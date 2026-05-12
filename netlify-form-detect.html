@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="robots" content="noindex" />
+    <title>Netlify Form Detection</title>
+  </head>
+  <body>
+    <form
+      name="audit-request"
+      method="POST"
+      action="/success.html"
+      data-netlify="true"
+      netlify
+      netlify-honeypot="bot-field"
+
+    >
+      <input type="hidden" name="form-name" value="audit-request" />
+      <p hidden>
+        <label>
+          Don’t fill this out: <input name="bot-field" />
+        </label>
+      </p>
+      <label>Business name <input type="text" name="businessName" /></label>
+      <label>Email <input type="email" name="email" /></label>
+      <label>Website <input type="url" name="website" /></label>
+      <label>Primary service needed <input type="text" name="serviceInterest" /></label>
+      <label>Goals <textarea name="goals"></textarea></label>
+      <button type="submit">Submit</button>
+    </form>
+  </body>
+</html>

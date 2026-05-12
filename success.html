@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Thanks | ComputerExpress</title>
+    <meta name="description" content="Your ComputerExpress audit request has been submitted." />
+    <meta name="theme-color" content="#081225" />
+    <style>
+      :root { color-scheme: dark; }
+      body {
+        margin: 0;
+        font-family: Inter, Arial, sans-serif;
+        background: linear-gradient(180deg, #081225 0%, #07101f 100%);
+        color: #ecf5ff;
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        padding: 24px;
+      }
+      .panel {
+        width: min(720px, 100%);
+        background: rgba(15, 28, 53, 0.9);
+        border: 1px solid rgba(125, 249, 255, 0.14);
+        border-radius: 28px;
+        padding: 32px;
+        box-shadow: 0 24px 80px rgba(0,0,0,0.35);
+      }
+      .eyebrow {
+        display: inline-block;
+        padding: 8px 14px;
+        border-radius: 999px;
+        color: #7df9ff;
+        border: 1px solid rgba(125, 249, 255, 0.16);
+        background: rgba(125, 249, 255, 0.06);
+        font-size: 14px;
+        margin-bottom: 18px;
+      }
+      h1 { margin: 0 0 14px; line-height: 1.05; font-size: clamp(2.2rem, 5vw, 3.6rem); }
+      p { color: #9ab4d2; line-height: 1.7; }
+      .actions { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 22px; }
+      .button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 48px;
+        padding: 0 18px;
+        border-radius: 999px;
+        text-decoration: none;
+        font-weight: 700;
+      }
+      .primary { background: linear-gradient(135deg, #12d6ff, #5ddfff); color: #03131f; }
+      .secondary { border: 1px solid rgba(255,255,255,0.12); color: #ecf5ff; }
+    </style>
+  </head>
+  <body>
+    <div class="panel">
+      <span class="eyebrow">You're all set</span>
+      <h1>Audit request received.</h1>
+      <p>
+        The team at ComputerExpress has received your audit request. Every submission is reviewed
+        personally — expect to hear back within 1–2 business days with a tailored plan for your
+        business.
+      </p>
+      <div class="actions">
+        <a class="button primary" href="/">Back to Home</a>
+        <a class="button secondary" href="/services">View Services</a>
+      </div>
+    </div>
+  </body>
+</html>
