@@ -35,12 +35,6 @@ export default function Layout() {
   }, [])
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 20)
-    window.addEventListener('scroll', onScroll, { passive: true })
-    return () => window.removeEventListener('scroll', onScroll)
-  }, [])
-
-  useEffect(() => {
     if (menuOpen) {
       document.body.style.overflow = 'hidden'
     } else {

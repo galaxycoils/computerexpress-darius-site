@@ -1,32 +1,18 @@
 import Seo from '../components/Seo'
 import ContactForm from '../components/ContactForm'
-import { useEffect, useRef } from 'react'
-
-function useInView(threshold = 0.15) {
-  const ref = useRef(null)
-  useEffect(() => {
-    const el = ref.current
-    if (!el) return
-    const obs = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) { el.classList.add('visible'); obs.unobserve(el); } },
-      { threshold }
-    )
-    obs.observe(el)
-    return () => obs.disconnect()
-  }, [threshold])
-  return ref
-}
-
-function AnimatedSection({ children, className = '', delay = 0 }) {
-  const ref = useInView()
-  return (
-    <div ref={ref} className={`animate-on-scroll ${className}`} style={{ transitionDelay: `${delay}ms` }}>
-      {children}
-    </div>
-  )
-}
+import AnimatedSection from '../hooks/useInView'
+import { useNavigate } from 'react-router-dom'
 
 export default function ContactPage() {
+  const navigate = useNavigate()
+
+  function handleFormSuccess() {
+    // Navigate to success page after a brief delay so user sees the success state
+    setTimeout(() => navigate('/success'), 1500)
+    // Update URL immediately for UX
+    window.history.replaceState(null, '', '/contact?sent=1')
+  }
+
   return (
     <>
       <Seo title="Contact | ComputerExpress" description="Request a free audit and start with practical next steps" path="/contact" />
@@ -37,14 +23,14 @@ export default function ContactPage() {
       <section className="section-first page-hero">
         <div className="container">
           <AnimatedSection>
-            <div className="eyebrow" style={{ justifyContent: 'center' }}>Get in touch</div>
+            <div className="eyebrow eyebrow-center">Get in touch</div>
             <h1>Request a free audit and start with practical next steps</h1>
             <p>Tell us what you are trying to improve: lead quality, rankings, local visibility, offer clarity, or website credibility.</p>
           </AnimatedSection>
         </div>
       </section>
 
-      <section className="section" style={{ paddingBottom: '7rem' }}>
+      <section className="section section-pad-bottom-lg">
         <div className="container">
           <div className="contact-panel">
             <AnimatedSection>
@@ -68,7 +54,7 @@ export default function ContactPage() {
               </div>
             </AnimatedSection>
             <AnimatedSection delay={150}>
-              <ContactForm />
+              <ContactForm onSuccess={handleFormSuccess} />
             </AnimatedSection>
           </div>
         </div>

@@ -1,79 +1,8 @@
 import Seo from '../components/Seo'
 import { Link } from 'react-router-dom'
-import { useEffect, useRef } from 'react'
 import { IconWeb, IconSearch, IconMap } from '../components/Icons'
-
-const services = [
-  {
-    icon: 'web',
-    title: 'High-Performance Websites',
-    description: 'Premium websites built to load fast, earn trust quickly, and guide visitors toward a clear next step.',
-    bullets: ['Custom page structure', 'Conversion-focused messaging', 'Mobile-first build quality']
-  },
-  {
-    icon: 'search',
-    title: 'Technical SEO',
-    description: 'Search-ready architecture, metadata, internal linking, schema, and performance work that supports rankings over time.',
-    bullets: ['Keyword-informed structure', 'On-page SEO setup', 'Technical cleanup + schema']
-  },
-  {
-    icon: 'map',
-    title: 'Google Business Profile',
-    description: 'Local visibility systems for businesses that need stronger map presence, better trust signals, and more calls.',
-    bullets: ['GBP optimization', 'Review strategy', 'Local landing page alignment']
-  }
-]
-
-const packages = [
-  {
-    name: 'Launch',
-    price: '$1,500',
-    period: 'starting at',
-    ideal: 'For businesses that need a sharp, credible online presence fast.',
-    features: ['1-5 page website', 'Mobile-first design', 'Core on-page SEO', 'Contact funnel setup'],
-    featured: false
-  },
-  {
-    name: 'Growth',
-    price: '$3,500',
-    period: 'starting at',
-    ideal: 'For teams that want stronger positioning, better search visibility, and more qualified leads.',
-    features: ['Custom website build', 'Technical SEO foundation', 'Offer-driven copy', 'Analytics + conversion tracking'],
-    featured: true
-  },
-  {
-    name: 'Local Authority',
-    price: '$5,500',
-    period: 'starting at',
-    ideal: 'For service brands ready to compete harder in local search and maps.',
-    features: ['Everything in Growth', 'GBP optimization', 'Local SEO page structure', 'Review/content workflow'],
-    featured: false
-  }
-]
-
-function useInView(threshold = 0.15) {
-  const ref = useRef(null)
-  useEffect(() => {
-    const el = ref.current
-    if (!el) return
-    const obs = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) { el.classList.add('visible'); obs.unobserve(el); } },
-      { threshold }
-    )
-    obs.observe(el)
-    return () => obs.disconnect()
-  }, [threshold])
-  return ref
-}
-
-function AnimatedSection({ children, className = '', delay = 0 }) {
-  const ref = useInView()
-  return (
-    <div ref={ref} className={`animate-on-scroll ${className}`} style={{ transitionDelay: `${delay}ms` }}>
-      {children}
-    </div>
-  )
-}
+import AnimatedSection from '../hooks/useInView'
+import { services, packages } from '../data/siteData'
 
 export default function ServicesPage() {
   return (

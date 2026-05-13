@@ -1,6 +1,7 @@
 import Seo from '../components/Seo'
 import { Link } from 'react-router-dom'
-import { useEffect, useRef } from 'react'
+import AnimatedSection from '../hooks/useInView'
+import { steps } from '../data/siteData'
 
 const values = [
   { icon: '✦', title: 'Premium positioning', desc: 'Without agency fluff or bloated process' },
@@ -8,37 +9,6 @@ const values = [
   { icon: '◎', title: 'Local-first mindset', desc: 'Designed for service businesses' },
   { icon: '⬡', title: 'Conversion-focused', desc: 'Clear calls to action and lead flow' }
 ]
-
-const steps = [
-  { title: 'Audit', desc: 'Audit your current site, offer clarity, search visibility, and conversion friction.' },
-  { title: 'Strategy', desc: 'Shape the right information architecture, messaging, and local SEO opportunities.' },
-  { title: 'Build', desc: 'Design and build a site that looks premium and performs like a sales asset.' },
-  { title: 'Launch', desc: 'Launch with tracking, search fundamentals, and a clear lead capture path.' }
-]
-
-function useInView(threshold = 0.15) {
-  const ref = useRef(null)
-  useEffect(() => {
-    const el = ref.current
-    if (!el) return
-    const obs = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) { el.classList.add('visible'); obs.unobserve(el); } },
-      { threshold }
-    )
-    obs.observe(el)
-    return () => obs.disconnect()
-  }, [threshold])
-  return ref
-}
-
-function AnimatedSection({ children, className = '', delay = 0 }) {
-  const ref = useInView()
-  return (
-    <div ref={ref} className={`animate-on-scroll ${className}`} style={{ transitionDelay: `${delay}ms` }}>
-      {children}
-    </div>
-  )
-}
 
 export default function AboutPage() {
   return (

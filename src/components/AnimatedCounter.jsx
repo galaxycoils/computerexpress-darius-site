@@ -25,7 +25,7 @@ function useCountUp(target, suffix = '', prefix = '', duration = 2000) {
             const progress = Math.min(elapsed / duration, 1)
             // easeOutExpo
             const eased = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress)
-            setValue(Math.round(from + (to - eased * to)))
+            setValue(Math.round(from + (to - from) * eased))
             if (progress < 1) requestAnimationFrame(step)
           }
           requestAnimationFrame(step)
@@ -42,14 +42,17 @@ function useCountUp(target, suffix = '', prefix = '', duration = 2000) {
 }
 
 export default function AnimatedCounter({ value, suffix = '', prefix = '', label }) {
-  const num = parseInt(value, 10) || 0
-  const isNumeric = !isNaN(num) && value.match(/^\d+/)
-  const { value: animatedValue, ref } = useCountUp(isNumeric ? num : 0, suffix, prefix)
+  // Extract leading numeric portion and trailing non-numeric suffix
+  const match = value.match(/^(\d+)(.*)$/)
+  const isNumeric = !!match
+  const numValue = isNumeric ? parseInt(match[1], 10) : 0
+  const extractedSuffix = isNumeric ? match[2] : value
+  const { value: animatedValue, ref } = useCountUp(numValue)
 
   return (
     <div ref={ref} className="stat-item">
       <div className="stat-value">
-        {prefix}{isNumeric ? animatedValue : value}{suffix}
+        {prefix}{isNumeric ? animatedValue : value}{extractedSuffix || suffix}
       </div>
       <div className="stat-label">{label}</div>
     </div>

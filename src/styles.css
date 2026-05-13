@@ -535,6 +535,11 @@ body.light .bg-orb {
   animation: pulse-dot 2s ease-in-out infinite;
 }
 
+.eyebrow-center {
+  margin-left: auto;
+  margin-right: auto;
+}
+
 @keyframes pulse-dot {
   0%, 100% { opacity: 1; transform: scale(1); }
   50% { opacity: 0.5; transform: scale(1.5); }
@@ -1264,6 +1269,58 @@ body.light .bg-orb {
   min-height: 120px;
 }
 
+.contact-form-success {
+  text-align: center;
+  padding: 3rem 2rem;
+}
+
+.contact-form-success-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: rgba(52, 211, 153, 0.1);
+  border: 1px solid rgba(52, 211, 153, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.5rem;
+  color: var(--success);
+}
+
+.contact-form-success h3 {
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+  color: var(--text-bright);
+}
+
+.contact-form-success p {
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+.contact-form-error {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  background: rgba(239, 68, 68, 0.08);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  border-radius: var(--radius-sm);
+  color: #f87171;
+  font-size: 0.85rem;
+  margin-bottom: 0.5rem;
+}
+
+.contact-form-error svg {
+  flex-shrink: 0;
+}
+
+.button.is-loading {
+  opacity: 0.7;
+  cursor: wait;
+}
+
 /* ============================================
    SUCCESS PAGE
    ============================================ */
@@ -1949,6 +2006,23 @@ body.light .bg-orb {
   color: var(--text);
 }
 
+.success-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: rgba(52, 211, 153, 0.1);
+  border: 2px solid rgba(52, 211, 153, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.5rem;
+  color: var(--success);
+}
+
+.success-actions {
+  margin-top: 1.5rem;
+}
+
 /* ============================================
    COUNTER / STATS BAR
    ============================================ */
@@ -1991,6 +2065,10 @@ body.light .bg-orb {
 /* ============================================
    UTILITY
    ============================================ */
+
+.section-pad-bottom-lg {
+  padding-bottom: 7rem;
+}
 
 .gradient-text {
   background: var(--gradient-1);
