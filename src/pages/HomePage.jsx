@@ -9,47 +9,54 @@ import {
   portfolioItems, stats
 } from '../data/siteData'
 
-const homePageJsonLd = {
-  '@context': 'https://schema.org',
-  '@type': 'ProfessionalService',
-  name: 'ComputerExpress',
-  url: 'https://computerexpress.pages.dev',
-  description: 'Premium websites, technical SEO, and local growth systems for service businesses.',
-  areaServed: {
-    '@type': 'City',
-    name: 'St. Catharines',
-    containedInPlace: {
-      '@type': 'State',
-      name: 'Ontario'
-    }
+const homePageJsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'LocalBusiness',
+    name: 'ComputerExpress',
+    '@id': 'https://computerexpress.pages.dev',
+    url: 'https://computerexpress.pages.dev',
+    description: 'ComputerExpress builds premium websites, technical SEO systems, and local growth engines for service businesses that need better visibility and more qualified leads.',
+    areaServed: [
+      { '@type': 'City', name: 'St. Catharines', containedInPlace: { '@type': 'State', name: 'Ontario' } },
+      { '@type': 'State', name: 'Ontario' },
+      { '@type': 'Country', name: 'Canada' },
+    ],
+    knowsAbout: ['Web Design', 'Technical SEO', 'Local SEO', 'Google Business Profile', 'React', 'Vite'],
+    hasOfferCatalog: {
+      '@type': 'OfferCatalog',
+      name: 'Services',
+      itemListElement: services.map(s => ({
+        '@type': 'Offer',
+        itemOffered: { '@type': 'Service', name: s.title, description: s.description }
+      }))
+    },
+    aggregateRating: {
+      '@type': 'AggregateRating',
+      ratingValue: '5',
+      reviewCount: '3'
+    },
   },
-  knowsAbout: ['Web Design', 'Technical SEO', 'Local SEO', 'Google Business Profile'],
-  hasOfferCatalog: {
-    '@type': 'OfferCatalog',
-    name: 'Services',
-    itemListElement: services.map(s => ({
-      '@type': 'Offer',
-      itemOffered: {
-        '@type': 'Service',
-        name: s.title,
-        description: s.description
-      }
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqItems.map(item => ({
+      '@type': 'Question',
+      name: item.q,
+      acceptedAnswer: { '@type': 'Answer', text: item.a }
     }))
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://computerexpress.pages.dev/' },
+      { '@type': 'ListItem', position: 2, name: 'Services', item: 'https://computerexpress.pages.dev/services' },
+      { '@type': 'ListItem', position: 3, name: 'About', item: 'https://computerexpress.pages.dev/about' },
+      { '@type': 'ListItem', position: 4, name: 'Contact', item: 'https://computerexpress.pages.dev/contact' },
+    ]
   }
-}
-
-const faqJsonLd = {
-  '@context': 'https://schema.org',
-  '@type': 'FAQPage',
-  mainEntity: faqItems.map(item => ({
-    '@type': 'Question',
-    name: item.q,
-    acceptedAnswer: {
-      '@type': 'Answer',
-      text: item.a
-    }
-  }))
-}
+]
 
 function FAQAccordion({ items }) {
   const [openIndex, setOpenIndex] = useState(null)
@@ -86,7 +93,7 @@ function FAQAccordion({ items }) {
 export default function HomePage() {
   return (
     <>
-      <Seo jsonLd={[homePageJsonLd, faqJsonLd]} />
+      <Seo jsonLd={homePageJsonLd} />
 
       {/* Background orbs */}
       <div className="bg-orb bg-orb-1" aria-hidden="true"></div>

@@ -34,8 +34,8 @@ export default function ServicesPage() {
   return (
     <>
       <Seo
-        title="Services | ComputerExpress — Web Design, SEO & Local Growth"
-        description="Explore ComputerExpress services: high-performance web design, technical SEO, Google Business Profile optimization, and local SEO for service businesses."
+        title="Web Design, Technical SEO & GBP Optimization Services | ComputerExpress"
+        description="Expert web design, technical SEO, and Google Business Profile optimization for service businesses. Custom websites that rank on Google and convert visitors into qualified leads."
         path="/services"
         jsonLd={servicesPageJsonLd}
       />

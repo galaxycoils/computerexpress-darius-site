@@ -2,13 +2,11 @@ import { Helmet } from 'react-helmet-async'
 
 const SITE = 'ComputerExpress'
 const BASE = 'https://computerexpress.pages.dev'
-const DEFAULT_TITLE = 'ComputerExpress | AI-First Web Design & Local SEO'
-const DEFAULT_DESC = 'ComputerExpress builds premium websites, technical SEO systems, and local growth engines for service businesses that need better visibility and more qualified leads.'
 const DEFAULT_IMG = '/og-card.svg'
 
 export default function Seo({
-  title = DEFAULT_TITLE,
-  description = DEFAULT_DESC,
+  title,
+  description,
   path = '/',
   image = DEFAULT_IMG,
   type = 'website',
@@ -18,10 +16,38 @@ export default function Seo({
   const url = `${BASE}${path}`
   const img = image.startsWith('http') ? image : `${BASE}${image}`
 
+  // Default title/description per page if not provided
+  const defaults = {
+    '/': {
+      title: `${SITE} | Web Design & Local SEO for Service Businesses`,
+      description: 'ComputerExpress builds premium websites, technical SEO systems, and local growth engines for service businesses. AI-first web design + local SEO that ranks.',
+    },
+    '/services': {
+      title: `Web Design, Technical SEO & GBP Optimization Services | ${SITE}`,
+      description: 'Expert web design, technical SEO, and Google Business Profile optimization for service businesses. Custom websites that rank on Google and convert visitors into leads.',
+    },
+    '/about': {
+      title: `About ${SITE} | AI-First Web Design & SEO Agency`,
+      description: 'ComputerExpress is an AI-first web design and local SEO agency. We combine modern design, technical SEO, and local growth systems for service businesses.',
+    },
+    '/contact': {
+      title: `Get a Free SEO Audit | ${SITE}`,
+      description: 'Request a free SEO audit from ComputerExpress. Tell us about your website, service area, and goals. We typically respond within 24 hours.',
+    },
+    '/success': {
+      title: `Request Received | ${SITE}`,
+      description: 'Your audit request has been submitted.',
+    },
+  }
+
+  const pageDefaults = defaults[path] || defaults['/']
+  const finalTitle = title || pageDefaults.title
+  const finalDesc = description || pageDefaults.description
+
   return (
     <Helmet>
-      <title>{title}</title>
-      <meta name="description" content={description} />
+      <title>{finalTitle}</title>
+      <meta name="description" content={finalDesc} />
       {noIndex ? (
         <meta name="robots" content="noindex,nofollow" />
       ) : (
@@ -29,20 +55,20 @@ export default function Seo({
       )}
       <link rel="canonical" href={url} />
       <meta property="og:site_name" content={SITE} />
-      <meta property="og:title" content={title} />
-      <meta property="og:description" content={description} />
+      <meta property="og:title" content={finalTitle} />
+      <meta property="og:description" content={finalDesc} />
       <meta property="og:type" content={type} />
       <meta property="og:url" content={url} />
       <meta property="og:image" content={img} />
       <meta property="og:image:width" content="1200" />
       <meta property="og:image:height" content="630" />
-      <meta property="og:image:alt" content={`${SITE} — AI-First Web Design & Local SEO`} />
+      <meta property="og:image:alt" content={`${finalTitle}`} />
       <meta property="og:locale" content="en_US" />
       <meta name="twitter:card" content="summary_large_image" />
-      <meta name="twitter:title" content={title} />
-      <meta name="twitter:description" content={description} />
+      <meta name="twitter:title" content={finalTitle} />
+      <meta name="twitter:description" content={finalDesc} />
       <meta name="twitter:image" content={img} />
-      <meta name="twitter:image:alt" content={`${SITE} — AI-First Web Design & Local SEO`} />
+      <meta name="twitter:image:alt" content={`${finalTitle}`} />
       {jsonLd && <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>}
     </Helmet>
   )
