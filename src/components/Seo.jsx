@@ -2,7 +2,7 @@ import { Helmet } from 'react-helmet-async'
 
 const SITE = 'ComputerExpress'
 const BASE = 'https://computerexpress.pages.dev'
-const DEFAULT_IMG = '/og-card.svg'
+const DEFAULT_IMG = '/og-card.png'
 
 export default function Seo({
   title,

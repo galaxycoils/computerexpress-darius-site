@@ -55,6 +55,11 @@ const homePageJsonLd = [
       { '@type': 'ListItem', position: 3, name: 'About', item: 'https://computerexpress.pages.dev/about' },
       { '@type': 'ListItem', position: 4, name: 'Contact', item: 'https://computerexpress.pages.dev/contact' },
     ]
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'SpeakableSpecification',
+    cssSelector: ['h1', 'h2', '.hero-copy'],
   }
 ]
 
