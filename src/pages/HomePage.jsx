@@ -178,13 +178,15 @@ function FAQAccordion({ items }) {
     <div className="faq-list">
       {items.map((item, i) => (
         <div key={i} className={`faq-item ${openIndex === i ? 'open' : ''}`}>
-          <button className="faq-question" onClick={() => setOpenIndex(openIndex === i ? null : i)}>
+          <button className="faq-question" onClick={() => setOpenIndex(openIndex === i ? null : i)} aria-expanded={openIndex === i}>
             {item.q}
-            <span className="faq-icon">+</span>
+            <span className="faq-icon">{openIndex === i ? '×' : '+'}</span>
           </button>
-          <div className="faq-answer">
-            <div className="faq-answer-inner">{item.a}</div>
-          </div>
+          {openIndex === i && (
+            <div className="faq-answer">
+              <div className="faq-answer-inner">{item.a}</div>
+            </div>
+          )}
         </div>
       ))}
     </div>

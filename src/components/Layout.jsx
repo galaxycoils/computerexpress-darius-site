@@ -1,10 +1,27 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { Outlet } from 'react-router-dom'
 import { Link, NavLink } from 'react-router-dom'
+
+function getInitialTheme() {
+  if (typeof window === 'undefined') return 'dark'
+  const stored = localStorage.getItem('theme')
+  if (stored === 'light' || stored === 'dark') return stored
+  return window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark'
+}
 
 export default function Layout() {
   const [menuOpen, setMenuOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
+  const [theme, setTheme] = useState(getInitialTheme)
+
+  useEffect(() => {
+    document.body.classList.toggle('light', theme === 'light')
+    localStorage.setItem('theme', theme)
+  }, [theme])
+
+  const toggleTheme = useCallback(() => {
+    setTheme(t => t === 'dark' ? 'light' : 'dark')
+  }, [])
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20)
@@ -37,6 +54,14 @@ export default function Layout() {
             aria-expanded={menuOpen}
           >
             <span></span><span></span><span></span>
+          </button>
+          <button
+            className="theme-toggle"
+            onClick={toggleTheme}
+            aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+            title={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+          >
+            {theme === 'dark' ? '☀' : '☾'}
           </button>
           <nav className={`nav-links ${menuOpen ? 'open' : ''}`} aria-label="Primary">
             <NavLink to="/services" onClick={closeMenu}>Services</NavLink>
