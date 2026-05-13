@@ -104,6 +104,7 @@ export default function Layout() {
           </button>
           <nav className={`nav-links ${menuOpen ? 'open' : ''}`} aria-label="Primary">
             <NavLink to="/services" onClick={closeMenu}>Services</NavLink>
+            <NavLink to="/blog" onClick={closeMenu}>Blog</NavLink>
             <NavLink to="/about" onClick={closeMenu}>About</NavLink>
             <NavLink to="/contact" onClick={closeMenu}>Contact</NavLink>
             <Link to="/contact" className="button button-ghost" onClick={closeMenu}>Book Audit</Link>
