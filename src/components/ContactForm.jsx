@@ -1,12 +1,11 @@
 import { useState } from 'react'
 
-const FORMSPREE_URL = 'https://formspree.io/f/xpwzgkby'
+const CONTACT_API = '/api/contact'
 
 export default function ContactForm({ onSuccess }) {
   const [submitted, setSubmitted] = useState(false)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
-  const [focused, setFocused] = useState(null)
 
   async function handleSubmit(e) {
     e.preventDefault()
@@ -15,19 +14,29 @@ export default function ContactForm({ onSuccess }) {
     const form = e.target
     const data = new FormData(form)
 
+    const payload = {
+      businessName: data.get('businessName')?.trim() || '',
+      email: data.get('email')?.trim() || '',
+      website: data.get('website')?.trim() || '',
+      serviceInterest: data.get('serviceInterest') || '',
+      goals: data.get('goals')?.trim() || '',
+    }
+
     try {
-      const res = await fetch(FORMSPREE_URL, {
+      const res = await fetch(CONTACT_API, {
         method: 'POST',
-        body: data,
-        headers: { Accept: 'application/json' }
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
       })
+
+      const result = await res.json()
+
       if (res.ok) {
         setSubmitted(true)
         form.reset()
         if (onSuccess) onSuccess()
       } else {
-        const errData = await res.json().catch(() => ({}))
-        setError(errData.message || 'Something went wrong. Please try again.')
+        setError(result.error || 'Something went wrong. Please try again.')
       }
     } catch (err) {
       console.error('Form submit failed:', err)
@@ -40,7 +49,7 @@ export default function ContactForm({ onSuccess }) {
   if (submitted) {
     return (
       <div className="contact-form contact-form-success">
-        <div className="contact-form-success-icon">
+        <div className="contact-form-success-icon" aria-hidden="true">
           <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
             <polyline points="20 6 9 17 4 12"/>
           </svg>
@@ -53,11 +62,9 @@ export default function ContactForm({ onSuccess }) {
 
   return (
     <form className="contact-form" onSubmit={handleSubmit}>
-      <input type="hidden" name="form-name" value="audit-request" />
-
       {error && (
         <div className="contact-form-error" role="alert">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
             <circle cx="12" cy="12" r="10"/>
             <line x1="12" y1="8" x2="12" y2="12"/>
             <line x1="12" y1="16" x2="12.01" y2="16"/>
@@ -73,8 +80,7 @@ export default function ContactForm({ onSuccess }) {
           name="businessName"
           placeholder="Your Company"
           required
-          onFocus={() => setFocused('businessName')}
-          onBlur={() => setFocused(null)}
+          autoComplete="organization"
         />
       </label>
       
@@ -85,8 +91,7 @@ export default function ContactForm({ onSuccess }) {
           name="email"
           placeholder="you@example.com"
           required
-          onFocus={() => setFocused('email')}
-          onBlur={() => setFocused(null)}
+          autoComplete="email"
         />
       </label>
       
@@ -96,19 +101,13 @@ export default function ContactForm({ onSuccess }) {
           type="url"
           name="website"
           placeholder="https://your-site.com"
-          onFocus={() => setFocused('website')}
-          onBlur={() => setFocused(null)}
+          autoComplete="url"
         />
       </label>
       
       <label>
         Primary service needed
-        <select
-          name="serviceInterest"
-          onFocus={() => setFocused('service')}
-          onBlur={() => setFocused(null)}
-          defaultValue=""
-        >
+        <select name="serviceInterest" defaultValue="">
           <option value="" disabled>Select a service...</option>
           <option value="website">Website design / redesign</option>
           <option value="seo">Technical SEO</option>
@@ -125,8 +124,6 @@ export default function ContactForm({ onSuccess }) {
           rows="4"
           placeholder="More leads, better rankings, clearer positioning, stronger local visibility..."
           required
-          onFocus={() => setFocused('goals')}
-          onBlur={() => setFocused(null)}
         />
       </label>
       
