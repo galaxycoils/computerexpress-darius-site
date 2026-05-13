@@ -5,9 +5,9 @@ const DEFAULT_TITLE = 'ComputerExpress | AI-First Web Design & Local SEO'
 const DEFAULT_DESC = 'ComputerExpress builds premium websites, technical SEO systems, and local growth engines for service businesses that need better visibility and more qualified leads.'
 
 export default function Seo({ title = DEFAULT_TITLE, description = DEFAULT_DESC, path = '/', image = '/og-card.svg', type = 'website', jsonLd }) {
-  const base = '' // will be set by Cloudflare Pages domain
-  const url = base ? `${base}${path}` : undefined
-  const img = base ? `${base}${image}` : image
+  const BASE = 'https://computerexpress.pages.dev'
+  const url = BASE ? `${BASE}${path}` : undefined
+  const img = BASE ? `${BASE}${image}` : image
 
   return (
     <Helmet>
