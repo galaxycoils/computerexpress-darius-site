@@ -13,6 +13,17 @@ export default function Layout() {
   const [menuOpen, setMenuOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const [theme, setTheme] = useState(getInitialTheme)
+  const [scrollProgress, setScrollProgress] = useState(0)
+
+  useEffect(() => {
+    const onScroll = () => {
+      setScrolled(window.scrollY > 20)
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight
+      setScrollProgress(docHeight > 0 ? (window.scrollY / docHeight) * 100 : 0)
+    }
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
 
   useEffect(() => {
     document.body.classList.toggle('light', theme === 'light')
@@ -42,6 +53,7 @@ export default function Layout() {
 
   return (
     <div className="page-shell">
+      <div className="scroll-progress" style={{ width: `${scrollProgress}%` }} aria-hidden="true" />
       <header className={`site-header ${scrolled ? 'scrolled' : ''}`}>
         <div className="container nav">
           <Link className="brand" to="/" aria-label="ComputerExpress home">

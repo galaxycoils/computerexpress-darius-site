@@ -1,6 +1,8 @@
 import Seo from '../components/Seo'
 import { Link } from 'react-router-dom'
 import { useEffect, useRef, useState } from 'react'
+import { IconWeb, IconSearch, IconMap, HeroIllustration } from '../components/Icons'
+import AnimatedCounter from '../components/AnimatedCounter'
 
 const services = [
   {
@@ -157,21 +159,6 @@ function AnimatedSection({ children, className = '', delay = 0 }) {
   )
 }
 
-function ServiceIcon({ type }) {
-  const icons = {
-    web: (
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
-    ),
-    search: (
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
-    ),
-    map: (
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
-    )
-  }
-  return icons[type] || icons.web
-}
-
 function FAQAccordion({ items }) {
   const [openIndex, setOpenIndex] = useState(null)
   return (
@@ -227,30 +214,7 @@ export default function HomePage() {
             </ul>
           </div>
           <div className="hero-card">
-            <div className="hero-visual">
-              <div className="metric-grid">
-                <div className="metric-card">
-                  <div className="metric-value">100</div>
-                  <span>PageSpeed Score</span>
-                  <strong>Performance-first builds</strong>
-                </div>
-                <div className="metric-card">
-                  <div className="metric-value">3x</div>
-                  <span>Lead Increase</span>
-                  <strong>Conversion-optimized</strong>
-                </div>
-                <div className="metric-card">
-                  <div className="metric-value">Top 3</div>
-                  <span>Local Pack</span>
-                  <strong>Map visibility</strong>
-                </div>
-                <div className="metric-card">
-                  <div className="metric-value">24h</div>
-                  <span>Response Time</span>
-                  <strong>Direct communication</strong>
-                </div>
-              </div>
-            </div>
+            <HeroIllustration className="hero-illustration" />
           </div>
         </div>
       </section>
@@ -261,10 +225,7 @@ export default function HomePage() {
           <AnimatedSection>
             <div className="stats-bar">
               {stats.map(s => (
-                <div key={s.label} className="stat-item">
-                  <div className="stat-value">{s.value}</div>
-                  <div className="stat-label">{s.label}</div>
-                </div>
+                <AnimatedCounter key={s.label} value={s.value} label={s.label} />
               ))}
             </div>
           </AnimatedSection>
@@ -286,7 +247,9 @@ export default function HomePage() {
               <AnimatedSection key={s.title} delay={i * 100}>
                 <article className="info-card">
                   <div className={`icon-circle ${i === 0 ? 'cyan' : i === 1 ? 'purple' : 'green'}`}>
-                    <ServiceIcon type={s.icon} />
+                    {s.icon === 'web' && <IconWeb />}
+                    {s.icon === 'search' && <IconSearch />}
+                    {s.icon === 'map' && <IconMap />}
                   </div>
                   <h3>{s.title}</h3>
                   <p>{s.description}</p>
