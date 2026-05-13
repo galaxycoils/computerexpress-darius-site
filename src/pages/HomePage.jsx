@@ -331,6 +331,51 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* ===== BLOG / RESOURCES ===== */}
+      <section className="section" id="resources" aria-label="Resources">
+        <div className="container">
+          <AnimatedSection>
+            <div className="section-heading">
+              <div className="glow-line" aria-hidden="true"></div>
+              <h2>Web design and SEO insights</h2>
+              <p>Expert guides to help your service business rank higher and get more qualified leads.</p>
+            </div>
+          </AnimatedSection>
+          <div className="card-grid three-up page-block stagger-children">
+            <AnimatedSection delay={0}>
+              <article className="info-card" style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+                <span className="portfolio-tag" style={{ fontSize: '0.7rem', marginBottom: '0.5rem', alignSelf: 'flex-start' }}>Local SEO</span>
+                <h3 style={{ fontSize: '1rem', marginBottom: '0.5rem' }}>
+                  <Link to="/blog/local-seo-checklist-2026" style={{ color: 'var(--text-bright)' }}>The Complete Local SEO Checklist for 2026</Link>
+                </h3>
+                <p style={{ fontSize: '0.85rem', color: 'var(--muted)', flexGrow: 1 }}>Everything you need to rank #1 on Google Maps and local search. From GBP optimization to local link building.</p>
+                <Link to="/blog/local-seo-checklist-2026" style={{ color: 'var(--primary)', fontSize: '0.85rem', marginTop: '0.75rem', display: 'inline-block' }}>Read the guide →</Link>
+              </article>
+            </AnimatedSection>
+            <AnimatedSection delay={100}>
+              <article className="info-card" style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+                <span className="portfolio-tag" style={{ fontSize: '0.7rem', marginBottom: '0.5rem', alignSelf: 'flex-start' }}>Lead Generation</span>
+                <h3 style={{ fontSize: '1rem', marginBottom: '0.5rem' }}>
+                  <Link to="/blog/how-to-get-more-leads-from-website" style={{ color: 'var(--text-bright)' }}>How to Get More Leads from Your Website</Link>
+                </h3>
+                <p style={{ fontSize: '0.85rem', color: 'var(--muted)', flexGrow: 1 }}>7 proven strategies to turn website visitors into qualified leads — from conversion-focused design to strategic CTAs.</p>
+                <Link to="/blog/how-to-get-more-leads-from-website" style={{ color: 'var(--primary)', fontSize: '0.85rem', marginTop: '0.75rem', display: 'inline-block' }}>Read the guide →</Link>
+              </article>
+            </AnimatedSection>
+            <AnimatedSection delay={200}>
+              <article className="info-card" style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+                <span className="portfolio-tag" style={{ fontSize: '0.7rem', marginBottom: '0.5rem', alignSelf: 'flex-start' }}>Technical SEO</span>
+                <h3 style={{ fontSize: '1rem', marginBottom: '0.5rem' }}>
+                  <Link to="/blog/technical-seo-explained" style={{ color: 'var(--text-bright)' }}>Technical SEO Explained</Link>
+                </h3>
+                <p style={{ fontSize: '0.85rem', color: 'var(--muted)', flexGrow: 1 }}>What technical SEO covers — site speed, schema markup, crawlability, mobile-first — and why it matters for rankings.</p>
+                <Link to="/blog/technical-seo-explained" style={{ color: 'var(--primary)', fontSize: '0.85rem', marginTop: '0.75rem', display: 'inline-block' }}>Read the guide →</Link>
+              </article>
+            </AnimatedSection>
+          </div>
+        </div>
+      </section>
+
       {/* ===== CTA ===== */}
       <section className="section" style={{ paddingBottom: '7rem' }} aria-label="Call to action">
         <div className="container">
