@@ -1906,6 +1906,16 @@ body.light .bg-orb {
   line-height: 1.7;
 }
 
+.footer-heading {
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-bright);
+  display: block;
+  margin-bottom: 0.75rem;
+}
+
 .footer-col-links {
   display: flex;
   flex-direction: column;

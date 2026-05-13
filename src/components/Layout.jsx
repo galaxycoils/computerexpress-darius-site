@@ -89,7 +89,7 @@ export default function Layout() {
               <p>Premium websites, technical SEO, and local growth systems for service businesses that need better visibility and more qualified leads.</p>
             </div>
             <div className="footer-col">
-              <h4>Services</h4>
+              <span className="footer-heading">Services</span>
               <nav className="footer-col-links" aria-label="Services links">
                 <Link to="/services">Web Design</Link>
                 <Link to="/services">Technical SEO</Link>
@@ -98,7 +98,7 @@ export default function Layout() {
               </nav>
             </div>
             <div className="footer-col">
-              <h4>Company</h4>
+              <span className="footer-heading">Company</span>
               <nav className="footer-col-links" aria-label="Company links">
                 <Link to="/about">About</Link>
                 <Link to="/contact">Contact</Link>
@@ -106,7 +106,7 @@ export default function Layout() {
               </nav>
             </div>
             <div className="footer-col">
-              <h4>Stay updated</h4>
+              <span className="footer-heading">Stay updated</span>
               <p style={{ fontSize: '0.85rem', marginBottom: '0.5rem' }}>Get SEO tips and web design insights.</p>
               <form className="footer-newsletter" action="https://formspree.io/f/xpwzgkby" method="POST" aria-label="Newsletter signup">
                 <input type="hidden" name="form-name" value="newsletter" />
