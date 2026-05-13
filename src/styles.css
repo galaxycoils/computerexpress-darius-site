@@ -13,8 +13,8 @@
   
   --text: #e8f0fe;
   --text-bright: #ffffff;
-  --muted: #8899b8;
-  --muted-lite: #5a7094;
+  --muted: #9ab4d2;
+  --muted-lite: #7a94b8;
   
   --primary: #12d6ff;
   --primary-dim: #12d6ff20;
@@ -46,6 +46,27 @@
   --transition-base: 300ms cubic-bezier(0.4, 0, 0.2, 1);
   --transition-slow: 500ms cubic-bezier(0.4, 0, 0.2, 1);
   --transition-bounce: 500ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* ============================================
+   ACCESSIBILITY
+   ============================================ */
+
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: 16px;
+  z-index: 10000;
+  padding: 0.75rem 1.5rem;
+  background: var(--primary);
+  color: var(--bg);
+  font-weight: 700;
+  font-size: 0.95rem;
+  border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+  transition: top var(--transition-fast);
+}
+.skip-link:focus {
+  top: 0;
 }
 
 /* ============================================

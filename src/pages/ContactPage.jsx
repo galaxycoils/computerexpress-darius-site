@@ -3,24 +3,35 @@ import ContactForm from '../components/ContactForm'
 import AnimatedSection from '../hooks/useInView'
 import { useNavigate } from 'react-router-dom'
 
+const contactPageJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'ContactPage',
+  name: 'Contact ComputerExpress',
+  url: 'https://computerexpress.pages.dev/contact',
+  description: 'Request a free SEO audit from ComputerExpress.'
+}
+
 export default function ContactPage() {
   const navigate = useNavigate()
 
   function handleFormSuccess() {
-    // Navigate to success page after a brief delay so user sees the success state
     setTimeout(() => navigate('/success'), 1500)
-    // Update URL immediately for UX
     window.history.replaceState(null, '', '/contact?sent=1')
   }
 
   return (
     <>
-      <Seo title="Contact | ComputerExpress" description="Request a free audit and start with practical next steps" path="/contact" />
+      <Seo
+        title="Contact | ComputerExpress — Request a Free SEO Audit"
+        description="Request a free SEO audit from ComputerExpress. Tell us about your website, service area, and goals. We typically respond within 24 hours."
+        path="/contact"
+        jsonLd={contactPageJsonLd}
+      />
 
       <div className="bg-orb bg-orb-1" aria-hidden="true"></div>
       <div className="bg-orb bg-orb-2" aria-hidden="true"></div>
 
-      <section className="section-first page-hero">
+      <section className="section-first page-hero" aria-label="Contact form">
         <div className="container">
           <AnimatedSection>
             <div className="eyebrow eyebrow-center">Get in touch</div>
@@ -30,7 +41,7 @@ export default function ContactPage() {
         </div>
       </section>
 
-      <section className="section section-pad-bottom-lg">
+      <section className="section section-pad-bottom-lg" aria-label="Contact details and form">
         <div className="container">
           <div className="contact-panel">
             <AnimatedSection>

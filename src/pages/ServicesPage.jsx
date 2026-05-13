@@ -4,15 +4,46 @@ import { IconWeb, IconSearch, IconMap } from '../components/Icons'
 import AnimatedSection from '../hooks/useInView'
 import { services, packages } from '../data/siteData'
 
+const servicesPageJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  provider: {
+    '@type': 'Organization',
+    name: 'ComputerExpress',
+    url: 'https://computerexpress.pages.dev'
+  },
+  areaServed: {
+    '@type': 'City',
+    name: 'St. Catharines'
+  },
+  hasOfferCatalog: {
+    '@type': 'OfferCatalog',
+    name: 'ComputerExpress Services',
+    itemListElement: services.map(s => ({
+      '@type': 'Offer',
+      itemOffered: {
+        '@type': 'Service',
+        name: s.title,
+        description: s.description
+      }
+    }))
+  }
+}
+
 export default function ServicesPage() {
   return (
     <>
-      <Seo title="Services | ComputerExpress" description="Services built around visibility, trust, and conversion" path="/services" />
+      <Seo
+        title="Services | ComputerExpress — Web Design, SEO & Local Growth"
+        description="Explore ComputerExpress services: high-performance web design, technical SEO, Google Business Profile optimization, and local SEO for service businesses."
+        path="/services"
+        jsonLd={servicesPageJsonLd}
+      />
 
       <div className="bg-orb bg-orb-1" aria-hidden="true"></div>
       <div className="bg-orb bg-orb-2" aria-hidden="true"></div>
 
-      <section className="section-first page-hero">
+      <section className="section-first page-hero" aria-label="Services overview">
         <div className="container">
           <AnimatedSection>
             <div className="eyebrow" style={{ justifyContent: 'center' }}>What we do</div>
@@ -22,18 +53,18 @@ export default function ServicesPage() {
         </div>
       </section>
 
-      <section className="section">
+      <section className="section" aria-label="Service details">
         <div className="container">
           <div className="card-grid three-up page-block stagger-children">
             {services.map((s, i) => (
               <AnimatedSection key={s.title} delay={i * 100}>
                 <article className="info-card">
-                  <div className={`icon-circle ${i === 0 ? 'cyan' : i === 1 ? 'purple' : 'green'}`}>
+                  <div className={`icon-circle ${i === 0 ? 'cyan' : i === 1 ? 'purple' : 'green'}`} aria-hidden="true">
                     {s.icon === 'web' && <IconWeb />}
                     {s.icon === 'search' && <IconSearch />}
                     {s.icon === 'map' && <IconMap />}
                   </div>
-                  <h3>{s.title}</h3>
+                  <h2>{s.title}</h2>
                   <p>{s.description}</p>
                   <ul className="feature-list">
                     {s.bullets.map(b => <li key={b}>{b}</li>)}
@@ -45,11 +76,11 @@ export default function ServicesPage() {
         </div>
       </section>
 
-      <section className="section section-alt">
+      <section className="section section-alt" aria-label="Getting started">
         <div className="container">
           <AnimatedSection>
             <div className="section-heading">
-              <div className="glow-line"></div>
+              <div className="glow-line" aria-hidden="true"></div>
               <h2>Offer structure you can publish now and refine later</h2>
               <p>Use these as draft packages for launch, then tighten them as your positioning becomes more specific.</p>
             </div>
@@ -64,11 +95,11 @@ export default function ServicesPage() {
         </div>
       </section>
 
-      <section className="section">
+      <section className="section" aria-label="Pricing packages">
         <div className="container">
           <AnimatedSection>
             <div className="section-heading">
-              <div className="glow-line"></div>
+              <div className="glow-line" aria-hidden="true"></div>
               <h2>Packages</h2>
             </div>
           </AnimatedSection>
@@ -97,7 +128,7 @@ export default function ServicesPage() {
         </div>
       </section>
 
-      <section className="section" style={{ paddingBottom: '7rem' }}>
+      <section className="section" style={{ paddingBottom: '7rem' }} aria-label="Call to action">
         <div className="container">
           <AnimatedSection>
             <div className="cta-strip">

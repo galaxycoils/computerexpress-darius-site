@@ -9,18 +9,71 @@ import {
   portfolioItems, stats
 } from '../data/siteData'
 
+const homePageJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'ProfessionalService',
+  name: 'ComputerExpress',
+  url: 'https://computerexpress.pages.dev',
+  description: 'Premium websites, technical SEO, and local growth systems for service businesses.',
+  areaServed: {
+    '@type': 'City',
+    name: 'St. Catharines',
+    containedInPlace: {
+      '@type': 'State',
+      name: 'Ontario'
+    }
+  },
+  knowsAbout: ['Web Design', 'Technical SEO', 'Local SEO', 'Google Business Profile'],
+  hasOfferCatalog: {
+    '@type': 'OfferCatalog',
+    name: 'Services',
+    itemListElement: services.map(s => ({
+      '@type': 'Offer',
+      itemOffered: {
+        '@type': 'Service',
+        name: s.title,
+        description: s.description
+      }
+    }))
+  }
+}
+
+const faqJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqItems.map(item => ({
+    '@type': 'Question',
+    name: item.q,
+    acceptedAnswer: {
+      '@type': 'Answer',
+      text: item.a
+    }
+  }))
+}
+
 function FAQAccordion({ items }) {
   const [openIndex, setOpenIndex] = useState(null)
   return (
     <div className="faq-list">
       {items.map((item, i) => (
         <div key={i} className={`faq-item ${openIndex === i ? 'open' : ''}`}>
-          <button className="faq-question" onClick={() => setOpenIndex(openIndex === i ? null : i)} aria-expanded={openIndex === i}>
+          <button
+            className="faq-question"
+            onClick={() => setOpenIndex(openIndex === i ? null : i)}
+            aria-expanded={openIndex === i}
+            aria-controls={`faq-answer-${i}`}
+            id={`faq-question-${i}`}
+          >
             {item.q}
-            <span className="faq-icon">{openIndex === i ? '×' : '+'}</span>
+            <span className="faq-icon" aria-hidden="true">{openIndex === i ? '×' : '+'}</span>
           </button>
           {openIndex === i && (
-            <div className="faq-answer">
+            <div
+              className="faq-answer"
+              id={`faq-answer-${i}`}
+              role="region"
+              aria-labelledby={`faq-question-${i}`}
+            >
               <div className="faq-answer-inner">{item.a}</div>
             </div>
           )}
@@ -33,7 +86,7 @@ function FAQAccordion({ items }) {
 export default function HomePage() {
   return (
     <>
-      <Seo />
+      <Seo jsonLd={[homePageJsonLd, faqJsonLd]} />
 
       {/* Background orbs */}
       <div className="bg-orb bg-orb-1" aria-hidden="true"></div>
@@ -41,7 +94,7 @@ export default function HomePage() {
       <div className="bg-orb bg-orb-3" aria-hidden="true"></div>
 
       {/* ===== HERO ===== */}
-      <section className="section-first hero">
+      <section className="section-first hero" aria-label="Hero">
         <div className="container hero-grid">
           <div>
             <div className="eyebrow">Built for service businesses that need better leads, not just more traffic</div>
@@ -70,7 +123,7 @@ export default function HomePage() {
       </section>
 
       {/* ===== STATS BAR ===== */}
-      <section className="section" style={{ padding: '3rem 0' }}>
+      <section className="section stats-section" style={{ padding: '3rem 0' }} aria-label="Key statistics">
         <div className="container">
           <AnimatedSection>
             <div className="stats-bar">
@@ -83,11 +136,11 @@ export default function HomePage() {
       </section>
 
       {/* ===== SERVICES ===== */}
-      <section className="section">
+      <section className="section" id="services" aria-label="Services">
         <div className="container">
           <AnimatedSection>
             <div className="section-heading">
-              <div className="glow-line"></div>
+              <div className="glow-line" aria-hidden="true"></div>
               <h2>Built to help local businesses look sharper and convert faster</h2>
               <p>Every engagement is designed to improve clarity, credibility, search visibility, and the path from visit to inquiry.</p>
             </div>
@@ -96,7 +149,7 @@ export default function HomePage() {
             {services.map((s, i) => (
               <AnimatedSection key={s.title} delay={i * 100}>
                 <article className="info-card">
-                  <div className={`icon-circle ${i === 0 ? 'cyan' : i === 1 ? 'purple' : 'green'}`}>
+                  <div className={`icon-circle ${i === 0 ? 'cyan' : i === 1 ? 'purple' : 'green'}`} aria-hidden="true">
                     {s.icon === 'web' && <IconWeb />}
                     {s.icon === 'search' && <IconSearch />}
                     {s.icon === 'map' && <IconMap />}
@@ -114,11 +167,11 @@ export default function HomePage() {
       </section>
 
       {/* ===== PORTFOLIO ===== */}
-      <section className="section section-alt">
+      <section className="section section-alt" id="portfolio" aria-label="Portfolio">
         <div className="container">
           <AnimatedSection>
             <div className="section-heading">
-              <div className="glow-line"></div>
+              <div className="glow-line" aria-hidden="true"></div>
               <h2>Work that speaks for itself</h2>
               <p>Real projects, real results. Here is a snapshot of what we have built for service businesses.</p>
             </div>
@@ -127,7 +180,7 @@ export default function HomePage() {
             {portfolioItems.map((p, i) => (
               <AnimatedSection key={p.title} delay={i * 150}>
                 <article className="portfolio-card">
-                  <div className="portfolio-thumb">
+                  <div className="portfolio-thumb" aria-hidden="true">
                     <div className="portfolio-thumb-content">
                       <div className="portfolio-thumb-icon">{p.icon}</div>
                       <div className="portfolio-thumb-label">Case Study</div>
@@ -156,11 +209,11 @@ export default function HomePage() {
       </section>
 
       {/* ===== PROCESS ===== */}
-      <section className="section">
+      <section className="section" id="process" aria-label="Our process">
         <div className="container">
           <AnimatedSection>
             <div className="section-heading">
-              <div className="glow-line"></div>
+              <div className="glow-line" aria-hidden="true"></div>
               <h2>A simple workflow built around clarity, speed, and execution</h2>
               <p>The goal is not to bury you in process. It is to move from diagnosis to launch with a cleaner strategy.</p>
             </div>
@@ -170,7 +223,7 @@ export default function HomePage() {
               <ol className="step-list">
                 {steps.map((s, i) => (
                   <li key={i}>
-                    <span>{i + 1}</span>
+                    <span aria-hidden="true">{i + 1}</span>
                     <div>
                       <strong style={{ color: 'var(--text-bright)', display: 'block', marginBottom: '0.25rem' }}>{s.title}</strong>
                       <p>{s.desc}</p>
@@ -184,11 +237,11 @@ export default function HomePage() {
       </section>
 
       {/* ===== TESTIMONIALS ===== */}
-      <section className="section section-alt">
+      <section className="section section-alt" id="testimonials" aria-label="Client testimonials">
         <div className="container">
           <AnimatedSection>
             <div className="section-heading">
-              <div className="glow-line"></div>
+              <div className="glow-line" aria-hidden="true"></div>
               <h2>What clients say</h2>
               <p>Service businesses that trusted us to build their digital presence.</p>
             </div>
@@ -197,10 +250,10 @@ export default function HomePage() {
             {testimonials.map((t, i) => (
               <AnimatedSection key={t.name} delay={i * 100}>
                 <article className="testimonial-card">
-                  <div className="testimonial-stars">{'★'.repeat(5)}</div>
-                  <p className="testimonial-text">{t.text}</p>
+                  <div className="testimonial-stars" aria-label="5 out of 5 stars">{'★'.repeat(5)}</div>
+                  <blockquote className="testimonial-text">{t.text}</blockquote>
                   <div className="testimonial-author">
-                    <div className="testimonial-avatar">{t.initials}</div>
+                    <div className="testimonial-avatar" aria-hidden="true">{t.initials}</div>
                     <div>
                       <div className="testimonial-name">{t.name}</div>
                       <div className="testimonial-role">{t.role}</div>
@@ -214,11 +267,11 @@ export default function HomePage() {
       </section>
 
       {/* ===== PRICING ===== */}
-      <section className="section">
+      <section className="section" id="pricing" aria-label="Pricing packages">
         <div className="container">
           <AnimatedSection>
             <div className="section-heading">
-              <div className="glow-line"></div>
+              <div className="glow-line" aria-hidden="true"></div>
               <h2>Starter packages you can tune before launch</h2>
               <p>These tiers give you a usable pricing structure now while keeping room to refine your offer later.</p>
             </div>
@@ -249,11 +302,11 @@ export default function HomePage() {
       </section>
 
       {/* ===== FAQ ===== */}
-      <section className="section section-alt">
+      <section className="section section-alt" id="faq" aria-label="Frequently asked questions">
         <div className="container">
           <AnimatedSection>
             <div className="section-heading">
-              <div className="glow-line"></div>
+              <div className="glow-line" aria-hidden="true"></div>
               <h2>Frequently asked questions</h2>
               <p>Everything you need to know before getting started.</p>
             </div>
@@ -267,7 +320,7 @@ export default function HomePage() {
       </section>
 
       {/* ===== CTA ===== */}
-      <section className="section" style={{ paddingBottom: '7rem' }}>
+      <section className="section" style={{ paddingBottom: '7rem' }} aria-label="Call to action">
         <div className="container">
           <AnimatedSection>
             <div className="cta-strip">

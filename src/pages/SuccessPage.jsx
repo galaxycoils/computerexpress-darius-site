@@ -4,10 +4,14 @@ import { Link } from 'react-router-dom'
 export default function SuccessPage() {
   return (
     <>
-      <Seo title="Request Received | ComputerExpress" path="/success" />
-      <section className="section-first page-hero">
+      <Seo
+        title="Request Received | ComputerExpress"
+        path="/success"
+        noIndex
+      />
+      <section className="section-first page-hero" aria-label="Success confirmation">
         <div className="container center-panel">
-          <div className="success-icon">
+          <div className="success-icon" aria-hidden="true">
             <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
               <polyline points="20 6 9 17 4 12"/>
             </svg>

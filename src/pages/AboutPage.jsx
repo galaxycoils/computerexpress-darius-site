@@ -3,6 +3,23 @@ import { Link } from 'react-router-dom'
 import AnimatedSection from '../hooks/useInView'
 import { steps } from '../data/siteData'
 
+const aboutPageJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: 'ComputerExpress',
+  url: 'https://computerexpress.pages.dev',
+  description: 'AI-first web design and local SEO agency for service businesses.',
+  areaServed: {
+    '@type': 'City',
+    name: 'St. Catharines',
+    containedInPlace: {
+      '@type': 'State',
+      name: 'Ontario'
+    }
+  },
+  knowsAbout: ['Web Design', 'Technical SEO', 'Local SEO', 'Google Business Profile']
+}
+
 const values = [
   { icon: '✦', title: 'Premium positioning', desc: 'Without agency fluff or bloated process' },
   { icon: '◈', title: 'Search-ready structure', desc: 'Built for rankings from day one' },
@@ -13,12 +30,17 @@ const values = [
 export default function AboutPage() {
   return (
     <>
-      <Seo title="About | ComputerExpress" description="Built to make your business look more credible online" path="/about" />
+      <Seo
+        title="About | ComputerExpress — AI-First Web Design Agency"
+        description="Learn about ComputerExpress: an AI-first agency combining modern design, technical SEO, and local growth systems for service businesses."
+        path="/about"
+        jsonLd={aboutPageJsonLd}
+      />
 
       <div className="bg-orb bg-orb-1" aria-hidden="true"></div>
       <div className="bg-orb bg-orb-2" aria-hidden="true"></div>
 
-      <section className="section-first page-hero">
+      <section className="section-first page-hero" aria-label="About overview">
         <div className="container">
           <AnimatedSection>
             <div className="eyebrow" style={{ justifyContent: 'center' }}>About us</div>
@@ -28,7 +50,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section className="section">
+      <section className="section" aria-label="Our values">
         <div className="container">
           <div className="split-layout">
             <AnimatedSection>
@@ -58,7 +80,7 @@ export default function AboutPage() {
                         flexShrink: 0,
                         color: 'var(--primary)',
                         fontSize: '1.1rem'
-                      }}>{v.icon}</span>
+                      }} aria-hidden="true">{v.icon}</span>
                       <div>
                         <strong style={{ color: 'var(--text-bright)', display: 'block', marginBottom: '0.2rem' }}>{v.title}</strong>
                         <span style={{ color: 'var(--muted)', fontSize: '0.9rem' }}>{v.desc}</span>
@@ -82,11 +104,11 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section className="section section-alt">
+      <section className="section section-alt" aria-label="Our process">
         <div className="container">
           <AnimatedSection>
             <div className="section-heading">
-              <div className="glow-line"></div>
+              <div className="glow-line" aria-hidden="true"></div>
               <h2>How projects move</h2>
               <p>Simple steps, clear outputs, and direct communication.</p>
             </div>
@@ -96,7 +118,7 @@ export default function AboutPage() {
               <ol className="step-list">
                 {steps.map((s, i) => (
                   <li key={i}>
-                    <span>{i + 1}</span>
+                    <span aria-hidden="true">{i + 1}</span>
                     <div>
                       <strong style={{ color: 'var(--text-bright)', display: 'block', marginBottom: '0.25rem' }}>{s.title}</strong>
                       <p>{s.desc}</p>
@@ -109,7 +131,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section className="section" style={{ paddingBottom: '7rem' }}>
+      <section className="section" style={{ paddingBottom: '7rem' }} aria-label="Call to action">
         <div className="container">
           <AnimatedSection>
             <div className="cta-strip">
