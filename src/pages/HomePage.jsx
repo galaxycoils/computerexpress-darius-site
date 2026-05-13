@@ -1,6 +1,6 @@
 import Seo from '../components/Seo'
 import { Link } from 'react-router-dom'
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 const services = [
   {
@@ -57,11 +57,80 @@ const steps = [
   { title: 'Launch', desc: 'Launch with tracking, search fundamentals, and a clear lead capture path.' }
 ]
 
-const trustItems = [
-  'Premium positioning without agency fluff',
-  'Search-ready structure from day one',
-  'Built for local service businesses',
-  'Clear calls to action and conversion flow'
+const testimonials = [
+  {
+    text: 'ComputerExpress rebuilt our site from the ground up. Within 3 months we were ranking on page 1 for our main service area and leads doubled.',
+    name: 'Marcus Chen',
+    role: 'Owner, Chen Plumbing',
+    initials: 'MC'
+  },
+  {
+    text: 'The difference was immediate. Our old site looked generic -- the new one actually makes us look like the premium service we are. Clients comment on it.',
+    name: 'Sarah Williams',
+    role: 'Director, Williams Legal',
+    initials: 'SW'
+  },
+  {
+    text: 'They handled everything -- design, SEO, Google Business Profile. Our map pack visibility went from nowhere to top 3 in our city.',
+    name: 'James Rodriguez',
+    role: 'Founder, Rodriguez HVAC',
+    initials: 'JR'
+  }
+]
+
+const faqItems = [
+  {
+    q: 'How long does a typical project take?',
+    a: 'Most website projects launch within 2-4 weeks depending on scope. SEO work begins immediately but meaningful ranking improvements typically show within 60-90 days.'
+  },
+  {
+    q: 'Do you work with businesses outside our local area?',
+    a: 'Yes. While we specialize in local SEO and service businesses, we work with clients remotely across the US and internationally.'
+  },
+  {
+    q: 'What makes ComputerExpress different from other agencies?',
+    a: 'We use AI to move faster and keep costs down, but every decision is made by a human who understands your business. No bloated retainers, no vague deliverables.'
+  },
+  {
+    q: 'Do you offer ongoing support after launch?',
+    a: 'Yes. We offer maintenance retainers for updates, content changes, and ongoing SEO. But we also build sites you can manage yourself -- your choice.'
+  },
+  {
+    q: 'What do you need from me to get started?',
+    a: 'Just your current website URL, a sense of what you want to improve, and your main service offerings. We handle the rest -- strategy, design, copy, and technical setup.'
+  }
+]
+
+const portfolioItems = [
+  {
+    icon: '🔧',
+    title: 'Plumbing Co. Website + Local SEO',
+    desc: 'Full redesign with service area pages, review integration, and GBP optimization for a regional plumbing company.',
+    tags: ['Web Design', 'Local SEO', 'GBP'],
+    results: [
+      { value: '3x', label: 'More leads' },
+      { value: '#1', label: 'Local pack' },
+      { value: '98', label: 'PageSpeed' }
+    ]
+  },
+  {
+    icon: '⚖️',
+    title: 'Law Firm Technical SEO Overhaul',
+    desc: 'Complete technical SEO cleanup, schema implementation, and content restructuring for a boutique law firm.',
+    tags: ['Technical SEO', 'Schema', 'Content'],
+    results: [
+      { value: '5x', label: 'Organic traffic' },
+      { value: '12', label: 'Page 1 ranks' },
+      { value: '45s', label: 'Avg. load' }
+    ]
+  }
+]
+
+const stats = [
+  { value: '50+', label: 'Sites launched' },
+  { value: '98', label: 'Avg. PageSpeed' },
+  { value: '3x', label: 'Lead increase' },
+  { value: '24h', label: 'Response time' }
 ]
 
 function useInView(threshold = 0.15) {
@@ -101,6 +170,25 @@ function ServiceIcon({ type }) {
     )
   }
   return icons[type] || icons.web
+}
+
+function FAQAccordion({ items }) {
+  const [openIndex, setOpenIndex] = useState(null)
+  return (
+    <div className="faq-list">
+      {items.map((item, i) => (
+        <div key={i} className={`faq-item ${openIndex === i ? 'open' : ''}`}>
+          <button className="faq-question" onClick={() => setOpenIndex(openIndex === i ? null : i)}>
+            {item.q}
+            <span className="faq-icon">+</span>
+          </button>
+          <div className="faq-answer">
+            <div className="faq-answer-inner">{item.a}</div>
+          </div>
+        </div>
+      ))}
+    </div>
+  )
 }
 
 export default function HomePage() {
@@ -165,6 +253,22 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* ===== STATS BAR ===== */}
+      <section className="section" style={{ padding: '3rem 0' }}>
+        <div className="container">
+          <AnimatedSection>
+            <div className="stats-bar">
+              {stats.map(s => (
+                <div key={s.label} className="stat-item">
+                  <div className="stat-value">{s.value}</div>
+                  <div className="stat-label">{s.label}</div>
+                </div>
+              ))}
+            </div>
+          </AnimatedSection>
+        </div>
+      </section>
+
       {/* ===== SERVICES ===== */}
       <section className="section">
         <div className="container">
@@ -194,8 +298,50 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ===== PROCESS ===== */}
+      {/* ===== PORTFOLIO ===== */}
       <section className="section section-alt">
+        <div className="container">
+          <AnimatedSection>
+            <div className="section-heading">
+              <div className="glow-line"></div>
+              <h2>Work that speaks for itself</h2>
+              <p>Real projects, real results. Here is a snapshot of what we have built for service businesses.</p>
+            </div>
+          </AnimatedSection>
+          <div className="portfolio-grid page-block stagger-children">
+            {portfolioItems.map((p, i) => (
+              <AnimatedSection key={p.title} delay={i * 150}>
+                <article className="portfolio-card">
+                  <div className="portfolio-thumb">
+                    <div className="portfolio-thumb-content">
+                      <div className="portfolio-thumb-icon">{p.icon}</div>
+                      <div className="portfolio-thumb-label">Case Study</div>
+                    </div>
+                  </div>
+                  <div className="portfolio-info">
+                    <h3>{p.title}</h3>
+                    <p>{p.desc}</p>
+                    <div className="portfolio-tags">
+                      {p.tags.map(t => <span key={t} className="portfolio-tag">{t}</span>)}
+                    </div>
+                    <div className="portfolio-results">
+                      {p.results.map(r => (
+                        <div key={r.label} className="portfolio-result">
+                          <div className="portfolio-result-value">{r.value}</div>
+                          <div className="portfolio-result-label">{r.label}</div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </article>
+              </AnimatedSection>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ===== PROCESS ===== */}
+      <section className="section">
         <div className="container">
           <AnimatedSection>
             <div className="section-heading">
@@ -219,6 +365,36 @@ export default function HomePage() {
               </ol>
             </div>
           </AnimatedSection>
+        </div>
+      </section>
+
+      {/* ===== TESTIMONIALS ===== */}
+      <section className="section section-alt">
+        <div className="container">
+          <AnimatedSection>
+            <div className="section-heading">
+              <div className="glow-line"></div>
+              <h2>What clients say</h2>
+              <p>Service businesses that trusted us to build their digital presence.</p>
+            </div>
+          </AnimatedSection>
+          <div className="testimonials-grid page-block stagger-children">
+            {testimonials.map((t, i) => (
+              <AnimatedSection key={t.name} delay={i * 100}>
+                <article className="testimonial-card">
+                  <div className="testimonial-stars">{'★'.repeat(5)}</div>
+                  <p className="testimonial-text">{t.text}</p>
+                  <div className="testimonial-author">
+                    <div className="testimonial-avatar">{t.initials}</div>
+                    <div>
+                      <div className="testimonial-name">{t.name}</div>
+                      <div className="testimonial-role">{t.role}</div>
+                    </div>
+                  </div>
+                </article>
+              </AnimatedSection>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -257,14 +433,19 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ===== TRUST BAR ===== */}
+      {/* ===== FAQ ===== */}
       <section className="section section-alt">
         <div className="container">
           <AnimatedSection>
-            <div className="trust-bar">
-              <div className="trust-items">
-                {trustItems.map(t => <span key={t}>{t}</span>)}
-              </div>
+            <div className="section-heading">
+              <div className="glow-line"></div>
+              <h2>Frequently asked questions</h2>
+              <p>Everything you need to know before getting started.</p>
+            </div>
+          </AnimatedSection>
+          <AnimatedSection>
+            <div className="page-block">
+              <FAQAccordion items={faqItems} />
             </div>
           </AnimatedSection>
         </div>
