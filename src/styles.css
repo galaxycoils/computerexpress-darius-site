@@ -281,6 +281,25 @@ main {
   color: var(--text-bright);
 }
 
+.nav-phone {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  color: var(--primary);
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-decoration: none;
+  padding: 0.4rem 0.8rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(18, 214, 255, 0.2);
+  transition: var(--transition-fast);
+}
+
+.nav-phone:hover {
+  border-color: var(--primary);
+  background: rgba(18, 214, 255, 0.06);
+}
+
 /* Mobile menu button */
 .nav-toggle {
   display: none;
@@ -1537,6 +1556,9 @@ body.light .bg-orb {
   }
   .cta-strip {
     padding: 2rem 1.5rem;
+  }
+  .nav-phone {
+    display: none;
   }
 }
 
