@@ -1,8 +1,9 @@
-import { useState, useEffect, useCallback } from 'react'
-import { Outlet } from 'react-router-dom'
-import { Link, NavLink } from 'react-router-dom'
+import { useState, useEffect, useCallback } from 'react';
+import { Outlet } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
+import AIChatWidget from './AIChatWidget';
 
-const NEWSLETTER_API = '/api/newsletter'
+const NEWSLETTER_API = '/api/newsletter';
 
 function getInitialTheme() {
   if (typeof window === 'undefined') return 'dark'
@@ -172,6 +173,7 @@ export default function Layout() {
           </div>
         </div>
       </footer>
+      <AIChatWidget />
     </div>
   )
 }
