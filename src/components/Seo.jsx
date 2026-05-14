@@ -1,6 +1,7 @@
 import { Helmet } from 'react-helmet-async'
 
-const SITE = 'ComputerExpress'
+const SITE = 'St. Catharines Digital'
+const SHORT_SITE = 'StCatharinesDigital'
 const BASE = import.meta.env.VITE_BASE_URL || 'https://computerexpress.pages.dev'
 const DEFAULT_IMG = '/og-card.png'
 
@@ -18,24 +19,24 @@ export default function Seo({
 
   const defaults = {
     '/': {
-      title: `${SITE} | Web Design & Local SEO for Service Businesses`,
-      description: 'ComputerExpress builds premium websites, technical SEO systems, and local growth engines for service businesses. AI-first web design + local SEO that ranks.',
+      title: `${SITE} | Web Design, SEO & Digital Marketing for Service Businesses`,
+      description: `${SITE} builds premium websites, technical SEO systems, and local growth engines for service businesses in St. Catharines and across Ontario. AI-first web design + local SEO that ranks.`,
     },
     '/services': {
-      title: `Web Design, Technical SEO & GBP Optimization Services | ${SITE}`,
-      description: 'Expert web design, technical SEO, and Google Business Profile optimization for service businesses. Custom websites that rank on Google and convert visitors into leads.',
+      title: `${SITE} | Web Design, Technical SEO & GBP Optimization Services`,
+      description: `Expert web design, technical SEO, and Google Business Profile optimization for service businesses. Custom websites that rank on Google and convert visitors into qualified leads.`,
     },
     '/about': {
-      title: `About ${SITE} | AI-First Web Design & SEO Agency`,
-      description: 'ComputerExpress is an AI-first web design and local SEO agency. We combine modern design, technical SEO, and local growth systems for service businesses.',
+      title: `About ${SITE} | Web Design & SEO Agency`,
+      description: `${SITE} is a St. Catharines-based web design and local SEO agency. We combine modern design, technical SEO, and local growth systems for service businesses.`,
     },
     '/contact': {
-      title: `Get a Free SEO Audit | ${SITE}`,
-      description: 'Request a free SEO audit from ComputerExpress. Tell us about your website, service area, and goals. We typically respond within 24 hours.',
+      title: `Contact ${SITE} | Get a Free SEO Audit`,
+      description: `Contact ${SITE} for web design, technical SEO, and local SEO services. Book a free 30-minute call or send us a message.`,
     },
     '/success': {
       title: `Request Received | ${SITE}`,
-      description: 'Your audit request has been submitted.',
+      description: 'Your request has been submitted.',
     },
   }
 

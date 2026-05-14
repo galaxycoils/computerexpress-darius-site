@@ -8,9 +8,9 @@ const CALENDLY_URL = 'https://calendly.com/tahamtandariush/30min'
 const contactPageJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'ContactPage',
-  name: 'Contact ComputerExpress',
-  url: 'https://computerexpress.pages.dev/contact',
-  description: 'Contact ComputerExpress for web design and local SEO services.'
+  name: 'Contact St. Catharines Digital',
+  url: 'https://stcatharinesdigital.pages.dev/contact',
+  description: 'Contact St. Catharines Digital for web design and local SEO services.'
 }
 
 export default function ContactPage() {
@@ -24,8 +24,8 @@ export default function ContactPage() {
   return (
     <>
       <Seo
-        title="Contact | ComputerExpress — Web Design & Local SEO"
-        description="Contact ComputerExpress for web design, technical SEO, and local SEO services. Book a free 30-minute call or send us a message."
+        title="Contact | St. Catharines Digital — Web Design & Local SEO"
+        description="Contact St. Catharines Digital for web design, technical SEO, and local SEO services. Book a free 30-minute call or send us a message."
         path="/contact"
         jsonLd={contactPageJsonLd}
       />

@@ -9,7 +9,7 @@ const blogPosts = {
     date: '2026-05-13',
     readTime: '8 min read',
     tags: ['Local SEO', 'Google Business Profile', 'Checklist'],
-    author: 'ComputerExpress',
+    author: 'St. Catharines Digital',
     content: `
 ## Why Local SEO Matters for Service Businesses
 
@@ -101,7 +101,7 @@ Content that answers local questions builds authority.
 4. **No local content** — Generic content doesn't signal local relevance
 5. **Slow website** — Speed is a ranking factor; aim for under 3 seconds
 
-## How ComputerExpress Can Help
+## How St. Catharines Digital Can Help
 
 We build websites with local SEO baked in from day one. From technical optimization to Google Business Profile setup, we help service businesses rank higher and get more qualified leads.
 
@@ -113,7 +113,7 @@ We build websites with local SEO baked in from day one. From technical optimizat
     date: '2026-05-13',
     readTime: '6 min read',
     tags: ['Lead Generation', 'Web Design', 'Conversion'],
-    author: 'ComputerExpress',
+    author: 'St. Catharines Digital',
     content: `
 ## Your Website Should Be Your Best Salesperson
 
@@ -185,7 +185,7 @@ You can't improve what you don't measure.
 
 A lead-generating website isn't about fancy design. It's about clarity, trust, and making it easy for the right prospects to take action.
 
-[Ready to turn your website into a lead machine?](/contact) Get a free audit from ComputerExpress.
+[Ready to turn your website into a lead machine?](/contact) Get a free audit from St. Catharines Digital.
 `,
   },
   'technical-seo-explained': {
@@ -193,7 +193,7 @@ A lead-generating website isn't about fancy design. It's about clarity, trust, a
     date: '2026-05-13',
     readTime: '7 min read',
     tags: ['Technical SEO', 'Schema', 'Site Speed'],
-    author: 'ComputerExpress',
+    author: 'St. Catharines Digital',
     content: `
 ## What Is Technical SEO?
 
@@ -279,7 +279,7 @@ HTTPS is a confirmed ranking signal. All modern sites should use it.
 
 Most local service business websites have terrible technical SEO. This is your competitive advantage. If your site is faster, more crawlable, and better structured than your competitors, you'll rank higher -- even with less content.
 
-## How ComputerExpress Helps
+## How St. Catharines Digital Helps
 
 Every website we build includes:
 - 90+ PageSpeed scores
@@ -329,7 +329,7 @@ export default function BlogPostPage({ slug }) {
   if (!post) {
     return (
       <>
-        <Seo title="Post Not Found | ComputerExpress Blog" path="/blog" noIndex />
+        <Seo title="Post Not Found | St. Catharines Digital Blog" path="/blog" noIndex />
         <section className="section-first page-hero">
           <div className="container" style={{ textAlign: 'center' }}>
             <h1>Post not found</h1>
@@ -347,14 +347,14 @@ export default function BlogPostPage({ slug }) {
     datePublished: post.date,
     dateModified: post.date,
     author: { '@type': 'Organization', name: post.author },
-    publisher: { '@type': 'Organization', name: 'ComputerExpress', url: 'https://computerexpress.pages.dev' },
-    mainEntityOfPage: `https://computerexpress.pages.dev/blog/${slug}`,
+    publisher: { '@type': 'Organization', name: 'St. Catharines Digital', url: 'https://stcatharinesdigital.pages.dev' },
+    mainEntityOfPage: `https://stcatharinesdigital.pages.dev/blog/${slug}`,
   }
 
   return (
     <>
       <Seo
-        title={`${post.title} | ComputerExpress Blog`}
+        title={`${post.title} | St. Catharines Digital Blog`}
         description={post.content.substring(0, 160).replace(/[#*[\]()-]/g, '').trim()}
         path={`/blog/${slug}`}
         type="article"
@@ -396,7 +396,7 @@ export default function BlogPostPage({ slug }) {
             <div className="cta-strip">
               <div>
                 <h2>Ready to rank higher on Google?</h2>
-                <p>Get a free SEO audit from ComputerExpress.</p>
+                <p>Get a free SEO audit from St. Catharines Digital.</p>
               </div>
               <Link to="/contact" className="button button-primary">Get Free Audit</Link>
             </div>

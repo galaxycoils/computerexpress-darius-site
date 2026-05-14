@@ -28,17 +28,17 @@ export async function onRequestPost(context) {
       },
       body: JSON.stringify({
         to: email,
-        subject: 'Welcome to ComputerExpress — SEO Tips & Web Design Insights',
-        text: `Welcome to ComputerExpress!\n\nYou're on the list. Expect SEO tips, web design insights, and growth strategies.\n\nNo spam. Unsubscribe anytime by replying.\n\nVisit: https://computerexpress.pages.dev`,
+        subject: 'Welcome to St. Catharines Digital — SEO Tips & Web Design Insights',
+        text: `Welcome to St. Catharines Digital!\n\nYou're on the list. Expect SEO tips, web design insights, and growth strategies.\n\nNo spam. Unsubscribe anytime by replying.\n\nVisit: https://stcatharinesdigital.pages.dev`,
         html: `<!DOCTYPE html><html><head><meta charset="utf-8"></head>
 <body style="font-family:Inter,-apple-system,sans-serif;color:#e8f0fe;background:#060d1b;padding:2rem;">
 <div style="max-width:600px;margin:0 auto;text-align:center;">
-<h1 style="color:#12d6ff;">Welcome to ComputerExpress</h1>
+<h1 style="color:#12d6ff;">Welcome to St. Catharines Digital</h1>
 <p style="color:#9ab4d2;font-size:1.1rem;">You're on the list. Expect SEO tips, web design insights, and growth strategies.</p>
 <div style="margin:2rem 0;padding:1.5rem;background:#0d1b30;border-radius:12px;border:1px solid rgba(125,249,255,.1);">
 <p style="margin:0;color:#8899b8;font-size:.9rem;">No spam. Unsubscribe anytime by replying.</p>
 </div>
-<a href="https://computerexpress.pages.dev" style="display:inline-block;padding:.75rem 2rem;background:#12d6ff;color:#060d1b;text-decoration:none;border-radius:8px;font-weight:700;">Visit ComputerExpress</a>
+<a href="https://stcatharinesdigital.pages.dev" style="display:inline-block;padding:.75rem 2rem;background:#12d6ff;color:#060d1b;text-decoration:none;border-radius:8px;font-weight:700;">Visit St. Catharines Digital</a>
 </div></body></html>`,
         labels: ['newsletter', 'welcome'],
       }),

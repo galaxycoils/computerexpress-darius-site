@@ -1,4 +1,4 @@
-// Shared SVG icon components for ComputerExpress
+// Shared SVG icon components for St. Catharines Digital
 
 export function IconWeb({ size = 22 }) {
   return (
@@ -141,7 +141,7 @@ export function HeroIllustration({ className = '' }) {
 
       {/* URL bar */}
       <rect x="140" y="60" width="240" height="24" rx="12" fill="#0a1628" stroke="#7df9ff1a" strokeWidth="1"/>
-      <text x="155" y="76" fill="#9ab4d2" fontSize="11" fontFamily="Inter, sans-serif">computerexpress.pages.dev</text>
+      <text x="155" y="76" fill="#9ab4d2" fontSize="11" fontFamily="Inter, sans-serif">stcatharinesdigital.pages.dev</text>
 
       {/* Content area - hero section mockup */}
       <rect x="80" y="110" width="200" height="8" rx="4" fill="#12d6ff" opacity="0.6"/>

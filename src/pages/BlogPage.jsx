@@ -35,16 +35,16 @@ const posts = [
 const blogJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'Blog',
-  name: 'ComputerExpress Blog',
+  name: 'St. Catharines Digital Blog',
   description: 'Expert insights on web design, local SEO, and digital growth for service businesses.',
-  url: 'https://computerexpress.pages.dev/blog',
+  url: 'https://stcatharinesdigital.pages.dev/blog',
 }
 
 export default function BlogPage() {
   return (
     <>
       <Seo
-        title="Blog | Web Design & Local SEO Tips for Service Businesses | ComputerExpress"
+        title="Blog | Web Design & Local SEO Tips for Service Businesses | St. Catharines Digital"
         description="Expert insights on web design, local SEO, Google Business Profile optimization, and digital growth strategies for service businesses."
         path="/blog"
         jsonLd={blogJsonLd}

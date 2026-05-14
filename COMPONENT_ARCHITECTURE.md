@@ -1,8 +1,8 @@
-# ComputerExpress — Component Architecture & Design System Audit
+# St. Catharines Digital — Component Architecture & Design System Audit
 
-> Last updated: May 13, 2026
-> Project: ComputerExpress v0.4.0 (React + Vite + React Router 7)
-> Live: computerexpress.pages.dev
+> Last updated: May 14, 2026
+> Project: St. Catharines Digital v0.5.2 (React + Vite + React Router 7)
+> Live: computerexpress.pages.dev (transitioning to stcatharinesdigital.com)
 
 ---
 

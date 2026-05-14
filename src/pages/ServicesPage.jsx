@@ -9,8 +9,8 @@ const servicesPageJsonLd = {
   '@type': 'Service',
   provider: {
     '@type': 'Organization',
-    name: 'ComputerExpress',
-    url: 'https://computerexpress.pages.dev'
+    name: 'St. Catharines Digital',
+    url: 'https://stcatharinesdigital.pages.dev'
   },
   areaServed: [
     { '@type': 'City', name: 'St. Catharines' },
@@ -19,7 +19,7 @@ const servicesPageJsonLd = {
   ],
   hasOfferCatalog: {
     '@type': 'OfferCatalog',
-    name: 'ComputerExpress Services',
+    name: 'St. Catharines Digital Services',
     itemListElement: services.map(s => ({
       '@type': 'Offer',
       itemOffered: { '@type': 'Service', name: s.title, description: s.description }
@@ -38,7 +38,7 @@ export default function ServicesPage() {
   return (
     <>
       <Seo
-        title="Web Design, Technical SEO & GBP Optimization Services | ComputerExpress"
+        title="Web Design, Technical SEO & GBP Optimization Services | St. Catharines Digital"
         description="Expert web design, technical SEO, and Google Business Profile optimization for service businesses. Custom websites that rank on Google and convert visitors into qualified leads."
         path="/services"
         jsonLd={servicesPageJsonLd}

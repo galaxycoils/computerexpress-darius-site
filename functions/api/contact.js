@@ -22,7 +22,7 @@ export async function onRequestPost(context) {
       return jsonResponse({ error: 'Invalid email format' }, 400);
     }
 
-    const textBody = `New message from ComputerExpress website.
+    const textBody = `New message from St. Catharines Digital website.
 
 Name: ${name}
 Email: ${email}
@@ -31,7 +31,7 @@ Message:
 ${message}
 
 ---
-Sent from ComputerExpress contact form
+Sent from St. Catharines Digital contact form
 ${new Date().toISOString()}`;
 
     const inbox = await getPrimaryInbox(apiKey);

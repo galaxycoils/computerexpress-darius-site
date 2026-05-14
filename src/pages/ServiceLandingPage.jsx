@@ -75,7 +75,7 @@ export default function ServiceLandingPage({ slug }) {
   if (!page) {
     return (
       <>
-        <Seo title="Page Not Found | ComputerExpress" path="/services" noIndex />
+        <Seo title="Page Not Found | St. Catharines Digital" path="/services" noIndex />
         <section className="section-first page-hero">
           <div className="container" style={{ textAlign: 'center' }}>
             <h1>Page not found</h1>
@@ -93,8 +93,8 @@ export default function ServiceLandingPage({ slug }) {
     description: page.description,
     provider: {
       '@type': 'LocalBusiness',
-      name: 'ComputerExpress',
-      url: 'https://computerexpress.pages.dev',
+      name: 'St. Catharines Digital',
+      url: 'https://stcatharinesdigital.pages.dev',
       areaServed: [
         { '@type': 'City', name: 'St. Catharines' },
         { '@type': 'State', name: 'Ontario' },
@@ -113,7 +113,7 @@ export default function ServiceLandingPage({ slug }) {
   return (
     <>
       <Seo
-        title={`${page.title} | ComputerExpress`}
+        title={`${page.title} | St. Catharines Digital`}
         description={page.description}
         path={`/services/${slug}`}
         type="service"
@@ -126,7 +126,7 @@ export default function ServiceLandingPage({ slug }) {
       <section className="section-first page-hero">
         <div className="container">
           <AnimatedSection>
-            <div className="eyebrow" style={{ justifyContent: 'center' }}>ComputerExpress</div>
+            <div className="eyebrow" style={{ justifyContent: 'center' }}>St. Catharines Digital</div>
             <h1>{page.headline}</h1>
             <p style={{ fontSize: '1.1rem', maxWidth: '700px' }}>{page.description}</p>
             <div className="hero-actions" style={{ justifyContent: 'center', marginTop: '1.5rem' }}>
@@ -168,7 +168,7 @@ export default function ServiceLandingPage({ slug }) {
               Generic websites don't rank for local service searches. Your website needs to be built specifically for how customers search for services in their area — things like "plumber near me", "HVAC repair St. Catharines", or "emergency electrician Ontario".
             </p>
             <p style={{ marginTop: '1rem', lineHeight: '1.8' }}>
-              ComputerExpress builds websites with local SEO baked in from day one. Every page is structured to rank for your target keywords, every service area gets its own optimized page, and your Google Business Profile is fully integrated.
+              St. Catharines Digital builds websites with local SEO baked in from day one. Every page is structured to rank for your target keywords, every service area gets its own optimized page, and your Google Business Profile is fully integrated.
             </p>
           </AnimatedSection>
         </div>

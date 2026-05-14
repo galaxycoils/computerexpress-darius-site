@@ -13,10 +13,10 @@ const homePageJsonLd = [
   {
     '@context': 'https://schema.org',
     '@type': 'LocalBusiness',
-    name: 'ComputerExpress',
+    name: 'St. Catharines Digital',
     '@id': 'https://computerexpress.pages.dev',
     url: 'https://computerexpress.pages.dev',
-    description: 'ComputerExpress builds premium websites, technical SEO systems, and local growth engines for service businesses that need better visibility and more qualified leads.',
+    description: 'St. Catharines Digital builds premium websites, technical SEO systems, and local growth engines for service businesses that need better visibility and more qualified leads.',
     areaServed: [
       { '@type': 'City', name: 'St. Catharines', containedInPlace: { '@type': 'State', name: 'Ontario' } },
       { '@type': 'State', name: 'Ontario' },
@@ -114,7 +114,7 @@ export default function HomePage() {
               Websites that look <span className="gradient-text">premium</span>, rank on page 1, and convert visitors into calls.
             </h1>
             <p className="hero-copy">
-              ComputerExpress builds high-performance websites with technical SEO, local search optimization, and Google Business Profile management — everything service businesses need to dominate their market.
+              St. Catharines Digital builds high-performance websites with technical SEO, local search optimization, and Google Business Profile management — everything service businesses need to dominate their market.
             </p>
             <div className="hero-actions">
               <Link to="/contact" className="button button-primary">Get a Free SEO Audit</Link>
@@ -382,10 +382,13 @@ export default function HomePage() {
           <AnimatedSection>
             <div className="cta-strip">
               <div>
-                <h2>AI-first execution without generic agency language</h2>
-                <p>ComputerExpress blends modern design, technical execution, and practical local growth strategy.</p>
+                <h2>Ready to rank higher and get more leads?</h2>
+                <p>St. Catharines Digital blends modern design, technical SEO, and practical local growth strategy — built for service businesses that need results.</p>
               </div>
-              <Link to="/contact" className="button button-primary">Book Audit</Link>
+              <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
+                <Link to="/contact" className="button button-primary">Get Free Audit</Link>
+                <a href="https://calendly.com/tahamtandariush/30min" target="_blank" rel="noopener noreferrer" className="button button-secondary">Book a Call</a>
+              </div>
             </div>
           </AnimatedSection>
         </div>

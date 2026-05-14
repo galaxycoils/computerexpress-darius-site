@@ -5,7 +5,7 @@ export default function SuccessPage() {
   return (
     <>
       <Seo
-        title="Request Received | ComputerExpress"
+        title="Request Received | St. Catharines Digital"
         path="/success"
         noIndex
       />

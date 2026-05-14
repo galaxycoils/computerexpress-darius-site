@@ -119,8 +119,8 @@ export const faqItems = [
     a: 'Yes. While we specialize in local SEO and service businesses, we work with clients remotely across Canada and the US. The same principles apply — we just target your specific service areas.'
   },
   {
-    q: 'What makes ComputerExpress different from other agencies?',
-    a: 'We use AI to move faster and keep costs down, but every decision is made by a human who understands your business. No bloated retainers, no vague deliverables. We focus on the three things that matter most: site quality, search readiness, and local presence.'
+    q: 'What makes St. Catharines Digital different from other agencies?',
+    a: 'We\'re based right here in St. Catharines and we specialize in service businesses. We use AI to move faster and keep costs down, but every decision is made by a human who understands your market. No bloated retainers, no vague deliverables. We focus on what matters: site quality, search readiness, and local presence.',
   },
   {
     q: 'Do you offer ongoing support after launch?',

@@ -6,9 +6,9 @@ import { steps } from '../data/siteData'
 const aboutPageJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'Organization',
-  name: 'ComputerExpress',
-  url: 'https://computerexpress.pages.dev',
-  description: 'AI-first web design and local SEO agency for service businesses.',
+  name: 'St. Catharines Digital',
+  url: 'https://stcatharinesdigital.pages.dev',
+  description: 'St. Catharines Digital is a web design and local SEO agency for service businesses.',
   areaServed: {
     '@type': 'City',
     name: 'St. Catharines',
@@ -31,8 +31,8 @@ export default function AboutPage() {
   return (
     <>
       <Seo
-        title="About | ComputerExpress — AI-First Web Design Agency"
-        description="Learn about ComputerExpress: an AI-first agency combining modern design, technical SEO, and local growth systems for service businesses."
+        title="About | St. Catharines Digital — AI-First Web Design Agency"
+        description="Learn about St. Catharines Digital: an AI-first agency combining modern design, technical SEO, and local growth systems for service businesses."
         path="/about"
         jsonLd={aboutPageJsonLd}
       />
@@ -45,7 +45,7 @@ export default function AboutPage() {
           <AnimatedSection>
             <div className="eyebrow" style={{ justifyContent: 'center' }}>About us</div>
             <h1>We build websites that rank and convert</h1>
-            <p>ComputerExpress is an AI-first web design and local SEO agency. We help service businesses rank higher on Google, get more qualified leads, and look credible online — without the bloated process or vague deliverables of a traditional agency.</p>
+            <p>St. Catharines Digital is an AI-first web design and local SEO agency. We help service businesses rank higher on Google, get more qualified leads, and look credible online — without the bloated process or vague deliverables of a traditional agency.</p>
           </AnimatedSection>
         </div>
       </section>
@@ -92,7 +92,7 @@ export default function AboutPage() {
             </AnimatedSection>
             <AnimatedSection delay={150}>
               <div className="about-copy">
-                <p>ComputerExpress blends modern design, technical execution, and practical local growth strategy into a single, focused engagement.</p>
+                <p>St. Catharines Digital blends modern design, technical execution, and practical local growth strategy into a single, focused engagement.</p>
                 <p>The goal is simple: make your business look sharper, rank better, and convert traffic into real inquiries. No bloated retainers. No vague deliverables.</p>
                 <p>Every page is structured to reduce friction, reinforce trust, and move the right prospects toward contact. We use AI to move faster, not to cut corners.</p>
                 <div style={{ marginTop: '2rem' }}>

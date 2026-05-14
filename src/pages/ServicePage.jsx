@@ -31,7 +31,7 @@ const serviceData = {
       '@type': 'Service',
       name: 'Website Design',
       description: 'Custom website design for service businesses. Mobile-first, SEO-optimized, conversion-focused.',
-      provider: { '@type': 'LocalBusiness', name: 'ComputerExpress', url: 'https://computerexpress.pages.dev' },
+      provider: { '@type': 'LocalBusiness', name: 'St. Catharines Digital', url: 'https://stcatharinesdigital.pages.dev' },
       areaServed: [{ '@type': 'City', name: 'St. Catharines' }, { '@type': 'State', name: 'Ontario' }],
     },
   },
@@ -62,7 +62,7 @@ const serviceData = {
       '@type': 'Service',
       name: 'Technical SEO',
       description: 'Technical SEO services including audits, site speed optimization, schema markup, and Core Web Vitals.',
-      provider: { '@type': 'LocalBusiness', name: 'ComputerExpress', url: 'https://computerexpress.pages.dev' },
+      provider: { '@type': 'LocalBusiness', name: 'St. Catharines Digital', url: 'https://stcatharinesdigital.pages.dev' },
       areaServed: [{ '@type': 'City', name: 'St. Catharines' }, { '@type': 'State', name: 'Ontario' }],
     },
   },
@@ -93,7 +93,7 @@ const serviceData = {
       '@type': 'Service',
       name: 'Google Business Profile Optimization',
       description: 'Google Business Profile optimization to rank #1 on Google Maps and local search.',
-      provider: { '@type': 'LocalBusiness', name: 'ComputerExpress', url: 'https://computerexpress.pages.dev' },
+      provider: { '@type': 'LocalBusiness', name: 'St. Catharines Digital', url: 'https://stcatharinesdigital.pages.dev' },
       areaServed: [{ '@type': 'City', name: 'St. Catharines' }, { '@type': 'State', name: 'Ontario' }],
     },
   },
@@ -107,7 +107,7 @@ export default function ServicePage({ slug }) {
   if (!service) {
     return (
       <>
-        <Seo title="Service Not Found | ComputerExpress" path="/services" noIndex />
+        <Seo title="Service Not Found | St. Catharines Digital" path="/services" noIndex />
         <section className="section-first page-hero">
           <div className="container" style={{ textAlign: 'center' }}>
             <h1>Service not found</h1>
@@ -123,7 +123,7 @@ export default function ServicePage({ slug }) {
   return (
     <>
       <Seo
-        title={`${service.title} | ComputerExpress`}
+        title={`${service.title} | St. Catharines Digital`}
         description={service.description}
         path={`/services/${slug}`}
         type="service"
