@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
-  <title>ComputerExpress social preview</title>
-  <desc>Open Graph card for ComputerExpress with logo and headline.</desc>
+  <title>St. Catharines Digital social preview</title>
+  <desc>Open Graph card for St. Catharines Digital with logo and headline.</desc>
   <defs>
     <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
       <stop offset="0%" stop-color="#07101f"/>
@@ -18,7 +18,7 @@
   <rect x="90" y="90" width="138" height="138" rx="30" fill="#091427" stroke="#2ce4ff" stroke-opacity="0.18"/>
   <path d="M114 159c0-24.301 19.699-44 44-44h47v18h-47c-14.359 0-26 11.641-26 26s11.641 26 26 26h47v18h-47c-24.301 0-44-19.699-44-44Z" fill="url(#cyan)"/>
   <path d="M172 133h50v16h-50zM172 169h50v16h-50z" fill="#d8ffff"/>
-  <text x="260" y="150" fill="#ecf5ff" font-family="Inter, Arial, sans-serif" font-size="48" font-weight="800">ComputerExpress</text>
+  <text x="260" y="150" fill="#ecf5ff" font-family="Inter, Arial, sans-serif" font-size="44" font-weight="800">St. Catharines Digital</text>
   <text x="92" y="320" fill="#ecf5ff" font-family="Inter, Arial, sans-serif" font-size="74" font-weight="800">Premium websites,</text>
   <text x="92" y="404" fill="#ecf5ff" font-family="Inter, Arial, sans-serif" font-size="74" font-weight="800">technical SEO,</text>
   <text x="92" y="488" fill="#ecf5ff" font-family="Inter, Arial, sans-serif" font-size="74" font-weight="800">and local growth.</text>
