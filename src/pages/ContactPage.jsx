@@ -8,7 +8,7 @@ const contactPageJsonLd = {
   '@type': 'ContactPage',
   name: 'Contact ComputerExpress',
   url: 'https://computerexpress.pages.dev/contact',
-  description: 'Request a free SEO audit from ComputerExpress.'
+  description: 'Contact ComputerExpress for web design and local SEO services.'
 }
 
 export default function ContactPage() {
@@ -22,8 +22,8 @@ export default function ContactPage() {
   return (
     <>
       <Seo
-        title="Contact | ComputerExpress — Request a Free SEO Audit"
-        description="Request a free SEO audit from ComputerExpress. Tell us about your website, service area, and goals. We typically respond within 24 hours."
+        title="Contact | ComputerExpress — Web Design & Local SEO"
+        description="Contact ComputerExpress for web design, technical SEO, and local SEO services. Get a free audit and start ranking higher on Google."
         path="/contact"
         jsonLd={contactPageJsonLd}
       />
@@ -35,8 +35,8 @@ export default function ContactPage() {
         <div className="container">
           <AnimatedSection>
             <div className="eyebrow eyebrow-center">Get in touch</div>
-            <h1>Request a free audit and start with practical next steps</h1>
-            <p>Tell us what you are trying to improve: lead quality, rankings, local visibility, offer clarity, or website credibility.</p>
+            <h1>Let's talk about your project</h1>
+            <p>Tell us what you're working on. We'll get back to you within 1-2 business days.</p>
           </AnimatedSection>
         </div>
       </section>
@@ -47,19 +47,20 @@ export default function ContactPage() {
             <AnimatedSection>
               <div>
                 <h2>What to expect</h2>
-                <p>A good first response should identify friction, explain the highest-leverage fixes, and clarify what should be built first.</p>
+                <p>We'll identify the highest-leverage improvements for your site and clarify what to build first.</p>
+
                 <div className="stacked-notes">
                   <div className="mini-card">
                     <strong>Good for</strong>
                     <span>Service businesses, local brands, redesigns, SEO cleanup, GBP alignment</span>
                   </div>
                   <div className="mini-card">
-                    <strong>Best inputs</strong>
-                    <span>Your website, service area, main offer, and the leads you want more of</span>
-                  </div>
-                  <div className="mini-card">
                     <strong>Response time</strong>
                     <span>We typically respond within 24 hours on business days</span>
+                  </div>
+                  <div className="mini-card">
+                    <strong>Prefer to call?</strong>
+                    <span><a href="tel:+13653595973" style={{color:'var(--primary)',textDecoration:'none'}}>+1 (365) 359-5973</a></span>
                   </div>
                 </div>
               </div>

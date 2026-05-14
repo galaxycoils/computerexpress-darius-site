@@ -12,9 +12,9 @@ export async function onRequestPost(context) {
 
   try {
     const body = await context.request.json();
-    const { businessName, email, website, serviceInterest, goals } = body;
+    const { name, email, message } = body;
 
-    if (!businessName || !email || !goals) {
+    if (!name || !email || !message) {
       return jsonResponse({ error: 'Missing required fields' }, 400);
     }
 
@@ -22,23 +22,13 @@ export async function onRequestPost(context) {
       return jsonResponse({ error: 'Invalid email format' }, 400);
     }
 
-    const serviceLabels = {
-      website: 'Website design / redesign',
-      seo: 'Technical SEO',
-      local: 'Local SEO / GBP optimization',
-      full: 'Full package (Website + SEO + Local)',
-      other: 'Something else',
-    };
+    const textBody = `New message from ComputerExpress website.
 
-    const textBody = `New audit request from ComputerExpress website.
-
-Business: ${businessName}
+Name: ${name}
 Email: ${email}
-Website: ${website || 'Not provided'}
-Service needed: ${serviceLabels[serviceInterest] || 'Not specified'}
 
-Goals:
-${goals}
+Message:
+${message}
 
 ---
 Sent from ComputerExpress contact form
@@ -55,7 +45,7 @@ ${new Date().toISOString()}`;
       body: JSON.stringify({
         to: inbox.email,
         reply_to: email,
-        subject: `Audit Request: ${businessName}`,
+        subject: `Contact: ${name}`,
         text: textBody,
         labels: ['audit-request', 'website-form'],
       }),
@@ -68,7 +58,7 @@ ${new Date().toISOString()}`;
     }
 
     const result = await sendRes.json();
-    console.log('Audit request sent:', result.message_id, 'for:', businessName);
+    console.log('Contact form sent:', result.message_id, 'from:', name);
     return jsonResponse({ success: true });
   } catch (err) {
     console.error('Contact form error:', err);

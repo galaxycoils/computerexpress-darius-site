@@ -1,7 +1,7 @@
 import { Helmet } from 'react-helmet-async'
 
 const SITE = 'ComputerExpress'
-const BASE = 'https://computerexpress.pages.dev'
+const BASE = import.meta.env.VITE_BASE_URL || 'https://computerexpress.pages.dev'
 const DEFAULT_IMG = '/og-card.png'
 
 export default function Seo({
@@ -16,7 +16,6 @@ export default function Seo({
   const url = `${BASE}${path}`
   const img = image.startsWith('http') ? image : `${BASE}${image}`
 
-  // Default title/description per page if not provided
   const defaults = {
     '/': {
       title: `${SITE} | Web Design & Local SEO for Service Businesses`,

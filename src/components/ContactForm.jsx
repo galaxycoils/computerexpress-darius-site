@@ -15,11 +15,9 @@ export default function ContactForm({ onSuccess }) {
     const data = new FormData(form)
 
     const payload = {
-      businessName: data.get('businessName')?.trim() || '',
+      name: data.get('name')?.trim() || '',
       email: data.get('email')?.trim() || '',
-      website: data.get('website')?.trim() || '',
-      serviceInterest: data.get('serviceInterest') || '',
-      goals: data.get('goals')?.trim() || '',
+      message: data.get('message')?.trim() || '',
     }
 
     try {
@@ -54,8 +52,8 @@ export default function ContactForm({ onSuccess }) {
             <polyline points="20 6 9 17 4 12"/>
           </svg>
         </div>
-        <h3>Audit request received</h3>
-        <p>Thanks for reaching out. We'll review your site and get back to you within 1-2 business days.</p>
+        <h3>Message sent</h3>
+        <p>Thanks for reaching out. We'll get back to you within 1-2 business days.</p>
       </div>
     )
   }
@@ -74,16 +72,16 @@ export default function ContactForm({ onSuccess }) {
       )}
 
       <label>
-        Business name
+        Name
         <input
           type="text"
-          name="businessName"
-          placeholder="Your Company"
+          name="name"
+          placeholder="Your name"
           required
-          autoComplete="organization"
+          autoComplete="name"
         />
       </label>
-      
+
       <label>
         Email
         <input
@@ -94,45 +92,23 @@ export default function ContactForm({ onSuccess }) {
           autoComplete="email"
         />
       </label>
-      
+
       <label>
-        Website
-        <input
-          type="url"
-          name="website"
-          placeholder="https://your-site.com"
-          autoComplete="url"
-        />
-      </label>
-      
-      <label>
-        Primary service needed
-        <select name="serviceInterest" defaultValue="">
-          <option value="" disabled>Select a service...</option>
-          <option value="website">Website design / redesign</option>
-          <option value="seo">Technical SEO</option>
-          <option value="local">Local SEO / GBP optimization</option>
-          <option value="full">Full package (Website + SEO + Local)</option>
-          <option value="other">Something else</option>
-        </select>
-      </label>
-      
-      <label>
-        What outcome are you trying to create?
+        Message
         <textarea
-          name="goals"
-          rows="4"
-          placeholder="More leads, better rankings, clearer positioning, stronger local visibility..."
+          name="message"
+          rows="5"
+          placeholder="Tell us about your project, website, or goals..."
           required
         />
       </label>
-      
+
       <button
         type="submit"
         className={`button button-primary${loading ? ' is-loading' : ''}`}
         disabled={loading}
       >
-        {loading ? 'Sending...' : 'Request Free Audit'}
+        {loading ? 'Sending...' : 'Send Message'}
       </button>
     </form>
   )
