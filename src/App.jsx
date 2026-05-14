@@ -17,11 +17,11 @@ function BlogPostWrapper() {
 
 function ServiceLandingWrapper() {
   const slug = window.location.pathname.replace('/services/', '')
-  // Only match specific landing pages
-  const landingSlugs = ['web-design-for-plumbers', 'web-design-for-hvac', 'web-design-for-electricians', 'local-seo-for-service-businesses']
-  if (landingSlugs.includes(slug)) {
-    return <ServiceLandingPage slug={slug} />
-  }
+  return <ServiceLandingPage slug={slug} />
+}
+
+function ServicePageWrapper() {
+  const slug = window.location.pathname.replace('/services/', '')
   return <ServicePage slug={slug} />
 }
 
@@ -32,7 +32,13 @@ const router = createBrowserRouter([
     children: [
       { index: true, element: <HomePage /> },
       { path: 'services', element: <ServicesPage /> },
-      { path: 'services/:slug', element: <ServiceLandingWrapper /> },
+      { path: 'services/website-design', element: <ServicePageWrapper /> },
+      { path: 'services/technical-seo', element: <ServicePageWrapper /> },
+      { path: 'services/gbp-optimization', element: <ServicePageWrapper /> },
+      { path: 'services/web-design-for-plumbers', element: <ServiceLandingWrapper /> },
+      { path: 'services/web-design-for-hvac', element: <ServiceLandingWrapper /> },
+      { path: 'services/web-design-for-electricians', element: <ServiceLandingWrapper /> },
+      { path: 'services/local-seo-for-service-businesses', element: <ServiceLandingWrapper /> },
       { path: 'about', element: <AboutPage /> },
       { path: 'contact', element: <ContactPage /> },
       { path: 'success', element: <SuccessPage /> },

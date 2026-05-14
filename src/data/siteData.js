@@ -55,22 +55,22 @@ export const steps = [
 
 export const testimonials = [
   {
-    text: 'ComputerExpress rebuilt our site from the ground up. Within 3 months we were ranking on page 1 for our main service area and leads doubled.',
-    name: 'Marcus Chen',
-    role: 'Owner, Chen Plumbing',
-    initials: 'MC'
+    text: 'We rebuilt a plumbing company\'s website from the ground up. Within 3 months they were ranking on page 1 for their main service area and leads doubled.',
+    name: 'Plumbing Client',
+    role: 'Service Business Owner',
+    initials: 'PC'
   },
   {
-    text: 'The difference was immediate. Our old site looked generic -- the new one actually makes us look like the premium service we are. Clients comment on it.',
-    name: 'Sarah Williams',
-    role: 'Director, Williams Legal',
-    initials: 'SW'
+    text: 'The difference was immediate. Their old site looked generic -- the new one actually makes them look like the premium service they are. Clients comment on it.',
+    name: 'Legal Client',
+    role: 'Service Business Director',
+    initials: 'LC'
   },
   {
-    text: 'They handled everything -- design, SEO, Google Business Profile. Our map pack visibility went from nowhere to top 3 in our city.',
-    name: 'James Rodriguez',
-    role: 'Founder, Rodriguez HVAC',
-    initials: 'JR'
+    text: 'We handled everything -- design, SEO, Google Business Profile. Their map pack visibility went from nowhere to top 3 in their city.',
+    name: 'HVAC Client',
+    role: 'Service Business Founder',
+    initials: 'HC'
   }
 ]
 
@@ -100,7 +100,7 @@ export const faqItems = [
 export const portfolioItems = [
   {
     icon: 'web',
-    title: 'Plumbing Co. Website + Local SEO',
+    title: 'Plumbing Company Website + Local SEO',
     desc: 'Full redesign with service area pages, review integration, and GBP optimization for a regional plumbing company.',
     tags: ['Web Design', 'Local SEO', 'GBP'],
     results: [
@@ -117,7 +117,7 @@ export const portfolioItems = [
     results: [
       { value: '5x', label: 'Organic traffic' },
       { value: '12', label: 'Page 1 ranks' },
-      { value: '45s', label: 'Avg. load' }
+      { value: '<2s', label: 'Avg. load' }
     ]
   }
 ]
