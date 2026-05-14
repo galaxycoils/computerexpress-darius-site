@@ -22,6 +22,4 @@ jobs:
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           accountId: a55a43856c7029505b79300ec82f1629
-          command: pages deploy dist --project-name=computerexpress --branch=main
-        env:
-          CLOUDFLARE_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
+          command: pages deploy dist --project-name=stcatharinesdigital --branch=main
