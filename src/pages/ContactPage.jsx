@@ -3,6 +3,8 @@ import ContactForm from '../components/ContactForm'
 import AnimatedSection from '../hooks/useInView'
 import { useNavigate } from 'react-router-dom'
 
+const CALENDLY_URL = 'https://calendly.com/tahamtandariush/30min'
+
 const contactPageJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'ContactPage',
@@ -23,7 +25,7 @@ export default function ContactPage() {
     <>
       <Seo
         title="Contact | ComputerExpress — Web Design & Local SEO"
-        description="Contact ComputerExpress for web design, technical SEO, and local SEO services. Get a free audit and start ranking higher on Google."
+        description="Contact ComputerExpress for web design, technical SEO, and local SEO services. Book a free 30-minute call or send us a message."
         path="/contact"
         jsonLd={contactPageJsonLd}
       />
@@ -36,7 +38,11 @@ export default function ContactPage() {
           <AnimatedSection>
             <div className="eyebrow eyebrow-center">Get in touch</div>
             <h1>Let's talk about your project</h1>
-            <p>Tell us what you're working on. We'll get back to you within 1-2 business days.</p>
+            <p>Book a free 30-minute call or send us a message.</p>
+            <div className="hero-actions" style={{ justifyContent: 'center', marginTop: '1.5rem' }}>
+              <a href={CALENDLY_URL} target="_blank" rel="noopener noreferrer" className="button button-primary">Book a Free Call</a>
+              <a href="tel:+13653595973" className="button button-secondary">Call (365) 359-5973</a>
+            </div>
           </AnimatedSection>
         </div>
       </section>
@@ -46,7 +52,7 @@ export default function ContactPage() {
           <div className="contact-panel">
             <AnimatedSection>
               <div>
-                <h2>What to expect</h2>
+                <h2>Send a message</h2>
                 <p>We'll identify the highest-leverage improvements for your site and clarify what to build first.</p>
 
                 <div className="stacked-notes">
@@ -59,8 +65,8 @@ export default function ContactPage() {
                     <span>We typically respond within 24 hours on business days</span>
                   </div>
                   <div className="mini-card">
-                    <strong>Prefer to call?</strong>
-                    <span><a href="tel:+13653595973" style={{color:'var(--primary)',textDecoration:'none'}}>+1 (365) 359-5973</a></span>
+                    <strong>Prefer to talk?</strong>
+                    <span><a href={CALENDLY_URL} target="_blank" rel="noopener noreferrer" style={{color:'var(--primary)',textDecoration:'none'}}>Book a 30-minute call</a> or <a href="tel:+13653595973" style={{color:'var(--primary)',textDecoration:'none'}}>call us</a></span>
                   </div>
                 </div>
               </div>
