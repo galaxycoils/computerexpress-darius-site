@@ -111,21 +111,21 @@ export default function HomePage() {
           <div>
             <div className="eyebrow">Built for service businesses that need better leads, not just more traffic</div>
             <h1>
-              Websites that look <span className="gradient-text">premium</span>, rank cleanly, and convert with intent.
+              Websites that look <span className="gradient-text">premium</span>, rank on page 1, and convert visitors into calls.
             </h1>
             <p className="hero-copy">
-              ComputerExpress builds high-performance websites, technical SEO foundations, and local growth systems for businesses that need stronger visibility and more qualified inquiries.
+              ComputerExpress builds high-performance websites with technical SEO, local search optimization, and Google Business Profile management — everything service businesses need to dominate their market.
             </p>
             <div className="hero-actions">
               <Link to="/contact" className="button button-primary">Get a Free SEO Audit</Link>
-              <Link to="/services" className="button button-secondary">Explore Services</Link>
+              <a href="https://calendly.com/tahamtandariush/30min" target="_blank" rel="noopener noreferrer" className="button button-secondary">Book a Free Call</a>
             </div>
             <ul className="hero-points">
-              <li><strong>More trust.</strong> Better visibility. Higher-quality leads.</li>
-              <li><strong>Fast + mobile-first</strong> build quality</li>
-              <li><strong>SEO + schema</strong> baked in from day one</li>
-              <li><strong>Offer clarity + CTA</strong> focused conversion flow</li>
-              <li><strong>GBP alignment</strong> for local growth</li>
+              <li><strong>Page 1 rankings.</strong> Technical SEO and local search optimization.</li>
+              <li><strong>More calls.</strong> Click-to-call, contact forms, and GBP alignment.</li>
+              <li><strong>Premium design.</strong> Custom sites that build trust instantly.</li>
+              <li><strong>Fast + mobile-first.</strong> 98+ PageSpeed, responsive on every device.</li>
+              <li><strong>Transparent pricing.</strong> No bloated retainers, no vague deliverables.</li>
             </ul>
           </div>
           <div className="hero-card">

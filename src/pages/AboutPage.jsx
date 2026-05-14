@@ -44,8 +44,8 @@ export default function AboutPage() {
         <div className="container">
           <AnimatedSection>
             <div className="eyebrow" style={{ justifyContent: 'center' }}>About us</div>
-            <h1>Built to make your business look more credible online</h1>
-            <p>ComputerExpress is an AI-first agency that combines modern design, technical SEO, and local growth systems without overcomplicating the client experience.</p>
+            <h1>We build websites that rank and convert</h1>
+            <p>ComputerExpress is an AI-first web design and local SEO agency. We help service businesses rank higher on Google, get more qualified leads, and look credible online — without the bloated process or vague deliverables of a traditional agency.</p>
           </AnimatedSection>
         </div>
       </section>
@@ -136,10 +136,13 @@ export default function AboutPage() {
           <AnimatedSection>
             <div className="cta-strip">
               <div>
-                <h2>Ready to turn positioning into lead flow?</h2>
-                <p>Move to the contact page and capture the first audit requests.</p>
+                <h2>Ready to rank higher?</h2>
+                <p>Get a free audit and see exactly what your site needs.</p>
               </div>
-              <Link to="/contact" className="button button-primary">Go to Contact</Link>
+              <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
+                <Link to="/contact" className="button button-primary">Get Free Audit</Link>
+                <a href="https://calendly.com/tahamtandariush/30min" target="_blank" rel="noopener noreferrer" className="button button-secondary">Book a Call</a>
+              </div>
             </div>
           </AnimatedSection>
         </div>

@@ -12,35 +12,26 @@ const servicesPageJsonLd = {
     name: 'ComputerExpress',
     url: 'https://computerexpress.pages.dev'
   },
-  areaServed: {
-    '@type': 'City',
-    name: 'St. Catharines'
-  },
+  areaServed: [
+    { '@type': 'City', name: 'St. Catharines' },
+    { '@type': 'State', name: 'Ontario' },
+    { '@type': 'Country', name: 'Canada' },
+  ],
   hasOfferCatalog: {
     '@type': 'OfferCatalog',
     name: 'ComputerExpress Services',
     itemListElement: services.map(s => ({
       '@type': 'Offer',
-      itemOffered: {
-        '@type': 'Service',
-        name: s.title,
-        description: s.description
-      }
+      itemOffered: { '@type': 'Service', name: s.title, description: s.description }
     }))
   }
 }
 
-const relatedPages = [
-  { path: '/services/web-design-for-plumbers', label: 'Plumbing Web Design' },
-  { path: '/services/web-design-for-hvac', label: 'HVAC Web Design' },
-  { path: '/services/web-design-for-electricians', label: 'Electrician Web Design' },
-  { path: '/services/local-seo-for-service-businesses', label: 'Local SEO Services' },
-]
-
-const relatedBlogPosts = [
-  { path: '/blog/local-seo-checklist-2026', label: 'Local SEO Checklist 2026' },
-  { path: '/blog/how-to-get-more-leads-from-website', label: 'How to Get More Leads' },
-  { path: '/blog/technical-seo-explained', label: 'Technical SEO Explained' },
+const industryPages = [
+  { path: '/services/web-design-for-plumbers', label: 'Plumbers', desc: 'Emergency call CTAs, service area pages, review integration, and GBP optimization.' },
+  { path: '/services/web-design-for-hvac', label: 'HVAC Companies', desc: 'Seasonal service pages, maintenance plan landing pages, and local SEO.' },
+  { path: '/services/web-design-for-electricians', label: 'Electricians', desc: 'Residential and commercial service pages, license display, and click-to-call.' },
+  { path: '/services/local-seo-for-service-businesses', label: 'All Service Businesses', desc: 'Google Maps dominance, review generation, and local link building.' },
 ]
 
 export default function ServicesPage() {
@@ -60,13 +51,13 @@ export default function ServicesPage() {
         <div className="container">
           <AnimatedSection>
             <div className="eyebrow" style={{ justifyContent: 'center' }}>What we do</div>
-            <h1>Services built around visibility, trust, and conversion</h1>
-            <p>ComputerExpress focuses on the three areas that tend to matter most for local service brands: site quality, search readiness, and local presence.</p>
+            <h1>Three services. One goal: more qualified leads.</h1>
+            <p>Websites that rank on Google. Technical SEO that gets you found. Google Business Profile that drives calls. Everything service businesses need to dominate their market — nothing they don't.</p>
           </AnimatedSection>
         </div>
       </section>
 
-      <section className="section" aria-label="Service details">
+      <section className="section" aria-label="Services">
         <div className="container">
           <div className="card-grid three-up page-block stagger-children">
             {services.map((s, i) => (
@@ -89,26 +80,23 @@ export default function ServicesPage() {
         </div>
       </section>
 
-      {/* Internal links to service-specific landing pages */}
-      <section className="section section-alt" aria-label="Service-specific solutions">
+      <section className="section section-alt" aria-label="Industry solutions">
         <div className="container">
           <AnimatedSection>
             <div className="section-heading">
               <div className="glow-line" aria-hidden="true"></div>
-              <h2>Solutions for your industry</h2>
-              <p>We build specialized websites for service businesses. Explore our industry-specific solutions.</p>
+              <h2>Built for your industry</h2>
+              <p>Specialized solutions for the service businesses we know best.</p>
             </div>
           </AnimatedSection>
           <div className="card-grid three-up page-block stagger-children">
-            {relatedPages.map((page, i) => (
+            {industryPages.map((page, i) => (
               <AnimatedSection key={page.path} delay={i * 100}>
                 <article className="info-card" style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
                   <h3 style={{ fontSize: '1.1rem', marginBottom: '0.5rem' }}>
                     <Link to={page.path} style={{ color: 'var(--text-bright)' }}>{page.label}</Link>
                   </h3>
-                  <p style={{ fontSize: '0.85rem', color: 'var(--muted)', flexGrow: 1 }}>
-                    Custom web design and SEO solutions tailored for {page.label.toLowerCase()}.
-                  </p>
+                  <p style={{ fontSize: '0.85rem', color: 'var(--muted)', flexGrow: 1 }}>{page.desc}</p>
                   <Link to={page.path} style={{ color: 'var(--primary)', fontSize: '0.85rem', marginTop: '0.75rem', display: 'inline-block' }}>
                     Learn more →
                   </Link>
@@ -119,18 +107,20 @@ export default function ServicesPage() {
         </div>
       </section>
 
-      <section className="section" aria-label="Pricing packages">
+      <section className="section" aria-label="Pricing">
         <div className="container">
           <AnimatedSection>
             <div className="section-heading">
               <div className="glow-line" aria-hidden="true"></div>
-              <h2>Packages</h2>
+              <h2>Transparent pricing</h2>
+              <p>No bloated retainers. No vague deliverables. Pick a package and get started.</p>
             </div>
           </AnimatedSection>
           <div className="card-grid three-up page-block stagger-children">
             {packages.map((p, i) => (
               <AnimatedSection key={p.name} delay={i * 100}>
                 <article className={`pricing-card ${p.featured ? 'featured' : ''}`}>
+                  {p.featured && <div style={{ textAlign: 'center', marginBottom: '0.5rem' }}><span className="portfolio-tag" style={{ fontSize: '0.65rem' }}>MOST POPULAR</span></div>}
                   <div className="pricing-top">
                     <h3>{p.name}</h3>
                     <div style={{ textAlign: 'right' }}>
@@ -152,47 +142,18 @@ export default function ServicesPage() {
         </div>
       </section>
 
-      {/* Internal links to related blog posts */}
-      <section className="section section-alt" aria-label="Related resources">
-        <div className="container">
-          <AnimatedSection>
-            <div className="section-heading">
-              <div className="glow-line" aria-hidden="true"></div>
-              <h2>Learn more about web design and SEO</h2>
-              <p>Expert insights to help your service business rank higher and get more leads.</p>
-            </div>
-          </AnimatedSection>
-          <div className="card-grid three-up page-block stagger-children">
-            {relatedBlogPosts.map((post, i) => (
-              <AnimatedSection key={post.path} delay={i * 100}>
-                <article className="info-card" style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
-                  <h3 style={{ fontSize: '1.1rem', marginBottom: '0.5rem' }}>
-                    <Link to={post.path} style={{ color: 'var(--text-bright)' }}>{post.label}</Link>
-                  </h3>
-                  <p style={{ fontSize: '0.85rem', color: 'var(--muted)', flexGrow: 1 }}>
-                    {post.path.includes('local-seo') && 'Complete checklist to rank #1 on Google Maps and local search.'}
-                    {post.path.includes('leads') && '7 proven strategies to turn website visitors into qualified leads.'}
-                    {post.path.includes('technical-seo') && 'What technical SEO covers and why your business needs it.'}
-                  </p>
-                  <Link to={post.path} style={{ color: 'var(--primary)', fontSize: '0.85rem', marginTop: '0.75rem', display: 'inline-block' }}>
-                    Read more →
-                  </Link>
-                </article>
-              </AnimatedSection>
-            ))}
-          </div>
-        </div>
-      </section>
-
       <section className="section" style={{ paddingBottom: '7rem' }} aria-label="Call to action">
         <div className="container">
           <AnimatedSection>
             <div className="cta-strip">
               <div>
-                <h2>Ready to get started?</h2>
-                <p>Request a free audit and we'll identify the highest-leverage improvements for your site.</p>
+                <h2>Ready to rank higher and get more leads?</h2>
+                <p>Start with a free audit. We'll show you exactly what to fix and what to build.</p>
               </div>
-              <Link to="/contact" className="button button-primary">Request Free Audit</Link>
+              <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
+                <Link to="/contact" className="button button-primary">Get Free Audit</Link>
+                <a href="https://calendly.com/tahamtandariush/30min" target="_blank" rel="noopener noreferrer" className="button button-secondary">Book a Call</a>
+              </div>
             </div>
           </AnimatedSection>
         </div>

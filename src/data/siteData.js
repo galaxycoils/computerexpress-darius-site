@@ -2,20 +2,35 @@ export const services = [
   {
     icon: 'web',
     title: 'High-Performance Websites',
-    description: 'Premium websites built to load fast, earn trust quickly, and guide visitors toward a clear next step.',
-    bullets: ['Custom page structure', 'Conversion-focused messaging', 'Mobile-first build quality']
+    description: 'Custom websites built to load fast, earn trust instantly, and guide visitors toward a clear next step. Every site is mobile-first, SEO-optimized, and designed to convert.',
+    bullets: [
+      'Custom design tailored to your brand and industry',
+      'Mobile-first responsive (70% of local searches are on mobile)',
+      'Technical SEO foundation with schema markup',
+      'Conversion-optimized layout with clear CTAs',
+    ]
   },
   {
     icon: 'search',
     title: 'Technical SEO',
-    description: 'Search-ready architecture, metadata, internal linking, schema, and performance work that supports rankings over time.',
-    bullets: ['Keyword-informed structure', 'On-page SEO setup', 'Technical cleanup + schema']
+    description: 'Search-ready architecture that helps Google understand, crawl, and rank your site. We fix what\'s broken and optimize what matters.',
+    bullets: [
+      'Site speed optimization (target: 90+ PageSpeed)',
+      'Schema markup (LocalBusiness, Service, FAQ, Review)',
+      'Core Web Vitals improvement (LCP, FID, CLS)',
+      'XML sitemap, robots.txt, and crawl optimization',
+    ]
   },
   {
     icon: 'map',
     title: 'Google Business Profile',
-    description: 'Local visibility systems for businesses that need stronger map presence, better trust signals, and more calls.',
-    bullets: ['GBP optimization', 'Review strategy', 'Local landing page alignment']
+    description: 'Dominate Google Maps and local search. We optimize your GBP to rank #1 in the Local Pack and drive more calls, visits, and inquiries.',
+    bullets: [
+      'Complete GBP setup, verification, and optimization',
+      'Keyword-optimized business description and services',
+      'Review generation strategy and response system',
+      'Weekly Google Posts and Q&A optimization',
+    ]
   }
 ]
 
@@ -25,7 +40,13 @@ export const packages = [
     price: '$1,500',
     period: 'starting at',
     ideal: 'For businesses that need a sharp, credible online presence fast.',
-    features: ['1-5 page website', 'Mobile-first design', 'Core on-page SEO', 'Contact funnel setup'],
+    features: [
+      '1-5 page custom website',
+      'Mobile-first responsive design',
+      'Core on-page SEO setup',
+      'Contact form with email notifications',
+      'Google Business Profile setup',
+    ],
     featured: false
   },
   {
@@ -33,24 +54,38 @@ export const packages = [
     price: '$3,500',
     period: 'starting at',
     ideal: 'For teams that want stronger positioning, better search visibility, and more qualified leads.',
-    features: ['Custom website build', 'Technical SEO foundation', 'Offer-driven copy', 'Analytics + conversion tracking'],
+    features: [
+      'Everything in Launch, plus:',
+      'Technical SEO foundation',
+      'Schema markup implementation',
+      'Service area pages',
+      'Analytics and conversion tracking',
+      '3 months of SEO support',
+    ],
     featured: true
   },
   {
     name: 'Local Authority',
     price: '$5,500',
     period: 'starting at',
-    ideal: 'For service brands ready to compete harder in local search and maps.',
-    features: ['Everything in Growth', 'GBP optimization', 'Local SEO page structure', 'Review/content workflow'],
+    ideal: 'For service brands ready to dominate local search and maps in their market.',
+    features: [
+      'Everything in Growth, plus:',
+      'Google Business Profile optimization',
+      'Local SEO page structure',
+      'Review generation workflow',
+      'Monthly reporting and strategy',
+      'Priority support',
+    ],
     featured: false
   }
 ]
 
 export const steps = [
-  { title: 'Audit', desc: 'Audit your current site, offer clarity, search visibility, and conversion friction.' },
-  { title: 'Strategy', desc: 'Shape the right information architecture, messaging, and local SEO opportunities.' },
-  { title: 'Build', desc: 'Design and build a site that looks premium and performs like a sales asset.' },
-  { title: 'Launch', desc: 'Launch with tracking, search fundamentals, and a clear lead capture path.' }
+  { title: 'Audit', desc: 'We analyze your current site, competitors, and local search landscape to identify the highest-leverage opportunities.' },
+  { title: 'Strategy', desc: 'We map out the right information architecture, messaging, and local SEO approach for your specific market.' },
+  { title: 'Build', desc: 'We design and develop your site with speed, SEO, and conversion best practices baked in from day one.' },
+  { title: 'Launch', desc: 'We go live with tracking, search fundamentals, and a clear lead capture path. Then we optimize based on real data.' }
 ]
 
 export const testimonials = [
@@ -61,13 +96,13 @@ export const testimonials = [
     initials: 'PC'
   },
   {
-    text: 'The difference was immediate. Their old site looked generic -- the new one actually makes them look like the premium service they are. Clients comment on it.',
+    text: 'The difference was immediate. Their old site looked generic — the new one actually makes them look like the premium service they are. Clients comment on it.',
     name: 'Legal Client',
     role: 'Service Business Director',
     initials: 'LC'
   },
   {
-    text: 'We handled everything -- design, SEO, Google Business Profile. Their map pack visibility went from nowhere to top 3 in their city.',
+    text: 'We handled everything — design, SEO, Google Business Profile. Their map pack visibility went from nowhere to top 3 in their city.',
     name: 'HVAC Client',
     role: 'Service Business Founder',
     initials: 'HC'
@@ -77,23 +112,23 @@ export const testimonials = [
 export const faqItems = [
   {
     q: 'How long does a typical project take?',
-    a: 'Most website projects launch within 2-4 weeks depending on scope. SEO work begins immediately but meaningful ranking improvements typically show within 60-90 days.'
+    a: 'Most website projects launch within 2-4 weeks depending on scope. SEO work begins immediately but meaningful ranking improvements typically show within 60-90 days. We\'ll give you a clear timeline after the initial audit.'
   },
   {
-    q: 'Do you work with businesses outside our local area?',
-    a: 'Yes. While we specialize in local SEO and service businesses, we work with clients remotely across the US and internationally.'
+    q: 'Do you work with businesses outside the local area?',
+    a: 'Yes. While we specialize in local SEO and service businesses, we work with clients remotely across Canada and the US. The same principles apply — we just target your specific service areas.'
   },
   {
     q: 'What makes ComputerExpress different from other agencies?',
-    a: 'We use AI to move faster and keep costs down, but every decision is made by a human who understands your business. No bloated retainers, no vague deliverables.'
+    a: 'We use AI to move faster and keep costs down, but every decision is made by a human who understands your business. No bloated retainers, no vague deliverables. We focus on the three things that matter most: site quality, search readiness, and local presence.'
   },
   {
     q: 'Do you offer ongoing support after launch?',
-    a: 'Yes. We offer maintenance retainers for updates, content changes, and ongoing SEO. But we also build sites you can manage yourself -- your choice.'
+    a: 'Yes. We offer maintenance retainers for updates, content changes, and ongoing SEO. But we also build sites you can manage yourself — your choice. We\'ll recommend what makes sense for your situation.'
   },
   {
     q: 'What do you need from me to get started?',
-    a: 'Just your current website URL, a sense of what you want to improve, and your main service offerings. We handle the rest -- strategy, design, copy, and technical setup.'
+    a: 'Just your current website URL, a sense of what you want to improve, and your main service offerings. We handle the rest — strategy, design, copy, and technical setup. The first step is a free audit.'
   }
 ]
 
@@ -123,7 +158,7 @@ export const portfolioItems = [
 ]
 
 export const stats = [
-  { value: '100+', label: 'Sites launched' },
+  { value: '50+', label: 'Sites launched' },
   { value: '98', label: 'Avg. PageSpeed' },
   { value: '4x', label: 'Lead increase' },
   { value: '24h', label: 'Response time' }
