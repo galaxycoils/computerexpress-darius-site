@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { Outlet } from 'react-router-dom';
 import { Link, NavLink } from 'react-router-dom';
 import AIChatWidget from './AIChatWidget';
+import WebLLMChat from './WebLLMChat';
 
 const NEWSLETTER_API = '/api/newsletter';
 
@@ -174,6 +175,7 @@ export default function Layout() {
         </div>
       </footer>
       <AIChatWidget />
+      <WebLLMChat />
     </div>
   )
 }
