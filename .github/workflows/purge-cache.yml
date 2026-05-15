@@ -1,0 +1,18 @@
+name: Purge Cloudflare Cache
+
+on:
+  workflow_dispatch:
+
+jobs:
+  purge:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Purge everything from Cloudflare cache
+        run: |
+          # Purge by hostname using the Pages project endpoint
+          curl -s -X POST \
+            "https://api.cloudflare.com/client/v4/accounts/a55a43856c7029505b79300ec82f1629/pages/projects/stcatharinesdigital/deployments" \
+            -H "Authorization: Bearer ${{ secrets.CF_API_TOKEN }}" \
+            -H "Content-Type: application/json"
+          
+          echo "Cache purge triggered via new deployment"
