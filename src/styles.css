@@ -2,8 +2,11 @@
    COMPUTEREXPRESS PREMIUM DESIGN SYSTEM
    ============================================ */
 
+/* cache-bust-v053b */
+
 :root {
   /* Colors */
+  --cache-bust: v053b;
   --bg: #060d1b;
   --bg-soft: #0a1628;
   --bg-card: #0d1b30;
