@@ -6,7 +6,7 @@ import AnimatedCounter from '../components/AnimatedCounter'
 import AnimatedSection from '../hooks/useInView'
 import {
   services, packages, steps, testimonials, faqItems,
-  portfolioItems, stats
+  portfolioItems, stats, guarantee
 } from '../data/siteData'
 
 const homePageJsonLd = [
@@ -105,7 +105,7 @@ export default function HomePage() {
       <div className="bg-orb bg-orb-2" aria-hidden="true"></div>
       <div className="bg-orb bg-orb-3" aria-hidden="true"></div>
 
-      {/* ===== HERO ===== */}
+      {/* ===== HERO — SHARP & ABOVE FOLD ===== */}
       <section className="section-first hero" aria-label="Hero">
         <div className="container hero-grid">
           <div>
@@ -114,7 +114,7 @@ export default function HomePage() {
               Websites that look <span className="gradient-text">premium</span>, rank on page 1, and convert visitors into calls.
             </h1>
             <p className="hero-copy">
-              St. Catharines Digital builds high-performance websites with technical SEO, local search optimization, and Google Business Profile management — everything service businesses need to dominate their market.
+              St. Catharines Digital builds high-performance websites with technical SEO and local search optimization — everything service businesses need to dominate their market.
             </p>
             <div className="hero-actions">
               <Link to="/contact" className="button button-primary">Get a Free SEO Audit</Link>
@@ -124,8 +124,6 @@ export default function HomePage() {
               <li><strong>Page 1 rankings.</strong> Technical SEO and local search optimization.</li>
               <li><strong>More calls.</strong> Click-to-call, contact forms, and GBP alignment.</li>
               <li><strong>Premium design.</strong> Custom sites that build trust instantly.</li>
-              <li><strong>Fast + mobile-first.</strong> 98+ PageSpeed, responsive on every device.</li>
-              <li><strong>Transparent pricing.</strong> No bloated retainers, no vague deliverables.</li>
             </ul>
           </div>
           <div className="hero-card">
@@ -134,8 +132,34 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* ===== TRUST BAR ===== */}
+      <section className="section trust-bar-section" aria-label="Trust indicators">
+        <div className="container">
+          <AnimatedSection>
+            <div className="trust-bar">
+              <div className="trust-item">
+                <span className="trust-icon" aria-hidden="true">✓</span>
+                <span>30-day satisfaction guarantee</span>
+              </div>
+              <div className="trust-item">
+                <span className="trust-icon" aria-hidden="true">✓</span>
+                <span>No bloated retainers</span>
+              </div>
+              <div className="trust-item">
+                <span className="trust-icon" aria-hidden="true">✓</span>
+                <span>AI-powered, human-directed</span>
+              </div>
+              <div className="trust-item">
+                <span className="trust-icon" aria-hidden="true">✓</span>
+                <span>St. Catharines based</span>
+              </div>
+            </div>
+          </AnimatedSection>
+        </div>
+      </section>
+
       {/* ===== STATS BAR ===== */}
-      <section className="section stats-section" style={{ padding: '3rem 0' }} aria-label="Key statistics">
+      <section className="section stats-section" aria-label="Key statistics">
         <div className="container">
           <AnimatedSection>
             <div className="stats-bar">
@@ -248,7 +272,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ===== TESTIMONIALS ===== */}
+      {/* ===== TESTIMONIALS — ENHANCED ===== */}
       <section className="section section-alt" id="testimonials" aria-label="Client testimonials">
         <div className="container">
           <AnimatedSection>
@@ -264,6 +288,9 @@ export default function HomePage() {
                 <article className="testimonial-card">
                   <div className="testimonial-stars" aria-label="5 out of 5 stars">{'★'.repeat(5)}</div>
                   <blockquote className="testimonial-text">{t.text}</blockquote>
+                  <div className="testimonial-metric">
+                    <span className="testimonial-metric-value">{t.metric}</span>
+                  </div>
                   <div className="testimonial-author">
                     <div className="testimonial-avatar" aria-hidden="true">{t.initials}</div>
                     <div>
@@ -278,20 +305,39 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* ===== GUARANTEE ===== */}
+      <section className="section guarantee-section" aria-label="Our guarantee">
+        <div className="container">
+          <AnimatedSection>
+            <div className="guarantee-card">
+              <div className="guarantee-icon" aria-hidden="true">🛡️</div>
+              <h2>{guarantee.title}</h2>
+              <p>{guarantee.description}</p>
+              <div className="guarantee-badges">
+                <span className="guarantee-badge">No risk</span>
+                <span className="guarantee-badge">No lock-in</span>
+                <span className="guarantee-badge">Cancel anytime</span>
+              </div>
+            </div>
+          </AnimatedSection>
+        </div>
+      </section>
+
       {/* ===== PRICING ===== */}
       <section className="section" id="pricing" aria-label="Pricing packages">
         <div className="container">
           <AnimatedSection>
             <div className="section-heading">
               <div className="glow-line" aria-hidden="true"></div>
-              <h2>Starter packages you can tune before launch</h2>
-              <p>These tiers give you a usable pricing structure now while keeping room to refine your offer later.</p>
+              <h2>Transparent pricing</h2>
+              <p>No bloated retainers. No vague deliverables. Pick a package and get started.</p>
             </div>
           </AnimatedSection>
           <div className="card-grid three-up page-block stagger-children">
             {packages.map((p, i) => (
               <AnimatedSection key={p.name} delay={i * 100}>
                 <article className={`pricing-card ${p.featured ? 'featured' : ''}`}>
+                  {p.featured && <div style={{ textAlign: 'center', marginBottom: '0.5rem' }}><span className="portfolio-tag" style={{ fontSize: '0.65rem' }}>MOST POPULAR</span></div>}
                   <div className="pricing-top">
                     <h3>{p.name}</h3>
                     <div style={{ textAlign: 'right' }}>

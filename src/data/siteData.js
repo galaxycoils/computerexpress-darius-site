@@ -38,7 +38,7 @@ export const packages = [
   {
     name: 'Launch',
     price: '$1,500',
-    period: 'starting at',
+    period: 'one-time',
     ideal: 'For businesses that need a sharp, credible online presence fast.',
     features: [
       '1-5 page custom website',
@@ -46,13 +46,14 @@ export const packages = [
       'Core on-page SEO setup',
       'Contact form with email notifications',
       'Google Business Profile setup',
+      '30-day satisfaction guarantee',
     ],
     featured: false
   },
   {
     name: 'Growth',
     price: '$3,500',
-    period: 'starting at',
+    period: 'one-time',
     ideal: 'For teams that want stronger positioning, better search visibility, and more qualified leads.',
     features: [
       'Everything in Launch, plus:',
@@ -61,13 +62,14 @@ export const packages = [
       'Service area pages',
       'Analytics and conversion tracking',
       '3 months of SEO support',
+      '30-day satisfaction guarantee',
     ],
     featured: true
   },
   {
     name: 'Local Authority',
     price: '$5,500',
-    period: 'starting at',
+    period: 'one-time',
     ideal: 'For service brands ready to dominate local search and maps in their market.',
     features: [
       'Everything in Growth, plus:',
@@ -76,6 +78,7 @@ export const packages = [
       'Review generation workflow',
       'Monthly reporting and strategy',
       'Priority support',
+      '30-day satisfaction guarantee',
     ],
     featured: false
   }
@@ -93,19 +96,22 @@ export const testimonials = [
     text: 'We rebuilt a plumbing company\'s website from the ground up. Within 3 months they were ranking on page 1 for their main service area and leads doubled.',
     name: 'Plumbing Client',
     role: 'Service Business Owner',
-    initials: 'PC'
+    initials: 'PC',
+    metric: '2x leads in 90 days'
   },
   {
     text: 'The difference was immediate. Their old site looked generic — the new one actually makes them look like the premium service they are. Clients comment on it.',
     name: 'Legal Client',
     role: 'Service Business Director',
-    initials: 'LC'
+    initials: 'LC',
+    metric: 'Premium positioning'
   },
   {
     text: 'We handled everything — design, SEO, Google Business Profile. Their map pack visibility went from nowhere to top 3 in their city.',
     name: 'HVAC Client',
     role: 'Service Business Founder',
-    initials: 'HC'
+    initials: 'HC',
+    metric: 'Top 3 map pack'
   }
 ]
 
@@ -120,7 +126,7 @@ export const faqItems = [
   },
   {
     q: 'What makes St. Catharines Digital different from other agencies?',
-    a: 'We\'re based right here in St. Catharines and we specialize in service businesses. We use AI to move faster and keep costs down, but every decision is made by a human who understands your market. No bloated retainers, no vague deliverables. We focus on what matters: site quality, search readiness, and local presence.',
+    a: 'We\'re based right here in St. Catharines and we specialize in service businesses. We use AI to move faster and keep costs down, but every decision is made by a human who understands your market. No bloated retainers, no vague deliverables. We focus on what matters: site quality, search readiness, and local presence.'
   },
   {
     q: 'Do you offer ongoing support after launch?',
@@ -129,6 +135,10 @@ export const faqItems = [
   {
     q: 'What do you need from me to get started?',
     a: 'Just your current website URL, a sense of what you want to improve, and your main service offerings. We handle the rest — strategy, design, copy, and technical setup. The first step is a free audit.'
+  },
+  {
+    q: 'What if I\'m not happy with the result?',
+    a: 'We offer a 30-day satisfaction guarantee on all packages. If you\'re not happy with the work, we\'ll keep revising until you are. We\'ve never had to use it — but it\'s there so you can commit with confidence.'
   }
 ]
 
@@ -170,3 +180,8 @@ export const trustItems = [
   'Built for local service businesses',
   'Clear calls to action and conversion flow'
 ]
+
+export const guarantee = {
+  title: '30-Day Satisfaction Guarantee',
+  description: 'If you\'re not happy with our work, we\'ll keep revising until you are. Every package includes this guarantee — so you can commit with zero risk.'
+}
