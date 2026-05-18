@@ -14,8 +14,8 @@ const homePageJsonLd = [
     '@context': 'https://schema.org',
     '@type': 'LocalBusiness',
     name: 'St. Catharines Digital',
-    '@id': 'https://computerexpress.pages.dev',
-    url: 'https://computerexpress.pages.dev',
+    '@id': 'https://stcatharinesdigital.pages.dev',
+    url: 'https://stcatharinesdigital.pages.dev',
     description: 'St. Catharines Digital builds premium websites, technical SEO systems, and local growth engines for service businesses that need better visibility and more qualified leads.',
     areaServed: [
       { '@type': 'City', name: 'St. Catharines', containedInPlace: { '@type': 'State', name: 'Ontario' } },
@@ -50,10 +50,10 @@ const homePageJsonLd = [
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
     itemListElement: [
-      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://computerexpress.pages.dev/' },
-      { '@type': 'ListItem', position: 2, name: 'Services', item: 'https://computerexpress.pages.dev/services' },
-      { '@type': 'ListItem', position: 3, name: 'About', item: 'https://computerexpress.pages.dev/about' },
-      { '@type': 'ListItem', position: 4, name: 'Contact', item: 'https://computerexpress.pages.dev/contact' },
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://stcatharinesdigital.pages.dev/' },
+      { '@type': 'ListItem', position: 2, name: 'Services', item: 'https://stcatharinesdigital.pages.dev/services' },
+      { '@type': 'ListItem', position: 3, name: 'About', item: 'https://stcatharinesdigital.pages.dev/about' },
+      { '@type': 'ListItem', position: 4, name: 'Contact', item: 'https://stcatharinesdigital.pages.dev/contact' },
     ]
   },
   {

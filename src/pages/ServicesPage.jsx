@@ -9,7 +9,7 @@ const servicesPageJsonLd = {
   provider: {
     '@type': 'Organization',
     name: 'St. Catharines Digital',
-    url: 'https://computerexpress.pages.dev'
+    url: 'https://stcatharinesdigital.pages.dev'
   },
   areaServed: [
     { '@type': 'City', name: 'St. Catharines' },

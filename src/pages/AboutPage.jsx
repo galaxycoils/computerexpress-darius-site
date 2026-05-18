@@ -7,7 +7,7 @@ const aboutPageJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'Organization',
   name: 'St. Catharines Digital',
-  url: 'https://computerexpress.pages.dev',
+  url: 'https://stcatharinesdigital.pages.dev',
   description: 'St. Catharines Digital is a web design and local SEO agency for service businesses in St. Catharines and across Ontario.',
   areaServed: {
     '@type': 'City',

@@ -8,7 +8,7 @@ const contactPageJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'ContactPage',
   name: 'Contact St. Catharines Digital',
-  url: 'https://computerexpress.pages.dev/contact',
+  url: 'https://stcatharinesdigital.pages.dev/contact',
   description: 'Contact St. Catharines Digital for web design, technical SEO, and Google Business Profile optimization. Get a free website audit.',
   about: 'We build high-performance websites and local SEO strategies for service businesses in St. Catharines and across Ontario.',
   knowsLanguage: ['English'],

@@ -6,7 +6,8 @@ export async function onRequest({ request, next }) {
   const response = await next();
   
   // If 404 and looks like a route (no file extension), serve index.html
-  if (response.status === 404) {
+  // Also explicitly ignore /assets/ to prevent hijacking of hashed files
+  if (response.status === 404 && !path.startsWith('/assets/')) {
     const lastPart = path.split('/').pop();
     if (!lastPart.includes('.')) {
       url.pathname = '/index.html';

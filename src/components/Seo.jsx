@@ -2,7 +2,7 @@ import { Helmet } from 'react-helmet-async'
 
 const SITE = 'St. Catharines Digital'
 const SHORT_SITE = 'StCatharinesDigital'
-const BASE = import.meta.env.VITE_BASE_URL || 'https://computerexpress.pages.dev'
+const BASE = import.meta.env.VITE_BASE_URL || 'https://stcatharinesdigital.pages.dev'
 const DEFAULT_IMG = '/og-card.png'
 
 export default function Seo({
