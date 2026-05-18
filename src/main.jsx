@@ -11,6 +11,7 @@ window.addEventListener('error', (event) => {
   errorDiv.style.padding = '20px';
   errorDiv.style.whiteSpace = 'pre-wrap';
   errorDiv.innerText = `FATAL ERROR: ${event.message}\n${event.filename}:${event.lineno}`;
+  console.error("DEBUG ERROR:", event.error);
   document.body.prepend(errorDiv);
 });
 
