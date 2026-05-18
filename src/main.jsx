@@ -1,3 +1,14 @@
+// Hard error catcher at the absolute top of the entry point
+window.addEventListener('error', (event) => {
+  const err = event.error || event.message;
+  console.error("CRITICAL APP CRASH:", err);
+  document.body.innerHTML = `<div style="color:red; font-family:sans-serif; padding:50px;">
+    <h1>Application Crash</h1>
+    <p>The website is failing to load. Error details:</p>
+    <pre>${err}</pre>
+  </div>`;
+});
+
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { HelmetProvider } from 'react-helmet-async'
