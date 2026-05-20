@@ -3,6 +3,8 @@ import { Outlet, useLocation } from 'react-router-dom'
 import { Link, NavLink } from 'react-router-dom'
 import AIChatWidget from './AIChatWidget'
 import WebLLMChat from './WebLLMChat'
+import ExitIntentPopup from './ExitIntentPopup'
+import SearchModal from './SearchModal'
 
 const NEWSLETTER_API = '/api/newsletter'
 
@@ -18,7 +20,8 @@ const breadcrumbLabels = {
   '/': 'Home',
   '/services': 'Services',
   '/about': 'About',
-  '/contact': 'Contact'
+  '/contact': 'Contact',
+  '/what-to-expect': 'What to Expect'
 }
 
 function Breadcrumbs() {
@@ -62,6 +65,7 @@ export default function Layout() {
   const [theme, setTheme] = useState(getInitialTheme)
   const [scrollProgress, setScrollProgress] = useState(0)
   const [showBackToTop, setShowBackToTop] = useState(false)
+  const [searchOpen, setSearchOpen] = useState(false)
   const [newsletterState, setNewsletterState] = useState({ status: '', message: '' })
   const scrollTimeoutRef = useRef(null)
 
@@ -83,6 +87,17 @@ export default function Layout() {
       window.removeEventListener('scroll', onScroll)
       if (scrollTimeoutRef.current) clearTimeout(scrollTimeoutRef.current)
     }
+  }, [])
+
+  useEffect(() => {
+    const handleGlobalKey = (e) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+        e.preventDefault()
+        setSearchOpen(true)
+      }
+    }
+    window.addEventListener('keydown', handleGlobalKey)
+    return () => window.removeEventListener('keydown', handleGlobalKey)
   }, [])
 
   useEffect(() => {
@@ -155,17 +170,34 @@ export default function Layout() {
           >
             <span></span><span></span><span></span>
           </button>
-          <button
-            className="theme-toggle"
-            onClick={toggleTheme}
-            aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
-            title={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
-          >
-            <span aria-hidden="true">{theme === 'dark' ? '☀' : '☾'}</span>
-          </button>
+          
+          <div style={{ display: 'flex', alignItems: 'center', marginLeft: 'auto', marginRight: '1rem', gap: '0.25rem' }}>
+            <button
+              className="search-toggle"
+              onClick={() => setSearchOpen(true)}
+              aria-label="Open search modal"
+              title="Search site (Cmd+K)"
+              style={{ background: 'none', border: 'none', color: 'var(--text-bright)', cursor: 'pointer', display: 'flex', alignItems: 'center', padding: '0.5rem' }}
+            >
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+              </svg>
+            </button>
+            <button
+              className="theme-toggle"
+              onClick={toggleTheme}
+              aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+              title={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+              style={{ border: 'none', background: 'none', padding: '0.5rem', cursor: 'pointer', color: 'var(--text-bright)' }}
+            >
+              <span aria-hidden="true">{theme === 'dark' ? '☀' : '☾'}</span>
+            </button>
+          </div>
+
           <nav className={`nav-links ${menuOpen ? 'open' : ''}`} aria-label="Primary">
             <NavLink to="/services" onClick={closeMenu}>Services</NavLink>
             <NavLink to="/blog" onClick={closeMenu}>Blog</NavLink>
+            <NavLink to="/what-to-expect" onClick={closeMenu}>What to Expect</NavLink>
             <NavLink to="/about" onClick={closeMenu}>About</NavLink>
             <a href="tel:+13653595973" className="nav-phone" aria-label="Call us" style={{color:'var(--primary)',fontSize:'0.85rem',fontWeight:600,textDecoration:'none',display:'flex',alignItems:'center',gap:'0.25rem'}}>
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
@@ -204,6 +236,7 @@ export default function Layout() {
               <span className="footer-heading">Company</span>
               <nav className="footer-col-links" aria-label="Company links">
                 <Link to="/about">About</Link>
+                <Link to="/what-to-expect">What to Expect</Link>
                 <Link to="/contact">Contact</Link>
                 <Link to="/contact">Free Audit</Link>
               </nav>
@@ -237,6 +270,8 @@ export default function Layout() {
 
       <AIChatWidget />
       <WebLLMChat />
+      <ExitIntentPopup />
+      {searchOpen && <SearchModal onClose={() => setSearchOpen(false)} />}
     </div>
   )
 }

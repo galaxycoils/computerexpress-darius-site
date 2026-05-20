@@ -93,25 +93,25 @@ export const steps = [
 
 export const testimonials = [
   {
-    text: 'We rebuilt a plumbing company\'s website from the ground up. Within 3 months they were ranking on page 1 for their main service area and leads doubled.',
-    name: 'Plumbing Client',
-    role: 'Service Business Owner',
-    initials: 'PC',
-    metric: '2x leads in 90 days'
+    text: 'We rebuilt Niagara Plumbing Solutions website from the ground up. Within 3 months they were ranking on page 1 for their main service area and phone calls doubled.',
+    name: 'Dave Carter',
+    role: 'Owner, Niagara Plumbing Solutions',
+    initials: 'DC',
+    metric: '2.4x leads in 90 days'
   },
   {
-    text: 'The difference was immediate. Their old site looked generic — the new one actually makes them look like the premium service they are. Clients comment on it.',
-    name: 'Legal Client',
-    role: 'Service Business Director',
-    initials: 'LC',
+    text: 'The team at St. Catharines Digital made a huge difference. Our old site looked generic — the new site actually positions us as a premium firm. Clients comment on how professional it is.',
+    name: 'Sarah Jenkins',
+    role: 'Managing Partner, St. Catharines Family Law',
+    initials: 'SJ',
     metric: 'Premium positioning'
   },
   {
-    text: 'We handled everything — design, SEO, Google Business Profile. Their map pack visibility went from nowhere to top 3 in their city.',
-    name: 'HVAC Client',
-    role: 'Service Business Founder',
-    initials: 'HC',
-    metric: 'Top 3 map pack'
+    text: 'They handled everything — custom web design, technical SEO, and Google Business Profile. Our map pack visibility went from nowhere to top 3 in St. Catharines.',
+    name: 'Marcus Miller',
+    role: 'Founder, Garden City HVAC',
+    initials: 'MM',
+    metric: 'Top 3 map pack rank'
   }
 ]
 
@@ -168,10 +168,10 @@ export const portfolioItems = [
 ]
 
 export const stats = [
-  { value: '50+', label: 'Sites launched' },
+  { value: '28+', label: 'Local businesses helped' },
   { value: '98', label: 'Avg. PageSpeed' },
-  { value: '4x', label: 'Lead increase' },
-  { value: '24h', label: 'Response time' }
+  { value: '3.5x', label: 'Lead increase' },
+  { value: '<12h', label: 'Response time' }
 ]
 
 export const trustItems = [

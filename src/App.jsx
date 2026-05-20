@@ -9,6 +9,7 @@ import BlogPage from './pages/BlogPage'
 import BlogPostPage from './pages/BlogPostPage'
 import ServiceLandingPage from './pages/ServiceLandingPage'
 import ServicePage from './pages/ServicePage'
+import WhatToExpectPage from './pages/WhatToExpectPage'
 
 function BlogPostWrapper() {
   const slug = window.location.pathname.replace('/blog/', '')
@@ -44,6 +45,7 @@ const router = createBrowserRouter([
       { path: 'success', element: <SuccessPage /> },
       { path: 'blog', element: <BlogPage /> },
       { path: 'blog/:slug', element: <BlogPostWrapper /> },
+      { path: 'what-to-expect', element: <WhatToExpectPage /> },
     ]
   }
 ])
