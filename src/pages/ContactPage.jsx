@@ -1,5 +1,5 @@
 import Seo from '../components/Seo'
-import { Link, useLocation } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import AnimatedSection from '../hooks/useInView'
 import ContactForm from '../components/ContactForm'
 import { guarantee } from '../data/siteData'
@@ -26,16 +26,6 @@ const contactPageJsonLd = {
     }
   }
 }
-
-// Breadcrumbs
-const pathParts = useLocation().pathname.split('/').filter(Boolean)
-const breadcrumbs = [
-  { label: 'Home', path: '/' },
-  ...pathParts.map((part, i) => ({
-    label: part.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase()),
-    path: '/' + pathParts.slice(0, i + 1).join('/')
-  }))
-]
 
 export default function ContactPage() {
   return (

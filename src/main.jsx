@@ -27,5 +27,9 @@ window.addEventListener('error', (event) => {
 });
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <div>Hello World</div>
+  <React.StrictMode>
+    <HelmetProvider>
+      <App />
+    </HelmetProvider>
+  </React.StrictMode>
 )
