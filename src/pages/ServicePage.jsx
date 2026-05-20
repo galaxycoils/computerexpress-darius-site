@@ -120,6 +120,17 @@ export default function ServicePage({ slug }) {
 
   const Icon = iconMap[service.icon]
 
+  const webpageJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: `${service.title} | St. Catharines Digital`,
+    url: `https://stcatharinesdigital.pages.dev/services/${slug}`,
+    speakable: {
+      '@type': 'SpeakableSpecification',
+      cssSelector: ['h1', 'h2', 'p']
+    }
+  }
+
   return (
     <>
       <Seo
@@ -127,7 +138,7 @@ export default function ServicePage({ slug }) {
         description={service.description}
         path={`/services/${slug}`}
         type="service"
-        jsonLd={service.jsonLd}
+        jsonLd={[service.jsonLd, webpageJsonLd]}
       />
 
       <div className="bg-orb bg-orb-1" aria-hidden="true"></div>

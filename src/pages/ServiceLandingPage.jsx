@@ -110,6 +110,17 @@ export default function ServiceLandingPage({ slug }) {
     },
   }
 
+  const webpageJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: `${page.title} | St. Catharines Digital`,
+    url: `https://stcatharinesdigital.pages.dev/services/${slug}`,
+    speakable: {
+      '@type': 'SpeakableSpecification',
+      cssSelector: ['h1', 'h2', 'p']
+    }
+  }
+
   return (
     <>
       <Seo
@@ -117,7 +128,7 @@ export default function ServiceLandingPage({ slug }) {
         description={page.description}
         path={`/services/${slug}`}
         type="service"
-        jsonLd={jsonLd}
+        jsonLd={[jsonLd, webpageJsonLd]}
       />
 
       <div className="bg-orb bg-orb-1" aria-hidden="true"></div>
