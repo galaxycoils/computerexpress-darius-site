@@ -1,3 +1,0 @@
-module.exports=[7856,(a,b,c)=>{let{createClientModuleProxy:d}=a.r(34256);a.n(d("[project]/stcatharines-digital-ai/node_modules/next/dist/client/components/builtin/global-error.js <module evaluation>"))},46008,(a,b,c)=>{let{createClientModuleProxy:d}=a.r(34256);a.n(d("[project]/stcatharines-digital-ai/node_modules/next/dist/client/components/builtin/global-error.js"))},888,a=>{"use strict";a.i(7856);var b=a.i(46008);a.n(b)}];
-
-//# sourceMappingURL=2cb1b_next_dist_client_components_builtin_global-error_fd78ce76.js.map
