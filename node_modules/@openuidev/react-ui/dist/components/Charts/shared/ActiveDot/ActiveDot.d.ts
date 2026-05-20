@@ -1,0 +1,11 @@
+import React from "react";
+export interface ActiveDotProps {
+    cx?: number;
+    cy?: number;
+    payload?: any;
+    value?: any;
+    fill?: string;
+    stroke?: string;
+}
+export declare const ActiveDot: React.FC<ActiveDotProps>;
+//# sourceMappingURL=ActiveDot.d.ts.map

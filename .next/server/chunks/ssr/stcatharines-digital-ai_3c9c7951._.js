@@ -1,0 +1,3 @@
+module.exports=[80896,a=>{a.n(a.i(39226))},38669,a=>{a.n(a.i(63925))},23318,a=>{a.n(a.i(21555))},72205,a=>{a.n(a.i(19619))},73452,a=>{a.n(a.i(888))},41222,a=>{"use strict";var b=a.i(65254);function c(){return(0,b.jsxs)("div",{className:"p-8",children:[(0,b.jsx)("h1",{className:"text-4xl font-bold",children:"St. Catharines Digital"}),(0,b.jsx)("p",{className:"text-lg text-muted mt-4",children:"Performance-first web design and SEO agency."})]})}a.s(["default",()=>c])}];
+
+//# sourceMappingURL=stcatharines-digital-ai_3c9c7951._.js.map

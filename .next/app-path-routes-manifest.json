@@ -1,0 +1,8 @@
+{
+  "/_global-error/page": "/_global-error",
+  "/_not-found/page": "/_not-found",
+  "/page": "/",
+  "/services/hvac/page": "/services/hvac",
+  "/services/legal/page": "/services/legal",
+  "/services/plumbing/page": "/services/plumbing"
+}
