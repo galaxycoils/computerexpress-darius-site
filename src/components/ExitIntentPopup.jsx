@@ -133,6 +133,7 @@ export default function ExitIntentPopup() {
                 type="text"
                 id="exit-url"
                 placeholder="yourwebsite.com"
+                autoComplete="url"
                 value={url}
                 onChange={(e) => {
                   setUrl(e.target.value)
@@ -158,6 +159,7 @@ export default function ExitIntentPopup() {
                 type="email"
                 id="exit-email"
                 placeholder="you@example.com"
+                autoComplete="email"
                 value={email}
                 onChange={(e) => {
                   setEmail(e.target.value)
@@ -184,7 +186,7 @@ export default function ExitIntentPopup() {
                 disabled={loading}
                 style={{ flex: 1 }}
               >
-                {loading ? 'Submitting...' : 'Analyze My Website'}
+                {loading ? 'Submitting…' : 'Analyze My Website'}
               </button>
               <button
                 type="button"

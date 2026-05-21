@@ -35,7 +35,7 @@ export default function WebLLMChat({ onSwitchMode }) {
     initStarted.current = true;
 
     try {
-      setProgress({ text: 'Initializing WebLLM...', percentage: 0 });
+      setProgress({ text: 'Initializing WebLLM…', percentage: 0 });
 
       const engine = new webllm.MLCEngine({
         initProgressCallback: (report) => {
@@ -169,7 +169,7 @@ export default function WebLLMChat({ onSwitchMode }) {
               ) : progress.percentage > 0 ? (
                 <>
                   <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#12d6ff', display: 'inline-block' }} />
-                  <span style={{ color: 'var(--muted)' }}>Loading model... {progress.percentage}%</span>
+                  <span style={{ color: 'var(--muted)' }}>Loading model… {progress.percentage}%</span>
                 </>
               ) : (
                 <>
@@ -376,7 +376,7 @@ export default function WebLLMChat({ onSwitchMode }) {
           type="text"
           value={input}
           onChange={e => setInput(e.target.value)}
-          placeholder={ready ? 'Ask about services, pricing, SEO...' : 'Load the model first...'}
+          placeholder={ready ? 'Ask about services, pricing, SEO…' : 'Load the model first…'}
           disabled={generating || !ready}
           style={{
             flex: 1,

@@ -352,6 +352,42 @@ export default function BlogPostPage({ slug }) {
     mainEntityOfPage: `${BASE_URL}/blog/${slug}`,
   }
 
+  const breadcrumbJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'Home',
+        item: BASE_URL
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: 'Blog',
+        item: `${BASE_URL}/blog`
+      },
+      {
+        '@type': 'ListItem',
+        position: 3,
+        name: post.title,
+        item: `${BASE_URL}/blog/${slug}`
+      }
+    ]
+  }
+
+  const webpageJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: `${post.title} | St. Catharines Digital Blog`,
+    url: `${BASE_URL}/blog/${slug}`,
+    speakable: {
+      '@type': 'SpeakableSpecification',
+      cssSelector: ['h1', 'h2', 'p']
+    }
+  }
+
   return (
     <>
       <Seo
@@ -359,7 +395,7 @@ export default function BlogPostPage({ slug }) {
         description={post.content.substring(0, 160).replace(/[#*[\]()-]/g, '').trim()}
         path={`/blog/${slug}`}
         type="article"
-        jsonLd={postJsonLd}
+        jsonLd={[postJsonLd, breadcrumbJsonLd, webpageJsonLd]}
       />
 
       <div className="bg-orb bg-orb-1" aria-hidden="true"></div>

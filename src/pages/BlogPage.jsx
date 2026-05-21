@@ -40,6 +40,25 @@ const blogJsonLd = {
   url: `${BASE_URL}/blog`,
 }
 
+const breadcrumbJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    {
+      '@type': 'ListItem',
+      position: 1,
+      name: 'Home',
+      item: BASE_URL
+    },
+    {
+      '@type': 'ListItem',
+      position: 2,
+      name: 'Blog',
+      item: `${BASE_URL}/blog`
+    }
+  ]
+}
+
 export default function BlogPage() {
   return (
     <>
@@ -47,7 +66,7 @@ export default function BlogPage() {
         title="Blog | Web Design & Local SEO Tips for Service Businesses | St. Catharines Digital"
         description="Expert insights on web design, local SEO, Google Business Profile optimization, and digital growth strategies for service businesses."
         path="/blog"
-        jsonLd={blogJsonLd}
+        jsonLd={[blogJsonLd, breadcrumbJsonLd]}
       />
 
       <div className="bg-orb bg-orb-1" aria-hidden="true"></div>

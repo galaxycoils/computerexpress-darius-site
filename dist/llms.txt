@@ -1,0 +1,34 @@
+# St. Catharines Digital
+
+Premium Web Design, Technical SEO, and Google Business Profile Optimization for service businesses in St. Catharines, Niagara, and across Ontario.
+
+## Core Offerings
+
+- **Website Design for Service Businesses**: Premium, mobile-first, and conversion-optimized custom websites tailored to local service companies (plumbers, HVAC, electricians, etc.).
+- **Technical SEO Services**: Optimization of site speed, schema markup (JSON-LD), crawlability, and Core Web Vitals to rank #1.
+- **Google Business Profile (GBP) Optimization**: Map pack setup, keyword-optimized descriptions, reviews strategy, local citations, and maps positioning.
+
+## Key Information
+
+- **Service Areas**: St. Catharines, Niagara Region, and all of Ontario.
+- **Target Keywords**: web design st catharines, seo st catharines, local seo ontario, web design for contractors.
+- **Approach**: AI-first research and copywriting combined with human engineering for premium quality, speed, and cost efficiency.
+
+## Navigation & Site Structure
+
+- Homepage: [/](https://stcatharinesdigital.pages.dev/)
+- Services Directory: [/services](https://stcatharinesdigital.pages.dev/services)
+  - Website Design: [/services/website-design](https://stcatharinesdigital.pages.dev/services/website-design)
+  - Technical SEO: [/services/technical-seo](https://stcatharinesdigital.pages.dev/services/technical-seo)
+  - Google Business Profile: [/services/gbp-optimization](https://stcatharinesdigital.pages.dev/services/gbp-optimization)
+  - Plumbers Web Design Landing Page: [/services/web-design-for-plumbers](https://stcatharinesdigital.pages.dev/services/web-design-for-plumbers)
+  - HVAC Web Design Landing Page: [/services/web-design-for-hvac](https://stcatharinesdigital.pages.dev/services/web-design-for-hvac)
+  - Electricians Web Design Landing Page: [/services/web-design-for-electricians](https://stcatharinesdigital.pages.dev/services/web-design-for-electricians)
+  - Local SEO Landing Page: [/services/local-seo-for-service-businesses](https://stcatharinesdigital.pages.dev/services/local-seo-for-service-businesses)
+- About Us: [/about](https://stcatharinesdigital.pages.dev/about)
+- Contact & Free SEO Audit: [/contact](https://stcatharinesdigital.pages.dev/contact)
+- What To Expect Process: [/what-to-expect](https://stcatharinesdigital.pages.dev/what-to-expect)
+- Insights Blog: [/blog](https://stcatharinesdigital.pages.dev/blog)
+  - Local SEO Checklist: [/blog/local-seo-checklist-2026](https://stcatharinesdigital.pages.dev/blog/local-seo-checklist-2026)
+  - Web Lead Generation: [/blog/how-to-get-more-leads-from-website](https://stcatharinesdigital.pages.dev/blog/how-to-get-more-leads-from-website)
+  - Technical SEO Explained: [/blog/technical-seo-explained](https://stcatharinesdigital.pages.dev/blog/technical-seo-explained)

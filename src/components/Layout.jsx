@@ -129,7 +129,7 @@ export default function Layout() {
     const email = form.email.value?.trim()
     if (!email) return
 
-    setNewsletterState({ status: 'loading', message: 'Subscribing...' })
+    setNewsletterState({ status: 'loading', message: 'Subscribing…' })
 
     try {
       const res = await fetch(NEWSLETTER_API, {
@@ -198,7 +198,7 @@ export default function Layout() {
             <NavLink to="/blog" onClick={closeMenu}>Blog</NavLink>
             <NavLink to="/what-to-expect" onClick={closeMenu}>What to Expect</NavLink>
             <NavLink to="/about" onClick={closeMenu}>About</NavLink>
-            <a href="tel:+13653595973" className="nav-phone" aria-label="Call us" style={{color:'var(--primary)',fontSize:'0.85rem',fontWeight:600,textDecoration:'none',display:'flex',alignItems:'center',gap:'0.25rem'}}>
+            <a href="tel:+13653595973" className="nav-phone" aria-label="Call (365) 359-5973" style={{color:'var(--primary)',fontSize:'0.85rem',fontWeight:600,textDecoration:'none',display:'flex',alignItems:'center',gap:'0.25rem'}}>
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
               (365) 359-5973
             </a>
@@ -219,7 +219,7 @@ export default function Layout() {
         <div className="container">
           <div className="footer-main">
             <div className="footer-col">
-              <img className="footer-logo" src="/logo-horizontal.svg" alt="St. Catharines Digital" width="180" height="32" />
+              <img className="footer-logo" src="/logo-horizontal.svg" alt="St. Catharines Digital" width="180" height="32" loading="lazy" />
               <p>Premium websites, technical SEO, and local growth systems for service businesses that need better visibility and more qualified leads.</p>
             </div>
             <div className="footer-col">
@@ -244,7 +244,7 @@ export default function Layout() {
               <span className="footer-heading">Stay updated</span>
               <p style={{ fontSize: '0.85rem', marginBottom: '0.5rem' }}>Get SEO tips and web design insights.</p>
               <form className="footer-newsletter" onSubmit={handleNewsletterSubmit} aria-label="Newsletter signup">
-                <input type="email" name="email" placeholder="your@email.com" aria-label="Email address" required />
+                <input type="email" name="email" autoComplete="email" placeholder="your@email.com" aria-label="Email address" required />
                 <button type="submit" className="button button-primary" style={{ padding: '0.6rem 1rem', fontSize: '0.8rem' }}>Join</button>
               </form>
               {newsletterState.message && (

@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import Seo, { BASE_URL } from '../components/Seo'
 import { Link } from 'react-router-dom'
 import AnimatedSection from '../hooks/useInView'
@@ -17,6 +18,10 @@ const servicePages = [
       'Review generation system',
       'Mobile-first design (70% of local searches are on mobile)',
     ],
+    faqs: [
+      { q: "How do you help plumbers get emergency calls?", a: "We place prominent click-to-call buttons and quick contact forms in high-visibility areas, ensuring mobile visitors can contact you instantly for emergencies." },
+      { q: "Do you write the content for my plumbing services?", a: "Yes, we write all copywriting for your core pages and services, including drain cleaning, leak detection, water heaters, and emergency plumbing." }
+    ],
     cta: 'Get a Free Plumbing Website Audit',
   },
   {
@@ -32,6 +37,10 @@ const servicePages = [
       'Maintenance plan landing pages',
       'Local SEO and Google Maps optimization',
       'Review and testimonial integration',
+    ],
+    faqs: [
+      { q: "How do you handle seasonal HVAC services?", a: "We build dedicated sections and landing pages for seasonal heating and cooling services, making it easy to promote AC repair in summer and furnace maintenance in winter." },
+      { q: "Can you help promote our HVAC maintenance plans?", a: "Yes, we design conversion-focused pages highlighting the benefits, pricing, and sign-up path for your recurring maintenance plans." }
     ],
     cta: 'Get a Free HVAC Website Audit',
   },
@@ -49,6 +58,10 @@ const servicePages = [
       'Google Business Profile optimization',
       'Review generation and display',
     ],
+    faqs: [
+      { q: "How do you show licensing and safety credentials?", a: "We design premium trust badges and license display panels to showcase your credentials, safety certifications, and insurance, building instant customer trust." },
+      { q: "Do you build pages for commercial electrical services?", a: "Yes, we structure separate sections for residential and commercial electrical services, ensuring you attract both homeowners and local businesses." }
+    ],
     cta: 'Get a Free Electrician Website Audit',
   },
   {
@@ -65,9 +78,45 @@ const servicePages = [
       'Local link building',
       'Monthly ranking reports',
     ],
+    faqs: [
+      { q: "What is local SEO and how is it different?", a: "Local SEO focuses on ranking your business for search terms in specific geographic locations, particularly in the Google Maps Pack and local search queries." },
+      { q: "How do service area pages help with local rankings?", a: "Service area pages target specific towns or cities you serve, allowing you to rank for search queries (e.g. 'AC repair Niagara Falls') even if your main office is in St. Catharines." }
+    ],
     cta: 'Get a Free Local SEO Audit',
   },
 ]
+
+function FAQAccordion({ items }) {
+  const [openIndex, setOpenIndex] = useState(null)
+  return (
+    <div className="faq-list">
+      {items.map((item, i) => (
+        <div key={i} className={`faq-item ${openIndex === i ? 'open' : ''}`}>
+          <button
+            className="faq-question"
+            onClick={() => setOpenIndex(openIndex === i ? null : i)}
+            aria-expanded={openIndex === i}
+            aria-controls={`faq-answer-${i}`}
+            id={`faq-question-${i}`}
+          >
+            {item.q}
+            <span className="faq-icon" aria-hidden="true">{openIndex === i ? '×' : '+'}</span>
+          </button>
+          {openIndex === i && (
+            <div
+              className="faq-answer"
+              id={`faq-answer-${i}`}
+              role="region"
+              aria-labelledby={`faq-question-${i}`}
+            >
+              <div className="faq-answer-inner">{item.a}</div>
+            </div>
+          )}
+        </div>
+      ))}
+    </div>
+  )
+}
 
 export default function ServiceLandingPage({ slug }) {
   const page = servicePages.find(p => p.slug === slug)
@@ -121,6 +170,44 @@ export default function ServiceLandingPage({ slug }) {
     }
   }
 
+  const breadcrumbJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'Home',
+        item: BASE_URL
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: 'Services',
+        item: `${BASE_URL}/services`
+      },
+      {
+        '@type': 'ListItem',
+        position: 3,
+        name: page.title,
+        item: `${BASE_URL}/services/${slug}`
+      }
+    ]
+  }
+
+  const faqJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: page.faqs.map(faq => ({
+      '@type': 'Question',
+      name: faq.q,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: faq.a
+      }
+    }))
+  }
+
   return (
     <>
       <Seo
@@ -128,7 +215,7 @@ export default function ServiceLandingPage({ slug }) {
         description={page.description}
         path={`/services/${slug}`}
         type="service"
-        jsonLd={[jsonLd, webpageJsonLd]}
+        jsonLd={[jsonLd, webpageJsonLd, breadcrumbJsonLd, faqJsonLd]}
       />
 
       <div className="bg-orb bg-orb-1" aria-hidden="true"></div>
@@ -185,7 +272,19 @@ export default function ServiceLandingPage({ slug }) {
         </div>
       </section>
 
-      <section className="section">
+      <section className="section" aria-label="Frequently asked questions">
+        <div className="container" style={{ maxWidth: '800px' }}>
+          <AnimatedSection>
+            <div className="section-heading" style={{ marginBottom: '2rem' }}>
+              <h2>Frequently asked questions</h2>
+              <p>Common questions about our {page.title} solutions.</p>
+            </div>
+            <FAQAccordion items={page.faqs} />
+          </AnimatedSection>
+        </div>
+      </section>
+
+      <section className="section section-alt">
         <div className="container">
           <AnimatedSection>
             <div className="cta-strip">

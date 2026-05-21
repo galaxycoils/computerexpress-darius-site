@@ -25,6 +25,24 @@ const whatToExpectJsonLd = [
       '@type': 'SpeakableSpecification',
       cssSelector: ['h1', 'h2', 'p']
     }
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'Home',
+        item: BASE_URL
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: 'What to Expect',
+        item: `${BASE_URL}/what-to-expect`
+      }
+    ]
   }
 ]
 

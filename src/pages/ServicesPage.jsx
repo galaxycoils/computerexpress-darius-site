@@ -28,6 +28,63 @@ const servicesPageJsonLd = {
   }
 }
 
+const localBusinessJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'LocalBusiness',
+  name: 'St. Catharines Digital',
+  url: BASE_URL,
+  logo: `${BASE_URL}/logo-horizontal.svg`,
+  image: `${BASE_URL}/og-card.png`,
+  telephone: '+13653595973',
+  email: 'hello@stcatharinesdigital.com',
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: 'St. Catharines',
+    addressRegion: 'ON',
+    addressCountry: 'CA'
+  },
+  geo: {
+    '@type': 'GeoCoordinates',
+    latitude: 43.1594,
+    longitude: -79.2449
+  },
+  areaServed: [
+    { '@type': 'City', name: 'St. Catharines' },
+    { '@type': 'State', name: 'Ontario' },
+    { '@type': 'Country', name: 'Canada' }
+  ]
+}
+
+const breadcrumbJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    {
+      '@type': 'ListItem',
+      position: 1,
+      name: 'Home',
+      item: BASE_URL
+    },
+    {
+      '@type': 'ListItem',
+      position: 2,
+      name: 'Services',
+      item: `${BASE_URL}/services`
+    }
+  ]
+}
+
+const speakableJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  name: 'Services | St. Catharines Digital',
+  url: `${BASE_URL}/services`,
+  speakable: {
+    '@type': 'SpeakableSpecification',
+    cssSelector: ['h1', 'h2', 'p']
+  }
+}
+
 const serviceFeatures = [
   { icon: 'web', title: 'Web Design', desc: 'Custom, mobile-first websites built for speed, SEO, and conversion.' },
   { icon: 'search', title: 'Technical SEO', desc: 'Site architecture, schema, Core Web Vitals — everything search engines need.' },
@@ -44,7 +101,7 @@ export default function ServicesPage() {
         title="Services | St. Catharines Digital"
         description="Web design, technical SEO, and Google Business Profile optimization for service businesses. Transparent pricing, 30-day satisfaction guarantee."
         path="/services"
-        jsonLd={servicesPageJsonLd}
+        jsonLd={[servicesPageJsonLd, localBusinessJsonLd, breadcrumbJsonLd, speakableJsonLd]}
       />
 
       {/* Background orbs */}

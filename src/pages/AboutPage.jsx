@@ -50,6 +50,25 @@ const faqJsonLd = {
   }))
 }
 
+const breadcrumbJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    {
+      '@type': 'ListItem',
+      position: 1,
+      name: 'Home',
+      item: BASE_URL
+    },
+    {
+      '@type': 'ListItem',
+      position: 2,
+      name: 'About',
+      item: `${BASE_URL}/about`
+    }
+  ]
+}
+
 const valueItems = [
   { icon: '⚡', title: 'Premium positioning', desc: 'Agency-quality work without the agency overhead' },
   { icon: '🔍', title: 'Search-ready structure', desc: 'Built for rankings from day one' },
@@ -66,7 +85,7 @@ export default function AboutPage() {
         title="About | St. Catharines Digital — Web Design & SEO Agency"
         description="St. Catharines Digital builds high-performance websites with technical SEO and local growth for service businesses. AI-powered, human-directed, no bloated process."
         path="/about"
-        jsonLd={[aboutPageJsonLd, faqJsonLd]}
+        jsonLd={[aboutPageJsonLd, faqJsonLd, breadcrumbJsonLd]}
       />
 
       {/* Background orbs */}

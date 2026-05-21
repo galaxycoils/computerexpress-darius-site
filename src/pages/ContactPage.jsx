@@ -1,4 +1,4 @@
-import Seo from '../components/Seo'
+import Seo, { BASE_URL } from '../components/Seo'
 import { Link } from 'react-router-dom'
 import AnimatedSection from '../hooks/useInView'
 import ContactForm from '../components/ContactForm'
@@ -8,7 +8,7 @@ const contactPageJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'ContactPage',
   name: 'Contact St. Catharines Digital',
-  url: 'https://stcatharinesdigital.pages.dev/contact',
+  url: `${BASE_URL}/contact`,
   description: 'Contact St. Catharines Digital for web design, technical SEO, and Google Business Profile optimization. Get a free website audit.',
   about: 'We build high-performance websites and local SEO strategies for service businesses in St. Catharines and across Ontario.',
   knowsLanguage: ['English'],
@@ -27,6 +27,52 @@ const contactPageJsonLd = {
   }
 }
 
+const localBusinessJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'LocalBusiness',
+  name: 'St. Catharines Digital',
+  url: BASE_URL,
+  logo: `${BASE_URL}/logo-horizontal.svg`,
+  image: `${BASE_URL}/og-card.png`,
+  telephone: '+13653595973',
+  email: 'hello@stcatharinesdigital.com',
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: 'St. Catharines',
+    addressRegion: 'ON',
+    addressCountry: 'CA'
+  },
+  geo: {
+    '@type': 'GeoCoordinates',
+    latitude: 43.1594,
+    longitude: -79.2449
+  },
+  areaServed: [
+    { '@type': 'City', name: 'St. Catharines' },
+    { '@type': 'State', name: 'Ontario' },
+    { '@type': 'Country', name: 'Canada' }
+  ]
+}
+
+const breadcrumbJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    {
+      '@type': 'ListItem',
+      position: 1,
+      name: 'Home',
+      item: BASE_URL
+    },
+    {
+      '@type': 'ListItem',
+      position: 2,
+      name: 'Contact',
+      item: `${BASE_URL}/contact`
+    }
+  ]
+}
+
 export default function ContactPage() {
   return (
     <>
@@ -34,14 +80,12 @@ export default function ContactPage() {
         title="Contact | St. Catharines Digital — Get a Free SEO Audit"
         description="Contact St. Catharines Digital for web design, technical SEO, and Google Business Profile optimization. Get a free website audit and strategy call."
         path="/contact"
-        jsonLd={contactPageJsonLd}
+        jsonLd={[contactPageJsonLd, localBusinessJsonLd, breadcrumbJsonLd]}
       />
 
       {/* Background orbs */}
       <div className="bg-orb bg-orb-1" aria-hidden="true"></div>
       <div className="bg-orb bg-orb-2" aria-hidden="true"></div>
-
-      {/* Breadcrumbs handled by Layout */}
 
       {/* Hero */}
       <section className="section-first page-hero" aria-label="Contact us">

@@ -379,7 +379,7 @@ export default function AIChatWidget() {
                   type="text"
                   value={input}
                   onChange={e => setInput(e.target.value)}
-                  placeholder="Ask about services, pricing, SEO..."
+                  placeholder="Ask about services, pricing, SEO…"
                   disabled={loading}
                   style={{
                     flex: 1,

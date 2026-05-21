@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import Seo, { BASE_URL } from '../components/Seo'
 import { Link } from 'react-router-dom'
 import AnimatedSection from '../hooks/useInView'
@@ -25,6 +26,11 @@ const serviceData = {
       { title: 'Design', desc: 'Custom mockups and revisions until it\'s perfect.' },
       { title: 'Build', desc: 'Development with SEO, speed, and mobile-first focus.' },
       { title: 'Launch', desc: 'Go live with tracking, analytics, and optimization.' },
+    ],
+    faqs: [
+      { q: "How long does a website project take?", a: "A typical project takes 4 weeks from kickoff to launch. We work in structured sprints to ensure your site is delivered on time." },
+      { q: "Can I update the website myself?", a: "Yes. We build sites using modular, reusable React components. For text or image updates, you can edit the files directly, or we can configure a headless CMS if requested." },
+      { q: "Is hosting and domain setup included?", a: "We set up hosting on high-performance Cloudflare servers (which is free/low cost) and help map your domain. We ensure your configuration is secure and fast." }
     ],
     jsonLd: {
       '@context': 'https://schema.org',
@@ -57,6 +63,11 @@ const serviceData = {
       { title: 'Optimize', desc: 'Implement schema, improve Core Web Vitals.' },
       { title: 'Monitor', desc: 'Ongoing tracking and monthly reports.' },
     ],
+    faqs: [
+      { q: "What does technical SEO cover?", a: "Technical SEO covers site structure, speed (Core Web Vitals), mobile responsiveness, XML sitemaps, robots.txt, canonical URLs, and schema structured data markup." },
+      { q: "Why is site speed important for SEO?", a: "Google uses speed as a direct ranking signal. Faster websites offer a better user experience, reduce bounce rates, and rank higher on search results." },
+      { q: "How do you test site speed?", a: "We use Lighthouse, PageSpeed Insights, and Web Vitals to measure load times and identify bottlenecks in rendering, asset delivery, and execution." }
+    ],
     jsonLd: {
       '@context': 'https://schema.org',
       '@type': 'Service',
@@ -88,6 +99,11 @@ const serviceData = {
       { title: 'Reviews', desc: 'Implement review generation system.' },
       { title: 'Grow', desc: 'Ongoing optimization and monthly reporting.' },
     ],
+    faqs: [
+      { q: "How long to see results from Google Business Profile optimization?", a: "Most service businesses notice an increase in local map pack views and calls within 30 to 90 days of complete profile optimization." },
+      { q: "What is the Google Local Pack?", a: "The Local Pack is the set of 3 map results that appear at the top of Google searches for local terms (e.g. 'plumber near me'). Ranking here drives significant call volume." },
+      { q: "Do you handle negative review removal?", a: "We cannot delete negative reviews directly, but we help you set up an automated review generation strategy and write professional responses that build customer trust." }
+    ],
     jsonLd: {
       '@context': 'https://schema.org',
       '@type': 'Service',
@@ -100,6 +116,38 @@ const serviceData = {
 }
 
 const iconMap = { web: IconWeb, search: IconSearch, map: IconMap }
+
+function FAQAccordion({ items }) {
+  const [openIndex, setOpenIndex] = useState(null)
+  return (
+    <div className="faq-list">
+      {items.map((item, i) => (
+        <div key={i} className={`faq-item ${openIndex === i ? 'open' : ''}`}>
+          <button
+            className="faq-question"
+            onClick={() => setOpenIndex(openIndex === i ? null : i)}
+            aria-expanded={openIndex === i}
+            aria-controls={`faq-answer-${i}`}
+            id={`faq-question-${i}`}
+          >
+            {item.q}
+            <span className="faq-icon" aria-hidden="true">{openIndex === i ? '×' : '+'}</span>
+          </button>
+          {openIndex === i && (
+            <div
+              className="faq-answer"
+              id={`faq-answer-${i}`}
+              role="region"
+              aria-labelledby={`faq-question-${i}`}
+            >
+              <div className="faq-answer-inner">{item.a}</div>
+            </div>
+          )}
+        </div>
+      ))}
+    </div>
+  )
+}
 
 export default function ServicePage({ slug }) {
   const service = serviceData[slug]
@@ -131,6 +179,44 @@ export default function ServicePage({ slug }) {
     }
   }
 
+  const breadcrumbJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'Home',
+        item: BASE_URL
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: 'Services',
+        item: `${BASE_URL}/services`
+      },
+      {
+        '@type': 'ListItem',
+        position: 3,
+        name: service.title,
+        item: `${BASE_URL}/services/${slug}`
+      }
+    ]
+  }
+
+  const faqJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: service.faqs.map(faq => ({
+      '@type': 'Question',
+      name: faq.q,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: faq.a
+      }
+    }))
+  }
+
   return (
     <>
       <Seo
@@ -138,7 +224,7 @@ export default function ServicePage({ slug }) {
         description={service.description}
         path={`/services/${slug}`}
         type="service"
-        jsonLd={[service.jsonLd, webpageJsonLd]}
+        jsonLd={[service.jsonLd, webpageJsonLd, breadcrumbJsonLd, faqJsonLd]}
       />
 
       <div className="bg-orb bg-orb-1" aria-hidden="true"></div>
@@ -201,7 +287,19 @@ export default function ServicePage({ slug }) {
         </div>
       </section>
 
-      <section className="section" style={{ paddingBottom: '7rem' }}>
+      <section className="section" aria-label="Frequently asked questions">
+        <div className="container" style={{ maxWidth: '800px' }}>
+          <AnimatedSection>
+            <div className="section-heading" style={{ marginBottom: '2rem' }}>
+              <h2>Frequently asked questions</h2>
+              <p>Common questions about our {service.title} services.</p>
+            </div>
+            <FAQAccordion items={service.faqs} />
+          </AnimatedSection>
+        </div>
+      </section>
+
+      <section className="section section-alt" style={{ paddingBottom: '7rem' }}>
         <div className="container">
           <AnimatedSection>
             <div className="cta-strip">

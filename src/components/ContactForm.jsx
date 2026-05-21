@@ -201,7 +201,7 @@ export default function ContactForm({ onSuccess }) {
           id="message"
           name="message"
           rows="5"
-          placeholder="Tell us about your project, website, or goals..."
+          placeholder="Tell us about your project, website, or goals…"
           required
           value={fields.message}
           onChange={handleChange}
@@ -225,7 +225,7 @@ export default function ContactForm({ onSuccess }) {
           className={`button button-primary${loading ? ' is-loading' : ''}`}
           disabled={loading}
         >
-          {loading ? 'Sending...' : 'Send Message'}
+          {loading ? 'Sending…' : 'Send Message'}
         </button>
         <p className="form-privacy">By submitting, you agree to be contacted regarding your inquiry. Your data is secure.</p>
       </div>
