@@ -57,6 +57,24 @@ const posts = [
     tags: ['Site Speed', 'Technical SEO', 'Core Web Vitals'],
     keywords: ['website speed optimization', 'speed optimization tips', 'Core Web Vitals', 'PageSpeed Insights'],
   },
+  {
+    slug: 'how-much-does-local-seo-cost',
+    title: 'How much does local SEO cost?',
+    excerpt: 'Thinking about investing in local SEO? Here is a breakdown of what you can expect to pay for local SEO services in the Niagara and St. Catharines area.',
+    date: '2026-05-21',
+    readTime: '6 min read',
+    tags: ['Local SEO', 'Pricing', 'Marketing Budget'],
+    keywords: ['local SEO cost', 'SEO pricing Niagara', 'St. Catharines SEO services'],
+  },
+  {
+    slug: 'service-business-website-examples',
+    title: 'Service business website examples',
+    excerpt: 'Looking for inspiration for your service business website? Check out these top examples that use trust badges, CTAs, and optimized design to convert visitors into leads.',
+    date: '2026-05-21',
+    readTime: '5 min read',
+    tags: ['Web Design', 'Conversion', 'Examples'],
+    keywords: ['service business website examples', 'plumber website design', 'electrician website design', 'conversion elements'],
+  },
 ]
 
 const blogJsonLd = {
