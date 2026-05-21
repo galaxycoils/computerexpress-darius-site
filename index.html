@@ -17,6 +17,7 @@
     </noscript>
     <link rel="icon" href="/logo-mark.svg" type="image/svg+xml" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.svg" />
+    <link rel="preload" as="image" href="/logo-mark.svg" fetchpriority="high" />
     <link rel="manifest" href="/site.webmanifest" />
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-HDESV0NDX4"></script>
@@ -25,6 +26,16 @@
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
       gtag('config', 'G-HDESV0NDX4', { 'anonymize_ip': true });
+    </script>
+    <script type="speculationrules">
+      {
+        "prefetch": [
+          {
+            "source": "list",
+            "urls": ["/services", "/about", "/contact"]
+          }
+        ]
+      }
     </script>
   </head>
   <body>

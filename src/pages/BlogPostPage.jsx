@@ -514,6 +514,110 @@ Implementing these 5 tips will make your website faster, rank higher on search e
 Want to see your current Core Web Vitals score? [Run your website through our free Website Grader](/free-audit) for an instant diagnostic report.
 `,
   },
+  'how-much-does-local-seo-cost': {
+    title: 'How much does local SEO cost?',
+    date: '2026-05-21',
+    readTime: '6 min read',
+    tags: ['Local SEO', 'Pricing', 'Marketing Budget'],
+    author: 'St. Catharines Digital',
+    content: `
+## Transparent Pricing for Local SEO Services in Niagara
+
+Investing in local SEO is one of the most effective ways for service businesses to grow, but pricing can often feel like a black box. At St. Catharines Digital, we believe in transparency.
+
+If you are a business owner in St. Catharines, Niagara Falls, or the surrounding region, here is a breakdown of what you can expect to pay and the ROI you should look for.
+
+### The Three Pricing Tiers of Local SEO
+
+Local SEO pricing generally falls into three main buckets based on your goals, competition, and the speed at which you want to grow.
+
+#### 1. The "Launch" Tier (Maintenance & Basics)
+**Typical Range: $1,000 – $2,000 (one-time setup)**
+This tier is ideal for new businesses or those who just need to get their "digital house" in order.
+- **What is included**: Google Business Profile setup/verification, basic citation cleanup, and core technical SEO fixes for your website.
+- **Goal**: Establish a baseline presence so you appear for your brand name and basic service terms.
+
+#### 2. The "Growth" Tier (Active Optimization)
+**Typical Range: $2,500 – $4,500 (one-time or quarterly)**
+This is the "sweet spot" for established service businesses ready to outrank local competitors.
+- **What is included**: Extensive category optimization, monthly Google Posts, active review generation strategy, and creation of dedicated service area pages.
+- **Goal**: Break into the Google Maps "Local Pack" for your primary keywords.
+
+#### 3. The "Dominance" Tier (Market Leader)
+**Typical Range: $5,000+ or Monthly Retainers**
+For businesses in high-competition niches (like law firms or large HVAC companies) looking to dominate the entire Niagara region.
+- **What is included**: Continuous content publishing, advanced link building, detailed competitor monitoring, and technical performance maintenance.
+- **Goal**: Maintain #1 rankings for dozens of high-volume keywords across multiple cities.
+
+### Factors That Influence Your Cost
+
+- **Market Competition**: Ranking for "plumber in St. Catharines" is more difficult (and expensive) than ranking for "drywall repair in Thorold."
+- **Current Site Health**: A brand-new site requires more foundational technical work than an established site with some existing authority.
+- **Number of Locations**: If you have multiple offices or serve a wide radius across Niagara, the scope of work increases.
+
+### Focus on ROI, Not Just Cost
+
+Local SEO is not an expense; it is a customer acquisition channel. To calculate your ROI, look at your **Customer Lifetime Value (CLV)**. If one new plumbing customer is worth $500, and a $2,000 SEO project brings in just 10 new customers over the next year, you have already doubled your investment.
+
+### The St. Catharines Digital Advantage
+
+We leverage AI-first workflows to provide "Dominance" tier results at "Growth" tier prices. We do not hide behind vague monthly retainers. We provide clear, fixed-price packages designed specifically for the Niagara service market.
+
+[Ready to see which tier fits your business?](/contact) Contact us for a custom quote based on your specific market competition.
+`,
+  },
+  'service-business-website-examples': {
+    title: 'Service business website examples',
+    date: '2026-05-21',
+    readTime: '5 min read',
+    tags: ['Web Design', 'Conversion', 'Examples'],
+    author: 'St. Catharines Digital',
+    content: `
+## What Makes a Service Business Website Convert?
+
+A great service business website is not just about aesthetics -- it is a conversion machine. When a prospect lands on your site, they are usually in "problem-solving mode." They need to know immediately if they can trust you to fix their problem.
+
+Here are the critical elements found in the best service business website examples, and why they work.
+
+### 1. The High-Trust Hero Section
+The "above-the-fold" area (what you see before scrolling) is your most valuable real estate.
+- **What to include**: A clear headline stating what you do, a visible phone number, and a primary Call to Action (CTA) like "Get a Free Quote."
+- **Example**: A plumber website that features a "Same Day Service" badge and an immediate booking button.
+
+### 2. Prominent Trust Badges and Social Proof
+Trust is the currency of the service industry. People are inviting you into their homes or businesses; they need to know you are legitimate.
+- **What to include**: Google Review ratings, BBB accreditation, trade associations, and insurance/licensing badges.
+- **Pro Tip**: Use real photos of your team and branded trucks rather than generic stock photography.
+
+### 3. Clear, Benefit-Driven Service Blocks
+Do not just list your services. Explain the benefit to the customer.
+- **What to include**: Instead of just "HVAC Repair," use "Fast Furnace Repair to Keep Your Family Warm."
+- **Example**: An electrician website that uses bullet points to highlight "24/7 Emergency Response" and "Upfront Pricing."
+
+### 4. Frictionless Lead Capture Forms
+The goal of your website is to get the user's contact information.
+- **What to include**: Keep your forms short (Name, Email/Phone, Service Needed). Use inline validation to catch errors as they type.
+- **Example**: A landscaping site that uses a simple 3-field form in the footer of every page.
+
+### 5. Dedicated Service Area Pages
+If you serve multiple cities across Niagara (St. Catharines, Niagara Falls, Welland), you need pages for each.
+- **What to include**: Mention specific local landmarks or neighborhoods to signal relevance to both users and Google.
+- **Example**: A cleaning company that has a dedicated "House Cleaning in Niagara-on-the-Lake" page.
+
+### The "St. Catharines Digital" Standard
+
+Every site we build is designed based on these high-performing examples. We focus on:
+- **Mobile-First Responsiveness**: Ensuring your site looks perfect on the smartphones your customers are using on the go.
+- **Extreme Performance**: Using modern web guidance to ensure your site loads in under 2 seconds.
+- **Schema Integration**: Ensuring your trust badges and reviews are "readable" by Google search bots.
+
+## See the Examples in Action
+
+Want to see how your own website measures up against these high-conversion standards?
+
+[Run your site through our interactive Website Grader](/free-audit) for a free instant analysis of your design, speed, and conversion readiness.
+`,
+  },
 }
 
 // Simple markdown-to-HTML converter

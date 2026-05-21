@@ -26,6 +26,11 @@ const routes = [
   '/blog/google-business-profile-tips-local-seo',
   '/blog/how-to-rank-1-on-google-maps',
   '/blog/website-speed-optimization-tips',
+  '/blog/how-much-does-local-seo-cost',
+  '/blog/service-business-website-examples',
+  '/case-studies/plumber-case-study',
+  '/case-studies/hvac-case-study',
+  '/case-studies/legal-case-study',
   '/what-to-expect',
   '/free-audit',
   '/404' // Render 404 page separately
