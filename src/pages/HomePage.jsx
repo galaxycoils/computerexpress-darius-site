@@ -400,7 +400,13 @@ export default function HomePage() {
                     <span className="testimonial-metric-value">{t.metric}</span>
                   </div>
                   <div className="testimonial-author">
-                    <div className="testimonial-avatar" aria-hidden="true">{t.initials}</div>
+                    <div className="testimonial-avatar" aria-hidden="true" style={t.image ? { background: 'none' } : {}}>
+                      {t.image ? (
+                        <img src={t.image} alt={t.name} style={{ width: '100%', height: '100%', borderRadius: '50%', objectFit: 'cover' }} />
+                      ) : (
+                        t.initials
+                      )}
+                    </div>
                     <div>
                       <div className="testimonial-name">{t.name}</div>
                       <div className="testimonial-role">{t.role}</div>

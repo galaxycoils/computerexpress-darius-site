@@ -97,6 +97,7 @@ export const testimonials = [
     name: 'Dave Carter',
     role: 'Owner, Niagara Plumbing Solutions',
     initials: 'DC',
+    image: '/images/client_plumber.png',
     metric: '2.4x leads in 90 days'
   },
   {
@@ -104,6 +105,7 @@ export const testimonials = [
     name: 'Sarah Jenkins',
     role: 'Managing Partner, St. Catharines Family Law',
     initials: 'SJ',
+    image: '/images/client_lawyer.png',
     metric: 'Premium positioning'
   },
   {
@@ -111,6 +113,7 @@ export const testimonials = [
     name: 'Marcus Miller',
     role: 'Founder, Garden City HVAC',
     initials: 'MM',
+    image: '/images/client_hvac.png',
     metric: 'Top 3 map pack rank'
   }
 ]

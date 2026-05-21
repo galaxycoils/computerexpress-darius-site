@@ -30,6 +30,33 @@ const posts = [
     tags: ['Technical SEO', 'Schema', 'Site Speed'],
     keywords: ['what is technical SEO', 'technical SEO for small business', 'technical SEO basics'],
   },
+  {
+    slug: 'google-business-profile-tips-local-seo',
+    title: '7 Essential Google Business Profile Tips for Local Service Businesses',
+    excerpt: 'Google Business Profile is the heartbeat of local search. Learn 7 critical optimization tips to dominate the Google Maps 3-pack and drive phone calls and leads.',
+    date: '2026-05-21',
+    readTime: '7 min read',
+    tags: ['Local SEO', 'Google Business Profile', 'Google Maps'],
+    keywords: ['Google Business Profile tips', 'local SEO', 'Google Maps ranking', 'local pack'],
+  },
+  {
+    slug: 'how-to-rank-1-on-google-maps',
+    title: 'How to Rank #1 on Google Maps: The Definitive Local Pack Guide',
+    excerpt: 'Want more local leads? You need to rank in the Google Maps top 3. Discover the proximity, relevance, and prominence ranking factors and how to optimize for them.',
+    date: '2026-05-21',
+    readTime: '9 min read',
+    tags: ['Google Maps', 'Local SEO', 'Citations'],
+    keywords: ['rank #1 on Google Maps', 'local pack guide', 'Google Maps ranking factors', 'local citations'],
+  },
+  {
+    slug: 'website-speed-optimization-tips',
+    title: 'Speed Kills Conversions: 5 Website Speed Optimization Tips for 2026',
+    excerpt: 'A slow website is leaking money. Learn 5 practical website speed optimization tips to ace Google Core Web Vitals, lower bounce rates, and boost conversions.',
+    date: '2026-05-21',
+    readTime: '6 min read',
+    tags: ['Site Speed', 'Technical SEO', 'Core Web Vitals'],
+    keywords: ['website speed optimization', 'speed optimization tips', 'Core Web Vitals', 'PageSpeed Insights'],
+  },
 ]
 
 const blogJsonLd = {

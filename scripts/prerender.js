@@ -23,6 +23,9 @@ const routes = [
   '/blog/local-seo-checklist-2026',
   '/blog/how-to-get-more-leads-from-website',
   '/blog/technical-seo-explained',
+  '/blog/google-business-profile-tips-local-seo',
+  '/blog/how-to-rank-1-on-google-maps',
+  '/blog/website-speed-optimization-tips',
   '/what-to-expect',
   '/free-audit',
   '/404' // Render 404 page separately
