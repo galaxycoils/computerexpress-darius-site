@@ -1,5 +1,6 @@
 import Seo, { BASE_URL } from '../components/Seo'
 import { Link } from 'react-router-dom'
+import { useState } from 'react'
 import AnimatedSection from '../hooks/useInView'
 import { packages, guarantee } from '../data/siteData'
 
@@ -94,7 +95,23 @@ const serviceFeatures = [
   { icon: 'analytics', title: 'Analytics & Reporting', desc: 'Clear dashboards, goal tracking, and monthly performance reports.' },
 ]
 
+const serviceImages = [
+  '/images/service_website_design.png',
+  '/images/service_technical_seo.png',
+  '/images/service_gbp_optimization.png',
+  '/images/service_website_design.png',
+  '/images/service_technical_seo.png',
+  '/images/service_technical_seo.png'
+]
+
 export default function ServicesPage() {
+  const [hoveredIndex, setHoveredIndex] = useState(null)
+  const [revealPos, setRevealPos] = useState({ x: 0, y: 0 })
+
+  const handleMouseMove = (e) => {
+    setRevealPos({ x: e.clientX, y: e.clientY })
+  }
+
   return (
     <>
       <Seo
@@ -129,20 +146,46 @@ export default function ServicesPage() {
               <p>We combine three core services into a complete local digital strategy.</p>
             </div>
           </AnimatedSection>
-          <div className="card-grid three-up page-block stagger-children">
-            {serviceFeatures.map((s, i) => (
-              <AnimatedSection key={s.title} delay={i * 100}>
-                <article className="info-card">
-                  <div className={`icon-circle ${i < 3 ? ['cyan', 'purple', 'green'][i] : i < 5 ? ['cyan', 'purple'][i - 3] : 'green'}`} aria-hidden="true">
-                    <span style={{ fontSize: '1.3rem' }} aria-hidden="true">
-                      {{ web: '🌐', search: '🔍', map: '📍', code: '💻', rocket: '🚀', analytics: '📊' }[s.icon]}
-                    </span>
+          
+          <div className="page-block">
+            <div 
+              className="exhibition-list"
+              onMouseMove={handleMouseMove}
+            >
+              {serviceFeatures.map((s, i) => (
+                <div
+                  key={s.title}
+                  className="exhibition-item"
+                  onMouseEnter={() => setHoveredIndex(i)}
+                  onMouseLeave={() => setHoveredIndex(null)}
+                >
+                  <div className="exhibition-item-left">
+                    <span className="exhibition-num">0{i + 1}</span>
+                    <h3 className="exhibition-title">{s.title}</h3>
                   </div>
-                  <h3>{s.title}</h3>
-                  <p>{s.desc}</p>
-                </article>
-              </AnimatedSection>
-            ))}
+                  <p className="exhibition-desc">{s.desc}</p>
+                </div>
+              ))}
+            </div>
+
+            {/* Hover Reveal Floating Container */}
+            <div 
+              className={`hover-reveal ${hoveredIndex !== null ? 'active' : ''}`}
+              style={{
+                left: `${revealPos.x}px`,
+                top: `${revealPos.y}px`
+              }}
+            >
+              <div className="hover-reveal__inner">
+                {hoveredIndex !== null && (
+                  <img 
+                    src={serviceImages[hoveredIndex]} 
+                    alt={serviceFeatures[hoveredIndex].title} 
+                    className="hover-reveal__img" 
+                  />
+                )}
+              </div>
+            </div>
           </div>
         </div>
       </section>

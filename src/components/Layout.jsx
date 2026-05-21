@@ -4,6 +4,7 @@ import { Link, NavLink } from 'react-router-dom'
 import AIChatWidget from './AIChatWidget'
 import ExitIntentPopup from './ExitIntentPopup'
 import SearchModal from './SearchModal'
+import CustomCursor from './CustomCursor'
 
 const NEWSLETTER_API = '/api/newsletter'
 
@@ -154,6 +155,7 @@ export default function Layout() {
 
   return (
     <div className="page-shell">
+      <CustomCursor />
       <a href="#main-content" className="skip-link">Skip to main content</a>
       <div className="scroll-progress" style={{ width: `${scrollProgress}%` }} aria-hidden="true" />
       <header className={`site-header ${scrolled ? 'scrolled' : ''}`}>

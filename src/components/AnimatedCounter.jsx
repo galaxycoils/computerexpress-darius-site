@@ -61,13 +61,13 @@ export default function AnimatedCounter({ value, suffix = '', prefix = '', label
   const match = value.match(/^(\d+)(.*)$/)
   const isNumeric = !!match
   const numValue = isNumeric ? parseInt(match[1], 10) : 0
-  const extractedSuffix = isNumeric ? match[2] : value
+  const extractedSuffix = isNumeric ? match[2] : ''
   const { value: animatedValue, ref } = useCountUp(numValue)
 
   return (
     <div ref={ref} className="stat-item">
       <div className="stat-value">
-        {prefix}{isNumeric ? animatedValue : value}{extractedSuffix || suffix}
+        {prefix}{isNumeric ? animatedValue : value}{isNumeric ? (extractedSuffix || suffix) : ''}
       </div>
       <div className="stat-label">{label}</div>
     </div>

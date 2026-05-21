@@ -65,6 +65,12 @@ const homePageJsonLd = [
   }
 ]
 
+const serviceImages = [
+  '/images/service_website_design.png',
+  '/images/service_technical_seo.png',
+  '/images/service_gbp_optimization.png'
+]
+
 function FAQAccordion({ items }) {
   const [openIndex, setOpenIndex] = useState(null)
   return (
@@ -98,6 +104,13 @@ function FAQAccordion({ items }) {
 }
 
 export default function HomePage() {
+  const [hoveredIndex, setHoveredIndex] = useState(null)
+  const [revealPos, setRevealPos] = useState({ x: 0, y: 0 })
+
+  const handleMouseMove = (e) => {
+    setRevealPos({ x: e.clientX, y: e.clientY })
+  }
+
   return (
     <>
       <Seo jsonLd={homePageJsonLd} />
@@ -210,23 +223,47 @@ export default function HomePage() {
               <p>Every engagement is designed to improve clarity, credibility, search visibility, and the path from visit to inquiry.</p>
             </div>
           </AnimatedSection>
-          <div className="card-grid three-up page-block stagger-children">
-            {services.map((s, i) => (
-              <AnimatedSection key={s.title} delay={i * 100}>
-                <article className="info-card">
-                  <div className={`icon-circle ${i === 0 ? 'cyan' : i === 1 ? 'purple' : 'green'}`} aria-hidden="true">
-                    {s.icon === 'web' && <IconWeb />}
-                    {s.icon === 'search' && <IconSearch />}
-                    {s.icon === 'map' && <IconMap />}
+          
+          <div className="page-block">
+            <div 
+              className="exhibition-list"
+              onMouseMove={handleMouseMove}
+            >
+              {services.map((s, i) => (
+                <Link
+                  key={s.title}
+                  to="/services"
+                  className="exhibition-item"
+                  onMouseEnter={() => setHoveredIndex(i)}
+                  onMouseLeave={() => setHoveredIndex(null)}
+                >
+                  <div className="exhibition-item-left">
+                    <span className="exhibition-num">0{i + 1}</span>
+                    <h3 className="exhibition-title">{s.title}</h3>
                   </div>
-                  <h3>{s.title}</h3>
-                  <p>{s.description}</p>
-                  <ul className="feature-list">
-                    {s.bullets.map(b => <li key={b}>{b}</li>)}
-                  </ul>
-                </article>
-              </AnimatedSection>
-            ))}
+                  <p className="exhibition-desc">{s.description}</p>
+                </Link>
+              ))}
+            </div>
+
+            {/* Hover Reveal Floating Container */}
+            <div 
+              className={`hover-reveal ${hoveredIndex !== null ? 'active' : ''}`}
+              style={{
+                left: `${revealPos.x}px`,
+                top: `${revealPos.y}px`
+              }}
+            >
+              <div className="hover-reveal__inner">
+                {hoveredIndex !== null && (
+                  <img 
+                    src={serviceImages[hoveredIndex]} 
+                    alt={services[hoveredIndex].title} 
+                    className="hover-reveal__img" 
+                  />
+                )}
+              </div>
+            </div>
           </div>
         </div>
       </section>
