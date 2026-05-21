@@ -24,6 +24,7 @@ const routes = [
   '/blog/how-to-get-more-leads-from-website',
   '/blog/technical-seo-explained',
   '/what-to-expect',
+  '/free-audit',
   '/404' // Render 404 page separately
 ]
 

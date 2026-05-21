@@ -3333,3 +3333,415 @@ html {
   }
 }
 
+/* ============================================
+   WEBSITE AUDIT & SEO GRADER
+   ============================================ */
+
+.grader-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+.grader-step-card {
+  background: var(--bg-card);
+  border: 1px solid var(--panel-border);
+  border-radius: var(--radius-lg);
+  padding: 3rem 2.5rem;
+  box-shadow: var(--shadow-sm);
+  position: relative;
+  overflow: hidden;
+}
+
+.grader-step-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: var(--gradient-1);
+}
+
+.grader-step-header {
+  margin-bottom: 2.5rem;
+}
+
+.grader-step-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  color: var(--text-bright);
+  font-weight: 400;
+  margin-bottom: 0.5rem;
+  line-height: 1.2;
+}
+
+.grader-step-subtitle {
+  color: var(--muted);
+  font-size: var(--fs-base);
+}
+
+.grader-input-group {
+  margin-bottom: 2rem;
+}
+
+.grader-input-group label {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--muted-lite);
+  margin-bottom: 0.75rem;
+}
+
+.grader-text-input {
+  width: 100%;
+  padding: 1.1rem 1.25rem;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  color: var(--text-bright);
+  font-size: var(--fs-base);
+  transition: border-color var(--transition-base), box-shadow var(--transition-base);
+}
+
+.grader-text-input:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 15px rgba(18, 214, 255, 0.15);
+}
+
+.grader-options-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.25rem;
+  margin-bottom: 2.5rem;
+}
+
+.grader-option-card {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  padding: 1.5rem;
+  cursor: pointer;
+  transition: all var(--transition-base);
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.grader-option-card:hover {
+  background: rgba(18, 214, 255, 0.02);
+  border-color: rgba(18, 214, 255, 0.3);
+  transform: translateY(-2px);
+}
+
+.grader-option-card.selected {
+  background: rgba(18, 214, 255, 0.05);
+  border-color: var(--primary);
+  box-shadow: 0 0 15px rgba(18, 214, 255, 0.1);
+}
+
+.grader-option-icon {
+  font-size: 1.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.grader-option-title {
+  color: var(--text-bright);
+  font-size: 1.05rem;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+
+.grader-option-desc {
+  color: var(--muted);
+  font-size: 0.85rem;
+  line-height: 1.4;
+}
+
+.grader-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 2rem;
+}
+
+.grader-progress-bar {
+  height: 2px;
+  background: var(--line);
+  border-radius: 2px;
+  flex-grow: 1;
+  margin: 0 2rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.grader-progress-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background: var(--gradient-1);
+  transition: width 0.3s ease;
+}
+
+/* Grader Loading / Analysis State */
+.grader-loading-overlay {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 2rem;
+  text-align: center;
+}
+
+.grader-spinner {
+  width: 64px;
+  height: 64px;
+  border: 3px solid rgba(18, 214, 255, 0.1);
+  border-top-color: var(--primary);
+  border-radius: 50%;
+  animation: spin 1s infinite linear;
+  margin-bottom: 2.5rem;
+}
+
+.grader-analysis-steps {
+  max-width: 400px;
+  width: 100%;
+  margin-top: 1.5rem;
+  text-align: left;
+}
+
+.grader-analysis-step {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem 0;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--muted);
+  transition: color 0.3s ease;
+}
+
+.grader-analysis-step.active {
+  color: var(--primary);
+}
+
+.grader-analysis-step.complete {
+  color: var(--success);
+}
+
+.grader-analysis-step-check {
+  font-weight: bold;
+}
+
+/* Grader Results Dashboard */
+.grader-results-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 2.5rem;
+  margin-top: 1rem;
+}
+
+.grader-results-left {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.grader-results-right {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.grader-score-card {
+  background: var(--bg-card);
+  border: 1px solid var(--panel-border);
+  border-radius: var(--radius-lg);
+  padding: 2.5rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: var(--shadow-sm);
+  position: relative;
+}
+
+.grader-score-ring-wrapper {
+  position: relative;
+  width: 150px;
+  height: 150px;
+  margin-bottom: 1.5rem;
+}
+
+.grader-score-ring {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.grader-score-ring::after {
+  content: '';
+  position: absolute;
+  width: 130px;
+  height: 130px;
+  background: var(--bg-card);
+  border-radius: 50%;
+  z-index: 1;
+}
+
+.grader-score-number {
+  font-family: var(--font-display);
+  font-size: 3rem;
+  font-weight: 700;
+  color: var(--text-bright);
+  z-index: 2;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.grader-score-number span {
+  font-size: 1.25rem;
+  color: var(--muted);
+  font-weight: 400;
+}
+
+.grader-score-label {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 0.35rem 0.75rem;
+  border-radius: var(--radius-sm);
+  margin-top: 0.5rem;
+  display: inline-block;
+}
+
+.grader-score-label.low {
+  background: rgba(239, 68, 68, 0.1);
+  color: #ef4444;
+  border: 1px solid rgba(239, 68, 68, 0.2);
+}
+
+.grader-score-label.medium {
+  background: rgba(245, 158, 11, 0.1);
+  color: #f59e0b;
+  border: 1px solid rgba(245, 158, 11, 0.2);
+}
+
+.grader-roi-card {
+  background: linear-gradient(135deg, rgba(167, 139, 250, 0.08) 0%, rgba(18, 214, 255, 0.08) 100%);
+  border: 1px solid rgba(18, 214, 255, 0.25);
+  border-radius: var(--radius-lg);
+  padding: 2.5rem;
+  box-shadow: 0 4px 30px rgba(18, 214, 255, 0.05);
+}
+
+.grader-roi-card h3 {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  color: var(--text-bright);
+  margin-bottom: 0.5rem;
+}
+
+.grader-roi-card p {
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
+
+.grader-roi-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 1.5rem;
+}
+
+.grader-roi-stat-val {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--primary);
+}
+
+.grader-roi-stat-val.revenue {
+  color: var(--success);
+}
+
+.grader-roi-stat-lbl {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  color: var(--muted-lite);
+  margin-top: 0.25rem;
+}
+
+.grader-issues-card {
+  background: var(--bg-card);
+  border: 1px solid var(--panel-border);
+  border-radius: var(--radius-lg);
+  padding: 2.5rem;
+}
+
+.grader-issues-card h3 {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  color: var(--text-bright);
+  margin-bottom: 1.5rem;
+}
+
+.grader-issue-item {
+  display: flex;
+  gap: 1rem;
+  padding: 1.25rem 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.grader-issue-item:last-child {
+  border-bottom: none;
+}
+
+.grader-issue-icon {
+  font-size: 1.25rem;
+  flex-shrink: 0;
+}
+
+.grader-issue-title {
+  color: var(--text-bright);
+  font-weight: 600;
+  font-size: 0.95rem;
+  margin-bottom: 0.25rem;
+}
+
+.grader-issue-desc {
+  color: var(--muted);
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@media (max-width: 900px) {
+  .grader-results-grid {
+    grid-template-columns: 1fr;
+  }
+  .grader-step-card {
+    padding: 2rem 1.5rem;
+  }
+}
+
+

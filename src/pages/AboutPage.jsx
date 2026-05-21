@@ -70,10 +70,10 @@ const breadcrumbJsonLd = {
 }
 
 const valueItems = [
-  { icon: '⚡', title: 'Premium positioning', desc: 'Agency-quality work without the agency overhead' },
-  { icon: '🔍', title: 'Search-ready structure', desc: 'Built for rankings from day one' },
-  { icon: '📍', title: 'Local-first mindset', desc: 'Designed specifically for service businesses' },
-  { icon: '🎯', title: 'Conversion-focused', desc: 'Clear calls to action and lead flow on every page' }
+  { icon: '⚡', title: 'Premium positioning', desc: 'Agency-quality work, zero agency overhead.' },
+  { icon: '🔍', title: 'Search-ready structure', desc: 'Built for rankings from day one.' },
+  { icon: '📍', title: 'Local-first mindset', desc: 'Tailored for service-area businesses.' },
+  { icon: '🎯', title: 'Conversion-focused', desc: 'Clear CTAs and lead flow on every page.' }
 ]
 
 export default function AboutPage() {
@@ -97,7 +97,7 @@ export default function AboutPage() {
         <div className="container">
           <div className="eyebrow" style={{ justifyContent: 'center' }}>About us</div>
           <h1>We build websites that rank and convert</h1>
-          <p>St. Catharines Digital is a web design and local SEO agency. We help service businesses rank higher on Google, get more qualified leads, and look credible online — without the bloated process or vague deliverables of a traditional agency.</p>
+          <p>Web design and local SEO for service businesses. Higher Google rankings, more qualified leads, and a credible online presence — no bloated process, no vague deliverables.</p>
         </div>
       </section>
 
@@ -130,7 +130,7 @@ export default function AboutPage() {
             <div className="section-heading">
               <div className="glow-line" aria-hidden="true"></div>
               <h2>Simple process, clear outputs</h2>
-              <p>From audit to launch, every step is transparent and designed around your business needs.</p>
+              <p>Transparent steps from audit to launch, built around your business.</p>
             </div>
           </AnimatedSection>
           <AnimatedSection>

@@ -12,6 +12,7 @@ import ServiceLandingPage from './pages/ServiceLandingPage'
 import ServicePage from './pages/ServicePage'
 import WhatToExpectPage from './pages/WhatToExpectPage'
 import NotFoundPage from './pages/NotFoundPage'
+import FreeAuditPage from './pages/FreeAuditPage'
 
 function BlogPostWrapper() {
   const { slug } = useParams()
@@ -37,6 +38,7 @@ export function AppRoutes() {
         <Route path="blog" element={<BlogPage />} />
         <Route path="blog/:slug" element={<BlogPostWrapper />} />
         <Route path="what-to-expect" element={<WhatToExpectPage />} />
+        <Route path="free-audit" element={<FreeAuditPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Route>
     </Routes>

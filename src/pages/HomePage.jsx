@@ -133,7 +133,7 @@ export default function HomePage() {
               St. Catharines Digital builds high-performance websites with technical SEO and local search optimization — everything service businesses need to dominate their market.
             </p>
             <div className="hero-actions">
-              <Link to="/contact" className="button button-primary">Get a Free SEO Audit</Link>
+              <Link to="/free-audit" className="button button-primary">Get a Free SEO Audit</Link>
               <a href="https://calendly.com/tahamtandariush/30min" target="_blank" rel="noopener noreferrer" className="button button-secondary">Book a Free Call</a>
             </div>
             
@@ -208,6 +208,38 @@ export default function HomePage() {
               {stats.map(s => (
                 <AnimatedCounter key={s.label} value={s.value} label={s.label} />
               ))}
+            </div>
+          </AnimatedSection>
+        </div>
+      </section>
+
+      {/* ===== THE AI-FIRST ADVANTAGE ===== */}
+      <section className="section section-alt" aria-label="The AI-First Advantage">
+        <div className="container">
+          <AnimatedSection>
+            <div className="section-heading">
+              <div className="glow-line" aria-hidden="true"></div>
+              <h2>The AI-First Advantage</h2>
+              <p>We use artificial intelligence to accelerate every phase of your project — from research to deployment — while a human expert directs every strategic decision.</p>
+            </div>
+          </AnimatedSection>
+          <AnimatedSection>
+            <div className="card-grid three-up page-block stagger-children">
+              <article className="info-card" style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+                <div style={{ fontSize: '2rem', marginBottom: '1rem' }} aria-hidden="true">⚡</div>
+                <h3 style={{ fontSize: '1.1rem', marginBottom: '0.5rem', color: 'var(--text-bright)' }}>Speed to Market</h3>
+                <p style={{ fontSize: '0.9rem', color: 'var(--muted)', flexGrow: 1, lineHeight: '1.6' }}>AI-assisted code generation, automated asset optimization, and parallel workflow pipelines compress project timelines from weeks to days. Your competitors are still waiting on their agency — you are already live.</p>
+              </article>
+              <article className="info-card" style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+                <div style={{ fontSize: '2rem', marginBottom: '1rem' }} aria-hidden="true">💯</div>
+                <h3 style={{ fontSize: '1.1rem', marginBottom: '0.5rem', color: 'var(--text-bright)' }}>PageSpeed 100 Guarantee</h3>
+                <p style={{ fontSize: '0.9rem', color: 'var(--muted)', flexGrow: 1, lineHeight: '1.6' }}>Hand-crafted code with zero WordPress bloat. Every site ships with optimized images, minimal JavaScript bundles, and edge-cached static delivery. Google rewards speed — we guarantee a perfect score.</p>
+              </article>
+              <article className="info-card" style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+                <div style={{ fontSize: '2rem', marginBottom: '1rem' }} aria-hidden="true">🤖</div>
+                <h3 style={{ fontSize: '1.1rem', marginBottom: '0.5rem', color: 'var(--text-bright)' }}>Automated Schema Markup</h3>
+                <p style={{ fontSize: '0.9rem', color: 'var(--muted)', flexGrow: 1, lineHeight: '1.6' }}>AI generates correct JSON-LD structured data for local businesses, services, FAQs, and reviews — so Google bots understand exactly what you offer and where you serve. Competitors guess. We automate.</p>
+              </article>
             </div>
           </AnimatedSection>
         </div>
@@ -508,7 +540,7 @@ export default function HomePage() {
                 <p>St. Catharines Digital blends modern design, technical SEO, and practical local growth strategy — built for service businesses that need results.</p>
               </div>
               <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
-                <Link to="/contact" className="button button-primary">Get Free Audit</Link>
+                <Link to="/free-audit" className="button button-primary">Get Free Audit</Link>
                 <a href="https://calendly.com/tahamtandariush/30min" target="_blank" rel="noopener noreferrer" className="button button-secondary">Book a Call</a>
               </div>
             </div>
