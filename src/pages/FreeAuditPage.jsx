@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import Seo from '../components/Seo'
+import Seo, { BASE_URL } from '../components/Seo'
 
 const CONTACT_API = '/api/contact'
 
@@ -43,6 +43,38 @@ const ANALYSIS_PHASES = [
   'Querying Google Maps 3-Pack prominence for Niagara region...',
   'Calculating estimated lost monthly leads & revenue...',
   'Generating customized local growth checklist...'
+]
+
+const freeAuditJsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: 'Free Website Audit & SEO Grader | St. Catharines Digital',
+    url: `${BASE_URL}/free-audit`,
+    description: 'Calculate your website speed, local schema coverage, Maps prominence, and monthly revenue lost to competitors.',
+    speakable: {
+      '@type': 'SpeakableSpecification',
+      cssSelector: ['h1', 'h2', 'p']
+    }
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'Home',
+        item: BASE_URL
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: 'Free Audit',
+        item: `${BASE_URL}/free-audit`
+      }
+    ]
+  }
 ]
 
 export default function FreeAuditPage() {
@@ -104,6 +136,7 @@ export default function FreeAuditPage() {
     setStep(prev => prev + 1)
   }
 
+  // Prev step
   function prevStep() {
     setStep(prev => prev - 1)
   }
@@ -287,6 +320,7 @@ Primary Challenge: ${selectedPain}
         title="Free Website Audit & SEO Grader | St. Catharines Digital"
         description="Run our instant interactive grader to calculate your website conversion score, maps package prominence, and estimated monthly lost revenue."
         path="/free-audit"
+        jsonLd={freeAuditJsonLd}
       />
 
       <section className="section-first" aria-label="Website Grader Tool">
