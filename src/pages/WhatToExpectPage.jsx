@@ -1,4 +1,4 @@
-import Seo from '../components/Seo'
+import Seo, { BASE_URL } from '../components/Seo'
 import { Link } from 'react-router-dom'
 import AnimatedSection from '../hooks/useInView'
 import { steps, guarantee } from '../data/siteData'
@@ -8,19 +8,19 @@ const whatToExpectJsonLd = [
     '@context': 'https://schema.org',
     '@type': 'AboutPage',
     name: 'What to Expect | St. Catharines Digital',
-    url: 'https://stcatharinesdigital.pages.dev/what-to-expect',
+    url: `${BASE_URL}/what-to-expect`,
     description: 'Understand the timeline, deliverables, processes, and satisfaction guarantees when working with St. Catharines Digital.',
     provider: {
       '@type': 'LocalBusiness',
       name: 'St. Catharines Digital',
-      url: 'https://stcatharinesdigital.pages.dev'
+      url: BASE_URL
     }
   },
   {
     '@context': 'https://schema.org',
     '@type': 'WebPage',
     name: 'What to Expect | St. Catharines Digital',
-    url: 'https://stcatharinesdigital.pages.dev/what-to-expect',
+    url: `${BASE_URL}/what-to-expect`,
     speakable: {
       '@type': 'SpeakableSpecification',
       cssSelector: ['h1', 'h2', 'p']

@@ -2,7 +2,8 @@ import { Helmet } from 'react-helmet-async'
 
 const SITE = 'St. Catharines Digital'
 const SHORT_SITE = 'StCatharinesDigital'
-const BASE = import.meta.env.VITE_BASE_URL || 'https://stcatharinesdigital.pages.dev'
+export const BASE_URL = import.meta.env.VITE_BASE_URL || 'https://stcatharinesdigital.pages.dev'
+const BASE = BASE_URL
 const DEFAULT_IMG = '/og-card.png'
 
 export default function Seo({
@@ -48,6 +49,10 @@ export default function Seo({
     <Helmet>
       <title>{finalTitle}</title>
       <meta name="description" content={finalDesc} />
+      <meta name="geo.region" content="CA-ON" />
+      <meta name="geo.placename" content="St. Catharines" />
+      <meta name="geo.position" content="43.1594;-79.2449" />
+      <meta name="ICBM" content="43.1594, -79.2449" />
       {noIndex ? (
         <meta name="robots" content="noindex,nofollow" />
       ) : (

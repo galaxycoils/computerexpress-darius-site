@@ -1,4 +1,4 @@
-import Seo from '../components/Seo'
+import Seo, { BASE_URL } from '../components/Seo'
 import { useState } from 'react'
 import AnimatedSection from '../hooks/useInView'
 import { steps, guarantee } from '../data/siteData'
@@ -7,7 +7,7 @@ const aboutPageJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'Organization',
   name: 'St. Catharines Digital',
-  url: 'https://stcatharinesdigital.pages.dev',
+  url: BASE_URL,
   description: 'St. Catharines Digital is a web design and local SEO agency for service businesses in St. Catharines and across Ontario.',
   areaServed: {
     '@type': 'City',
@@ -37,6 +37,19 @@ const aboutFaqs = [
   }
 ]
 
+const faqJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: aboutFaqs.map(faq => ({
+    '@type': 'Question',
+    name: faq.q,
+    acceptedAnswer: {
+      '@type': 'Answer',
+      text: faq.a
+    }
+  }))
+}
+
 const valueItems = [
   { icon: '⚡', title: 'Premium positioning', desc: 'Agency-quality work without the agency overhead' },
   { icon: '🔍', title: 'Search-ready structure', desc: 'Built for rankings from day one' },
@@ -53,7 +66,7 @@ export default function AboutPage() {
         title="About | St. Catharines Digital — Web Design & SEO Agency"
         description="St. Catharines Digital builds high-performance websites with technical SEO and local growth for service businesses. AI-powered, human-directed, no bloated process."
         path="/about"
-        jsonLd={aboutPageJsonLd}
+        jsonLd={[aboutPageJsonLd, faqJsonLd]}
       />
 
       {/* Background orbs */}

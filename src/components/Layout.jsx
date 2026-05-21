@@ -2,7 +2,6 @@ import { useState, useEffect, useCallback, useRef } from 'react'
 import { Outlet, useLocation } from 'react-router-dom'
 import { Link, NavLink } from 'react-router-dom'
 import AIChatWidget from './AIChatWidget'
-import WebLLMChat from './WebLLMChat'
 import ExitIntentPopup from './ExitIntentPopup'
 import SearchModal from './SearchModal'
 
@@ -269,7 +268,6 @@ export default function Layout() {
       </button>
 
       <AIChatWidget />
-      <WebLLMChat />
       <ExitIntentPopup />
       {searchOpen && <SearchModal onClose={() => setSearchOpen(false)} />}
     </div>

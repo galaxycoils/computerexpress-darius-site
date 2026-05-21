@@ -1,4 +1,5 @@
-import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import React from 'react'
+import { BrowserRouter, Routes, Route, useParams } from 'react-router-dom'
 import Layout from './components/Layout'
 import HomePage from './pages/HomePage'
 import ServicesPage from './pages/ServicesPage'
@@ -10,46 +11,42 @@ import BlogPostPage from './pages/BlogPostPage'
 import ServiceLandingPage from './pages/ServiceLandingPage'
 import ServicePage from './pages/ServicePage'
 import WhatToExpectPage from './pages/WhatToExpectPage'
+import NotFoundPage from './pages/NotFoundPage'
 
 function BlogPostWrapper() {
-  const slug = window.location.pathname.replace('/blog/', '')
+  const { slug } = useParams()
   return <BlogPostPage slug={slug} />
 }
 
-function ServiceLandingWrapper() {
-  const slug = window.location.pathname.replace('/services/', '')
-  return <ServiceLandingPage slug={slug} />
+export function AppRoutes() {
+  return (
+    <Routes>
+      <Route path="/" element={<Layout />}>
+        <Route index element={<HomePage />} />
+        <Route path="services" element={<ServicesPage />} />
+        <Route path="services/website-design" element={<ServicePage slug="website-design" />} />
+        <Route path="services/technical-seo" element={<ServicePage slug="technical-seo" />} />
+        <Route path="services/gbp-optimization" element={<ServicePage slug="gbp-optimization" />} />
+        <Route path="services/web-design-for-plumbers" element={<ServiceLandingPage slug="web-design-for-plumbers" />} />
+        <Route path="services/web-design-for-hvac" element={<ServiceLandingPage slug="web-design-for-hvac" />} />
+        <Route path="services/web-design-for-electricians" element={<ServiceLandingPage slug="web-design-for-electricians" />} />
+        <Route path="services/local-seo-for-service-businesses" element={<ServiceLandingPage slug="local-seo-for-service-businesses" />} />
+        <Route path="about" element={<AboutPage />} />
+        <Route path="contact" element={<ContactPage />} />
+        <Route path="success" element={<SuccessPage />} />
+        <Route path="blog" element={<BlogPage />} />
+        <Route path="blog/:slug" element={<BlogPostWrapper />} />
+        <Route path="what-to-expect" element={<WhatToExpectPage />} />
+        <Route path="*" element={<NotFoundPage />} />
+      </Route>
+    </Routes>
+  )
 }
-
-function ServicePageWrapper() {
-  const slug = window.location.pathname.replace('/services/', '')
-  return <ServicePage slug={slug} />
-}
-
-const router = createBrowserRouter([
-  {
-    path: '/',
-    element: <Layout />,
-    children: [
-      { index: true, element: <HomePage /> },
-      { path: 'services', element: <ServicesPage /> },
-      { path: 'services/website-design', element: <ServicePageWrapper /> },
-      { path: 'services/technical-seo', element: <ServicePageWrapper /> },
-      { path: 'services/gbp-optimization', element: <ServicePageWrapper /> },
-      { path: 'services/web-design-for-plumbers', element: <ServiceLandingWrapper /> },
-      { path: 'services/web-design-for-hvac', element: <ServiceLandingWrapper /> },
-      { path: 'services/web-design-for-electricians', element: <ServiceLandingWrapper /> },
-      { path: 'services/local-seo-for-service-businesses', element: <ServiceLandingWrapper /> },
-      { path: 'about', element: <AboutPage /> },
-      { path: 'contact', element: <ContactPage /> },
-      { path: 'success', element: <SuccessPage /> },
-      { path: 'blog', element: <BlogPage /> },
-      { path: 'blog/:slug', element: <BlogPostWrapper /> },
-      { path: 'what-to-expect', element: <WhatToExpectPage /> },
-    ]
-  }
-])
 
 export default function App() {
-  return <RouterProvider router={router} />
+  return (
+    <BrowserRouter>
+      <AppRoutes />
+    </BrowserRouter>
+  )
 }

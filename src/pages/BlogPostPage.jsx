@@ -1,4 +1,4 @@
-import Seo from '../components/Seo'
+import Seo, { BASE_URL } from '../components/Seo'
 import { Link } from 'react-router-dom'
 import AnimatedSection from '../hooks/useInView'
 
@@ -346,9 +346,10 @@ export default function BlogPostPage({ slug }) {
     headline: post.title,
     datePublished: post.date,
     dateModified: post.date,
+    image: `${BASE_URL}/og-card.png`,
     author: { '@type': 'Organization', name: post.author },
-    publisher: { '@type': 'Organization', name: 'St. Catharines Digital', url: 'https://stcatharinesdigital.pages.dev' },
-    mainEntityOfPage: `https://stcatharinesdigital.pages.dev/blog/${slug}`,
+    publisher: { '@type': 'Organization', name: 'St. Catharines Digital', url: BASE_URL },
+    mainEntityOfPage: `${BASE_URL}/blog/${slug}`,
   }
 
   return (

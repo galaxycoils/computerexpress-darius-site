@@ -1,9 +1,11 @@
-import Seo from '../components/Seo'
+import Seo, { BASE_URL } from '../components/Seo'
 import { Link } from 'react-router-dom'
 import { useState } from 'react'
 import { IconWeb, IconSearch, IconMap, HeroIllustration } from '../components/Icons'
 import AnimatedCounter from '../components/AnimatedCounter'
 import AnimatedSection from '../hooks/useInView'
+import BeforeAfterSlider from '../components/BeforeAfterSlider'
+import AnimatedHeroBg from '../components/AnimatedHeroBg'
 import {
   services, packages, steps, testimonials, faqItems,
   portfolioItems, stats, guarantee
@@ -14,8 +16,8 @@ const homePageJsonLd = [
     '@context': 'https://schema.org',
     '@type': 'LocalBusiness',
     name: 'St. Catharines Digital',
-    '@id': 'https://stcatharinesdigital.pages.dev',
-    url: 'https://stcatharinesdigital.pages.dev',
+    '@id': BASE_URL,
+    url: BASE_URL,
     description: 'St. Catharines Digital builds premium websites, technical SEO systems, and local growth engines for service businesses that need better visibility and more qualified leads.',
     areaServed: [
       { '@type': 'City', name: 'St. Catharines', containedInPlace: { '@type': 'State', name: 'Ontario' } },
@@ -50,10 +52,10 @@ const homePageJsonLd = [
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
     itemListElement: [
-      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://stcatharinesdigital.pages.dev/' },
-      { '@type': 'ListItem', position: 2, name: 'Services', item: 'https://stcatharinesdigital.pages.dev/services' },
-      { '@type': 'ListItem', position: 3, name: 'About', item: 'https://stcatharinesdigital.pages.dev/about' },
-      { '@type': 'ListItem', position: 4, name: 'Contact', item: 'https://stcatharinesdigital.pages.dev/contact' },
+      { '@type': 'ListItem', position: 1, name: 'Home', item: `${BASE_URL}/` },
+      { '@type': 'ListItem', position: 2, name: 'Services', item: `${BASE_URL}/services` },
+      { '@type': 'ListItem', position: 3, name: 'About', item: `${BASE_URL}/about` },
+      { '@type': 'ListItem', position: 4, name: 'Contact', item: `${BASE_URL}/contact` },
     ]
   },
   {
@@ -106,7 +108,8 @@ export default function HomePage() {
       <div className="bg-orb bg-orb-3" aria-hidden="true"></div>
 
       {/* ===== HERO — SHARP & ABOVE FOLD ===== */}
-      <section className="section-first hero" aria-label="Hero">
+      <section className="section-first hero" aria-label="Hero" style={{ position: 'relative', overflow: 'hidden' }}>
+        <AnimatedHeroBg />
         <div className="container hero-grid">
           <div>
             <div className="eyebrow">Built for service businesses that need better leads, not just more traffic</div>
@@ -120,6 +123,32 @@ export default function HomePage() {
               <Link to="/contact" className="button button-primary">Get a Free SEO Audit</Link>
               <a href="https://calendly.com/tahamtandariush/30min" target="_blank" rel="noopener noreferrer" className="button button-secondary">Book a Free Call</a>
             </div>
+            
+            {/* Google Partner Trust Badges strip */}
+            <div className="hero-trust-badges">
+              <span className="hero-trust-badge">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                  <path d="m9 12 2 2 4-4"/>
+                </svg>
+                Google Partner Certified
+              </span>
+              <span className="hero-trust-badge">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--secondary)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <polyline points="16 18 22 12 16 6"/>
+                  <polyline points="8 6 2 12 8 18"/>
+                </svg>
+                Premium Stack Developers
+              </span>
+              <span className="hero-trust-badge">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--success)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <circle cx="12" cy="12" r="10"/>
+                  <polyline points="12 6 12 12 16 14"/>
+                </svg>
+                100% PageSpeed Guaranteed
+              </span>
+            </div>
+
             <ul className="hero-points">
               <li><strong>Page 1 rankings.</strong> Technical SEO and local search optimization.</li>
               <li><strong>More calls.</strong> Click-to-call, contact forms, and GBP alignment.</li>
@@ -212,6 +241,16 @@ export default function HomePage() {
               <p>Real projects, real results. Here is a snapshot of what we have built for service businesses.</p>
             </div>
           </AnimatedSection>
+          
+          <AnimatedSection>
+            <div className="portfolio-slider-showcase page-block" style={{ marginBottom: '4rem' }}>
+              <h3 style={{ textAlign: 'center', marginBottom: '1.5rem', color: 'var(--text-bright)' }}>
+                Interactive Redesign Case Study
+              </h3>
+              <BeforeAfterSlider />
+            </div>
+          </AnimatedSection>
+
           <div className="portfolio-grid page-block stagger-children">
             {portfolioItems.map((p, i) => (
               <AnimatedSection key={p.title} delay={i * 150}>

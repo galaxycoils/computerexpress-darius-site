@@ -1,0 +1,2325 @@
+{
+  "posts": [
+    {
+      "_id": "6a0b4b4881ec7bd846a822c1",
+      "userId": {
+        "_id": "6a0afbfcf1b64bfae0e25c0a",
+        "name": "Dariush",
+        "email": "tahamtandariush@gmail.com",
+        "image": "https://lh3.googleusercontent.com/a/ACg8ocJISrcuKjkq6kOiZsQMW5adXLqVrE3uCbqbvP4sJSa5sIkfF_POtA=s96-c"
+      },
+      "title": "",
+      "content": "Day 20: The future is aerial. #future #drone",
+      "mediaItems": [
+        {
+          "type": "video",
+          "url": "https://videos.pexels.com/video-files/33410355/14221730_1920_1080_25fps.mp4",
+          "_id": "6a0b4b4881ec7bd846a822c2"
+        }
+      ],
+      "platforms": [
+        {
+          "platform": "instagram",
+          "accountId": {
+            "_id": "6a0afc8a5e333c0529912a50",
+            "profileId": "6a0afbfcf1b64bfae0e25c0c",
+            "platform": "instagram",
+            "displayName": "DariusTheKing",
+            "isActive": true,
+            "profilePicture": "https://scontent-lhr6-1.cdninstagram.com/v/t51.82787-19/524379541_18378684478122203_7661966579575208829_n.jpg?stp=dst-jpg_s206x206_tt6&_nc_cat=102&ccb=7-5&_nc_sid=bf7eb4&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLnd3dy4xMDgwLkMzIn0%3D&_nc_ohc=xq9-b22M4nsQ7kNvwGNf1So&_nc_oc=AdoW30QZJyjA3O56FDis13eOyNazPj_xnWwKBH8b1szxl_JYsfJh8y-QPg2njRgvbo4&_nc_zt=24&_nc_ht=scontent-lhr6-1.cdninstagram.com&edm=AP4hL3IEAAAA&_nc_gid=IdhcqNRpb0Xs15Og7tO2tA&_nc_tpa=Q5bMBQGSXuS2EpRw9LSwLSu4YcIo51RMNsV_OvVMOBwi1Y6lDavVSd48UH_ctp17IIYF95Hg9ml9UW-AeA&oh=00_Af4Y0IvhWCSQbuKpNURrnQdtqRdZnnkontOKU0m9NRYF0A&oe=6A10C694",
+            "username": "galaxycoils"
+          },
+          "profileId": "6a0afbfcf1b64bfae0e25c0c",
+          "customMedia": [],
+          "scheduledFor": "2026-05-19T17:00:00.000Z",
+          "platformSpecificData": {
+            "__platformUserIdSnapshot": "26753942627588440",
+            "__usernameSnapshot": "galaxycoils"
+          },
+          "status": "pending",
+          "publishAttempts": 0,
+          "contentHash": "aef252d85f3c5277e9e894e467b6e9c4",
+          "_id": "6a0b4b4881ec7bd846a822c3"
+        }
+      ],
+      "scheduledFor": "2026-05-19T17:00:00.000Z",
+      "timezone": "UTC",
+      "status": "scheduled",
+      "tags": [],
+      "hashtags": [],
+      "mentions": [],
+      "visibility": "public",
+      "crosspostingEnabled": true,
+      "metadata": {
+        "usageCounted": true
+      },
+      "publishAttempts": 0,
+      "contentHash": "aef252d85f3c5277e9e894e467b6e9c4",
+      "recycling": {
+        "enabled": false,
+        "gapFreq": "month",
+        "recycleCount": 0,
+        "contentVariations": [],
+        "contentVariationIndex": 0
+      },
+      "createdAt": "2026-05-18T17:24:24.065Z",
+      "updatedAt": "2026-05-18T17:24:24.065Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a0b4b46782d28842046dbd9",
+      "userId": {
+        "_id": "6a0afbfcf1b64bfae0e25c0a",
+        "name": "Dariush",
+        "email": "tahamtandariush@gmail.com",
+        "image": "https://lh3.googleusercontent.com/a/ACg8ocJISrcuKjkq6kOiZsQMW5adXLqVrE3uCbqbvP4sJSa5sIkfF_POtA=s96-c"
+      },
+      "title": "",
+      "content": "Day 19: Flying high, staying productive. #productive #drone",
+      "mediaItems": [
+        {
+          "type": "video",
+          "url": "https://videos.pexels.com/video-files/32305808/13777815_1920_1080_24fps.mp4",
+          "_id": "6a0b4b46782d28842046dbda"
+        }
+      ],
+      "platforms": [
+        {
+          "platform": "instagram",
+          "accountId": {
+            "_id": "6a0afc8a5e333c0529912a50",
+            "profileId": "6a0afbfcf1b64bfae0e25c0c",
+            "platform": "instagram",
+            "displayName": "DariusTheKing",
+            "isActive": true,
+            "profilePicture": "https://scontent-lhr6-1.cdninstagram.com/v/t51.82787-19/524379541_18378684478122203_7661966579575208829_n.jpg?stp=dst-jpg_s206x206_tt6&_nc_cat=102&ccb=7-5&_nc_sid=bf7eb4&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLnd3dy4xMDgwLkMzIn0%3D&_nc_ohc=xq9-b22M4nsQ7kNvwGNf1So&_nc_oc=AdoW30QZJyjA3O56FDis13eOyNazPj_xnWwKBH8b1szxl_JYsfJh8y-QPg2njRgvbo4&_nc_zt=24&_nc_ht=scontent-lhr6-1.cdninstagram.com&edm=AP4hL3IEAAAA&_nc_gid=IdhcqNRpb0Xs15Og7tO2tA&_nc_tpa=Q5bMBQGSXuS2EpRw9LSwLSu4YcIo51RMNsV_OvVMOBwi1Y6lDavVSd48UH_ctp17IIYF95Hg9ml9UW-AeA&oh=00_Af4Y0IvhWCSQbuKpNURrnQdtqRdZnnkontOKU0m9NRYF0A&oe=6A10C694",
+            "username": "galaxycoils"
+          },
+          "profileId": "6a0afbfcf1b64bfae0e25c0c",
+          "customMedia": [],
+          "scheduledFor": "2026-05-19T16:00:00.000Z",
+          "platformSpecificData": {
+            "__platformUserIdSnapshot": "26753942627588440",
+            "__usernameSnapshot": "galaxycoils"
+          },
+          "status": "pending",
+          "publishAttempts": 0,
+          "contentHash": "7d1b3bd3e752b875c4984aacf43d826c",
+          "_id": "6a0b4b46782d28842046dbdb"
+        }
+      ],
+      "scheduledFor": "2026-05-19T16:00:00.000Z",
+      "timezone": "UTC",
+      "status": "scheduled",
+      "tags": [],
+      "hashtags": [],
+      "mentions": [],
+      "visibility": "public",
+      "crosspostingEnabled": true,
+      "metadata": {
+        "usageCounted": true
+      },
+      "publishAttempts": 0,
+      "contentHash": "7d1b3bd3e752b875c4984aacf43d826c",
+      "recycling": {
+        "enabled": false,
+        "gapFreq": "month",
+        "recycleCount": 0,
+        "contentVariations": [],
+        "contentVariationIndex": 0
+      },
+      "createdAt": "2026-05-18T17:24:22.891Z",
+      "updatedAt": "2026-05-18T17:24:22.891Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a0b4b4581ec7bd846a822a0",
+      "userId": {
+        "_id": "6a0afbfcf1b64bfae0e25c0a",
+        "name": "Dariush",
+        "email": "tahamtandariush@gmail.com",
+        "image": "https://lh3.googleusercontent.com/a/ACg8ocJISrcuKjkq6kOiZsQMW5adXLqVrE3uCbqbvP4sJSa5sIkfF_POtA=s96-c"
+      },
+      "title": "",
+      "content": "Day 18: Maximizing aerial impact. #impact #drone",
+      "mediaItems": [
+        {
+          "type": "video",
+          "url": "https://videos.pexels.com/video-files/32305792/13777740_1920_1080_24fps.mp4",
+          "_id": "6a0b4b4581ec7bd846a822a1"
+        }
+      ],
+      "platforms": [
+        {
+          "platform": "instagram",
+          "accountId": {
+            "_id": "6a0afc8a5e333c0529912a50",
+            "profileId": "6a0afbfcf1b64bfae0e25c0c",
+            "platform": "instagram",
+            "displayName": "DariusTheKing",
+            "isActive": true,
+            "profilePicture": "https://scontent-lhr6-1.cdninstagram.com/v/t51.82787-19/524379541_18378684478122203_7661966579575208829_n.jpg?stp=dst-jpg_s206x206_tt6&_nc_cat=102&ccb=7-5&_nc_sid=bf7eb4&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLnd3dy4xMDgwLkMzIn0%3D&_nc_ohc=xq9-b22M4nsQ7kNvwGNf1So&_nc_oc=AdoW30QZJyjA3O56FDis13eOyNazPj_xnWwKBH8b1szxl_JYsfJh8y-QPg2njRgvbo4&_nc_zt=24&_nc_ht=scontent-lhr6-1.cdninstagram.com&edm=AP4hL3IEAAAA&_nc_gid=IdhcqNRpb0Xs15Og7tO2tA&_nc_tpa=Q5bMBQGSXuS2EpRw9LSwLSu4YcIo51RMNsV_OvVMOBwi1Y6lDavVSd48UH_ctp17IIYF95Hg9ml9UW-AeA&oh=00_Af4Y0IvhWCSQbuKpNURrnQdtqRdZnnkontOKU0m9NRYF0A&oe=6A10C694",
+            "username": "galaxycoils"
+          },
+          "profileId": "6a0afbfcf1b64bfae0e25c0c",
+          "customMedia": [],
+          "scheduledFor": "2026-05-19T15:00:00.000Z",
+          "platformSpecificData": {
+            "__platformUserIdSnapshot": "26753942627588440",
+            "__usernameSnapshot": "galaxycoils"
+          },
+          "status": "pending",
+          "publishAttempts": 0,
+          "contentHash": "8c6ebf3aa90072863474701c02c1226f",
+          "_id": "6a0b4b4581ec7bd846a822a2"
+        }
+      ],
+      "scheduledFor": "2026-05-19T15:00:00.000Z",
+      "timezone": "UTC",
+      "status": "scheduled",
+      "tags": [],
+      "hashtags": [],
+      "mentions": [],
+      "visibility": "public",
+      "crosspostingEnabled": true,
+      "metadata": {
+        "usageCounted": true
+      },
+      "publishAttempts": 0,
+      "contentHash": "8c6ebf3aa90072863474701c02c1226f",
+      "recycling": {
+        "enabled": false,
+        "gapFreq": "month",
+        "recycleCount": 0,
+        "contentVariations": [],
+        "contentVariationIndex": 0
+      },
+      "createdAt": "2026-05-18T17:24:21.741Z",
+      "updatedAt": "2026-05-18T17:24:21.741Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a0b4b44b78ff4a2ede10a4e",
+      "userId": {
+        "_id": "6a0afbfcf1b64bfae0e25c0a",
+        "name": "Dariush",
+        "email": "tahamtandariush@gmail.com",
+        "image": "https://lh3.googleusercontent.com/a/ACg8ocJISrcuKjkq6kOiZsQMW5adXLqVrE3uCbqbvP4sJSa5sIkfF_POtA=s96-c"
+      },
+      "title": "",
+      "content": "Day 17: Cinematic camera movements explained. #filming #drone",
+      "mediaItems": [
+        {
+          "type": "video",
+          "url": "https://videos.pexels.com/video-files/32305786/13777705_1920_1080_24fps.mp4",
+          "_id": "6a0b4b44b78ff4a2ede10a4f"
+        }
+      ],
+      "platforms": [
+        {
+          "platform": "instagram",
+          "accountId": {
+            "_id": "6a0afc8a5e333c0529912a50",
+            "profileId": "6a0afbfcf1b64bfae0e25c0c",
+            "platform": "instagram",
+            "displayName": "DariusTheKing",
+            "isActive": true,
+            "profilePicture": "https://scontent-lhr6-1.cdninstagram.com/v/t51.82787-19/524379541_18378684478122203_7661966579575208829_n.jpg?stp=dst-jpg_s206x206_tt6&_nc_cat=102&ccb=7-5&_nc_sid=bf7eb4&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLnd3dy4xMDgwLkMzIn0%3D&_nc_ohc=xq9-b22M4nsQ7kNvwGNf1So&_nc_oc=AdoW30QZJyjA3O56FDis13eOyNazPj_xnWwKBH8b1szxl_JYsfJh8y-QPg2njRgvbo4&_nc_zt=24&_nc_ht=scontent-lhr6-1.cdninstagram.com&edm=AP4hL3IEAAAA&_nc_gid=IdhcqNRpb0Xs15Og7tO2tA&_nc_tpa=Q5bMBQGSXuS2EpRw9LSwLSu4YcIo51RMNsV_OvVMOBwi1Y6lDavVSd48UH_ctp17IIYF95Hg9ml9UW-AeA&oh=00_Af4Y0IvhWCSQbuKpNURrnQdtqRdZnnkontOKU0m9NRYF0A&oe=6A10C694",
+            "username": "galaxycoils"
+          },
+          "profileId": "6a0afbfcf1b64bfae0e25c0c",
+          "customMedia": [],
+          "scheduledFor": "2026-05-19T14:00:00.000Z",
+          "platformSpecificData": {
+            "__platformUserIdSnapshot": "26753942627588440",
+            "__usernameSnapshot": "galaxycoils"
+          },
+          "status": "pending",
+          "publishAttempts": 0,
+          "contentHash": "81ed9bb3152550a3a23cdcf8adffa840",
+          "_id": "6a0b4b44b78ff4a2ede10a50"
+        }
+      ],
+      "scheduledFor": "2026-05-19T14:00:00.000Z",
+      "timezone": "UTC",
+      "status": "scheduled",
+      "tags": [],
+      "hashtags": [],
+      "mentions": [],
+      "visibility": "public",
+      "crosspostingEnabled": true,
+      "metadata": {
+        "usageCounted": true
+      },
+      "publishAttempts": 0,
+      "contentHash": "81ed9bb3152550a3a23cdcf8adffa840",
+      "recycling": {
+        "enabled": false,
+        "gapFreq": "month",
+        "recycleCount": 0,
+        "contentVariations": [],
+        "contentVariationIndex": 0
+      },
+      "createdAt": "2026-05-18T17:24:20.639Z",
+      "updatedAt": "2026-05-18T17:24:20.639Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a0b4b43b78ff4a2ede10a1e",
+      "userId": {
+        "_id": "6a0afbfcf1b64bfae0e25c0a",
+        "name": "Dariush",
+        "email": "tahamtandariush@gmail.com",
+        "image": "https://lh3.googleusercontent.com/a/ACg8ocJISrcuKjkq6kOiZsQMW5adXLqVrE3uCbqbvP4sJSa5sIkfF_POtA=s96-c"
+      },
+      "title": "",
+      "content": "Day 16: Building drone empires with software. #startup #drone",
+      "mediaItems": [
+        {
+          "type": "video",
+          "url": "https://videos.pexels.com/video-files/33410350/14221715_1920_1080_25fps.mp4",
+          "_id": "6a0b4b43b78ff4a2ede10a1f"
+        }
+      ],
+      "platforms": [
+        {
+          "platform": "instagram",
+          "accountId": {
+            "_id": "6a0afc8a5e333c0529912a50",
+            "profileId": "6a0afbfcf1b64bfae0e25c0c",
+            "platform": "instagram",
+            "displayName": "DariusTheKing",
+            "isActive": true,
+            "profilePicture": "https://scontent-lhr6-1.cdninstagram.com/v/t51.82787-19/524379541_18378684478122203_7661966579575208829_n.jpg?stp=dst-jpg_s206x206_tt6&_nc_cat=102&ccb=7-5&_nc_sid=bf7eb4&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLnd3dy4xMDgwLkMzIn0%3D&_nc_ohc=xq9-b22M4nsQ7kNvwGNf1So&_nc_oc=AdoW30QZJyjA3O56FDis13eOyNazPj_xnWwKBH8b1szxl_JYsfJh8y-QPg2njRgvbo4&_nc_zt=24&_nc_ht=scontent-lhr6-1.cdninstagram.com&edm=AP4hL3IEAAAA&_nc_gid=IdhcqNRpb0Xs15Og7tO2tA&_nc_tpa=Q5bMBQGSXuS2EpRw9LSwLSu4YcIo51RMNsV_OvVMOBwi1Y6lDavVSd48UH_ctp17IIYF95Hg9ml9UW-AeA&oh=00_Af4Y0IvhWCSQbuKpNURrnQdtqRdZnnkontOKU0m9NRYF0A&oe=6A10C694",
+            "username": "galaxycoils"
+          },
+          "profileId": "6a0afbfcf1b64bfae0e25c0c",
+          "customMedia": [],
+          "scheduledFor": "2026-05-19T13:00:00.000Z",
+          "platformSpecificData": {
+            "__platformUserIdSnapshot": "26753942627588440",
+            "__usernameSnapshot": "galaxycoils"
+          },
+          "status": "pending",
+          "publishAttempts": 0,
+          "contentHash": "99c3b6a6514d07a965c3500ee44a2bad",
+          "_id": "6a0b4b43b78ff4a2ede10a20"
+        }
+      ],
+      "scheduledFor": "2026-05-19T13:00:00.000Z",
+      "timezone": "UTC",
+      "status": "scheduled",
+      "tags": [],
+      "hashtags": [],
+      "mentions": [],
+      "visibility": "public",
+      "crosspostingEnabled": true,
+      "metadata": {
+        "usageCounted": true
+      },
+      "publishAttempts": 0,
+      "contentHash": "99c3b6a6514d07a965c3500ee44a2bad",
+      "recycling": {
+        "enabled": false,
+        "gapFreq": "month",
+        "recycleCount": 0,
+        "contentVariations": [],
+        "contentVariationIndex": 0
+      },
+      "createdAt": "2026-05-18T17:24:19.542Z",
+      "updatedAt": "2026-05-18T17:24:19.542Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a0b4b4235e78fcd84c0848c",
+      "userId": {
+        "_id": "6a0afbfcf1b64bfae0e25c0a",
+        "name": "Dariush",
+        "email": "tahamtandariush@gmail.com",
+        "image": "https://lh3.googleusercontent.com/a/ACg8ocJISrcuKjkq6kOiZsQMW5adXLqVrE3uCbqbvP4sJSa5sIkfF_POtA=s96-c"
+      },
+      "title": "",
+      "content": "Day 15: Aerial forest exploration. #forest #drone",
+      "mediaItems": [
+        {
+          "type": "video",
+          "url": "https://videos.pexels.com/video-files/26081715/11929630_1920_1080_60fps.mp4",
+          "_id": "6a0b4b4235e78fcd84c0848d"
+        }
+      ],
+      "platforms": [
+        {
+          "platform": "instagram",
+          "accountId": {
+            "_id": "6a0afc8a5e333c0529912a50",
+            "profileId": "6a0afbfcf1b64bfae0e25c0c",
+            "platform": "instagram",
+            "displayName": "DariusTheKing",
+            "isActive": true,
+            "profilePicture": "https://scontent-lhr6-1.cdninstagram.com/v/t51.82787-19/524379541_18378684478122203_7661966579575208829_n.jpg?stp=dst-jpg_s206x206_tt6&_nc_cat=102&ccb=7-5&_nc_sid=bf7eb4&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLnd3dy4xMDgwLkMzIn0%3D&_nc_ohc=xq9-b22M4nsQ7kNvwGNf1So&_nc_oc=AdoW30QZJyjA3O56FDis13eOyNazPj_xnWwKBH8b1szxl_JYsfJh8y-QPg2njRgvbo4&_nc_zt=24&_nc_ht=scontent-lhr6-1.cdninstagram.com&edm=AP4hL3IEAAAA&_nc_gid=IdhcqNRpb0Xs15Og7tO2tA&_nc_tpa=Q5bMBQGSXuS2EpRw9LSwLSu4YcIo51RMNsV_OvVMOBwi1Y6lDavVSd48UH_ctp17IIYF95Hg9ml9UW-AeA&oh=00_Af4Y0IvhWCSQbuKpNURrnQdtqRdZnnkontOKU0m9NRYF0A&oe=6A10C694",
+            "username": "galaxycoils"
+          },
+          "profileId": "6a0afbfcf1b64bfae0e25c0c",
+          "customMedia": [],
+          "scheduledFor": "2026-05-19T12:00:00.000Z",
+          "platformSpecificData": {
+            "__platformUserIdSnapshot": "26753942627588440",
+            "__usernameSnapshot": "galaxycoils"
+          },
+          "status": "pending",
+          "publishAttempts": 0,
+          "contentHash": "a055cafd47a849f5868d156ecf1a2730",
+          "_id": "6a0b4b4235e78fcd84c0848e"
+        }
+      ],
+      "scheduledFor": "2026-05-19T12:00:00.000Z",
+      "timezone": "UTC",
+      "status": "scheduled",
+      "tags": [],
+      "hashtags": [],
+      "mentions": [],
+      "visibility": "public",
+      "crosspostingEnabled": true,
+      "metadata": {
+        "usageCounted": true
+      },
+      "publishAttempts": 0,
+      "contentHash": "a055cafd47a849f5868d156ecf1a2730",
+      "recycling": {
+        "enabled": false,
+        "gapFreq": "month",
+        "recycleCount": 0,
+        "contentVariations": [],
+        "contentVariationIndex": 0
+      },
+      "createdAt": "2026-05-18T17:24:18.397Z",
+      "updatedAt": "2026-05-18T17:24:18.397Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a0b4b41b78ff4a2ede109b0",
+      "userId": {
+        "_id": "6a0afbfcf1b64bfae0e25c0a",
+        "name": "Dariush",
+        "email": "tahamtandariush@gmail.com",
+        "image": "https://lh3.googleusercontent.com/a/ACg8ocJISrcuKjkq6kOiZsQMW5adXLqVrE3uCbqbvP4sJSa5sIkfF_POtA=s96-c"
+      },
+      "title": "",
+      "content": "Day 14: Tech-driven creativity. #creative #drone",
+      "mediaItems": [
+        {
+          "type": "video",
+          "url": "https://videos.pexels.com/video-files/8747395/8747395-uhd_2732_1440_30fps.mp4",
+          "_id": "6a0b4b41b78ff4a2ede109b1"
+        }
+      ],
+      "platforms": [
+        {
+          "platform": "instagram",
+          "accountId": {
+            "_id": "6a0afc8a5e333c0529912a50",
+            "profileId": "6a0afbfcf1b64bfae0e25c0c",
+            "platform": "instagram",
+            "displayName": "DariusTheKing",
+            "isActive": true,
+            "profilePicture": "https://scontent-lhr6-1.cdninstagram.com/v/t51.82787-19/524379541_18378684478122203_7661966579575208829_n.jpg?stp=dst-jpg_s206x206_tt6&_nc_cat=102&ccb=7-5&_nc_sid=bf7eb4&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLnd3dy4xMDgwLkMzIn0%3D&_nc_ohc=xq9-b22M4nsQ7kNvwGNf1So&_nc_oc=AdoW30QZJyjA3O56FDis13eOyNazPj_xnWwKBH8b1szxl_JYsfJh8y-QPg2njRgvbo4&_nc_zt=24&_nc_ht=scontent-lhr6-1.cdninstagram.com&edm=AP4hL3IEAAAA&_nc_gid=IdhcqNRpb0Xs15Og7tO2tA&_nc_tpa=Q5bMBQGSXuS2EpRw9LSwLSu4YcIo51RMNsV_OvVMOBwi1Y6lDavVSd48UH_ctp17IIYF95Hg9ml9UW-AeA&oh=00_Af4Y0IvhWCSQbuKpNURrnQdtqRdZnnkontOKU0m9NRYF0A&oe=6A10C694",
+            "username": "galaxycoils"
+          },
+          "profileId": "6a0afbfcf1b64bfae0e25c0c",
+          "customMedia": [],
+          "scheduledFor": "2026-05-19T11:00:00.000Z",
+          "platformSpecificData": {
+            "__platformUserIdSnapshot": "26753942627588440",
+            "__usernameSnapshot": "galaxycoils"
+          },
+          "status": "pending",
+          "publishAttempts": 0,
+          "contentHash": "e4f9d9871d88b7f376689c27057669bf",
+          "_id": "6a0b4b41b78ff4a2ede109b2"
+        }
+      ],
+      "scheduledFor": "2026-05-19T11:00:00.000Z",
+      "timezone": "UTC",
+      "status": "scheduled",
+      "tags": [],
+      "hashtags": [],
+      "mentions": [],
+      "visibility": "public",
+      "crosspostingEnabled": true,
+      "metadata": {
+        "usageCounted": true
+      },
+      "publishAttempts": 0,
+      "contentHash": "e4f9d9871d88b7f376689c27057669bf",
+      "recycling": {
+        "enabled": false,
+        "gapFreq": "month",
+        "recycleCount": 0,
+        "contentVariations": [],
+        "contentVariationIndex": 0
+      },
+      "createdAt": "2026-05-18T17:24:17.108Z",
+      "updatedAt": "2026-05-18T17:24:17.108Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a0b4b3d81ec7bd846a82188",
+      "userId": {
+        "_id": "6a0afbfcf1b64bfae0e25c0a",
+        "name": "Dariush",
+        "email": "tahamtandariush@gmail.com",
+        "image": "https://lh3.googleusercontent.com/a/ACg8ocJISrcuKjkq6kOiZsQMW5adXLqVrE3uCbqbvP4sJSa5sIkfF_POtA=s96-c"
+      },
+      "title": "",
+      "content": "Day 13: Epic mountain views from above. #mountain #drone",
+      "mediaItems": [
+        {
+          "type": "video",
+          "url": "https://videos.pexels.com/video-files/32305810/13777820_1920_1080_24fps.mp4",
+          "_id": "6a0b4b3d81ec7bd846a82189"
+        }
+      ],
+      "platforms": [
+        {
+          "platform": "instagram",
+          "accountId": {
+            "_id": "6a0afc8a5e333c0529912a50",
+            "profileId": "6a0afbfcf1b64bfae0e25c0c",
+            "platform": "instagram",
+            "displayName": "DariusTheKing",
+            "isActive": true,
+            "profilePicture": "https://scontent-lhr6-1.cdninstagram.com/v/t51.82787-19/524379541_18378684478122203_7661966579575208829_n.jpg?stp=dst-jpg_s206x206_tt6&_nc_cat=102&ccb=7-5&_nc_sid=bf7eb4&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLnd3dy4xMDgwLkMzIn0%3D&_nc_ohc=xq9-b22M4nsQ7kNvwGNf1So&_nc_oc=AdoW30QZJyjA3O56FDis13eOyNazPj_xnWwKBH8b1szxl_JYsfJh8y-QPg2njRgvbo4&_nc_zt=24&_nc_ht=scontent-lhr6-1.cdninstagram.com&edm=AP4hL3IEAAAA&_nc_gid=IdhcqNRpb0Xs15Og7tO2tA&_nc_tpa=Q5bMBQGSXuS2EpRw9LSwLSu4YcIo51RMNsV_OvVMOBwi1Y6lDavVSd48UH_ctp17IIYF95Hg9ml9UW-AeA&oh=00_Af4Y0IvhWCSQbuKpNURrnQdtqRdZnnkontOKU0m9NRYF0A&oe=6A10C694",
+            "username": "galaxycoils"
+          },
+          "profileId": "6a0afbfcf1b64bfae0e25c0c",
+          "customMedia": [],
+          "scheduledFor": "2026-05-19T10:00:00.000Z",
+          "platformSpecificData": {
+            "__platformUserIdSnapshot": "26753942627588440",
+            "__usernameSnapshot": "galaxycoils"
+          },
+          "status": "pending",
+          "publishAttempts": 0,
+          "contentHash": "c18ad6df4e80bb1c45e5b96865a0cc14",
+          "_id": "6a0b4b3d81ec7bd846a8218a"
+        }
+      ],
+      "scheduledFor": "2026-05-19T10:00:00.000Z",
+      "timezone": "UTC",
+      "status": "scheduled",
+      "tags": [],
+      "hashtags": [],
+      "mentions": [],
+      "visibility": "public",
+      "crosspostingEnabled": true,
+      "metadata": {
+        "usageCounted": true
+      },
+      "publishAttempts": 0,
+      "contentHash": "c18ad6df4e80bb1c45e5b96865a0cc14",
+      "recycling": {
+        "enabled": false,
+        "gapFreq": "month",
+        "recycleCount": 0,
+        "contentVariations": [],
+        "contentVariationIndex": 0
+      },
+      "createdAt": "2026-05-18T17:24:13.712Z",
+      "updatedAt": "2026-05-18T17:24:13.712Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a0b4b3b35e78fcd84c0842b",
+      "userId": {
+        "_id": "6a0afbfcf1b64bfae0e25c0a",
+        "name": "Dariush",
+        "email": "tahamtandariush@gmail.com",
+        "image": "https://lh3.googleusercontent.com/a/ACg8ocJISrcuKjkq6kOiZsQMW5adXLqVrE3uCbqbvP4sJSa5sIkfF_POtA=s96-c"
+      },
+      "title": "",
+      "content": "Day 12: Productivity tools for pilots. #dronepilot #tools",
+      "mediaItems": [
+        {
+          "type": "video",
+          "url": "https://videos.pexels.com/video-files/32305799/13777775_1920_1080_24fps.mp4",
+          "_id": "6a0b4b3b35e78fcd84c0842c"
+        }
+      ],
+      "platforms": [
+        {
+          "platform": "instagram",
+          "accountId": {
+            "_id": "6a0afc8a5e333c0529912a50",
+            "profileId": "6a0afbfcf1b64bfae0e25c0c",
+            "platform": "instagram",
+            "displayName": "DariusTheKing",
+            "isActive": true,
+            "profilePicture": "https://scontent-lhr6-1.cdninstagram.com/v/t51.82787-19/524379541_18378684478122203_7661966579575208829_n.jpg?stp=dst-jpg_s206x206_tt6&_nc_cat=102&ccb=7-5&_nc_sid=bf7eb4&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLnd3dy4xMDgwLkMzIn0%3D&_nc_ohc=xq9-b22M4nsQ7kNvwGNf1So&_nc_oc=AdoW30QZJyjA3O56FDis13eOyNazPj_xnWwKBH8b1szxl_JYsfJh8y-QPg2njRgvbo4&_nc_zt=24&_nc_ht=scontent-lhr6-1.cdninstagram.com&edm=AP4hL3IEAAAA&_nc_gid=IdhcqNRpb0Xs15Og7tO2tA&_nc_tpa=Q5bMBQGSXuS2EpRw9LSwLSu4YcIo51RMNsV_OvVMOBwi1Y6lDavVSd48UH_ctp17IIYF95Hg9ml9UW-AeA&oh=00_Af4Y0IvhWCSQbuKpNURrnQdtqRdZnnkontOKU0m9NRYF0A&oe=6A10C694",
+            "username": "galaxycoils"
+          },
+          "profileId": "6a0afbfcf1b64bfae0e25c0c",
+          "customMedia": [],
+          "scheduledFor": "2026-05-19T09:00:00.000Z",
+          "platformSpecificData": {
+            "__platformUserIdSnapshot": "26753942627588440",
+            "__usernameSnapshot": "galaxycoils"
+          },
+          "status": "pending",
+          "publishAttempts": 0,
+          "contentHash": "2e4fda8f1d877c3760f9cb2e5cf47311",
+          "_id": "6a0b4b3b35e78fcd84c0842d"
+        }
+      ],
+      "scheduledFor": "2026-05-19T09:00:00.000Z",
+      "timezone": "UTC",
+      "status": "scheduled",
+      "tags": [],
+      "hashtags": [],
+      "mentions": [],
+      "visibility": "public",
+      "crosspostingEnabled": true,
+      "metadata": {
+        "usageCounted": true
+      },
+      "publishAttempts": 0,
+      "contentHash": "2e4fda8f1d877c3760f9cb2e5cf47311",
+      "recycling": {
+        "enabled": false,
+        "gapFreq": "month",
+        "recycleCount": 0,
+        "contentVariations": [],
+        "contentVariationIndex": 0
+      },
+      "createdAt": "2026-05-18T17:24:11.835Z",
+      "updatedAt": "2026-05-18T17:24:11.835Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a0b4b3a81ec7bd846a820c1",
+      "userId": {
+        "_id": "6a0afbfcf1b64bfae0e25c0a",
+        "name": "Dariush",
+        "email": "tahamtandariush@gmail.com",
+        "image": "https://lh3.googleusercontent.com/a/ACg8ocJISrcuKjkq6kOiZsQMW5adXLqVrE3uCbqbvP4sJSa5sIkfF_POtA=s96-c"
+      },
+      "title": "",
+      "content": "Day 11: Aerial storytelling at its best. #storytelling #drone",
+      "mediaItems": [
+        {
+          "type": "video",
+          "url": "https://videos.pexels.com/video-files/33410349/14221700_1920_1080_25fps.mp4",
+          "_id": "6a0b4b3a81ec7bd846a820c2"
+        }
+      ],
+      "platforms": [
+        {
+          "platform": "instagram",
+          "accountId": {
+            "_id": "6a0afc8a5e333c0529912a50",
+            "profileId": "6a0afbfcf1b64bfae0e25c0c",
+            "platform": "instagram",
+            "displayName": "DariusTheKing",
+            "isActive": true,
+            "profilePicture": "https://scontent-lhr6-1.cdninstagram.com/v/t51.82787-19/524379541_18378684478122203_7661966579575208829_n.jpg?stp=dst-jpg_s206x206_tt6&_nc_cat=102&ccb=7-5&_nc_sid=bf7eb4&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLnd3dy4xMDgwLkMzIn0%3D&_nc_ohc=xq9-b22M4nsQ7kNvwGNf1So&_nc_oc=AdoW30QZJyjA3O56FDis13eOyNazPj_xnWwKBH8b1szxl_JYsfJh8y-QPg2njRgvbo4&_nc_zt=24&_nc_ht=scontent-lhr6-1.cdninstagram.com&edm=AP4hL3IEAAAA&_nc_gid=IdhcqNRpb0Xs15Og7tO2tA&_nc_tpa=Q5bMBQGSXuS2EpRw9LSwLSu4YcIo51RMNsV_OvVMOBwi1Y6lDavVSd48UH_ctp17IIYF95Hg9ml9UW-AeA&oh=00_Af4Y0IvhWCSQbuKpNURrnQdtqRdZnnkontOKU0m9NRYF0A&oe=6A10C694",
+            "username": "galaxycoils"
+          },
+          "profileId": "6a0afbfcf1b64bfae0e25c0c",
+          "customMedia": [],
+          "scheduledFor": "2026-05-19T08:00:00.000Z",
+          "platformSpecificData": {
+            "__platformUserIdSnapshot": "26753942627588440",
+            "__usernameSnapshot": "galaxycoils"
+          },
+          "status": "pending",
+          "publishAttempts": 0,
+          "contentHash": "e73d71450b02639236c12b059d4ece42",
+          "_id": "6a0b4b3a81ec7bd846a820c3"
+        }
+      ],
+      "scheduledFor": "2026-05-19T08:00:00.000Z",
+      "timezone": "UTC",
+      "status": "scheduled",
+      "tags": [],
+      "hashtags": [],
+      "mentions": [],
+      "visibility": "public",
+      "crosspostingEnabled": true,
+      "metadata": {
+        "usageCounted": true
+      },
+      "publishAttempts": 0,
+      "contentHash": "e73d71450b02639236c12b059d4ece42",
+      "recycling": {
+        "enabled": false,
+        "gapFreq": "month",
+        "recycleCount": 0,
+        "contentVariations": [],
+        "contentVariationIndex": 0
+      },
+      "createdAt": "2026-05-18T17:24:10.599Z",
+      "updatedAt": "2026-05-18T17:24:10.599Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a0b4b3935e78fcd84c083a6",
+      "userId": {
+        "_id": "6a0afbfcf1b64bfae0e25c0a",
+        "name": "Dariush",
+        "email": "tahamtandariush@gmail.com",
+        "image": "https://lh3.googleusercontent.com/a/ACg8ocJISrcuKjkq6kOiZsQMW5adXLqVrE3uCbqbvP4sJSa5sIkfF_POtA=s96-c"
+      },
+      "title": "",
+      "content": "Day 10: Scaling creative output with tech. #automation #tech",
+      "mediaItems": [
+        {
+          "type": "video",
+          "url": "https://videos.pexels.com/video-files/32305805/13777801_1920_1080_24fps.mp4",
+          "_id": "6a0b4b3935e78fcd84c083a7"
+        }
+      ],
+      "platforms": [
+        {
+          "platform": "instagram",
+          "accountId": {
+            "_id": "6a0afc8a5e333c0529912a50",
+            "profileId": "6a0afbfcf1b64bfae0e25c0c",
+            "platform": "instagram",
+            "displayName": "DariusTheKing",
+            "isActive": true,
+            "profilePicture": "https://scontent-lhr6-1.cdninstagram.com/v/t51.82787-19/524379541_18378684478122203_7661966579575208829_n.jpg?stp=dst-jpg_s206x206_tt6&_nc_cat=102&ccb=7-5&_nc_sid=bf7eb4&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLnd3dy4xMDgwLkMzIn0%3D&_nc_ohc=xq9-b22M4nsQ7kNvwGNf1So&_nc_oc=AdoW30QZJyjA3O56FDis13eOyNazPj_xnWwKBH8b1szxl_JYsfJh8y-QPg2njRgvbo4&_nc_zt=24&_nc_ht=scontent-lhr6-1.cdninstagram.com&edm=AP4hL3IEAAAA&_nc_gid=IdhcqNRpb0Xs15Og7tO2tA&_nc_tpa=Q5bMBQGSXuS2EpRw9LSwLSu4YcIo51RMNsV_OvVMOBwi1Y6lDavVSd48UH_ctp17IIYF95Hg9ml9UW-AeA&oh=00_Af4Y0IvhWCSQbuKpNURrnQdtqRdZnnkontOKU0m9NRYF0A&oe=6A10C694",
+            "username": "galaxycoils"
+          },
+          "profileId": "6a0afbfcf1b64bfae0e25c0c",
+          "customMedia": [],
+          "scheduledFor": "2026-05-19T07:00:00.000Z",
+          "platformSpecificData": {
+            "__platformUserIdSnapshot": "26753942627588440",
+            "__usernameSnapshot": "galaxycoils"
+          },
+          "status": "pending",
+          "publishAttempts": 0,
+          "contentHash": "dc90262367308b3394244db821eecaea",
+          "_id": "6a0b4b3935e78fcd84c083a8"
+        }
+      ],
+      "scheduledFor": "2026-05-19T07:00:00.000Z",
+      "timezone": "UTC",
+      "status": "scheduled",
+      "tags": [],
+      "hashtags": [],
+      "mentions": [],
+      "visibility": "public",
+      "crosspostingEnabled": true,
+      "metadata": {
+        "usageCounted": true
+      },
+      "publishAttempts": 0,
+      "contentHash": "dc90262367308b3394244db821eecaea",
+      "recycling": {
+        "enabled": false,
+        "gapFreq": "month",
+        "recycleCount": 0,
+        "contentVariations": [],
+        "contentVariationIndex": 0
+      },
+      "createdAt": "2026-05-18T17:24:09.133Z",
+      "updatedAt": "2026-05-18T17:24:09.133Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a0b4b3735e78fcd84c08359",
+      "userId": {
+        "_id": "6a0afbfcf1b64bfae0e25c0a",
+        "name": "Dariush",
+        "email": "tahamtandariush@gmail.com",
+        "image": "https://lh3.googleusercontent.com/a/ACg8ocJISrcuKjkq6kOiZsQMW5adXLqVrE3uCbqbvP4sJSa5sIkfF_POtA=s96-c"
+      },
+      "title": "",
+      "content": "Day 9: Drone photography business essentials. #business #photography",
+      "mediaItems": [
+        {
+          "type": "video",
+          "url": "https://videos.pexels.com/video-files/32305801/13777785_1920_1080_24fps.mp4",
+          "_id": "6a0b4b3735e78fcd84c0835a"
+        }
+      ],
+      "platforms": [
+        {
+          "platform": "instagram",
+          "accountId": {
+            "_id": "6a0afc8a5e333c0529912a50",
+            "profileId": "6a0afbfcf1b64bfae0e25c0c",
+            "platform": "instagram",
+            "displayName": "DariusTheKing",
+            "isActive": true,
+            "profilePicture": "https://scontent-lhr6-1.cdninstagram.com/v/t51.82787-19/524379541_18378684478122203_7661966579575208829_n.jpg?stp=dst-jpg_s206x206_tt6&_nc_cat=102&ccb=7-5&_nc_sid=bf7eb4&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLnd3dy4xMDgwLkMzIn0%3D&_nc_ohc=xq9-b22M4nsQ7kNvwGNf1So&_nc_oc=AdoW30QZJyjA3O56FDis13eOyNazPj_xnWwKBH8b1szxl_JYsfJh8y-QPg2njRgvbo4&_nc_zt=24&_nc_ht=scontent-lhr6-1.cdninstagram.com&edm=AP4hL3IEAAAA&_nc_gid=IdhcqNRpb0Xs15Og7tO2tA&_nc_tpa=Q5bMBQGSXuS2EpRw9LSwLSu4YcIo51RMNsV_OvVMOBwi1Y6lDavVSd48UH_ctp17IIYF95Hg9ml9UW-AeA&oh=00_Af4Y0IvhWCSQbuKpNURrnQdtqRdZnnkontOKU0m9NRYF0A&oe=6A10C694",
+            "username": "galaxycoils"
+          },
+          "profileId": "6a0afbfcf1b64bfae0e25c0c",
+          "customMedia": [],
+          "scheduledFor": "2026-05-19T06:00:00.000Z",
+          "platformSpecificData": {
+            "__platformUserIdSnapshot": "26753942627588440",
+            "__usernameSnapshot": "galaxycoils"
+          },
+          "status": "pending",
+          "publishAttempts": 0,
+          "contentHash": "59995825254d3d2f2d113d8308b804db",
+          "_id": "6a0b4b3735e78fcd84c0835b"
+        }
+      ],
+      "scheduledFor": "2026-05-19T06:00:00.000Z",
+      "timezone": "UTC",
+      "status": "scheduled",
+      "tags": [],
+      "hashtags": [],
+      "mentions": [],
+      "visibility": "public",
+      "crosspostingEnabled": true,
+      "metadata": {
+        "usageCounted": true
+      },
+      "publishAttempts": 0,
+      "contentHash": "59995825254d3d2f2d113d8308b804db",
+      "recycling": {
+        "enabled": false,
+        "gapFreq": "month",
+        "recycleCount": 0,
+        "contentVariations": [],
+        "contentVariationIndex": 0
+      },
+      "createdAt": "2026-05-18T17:24:07.984Z",
+      "updatedAt": "2026-05-18T17:24:07.984Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a0b4b3635e78fcd84c08314",
+      "userId": {
+        "_id": "6a0afbfcf1b64bfae0e25c0a",
+        "name": "Dariush",
+        "email": "tahamtandariush@gmail.com",
+        "image": "https://lh3.googleusercontent.com/a/ACg8ocJISrcuKjkq6kOiZsQMW5adXLqVrE3uCbqbvP4sJSa5sIkfF_POtA=s96-c"
+      },
+      "title": "",
+      "content": "Day 8: SaaS for drone business scalability. #saas #business",
+      "mediaItems": [
+        {
+          "type": "video",
+          "url": "https://videos.pexels.com/video-files/32305795/13777755_1920_1080_24fps.mp4",
+          "_id": "6a0b4b3635e78fcd84c08315"
+        }
+      ],
+      "platforms": [
+        {
+          "platform": "instagram",
+          "accountId": {
+            "_id": "6a0afc8a5e333c0529912a50",
+            "profileId": "6a0afbfcf1b64bfae0e25c0c",
+            "platform": "instagram",
+            "displayName": "DariusTheKing",
+            "isActive": true,
+            "profilePicture": "https://scontent-lhr6-1.cdninstagram.com/v/t51.82787-19/524379541_18378684478122203_7661966579575208829_n.jpg?stp=dst-jpg_s206x206_tt6&_nc_cat=102&ccb=7-5&_nc_sid=bf7eb4&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLnd3dy4xMDgwLkMzIn0%3D&_nc_ohc=xq9-b22M4nsQ7kNvwGNf1So&_nc_oc=AdoW30QZJyjA3O56FDis13eOyNazPj_xnWwKBH8b1szxl_JYsfJh8y-QPg2njRgvbo4&_nc_zt=24&_nc_ht=scontent-lhr6-1.cdninstagram.com&edm=AP4hL3IEAAAA&_nc_gid=IdhcqNRpb0Xs15Og7tO2tA&_nc_tpa=Q5bMBQGSXuS2EpRw9LSwLSu4YcIo51RMNsV_OvVMOBwi1Y6lDavVSd48UH_ctp17IIYF95Hg9ml9UW-AeA&oh=00_Af4Y0IvhWCSQbuKpNURrnQdtqRdZnnkontOKU0m9NRYF0A&oe=6A10C694",
+            "username": "galaxycoils"
+          },
+          "profileId": "6a0afbfcf1b64bfae0e25c0c",
+          "customMedia": [],
+          "scheduledFor": "2026-05-19T05:00:00.000Z",
+          "platformSpecificData": {
+            "__platformUserIdSnapshot": "26753942627588440",
+            "__usernameSnapshot": "galaxycoils"
+          },
+          "status": "pending",
+          "publishAttempts": 0,
+          "contentHash": "0756e1c5cd3778dde5c5a43b52b88802",
+          "_id": "6a0b4b3635e78fcd84c08316"
+        }
+      ],
+      "scheduledFor": "2026-05-19T05:00:00.000Z",
+      "timezone": "UTC",
+      "status": "scheduled",
+      "tags": [],
+      "hashtags": [],
+      "mentions": [],
+      "visibility": "public",
+      "crosspostingEnabled": true,
+      "metadata": {
+        "usageCounted": true
+      },
+      "publishAttempts": 0,
+      "contentHash": "0756e1c5cd3778dde5c5a43b52b88802",
+      "recycling": {
+        "enabled": false,
+        "gapFreq": "month",
+        "recycleCount": 0,
+        "contentVariations": [],
+        "contentVariationIndex": 0
+      },
+      "createdAt": "2026-05-18T17:24:06.793Z",
+      "updatedAt": "2026-05-18T17:24:06.793Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a0b4b35d681ff20ef420686",
+      "userId": {
+        "_id": "6a0afbfcf1b64bfae0e25c0a",
+        "name": "Dariush",
+        "email": "tahamtandariush@gmail.com",
+        "image": "https://lh3.googleusercontent.com/a/ACg8ocJISrcuKjkq6kOiZsQMW5adXLqVrE3uCbqbvP4sJSa5sIkfF_POtA=s96-c"
+      },
+      "title": "",
+      "content": "Day 7: The future of aerial cinematography. #futuretech #cinematic",
+      "mediaItems": [
+        {
+          "type": "video",
+          "url": "https://videos.pexels.com/video-files/32305790/13777730_1920_1080_24fps.mp4",
+          "_id": "6a0b4b35d681ff20ef420687"
+        }
+      ],
+      "platforms": [
+        {
+          "platform": "instagram",
+          "accountId": {
+            "_id": "6a0afc8a5e333c0529912a50",
+            "profileId": "6a0afbfcf1b64bfae0e25c0c",
+            "platform": "instagram",
+            "displayName": "DariusTheKing",
+            "isActive": true,
+            "profilePicture": "https://scontent-lhr6-1.cdninstagram.com/v/t51.82787-19/524379541_18378684478122203_7661966579575208829_n.jpg?stp=dst-jpg_s206x206_tt6&_nc_cat=102&ccb=7-5&_nc_sid=bf7eb4&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLnd3dy4xMDgwLkMzIn0%3D&_nc_ohc=xq9-b22M4nsQ7kNvwGNf1So&_nc_oc=AdoW30QZJyjA3O56FDis13eOyNazPj_xnWwKBH8b1szxl_JYsfJh8y-QPg2njRgvbo4&_nc_zt=24&_nc_ht=scontent-lhr6-1.cdninstagram.com&edm=AP4hL3IEAAAA&_nc_gid=IdhcqNRpb0Xs15Og7tO2tA&_nc_tpa=Q5bMBQGSXuS2EpRw9LSwLSu4YcIo51RMNsV_OvVMOBwi1Y6lDavVSd48UH_ctp17IIYF95Hg9ml9UW-AeA&oh=00_Af4Y0IvhWCSQbuKpNURrnQdtqRdZnnkontOKU0m9NRYF0A&oe=6A10C694",
+            "username": "galaxycoils"
+          },
+          "profileId": "6a0afbfcf1b64bfae0e25c0c",
+          "customMedia": [],
+          "scheduledFor": "2026-05-19T04:00:00.000Z",
+          "platformSpecificData": {
+            "__platformUserIdSnapshot": "26753942627588440",
+            "__usernameSnapshot": "galaxycoils"
+          },
+          "status": "pending",
+          "publishAttempts": 0,
+          "contentHash": "6d6f95c68af8bb3eb68305c7bb75689c",
+          "_id": "6a0b4b35d681ff20ef420688"
+        }
+      ],
+      "scheduledFor": "2026-05-19T04:00:00.000Z",
+      "timezone": "UTC",
+      "status": "scheduled",
+      "tags": [],
+      "hashtags": [],
+      "mentions": [],
+      "visibility": "public",
+      "crosspostingEnabled": true,
+      "metadata": {
+        "usageCounted": true
+      },
+      "publishAttempts": 0,
+      "contentHash": "6d6f95c68af8bb3eb68305c7bb75689c",
+      "recycling": {
+        "enabled": false,
+        "gapFreq": "month",
+        "recycleCount": 0,
+        "contentVariations": [],
+        "contentVariationIndex": 0
+      },
+      "createdAt": "2026-05-18T17:24:05.340Z",
+      "updatedAt": "2026-05-18T17:24:05.340Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a0b4b3435e78fcd84c08241",
+      "userId": {
+        "_id": "6a0afbfcf1b64bfae0e25c0a",
+        "name": "Dariush",
+        "email": "tahamtandariush@gmail.com",
+        "image": "https://lh3.googleusercontent.com/a/ACg8ocJISrcuKjkq6kOiZsQMW5adXLqVrE3uCbqbvP4sJSa5sIkfF_POtA=s96-c"
+      },
+      "title": "",
+      "content": "Day 6: Advanced editing techniques for drone footage. #editing #dronelife",
+      "mediaItems": [
+        {
+          "type": "video",
+          "url": "https://videos.pexels.com/video-files/32305788/13777712_1920_1080_24fps.mp4",
+          "_id": "6a0b4b3435e78fcd84c08242"
+        }
+      ],
+      "platforms": [
+        {
+          "platform": "instagram",
+          "accountId": {
+            "_id": "6a0afc8a5e333c0529912a50",
+            "profileId": "6a0afbfcf1b64bfae0e25c0c",
+            "platform": "instagram",
+            "displayName": "DariusTheKing",
+            "isActive": true,
+            "profilePicture": "https://scontent-lhr6-1.cdninstagram.com/v/t51.82787-19/524379541_18378684478122203_7661966579575208829_n.jpg?stp=dst-jpg_s206x206_tt6&_nc_cat=102&ccb=7-5&_nc_sid=bf7eb4&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLnd3dy4xMDgwLkMzIn0%3D&_nc_ohc=xq9-b22M4nsQ7kNvwGNf1So&_nc_oc=AdoW30QZJyjA3O56FDis13eOyNazPj_xnWwKBH8b1szxl_JYsfJh8y-QPg2njRgvbo4&_nc_zt=24&_nc_ht=scontent-lhr6-1.cdninstagram.com&edm=AP4hL3IEAAAA&_nc_gid=IdhcqNRpb0Xs15Og7tO2tA&_nc_tpa=Q5bMBQGSXuS2EpRw9LSwLSu4YcIo51RMNsV_OvVMOBwi1Y6lDavVSd48UH_ctp17IIYF95Hg9ml9UW-AeA&oh=00_Af4Y0IvhWCSQbuKpNURrnQdtqRdZnnkontOKU0m9NRYF0A&oe=6A10C694",
+            "username": "galaxycoils"
+          },
+          "profileId": "6a0afbfcf1b64bfae0e25c0c",
+          "customMedia": [],
+          "scheduledFor": "2026-05-19T03:00:00.000Z",
+          "platformSpecificData": {
+            "__platformUserIdSnapshot": "26753942627588440",
+            "__usernameSnapshot": "galaxycoils"
+          },
+          "status": "pending",
+          "publishAttempts": 0,
+          "contentHash": "46c2938fe6deddca6c994f3ef53b9328",
+          "_id": "6a0b4b3435e78fcd84c08243"
+        }
+      ],
+      "scheduledFor": "2026-05-19T03:00:00.000Z",
+      "timezone": "UTC",
+      "status": "scheduled",
+      "tags": [],
+      "hashtags": [],
+      "mentions": [],
+      "visibility": "public",
+      "crosspostingEnabled": true,
+      "metadata": {
+        "usageCounted": true
+      },
+      "publishAttempts": 0,
+      "contentHash": "46c2938fe6deddca6c994f3ef53b9328",
+      "recycling": {
+        "enabled": false,
+        "gapFreq": "month",
+        "recycleCount": 0,
+        "contentVariations": [],
+        "contentVariationIndex": 0
+      },
+      "createdAt": "2026-05-18T17:24:04.125Z",
+      "updatedAt": "2026-05-18T17:24:04.125Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a0b4b3335e78fcd84c081e2",
+      "userId": {
+        "_id": "6a0afbfcf1b64bfae0e25c0a",
+        "name": "Dariush",
+        "email": "tahamtandariush@gmail.com",
+        "image": "https://lh3.googleusercontent.com/a/ACg8ocJISrcuKjkq6kOiZsQMW5adXLqVrE3uCbqbvP4sJSa5sIkfF_POtA=s96-c"
+      },
+      "title": "",
+      "content": "Day 5: Aerial serenity. #drone #nature",
+      "mediaItems": [
+        {
+          "type": "video",
+          "url": "https://videos.pexels.com/video-files/8747386/8747386-hd_2048_1080_30fps.mp4",
+          "_id": "6a0b4b3335e78fcd84c081e3"
+        }
+      ],
+      "platforms": [
+        {
+          "platform": "instagram",
+          "accountId": {
+            "_id": "6a0afc8a5e333c0529912a50",
+            "profileId": "6a0afbfcf1b64bfae0e25c0c",
+            "platform": "instagram",
+            "displayName": "DariusTheKing",
+            "isActive": true,
+            "profilePicture": "https://scontent-lhr6-1.cdninstagram.com/v/t51.82787-19/524379541_18378684478122203_7661966579575208829_n.jpg?stp=dst-jpg_s206x206_tt6&_nc_cat=102&ccb=7-5&_nc_sid=bf7eb4&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLnd3dy4xMDgwLkMzIn0%3D&_nc_ohc=xq9-b22M4nsQ7kNvwGNf1So&_nc_oc=AdoW30QZJyjA3O56FDis13eOyNazPj_xnWwKBH8b1szxl_JYsfJh8y-QPg2njRgvbo4&_nc_zt=24&_nc_ht=scontent-lhr6-1.cdninstagram.com&edm=AP4hL3IEAAAA&_nc_gid=IdhcqNRpb0Xs15Og7tO2tA&_nc_tpa=Q5bMBQGSXuS2EpRw9LSwLSu4YcIo51RMNsV_OvVMOBwi1Y6lDavVSd48UH_ctp17IIYF95Hg9ml9UW-AeA&oh=00_Af4Y0IvhWCSQbuKpNURrnQdtqRdZnnkontOKU0m9NRYF0A&oe=6A10C694",
+            "username": "galaxycoils"
+          },
+          "profileId": "6a0afbfcf1b64bfae0e25c0c",
+          "customMedia": [],
+          "scheduledFor": "2026-05-19T02:00:00.000Z",
+          "platformSpecificData": {
+            "__platformUserIdSnapshot": "26753942627588440",
+            "__usernameSnapshot": "galaxycoils"
+          },
+          "status": "pending",
+          "publishAttempts": 0,
+          "contentHash": "18d0782a121748d627f569dae60c9136",
+          "_id": "6a0b4b3335e78fcd84c081e4"
+        }
+      ],
+      "scheduledFor": "2026-05-19T02:00:00.000Z",
+      "timezone": "UTC",
+      "status": "scheduled",
+      "tags": [],
+      "hashtags": [],
+      "mentions": [],
+      "visibility": "public",
+      "crosspostingEnabled": true,
+      "metadata": {
+        "usageCounted": true
+      },
+      "publishAttempts": 0,
+      "contentHash": "18d0782a121748d627f569dae60c9136",
+      "recycling": {
+        "enabled": false,
+        "gapFreq": "month",
+        "recycleCount": 0,
+        "contentVariations": [],
+        "contentVariationIndex": 0
+      },
+      "createdAt": "2026-05-18T17:24:03.091Z",
+      "updatedAt": "2026-05-18T17:24:03.091Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a0b4b3135e78fcd84c08189",
+      "userId": {
+        "_id": "6a0afbfcf1b64bfae0e25c0a",
+        "name": "Dariush",
+        "email": "tahamtandariush@gmail.com",
+        "image": "https://lh3.googleusercontent.com/a/ACg8ocJISrcuKjkq6kOiZsQMW5adXLqVrE3uCbqbvP4sJSa5sIkfF_POtA=s96-c"
+      },
+      "title": "",
+      "content": "Day 4: Tech stack integration for creators. #creatorlife #tech",
+      "mediaItems": [
+        {
+          "type": "video",
+          "url": "https://videos.pexels.com/video-files/33410346/14221672_1920_1080_25fps.mp4",
+          "_id": "6a0b4b3135e78fcd84c0818a"
+        }
+      ],
+      "platforms": [
+        {
+          "platform": "instagram",
+          "accountId": {
+            "_id": "6a0afc8a5e333c0529912a50",
+            "profileId": "6a0afbfcf1b64bfae0e25c0c",
+            "platform": "instagram",
+            "displayName": "DariusTheKing",
+            "isActive": true,
+            "profilePicture": "https://scontent-lhr6-1.cdninstagram.com/v/t51.82787-19/524379541_18378684478122203_7661966579575208829_n.jpg?stp=dst-jpg_s206x206_tt6&_nc_cat=102&ccb=7-5&_nc_sid=bf7eb4&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLnd3dy4xMDgwLkMzIn0%3D&_nc_ohc=xq9-b22M4nsQ7kNvwGNf1So&_nc_oc=AdoW30QZJyjA3O56FDis13eOyNazPj_xnWwKBH8b1szxl_JYsfJh8y-QPg2njRgvbo4&_nc_zt=24&_nc_ht=scontent-lhr6-1.cdninstagram.com&edm=AP4hL3IEAAAA&_nc_gid=IdhcqNRpb0Xs15Og7tO2tA&_nc_tpa=Q5bMBQGSXuS2EpRw9LSwLSu4YcIo51RMNsV_OvVMOBwi1Y6lDavVSd48UH_ctp17IIYF95Hg9ml9UW-AeA&oh=00_Af4Y0IvhWCSQbuKpNURrnQdtqRdZnnkontOKU0m9NRYF0A&oe=6A10C694",
+            "username": "galaxycoils"
+          },
+          "profileId": "6a0afbfcf1b64bfae0e25c0c",
+          "customMedia": [],
+          "scheduledFor": "2026-05-19T01:00:00.000Z",
+          "platformSpecificData": {
+            "__platformUserIdSnapshot": "26753942627588440",
+            "__usernameSnapshot": "galaxycoils"
+          },
+          "status": "pending",
+          "publishAttempts": 0,
+          "contentHash": "5ad1de6c91a231f40fb3a13092a2c44a",
+          "_id": "6a0b4b3135e78fcd84c0818b"
+        }
+      ],
+      "scheduledFor": "2026-05-19T01:00:00.000Z",
+      "timezone": "UTC",
+      "status": "scheduled",
+      "tags": [],
+      "hashtags": [],
+      "mentions": [],
+      "visibility": "public",
+      "crosspostingEnabled": true,
+      "metadata": {
+        "usageCounted": true
+      },
+      "publishAttempts": 0,
+      "contentHash": "5ad1de6c91a231f40fb3a13092a2c44a",
+      "recycling": {
+        "enabled": false,
+        "gapFreq": "month",
+        "recycleCount": 0,
+        "contentVariations": [],
+        "contentVariationIndex": 0
+      },
+      "createdAt": "2026-05-18T17:24:01.867Z",
+      "updatedAt": "2026-05-18T17:24:01.867Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a0b4b3035e78fcd84c0814b",
+      "userId": {
+        "_id": "6a0afbfcf1b64bfae0e25c0a",
+        "name": "Dariush",
+        "email": "tahamtandariush@gmail.com",
+        "image": "https://lh3.googleusercontent.com/a/ACg8ocJISrcuKjkq6kOiZsQMW5adXLqVrE3uCbqbvP4sJSa5sIkfF_POtA=s96-c"
+      },
+      "title": "",
+      "content": "Day 3: FPV rush. Low altitude flying. #fpv #drone",
+      "mediaItems": [
+        {
+          "type": "video",
+          "url": "https://videos.pexels.com/video-files/26081711/11929628_1920_1080_60fps.mp4",
+          "_id": "6a0b4b3035e78fcd84c0814c"
+        }
+      ],
+      "platforms": [
+        {
+          "platform": "instagram",
+          "accountId": {
+            "_id": "6a0afc8a5e333c0529912a50",
+            "profileId": "6a0afbfcf1b64bfae0e25c0c",
+            "platform": "instagram",
+            "displayName": "DariusTheKing",
+            "isActive": true,
+            "profilePicture": "https://scontent-lhr6-1.cdninstagram.com/v/t51.82787-19/524379541_18378684478122203_7661966579575208829_n.jpg?stp=dst-jpg_s206x206_tt6&_nc_cat=102&ccb=7-5&_nc_sid=bf7eb4&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLnd3dy4xMDgwLkMzIn0%3D&_nc_ohc=xq9-b22M4nsQ7kNvwGNf1So&_nc_oc=AdoW30QZJyjA3O56FDis13eOyNazPj_xnWwKBH8b1szxl_JYsfJh8y-QPg2njRgvbo4&_nc_zt=24&_nc_ht=scontent-lhr6-1.cdninstagram.com&edm=AP4hL3IEAAAA&_nc_gid=IdhcqNRpb0Xs15Og7tO2tA&_nc_tpa=Q5bMBQGSXuS2EpRw9LSwLSu4YcIo51RMNsV_OvVMOBwi1Y6lDavVSd48UH_ctp17IIYF95Hg9ml9UW-AeA&oh=00_Af4Y0IvhWCSQbuKpNURrnQdtqRdZnnkontOKU0m9NRYF0A&oe=6A10C694",
+            "username": "galaxycoils"
+          },
+          "profileId": "6a0afbfcf1b64bfae0e25c0c",
+          "customMedia": [],
+          "scheduledFor": "2026-05-19T00:00:00.000Z",
+          "platformSpecificData": {
+            "__platformUserIdSnapshot": "26753942627588440",
+            "__usernameSnapshot": "galaxycoils"
+          },
+          "status": "pending",
+          "publishAttempts": 0,
+          "contentHash": "aae9acb3c37e1f6a690318db869f0e80",
+          "_id": "6a0b4b3035e78fcd84c0814d"
+        }
+      ],
+      "scheduledFor": "2026-05-19T00:00:00.000Z",
+      "timezone": "UTC",
+      "status": "scheduled",
+      "tags": [],
+      "hashtags": [],
+      "mentions": [],
+      "visibility": "public",
+      "crosspostingEnabled": true,
+      "metadata": {
+        "usageCounted": true
+      },
+      "publishAttempts": 0,
+      "contentHash": "aae9acb3c37e1f6a690318db869f0e80",
+      "recycling": {
+        "enabled": false,
+        "gapFreq": "month",
+        "recycleCount": 0,
+        "contentVariations": [],
+        "contentVariationIndex": 0
+      },
+      "createdAt": "2026-05-18T17:24:00.743Z",
+      "updatedAt": "2026-05-18T17:24:00.743Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a0b4b2f782d28842046db09",
+      "userId": {
+        "_id": "6a0afbfcf1b64bfae0e25c0a",
+        "name": "Dariush",
+        "email": "tahamtandariush@gmail.com",
+        "image": "https://lh3.googleusercontent.com/a/ACg8ocJISrcuKjkq6kOiZsQMW5adXLqVrE3uCbqbvP4sJSa5sIkfF_POtA=s96-c"
+      },
+      "title": "",
+      "content": "Day 2: Streamlining my flight bag with smart SaaS. #drone #saas",
+      "mediaItems": [
+        {
+          "type": "video",
+          "url": "https://videos.pexels.com/video-files/32305782/13777699_1920_1080_24fps.mp4",
+          "_id": "6a0b4b2f782d28842046db0a"
+        }
+      ],
+      "platforms": [
+        {
+          "platform": "instagram",
+          "accountId": {
+            "_id": "6a0afc8a5e333c0529912a50",
+            "profileId": "6a0afbfcf1b64bfae0e25c0c",
+            "platform": "instagram",
+            "displayName": "DariusTheKing",
+            "isActive": true,
+            "profilePicture": "https://scontent-lhr6-1.cdninstagram.com/v/t51.82787-19/524379541_18378684478122203_7661966579575208829_n.jpg?stp=dst-jpg_s206x206_tt6&_nc_cat=102&ccb=7-5&_nc_sid=bf7eb4&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLnd3dy4xMDgwLkMzIn0%3D&_nc_ohc=xq9-b22M4nsQ7kNvwGNf1So&_nc_oc=AdoW30QZJyjA3O56FDis13eOyNazPj_xnWwKBH8b1szxl_JYsfJh8y-QPg2njRgvbo4&_nc_zt=24&_nc_ht=scontent-lhr6-1.cdninstagram.com&edm=AP4hL3IEAAAA&_nc_gid=IdhcqNRpb0Xs15Og7tO2tA&_nc_tpa=Q5bMBQGSXuS2EpRw9LSwLSu4YcIo51RMNsV_OvVMOBwi1Y6lDavVSd48UH_ctp17IIYF95Hg9ml9UW-AeA&oh=00_Af4Y0IvhWCSQbuKpNURrnQdtqRdZnnkontOKU0m9NRYF0A&oe=6A10C694",
+            "username": "galaxycoils"
+          },
+          "profileId": "6a0afbfcf1b64bfae0e25c0c",
+          "customMedia": [],
+          "scheduledFor": "2026-05-18T23:00:00.000Z",
+          "platformSpecificData": {
+            "__platformUserIdSnapshot": "26753942627588440",
+            "__usernameSnapshot": "galaxycoils"
+          },
+          "status": "pending",
+          "publishAttempts": 0,
+          "contentHash": "42a74b0d4ef9b85620814d4c2cc68197",
+          "_id": "6a0b4b2f782d28842046db0b"
+        }
+      ],
+      "scheduledFor": "2026-05-18T23:00:00.000Z",
+      "timezone": "UTC",
+      "status": "scheduled",
+      "tags": [],
+      "hashtags": [],
+      "mentions": [],
+      "visibility": "public",
+      "crosspostingEnabled": true,
+      "metadata": {
+        "usageCounted": true
+      },
+      "publishAttempts": 0,
+      "contentHash": "42a74b0d4ef9b85620814d4c2cc68197",
+      "recycling": {
+        "enabled": false,
+        "gapFreq": "month",
+        "recycleCount": 0,
+        "contentVariations": [],
+        "contentVariationIndex": 0
+      },
+      "createdAt": "2026-05-18T17:23:59.649Z",
+      "updatedAt": "2026-05-18T17:23:59.649Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a0b4b2eef209159a55ffb22",
+      "userId": {
+        "_id": "6a0afbfcf1b64bfae0e25c0a",
+        "name": "Dariush",
+        "email": "tahamtandariush@gmail.com",
+        "image": "https://lh3.googleusercontent.com/a/ACg8ocJISrcuKjkq6kOiZsQMW5adXLqVrE3uCbqbvP4sJSa5sIkfF_POtA=s96-c"
+      },
+      "title": "",
+      "content": "Day 1: Aerial perspective. Tech meets nature. #drone #cinematic",
+      "mediaItems": [
+        {
+          "type": "video",
+          "url": "https://videos.pexels.com/video-files/32305781/13777659_1920_1080_24fps.mp4",
+          "_id": "6a0b4b2eef209159a55ffb23"
+        }
+      ],
+      "platforms": [
+        {
+          "platform": "instagram",
+          "accountId": {
+            "_id": "6a0afc8a5e333c0529912a50",
+            "profileId": "6a0afbfcf1b64bfae0e25c0c",
+            "platform": "instagram",
+            "displayName": "DariusTheKing",
+            "isActive": true,
+            "profilePicture": "https://scontent-lhr6-1.cdninstagram.com/v/t51.82787-19/524379541_18378684478122203_7661966579575208829_n.jpg?stp=dst-jpg_s206x206_tt6&_nc_cat=102&ccb=7-5&_nc_sid=bf7eb4&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLnd3dy4xMDgwLkMzIn0%3D&_nc_ohc=xq9-b22M4nsQ7kNvwGNf1So&_nc_oc=AdoW30QZJyjA3O56FDis13eOyNazPj_xnWwKBH8b1szxl_JYsfJh8y-QPg2njRgvbo4&_nc_zt=24&_nc_ht=scontent-lhr6-1.cdninstagram.com&edm=AP4hL3IEAAAA&_nc_gid=IdhcqNRpb0Xs15Og7tO2tA&_nc_tpa=Q5bMBQGSXuS2EpRw9LSwLSu4YcIo51RMNsV_OvVMOBwi1Y6lDavVSd48UH_ctp17IIYF95Hg9ml9UW-AeA&oh=00_Af4Y0IvhWCSQbuKpNURrnQdtqRdZnnkontOKU0m9NRYF0A&oe=6A10C694",
+            "username": "galaxycoils"
+          },
+          "profileId": "6a0afbfcf1b64bfae0e25c0c",
+          "customMedia": [],
+          "scheduledFor": "2026-05-18T22:00:00.000Z",
+          "platformSpecificData": {
+            "__platformUserIdSnapshot": "26753942627588440",
+            "__usernameSnapshot": "galaxycoils"
+          },
+          "status": "pending",
+          "publishAttempts": 0,
+          "contentHash": "6849ab78b70237e90fa1156457bca285",
+          "_id": "6a0b4b2eef209159a55ffb24"
+        }
+      ],
+      "scheduledFor": "2026-05-18T22:00:00.000Z",
+      "timezone": "UTC",
+      "status": "scheduled",
+      "tags": [],
+      "hashtags": [],
+      "mentions": [],
+      "visibility": "public",
+      "crosspostingEnabled": true,
+      "metadata": {
+        "usageCounted": true
+      },
+      "publishAttempts": 0,
+      "contentHash": "6849ab78b70237e90fa1156457bca285",
+      "recycling": {
+        "enabled": false,
+        "gapFreq": "month",
+        "recycleCount": 0,
+        "contentVariations": [],
+        "contentVariationIndex": 0
+      },
+      "createdAt": "2026-05-18T17:23:58.640Z",
+      "updatedAt": "2026-05-18T17:23:58.640Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a0b4ad9841ab2c80615295c",
+      "userId": {
+        "_id": "6a0afbfcf1b64bfae0e25c0a",
+        "name": "Dariush",
+        "email": "tahamtandariush@gmail.com",
+        "image": "https://lh3.googleusercontent.com/a/ACg8ocJISrcuKjkq6kOiZsQMW5adXLqVrE3uCbqbvP4sJSa5sIkfF_POtA=s96-c"
+      },
+      "title": "",
+      "content": "Capturing serenity from above. 🧘‍♂️ Nature’s beauty, viewed through a professional lens. Tell me: where is your dream location to fly your drone? #droneview #aerialnature #landscapephotography #dronelife",
+      "mediaItems": [
+        {
+          "type": "video",
+          "url": "https://videos.pexels.com/video-files/32305805/13777801_1920_1080_24fps.mp4",
+          "_id": "6a0b4ad9841ab2c80615295d"
+        }
+      ],
+      "platforms": [
+        {
+          "platform": "instagram",
+          "accountId": {
+            "_id": "6a0afc8a5e333c0529912a50",
+            "profileId": "6a0afbfcf1b64bfae0e25c0c",
+            "platform": "instagram",
+            "displayName": "DariusTheKing",
+            "isActive": true,
+            "profilePicture": "https://scontent-lhr6-1.cdninstagram.com/v/t51.82787-19/524379541_18378684478122203_7661966579575208829_n.jpg?stp=dst-jpg_s206x206_tt6&_nc_cat=102&ccb=7-5&_nc_sid=bf7eb4&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLnd3dy4xMDgwLkMzIn0%3D&_nc_ohc=xq9-b22M4nsQ7kNvwGNf1So&_nc_oc=AdoW30QZJyjA3O56FDis13eOyNazPj_xnWwKBH8b1szxl_JYsfJh8y-QPg2njRgvbo4&_nc_zt=24&_nc_ht=scontent-lhr6-1.cdninstagram.com&edm=AP4hL3IEAAAA&_nc_gid=IdhcqNRpb0Xs15Og7tO2tA&_nc_tpa=Q5bMBQGSXuS2EpRw9LSwLSu4YcIo51RMNsV_OvVMOBwi1Y6lDavVSd48UH_ctp17IIYF95Hg9ml9UW-AeA&oh=00_Af4Y0IvhWCSQbuKpNURrnQdtqRdZnnkontOKU0m9NRYF0A&oe=6A10C694",
+            "username": "galaxycoils"
+          },
+          "profileId": "6a0afbfcf1b64bfae0e25c0c",
+          "customMedia": [],
+          "scheduledFor": "2026-05-18T21:00:00.000Z",
+          "platformSpecificData": {
+            "__platformUserIdSnapshot": "26753942627588440",
+            "__usernameSnapshot": "galaxycoils"
+          },
+          "status": "pending",
+          "publishAttempts": 0,
+          "contentHash": "57312d36ac4eaae4d72699cc019bf809",
+          "_id": "6a0b4ad9841ab2c80615295e"
+        }
+      ],
+      "scheduledFor": "2026-05-18T21:00:00.000Z",
+      "timezone": "UTC",
+      "status": "scheduled",
+      "tags": [],
+      "hashtags": [],
+      "mentions": [],
+      "visibility": "public",
+      "crosspostingEnabled": true,
+      "metadata": {
+        "usageCounted": true
+      },
+      "publishAttempts": 0,
+      "contentHash": "57312d36ac4eaae4d72699cc019bf809",
+      "recycling": {
+        "enabled": false,
+        "gapFreq": "month",
+        "recycleCount": 0,
+        "contentVariations": [],
+        "contentVariationIndex": 0
+      },
+      "createdAt": "2026-05-18T17:22:33.481Z",
+      "updatedAt": "2026-05-18T17:22:33.481Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a0b4ad7bb91db97c34db28e",
+      "userId": {
+        "_id": "6a0afbfcf1b64bfae0e25c0a",
+        "name": "Dariush",
+        "email": "tahamtandariush@gmail.com",
+        "image": "https://lh3.googleusercontent.com/a/ACg8ocJISrcuKjkq6kOiZsQMW5adXLqVrE3uCbqbvP4sJSa5sIkfF_POtA=s96-c"
+      },
+      "title": "",
+      "content": "Tech stack essentials for 2026: What’s in your bag? 💼✈️ Let’s discuss tools that bridge the gap between creative drone work and efficient business management. #creativestack #dronepilot #techtools #aerialfilmmaking",
+      "mediaItems": [
+        {
+          "type": "video",
+          "url": "https://videos.pexels.com/video-files/32305801/13777785_1920_1080_24fps.mp4",
+          "_id": "6a0b4ad7bb91db97c34db28f"
+        }
+      ],
+      "platforms": [
+        {
+          "platform": "instagram",
+          "accountId": {
+            "_id": "6a0afc8a5e333c0529912a50",
+            "profileId": "6a0afbfcf1b64bfae0e25c0c",
+            "platform": "instagram",
+            "displayName": "DariusTheKing",
+            "isActive": true,
+            "profilePicture": "https://scontent-lhr6-1.cdninstagram.com/v/t51.82787-19/524379541_18378684478122203_7661966579575208829_n.jpg?stp=dst-jpg_s206x206_tt6&_nc_cat=102&ccb=7-5&_nc_sid=bf7eb4&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLnd3dy4xMDgwLkMzIn0%3D&_nc_ohc=xq9-b22M4nsQ7kNvwGNf1So&_nc_oc=AdoW30QZJyjA3O56FDis13eOyNazPj_xnWwKBH8b1szxl_JYsfJh8y-QPg2njRgvbo4&_nc_zt=24&_nc_ht=scontent-lhr6-1.cdninstagram.com&edm=AP4hL3IEAAAA&_nc_gid=IdhcqNRpb0Xs15Og7tO2tA&_nc_tpa=Q5bMBQGSXuS2EpRw9LSwLSu4YcIo51RMNsV_OvVMOBwi1Y6lDavVSd48UH_ctp17IIYF95Hg9ml9UW-AeA&oh=00_Af4Y0IvhWCSQbuKpNURrnQdtqRdZnnkontOKU0m9NRYF0A&oe=6A10C694",
+            "username": "galaxycoils"
+          },
+          "profileId": "6a0afbfcf1b64bfae0e25c0c",
+          "customMedia": [],
+          "scheduledFor": "2026-05-18T20:00:00.000Z",
+          "platformSpecificData": {
+            "__platformUserIdSnapshot": "26753942627588440",
+            "__usernameSnapshot": "galaxycoils"
+          },
+          "status": "pending",
+          "publishAttempts": 0,
+          "contentHash": "b05d0dd7345910ddfd48955314acd244",
+          "_id": "6a0b4ad7bb91db97c34db290"
+        }
+      ],
+      "scheduledFor": "2026-05-18T20:00:00.000Z",
+      "timezone": "UTC",
+      "status": "scheduled",
+      "tags": [],
+      "hashtags": [],
+      "mentions": [],
+      "visibility": "public",
+      "crosspostingEnabled": true,
+      "metadata": {
+        "usageCounted": true
+      },
+      "publishAttempts": 0,
+      "contentHash": "b05d0dd7345910ddfd48955314acd244",
+      "recycling": {
+        "enabled": false,
+        "gapFreq": "month",
+        "recycleCount": 0,
+        "contentVariations": [],
+        "contentVariationIndex": 0
+      },
+      "createdAt": "2026-05-18T17:22:31.867Z",
+      "updatedAt": "2026-05-18T17:22:31.867Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a0b4ad6bb91db97c34db235",
+      "userId": {
+        "_id": "6a0afbfcf1b64bfae0e25c0a",
+        "name": "Dariush",
+        "email": "tahamtandariush@gmail.com",
+        "image": "https://lh3.googleusercontent.com/a/ACg8ocJISrcuKjkq6kOiZsQMW5adXLqVrE3uCbqbvP4sJSa5sIkfF_POtA=s96-c"
+      },
+      "title": "",
+      "content": "The power of FPV: Flying low and fast to capture the energy of the environment. 💨 Experience the rush. #fpvdrone #cinematic #aerialdrone #adventure",
+      "mediaItems": [
+        {
+          "type": "video",
+          "url": "https://videos.pexels.com/video-files/32305795/13777755_1920_1080_24fps.mp4",
+          "_id": "6a0b4ad6bb91db97c34db236"
+        }
+      ],
+      "platforms": [
+        {
+          "platform": "instagram",
+          "accountId": {
+            "_id": "6a0afc8a5e333c0529912a50",
+            "profileId": "6a0afbfcf1b64bfae0e25c0c",
+            "platform": "instagram",
+            "displayName": "DariusTheKing",
+            "isActive": true,
+            "profilePicture": "https://scontent-lhr6-1.cdninstagram.com/v/t51.82787-19/524379541_18378684478122203_7661966579575208829_n.jpg?stp=dst-jpg_s206x206_tt6&_nc_cat=102&ccb=7-5&_nc_sid=bf7eb4&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLnd3dy4xMDgwLkMzIn0%3D&_nc_ohc=xq9-b22M4nsQ7kNvwGNf1So&_nc_oc=AdoW30QZJyjA3O56FDis13eOyNazPj_xnWwKBH8b1szxl_JYsfJh8y-QPg2njRgvbo4&_nc_zt=24&_nc_ht=scontent-lhr6-1.cdninstagram.com&edm=AP4hL3IEAAAA&_nc_gid=IdhcqNRpb0Xs15Og7tO2tA&_nc_tpa=Q5bMBQGSXuS2EpRw9LSwLSu4YcIo51RMNsV_OvVMOBwi1Y6lDavVSd48UH_ctp17IIYF95Hg9ml9UW-AeA&oh=00_Af4Y0IvhWCSQbuKpNURrnQdtqRdZnnkontOKU0m9NRYF0A&oe=6A10C694",
+            "username": "galaxycoils"
+          },
+          "profileId": "6a0afbfcf1b64bfae0e25c0c",
+          "customMedia": [],
+          "scheduledFor": "2026-05-18T19:00:00.000Z",
+          "platformSpecificData": {
+            "__platformUserIdSnapshot": "26753942627588440",
+            "__usernameSnapshot": "galaxycoils"
+          },
+          "status": "pending",
+          "publishAttempts": 0,
+          "contentHash": "f062a069a15bc391629fe4f3e6fcb024",
+          "_id": "6a0b4ad6bb91db97c34db237"
+        }
+      ],
+      "scheduledFor": "2026-05-18T19:00:00.000Z",
+      "timezone": "UTC",
+      "status": "scheduled",
+      "tags": [],
+      "hashtags": [],
+      "mentions": [],
+      "visibility": "public",
+      "crosspostingEnabled": true,
+      "metadata": {
+        "usageCounted": true
+      },
+      "publishAttempts": 0,
+      "contentHash": "f062a069a15bc391629fe4f3e6fcb024",
+      "recycling": {
+        "enabled": false,
+        "gapFreq": "month",
+        "recycleCount": 0,
+        "contentVariations": [],
+        "contentVariationIndex": 0
+      },
+      "createdAt": "2026-05-18T17:22:30.820Z",
+      "updatedAt": "2026-05-18T17:22:30.820Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a0b4ad5bb91db97c34db1e8",
+      "userId": {
+        "_id": "6a0afbfcf1b64bfae0e25c0a",
+        "name": "Dariush",
+        "email": "tahamtandariush@gmail.com",
+        "image": "https://lh3.googleusercontent.com/a/ACg8ocJISrcuKjkq6kOiZsQMW5adXLqVrE3uCbqbvP4sJSa5sIkfF_POtA=s96-c"
+      },
+      "title": "",
+      "content": "SaaS tools are the secret backbone of any high-end creative drone business. Organization is key. 📊 #saastools #dronebusiness #aerialfilmmaking #productivity",
+      "mediaItems": [
+        {
+          "type": "video",
+          "url": "https://videos.pexels.com/video-files/32305790/13777730_1920_1080_24fps.mp4",
+          "_id": "6a0b4ad5bb91db97c34db1e9"
+        }
+      ],
+      "platforms": [
+        {
+          "platform": "instagram",
+          "accountId": {
+            "_id": "6a0afc8a5e333c0529912a50",
+            "profileId": "6a0afbfcf1b64bfae0e25c0c",
+            "platform": "instagram",
+            "displayName": "DariusTheKing",
+            "isActive": true,
+            "profilePicture": "https://scontent-lhr6-1.cdninstagram.com/v/t51.82787-19/524379541_18378684478122203_7661966579575208829_n.jpg?stp=dst-jpg_s206x206_tt6&_nc_cat=102&ccb=7-5&_nc_sid=bf7eb4&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLnd3dy4xMDgwLkMzIn0%3D&_nc_ohc=xq9-b22M4nsQ7kNvwGNf1So&_nc_oc=AdoW30QZJyjA3O56FDis13eOyNazPj_xnWwKBH8b1szxl_JYsfJh8y-QPg2njRgvbo4&_nc_zt=24&_nc_ht=scontent-lhr6-1.cdninstagram.com&edm=AP4hL3IEAAAA&_nc_gid=IdhcqNRpb0Xs15Og7tO2tA&_nc_tpa=Q5bMBQGSXuS2EpRw9LSwLSu4YcIo51RMNsV_OvVMOBwi1Y6lDavVSd48UH_ctp17IIYF95Hg9ml9UW-AeA&oh=00_Af4Y0IvhWCSQbuKpNURrnQdtqRdZnnkontOKU0m9NRYF0A&oe=6A10C694",
+            "username": "galaxycoils"
+          },
+          "profileId": "6a0afbfcf1b64bfae0e25c0c",
+          "customMedia": [],
+          "scheduledFor": "2026-05-18T18:00:00.000Z",
+          "platformSpecificData": {
+            "__platformUserIdSnapshot": "26753942627588440",
+            "__usernameSnapshot": "galaxycoils"
+          },
+          "status": "pending",
+          "publishAttempts": 0,
+          "contentHash": "be5e3fe1bdbd9d32957d945dfc8601c2",
+          "_id": "6a0b4ad5bb91db97c34db1ea"
+        }
+      ],
+      "scheduledFor": "2026-05-18T18:00:00.000Z",
+      "timezone": "UTC",
+      "status": "scheduled",
+      "tags": [],
+      "hashtags": [],
+      "mentions": [],
+      "visibility": "public",
+      "crosspostingEnabled": true,
+      "metadata": {
+        "usageCounted": true
+      },
+      "publishAttempts": 0,
+      "contentHash": "be5e3fe1bdbd9d32957d945dfc8601c2",
+      "recycling": {
+        "enabled": false,
+        "gapFreq": "month",
+        "recycleCount": 0,
+        "contentVariations": [],
+        "contentVariationIndex": 0
+      },
+      "createdAt": "2026-05-18T17:22:29.631Z",
+      "updatedAt": "2026-05-18T17:22:29.631Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a0b49608e3a22f25b0593a1",
+      "userId": {
+        "_id": "6a0afbfcf1b64bfae0e25c0a",
+        "name": "Dariush",
+        "email": "tahamtandariush@gmail.com",
+        "image": "https://lh3.googleusercontent.com/a/ACg8ocJISrcuKjkq6kOiZsQMW5adXLqVrE3uCbqbvP4sJSa5sIkfF_POtA=s96-c"
+      },
+      "title": "",
+      "content": "POV: You're flying through the forest at high speed. 🌲🔥 Cinematic drone energy.\\n\\nFollow for more aerial content! #fpvdrone #cinematicview #naturephotography #aerialcinematography",
+      "mediaItems": [
+        {
+          "type": "video",
+          "url": "https://videos.pexels.com/video-files/26081711/11929628_1920_1080_60fps.mp4",
+          "_id": "6a0b49608e3a22f25b0593a2"
+        }
+      ],
+      "platforms": [
+        {
+          "platform": "instagram",
+          "accountId": {
+            "_id": "6a0afc8a5e333c0529912a50",
+            "profileId": "6a0afbfcf1b64bfae0e25c0c",
+            "platform": "instagram",
+            "displayName": "DariusTheKing",
+            "isActive": true,
+            "profilePicture": "https://scontent-lhr6-1.cdninstagram.com/v/t51.82787-19/524379541_18378684478122203_7661966579575208829_n.jpg?stp=dst-jpg_s206x206_tt6&_nc_cat=102&ccb=7-5&_nc_sid=bf7eb4&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLnd3dy4xMDgwLkMzIn0%3D&_nc_ohc=xq9-b22M4nsQ7kNvwGNf1So&_nc_oc=AdoW30QZJyjA3O56FDis13eOyNazPj_xnWwKBH8b1szxl_JYsfJh8y-QPg2njRgvbo4&_nc_zt=24&_nc_ht=scontent-lhr6-1.cdninstagram.com&edm=AP4hL3IEAAAA&_nc_gid=IdhcqNRpb0Xs15Og7tO2tA&_nc_tpa=Q5bMBQGSXuS2EpRw9LSwLSu4YcIo51RMNsV_OvVMOBwi1Y6lDavVSd48UH_ctp17IIYF95Hg9ml9UW-AeA&oh=00_Af4Y0IvhWCSQbuKpNURrnQdtqRdZnnkontOKU0m9NRYF0A&oe=6A10C694",
+            "username": "galaxycoils"
+          },
+          "profileId": "6a0afbfcf1b64bfae0e25c0c",
+          "customMedia": [],
+          "scheduledFor": "2026-05-18T17:16:16.340Z",
+          "platformSpecificData": {
+            "__platformUserIdSnapshot": "26753942627588440",
+            "__usernameSnapshot": "galaxycoils",
+            "publishingStarted": null,
+            "lastPublishStage": "awaiting-finalize",
+            "pendingContainerId": null
+          },
+          "status": "published",
+          "publishAttempts": 0,
+          "contentHash": "48b3646c427c945a00dc1c4ad38bd1ff",
+          "_id": "6a0b49608e3a22f25b0593a3",
+          "platformPostId": "17860141008601805",
+          "platformPostUrl": "https://www.instagram.com/reel/DYfPJMtjDtK/",
+          "publishedAt": "2026-05-18T17:17:13.634Z"
+        }
+      ],
+      "scheduledFor": "2026-05-18T17:16:16.340Z",
+      "timezone": "UTC",
+      "status": "published",
+      "tags": [],
+      "hashtags": [],
+      "mentions": [],
+      "visibility": "public",
+      "crosspostingEnabled": true,
+      "metadata": {
+        "usageCounted": true
+      },
+      "publishAttempts": 0,
+      "contentHash": "48b3646c427c945a00dc1c4ad38bd1ff",
+      "recycling": {
+        "enabled": false,
+        "gapFreq": "month",
+        "recycleCount": 0,
+        "contentVariations": [],
+        "contentVariationIndex": 0
+      },
+      "createdAt": "2026-05-18T17:16:16.633Z",
+      "updatedAt": "2026-05-18T17:17:13.787Z",
+      "__v": 0,
+      "publishingClaimedAt": "2026-05-18T17:16:16.723Z"
+    },
+    {
+      "_id": "6a0b495d266490e0fd5643a2",
+      "userId": {
+        "_id": "6a0afbfcf1b64bfae0e25c0a",
+        "name": "Dariush",
+        "email": "tahamtandariush@gmail.com",
+        "image": "https://lh3.googleusercontent.com/a/ACg8ocJISrcuKjkq6kOiZsQMW5adXLqVrE3uCbqbvP4sJSa5sIkfF_POtA=s96-c"
+      },
+      "title": "",
+      "content": "5 SaaS Tools every Drone Pilot needs in 2026. 🚁📊\\n\\nSave this for when you're building your business!\\n\\n#dronebusiness #techtools #aerialfilmmaking #entrepreneur",
+      "mediaItems": [
+        {
+          "type": "video",
+          "url": "https://videos.pexels.com/video-files/32305781/13777659_1920_1080_24fps.mp4",
+          "_id": "6a0b495d266490e0fd5643a3"
+        }
+      ],
+      "platforms": [
+        {
+          "platform": "instagram",
+          "accountId": {
+            "_id": "6a0afc8a5e333c0529912a50",
+            "profileId": "6a0afbfcf1b64bfae0e25c0c",
+            "platform": "instagram",
+            "displayName": "DariusTheKing",
+            "isActive": true,
+            "profilePicture": "https://scontent-lhr6-1.cdninstagram.com/v/t51.82787-19/524379541_18378684478122203_7661966579575208829_n.jpg?stp=dst-jpg_s206x206_tt6&_nc_cat=102&ccb=7-5&_nc_sid=bf7eb4&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLnd3dy4xMDgwLkMzIn0%3D&_nc_ohc=xq9-b22M4nsQ7kNvwGNf1So&_nc_oc=AdoW30QZJyjA3O56FDis13eOyNazPj_xnWwKBH8b1szxl_JYsfJh8y-QPg2njRgvbo4&_nc_zt=24&_nc_ht=scontent-lhr6-1.cdninstagram.com&edm=AP4hL3IEAAAA&_nc_gid=IdhcqNRpb0Xs15Og7tO2tA&_nc_tpa=Q5bMBQGSXuS2EpRw9LSwLSu4YcIo51RMNsV_OvVMOBwi1Y6lDavVSd48UH_ctp17IIYF95Hg9ml9UW-AeA&oh=00_Af4Y0IvhWCSQbuKpNURrnQdtqRdZnnkontOKU0m9NRYF0A&oe=6A10C694",
+            "username": "galaxycoils"
+          },
+          "profileId": "6a0afbfcf1b64bfae0e25c0c",
+          "customMedia": [],
+          "scheduledFor": "2026-05-18T17:16:13.645Z",
+          "platformSpecificData": {
+            "__platformUserIdSnapshot": "26753942627588440",
+            "__usernameSnapshot": "galaxycoils",
+            "publishingStarted": null,
+            "lastPublishStage": "awaiting-finalize",
+            "pendingContainerId": null
+          },
+          "status": "published",
+          "publishAttempts": 0,
+          "contentHash": "549d45405e44f80eac0f854741a7d250",
+          "_id": "6a0b495d266490e0fd5643a4",
+          "platformPostId": "18189967153332363",
+          "platformPostUrl": "https://www.instagram.com/reel/DYfPEatD7zF/",
+          "publishedAt": "2026-05-18T17:16:47.024Z"
+        }
+      ],
+      "scheduledFor": "2026-05-18T17:16:13.645Z",
+      "timezone": "UTC",
+      "status": "published",
+      "tags": [],
+      "hashtags": [],
+      "mentions": [],
+      "visibility": "public",
+      "crosspostingEnabled": true,
+      "metadata": {
+        "usageCounted": true
+      },
+      "publishAttempts": 0,
+      "contentHash": "549d45405e44f80eac0f854741a7d250",
+      "recycling": {
+        "enabled": false,
+        "gapFreq": "month",
+        "recycleCount": 0,
+        "contentVariations": [],
+        "contentVariationIndex": 0
+      },
+      "createdAt": "2026-05-18T17:16:13.801Z",
+      "updatedAt": "2026-05-18T17:16:47.185Z",
+      "__v": 0,
+      "publishingClaimedAt": "2026-05-18T17:16:13.872Z"
+    },
+    {
+      "_id": "6a0b495a502c0042f7aeb0ab",
+      "userId": {
+        "_id": "6a0afbfcf1b64bfae0e25c0a",
+        "name": "Dariush",
+        "email": "tahamtandariush@gmail.com",
+        "image": "https://lh3.googleusercontent.com/a/ACg8ocJISrcuKjkq6kOiZsQMW5adXLqVrE3uCbqbvP4sJSa5sIkfF_POtA=s96-c"
+      },
+      "title": "",
+      "content": "Flight path planning > Winging it. 🗺️ Using specialized map-based SaaS tools to scout locations before takeoff has saved me so many battery swaps. Don't fly blind! #dronepilot #uav #dronetips #saas",
+      "mediaItems": [
+        {
+          "type": "video",
+          "url": "https://videos.pexels.com/video-files/33410346/14221672_1920_1080_25fps.mp4",
+          "_id": "6a0b495a502c0042f7aeb0ac"
+        }
+      ],
+      "platforms": [
+        {
+          "platform": "instagram",
+          "accountId": {
+            "_id": "6a0afc8a5e333c0529912a50",
+            "profileId": "6a0afbfcf1b64bfae0e25c0c",
+            "platform": "instagram",
+            "displayName": "DariusTheKing",
+            "isActive": true,
+            "profilePicture": "https://scontent-lhr6-1.cdninstagram.com/v/t51.82787-19/524379541_18378684478122203_7661966579575208829_n.jpg?stp=dst-jpg_s206x206_tt6&_nc_cat=102&ccb=7-5&_nc_sid=bf7eb4&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLnd3dy4xMDgwLkMzIn0%3D&_nc_ohc=xq9-b22M4nsQ7kNvwGNf1So&_nc_oc=AdoW30QZJyjA3O56FDis13eOyNazPj_xnWwKBH8b1szxl_JYsfJh8y-QPg2njRgvbo4&_nc_zt=24&_nc_ht=scontent-lhr6-1.cdninstagram.com&edm=AP4hL3IEAAAA&_nc_gid=IdhcqNRpb0Xs15Og7tO2tA&_nc_tpa=Q5bMBQGSXuS2EpRw9LSwLSu4YcIo51RMNsV_OvVMOBwi1Y6lDavVSd48UH_ctp17IIYF95Hg9ml9UW-AeA&oh=00_Af4Y0IvhWCSQbuKpNURrnQdtqRdZnnkontOKU0m9NRYF0A&oe=6A10C694",
+            "username": "galaxycoils"
+          },
+          "profileId": "6a0afbfcf1b64bfae0e25c0c",
+          "customMedia": [],
+          "scheduledFor": "2026-05-18T17:16:10.453Z",
+          "platformSpecificData": {
+            "__platformUserIdSnapshot": "26753942627588440",
+            "__usernameSnapshot": "galaxycoils",
+            "publishingStarted": null,
+            "lastPublishStage": "awaiting-finalize",
+            "pendingContainerId": null
+          },
+          "status": "published",
+          "publishAttempts": 0,
+          "contentHash": "db130b3570f07bb5b368b9d8afa7f429",
+          "_id": "6a0b495a502c0042f7aeb0ad",
+          "platformPostId": "17948959761173535",
+          "platformPostUrl": "https://www.instagram.com/reel/DYfPEIQjZvi/",
+          "publishedAt": "2026-05-18T17:16:45.411Z"
+        }
+      ],
+      "scheduledFor": "2026-05-18T17:16:10.453Z",
+      "timezone": "UTC",
+      "status": "published",
+      "tags": [],
+      "hashtags": [],
+      "mentions": [],
+      "visibility": "public",
+      "crosspostingEnabled": true,
+      "metadata": {
+        "usageCounted": true
+      },
+      "publishAttempts": 0,
+      "contentHash": "db130b3570f07bb5b368b9d8afa7f429",
+      "recycling": {
+        "enabled": false,
+        "gapFreq": "month",
+        "recycleCount": 0,
+        "contentVariations": [],
+        "contentVariationIndex": 0
+      },
+      "createdAt": "2026-05-18T17:16:10.622Z",
+      "updatedAt": "2026-05-18T17:16:45.519Z",
+      "__v": 0,
+      "publishingClaimedAt": "2026-05-18T17:16:10.765Z"
+    },
+    {
+      "_id": "6a0b4957502c0042f7aeafae",
+      "userId": {
+        "_id": "6a0afbfcf1b64bfae0e25c0a",
+        "name": "Dariush",
+        "email": "tahamtandariush@gmail.com",
+        "image": "https://lh3.googleusercontent.com/a/ACg8ocJISrcuKjkq6kOiZsQMW5adXLqVrE3uCbqbvP4sJSa5sIkfF_POtA=s96-c"
+      },
+      "title": "",
+      "content": "Color grading aerials in under 60 seconds? 🎨 Here’s how I streamline my workflow using AI-powered color tools in my editor.\\n\\nSlide through to see the before and after! ➡️\\n\\n#colorgrading #droneeditor #creativetech #cinematic",
+      "mediaItems": [
+        {
+          "type": "video",
+          "url": "https://videos.pexels.com/video-files/8747386/8747386-hd_2048_1080_30fps.mp4",
+          "_id": "6a0b4957502c0042f7aeafaf"
+        }
+      ],
+      "platforms": [
+        {
+          "platform": "instagram",
+          "accountId": {
+            "_id": "6a0afc8a5e333c0529912a50",
+            "profileId": "6a0afbfcf1b64bfae0e25c0c",
+            "platform": "instagram",
+            "displayName": "DariusTheKing",
+            "isActive": true,
+            "profilePicture": "https://scontent-lhr6-1.cdninstagram.com/v/t51.82787-19/524379541_18378684478122203_7661966579575208829_n.jpg?stp=dst-jpg_s206x206_tt6&_nc_cat=102&ccb=7-5&_nc_sid=bf7eb4&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLnd3dy4xMDgwLkMzIn0%3D&_nc_ohc=xq9-b22M4nsQ7kNvwGNf1So&_nc_oc=AdoW30QZJyjA3O56FDis13eOyNazPj_xnWwKBH8b1szxl_JYsfJh8y-QPg2njRgvbo4&_nc_zt=24&_nc_ht=scontent-lhr6-1.cdninstagram.com&edm=AP4hL3IEAAAA&_nc_gid=IdhcqNRpb0Xs15Og7tO2tA&_nc_tpa=Q5bMBQGSXuS2EpRw9LSwLSu4YcIo51RMNsV_OvVMOBwi1Y6lDavVSd48UH_ctp17IIYF95Hg9ml9UW-AeA&oh=00_Af4Y0IvhWCSQbuKpNURrnQdtqRdZnnkontOKU0m9NRYF0A&oe=6A10C694",
+            "username": "galaxycoils"
+          },
+          "profileId": "6a0afbfcf1b64bfae0e25c0c",
+          "customMedia": [],
+          "scheduledFor": "2026-05-18T17:16:07.246Z",
+          "platformSpecificData": {
+            "__platformUserIdSnapshot": "26753942627588440",
+            "__usernameSnapshot": "galaxycoils",
+            "publishingStarted": null,
+            "lastPublishStage": "awaiting-finalize",
+            "pendingContainerId": null
+          },
+          "status": "published",
+          "publishAttempts": 0,
+          "contentHash": "afe735bc47f257cb4d25f24a8f498e05",
+          "_id": "6a0b4957502c0042f7aeafb0",
+          "platformPostId": "18119777686679519",
+          "platformPostUrl": "https://www.instagram.com/reel/DYfPD76CDrK/",
+          "publishedAt": "2026-05-18T17:16:47.140Z"
+        }
+      ],
+      "scheduledFor": "2026-05-18T17:16:07.246Z",
+      "timezone": "UTC",
+      "status": "published",
+      "tags": [],
+      "hashtags": [],
+      "mentions": [],
+      "visibility": "public",
+      "crosspostingEnabled": true,
+      "metadata": {
+        "usageCounted": true
+      },
+      "publishAttempts": 0,
+      "contentHash": "afe735bc47f257cb4d25f24a8f498e05",
+      "recycling": {
+        "enabled": false,
+        "gapFreq": "month",
+        "recycleCount": 0,
+        "contentVariations": [],
+        "contentVariationIndex": 0
+      },
+      "createdAt": "2026-05-18T17:16:07.435Z",
+      "updatedAt": "2026-05-18T17:16:47.249Z",
+      "__v": 0,
+      "publishingClaimedAt": "2026-05-18T17:16:07.518Z"
+    },
+    {
+      "_id": "6a0b49545ca95e3f3fa8105b",
+      "userId": {
+        "_id": "6a0afbfcf1b64bfae0e25c0a",
+        "name": "Dariush",
+        "email": "tahamtandariush@gmail.com",
+        "image": "https://lh3.googleusercontent.com/a/ACg8ocJISrcuKjkq6kOiZsQMW5adXLqVrE3uCbqbvP4sJSa5sIkfF_POtA=s96-c"
+      },
+      "title": "",
+      "content": "3 SaaS tools saving me 10+ hours a week as a creator. 🚀\\n\\n1. Notion (Organization)\\n2. CapCut (Fast Cuts)\\n3. Frame.io (Client Feedback)\\n\\nWhat’s your #1 time saver? #productivitytips #saas #creatorlife #tech",
+      "mediaItems": [
+        {
+          "type": "video",
+          "url": "https://videos.pexels.com/video-files/26081711/11929628_1920_1080_60fps.mp4",
+          "_id": "6a0b49545ca95e3f3fa8105c"
+        }
+      ],
+      "platforms": [
+        {
+          "platform": "instagram",
+          "accountId": {
+            "_id": "6a0afc8a5e333c0529912a50",
+            "profileId": "6a0afbfcf1b64bfae0e25c0c",
+            "platform": "instagram",
+            "displayName": "DariusTheKing",
+            "isActive": true,
+            "profilePicture": "https://scontent-lhr6-1.cdninstagram.com/v/t51.82787-19/524379541_18378684478122203_7661966579575208829_n.jpg?stp=dst-jpg_s206x206_tt6&_nc_cat=102&ccb=7-5&_nc_sid=bf7eb4&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLnd3dy4xMDgwLkMzIn0%3D&_nc_ohc=xq9-b22M4nsQ7kNvwGNf1So&_nc_oc=AdoW30QZJyjA3O56FDis13eOyNazPj_xnWwKBH8b1szxl_JYsfJh8y-QPg2njRgvbo4&_nc_zt=24&_nc_ht=scontent-lhr6-1.cdninstagram.com&edm=AP4hL3IEAAAA&_nc_gid=IdhcqNRpb0Xs15Og7tO2tA&_nc_tpa=Q5bMBQGSXuS2EpRw9LSwLSu4YcIo51RMNsV_OvVMOBwi1Y6lDavVSd48UH_ctp17IIYF95Hg9ml9UW-AeA&oh=00_Af4Y0IvhWCSQbuKpNURrnQdtqRdZnnkontOKU0m9NRYF0A&oe=6A10C694",
+            "username": "galaxycoils"
+          },
+          "profileId": "6a0afbfcf1b64bfae0e25c0c",
+          "customMedia": [],
+          "scheduledFor": "2026-05-18T17:16:03.865Z",
+          "platformSpecificData": {
+            "__platformUserIdSnapshot": "26753942627588440",
+            "__usernameSnapshot": "galaxycoils",
+            "publishingStarted": null,
+            "lastPublishStage": "awaiting-finalize",
+            "pendingContainerId": null
+          },
+          "status": "published",
+          "publishAttempts": 0,
+          "contentHash": "a4aca5204da56d2d97c6840391777908",
+          "_id": "6a0b49545ca95e3f3fa8105d",
+          "platformPostId": "18128129800593637",
+          "platformPostUrl": "https://www.instagram.com/reel/DYfPDchCIKe/",
+          "publishedAt": "2026-05-18T17:16:39.116Z"
+        }
+      ],
+      "scheduledFor": "2026-05-18T17:16:03.865Z",
+      "timezone": "UTC",
+      "status": "published",
+      "tags": [],
+      "hashtags": [],
+      "mentions": [],
+      "visibility": "public",
+      "crosspostingEnabled": true,
+      "metadata": {
+        "usageCounted": true
+      },
+      "publishAttempts": 0,
+      "contentHash": "a4aca5204da56d2d97c6840391777908",
+      "recycling": {
+        "enabled": false,
+        "gapFreq": "month",
+        "recycleCount": 0,
+        "contentVariations": [],
+        "contentVariationIndex": 0
+      },
+      "createdAt": "2026-05-18T17:16:04.050Z",
+      "updatedAt": "2026-05-18T17:16:39.270Z",
+      "__v": 0,
+      "publishingClaimedAt": "2026-05-18T17:16:04.135Z"
+    },
+    {
+      "_id": "6a0b49505ca95e3f3fa80fe8",
+      "userId": {
+        "_id": "6a0afbfcf1b64bfae0e25c0a",
+        "name": "Dariush",
+        "email": "tahamtandariush@gmail.com",
+        "image": "https://lh3.googleusercontent.com/a/ACg8ocJISrcuKjkq6kOiZsQMW5adXLqVrE3uCbqbvP4sJSa5sIkfF_POtA=s96-c"
+      },
+      "title": "",
+      "content": "4K cinematic ridges. 🏔️ The wait for that golden hour light is real. Shot on Mini 4 Pro.\\n\\nWho wants to see the full raw file? Comment 'RAW' below! 📥 #cinematicdrone #aerialphotography #dji #goldenhour",
+      "mediaItems": [
+        {
+          "type": "video",
+          "url": "https://videos.pexels.com/video-files/32305782/13777699_1920_1080_24fps.mp4",
+          "_id": "6a0b49505ca95e3f3fa80fe9"
+        }
+      ],
+      "platforms": [
+        {
+          "platform": "instagram",
+          "accountId": {
+            "_id": "6a0afc8a5e333c0529912a50",
+            "profileId": "6a0afbfcf1b64bfae0e25c0c",
+            "platform": "instagram",
+            "displayName": "DariusTheKing",
+            "isActive": true,
+            "profilePicture": "https://scontent-lhr6-1.cdninstagram.com/v/t51.82787-19/524379541_18378684478122203_7661966579575208829_n.jpg?stp=dst-jpg_s206x206_tt6&_nc_cat=102&ccb=7-5&_nc_sid=bf7eb4&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLnd3dy4xMDgwLkMzIn0%3D&_nc_ohc=xq9-b22M4nsQ7kNvwGNf1So&_nc_oc=AdoW30QZJyjA3O56FDis13eOyNazPj_xnWwKBH8b1szxl_JYsfJh8y-QPg2njRgvbo4&_nc_zt=24&_nc_ht=scontent-lhr6-1.cdninstagram.com&edm=AP4hL3IEAAAA&_nc_gid=IdhcqNRpb0Xs15Og7tO2tA&_nc_tpa=Q5bMBQGSXuS2EpRw9LSwLSu4YcIo51RMNsV_OvVMOBwi1Y6lDavVSd48UH_ctp17IIYF95Hg9ml9UW-AeA&oh=00_Af4Y0IvhWCSQbuKpNURrnQdtqRdZnnkontOKU0m9NRYF0A&oe=6A10C694",
+            "username": "galaxycoils"
+          },
+          "profileId": "6a0afbfcf1b64bfae0e25c0c",
+          "customMedia": [],
+          "scheduledFor": "2026-05-18T17:16:00.098Z",
+          "platformSpecificData": {
+            "__platformUserIdSnapshot": "26753942627588440",
+            "__usernameSnapshot": "galaxycoils",
+            "publishingStarted": null,
+            "lastPublishStage": "awaiting-finalize",
+            "pendingContainerId": null
+          },
+          "status": "published",
+          "publishAttempts": 0,
+          "contentHash": "a7d03fbb4112255051c5cf4135ed3cc4",
+          "_id": "6a0b49505ca95e3f3fa80fea",
+          "platformPostId": "17889190518481556",
+          "platformPostUrl": "https://www.instagram.com/reel/DYfPDP9CEu1/",
+          "publishedAt": "2026-05-18T17:17:01.645Z"
+        }
+      ],
+      "scheduledFor": "2026-05-18T17:16:00.098Z",
+      "timezone": "UTC",
+      "status": "published",
+      "tags": [],
+      "hashtags": [],
+      "mentions": [],
+      "visibility": "public",
+      "crosspostingEnabled": true,
+      "metadata": {
+        "usageCounted": true
+      },
+      "publishAttempts": 0,
+      "contentHash": "a7d03fbb4112255051c5cf4135ed3cc4",
+      "recycling": {
+        "enabled": false,
+        "gapFreq": "month",
+        "recycleCount": 0,
+        "contentVariations": [],
+        "contentVariationIndex": 0
+      },
+      "createdAt": "2026-05-18T17:16:00.319Z",
+      "updatedAt": "2026-05-18T17:17:01.794Z",
+      "__v": 0,
+      "publishingClaimedAt": "2026-05-18T17:16:00.403Z"
+    },
+    {
+      "_id": "6a0b494c266490e0fd564131",
+      "userId": {
+        "_id": "6a0afbfcf1b64bfae0e25c0a",
+        "name": "Dariush",
+        "email": "tahamtandariush@gmail.com",
+        "image": "https://lh3.googleusercontent.com/a/ACg8ocJISrcuKjkq6kOiZsQMW5adXLqVrE3uCbqbvP4sJSa5sIkfF_POtA=s96-c"
+      },
+      "title": "",
+      "content": "My 2026 Tech Stack for Aerial Cinematography. 🚁 + 💻\\n\\n1. Drone: Mini 4 Pro\\n2. Editor: DaVinci Resolve\\n3. Workflow: Notion (Project Tracking)\\n4. Cloud: Frame.io (Client Reviews)\\n\\nSave this for your next setup upgrade! 💾 #creatorstack #dronelife #saas #productivity",
+      "mediaItems": [
+        {
+          "type": "video",
+          "url": "https://videos.pexels.com/video-files/33410346/14221672_1920_1080_25fps.mp4",
+          "_id": "6a0b494c266490e0fd564132"
+        }
+      ],
+      "platforms": [
+        {
+          "platform": "instagram",
+          "accountId": {
+            "_id": "6a0afc8a5e333c0529912a50",
+            "profileId": "6a0afbfcf1b64bfae0e25c0c",
+            "platform": "instagram",
+            "displayName": "DariusTheKing",
+            "isActive": true,
+            "profilePicture": "https://scontent-lhr6-1.cdninstagram.com/v/t51.82787-19/524379541_18378684478122203_7661966579575208829_n.jpg?stp=dst-jpg_s206x206_tt6&_nc_cat=102&ccb=7-5&_nc_sid=bf7eb4&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLnd3dy4xMDgwLkMzIn0%3D&_nc_ohc=xq9-b22M4nsQ7kNvwGNf1So&_nc_oc=AdoW30QZJyjA3O56FDis13eOyNazPj_xnWwKBH8b1szxl_JYsfJh8y-QPg2njRgvbo4&_nc_zt=24&_nc_ht=scontent-lhr6-1.cdninstagram.com&edm=AP4hL3IEAAAA&_nc_gid=IdhcqNRpb0Xs15Og7tO2tA&_nc_tpa=Q5bMBQGSXuS2EpRw9LSwLSu4YcIo51RMNsV_OvVMOBwi1Y6lDavVSd48UH_ctp17IIYF95Hg9ml9UW-AeA&oh=00_Af4Y0IvhWCSQbuKpNURrnQdtqRdZnnkontOKU0m9NRYF0A&oe=6A10C694",
+            "username": "galaxycoils"
+          },
+          "profileId": "6a0afbfcf1b64bfae0e25c0c",
+          "customMedia": [],
+          "scheduledFor": "2026-05-18T17:15:56.431Z",
+          "platformSpecificData": {
+            "__platformUserIdSnapshot": "26753942627588440",
+            "__usernameSnapshot": "galaxycoils",
+            "publishingStarted": null,
+            "lastPublishStage": "awaiting-finalize",
+            "pendingContainerId": null
+          },
+          "status": "published",
+          "publishAttempts": 0,
+          "contentHash": "6540ee50a4a9247a773fae30c092c709",
+          "_id": "6a0b494c266490e0fd564133",
+          "platformPostId": "18098856475868334",
+          "platformPostUrl": "https://www.instagram.com/reel/DYfPIFTEkx7/",
+          "publishedAt": "2026-05-18T17:17:29.265Z"
+        }
+      ],
+      "scheduledFor": "2026-05-18T17:15:56.431Z",
+      "timezone": "UTC",
+      "status": "published",
+      "tags": [],
+      "hashtags": [],
+      "mentions": [],
+      "visibility": "public",
+      "crosspostingEnabled": true,
+      "metadata": {
+        "usageCounted": true
+      },
+      "publishAttempts": 0,
+      "contentHash": "6540ee50a4a9247a773fae30c092c709",
+      "recycling": {
+        "enabled": false,
+        "gapFreq": "month",
+        "recycleCount": 0,
+        "contentVariations": [],
+        "contentVariationIndex": 0
+      },
+      "createdAt": "2026-05-18T17:15:56.605Z",
+      "updatedAt": "2026-05-18T17:17:29.541Z",
+      "__v": 0,
+      "publishingClaimedAt": "2026-05-18T17:15:56.722Z"
+    },
+    {
+      "_id": "6a0b49495ca95e3f3fa80ef5",
+      "userId": {
+        "_id": "6a0afbfcf1b64bfae0e25c0a",
+        "name": "Dariush",
+        "email": "tahamtandariush@gmail.com",
+        "image": "https://lh3.googleusercontent.com/a/ACg8ocJISrcuKjkq6kOiZsQMW5adXLqVrE3uCbqbvP4sJSa5sIkfF_POtA=s96-c"
+      },
+      "title": "",
+      "content": "Stop wasting hours on post-production. ⏱️ I started using AI-sync tools to match my cinematic drone cuts to the beat, and it’s a game-changer. What do you use for your edits? 👇 #dronevideography #saastools #creatoreconomy #dji",
+      "mediaItems": [
+        {
+          "type": "video",
+          "url": "https://videos.pexels.com/video-files/32305781/13777659_1920_1080_24fps.mp4",
+          "_id": "6a0b49495ca95e3f3fa80ef6"
+        }
+      ],
+      "platforms": [
+        {
+          "platform": "instagram",
+          "accountId": {
+            "_id": "6a0afc8a5e333c0529912a50",
+            "profileId": "6a0afbfcf1b64bfae0e25c0c",
+            "platform": "instagram",
+            "displayName": "DariusTheKing",
+            "isActive": true,
+            "profilePicture": "https://scontent-lhr6-1.cdninstagram.com/v/t51.82787-19/524379541_18378684478122203_7661966579575208829_n.jpg?stp=dst-jpg_s206x206_tt6&_nc_cat=102&ccb=7-5&_nc_sid=bf7eb4&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLnd3dy4xMDgwLkMzIn0%3D&_nc_ohc=xq9-b22M4nsQ7kNvwGNf1So&_nc_oc=AdoW30QZJyjA3O56FDis13eOyNazPj_xnWwKBH8b1szxl_JYsfJh8y-QPg2njRgvbo4&_nc_zt=24&_nc_ht=scontent-lhr6-1.cdninstagram.com&edm=AP4hL3IEAAAA&_nc_gid=IdhcqNRpb0Xs15Og7tO2tA&_nc_tpa=Q5bMBQGSXuS2EpRw9LSwLSu4YcIo51RMNsV_OvVMOBwi1Y6lDavVSd48UH_ctp17IIYF95Hg9ml9UW-AeA&oh=00_Af4Y0IvhWCSQbuKpNURrnQdtqRdZnnkontOKU0m9NRYF0A&oe=6A10C694",
+            "username": "galaxycoils"
+          },
+          "profileId": "6a0afbfcf1b64bfae0e25c0c",
+          "customMedia": [],
+          "scheduledFor": "2026-05-18T17:15:53.196Z",
+          "platformSpecificData": {
+            "__platformUserIdSnapshot": "26753942627588440",
+            "__usernameSnapshot": "galaxycoils",
+            "publishingStarted": null,
+            "lastPublishStage": "awaiting-finalize",
+            "pendingContainerId": null
+          },
+          "status": "published",
+          "publishAttempts": 0,
+          "contentHash": "304b4f9c6da619ad6e1096379e9dddc7",
+          "_id": "6a0b49495ca95e3f3fa80ef7",
+          "platformPostId": "18214402000324306",
+          "platformPostUrl": "https://www.instagram.com/reel/DYfPCB4lWAU/",
+          "publishedAt": "2026-05-18T17:16:25.933Z"
+        }
+      ],
+      "scheduledFor": "2026-05-18T17:15:53.196Z",
+      "timezone": "UTC",
+      "status": "published",
+      "tags": [],
+      "hashtags": [],
+      "mentions": [],
+      "visibility": "public",
+      "crosspostingEnabled": true,
+      "metadata": {
+        "usageCounted": true
+      },
+      "publishAttempts": 0,
+      "contentHash": "304b4f9c6da619ad6e1096379e9dddc7",
+      "recycling": {
+        "enabled": false,
+        "gapFreq": "month",
+        "recycleCount": 0,
+        "contentVariations": [],
+        "contentVariationIndex": 0
+      },
+      "createdAt": "2026-05-18T17:15:53.499Z",
+      "updatedAt": "2026-05-18T17:16:27.288Z",
+      "__v": 0,
+      "publishingClaimedAt": "2026-05-18T17:15:53.573Z"
+    },
+    {
+      "_id": "6a0b47a0f8d68d5a96394ba3",
+      "userId": {
+        "_id": "6a0afbfcf1b64bfae0e25c0a",
+        "name": "Dariush",
+        "email": "tahamtandariush@gmail.com",
+        "image": "https://lh3.googleusercontent.com/a/ACg8ocJISrcuKjkq6kOiZsQMW5adXLqVrE3uCbqbvP4sJSa5sIkfF_POtA=s96-c"
+      },
+      "title": "",
+      "content": "Quick question for my fellow drone flyers: What’s the one piece of gear you never leave the house without? Trying to streamline my flight bag. 💼✈️ #dronegear #dronephotography #aerialcinematography",
+      "mediaItems": [
+        {
+          "type": "video",
+          "url": "https://videos.pexels.com/video-files/32305781/13777659_1920_1080_24fps.mp4",
+          "_id": "6a0b47a0f8d68d5a96394ba4"
+        }
+      ],
+      "platforms": [
+        {
+          "platform": "instagram",
+          "accountId": {
+            "_id": "6a0afc8a5e333c0529912a50",
+            "profileId": "6a0afbfcf1b64bfae0e25c0c",
+            "platform": "instagram",
+            "displayName": "DariusTheKing",
+            "isActive": true,
+            "profilePicture": "https://scontent-lhr6-1.cdninstagram.com/v/t51.82787-19/524379541_18378684478122203_7661966579575208829_n.jpg?stp=dst-jpg_s206x206_tt6&_nc_cat=102&ccb=7-5&_nc_sid=bf7eb4&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLnd3dy4xMDgwLkMzIn0%3D&_nc_ohc=xq9-b22M4nsQ7kNvwGNf1So&_nc_oc=AdoW30QZJyjA3O56FDis13eOyNazPj_xnWwKBH8b1szxl_JYsfJh8y-QPg2njRgvbo4&_nc_zt=24&_nc_ht=scontent-lhr6-1.cdninstagram.com&edm=AP4hL3IEAAAA&_nc_gid=IdhcqNRpb0Xs15Og7tO2tA&_nc_tpa=Q5bMBQGSXuS2EpRw9LSwLSu4YcIo51RMNsV_OvVMOBwi1Y6lDavVSd48UH_ctp17IIYF95Hg9ml9UW-AeA&oh=00_Af4Y0IvhWCSQbuKpNURrnQdtqRdZnnkontOKU0m9NRYF0A&oe=6A10C694",
+            "username": "galaxycoils"
+          },
+          "profileId": "6a0afbfcf1b64bfae0e25c0c",
+          "customMedia": [],
+          "scheduledFor": "2026-05-18T17:08:48.599Z",
+          "platformSpecificData": {
+            "__platformUserIdSnapshot": "26753942627588440",
+            "__usernameSnapshot": "galaxycoils",
+            "publishingStarted": null,
+            "lastPublishStage": "awaiting-finalize",
+            "pendingContainerId": null
+          },
+          "status": "published",
+          "publishAttempts": 0,
+          "contentHash": "39986719f0fac082e46a6475f59a9ffd",
+          "_id": "6a0b47a0f8d68d5a96394ba5",
+          "platformPostId": "18062348675454484",
+          "platformPostUrl": "https://www.instagram.com/reel/DYfOOWKD1qV/",
+          "publishedAt": "2026-05-18T17:09:33.801Z"
+        }
+      ],
+      "scheduledFor": "2026-05-18T17:08:48.599Z",
+      "timezone": "UTC",
+      "status": "published",
+      "tags": [],
+      "hashtags": [],
+      "mentions": [],
+      "visibility": "public",
+      "crosspostingEnabled": true,
+      "metadata": {
+        "usageCounted": true
+      },
+      "publishAttempts": 0,
+      "contentHash": "39986719f0fac082e46a6475f59a9ffd",
+      "recycling": {
+        "enabled": false,
+        "gapFreq": "month",
+        "recycleCount": 0,
+        "contentVariations": [],
+        "contentVariationIndex": 0
+      },
+      "createdAt": "2026-05-18T17:08:48.754Z",
+      "updatedAt": "2026-05-18T17:09:33.914Z",
+      "__v": 0,
+      "publishingClaimedAt": "2026-05-18T17:08:48.832Z"
+    },
+    {
+      "_id": "6a0b4ad1bb91db97c34db10e",
+      "userId": {
+        "_id": "6a0afbfcf1b64bfae0e25c0a",
+        "name": "Dariush",
+        "email": "tahamtandariush@gmail.com",
+        "image": "https://lh3.googleusercontent.com/a/ACg8ocJISrcuKjkq6kOiZsQMW5adXLqVrE3uCbqbvP4sJSa5sIkfF_POtA=s96-c"
+      },
+      "title": "",
+      "content": "Cinematic aerial perspective. 🚁 High-altitude drone shots offer a unique view on tech and landscape. Would you explore this terrain? #dronephotography #aerialcinematography #techlifestyle",
+      "mediaItems": [
+        {
+          "type": "video",
+          "url": "https://videos.pexels.com/video-files/32305788/13777712_1920_1080_24fps.mp4",
+          "_id": "6a0b4ad1bb91db97c34db10f"
+        }
+      ],
+      "platforms": [
+        {
+          "platform": "instagram",
+          "accountId": {
+            "_id": "6a0afc8a5e333c0529912a50",
+            "profileId": "6a0afbfcf1b64bfae0e25c0c",
+            "platform": "instagram",
+            "displayName": "DariusTheKing",
+            "isActive": true,
+            "profilePicture": "https://scontent-lhr6-1.cdninstagram.com/v/t51.82787-19/524379541_18378684478122203_7661966579575208829_n.jpg?stp=dst-jpg_s206x206_tt6&_nc_cat=102&ccb=7-5&_nc_sid=bf7eb4&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLnd3dy4xMDgwLkMzIn0%3D&_nc_ohc=xq9-b22M4nsQ7kNvwGNf1So&_nc_oc=AdoW30QZJyjA3O56FDis13eOyNazPj_xnWwKBH8b1szxl_JYsfJh8y-QPg2njRgvbo4&_nc_zt=24&_nc_ht=scontent-lhr6-1.cdninstagram.com&edm=AP4hL3IEAAAA&_nc_gid=IdhcqNRpb0Xs15Og7tO2tA&_nc_tpa=Q5bMBQGSXuS2EpRw9LSwLSu4YcIo51RMNsV_OvVMOBwi1Y6lDavVSd48UH_ctp17IIYF95Hg9ml9UW-AeA&oh=00_Af4Y0IvhWCSQbuKpNURrnQdtqRdZnnkontOKU0m9NRYF0A&oe=6A10C694",
+            "username": "galaxycoils"
+          },
+          "profileId": "6a0afbfcf1b64bfae0e25c0c",
+          "customMedia": [],
+          "scheduledFor": "2026-05-18T17:00:00.000Z",
+          "platformSpecificData": {
+            "__platformUserIdSnapshot": "26753942627588440",
+            "__usernameSnapshot": "galaxycoils",
+            "publishingStarted": null,
+            "lastPublishStage": "awaiting-finalize",
+            "pendingContainerId": null
+          },
+          "status": "failed",
+          "publishAttempts": 0,
+          "contentHash": "06a5ba62447ad45a560be6333acc994d",
+          "_id": "6a0b4ad1bb91db97c34db110",
+          "errorCategory": "platform_rejected",
+          "errorMessage": "instagram container error",
+          "errorSource": "platform"
+        }
+      ],
+      "scheduledFor": "2026-05-18T17:00:00.000Z",
+      "timezone": "UTC",
+      "status": "failed",
+      "tags": [],
+      "hashtags": [],
+      "mentions": [],
+      "visibility": "public",
+      "crosspostingEnabled": true,
+      "metadata": {
+        "usageCounted": true,
+        "usageRefunded": true
+      },
+      "publishAttempts": 0,
+      "contentHash": "06a5ba62447ad45a560be6333acc994d",
+      "recycling": {
+        "enabled": false,
+        "gapFreq": "month",
+        "recycleCount": 0,
+        "contentVariations": [],
+        "contentVariationIndex": 0
+      },
+      "createdAt": "2026-05-18T17:22:25.077Z",
+      "updatedAt": "2026-05-18T17:22:34.266Z",
+      "__v": 0,
+      "publishingClaimedAt": "2026-05-18T17:22:25.183Z"
+    }
+  ],
+  "pagination": {
+    "page": 1,
+    "limit": 100,
+    "total": 34,
+    "pages": 1
+  }
+}

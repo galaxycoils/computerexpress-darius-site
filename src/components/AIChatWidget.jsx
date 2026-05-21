@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, Suspense, lazy } from 'react';
 
 const CHAT_API = '/api/chat';
 
@@ -9,8 +9,69 @@ const SUGGESTIONS = [
   { label: '📞 Book a Call', message: 'How do I book a free consultation?' },
 ];
 
+const WebLLMChat = lazy(() => import('./WebLLMChat'));
+
+function AIChatSkeleton() {
+  return (
+    <div style={{
+      display: 'flex',
+      flexDirection: 'column',
+      height: '100%',
+      width: '100%',
+      background: 'var(--bg-card)',
+      color: 'var(--text)',
+    }}>
+      {/* Header Skeleton */}
+      <div style={{
+        padding: '0.85rem 1.25rem',
+        borderBottom: '1px solid var(--panel-border)',
+        display: 'flex',
+        alignItems: 'center',
+        gap: '0.75rem',
+      }}>
+        <div style={{ width: '36px', height: '36px', borderRadius: '50%', background: 'var(--bg-soft)' }} />
+        <div style={{ flex: 1 }}>
+          <div style={{ width: '120px', height: '12px', borderRadius: '4px', background: 'var(--bg-soft)', marginBottom: '6px' }} />
+          <div style={{ width: '80px', height: '8px', borderRadius: '4px', background: 'var(--bg-soft)' }} />
+        </div>
+      </div>
+      
+      {/* Messages Skeleton */}
+      <div style={{
+        flex: 1,
+        padding: '1rem',
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '1rem',
+      }}>
+        <div style={{ alignSelf: 'flex-start', width: '70%' }}>
+          <div style={{ height: '40px', borderRadius: '12px 12px 12px 4px', background: 'var(--bg-soft)' }} />
+        </div>
+        <div style={{ alignSelf: 'flex-end', width: '60%' }}>
+          <div style={{ height: '32px', borderRadius: '12px 12px 4px 12px', background: 'var(--bg-soft)' }} />
+        </div>
+        <div style={{ alignSelf: 'flex-start', width: '80%' }}>
+          <div style={{ height: '56px', borderRadius: '12px 12px 12px 4px', background: 'var(--bg-soft)' }} />
+        </div>
+      </div>
+
+      {/* Input Skeleton */}
+      <div style={{
+        padding: '0.65rem 1rem',
+        borderTop: '1px solid var(--panel-border)',
+        display: 'flex',
+        gap: '0.5rem',
+      }}>
+        <div style={{ flex: 1, height: '36px', borderRadius: '999px', background: 'var(--bg-soft)' }} />
+        <div style={{ width: '36px', height: '36px', borderRadius: '50%', background: 'var(--bg-soft)' }} />
+      </div>
+    </div>
+  );
+}
+
 export default function AIChatWidget() {
   const [open, setOpen] = useState(false);
+  const [mode, setMode] = useState('cloud'); // 'cloud' | 'local'
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
@@ -23,10 +84,10 @@ export default function AIChatWidget() {
   }, [messages]);
 
   useEffect(() => {
-    if (open && inputRef.current) {
+    if (open && inputRef.current && mode === 'cloud') {
       inputRef.current.focus();
     }
-  }, [open]);
+  }, [open, mode]);
 
   async function sendMessage(text) {
     if (!text.trim() || loading) return;
@@ -110,7 +171,9 @@ export default function AIChatWidget() {
           width: '56px',
           height: '56px',
           borderRadius: '50%',
-          background: 'linear-gradient(135deg, #12d6ff, #0ea5e9)',
+          background: mode === 'local' 
+            ? 'linear-gradient(135deg, #34d399, #10b981)' 
+            : 'linear-gradient(135deg, #12d6ff, #0ea5e9)',
           border: 'none',
           cursor: 'pointer',
           display: 'flex',
@@ -118,7 +181,7 @@ export default function AIChatWidget() {
           justifyContent: 'center',
           boxShadow: '0 8px 32px rgba(18, 214, 255, 0.3)',
           zIndex: 9999,
-          transition: 'transform 0.2s, box-shadow 0.2s',
+          transition: 'transform 0.2s, box-shadow 0.2s, background 0.3s',
         }}
       >
         {open ? (
@@ -141,8 +204,8 @@ export default function AIChatWidget() {
             position: 'fixed',
             bottom: '90px',
             right: '24px',
-            width: 'min(400px, calc(100vw - 48px))',
-            height: 'min(560px, calc(100vh - 140px))',
+            width: 'min(420px, calc(100vw - 48px))',
+            height: 'min(580px, calc(100vh - 140px))',
             background: 'var(--bg-card)',
             border: '1px solid var(--panel-border)',
             borderRadius: 'var(--radius-lg)',
@@ -153,179 +216,205 @@ export default function AIChatWidget() {
             overflow: 'hidden',
           }}
         >
-          {/* Header */}
-          <div style={{
-            padding: '1rem 1.25rem',
-            borderBottom: '1px solid var(--panel-border)',
-            background: 'linear-gradient(135deg, rgba(18,214,255,0.05), rgba(167,139,250,0.05))',
-          }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+          {mode === 'local' ? (
+            <Suspense fallback={<AIChatSkeleton />}>
+              <WebLLMChat onSwitchMode={() => setMode('cloud')} />
+            </Suspense>
+          ) : (
+            <>
+              {/* Header */}
               <div style={{
-                width: '36px', height: '36px', borderRadius: '50%',
-                background: 'linear-gradient(135deg, #12d6ff, #0ea5e9)',
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                padding: '1rem 1.25rem',
+                borderBottom: '1px solid var(--panel-border)',
+                background: 'linear-gradient(135deg, rgba(18,214,255,0.05), rgba(167,139,250,0.05))',
               }}>
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#060d1b" strokeWidth="2">
-                  <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
-                </svg>
-              </div>
-              <div>
-                <div style={{ color: 'var(--text-bright)', fontWeight: 700, fontSize: '0.95rem' }}>
-                  St. Catharines Digital
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                  <div style={{
+                    width: '36px', height: '36px', borderRadius: '50%',
+                    background: 'linear-gradient(135deg, #12d6ff, #0ea5e9)',
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  }}>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#060d1b" strokeWidth="2">
+                      <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                    </svg>
+                  </div>
+                  <div style={{ flex: 1 }}>
+                    <div style={{ color: 'var(--text-bright)', fontWeight: 700, fontSize: '0.95rem' }}>
+                      St. Catharines Digital
+                    </div>
+                    <div style={{ color: 'var(--success)', fontSize: '0.75rem', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                      <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: 'var(--success)', display: 'inline-block' }} />
+                      AI Assistant — Online
+                    </div>
+                  </div>
+                  <button
+                    onClick={() => setMode('local')}
+                    style={{
+                      background: 'var(--bg-soft)',
+                      border: '1px solid var(--panel-border)',
+                      color: '#34d399',
+                      cursor: 'pointer',
+                      fontSize: '0.75rem',
+                      padding: '4px 8px',
+                      borderRadius: '4px',
+                      fontWeight: '600',
+                      transition: 'opacity 0.2s',
+                    }}
+                    onMouseEnter={(e) => e.target.style.opacity = '0.8'}
+                    onMouseLeave={(e) => e.target.style.opacity = '1'}
+                  >
+                    Local LLM
+                  </button>
                 </div>
-                <div style={{ color: 'var(--success)', fontSize: '0.75rem', display: 'flex', alignItems: 'center', gap: '4px' }}>
-                  <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: 'var(--success)', display: 'inline-block' }} />
-                  AI Assistant — Online
-                </div>
               </div>
-            </div>
-          </div>
 
-          {/* Messages */}
-          <div style={{
-            flex: 1,
-            overflowY: 'auto',
-            padding: '1rem',
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '0.75rem',
-          }}>
-            {messages.length === 0 && (
-              <div style={{ textAlign: 'center', padding: '1.5rem 0' }}>
-                <div style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>👋</div>
-                <div style={{ color: 'var(--text-bright)', fontWeight: 600, marginBottom: '0.5rem' }}>
-                  Hi! I'm the St. Catharines Digital AI assistant.
-                </div>
-                <div style={{ color: 'var(--muted)', fontSize: '0.85rem', marginBottom: '1.5rem' }}>
-                  Ask me about our services, pricing, or how we can help your business rank higher.
-                </div>
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', justifyContent: 'center' }}>
-                  {SUGGESTIONS.map(s => (
-                    <button
-                      key={s.label}
-                      onClick={() => handleSuggestion(s.message)}
-                      style={{
-                        padding: '0.4rem 0.8rem',
-                        borderRadius: '999px',
-                        border: '1px solid var(--panel-border)',
-                        background: 'var(--bg-soft)',
-                        color: 'var(--text)',
-                        fontSize: '0.8rem',
-                        cursor: 'pointer',
-                        transition: 'all 0.15s',
-                      }}
-                    >
-                      {s.label}
-                    </button>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {messages.map((msg, i) => (
-              <div
-                key={i}
-                style={{
-                  alignSelf: msg.role === 'user' ? 'flex-end' : 'flex-start',
-                  maxWidth: '85%',
-                }}
-              >
-                <div style={{
-                  padding: '0.65rem 0.9rem',
-                  borderRadius: msg.role === 'user'
-                    ? '16px 16px 4px 16px'
-                    : '16px 16px 16px 4px',
-                  background: msg.role === 'user'
-                    ? 'linear-gradient(135deg, #12d6ff, #0ea5e9)'
-                    : 'var(--bg-soft)',
-                  color: msg.role === 'user' ? '#060d1b' : 'var(--text)',
-                  fontSize: '0.9rem',
-                  lineHeight: 1.5,
-                  whiteSpace: 'pre-wrap',
-                }}>
-                  {msg.content}
-                </div>
-              </div>
-            ))}
-
-            {loading && (
-              <div style={{ alignSelf: 'flex-start' }}>
-                <div style={{
-                  padding: '0.65rem 0.9rem',
-                  borderRadius: '16px 16px 16px 4px',
-                  background: 'var(--bg-soft)',
-                  display: 'flex',
-                  gap: '4px',
-                }}>
-                  <span className="chat-dot" style={{ width: '8px', height: '8px', borderRadius: '50%', background: 'var(--muted)', display: 'inline-block', animation: 'chat-pulse 1.4s infinite' }} />
-                  <span className="chat-dot" style={{ width: '8px', height: '8px', borderRadius: '50%', background: 'var(--muted)', display: 'inline-block', animation: 'chat-pulse 1.4s infinite 0.2s' }} />
-                  <span className="chat-dot" style={{ width: '8px', height: '8px', borderRadius: '50%', background: 'var(--muted)', display: 'inline-block', animation: 'chat-pulse 1.4s infinite 0.4s' }} />
-                </div>
-              </div>
-            )}
-
-            {error && (
+              {/* Messages */}
               <div style={{
-                padding: '0.5rem 0.75rem',
-                borderRadius: '8px',
-                background: 'rgba(255,107,107,0.1)',
-                border: '1px solid rgba(255,107,107,0.2)',
-                color: '#ff6b6b',
-                fontSize: '0.8rem',
-              }}>
-                {error}
-              </div>
-            )}
-
-            <div ref={messagesEndRef} />
-          </div>
-
-          {/* Input */}
-          <form onSubmit={handleSubmit} style={{
-            padding: '0.75rem 1rem',
-            borderTop: '1px solid var(--panel-border)',
-            display: 'flex',
-            gap: '0.5rem',
-          }}>
-            <input
-              ref={inputRef}
-              type="text"
-              value={input}
-              onChange={e => setInput(e.target.value)}
-              placeholder="Ask about services, pricing, SEO..."
-              disabled={loading}
-              style={{
                 flex: 1,
-                padding: '0.6rem 0.9rem',
-                borderRadius: '999px',
-                border: '1px solid var(--panel-border)',
-                background: 'var(--bg-soft)',
-                color: 'var(--text)',
-                fontSize: '0.9rem',
-                outline: 'none',
-              }}
-            />
-            <button
-              type="submit"
-              disabled={loading || !input.trim()}
-              style={{
-                width: '40px',
-                height: '40px',
-                borderRadius: '50%',
-                border: 'none',
-                background: 'linear-gradient(135deg, #12d6ff, #0ea5e9)',
-                cursor: loading ? 'default' : 'pointer',
+                overflowY: 'auto',
+                padding: '1rem',
                 display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                opacity: loading || !input.trim() ? 0.5 : 1,
-              }}
-            >
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#060d1b" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>
-              </svg>
-            </button>
-          </form>
+                flexDirection: 'column',
+                gap: '0.75rem',
+              }}>
+                {messages.length === 0 && (
+                  <div style={{ textAlign: 'center', padding: '1.5rem 0' }}>
+                    <div style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>👋</div>
+                    <div style={{ color: 'var(--text-bright)', fontWeight: 600, marginBottom: '0.5rem' }}>
+                      Hi! I'm the St. Catharines Digital AI assistant.
+                    </div>
+                    <div style={{ color: 'var(--muted)', fontSize: '0.85rem', marginBottom: '1.5rem' }}>
+                      Ask me about our services, pricing, or how we can help your business rank higher.
+                    </div>
+                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', justifyContent: 'center' }}>
+                      {SUGGESTIONS.map(s => (
+                        <button
+                          key={s.label}
+                          onClick={() => handleSuggestion(s.message)}
+                          style={{
+                            padding: '0.4rem 0.8rem',
+                            borderRadius: '999px',
+                            border: '1px solid var(--panel-border)',
+                            background: 'var(--bg-soft)',
+                            color: 'var(--text)',
+                            fontSize: '0.8rem',
+                            cursor: 'pointer',
+                            transition: 'all 0.15s',
+                          }}
+                        >
+                          {s.label}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {messages.map((msg, i) => (
+                  <div
+                    key={i}
+                    style={{
+                      alignSelf: msg.role === 'user' ? 'flex-end' : 'flex-start',
+                      maxWidth: '85%',
+                    }}
+                  >
+                    <div style={{
+                      padding: '0.65rem 0.9rem',
+                      borderRadius: msg.role === 'user'
+                        ? '16px 16px 4px 16px'
+                        : '16px 16px 16px 4px',
+                      background: msg.role === 'user'
+                        ? 'linear-gradient(135deg, #12d6ff, #0ea5e9)'
+                        : 'var(--bg-soft)',
+                      color: msg.role === 'user' ? '#060d1b' : 'var(--text)',
+                      fontSize: '0.9rem',
+                      lineHeight: 1.5,
+                      whiteSpace: 'pre-wrap',
+                    }}>
+                      {msg.content}
+                    </div>
+                  </div>
+                ))}
+
+                {loading && (
+                  <div style={{ alignSelf: 'flex-start' }}>
+                    <div style={{
+                      padding: '0.65rem 0.9rem',
+                      borderRadius: '16px 16px 16px 4px',
+                      background: 'var(--bg-soft)',
+                      display: 'flex',
+                      gap: '4px',
+                    }}>
+                      <span className="chat-dot" style={{ width: '8px', height: '8px', borderRadius: '50%', background: 'var(--muted)', display: 'inline-block', animation: 'chat-pulse 1.4s infinite' }} />
+                      <span className="chat-dot" style={{ width: '8px', height: '8px', borderRadius: '50%', background: 'var(--muted)', display: 'inline-block', animation: 'chat-pulse 1.4s infinite 0.2s' }} />
+                      <span className="chat-dot" style={{ width: '8px', height: '8px', borderRadius: '50%', background: 'var(--muted)', display: 'inline-block', animation: 'chat-pulse 1.4s infinite 0.4s' }} />
+                    </div>
+                  </div>
+                )}
+
+                {error && (
+                  <div style={{
+                    padding: '0.5rem 0.75rem',
+                    borderRadius: '8px',
+                    background: 'rgba(255,107,107,0.1)',
+                    border: '1px solid rgba(255,107,107,0.2)',
+                    color: '#ff6b6b',
+                    fontSize: '0.8rem',
+                  }}>
+                    {error}
+                  </div>
+                )}
+
+                <div ref={messagesEndRef} />
+              </div>
+
+              {/* Input */}
+              <form onSubmit={handleSubmit} style={{
+                padding: '0.75rem 1rem',
+                borderTop: '1px solid var(--panel-border)',
+                display: 'flex',
+                gap: '0.5rem',
+              }}>
+                <input
+                  ref={inputRef}
+                  type="text"
+                  value={input}
+                  onChange={e => setInput(e.target.value)}
+                  placeholder="Ask about services, pricing, SEO..."
+                  disabled={loading}
+                  style={{
+                    flex: 1,
+                    padding: '0.6rem 0.9rem',
+                    borderRadius: '999px',
+                    border: '1px solid var(--panel-border)',
+                    background: 'var(--bg-soft)',
+                    color: 'var(--text)',
+                    fontSize: '0.9rem',
+                    outline: 'none',
+                  }}
+                />
+                <button
+                  type="submit"
+                  disabled={loading || !input.trim()}
+                  style={{
+                    width: '40px',
+                    height: '40px',
+                    borderRadius: '50%',
+                    border: 'none',
+                    background: 'linear-gradient(135deg, #12d6ff, #0ea5e9)',
+                    cursor: loading ? 'default' : 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    opacity: loading || !input.trim() ? 0.5 : 1,
+                  }}
+                >
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#060d1b" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                    <line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>
+                  </svg>
+                </button>
+              </form>
+            </>
+          )}
         </div>
       )}
 
@@ -333,6 +422,13 @@ export default function AIChatWidget() {
         @keyframes chat-pulse {
           0%, 80%, 100% { opacity: 0.3; transform: scale(0.8); }
           40% { opacity: 1; transform: scale(1); }
+        }
+        .skeleton-pulse {
+          animation: skeleton-load 1.5s ease-in-out infinite;
+        }
+        @keyframes skeleton-load {
+          0%, 100% { opacity: 0.6; }
+          50% { opacity: 0.35; }
         }
       `}</style>
     </>

@@ -1,4 +1,4 @@
-import Seo from '../components/Seo'
+import Seo, { BASE_URL } from '../components/Seo'
 import { Link } from 'react-router-dom'
 import AnimatedSection from '../hooks/useInView'
 import { packages, guarantee } from '../data/siteData'
@@ -9,7 +9,7 @@ const servicesPageJsonLd = {
   provider: {
     '@type': 'Organization',
     name: 'St. Catharines Digital',
-    url: 'https://stcatharinesdigital.pages.dev'
+    url: BASE_URL
   },
   areaServed: [
     { '@type': 'City', name: 'St. Catharines' },
@@ -101,15 +101,20 @@ export default function ServicesPage() {
             </div>
           </AnimatedSection>
           {[
-            { label: 'Plumbers', desc: 'Emergency call CTAs, service area pages, review integration, and GBP optimization.' },
-            { label: 'HVAC Companies', desc: 'Seasonal service pages, maintenance plan landing pages, and local SEO.' },
-            { label: 'Electricians', desc: 'Residential and commercial service pages, license display, and click-to-call.' },
+            { label: 'Plumbers', path: '/services/web-design-for-plumbers', desc: 'Emergency call CTAs, service area pages, review integration, and GBP optimization.' },
+            { label: 'HVAC Companies', path: '/services/web-design-for-hvac', desc: 'Seasonal service pages, maintenance plan landing pages, and local SEO.' },
+            { label: 'Electricians', path: '/services/web-design-for-electricians', desc: 'Residential and commercial service pages, license display, and click-to-call.' },
           ].map(page => (
             <AnimatedSection key={page.label}>
-              <article className="info-card" style={{ marginBottom: '1rem' }}>
-                <h3 style={{ fontSize: '1.1rem', marginBottom: '0.5rem' }}>{page.label}</h3>
-                <p style={{ color: 'var(--muted)', fontSize: '0.9rem' }}>{page.desc}</p>
-              </article>
+              <Link to={page.path} style={{ textDecoration: 'none', display: 'block' }}>
+                <article className="info-card" style={{ marginBottom: '1rem', cursor: 'pointer', transition: 'all 0.2s ease-in-out' }}>
+                  <h3 style={{ fontSize: '1.1rem', marginBottom: '0.5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    {page.label}
+                    <span style={{ fontSize: '1.2rem', color: 'var(--primary)', fontWeight: 'bold' }}>→</span>
+                  </h3>
+                  <p style={{ color: 'var(--muted)', fontSize: '0.9rem' }}>{page.desc}</p>
+                </article>
+              </Link>
             </AnimatedSection>
           ))}
         </div>

@@ -1,4 +1,4 @@
-import Seo from '../components/Seo'
+import Seo, { BASE_URL } from '../components/Seo'
 import { Link } from 'react-router-dom'
 import AnimatedSection from '../hooks/useInView'
 import { IconWeb, IconSearch, IconMap } from '../components/Icons'
@@ -31,7 +31,7 @@ const serviceData = {
       '@type': 'Service',
       name: 'Website Design',
       description: 'Custom website design for service businesses. Mobile-first, SEO-optimized, conversion-focused.',
-      provider: { '@type': 'LocalBusiness', name: 'St. Catharines Digital', url: 'https://stcatharinesdigital.pages.dev' },
+      provider: { '@type': 'LocalBusiness', name: 'St. Catharines Digital', url: BASE_URL },
       areaServed: [{ '@type': 'City', name: 'St. Catharines' }, { '@type': 'State', name: 'Ontario' }],
     },
   },
@@ -62,7 +62,7 @@ const serviceData = {
       '@type': 'Service',
       name: 'Technical SEO',
       description: 'Technical SEO services including audits, site speed optimization, schema markup, and Core Web Vitals.',
-      provider: { '@type': 'LocalBusiness', name: 'St. Catharines Digital', url: 'https://stcatharinesdigital.pages.dev' },
+      provider: { '@type': 'LocalBusiness', name: 'St. Catharines Digital', url: BASE_URL },
       areaServed: [{ '@type': 'City', name: 'St. Catharines' }, { '@type': 'State', name: 'Ontario' }],
     },
   },
@@ -93,7 +93,7 @@ const serviceData = {
       '@type': 'Service',
       name: 'Google Business Profile Optimization',
       description: 'Google Business Profile optimization to rank #1 on Google Maps and local search.',
-      provider: { '@type': 'LocalBusiness', name: 'St. Catharines Digital', url: 'https://stcatharinesdigital.pages.dev' },
+      provider: { '@type': 'LocalBusiness', name: 'St. Catharines Digital', url: BASE_URL },
       areaServed: [{ '@type': 'City', name: 'St. Catharines' }, { '@type': 'State', name: 'Ontario' }],
     },
   },
@@ -124,7 +124,7 @@ export default function ServicePage({ slug }) {
     '@context': 'https://schema.org',
     '@type': 'WebPage',
     name: `${service.title} | St. Catharines Digital`,
-    url: `https://stcatharinesdigital.pages.dev/services/${slug}`,
+    url: `${BASE_URL}/services/${slug}`,
     speakable: {
       '@type': 'SpeakableSpecification',
       cssSelector: ['h1', 'h2', 'p']

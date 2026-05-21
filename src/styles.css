@@ -49,6 +49,15 @@
   --transition-base: 300ms cubic-bezier(0.4, 0, 0.2, 1);
   --transition-slow: 500ms cubic-bezier(0.4, 0, 0.2, 1);
   --transition-bounce: 500ms cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* Fluid Typography Scale */
+  --fs-xs: clamp(0.7rem, 0.65rem + 0.25vw, 0.8rem);
+  --fs-sm: clamp(0.8rem, 0.75rem + 0.25vw, 0.9rem);
+  --fs-base: clamp(0.95rem, 0.9rem + 0.25vw, 1.05rem);
+  --fs-md: clamp(1.1rem, 1.02rem + 0.4vw, 1.25rem);
+  --fs-lg: clamp(1.3rem, 1.2rem + 0.5vw, 1.55rem);
+  --fs-xl: clamp(1.6rem, 1.45rem + 0.75vw, 2.1rem);
+  --fs-xxl: clamp(2.2rem, 1.9rem + 1.5vw, 3.5rem);
 }
 
 /* ============================================
@@ -2910,6 +2919,183 @@ html {
 @media (max-width: 768px) {
   .timeline-container::before {
     left: 20px;
+  }
+}
+
+/* ============================================
+   GOOGLE PARTNER / TRUST BADGES
+   ============================================ */
+.hero-trust-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin: 2rem 0;
+  align-items: center;
+}
+
+.hero-trust-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-bright);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--panel-border);
+  padding: 0.5rem 1rem;
+  border-radius: 99px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.hero-trust-badge svg {
+  flex-shrink: 0;
+}
+
+@media (max-width: 640px) {
+  .hero-trust-badges {
+    justify-content: center;
+    gap: 0.75rem;
+  }
+  .hero-trust-badge {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.75rem;
+  }
+}
+
+/* ============================================
+   BEFORE/AFTER SLIDER (ba-slider)
+   ============================================ */
+.ba-slider-container {
+  position: relative;
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  aspect-ratio: 16/10;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--panel-border);
+  box-shadow: var(--shadow-lg), 0 0 40px rgba(18, 214, 255, 0.05);
+  user-select: none;
+}
+
+.ba-slider-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+}
+
+.ba-slider-after-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.ba-slider-divider {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: var(--primary);
+  box-shadow: 0 0 10px var(--primary-glow);
+  pointer-events: none;
+  transform: translateX(-50%);
+  z-index: 10;
+}
+
+.ba-slider-handle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--bg-card);
+  border: 3px solid var(--primary);
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5), 0 0 10px var(--primary-glow);
+}
+
+.ba-slider-range-input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: ew-resize;
+  z-index: 20;
+}
+
+.ba-slider-label {
+  position: absolute;
+  top: 1rem;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  padding: 0.4rem 0.75rem;
+  border-radius: 4px;
+  z-index: 15;
+  pointer-events: none;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.ba-slider-label-before {
+  left: 1rem;
+  color: #ff6b6b;
+  background: rgba(255, 107, 107, 0.15);
+  border: 1px solid rgba(255, 107, 107, 0.3);
+}
+
+.ba-slider-label-after {
+  right: 1rem;
+  color: var(--primary);
+  background: rgba(18, 214, 255, 0.15);
+  border: 1px solid rgba(18, 214, 255, 0.3);
+}
+
+/* ============================================
+   ACCESSIBILITY & TOUCH TARGET FIXES
+   ============================================ */
+/* Ensure all interactive buttons have min height/width for physical touch targets */
+.button, .chat-toggle, .webllm-toggle, .theme-toggle, .nav-toggle, .search-toggle {
+  min-height: 44px;
+}
+
+.nav-links a {
+  padding: 0.75rem 1rem !important; /* Increase vertical padding for larger touch target */
+}
+
+/* ============================================
+   REDUCED MOTION OVERRIDES
+   ============================================ */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-delay: 0s !important;
+    animation-duration: 0s !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0s !important;
+    scroll-behavior: auto !important;
+  }
+  
+  .bg-orb {
+    animation: none !important;
+    transform: none !important;
+  }
+  
+  .animated-hero-bg {
+    display: none !important;
   }
 }
 

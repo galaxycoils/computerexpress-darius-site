@@ -1,4 +1,4 @@
-import Seo from '../components/Seo'
+import Seo, { BASE_URL } from '../components/Seo'
 import { Link } from 'react-router-dom'
 import AnimatedSection from '../hooks/useInView'
 
@@ -94,7 +94,7 @@ export default function ServiceLandingPage({ slug }) {
     provider: {
       '@type': 'LocalBusiness',
       name: 'St. Catharines Digital',
-      url: 'https://stcatharinesdigital.pages.dev',
+      url: BASE_URL,
       areaServed: [
         { '@type': 'City', name: 'St. Catharines' },
         { '@type': 'State', name: 'Ontario' },
@@ -114,7 +114,7 @@ export default function ServiceLandingPage({ slug }) {
     '@context': 'https://schema.org',
     '@type': 'WebPage',
     name: `${page.title} | St. Catharines Digital`,
-    url: `https://stcatharinesdigital.pages.dev/services/${slug}`,
+    url: `${BASE_URL}/services/${slug}`,
     speakable: {
       '@type': 'SpeakableSpecification',
       cssSelector: ['h1', 'h2', 'p']

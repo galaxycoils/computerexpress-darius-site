@@ -1,4 +1,4 @@
-import Seo from '../components/Seo'
+import Seo, { BASE_URL } from '../components/Seo'
 import { Link } from 'react-router-dom'
 import AnimatedSection from '../hooks/useInView'
 
@@ -37,7 +37,7 @@ const blogJsonLd = {
   '@type': 'Blog',
   name: 'St. Catharines Digital Blog',
   description: 'Expert insights on web design, local SEO, and digital growth for service businesses.',
-  url: 'https://stcatharinesdigital.pages.dev/blog',
+  url: `${BASE_URL}/blog`,
 }
 
 export default function BlogPage() {
@@ -66,8 +66,8 @@ export default function BlogPage() {
       <section className="section" aria-label="Blog posts">
         <div className="container">
           <div className="card-grid three-up page-block stagger-children">
-            {posts.map((post) => (
-              <AnimatedSection key={post.slug} delay={post.index * 100}>
+            {posts.map((post, index) => (
+              <AnimatedSection key={post.slug} delay={index * 100}>
                 <article className="info-card" style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
                   <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', marginBottom: '0.75rem' }}>
                     {post.tags.map(tag => (
