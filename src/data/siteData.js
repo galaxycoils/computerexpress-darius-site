@@ -188,3 +188,33 @@ export const guarantee = {
   title: '30-Day Satisfaction Guarantee',
   description: 'If you\'re not happy with our work, we\'ll keep revising until you are. Every package includes this guarantee — so you can commit with zero risk.'
 }
+
+export const caseStudies = [
+  {
+    slug: 'plumber-case-study',
+    title: 'Niagara Plumbing Solutions',
+    clientOverview: 'A local plumbing company struggling with online visibility.',
+    challenge: 'Old website was slow, not mobile-friendly, and they were invisible on Google Maps.',
+    solution: 'Full website redesign with service area pages and complete Google Business Profile optimization.',
+    results: 'Ranked on page 1 for main service area. Phone calls doubled in 3 months.',
+    testimonial: 'We rebuilt Niagara Plumbing Solutions website from the ground up. Within 3 months they were ranking on page 1 for their main service area and phone calls doubled. - Dave Carter'
+  },
+  {
+    slug: 'hvac-case-study',
+    title: 'Garden City HVAC',
+    clientOverview: 'An established HVAC contractor needing to modernize their brand.',
+    challenge: 'Generic website that didn\'t reflect the quality of their service. Poor local search rankings.',
+    solution: 'Custom web design, technical SEO overhaul, and GBP review generation strategy.',
+    results: 'Map pack visibility went from nowhere to top 3 in St. Catharines.',
+    testimonial: 'They handled everything — custom web design, technical SEO, and Google Business Profile. Our map pack visibility went from nowhere to top 3 in St. Catharines. - Marcus Miller'
+  },
+  {
+    slug: 'legal-case-study',
+    title: 'St. Catharines Family Law',
+    clientOverview: 'A boutique family law firm looking for premium positioning.',
+    challenge: 'Website looked outdated and didn\'t attract the right type of high-value client.',
+    solution: 'Professional redesign with high-quality imagery, clear messaging, and technical SEO structure.',
+    results: 'Improved brand perception and an increase in inquiries from qualified prospects.',
+    testimonial: 'The team at St. Catharines Digital made a huge difference. Our old site looked generic — the new site actually positions us as a premium firm. Clients comment on how professional it is. - Sarah Jenkins'
+  }
+];

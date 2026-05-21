@@ -87,16 +87,15 @@ function FAQAccordion({ items }) {
             {item.q}
             <span className="faq-icon" aria-hidden="true">{openIndex === i ? '×' : '+'}</span>
           </button>
-          {openIndex === i && (
-            <div
-              className="faq-answer"
-              id={`faq-answer-${i}`}
-              role="region"
-              aria-labelledby={`faq-question-${i}`}
-            >
-              <div className="faq-answer-inner">{item.a}</div>
-            </div>
-          )}
+          <div
+            className="faq-answer"
+            id={`faq-answer-${i}`}
+            role="region"
+            aria-labelledby={`faq-question-${i}`}
+            hidden={openIndex !== i ? "until-found" : undefined}
+          >
+            <div className="faq-answer-inner">{item.a}</div>
+          </div>
         </div>
       ))}
     </div>
