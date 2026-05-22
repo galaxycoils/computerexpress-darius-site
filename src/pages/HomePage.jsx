@@ -66,9 +66,9 @@ const homePageJsonLd = [
 ]
 
 const serviceImages = [
-  '/images/service_website_design.png',
-  '/images/service_technical_seo.png',
-  '/images/service_gbp_optimization.png'
+  '/images/service_website_design.webp',
+  '/images/service_technical_seo.webp',
+  '/images/service_gbp_optimization.webp'
 ]
 
 function FAQAccordion({ items }) {

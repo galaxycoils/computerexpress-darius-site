@@ -4,7 +4,7 @@ const SITE = 'St. Catharines Digital'
 const SHORT_SITE = 'StCatharinesDigital'
 export const BASE_URL = import.meta.env.VITE_BASE_URL || 'https://stcatharinesdigital.pages.dev'
 const BASE = BASE_URL
-const DEFAULT_IMG = '/og-card.png'
+const DEFAULT_IMG = '/og-card.webp'
 
 export default function Seo({
   title,

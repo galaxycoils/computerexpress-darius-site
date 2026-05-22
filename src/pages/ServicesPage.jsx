@@ -35,7 +35,7 @@ const localBusinessJsonLd = {
   name: 'St. Catharines Digital',
   url: BASE_URL,
   logo: `${BASE_URL}/logo-horizontal.svg`,
-  image: `${BASE_URL}/og-card.png`,
+  image: `${BASE_URL}/og-card.webp`,
   telephone: '+13653595973',
   email: 'hello@stcatharinesdigital.com',
   address: {
@@ -96,12 +96,12 @@ const serviceFeatures = [
 ]
 
 const serviceImages = [
-  '/images/service_website_design.png',
-  '/images/service_technical_seo.png',
-  '/images/service_gbp_optimization.png',
-  '/images/service_website_design.png',
-  '/images/service_technical_seo.png',
-  '/images/service_technical_seo.png'
+  '/images/service_website_design.webp',
+  '/images/service_technical_seo.webp',
+  '/images/service_gbp_optimization.webp',
+  '/images/service_website_design.webp',
+  '/images/service_technical_seo.webp',
+  '/images/service_technical_seo.webp'
 ]
 
 export default function ServicesPage() {

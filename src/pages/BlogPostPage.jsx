@@ -752,7 +752,7 @@ export default function BlogPostPage({ slug }) {
     headline: post.title,
     datePublished: post.date,
     dateModified: post.date,
-    image: `${BASE_URL}/og-card.png`,
+    image: `${BASE_URL}/og-card.webp`,
     author: { '@type': 'Organization', name: post.author },
     publisher: { '@type': 'Organization', name: 'St. Catharines Digital', url: BASE_URL },
     mainEntityOfPage: `${BASE_URL}/blog/${slug}`,

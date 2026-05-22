@@ -549,6 +549,26 @@ Primary Challenge: ${selectedPain}
                 </div>
 
                 <div className="grader-step-card" style={{ padding: '2.5rem' }}>
+                  <div 
+                    className="grader-video-preview-wrapper" 
+                    onClick={() => document.getElementById('lead-name')?.focus()}
+                    role="button"
+                    tabIndex={0}
+                    aria-label="Click to request video audit walkthrough"
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter' || e.key === ' ') {
+                        document.getElementById('lead-name')?.focus();
+                      }
+                    }}
+                  >
+                    <img 
+                      src="/images/video_preview.webp" 
+                      alt="Sample video website audit walkthrough" 
+                      className="grader-video-preview-image"
+                    />
+                    <div className="grader-video-preview-overlay" />
+                  </div>
+
                   <h3 style={{ fontFamily: 'var(--font-display)', fontSize: '1.5rem', color: 'var(--text-bright)', marginBottom: '0.75rem' }}>
                     Claim Your Complete Video Walkthrough
                   </h3>
