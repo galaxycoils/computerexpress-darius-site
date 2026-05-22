@@ -369,6 +369,7 @@ main {
   .nav-links {
     position: fixed;
     inset: 0;
+    z-index: 100;
     background: rgba(6, 13, 27, 0.98);
     backdrop-filter: blur(20px);
     flex-direction: column;
@@ -3783,6 +3784,240 @@ html {
 .grader-video-preview-wrapper:hover .grader-video-preview-overlay {
   background: rgba(0, 0, 0, 0);
 }
+
+/* Media Overview Section */
+.media-overview-section {
+  padding: 6rem 0;
+  position: relative;
+}
+
+.media-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  align-items: stretch;
+}
+
+@media (max-width: 900px) {
+  .media-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+}
+
+/* Custom Video Player Card */
+.custom-video-player-card {
+  background: var(--bg-card);
+  border: 1px solid var(--panel-border);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  box-shadow: var(--shadow-md);
+  transition: var(--transition-base);
+}
+
+.custom-video-player-card:hover {
+  border-color: rgba(18, 214, 255, 0.2);
+  box-shadow: var(--shadow-glow);
+}
+
+.video-wrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16/9;
+  background: #000;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  margin-bottom: 1.25rem;
+}
+
+.video-wrapper video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Custom Audio Player Card */
+.custom-audio-player-card {
+  background: var(--bg-card);
+  border: 1px solid var(--panel-border);
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: var(--shadow-md);
+  transition: var(--transition-base);
+}
+
+.custom-audio-player-card:hover {
+  border-color: rgba(167, 139, 250, 0.2);
+  box-shadow: var(--shadow-glow);
+}
+
+.audio-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.audio-icon-wrapper {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-sm);
+  background: var(--accent-dim);
+  border: 1px solid rgba(167, 139, 250, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+}
+
+.audio-title-info h3 {
+  font-size: 1.15rem;
+  color: var(--text-bright);
+  margin-bottom: 0.25rem;
+}
+
+.audio-title-info p {
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.audio-player-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.audio-timeline-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.audio-timeline {
+  position: relative;
+  width: 100%;
+  height: 6px;
+  background: rgba(154, 180, 210, 0.15);
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.audio-progress {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background: var(--gradient-2);
+  border-radius: 3px;
+  transition: width 0.1s linear;
+}
+
+.audio-time-stamps {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.75rem;
+  color: var(--muted-lite);
+  font-family: var(--font-mono);
+}
+
+.audio-buttons-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.play-pause-btn {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--gradient-2);
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--bg);
+  box-shadow: 0 4px 15px rgba(167, 139, 250, 0.3);
+  transition: var(--transition-base);
+}
+
+.play-pause-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 20px rgba(167, 139, 250, 0.5);
+}
+
+.play-pause-btn svg {
+  width: 24px;
+  height: 24px;
+  fill: currentColor;
+}
+
+.volume-control {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100px;
+}
+
+.volume-slider {
+  width: 100%;
+  height: 4px;
+  -webkit-appearance: none;
+  background: rgba(154, 180, 210, 0.2);
+  border-radius: 2px;
+  outline: none;
+}
+
+.volume-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--accent);
+  cursor: pointer;
+}
+
+/* Mobile Testimonials Swipe Gestures Support */
+@media (max-width: 768px) {
+  .testimonials-grid {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    gap: 1.5rem;
+    padding-bottom: 1.5rem;
+    scrollbar-width: thin;
+  }
+  
+  .testimonials-grid::-webkit-scrollbar {
+    height: 6px;
+  }
+  
+  .testimonials-grid::-webkit-scrollbar-thumb {
+    background: var(--panel-border);
+    border-radius: 3px;
+  }
+  
+  .testimonial-card {
+    min-width: 85%;
+    scroll-snap-align: start;
+  }
+}
+
+@keyframes bounce {
+  0% {
+    height: 30%;
+  }
+  100% {
+    height: 100%;
+  }
+}
+
 
 
 

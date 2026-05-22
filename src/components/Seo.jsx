@@ -2,7 +2,7 @@ import { Helmet } from 'react-helmet-async'
 
 const SITE = 'St. Catharines Digital'
 const SHORT_SITE = 'StCatharinesDigital'
-export const BASE_URL = import.meta.env.VITE_BASE_URL || 'https://stcatharinesdigital.pages.dev'
+export const BASE_URL = import.meta.env.VITE_BASE_URL || 'https://stcatharinesdigital.ca'
 const BASE = BASE_URL
 const DEFAULT_IMG = '/og-card.webp'
 

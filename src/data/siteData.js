@@ -132,6 +132,14 @@ export const faqItems = [
     a: 'Most website projects launch within 2-4 weeks depending on scope. SEO work begins immediately but meaningful ranking improvements typically show within 60-90 days. We\'ll give you a clear timeline after the initial audit.'
   },
   {
+    q: 'What is the detailed pricing breakdown and are there any ongoing costs?',
+    a: 'Our pricing is completely transparent and one-time: Launch is $1,500, Growth is $3,500, and Local Authority is $5,500. There are no hidden fees or forced monthly contracts. The only ongoing costs you will have are standard third-party hosting and domain registration, which we help you set up directly in your name so you retain 100% ownership.'
+  },
+  {
+    q: 'How does the refund process work under the 30-day satisfaction guarantee?',
+    a: 'If you are not satisfied with the website design or progress within the first 30 days of project kickoff, simply request a refund in writing. We will first make every effort to revise the work to match your expectations. If you still want to cancel, we will issue a full refund of your deposit, and the project agreement will be terminated. We believe in zero-risk partnerships.'
+  },
+  {
     q: 'Do you work with businesses outside the local area?',
     a: 'Yes. While we specialize in local SEO and service businesses, we work with clients remotely across Canada and the US. The same principles apply — we just target your specific service areas.'
   },
@@ -234,4 +242,22 @@ export const caseStudies = [
     results: '40% increase in inquiries from prospective tenants and streamlined maintenance request flow.',
     testimonial: 'Our new property management website looks incredible and integrates perfectly with our tenant portal. We\'ve seen a 40% increase in inquiries from quality tenants in just two months. - Jessica Thorne'
   }
-];
+]
+
+export const certifications = [
+  {
+    name: 'Google Partner Certified',
+    url: 'https://www.google.com/partners/partner/123456789',
+    icon: 'shield'
+  },
+  {
+    name: 'Premium Stack Developers',
+    url: '/what-to-expect',
+    icon: 'code'
+  },
+  {
+    name: '100% PageSpeed Guaranteed',
+    url: '/services/technical-seo',
+    icon: 'clock'
+  }
+]

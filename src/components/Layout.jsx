@@ -227,10 +227,10 @@ export default function Layout() {
             <div className="footer-col">
               <span className="footer-heading">Services</span>
               <nav className="footer-col-links" aria-label="Services links">
-                <Link to="/services">Web Design</Link>
-                <Link to="/services">Technical SEO</Link>
-                <Link to="/services">Google Business Profile</Link>
-                <Link to="/services">Local SEO</Link>
+                <Link to="/services/website-design">Web Design</Link>
+                <Link to="/services/technical-seo">Technical SEO</Link>
+                <Link to="/services/gbp-optimization">Google Business Profile</Link>
+                <Link to="/services/local-seo-for-service-businesses">Local SEO</Link>
               </nav>
             </div>
             <div className="footer-col">
@@ -264,6 +264,15 @@ export default function Layout() {
                   {newsletterState.message}
                 </p>
               )}
+            </div>
+          </div>
+          <div className="footer-bottom">
+            <span className="footer-copyright">
+              © {new Date().getFullYear()} St. Catharines Digital. All rights reserved.
+            </span>
+            <div style={{ display: 'flex', gap: '1.5rem', fontSize: '0.8rem' }}>
+              <Link to="/privacy" style={{ color: 'var(--muted-lite)', textDecoration: 'none' }}>Privacy Policy</Link>
+              <Link to="/terms" style={{ color: 'var(--muted-lite)', textDecoration: 'none' }}>Terms of Service</Link>
             </div>
           </div>
         </div>

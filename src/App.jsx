@@ -15,6 +15,8 @@ import NotFoundPage from './pages/NotFoundPage'
 import FreeAuditPage from './pages/FreeAuditPage'
 import CaseStudyPage from './pages/CaseStudyPage'
 import LocalServiceAreaPage from './pages/LocalServiceAreaPage'
+import PrivacyPage from './pages/PrivacyPage'
+import TermsPage from './pages/TermsPage'
 
 function BlogPostWrapper() {
   const { slug } = useParams()
@@ -44,6 +46,8 @@ export function AppRoutes() {
         <Route path="service-areas/:serviceSlug/:citySlug" element={<LocalServiceAreaPage />} />
         <Route path="what-to-expect" element={<WhatToExpectPage />} />
         <Route path="free-audit" element={<FreeAuditPage />} />
+        <Route path="privacy" element={<PrivacyPage />} />
+        <Route path="terms" element={<TermsPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Route>
     </Routes>
