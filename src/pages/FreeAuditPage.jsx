@@ -39,11 +39,11 @@ const PAIN_POINTS = [
 ]
 
 const ANALYSIS_PHASES = [
-  'Checking website responsiveness and PageSpeed score...',
-  'Analyzing local schema markup and semantic tags...',
-  'Querying Google Maps 3-Pack prominence for Niagara region...',
-  'Calculating estimated lost monthly leads & revenue...',
-  'Generating customized local growth checklist...'
+  'Estimating mobile speed and Core Web Vitals risk...',
+  'Checking crawl, metadata, and local schema signals...',
+  'Reviewing Google Maps and service-area coverage inputs...',
+  'Modeling potential monthly lead opportunity...',
+  'Building your priority local growth checklist...'
 ]
 
 const freeAuditJsonLd = [
@@ -52,11 +52,7 @@ const freeAuditJsonLd = [
     '@type': 'WebPage',
     name: 'Free Website Audit & SEO Grader | St. Catharines Digital',
     url: `${BASE_URL}/free-audit`,
-    description: 'Calculate your website speed, local schema coverage, Maps prominence, and monthly revenue lost to competitors.',
-    speakable: {
-      '@type': 'SpeakableSpecification',
-      cssSelector: ['h1', 'h2', 'p']
-    }
+    description: 'Estimate your website speed risk, local schema coverage, Maps visibility inputs, service-area gaps, and conversion opportunities.',
   },
   {
     '@context': 'https://schema.org',
@@ -168,9 +164,9 @@ export default function FreeAuditPage() {
     return () => clearInterval(interval)
   }, [stage, activePhaseIndex])
 
-  // Calculate score, lost revenue, and checklist
+  // Calculate score, opportunity estimate, and checklist
   function calculateResults() {
-    // 1. Calculate Score (clamped between 40 and 68)
+    // Estimate a conservative readiness score from self-reported inputs.
     let baseScore = 88
     if (maps === 'no') baseScore -= 18
     if (maps === 'unsure') baseScore -= 9
@@ -184,7 +180,7 @@ export default function FreeAuditPage() {
     const finalScore = Math.max(40, Math.min(68, baseScore))
     setScore(finalScore)
 
-    // 2. Estimate lost leads and lost revenue
+    // Estimate possible lead opportunity from broad traffic and ticket-value inputs.
     const selectedIndustry = INDUSTRIES.find(i => i.id === industry)
     const selectedTraffic = TRAFFIC_OPTIONS.find(t => t.id === traffic)
 
@@ -256,8 +252,8 @@ Website: ${url}
 
 === GRADER DIAGNOSTICS ===
 Calculated Score: ${score}%
-Estimated Monthly Lost Leads: ${lostLeads}
-Estimated Monthly Lost Revenue: $${lostRevenue}
+Estimated Monthly Lead Opportunity: ${lostLeads}
+Estimated Monthly Opportunity Value: $${lostRevenue}
 Industry Category: ${selectedIndustry}
 Google Maps Prominence: ${selectedMaps}
 Monthly Traffic: ${selectedTraffic}
@@ -319,7 +315,7 @@ Primary Challenge: ${selectedPain}
     <>
       <Seo
         title="Free Website Audit & SEO Grader | St. Catharines Digital"
-        description="Run our instant interactive grader to calculate your website conversion score, maps package prominence, and estimated monthly lost revenue."
+        description="Run our instant interactive grader to estimate website readiness, local search visibility inputs, and potential monthly lead opportunity."
         path="/free-audit"
         jsonLd={freeAuditJsonLd}
       />
@@ -509,25 +505,25 @@ Primary Challenge: ${selectedPain}
                       {score}<span>%</span>
                     </div>
                   </div>
-                  <h3>Overall Digital Score</h3>
-                  <p style={{ color: 'var(--muted)', fontSize: '0.85rem', margin: '0.5rem 0 1rem' }}>URL under test: {url}</p>
+                  <h3>Authority Readiness Score</h3>
+                  <p style={{ color: 'var(--muted)', fontSize: '0.85rem', margin: '0.5rem 0 1rem' }}>Self-reported estimate for: {url}</p>
                   <span className={`grader-score-label ${score < 55 ? 'low' : 'medium'}`}>
-                    {score < 55 ? 'Critical Action Required' : 'Needs Optimization'}
+                    {score < 55 ? 'High Priority Gaps' : 'Optimization Opportunity'}
                   </span>
                 </div>
 
                 <div className="grader-roi-card">
-                  <h3>Lost Monthly Revenue Estimate</h3>
-                  <p>Based on local service ticket prices and traffic conversion gaps, your current layout limitations cost your business:</p>
+                  <h3>Monthly Opportunity Estimate</h3>
+                  <p>Based on broad service-ticket values and your traffic range, this models possible upside. The manual audit verifies the real numbers.</p>
                   
                   <div className="grader-roi-stats">
                     <div>
                       <div className="grader-roi-stat-val">{lostLeads}</div>
-                      <div className="grader-roi-stat-lbl">Lost Leads / Mo</div>
+                      <div className="grader-roi-stat-lbl">Potential Leads / Mo</div>
                     </div>
                     <div>
                       <div className="grader-roi-stat-val revenue">${lostRevenue.toLocaleString()}</div>
-                      <div className="grader-roi-stat-lbl">Lost Revenue / Mo</div>
+                      <div className="grader-roi-stat-lbl">Opportunity Value / Mo</div>
                     </div>
                   </div>
                 </div>
@@ -571,10 +567,10 @@ Primary Challenge: ${selectedPain}
                   </div>
 
                   <h3 style={{ fontFamily: 'var(--font-display)', fontSize: '1.5rem', color: 'var(--text-bright)', marginBottom: '0.75rem' }}>
-                    Claim Your Complete Video Walkthrough
+                    Claim Your Complete Audit Walkthrough
                   </h3>
                   <p style={{ color: 'var(--muted)', fontSize: '0.9rem', marginBottom: '1.5rem', lineHeight: '1.5' }}>
-                    Get a personalized, 5-minute video screen-share audit of your site. We'll show you exactly where visitors bounce, how to optimize mobile load speed, and step-by-step maps pack positioning.
+                    Get a personalized screen-share audit of your site. We will verify the estimate, review mobile speed, inspect conversion paths, and identify practical local search improvements.
                   </p>
 
                   {leadError && (
@@ -637,7 +633,7 @@ Primary Challenge: ${selectedPain}
                         className="button button-primary"
                         disabled={leadLoading}
                       >
-                        {leadLoading ? 'Generating Walkthrough...' : 'Get Video Audit'}
+                        {leadLoading ? 'Queueing audit...' : 'Get Audit Walkthrough'}
                       </button>
                       <button
                         type="button"
@@ -661,7 +657,7 @@ Primary Challenge: ${selectedPain}
                 </svg>
               </div>
               <h3 style={{ fontFamily: 'var(--font-display)', fontSize: '2rem', color: 'var(--text-bright)', marginBottom: '1rem' }}>
-                Your Video Audit Is Queueing!
+                Your Audit Is Queueing!
               </h3>
               <p style={{ color: 'var(--muted)', maxWidth: '55ch', margin: '0 auto 2rem', lineHeight: '1.6' }}>
                 Thanks — we have received your Website Grader report. Darius is preparing your custom 5-minute screen walkthrough. We will send the review link to <strong>{leadEmail}</strong> within 1 business day.

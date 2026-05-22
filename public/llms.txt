@@ -5,7 +5,7 @@ Premium Web Design, Technical SEO, and Google Business Profile Optimization for 
 ## Core Offerings
 
 - **Website Design for Service Businesses**: Premium, mobile-first, and conversion-optimized custom websites tailored to local service companies (plumbers, HVAC, electricians, etc.).
-- **Technical SEO Services**: Optimization of site speed, schema markup (JSON-LD), crawlability, and Core Web Vitals to rank #1.
+- **Technical SEO Services**: Optimization of site speed, schema markup (JSON-LD), crawlability, and Core Web Vitals to support stronger search visibility.
 - **Google Business Profile (GBP) Optimization**: Map pack setup, keyword-optimized descriptions, reviews strategy, local citations, and maps positioning.
 
 ## Key Information

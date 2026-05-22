@@ -2,88 +2,11 @@ import fs from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { execSync } from 'node:child_process'
+import { createSitemapXml, prerenderRoutes } from '../src/data/routeManifest.js'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const rootDir = path.resolve(__dirname, '..')
-const BASE_URL = 'https://stcatharinesdigital.ca'
-
-const baseRoutes = [
-  '/',
-  '/services',
-  '/services/website-design',
-  '/services/technical-seo',
-  '/services/gbp-optimization',
-  '/services/web-design-for-plumbers',
-  '/services/web-design-for-hvac',
-  '/services/web-design-for-electricians',
-  '/services/web-design-for-landlords',
-  '/services/local-seo-for-service-businesses',
-  '/about',
-  '/contact',
-  '/success',
-  '/blog',
-  '/blog/local-seo-checklist-2026',
-  '/blog/how-to-get-more-leads-from-website',
-  '/blog/technical-seo-explained',
-  '/blog/google-business-profile-tips-local-seo',
-  '/blog/how-to-rank-1-on-google-maps',
-  '/blog/website-speed-optimization-tips',
-  '/blog/how-much-does-local-seo-cost',
-  '/blog/service-business-website-examples',
-  '/case-studies/plumber-case-study',
-  '/case-studies/hvac-case-study',
-  '/case-studies/legal-case-study',
-  '/what-to-expect',
-  '/free-audit',
-  '/privacy',
-  '/terms',
-  '/404' // Render 404 page separately
-]
-
-// Programmatic SEO Generation
-const CITIES = ['st-catharines', 'niagara-falls', 'welland', 'grimsby', 'thorold', 'fort-erie']
-const SERVICES = ['web-design', 'local-seo']
-
-const programmaticRoutes = []
-for (const service of SERVICES) {
-  for (const city of CITIES) {
-    programmaticRoutes.push(`/service-areas/${service}/${city}`)
-  }
-}
-
-const allRoutes = [...baseRoutes, ...programmaticRoutes]
-
-function generateSitemap(routes) {
-  let xml = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n`
-  const today = new Date().toISOString().split('T')[0]
-
-  for (const route of routes) {
-    if (route === '/404') continue
-
-    // Determine priority and changefreq based on route type
-    let priority = '0.7'
-    let changefreq = 'monthly'
-
-    if (route === '/') {
-      priority = '1.0'
-      changefreq = 'weekly'
-    } else if (route === '/services' || route === '/contact' || route === '/free-audit') {
-      priority = '0.9'
-      changefreq = 'monthly'
-    } else if (route.startsWith('/services/')) {
-      priority = '0.8'
-    } else if (route.startsWith('/service-areas/')) {
-      priority = '0.8'
-      changefreq = 'monthly'
-    }
-
-    const loc = `${BASE_URL}${route === '/' ? '' : route}`
-    xml += `  <url>\n    <loc>${loc}</loc>\n    <lastmod>${today}</lastmod>\n    <changefreq>${changefreq}</changefreq>\n    <priority>${priority}</priority>\n  </url>\n`
-  }
-
-  xml += `</urlset>`
-  return xml
-}
+const allRoutes = prerenderRoutes
 
 async function run() {
   console.log('--- Starting Static Prerendering (SSG) ---')
@@ -154,7 +77,7 @@ async function run() {
 
   // 4. Generate dynamic sitemap
   console.log('Generating dynamic sitemap.xml...')
-  const sitemapXml = generateSitemap(allRoutes)
+  const sitemapXml = createSitemapXml(allRoutes)
   fs.writeFileSync(path.resolve(rootDir, 'dist/sitemap.xml'), sitemapXml, 'utf8')
 
   // 5. Clean up SSR build folder

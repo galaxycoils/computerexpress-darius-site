@@ -16,7 +16,7 @@ export const services = [
     description: 'Search-ready architecture that helps Google understand, crawl, and rank your site. We fix what\'s broken and optimize what matters.',
     bullets: [
       'Site speed optimization (target: 90+ PageSpeed)',
-      'Schema markup (LocalBusiness, Service, FAQ, Review)',
+      'Schema markup where page-visible content supports it',
       'Core Web Vitals improvement (LCP, FID, CLS)',
       'XML sitemap, robots.txt, and crawl optimization',
     ]
@@ -24,7 +24,7 @@ export const services = [
   {
     icon: 'map',
     title: 'Google Business Profile',
-    description: 'Dominate Google Maps and local search. We optimize your GBP to rank #1 in the Local Pack and drive more calls, visits, and inquiries.',
+    description: 'Strengthen Google Maps and local search visibility. We optimize your GBP so customers can find, trust, and contact you more easily.',
     bullets: [
       'Complete GBP setup, verification, and optimization',
       'Keyword-optimized business description and services',
@@ -70,7 +70,7 @@ export const packages = [
     name: 'Local Authority',
     price: '$5,500',
     period: 'one-time',
-    ideal: 'For service brands ready to dominate local search and maps in their market.',
+    ideal: 'For service brands ready to build stronger local search and maps visibility in their market.',
     features: [
       'Everything in Growth, plus:',
       'Google Business Profile optimization',
@@ -93,36 +93,36 @@ export const steps = [
 
 export const testimonials = [
   {
-    text: 'We rebuilt Niagara Plumbing Solutions website from the ground up. Within 3 months they were ranking on page 1 for their main service area and phone calls doubled.',
+    text: 'Example project profile: a plumbing website rebuild with service-area structure, faster pages, and clearer call paths designed to support stronger local visibility.',
     name: 'Dave Carter',
     role: 'Owner, Niagara Plumbing Solutions',
     initials: 'DC',
     image: '/images/client_plumber.webp',
-    metric: '2.4x leads in 90 days'
+    metric: 'Lead-flow model'
   },
   {
-    text: 'The team at St. Catharines Digital made a huge difference. Our old site looked generic — the new site actually positions us as a premium firm. Clients comment on how professional it is.',
+    text: 'Example project profile: a professional-services redesign focused on premium positioning, clearer messaging, and a more credible first impression.',
     name: 'Sarah Jenkins',
     role: 'Managing Partner, St. Catharines Family Law',
     initials: 'SJ',
     image: '/images/client_lawyer.webp',
-    metric: 'Premium positioning'
+    metric: 'Positioning lift'
   },
   {
-    text: 'They handled everything — custom web design, technical SEO, and Google Business Profile. Our map pack visibility went from nowhere to top 3 in St. Catharines.',
+    text: 'Example project profile: a contractor site plan combining custom web design, technical SEO, and Google Business Profile improvements.',
     name: 'Marcus Miller',
     role: 'Founder, Garden City HVAC',
     initials: 'MM',
     image: '/images/client_hvac.webp',
-    metric: 'Top 3 map pack rank'
+    metric: 'Maps-ready setup'
   },
   {
-    text: 'Our new property management website looks incredible and integrates perfectly with our tenant portal. We\'ve seen a 40% increase in inquiries from quality tenants in just two months.',
+    text: 'Example project profile: a property-management website concept with clearer tenant paths, service pages, and portal-friendly navigation.',
     name: 'Jessica Thorne',
     role: 'Owner, Thorne Property Management',
     initials: 'JT',
     image: '/images/client_landlord.webp',
-    metric: '40% increase in inquiries'
+    metric: 'Cleaner inquiry flow'
   }
 ]
 
@@ -168,9 +168,9 @@ export const portfolioItems = [
     desc: 'Full redesign with service area pages, review integration, and GBP optimization for a regional plumbing company.',
     tags: ['Web Design', 'Local SEO', 'GBP'],
     results: [
-      { value: '3x', label: 'More leads' },
-      { value: '#1', label: 'Local pack' },
-      { value: '98', label: 'PageSpeed' }
+      { value: 'Audit', label: 'Lead flow' },
+      { value: 'GBP', label: 'Maps ready' },
+      { value: '90+', label: 'Speed target' }
     ]
   },
   {
@@ -179,18 +179,18 @@ export const portfolioItems = [
     desc: 'Complete technical SEO cleanup, schema implementation, and content restructuring for a boutique law firm.',
     tags: ['Technical SEO', 'Schema', 'Content'],
     results: [
-      { value: '5x', label: 'Organic traffic' },
-      { value: '12', label: 'Page 1 ranks' },
-      { value: '<2s', label: 'Avg. load' }
+      { value: 'Schema', label: 'Markup' },
+      { value: 'CWV', label: 'Core focus' },
+      { value: '<2s', label: 'Load target' }
     ]
   }
 ]
 
 export const stats = [
-  { value: '28+', label: 'Local businesses helped' },
-  { value: '98', label: 'Avg. PageSpeed' },
-  { value: '3.5x', label: 'Lead increase' },
-  { value: '<12h', label: 'Response time' }
+  { value: '42', label: 'SEO audit checkpoints' },
+  { value: '90+', label: 'PageSpeed target' },
+  { value: '6', label: 'Niagara service areas' },
+  { value: '<1d', label: 'Audit turnaround target' }
 ]
 
 export const trustItems = [
@@ -212,8 +212,8 @@ export const caseStudies = [
     clientOverview: 'A local plumbing company struggling with online visibility.',
     challenge: 'Old website was slow, not mobile-friendly, and they were invisible on Google Maps.',
     solution: 'Full website redesign with service area pages and complete Google Business Profile optimization.',
-    results: 'Ranked on page 1 for main service area. Phone calls doubled in 3 months.',
-    testimonial: 'We rebuilt Niagara Plumbing Solutions website from the ground up. Within 3 months they were ranking on page 1 for their main service area and phone calls doubled. - Dave Carter'
+    results: 'Built as an example of how plumbing service pages, GBP alignment, and faster load paths can support stronger local visibility.',
+    testimonial: 'Example profile based on a plumbing website rebuild: service-area structure, faster pages, and clearer call paths.'
   },
   {
     slug: 'hvac-case-study',
@@ -221,8 +221,8 @@ export const caseStudies = [
     clientOverview: 'An established HVAC contractor needing to modernize their brand.',
     challenge: 'Generic website that didn\'t reflect the quality of their service. Poor local search rankings.',
     solution: 'Custom web design, technical SEO overhaul, and GBP review generation strategy.',
-    results: 'Map pack visibility went from nowhere to top 3 in St. Catharines.',
-    testimonial: 'They handled everything — custom web design, technical SEO, and Google Business Profile. Our map pack visibility went from nowhere to top 3 in St. Catharines. - Marcus Miller'
+    results: 'Built as an example of how HVAC sites can align seasonal services, technical SEO, and Google Business Profile content.',
+    testimonial: 'Example profile based on an HVAC redesign plan: service pages, technical SEO, and GBP improvements.'
   },
   {
     slug: 'legal-case-study',
@@ -230,8 +230,8 @@ export const caseStudies = [
     clientOverview: 'A boutique family law firm looking for premium positioning.',
     challenge: 'Website looked outdated and didn\'t attract the right type of high-value client.',
     solution: 'Professional redesign with high-quality imagery, clear messaging, and technical SEO structure.',
-    results: 'Improved brand perception and an increase in inquiries from qualified prospects.',
-    testimonial: 'The team at St. Catharines Digital made a huge difference. Our old site looked generic — the new site actually positions us as a premium firm. Clients comment on how professional it is. - Sarah Jenkins'
+    results: 'Built as an example of how a professional-services site can improve clarity, trust, and inquiry quality.',
+    testimonial: 'Example profile based on a law-firm positioning refresh: clearer messaging and a more credible first impression.'
   },
   {
     slug: 'landlord-case-study',
@@ -239,15 +239,15 @@ export const caseStudies = [
     clientOverview: 'A growing property management company needing to streamline operations and attract new tenants.',
     challenge: 'Their previous website lacked modern tenant portal integration and failed to rank for local property management searches.',
     solution: 'Built a new, conversion-optimized website with dedicated property galleries, seamless portal integration, and local SEO campaigns.',
-    results: '40% increase in inquiries from prospective tenants and streamlined maintenance request flow.',
-    testimonial: 'Our new property management website looks incredible and integrates perfectly with our tenant portal. We\'ve seen a 40% increase in inquiries from quality tenants in just two months. - Jessica Thorne'
+    results: 'Built as an example of how property-management sites can improve tenant paths, service clarity, and inquiry routing.',
+    testimonial: 'Example profile based on a property-management website concept: clearer navigation and portal-friendly structure.'
   }
 ]
 
 export const certifications = [
   {
-    name: 'Google Partner Certified',
-    url: 'https://www.google.com/partners/partner/123456789',
+    name: 'Google-first SEO workflow',
+    url: '/services/gbp-optimization',
     icon: 'shield'
   },
   {
@@ -256,7 +256,7 @@ export const certifications = [
     icon: 'code'
   },
   {
-    name: '100% PageSpeed Guaranteed',
+    name: '90+ PageSpeed target',
     url: '/services/technical-seo',
     icon: 'clock'
   }

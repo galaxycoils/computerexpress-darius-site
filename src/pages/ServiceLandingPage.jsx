@@ -7,7 +7,7 @@ const servicePages = [
   {
     slug: 'web-design-for-plumbers',
     title: 'Web Design for Plumbers',
-    headline: 'Plumbing Websites That Rank #1 and Generate More Calls',
+    headline: 'Plumbing Websites Built for Local Visibility and More Calls',
     description: 'Custom plumbing websites built to rank on Google, showcase your services, and convert visitors into phone calls. Local SEO included.',
     keywords: ['plumber web design', 'plumbing website', 'plumber SEO', 'plumbing company website'],
     heroImage: '/images/hero_plumber.webp',
@@ -91,7 +91,7 @@ const servicePages = [
   {
     slug: 'local-seo-for-service-businesses',
     title: 'Local SEO for Service Businesses',
-    headline: 'Local SEO That Puts You on Top of Google Maps',
+    headline: 'Local SEO That Builds Stronger Google Maps Visibility',
     description: 'Dominate local search results for your service area. Get found by customers searching for your services in your city.',
     keywords: ['local SEO service', 'local SEO for service businesses', 'Google Maps ranking', 'local search optimization'],
     heroImage: '/images/hero_localseo.webp',
@@ -189,10 +189,7 @@ export default function ServiceLandingPage({ slug }) {
     '@type': 'WebPage',
     name: `${page.title} | St. Catharines Digital`,
     url: `${BASE_URL}/services/${slug}`,
-    speakable: {
-      '@type': 'SpeakableSpecification',
-      cssSelector: ['h1', 'h2', 'p']
-    }
+    description: page.description,
   }
 
   const breadcrumbJsonLd = {
@@ -220,19 +217,6 @@ export default function ServiceLandingPage({ slug }) {
     ]
   }
 
-  const faqJsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'FAQPage',
-    mainEntity: page.faqs.map(faq => ({
-      '@type': 'Question',
-      name: faq.q,
-      acceptedAnswer: {
-        '@type': 'Answer',
-        text: faq.a
-      }
-    }))
-  }
-
   return (
     <>
       <Seo
@@ -240,7 +224,7 @@ export default function ServiceLandingPage({ slug }) {
         description={page.description}
         path={`/services/${slug}`}
         type="service"
-        jsonLd={[jsonLd, webpageJsonLd, breadcrumbJsonLd, faqJsonLd]}
+        jsonLd={[jsonLd, webpageJsonLd, breadcrumbJsonLd]}
       />
 
       <div className="bg-orb bg-orb-1" aria-hidden="true"></div>
@@ -330,7 +314,7 @@ export default function ServiceLandingPage({ slug }) {
           <AnimatedSection>
             <div className="cta-strip">
               <div>
-                <h2>Ready to dominate local search?</h2>
+                <h2>Ready to build stronger local search visibility?</h2>
                 <p>Get a free audit and see where your website stands.</p>
               </div>
               <Link to="/contact" className="button button-primary">{page.cta}</Link>

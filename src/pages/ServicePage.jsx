@@ -23,7 +23,7 @@ const serviceData = {
     ],
     process: [
       { title: 'Discovery', desc: 'We learn about your business, customers, and goals.' },
-      { title: 'Design', desc: 'Custom mockups and revisions until it\'s perfect.' },
+      { title: 'Design', desc: 'Custom mockups and revisions until the direction is right.' },
       { title: 'Build', desc: 'Development with SEO, speed, and mobile-first focus.' },
       { title: 'Launch', desc: 'Go live with tracking, analytics, and optimization.' },
     ],
@@ -50,7 +50,7 @@ const serviceData = {
     features: [
       'Comprehensive technical SEO audit',
       'Site speed optimization (target: 90+ PageSpeed)',
-      'Schema markup implementation (LocalBusiness, Service, FAQ, Review)',
+      'Schema markup implementation where page-visible content supports it',
       'Core Web Vitals optimization (LCP, FID, CLS)',
       'XML sitemap creation and submission',
       'robots.txt optimization',
@@ -80,8 +80,8 @@ const serviceData = {
   'gbp-optimization': {
     icon: 'map',
     title: 'Google Business Profile Optimization',
-    headline: 'Dominate Google Maps and Local Search Results',
-    description: 'Get found by customers searching for your services in your area. We optimize your Google Business Profile to rank #1 in the Local Pack and drive more calls, visits, and inquiries.',
+    headline: 'Strengthen Google Maps and Local Search Visibility',
+    description: 'Get found by customers searching for your services in your area. We optimize your Google Business Profile to improve trust signals, service clarity, and contact paths.',
     keywords: ['Google Business Profile', 'GBP optimization', 'Google Maps ranking', 'local SEO', 'local pack'],
     features: [
       'Complete GBP setup and verification',
@@ -108,7 +108,7 @@ const serviceData = {
       '@context': 'https://schema.org',
       '@type': 'Service',
       name: 'Google Business Profile Optimization',
-      description: 'Google Business Profile optimization to rank #1 on Google Maps and local search.',
+      description: 'Google Business Profile optimization for stronger Google Maps and local search visibility.',
       provider: { '@type': 'LocalBusiness', name: 'St. Catharines Digital', url: BASE_URL },
       areaServed: [{ '@type': 'City', name: 'St. Catharines' }, { '@type': 'State', name: 'Ontario' }],
     },
@@ -173,10 +173,7 @@ export default function ServicePage({ slug }) {
     '@type': 'WebPage',
     name: `${service.title} | St. Catharines Digital`,
     url: `${BASE_URL}/services/${slug}`,
-    speakable: {
-      '@type': 'SpeakableSpecification',
-      cssSelector: ['h1', 'h2', 'p']
-    }
+    description: service.description,
   }
 
   const breadcrumbJsonLd = {
@@ -204,19 +201,6 @@ export default function ServicePage({ slug }) {
     ]
   }
 
-  const faqJsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'FAQPage',
-    mainEntity: service.faqs.map(faq => ({
-      '@type': 'Question',
-      name: faq.q,
-      acceptedAnswer: {
-        '@type': 'Answer',
-        text: faq.a
-      }
-    }))
-  }
-
   return (
     <>
       <Seo
@@ -224,7 +208,7 @@ export default function ServicePage({ slug }) {
         description={service.description}
         path={`/services/${slug}`}
         type="service"
-        jsonLd={[service.jsonLd, webpageJsonLd, breadcrumbJsonLd, faqJsonLd]}
+        jsonLd={[service.jsonLd, webpageJsonLd, breadcrumbJsonLd]}
       />
 
       <div className="bg-orb bg-orb-1" aria-hidden="true"></div>

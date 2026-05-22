@@ -37,19 +37,6 @@ const aboutFaqs = [
   }
 ]
 
-const faqJsonLd = {
-  '@context': 'https://schema.org',
-  '@type': 'FAQPage',
-  mainEntity: aboutFaqs.map(faq => ({
-    '@type': 'Question',
-    name: faq.q,
-    acceptedAnswer: {
-      '@type': 'Answer',
-      text: faq.a
-    }
-  }))
-}
-
 const breadcrumbJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'BreadcrumbList',
@@ -85,7 +72,7 @@ export default function AboutPage() {
         title="About | St. Catharines Digital — Web Design & SEO Agency"
         description="St. Catharines Digital builds high-performance websites with technical SEO and local growth for service businesses. AI-powered, human-directed, no bloated process."
         path="/about"
-        jsonLd={[aboutPageJsonLd, faqJsonLd, breadcrumbJsonLd]}
+        jsonLd={[aboutPageJsonLd, breadcrumbJsonLd]}
       />
 
       {/* Background orbs */}

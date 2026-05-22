@@ -1,15 +1,15 @@
 import Seo, { BASE_URL } from '../components/Seo'
 import { Link } from 'react-router-dom'
 import { useState, useRef, useEffect } from 'react'
-import { IconWeb, IconSearch, IconMap, HeroIllustration } from '../components/Icons'
 import AnimatedCounter from '../components/AnimatedCounter'
 import AnimatedSection from '../hooks/useInView'
 import BeforeAfterSlider from '../components/BeforeAfterSlider'
 import AnimatedHeroBg from '../components/AnimatedHeroBg'
 import {
   services, packages, steps, testimonials, faqItems,
-  portfolioItems, stats, guarantee, certifications
+  portfolioItems, stats, guarantee
 } from '../data/siteData'
+import { siteConfig } from '../data/siteConfig'
 
 const homePageJsonLd = [
   {
@@ -18,6 +18,21 @@ const homePageJsonLd = [
     name: 'St. Catharines Digital',
     '@id': BASE_URL,
     url: BASE_URL,
+    logo: `${BASE_URL}/logo-horizontal.svg`,
+    image: `${BASE_URL}/og-card.webp`,
+    telephone: siteConfig.phone,
+    email: siteConfig.email,
+    address: {
+      '@type': 'PostalAddress',
+      addressLocality: siteConfig.city,
+      addressRegion: siteConfig.region,
+      addressCountry: siteConfig.country
+    },
+    geo: {
+      '@type': 'GeoCoordinates',
+      latitude: siteConfig.geo.latitude,
+      longitude: siteConfig.geo.longitude
+    },
     description: 'St. Catharines Digital builds premium websites, technical SEO systems, and local growth engines for service businesses that need better visibility and more qualified leads.',
     areaServed: [
       { '@type': 'City', name: 'St. Catharines', containedInPlace: { '@type': 'State', name: 'Ontario' } },
@@ -33,20 +48,13 @@ const homePageJsonLd = [
         itemOffered: { '@type': 'Service', name: s.title, description: s.description }
       }))
     },
-    aggregateRating: {
-      '@type': 'AggregateRating',
-      ratingValue: '5',
-      reviewCount: '3'
-    },
   },
   {
     '@context': 'https://schema.org',
-    '@type': 'FAQPage',
-    mainEntity: faqItems.map(item => ({
-      '@type': 'Question',
-      name: item.q,
-      acceptedAnswer: { '@type': 'Answer', text: item.a }
-    }))
+    '@type': 'WebSite',
+    name: siteConfig.name,
+    url: BASE_URL,
+    inLanguage: siteConfig.language,
   },
   {
     '@context': 'https://schema.org',
@@ -57,11 +65,6 @@ const homePageJsonLd = [
       { '@type': 'ListItem', position: 3, name: 'About', item: `${BASE_URL}/about` },
       { '@type': 'ListItem', position: 4, name: 'Contact', item: `${BASE_URL}/contact` },
     ]
-  },
-  {
-    '@context': 'https://schema.org',
-    '@type': 'SpeakableSpecification',
-    cssSelector: ['h1', 'h2', '.hero-copy'],
   }
 ]
 
@@ -281,55 +284,77 @@ export default function HomePage() {
         <AnimatedHeroBg />
         <div className="container hero-grid">
           <div>
-            <div className="eyebrow">Built for service businesses that need better leads, not just more traffic</div>
+            <div className="eyebrow">Local Authority Lab for Niagara service businesses</div>
             <h1>
-              Websites that look <span className="gradient-text">premium</span>, rank on page 1, and convert visitors into calls.
+              Premium websites engineered to <span className="gradient-text">earn trust</span>, support local search, and turn visits into audits.
             </h1>
             <p className="hero-copy">
-              St. Catharines Digital builds high-performance websites with technical SEO and local search optimization — everything service businesses need to dominate their market.
+              St. Catharines Digital builds high-performance websites with technical SEO, Google Business Profile alignment, and service-area pages for businesses across St. Catharines and Niagara.
             </p>
             <div className="hero-actions">
               <Link to="/free-audit" className="button button-primary">Get a Free SEO Audit</Link>
-              <a href="https://calendly.com/tahamtandariush/30min" target="_blank" rel="noopener noreferrer" className="button button-secondary">Book a Free Call</a>
+              <a href={`tel:${siteConfig.phone}`} className="button button-secondary">Call {siteConfig.phoneDisplay}</a>
+              <a href={siteConfig.calendlyUrl} target="_blank" rel="noopener noreferrer" className="button button-ghost">Book Call</a>
             </div>
             
             <p className="hero-micro-copy" style={{ fontSize: '0.8rem', color: 'var(--muted)', marginTop: '0.75rem', marginLeft: '0.25rem' }}>
-              Get a Free SEO Audit — No obligation, 3-page report sent in 24 hours.
+              No obligation. We review site speed, local search signals, service-area coverage, and conversion flow.
             </p>
             
-            {/* Google Partner Trust Badges strip */}
             <div className="hero-trust-badges">
-              <a href={certifications[0].url} target="_blank" rel="noopener noreferrer" className="hero-trust-badge" style={{ textDecoration: 'none' }}>
+              <Link to="/services/technical-seo" className="hero-trust-badge" style={{ textDecoration: 'none' }}>
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                   <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
                   <path d="m9 12 2 2 4-4"/>
                 </svg>
-                Google Partner Certified
-              </a>
-              <Link to={certifications[1].url} className="hero-trust-badge" style={{ textDecoration: 'none' }}>
+                Technical SEO audit
+              </Link>
+              <Link to="/service-areas/web-design/st-catharines" className="hero-trust-badge" style={{ textDecoration: 'none' }}>
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--secondary)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                   <polyline points="16 18 22 12 16 6"/>
                   <polyline points="8 6 2 12 8 18"/>
                 </svg>
-                Premium Stack Developers
+                Niagara service pages
               </Link>
-              <Link to={certifications[2].url} className="hero-trust-badge" style={{ textDecoration: 'none' }}>
+              <Link to="/free-audit" className="hero-trust-badge" style={{ textDecoration: 'none' }}>
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--success)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                   <circle cx="12" cy="12" r="10"/>
                   <polyline points="12 6 12 12 16 14"/>
                 </svg>
-                100% PageSpeed Guaranteed
+                Conversion review
               </Link>
             </div>
 
             <ul className="hero-points">
-              <li><strong>Page 1 rankings.</strong> Technical SEO and local search optimization.</li>
-              <li><strong>More calls.</strong> Click-to-call, contact forms, and GBP alignment.</li>
-              <li><strong>Premium design.</strong> Custom sites that build trust instantly.</li>
+              <li><strong>Search-ready.</strong> Clean metadata, crawl paths, schema, and sitemap hygiene.</li>
+              <li><strong>Lead-ready.</strong> Click-to-call, audit forms, and Google Business Profile alignment.</li>
+              <li><strong>Proof-safe.</strong> Credible positioning without fake badges or unverifiable claims.</li>
             </ul>
           </div>
-          <div className="hero-card">
-            <HeroIllustration className="hero-illustration" />
+          <div className="hero-card hero-diagnostic" aria-label="Local authority diagnostic preview">
+            <div className="diagnostic-topline">
+              <span>Live Audit Preview</span>
+              <strong>St. Catharines + Niagara</strong>
+            </div>
+            <div className="diagnostic-score">
+              <span>Authority Readiness</span>
+              <strong>42 checks</strong>
+            </div>
+            <div className="diagnostic-map" aria-hidden="true">
+              <span>St. Catharines</span>
+              <span>Niagara Falls</span>
+              <span>Welland</span>
+              <span>Grimsby</span>
+              <span>Thorold</span>
+              <span>Fort Erie</span>
+            </div>
+            <div className="diagnostic-list">
+              <div><span></span> Core Web Vitals review</div>
+              <div><span></span> Service-area content gaps</div>
+              <div><span></span> GBP + local intent alignment</div>
+              <div><span></span> Conversion path friction</div>
+            </div>
+            <Link to="/free-audit" className="button button-primary diagnostic-cta">Start audit</Link>
           </div>
         </div>
       </section>
@@ -392,13 +417,13 @@ export default function HomePage() {
               </article>
               <article className="info-card" style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
                 <div style={{ fontSize: '2rem', marginBottom: '1rem' }} aria-hidden="true">💯</div>
-                <h3 style={{ fontSize: '1.1rem', marginBottom: '0.5rem', color: 'var(--text-bright)' }}>PageSpeed 100 Guarantee</h3>
-                <p style={{ fontSize: '0.9rem', color: 'var(--muted)', flexGrow: 1, lineHeight: '1.6' }}>Hand-crafted code with zero WordPress bloat. Every site ships with optimized images, minimal JavaScript bundles, and edge-cached static delivery. Google rewards speed — we guarantee a perfect score.</p>
+                <h3 style={{ fontSize: '1.1rem', marginBottom: '0.5rem', color: 'var(--text-bright)' }}>90+ PageSpeed Target</h3>
+                <p style={{ fontSize: '0.9rem', color: 'var(--muted)', flexGrow: 1, lineHeight: '1.6' }}>Hand-crafted code with zero WordPress bloat. Every site ships with optimized images, minimal JavaScript bundles, and edge-cached static delivery. We target excellent speed and verify it before launch.</p>
               </article>
               <article className="info-card" style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
                 <div style={{ fontSize: '2rem', marginBottom: '1rem' }} aria-hidden="true">🤖</div>
-                <h3 style={{ fontSize: '1.1rem', marginBottom: '0.5rem', color: 'var(--text-bright)' }}>Automated Schema Markup</h3>
-                <p style={{ fontSize: '0.9rem', color: 'var(--muted)', flexGrow: 1, lineHeight: '1.6' }}>AI generates correct JSON-LD structured data for local businesses, services, FAQs, and reviews — so Google bots understand exactly what you offer and where you serve. Competitors guess. We automate.</p>
+                <h3 style={{ fontSize: '1.1rem', marginBottom: '0.5rem', color: 'var(--text-bright)' }}>Policy-Safe Schema</h3>
+                <p style={{ fontSize: '0.9rem', color: 'var(--muted)', flexGrow: 1, lineHeight: '1.6' }}>We add JSON-LD only where the page content supports it, so search engines get useful context without fake reviews, unsupported FAQ markup, or risky claims.</p>
               </article>
             </div>
           </AnimatedSection>
@@ -577,7 +602,6 @@ export default function HomePage() {
                   <div className="testimonial-stars" aria-label="5 out of 5 stars">{'★'.repeat(5)}</div>
                   <blockquote className="testimonial-text">{t.text}</blockquote>
                   
-                  {/* Mock Keyword Tracking / Maps Position Grid */}
                   <div className="testimonial-ranking-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.5rem', margin: '1.25rem 0', padding: '0.75rem', background: 'var(--bg-alt)', borderRadius: 'var(--radius-sm)', border: '1px solid var(--panel-border)', fontSize: '0.75rem' }}>
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
                       <span style={{ color: 'var(--muted)', fontSize: '0.65rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Target Keyword</span>
@@ -589,13 +613,13 @@ export default function HomePage() {
                       </span>
                     </div>
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '0.25rem', alignItems: 'flex-end' }}>
-                      <span style={{ color: 'var(--muted)', fontSize: '0.65rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Search Rank</span>
+                      <span style={{ color: 'var(--muted)', fontSize: '0.65rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Audit Focus</span>
                       <span style={{ color: 'var(--success)', fontWeight: 'bold', display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
                         <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: 'var(--success)' }}></span>
-                        {i === 0 ? '#1 Map Pack' :
-                         i === 1 ? '#2 Organic' :
-                         i === 2 ? '#1 Map Pack' :
-                         '#1 Organic'}
+                        {i === 0 ? 'Call path' :
+                         i === 1 ? 'Trust signals' :
+                         i === 2 ? 'GBP alignment' :
+                         'Tenant flow'}
                       </span>
                     </div>
                   </div>
@@ -630,7 +654,7 @@ export default function HomePage() {
             <div className="guarantee-card">
               <div className="guarantee-icon" aria-hidden="true">🛡️</div>
               <h2>{guarantee.title}</h2>
-              <p>If you are not happy with our work within 30 days of kickoff, we will refund 100% of your money. Every package includes this full refund guarantee so you can commit with zero risk.</p>
+              <p>{guarantee.description} We document scope, review points, and revisions clearly before launch.</p>
               <div className="guarantee-badges">
                 <span className="guarantee-badge">No risk</span>
                 <span className="guarantee-badge">No lock-in</span>
@@ -712,7 +736,7 @@ export default function HomePage() {
                 <h3 style={{ fontSize: '1rem', marginBottom: '0.5rem' }}>
                   <Link to="/blog/local-seo-checklist-2026" style={{ color: 'var(--text-bright)' }}>The Complete Local SEO Checklist for 2026</Link>
                 </h3>
-                <p style={{ fontSize: '0.85rem', color: 'var(--muted)', flexGrow: 1 }}>Everything you need to rank #1 on Google Maps and local search. From GBP optimization to local link building.</p>
+                <p style={{ fontSize: '0.85rem', color: 'var(--muted)', flexGrow: 1 }}>A practical checklist for stronger Google Maps and local search visibility, from GBP optimization to local links.</p>
                 <Link to="/blog/local-seo-checklist-2026" style={{ color: 'var(--primary)', fontSize: '0.85rem', marginTop: '0.75rem', display: 'inline-block' }}>Read the guide →</Link>
               </article>
             </AnimatedSection>

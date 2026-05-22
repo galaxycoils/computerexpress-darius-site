@@ -75,21 +75,10 @@ const breadcrumbJsonLd = {
   ]
 }
 
-const speakableJsonLd = {
-  '@context': 'https://schema.org',
-  '@type': 'WebPage',
-  name: 'Services | St. Catharines Digital',
-  url: `${BASE_URL}/services`,
-  speakable: {
-    '@type': 'SpeakableSpecification',
-    cssSelector: ['h1', 'h2', 'p']
-  }
-}
-
 const serviceFeatures = [
   { icon: 'web', title: 'Web Design', desc: 'Custom, mobile-first websites built for speed, SEO, and conversion.' },
   { icon: 'search', title: 'Technical SEO', desc: 'Site architecture, schema, Core Web Vitals — everything search engines need.' },
-  { icon: 'map', title: 'Google Business Profile', desc: 'Dominance in local search and Google Maps for service businesses.' },
+  { icon: 'map', title: 'Google Business Profile', desc: 'Stronger local search and Google Maps visibility for service businesses.' },
   { icon: 'code', title: 'Development', desc: 'Clean, fast code on modern stacks — no bloated frameworks or page builders.' },
   { icon: 'rocket', title: 'Speed Optimization', desc: 'Sub-second load times, optimized images, smart caching strategies.' },
   { icon: 'analytics', title: 'Analytics & Reporting', desc: 'Clear dashboards, goal tracking, and monthly performance reports.' },
@@ -118,7 +107,7 @@ export default function ServicesPage() {
         title="Services | St. Catharines Digital"
         description="Web design, technical SEO, and Google Business Profile optimization for service businesses. Transparent pricing, 30-day satisfaction guarantee."
         path="/services"
-        jsonLd={[servicesPageJsonLd, localBusinessJsonLd, breadcrumbJsonLd, speakableJsonLd]}
+        jsonLd={[servicesPageJsonLd, localBusinessJsonLd, breadcrumbJsonLd]}
       />
 
       {/* Background orbs */}
@@ -131,7 +120,7 @@ export default function ServicesPage() {
           <AnimatedSection>
             <div className="eyebrow" style={{ justifyContent: 'center' }}>What we do</div>
             <h1>Three services. One goal: more qualified leads.</h1>
-            <p>Websites that rank on Google. Technical SEO that gets you found. Google Business Profile that drives calls. Everything service businesses need to dominate their market.</p>
+            <p>Websites built for Google discovery. Technical SEO that improves crawlability. Google Business Profile work that makes calls and inquiries easier.</p>
           </AnimatedSection>
         </div>
       </section>

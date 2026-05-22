@@ -1,10 +1,11 @@
 import { Helmet } from 'react-helmet-async'
+import { siteConfig, BASE_URL } from '../data/siteConfig'
 
-const SITE = 'St. Catharines Digital'
-const SHORT_SITE = 'StCatharinesDigital'
-export const BASE_URL = import.meta.env.VITE_BASE_URL || 'https://stcatharinesdigital.ca'
+export { BASE_URL }
+
+const SITE = siteConfig.name
 const BASE = BASE_URL
-const DEFAULT_IMG = '/og-card.webp'
+const DEFAULT_IMG = siteConfig.defaultImage
 
 export default function Seo({
   title,
@@ -50,9 +51,9 @@ export default function Seo({
       <title>{finalTitle}</title>
       <meta name="description" content={finalDesc} />
       <meta name="geo.region" content="CA-ON" />
-      <meta name="geo.placename" content="St. Catharines" />
-      <meta name="geo.position" content="43.1594;-79.2449" />
-      <meta name="ICBM" content="43.1594, -79.2449" />
+      <meta name="geo.placename" content={siteConfig.city} />
+      <meta name="geo.position" content={`${siteConfig.geo.latitude};${siteConfig.geo.longitude}`} />
+      <meta name="ICBM" content={`${siteConfig.geo.latitude}, ${siteConfig.geo.longitude}`} />
       {noIndex ? (
         <meta name="robots" content="noindex,nofollow" />
       ) : (
@@ -68,7 +69,7 @@ export default function Seo({
       <meta property="og:image:width" content="1200" />
       <meta property="og:image:height" content="630" />
       <meta property="og:image:alt" content={`${finalTitle}`} />
-      <meta property="og:locale" content="en_US" />
+      <meta property="og:locale" content={siteConfig.locale} />
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={finalTitle} />
       <meta name="twitter:description" content={finalDesc} />
