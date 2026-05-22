@@ -18,16 +18,6 @@ const whatToExpectJsonLd = [
   },
   {
     '@context': 'https://schema.org',
-    '@type': 'WebPage',
-    name: 'What to Expect | St. Catharines Digital',
-    url: `${BASE_URL}/what-to-expect`,
-    speakable: {
-      '@type': 'SpeakableSpecification',
-      cssSelector: ['h1', 'h2', 'p']
-    }
-  },
-  {
-    '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
     itemListElement: [
       {
@@ -50,7 +40,7 @@ const detailedSteps = [
   {
     week: 'Week 1',
     title: 'Audit & Strategy Mapping',
-    desc: 'We analyze your service area, identify competitor gaps, and design a keyword-rich sitemap map. You get a clear, custom blueprint showing what pages we will rank and why.',
+    desc: 'We analyze your service area, identify competitor gaps, and design a keyword-informed sitemap map. You get a clear blueprint showing what pages to build and why.',
     deliverables: ['Custom competitor audit report', 'Keyword research map', 'Sitemap structure diagram']
   },
   {
@@ -62,13 +52,13 @@ const detailedSteps = [
   {
     week: 'Week 3',
     title: 'High-Performance Engineering',
-    desc: 'We code your website using React 18 and Vite. We implement perfect schema structured data, compile fast assets, verify accessibility, and integrate the private WebLLM browser AI widgets.',
+    desc: 'We code your website using React 18 and Vite. We implement policy-safe structured data, compile fast assets, verify accessibility, and integrate the private WebLLM browser AI widgets.',
     deliverables: ['Built speed-optimized website code', 'Integrated schema markups', 'Local contact/newsletter endpoints']
   },
   {
     week: 'Week 4',
-    title: 'Launch & Google Maps Dominance',
-    desc: 'We map the custom domain and deploy to Cloudflare. We register your sitemap with Google Search Console, optimize your Google Business Profile, and start local map ranking triggers.',
+    title: 'Launch & Google Maps Alignment',
+    desc: 'We map the custom domain and deploy to Cloudflare. We register your sitemap with Google Search Console, optimize your Google Business Profile, and document local map improvement actions.',
     deliverables: ['Cloudflare deploy verification', 'Google Search Console registration', 'GBP audit and post templates']
   }
 ]
@@ -91,7 +81,7 @@ export default function WhatToExpectPage() {
         <div className="container">
           <div className="eyebrow" style={{ justifyContent: 'center' }}>Our Blueprint</div>
           <h1>What to expect when working with us</h1>
-          <p>No vague agency handwaves. We build local authority through a structured, transparent 4-week framework. Learn what we build, when you receive it, and how we guarantee your success.</p>
+          <p>No vague agency handwaves. We build local authority through a structured, transparent 4-week framework. Learn what we build, when you receive it, and how we measure progress.</p>
         </div>
       </section>
 
@@ -100,7 +90,7 @@ export default function WhatToExpectPage() {
         <div className="container" style={{ maxWidth: '900px' }}>
           <AnimatedSection>
             <div className="section-heading">
-              <h2>The 4-Week Local Dominance Roadmap</h2>
+              <h2>The 4-Week Local Authority Roadmap</h2>
               <p>Here is what happens from our kickoff call to search indexing.</p>
             </div>
           </AnimatedSection>
@@ -193,7 +183,7 @@ export default function WhatToExpectPage() {
                   <h3 style={{ color: 'var(--text-bright)', margin: 0 }}>{guarantee.title}</h3>
                 </div>
                 <p style={{ color: 'var(--muted)', fontSize: '0.9rem', lineHeight: '1.7' }}>
-                  {guarantee.description} If you aren't wowed by the initial custom mockup, we will refund 100% of your deposit immediately. No questions asked, no retention loops.
+                  {guarantee.description} We document the scope, revision path, and refund terms in writing before work begins.
                 </p>
               </article>
             </AnimatedSection>

@@ -6,7 +6,7 @@ const posts = [
   {
     slug: 'local-seo-checklist-2026',
     title: 'The Complete Local SEO Checklist for Service Businesses in 2026',
-    excerpt: 'Everything you need to rank #1 on Google Maps and local search. From Google Business Profile optimization to local link building -- the definitive checklist.',
+    excerpt: 'Everything you need to strengthen Google Maps and local search visibility. From Google Business Profile optimization to local link building.',
     date: '2026-05-13',
     readTime: '8 min read',
     tags: ['Local SEO', 'Google Business Profile', 'Checklist'],
@@ -33,7 +33,7 @@ const posts = [
   {
     slug: 'google-business-profile-tips-local-seo',
     title: '7 Essential Google Business Profile Tips for Local Service Businesses',
-    excerpt: 'Google Business Profile is the heartbeat of local search. Learn 7 critical optimization tips to dominate the Google Maps 3-pack and drive phone calls and leads.',
+    excerpt: 'Google Business Profile is the heartbeat of local search. Learn 7 practical optimization tips that support stronger Google Maps visibility, phone calls, and leads.',
     date: '2026-05-21',
     readTime: '7 min read',
     tags: ['Local SEO', 'Google Business Profile', 'Google Maps'],
@@ -41,12 +41,12 @@ const posts = [
   },
   {
     slug: 'how-to-rank-1-on-google-maps',
-    title: 'How to Rank #1 on Google Maps: The Definitive Local Pack Guide',
+    title: 'How to Improve Google Maps Rankings: A Practical Local Pack Guide',
     excerpt: 'Want more local leads? You need to rank in the Google Maps top 3. Discover the proximity, relevance, and prominence ranking factors and how to optimize for them.',
     date: '2026-05-21',
     readTime: '9 min read',
     tags: ['Google Maps', 'Local SEO', 'Citations'],
-    keywords: ['rank #1 on Google Maps', 'local pack guide', 'Google Maps ranking factors', 'local citations'],
+    keywords: ['improve Google Maps rankings', 'local pack guide', 'Google Maps ranking factors', 'local citations'],
   },
   {
     slug: 'website-speed-optimization-tips',

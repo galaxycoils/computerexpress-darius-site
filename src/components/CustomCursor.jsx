@@ -9,7 +9,8 @@ export default function CustomCursor() {
   useEffect(() => {
     // Check if device supports hover and pointer is fine
     const isTouch = window.matchMedia('(pointer: coarse)').matches;
-    if (isTouch) {
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (isTouch || reduceMotion) {
       return;
     }
 

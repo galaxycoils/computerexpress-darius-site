@@ -246,7 +246,7 @@ Schema helps Google understand your content and can earn rich snippets in search
 **Essential schema types for service businesses:**
 - **LocalBusiness** — Your business name, address, phone, hours
 - **Service** — Each service you offer with descriptions
-- **FAQPage** — Questions and answers (can earn FAQ rich snippets)
+- **FAQPage** — Questions and answers, used only when current Google guidelines make it appropriate
 - **Review/AggregateRating** — Star ratings in search results
 - **BreadcrumbList** — Site navigation structure
 
@@ -379,7 +379,7 @@ If you want your service business to grow, you need to rank in the Google Maps t
 
 How does Google choose which businesses to display here? The algorithm relies on three core pillars: **Proximity**, **Relevance**, and **Prominence**.
 
-Here is the breakdown of how these factors work and how you can optimize for them to rank #1.
+Here is the breakdown of how these factors work and how you can optimize for stronger Google Maps visibility.
 
 ### 1. Proximity: The Distance Factor
 
@@ -543,9 +543,9 @@ This is the "sweet spot" for established service businesses ready to outrank loc
 - **What is included**: Extensive category optimization, monthly Google Posts, active review generation strategy, and creation of dedicated service area pages.
 - **Goal**: Break into the Google Maps "Local Pack" for your primary keywords.
 
-#### 3. The "Dominance" Tier (Market Leader)
+#### 3. The "Local Authority" Tier (Market Leader)
 **Typical Range: $5,000+ or Monthly Retainers**
-For businesses in high-competition niches (like law firms or large HVAC companies) looking to dominate the entire Niagara region.
+For businesses in high-competition niches (like law firms or large HVAC companies) looking to build authority across the Niagara region.
 - **What is included**: Continuous content publishing, advanced link building, detailed competitor monitoring, and technical performance maintenance.
 - **Goal**: Maintain #1 rankings for dozens of high-volume keywords across multiple cities.
 
@@ -561,7 +561,7 @@ Local SEO is not an expense; it is a customer acquisition channel. To calculate 
 
 ### The St. Catharines Digital Advantage
 
-We leverage AI-first workflows to provide "Dominance" tier results at "Growth" tier prices. We do not hide behind vague monthly retainers. We provide clear, fixed-price packages designed specifically for the Niagara service market.
+We leverage AI-first workflows to provide stronger local authority work at "Growth" tier prices. We do not hide behind vague monthly retainers. We provide clear, fixed-price packages designed specifically for the Niagara service market.
 
 [Ready to see which tier fits your business?](/contact) Contact us for a custom quote based on your specific market competition.
 `,
@@ -788,10 +788,7 @@ export default function BlogPostPage({ slug }) {
     '@type': 'WebPage',
     name: `${post.title} | St. Catharines Digital Blog`,
     url: `${BASE_URL}/blog/${slug}`,
-    speakable: {
-      '@type': 'SpeakableSpecification',
-      cssSelector: ['h1', 'h2', 'p']
-    }
+    description: post.content.substring(0, 160).replace(/[#*[\]()-]/g, '').trim()
   }
 
   return (

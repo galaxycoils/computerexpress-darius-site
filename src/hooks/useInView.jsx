@@ -10,6 +10,10 @@ export function useInView(threshold = 0.15) {
   useEffect(() => {
     const el = ref.current
     if (!el) return
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      el.classList.add('visible')
+      return
+    }
 
     const obs = new IntersectionObserver(
       ([entry]) => {
