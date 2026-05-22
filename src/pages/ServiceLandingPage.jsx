@@ -10,6 +10,7 @@ const servicePages = [
     headline: 'Plumbing Websites That Rank #1 and Generate More Calls',
     description: 'Custom plumbing websites built to rank on Google, showcase your services, and convert visitors into phone calls. Local SEO included.',
     keywords: ['plumber web design', 'plumbing website', 'plumber SEO', 'plumbing company website'],
+    heroImage: '/images/hero_plumber.webp',
     services: [
       'Service area pages for every city you serve',
       'Emergency call CTA on every page',
@@ -30,6 +31,7 @@ const servicePages = [
     headline: 'HVAC Websites That Rank Higher and Book More Jobs',
     description: 'HVAC websites built for local search dominance. Rank for "HVAC near me", "AC repair [city]", and "furnace installation".',
     keywords: ['HVAC web design', 'HVAC website', 'HVAC SEO', 'AC repair website'],
+    heroImage: '/images/hero_hvac.webp',
     services: [
       'Seasonal service pages (AC repair, furnace installation, maintenance)',
       'Service area optimization for every neighborhood',
@@ -50,6 +52,7 @@ const servicePages = [
     headline: 'Electrician Websites That Generate More Service Calls',
     description: 'Professional electrician websites that rank on Google and convert visitors into booked jobs. Built for local service businesses.',
     keywords: ['electrician web design', 'electrician website', 'electrician SEO', 'electrical contractor website'],
+    heroImage: '/images/hero_electrician.webp',
     services: [
       'Residential and commercial service pages',
       'Emergency electrician CTAs',
@@ -70,6 +73,7 @@ const servicePages = [
     headline: 'Property Management Websites That Attract Quality Tenants',
     description: 'Professional websites for landlords and property managers. Showcase properties, integrate tenant portals, and rank locally on Google.',
     keywords: ['property management web design', 'landlord website', 'property manager SEO', 'real estate website'],
+    heroImage: '/images/hero_landlord.webp',
     services: [
       'Property listing showcases and galleries',
       'Tenant portal and payment gateway integration',
@@ -90,6 +94,7 @@ const servicePages = [
     headline: 'Local SEO That Puts You on Top of Google Maps',
     description: 'Dominate local search results for your service area. Get found by customers searching for your services in your city.',
     keywords: ['local SEO service', 'local SEO for service businesses', 'Google Maps ranking', 'local search optimization'],
+    heroImage: '/images/hero_localseo.webp',
     services: [
       'Google Business Profile setup and optimization',
       'Local keyword research and targeting',
@@ -244,11 +249,27 @@ export default function ServiceLandingPage({ slug }) {
       <section className="section-first page-hero">
         <div className="container">
           <AnimatedSection>
-            <div className="eyebrow" style={{ justifyContent: 'center' }}>St. Catharines Digital</div>
-            <h1>{page.headline}</h1>
-            <p style={{ fontSize: '1.1rem', maxWidth: '700px' }}>{page.description}</p>
-            <div className="hero-actions" style={{ justifyContent: 'center', marginTop: '1.5rem' }}>
-              <Link to="/contact" className="button button-primary">{page.cta}</Link>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '3rem', alignItems: 'center' }}>
+              <div>
+                <div className="eyebrow">St. Catharines Digital</div>
+                <h1>{page.headline}</h1>
+                <p style={{ fontSize: '1.1rem' }}>{page.description}</p>
+                <div className="hero-actions" style={{ marginTop: '1.5rem' }}>
+                  <Link to="/contact" className="button button-primary">{page.cta}</Link>
+                </div>
+              </div>
+              {page.heroImage && (
+                <div style={{ position: 'relative', borderRadius: '1rem', overflow: 'hidden', border: '1px solid var(--panel-border)', boxShadow: '0 10px 30px rgba(0,0,0,0.5)' }}>
+                  <img src={page.heroImage} alt={page.title} width="800" height="800" style={{ width: '100%', height: 'auto', display: 'block', objectFit: 'cover', aspectRatio: '1/1' }} loading="eager" decoding="async" />
+                  <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'rgba(0,0,0,0.3)', transition: 'background 0.3s' }} className="video-overlay">
+                    <button onClick={() => window.location.href = '/contact'} aria-label={`Play video about ${page.title}`} style={{ width: '80px', height: '80px', borderRadius: '50%', background: 'var(--primary)', border: 'none', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', boxShadow: '0 0 0 10px rgba(0, 242, 254, 0.2)', transition: 'transform 0.3s, box-shadow 0.3s' }} onMouseEnter={(e) => { e.currentTarget.style.transform = 'scale(1.1)'; e.currentTarget.style.boxShadow = '0 0 0 15px rgba(0, 242, 254, 0.3)'; }} onMouseLeave={(e) => { e.currentTarget.style.transform = 'scale(1)'; e.currentTarget.style.boxShadow = '0 0 0 10px rgba(0, 242, 254, 0.2)'; }}>
+                      <svg width="32" height="32" viewBox="0 0 24 24" fill="var(--bg)" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M8 5V19L19 12L8 5Z" />
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+              )}
             </div>
           </AnimatedSection>
         </div>
