@@ -98,16 +98,22 @@ export default function AIChatWidget() {
     setLoading(true);
     setError('');
 
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 15000); // 15-second response timeout
+
     try {
       const res = await fetch(CHAT_API, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ messages: [...messages, userMsg] }),
+        signal: controller.signal,
       });
+
+      clearTimeout(timeoutId);
 
       if (!res.ok) {
         const err = await res.json().catch(() => ({}));
-        throw new Error(err.error || 'Failed to get response');
+        throw new Error(err.error || `HTTP error! status: ${res.status}`);
       }
 
       // Read streaming response
@@ -122,14 +128,14 @@ export default function AIChatWidget() {
         if (done) break;
 
         const chunk = decoder.decode(value, { stream: true });
-        const lines = chunk.split('\n').filter(l => l.startsWith('data: '));
+        const lines = chunk.split('\n').filter(l => l.trim().startsWith('data:'));
 
         for (const line of lines) {
-          const data = line.replace('data: ', '').trim();
+          const data = line.replace(/^data:\s*/, '').trim();
           if (data === '[DONE]') continue;
           try {
             const parsed = JSON.parse(data);
-            const delta = parsed.choices?.[0]?.delta?.content;
+            const delta = parsed.choices?.[0]?.delta?.content || parsed.response;
             if (delta) {
               assistantContent += delta;
               setMessages(prev => {
@@ -142,7 +148,12 @@ export default function AIChatWidget() {
         }
       }
     } catch (err) {
-      setError(err.message || 'Something went wrong. Please try again.');
+      clearTimeout(timeoutId);
+      if (err.name === 'AbortError') {
+        setError('Request timed out. The server took too long to respond.');
+      } else {
+        setError(err.message || 'Something went wrong. Please try again.');
+      }
     } finally {
       setLoading(false);
     }
@@ -155,6 +166,25 @@ export default function AIChatWidget() {
 
   function handleSuggestion(msg) {
     sendMessage(msg);
+  }
+
+  function handleRetry() {
+    if (messages.length > 0) {
+      const lastUserMsg = [...messages].reverse().find(m => m.role === 'user');
+      if (lastUserMsg) {
+        // Remove the last assistant message if it is empty/erroring, and retry
+        setMessages(prev => {
+          const clean = prev.filter((m, idx) => {
+            // Keep user messages and any successfully completed assistant messages
+            if (m.role === 'user') return true;
+            if (m.role === 'assistant' && m.content) return true;
+            return false;
+          });
+          return clean.slice(0, -1); // slice user message off because sendMessage will append it again
+        });
+        sendMessage(lastUserMsg.content);
+      }
+    }
   }
 
   return (
@@ -359,8 +389,28 @@ export default function AIChatWidget() {
                     border: '1px solid rgba(255,107,107,0.2)',
                     color: '#ff6b6b',
                     fontSize: '0.8rem',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: '6px',
                   }}>
-                    {error}
+                    <span>{error}</span>
+                    <button
+                      type="button"
+                      onClick={handleRetry}
+                      style={{
+                        alignSelf: 'flex-start',
+                        background: 'rgba(255,107,107,0.2)',
+                        border: '1px solid rgba(255,107,107,0.3)',
+                        color: '#ff6b6b',
+                        padding: '2px 8px',
+                        borderRadius: '4px',
+                        fontSize: '0.75rem',
+                        fontWeight: '600',
+                        cursor: 'pointer',
+                      }}
+                    >
+                      Retry message
+                    </button>
                   </div>
                 )}
 
