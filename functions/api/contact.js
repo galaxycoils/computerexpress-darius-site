@@ -2,14 +2,10 @@
 // POST /api/contact
 
 const AGENTMAIL_BASE = 'https://api.agentmail.to/v0';
+const FORMSUBMIT_BASE = 'https://formsubmit.co/ajax';
+const DEFAULT_CONTACT_EMAIL = 'hello@stcatharinesdigital.ca';
 
 export async function onRequestPost(context) {
-  const apiKey = context.env.AGENTMAIL_API_KEY;
-  if (!apiKey) {
-    console.error('AGENTMAIL_API_KEY not set');
-    return jsonResponse({ error: 'Service temporarily unavailable' }, 503);
-  }
-
   try {
     const body = await context.request.json();
     const { name, email, message } = body;
@@ -34,35 +30,26 @@ ${message}
 Sent from St. Catharines Digital contact form
 ${new Date().toISOString()}`;
 
-    const inbox = await getPrimaryInbox(apiKey);
-
-    const sendRes = await fetch(`${AGENTMAIL_BASE}/inboxes/${inbox.inbox_id}/messages/send`, {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${apiKey}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        to: inbox.email,
-        reply_to: email,
-        subject: `Contact: ${name}`,
-        text: textBody,
-        labels: ['audit-request', 'website-form'],
-      }),
-    });
-
-    if (!sendRes.ok) {
-      const errText = await sendRes.text();
-      console.error('AgentMail send failed:', sendRes.status, errText);
-      return jsonResponse({ error: 'Failed to send. Please try again later.' }, 502);
+    const apiKey = context.env.AGENTMAIL_API_KEY;
+    if (apiKey) {
+      try {
+        await sendWithAgentMail(apiKey, { name, email, textBody });
+        console.log('Contact form sent via AgentMail from:', name);
+        return jsonResponse({ success: true });
+      } catch (err) {
+        console.error('AgentMail failed, trying fallback provider:', err);
+      }
     }
 
-    const result = await sendRes.json();
-    console.log('Contact form sent:', result.message_id, 'from:', name);
-    return jsonResponse({ success: true });
+    const fallbackEmail = context.env.CONTACT_FORM_EMAIL || DEFAULT_CONTACT_EMAIL;
+    await sendWithFormSubmit(fallbackEmail, { name, email, message, textBody });
+    console.log('Contact form sent via fallback provider from:', name);
+    return jsonResponse({ success: true, fallback: true });
   } catch (err) {
     console.error('Contact form error:', err);
-    return jsonResponse({ error: 'Internal server error' }, 500);
+    return jsonResponse({
+      error: `We could not send this automatically. Please email ${DEFAULT_CONTACT_EMAIL} or call (365) 359-5973.`,
+    }, 502);
   }
 }
 
@@ -83,6 +70,55 @@ function corsHeaders() {
     'Access-Control-Allow-Methods': 'POST, OPTIONS',
     'Access-Control-Allow-Headers': 'Content-Type',
   };
+}
+
+async function sendWithAgentMail(apiKey, { name, email, textBody }) {
+  const inbox = await getPrimaryInbox(apiKey);
+
+  const sendRes = await fetch(`${AGENTMAIL_BASE}/inboxes/${inbox.inbox_id}/messages/send`, {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${apiKey}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      to: inbox.email,
+      reply_to: email,
+      subject: `Contact: ${name}`,
+      text: textBody,
+      labels: ['audit-request', 'website-form'],
+    }),
+  });
+
+  if (!sendRes.ok) {
+    const errText = await sendRes.text();
+    throw new Error(`AgentMail send failed: ${sendRes.status} ${errText}`);
+  }
+}
+
+async function sendWithFormSubmit(recipientEmail, { name, email, message, textBody }) {
+  const sendRes = await fetch(`${FORMSUBMIT_BASE}/${encodeURIComponent(recipientEmail)}`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+    },
+    body: JSON.stringify({
+      name,
+      email,
+      message,
+      _subject: `Website audit request: ${name}`,
+      _template: 'table',
+      _captcha: 'false',
+      _autoresponse: 'Thanks for requesting your St. Catharines Digital audit walkthrough. We received your details and will follow up within 1 business day.',
+      diagnostics: textBody,
+    }),
+  });
+
+  if (!sendRes.ok) {
+    const errText = await sendRes.text();
+    throw new Error(`FormSubmit fallback failed: ${sendRes.status} ${errText}`);
+  }
 }
 
 async function getPrimaryInbox(apiKey) {
