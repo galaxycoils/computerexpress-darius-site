@@ -325,7 +325,7 @@ Primary Challenge: ${selectedPain}
           <div className="section-heading">
             <span className="eyebrow eyebrow-center" aria-hidden="true">Interactive Tool</span>
             <h2>Website Audit & SEO Grader</h2>
-            <p>Analyze your local performance, uncover technical layout flaws, and discover how much local client revenue your business is losing each month.</p>
+            <p>Analyze your local performance, uncover technical layout flaws, and estimate potential monthly lead opportunity with clear proof-safe assumptions.</p>
           </div>
 
           {stage === STAGE_QUIZ && (
