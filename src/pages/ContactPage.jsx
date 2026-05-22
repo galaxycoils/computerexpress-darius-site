@@ -33,7 +33,7 @@ const localBusinessJsonLd = {
   name: 'St. Catharines Digital',
   url: BASE_URL,
   logo: `${BASE_URL}/logo-horizontal.svg`,
-  image: `${BASE_URL}/og-card.png`,
+  image: `${BASE_URL}/og-card.webp`,
   telephone: '+13653595973',
   email: 'hello@stcatharinesdigital.com',
   address: {

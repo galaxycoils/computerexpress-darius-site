@@ -3744,4 +3744,45 @@ html {
   }
 }
 
+.grader-video-preview-wrapper {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 1.75rem;
+  border: 1px solid var(--panel-border);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  background: #0d0d11;
+}
+
+.grader-video-preview-image {
+  width: 100%;
+  height: auto;
+  display: block;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), filter 0.4s ease;
+}
+
+.grader-video-preview-wrapper:hover .grader-video-preview-image {
+  transform: scale(1.03);
+  filter: brightness(1.1);
+}
+
+.grader-video-preview-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.3s ease;
+}
+
+.grader-video-preview-wrapper:hover .grader-video-preview-overlay {
+  background: rgba(0, 0, 0, 0);
+}
+
+
 

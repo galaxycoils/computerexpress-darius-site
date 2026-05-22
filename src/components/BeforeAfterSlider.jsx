@@ -4,24 +4,24 @@ const slides = [
   {
     id: 'plumbing',
     title: 'Plumbing',
-    beforeImage: '/before-redesign.png',
-    afterImage: '/after-redesign.png',
+    beforeImage: '/before-redesign.webp',
+    afterImage: '/after-redesign.webp',
     beforeAlt: 'Outdated plumbing website design before optimization',
     afterAlt: 'Premium dark plumbing website design by St. Catharines Digital'
   },
   {
     id: 'hvac',
     title: 'HVAC',
-    beforeImage: '/images/before_hvac.png',
-    afterImage: '/images/after_hvac.png',
+    beforeImage: '/images/before_hvac.webp',
+    afterImage: '/images/after_hvac.webp',
     beforeAlt: 'Outdated HVAC website design before optimization',
     afterAlt: 'Premium modern dark HVAC website design by St. Catharines Digital'
   },
   {
     id: 'legal',
     title: 'Family Law',
-    beforeImage: '/images/before_legal.png',
-    afterImage: '/images/after_legal.png',
+    beforeImage: '/images/before_legal.webp',
+    afterImage: '/images/after_legal.webp',
     beforeAlt: 'Outdated family law website design before optimization',
     afterAlt: 'Premium minimalist dark law website design by St. Catharines Digital'
   }
