@@ -617,7 +617,7 @@ Want to see how your own website measures up against these high-conversion stand
 
 [Run your site through our interactive Website Grader](/free-audit) for a free instant analysis of your design, speed, and conversion readiness.
 `,
-  },
+  }
 }
 
 function renderMarkdown(md) {

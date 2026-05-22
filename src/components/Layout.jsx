@@ -239,7 +239,17 @@ export default function Layout() {
                 <Link to="/about">About</Link>
                 <Link to="/what-to-expect">What to Expect</Link>
                 <Link to="/contact">Contact</Link>
-                <Link to="/contact">Free Audit</Link>
+                <Link to="/free-audit">Free Audit</Link>
+              </nav>
+            </div>
+            <div className="footer-col">
+              <span className="footer-heading">Locations We Serve</span>
+              <nav className="footer-col-links" aria-label="Locations we serve">
+                <Link to="/service-areas/web-design/st-catharines">St. Catharines</Link>
+                <Link to="/service-areas/web-design/niagara-falls">Niagara Falls</Link>
+                <Link to="/service-areas/web-design/welland">Welland</Link>
+                <Link to="/service-areas/local-seo/st-catharines">Local SEO St. Catharines</Link>
+                <Link to="/service-areas/local-seo/niagara-falls">Local SEO Niagara Falls</Link>
               </nav>
             </div>
             <div className="footer-col">
