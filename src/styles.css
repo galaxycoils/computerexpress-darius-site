@@ -390,12 +390,17 @@ main {
     flex-direction: column;
     justify-content: center;
     gap: 1.5rem;
-    transform: translateX(100%);
-    transition: var(--transition-slow);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: none;
+    transition: opacity var(--transition-base), visibility var(--transition-base);
   }
   
   .nav-links.open {
-    transform: translateX(0);
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
   }
   
   .nav-links a {
@@ -479,6 +484,30 @@ body.light .site-header.scrolled {
 
 body.light .bg-orb {
   opacity: 0.06;
+}
+
+body.light .section-first.hero {
+  color: #f5f2df;
+}
+
+body.light .section-first.hero h1,
+body.light .section-first.hero .hero-copy,
+body.light .section-first.hero .hero-points li,
+body.light .section-first.hero .hero-points li strong,
+body.light .section-first.hero .hero-micro-copy {
+  color: #f5f2df !important;
+}
+
+body.light .section-first.hero .hero-copy,
+body.light .section-first.hero .hero-points li,
+body.light .section-first.hero .hero-micro-copy {
+  opacity: 0.86;
+}
+
+body.light .section-first.hero .eyebrow {
+  color: #f5f2df;
+  background: rgba(245, 242, 223, 0.08);
+  border-color: rgba(245, 242, 223, 0.18);
 }
 
 /* ============================================
@@ -1710,7 +1739,7 @@ body.light .bg-orb {
     gap: 3rem;
   }
   .hero-card {
-    order: -1;
+    order: 0;
   }
 }
 
@@ -1720,6 +1749,9 @@ body.light .bg-orb {
   }
   .section, .section-alt {
     padding: 4rem 0;
+  }
+  .bg-orb {
+    display: none;
   }
   .hero {
     padding-bottom: 4rem;
@@ -2197,11 +2229,15 @@ body.light .bg-orb {
    ============================================ */
 
 .breadcrumbs {
-  padding: 0.75rem 0;
+  padding: 0.75rem max(1rem, calc((100vw - var(--container)) / 2));
   font-size: 0.85rem;
   color: var(--muted);
   background: rgba(125, 249, 255, 0.02);
   border-bottom: 1px solid var(--line);
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  flex-wrap: wrap;
 }
 
 .breadcrumbs .container {
@@ -2209,6 +2245,12 @@ body.light .bg-orb {
   align-items: center;
   gap: 0.5rem;
   flex-wrap: wrap;
+}
+
+.breadcrumbs > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
 }
 
 .breadcrumb-link {
@@ -2229,6 +2271,33 @@ body.light .bg-orb {
 .breadcrumb-current {
   color: var(--text-bright);
   font-weight: 600;
+}
+
+@media (max-width: 640px) {
+  .breadcrumbs {
+    font-size: 0.76rem;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    flex-wrap: nowrap;
+    padding-inline: 1rem;
+  }
+
+  .breadcrumbs .container {
+    width: max-content;
+    min-width: calc(100% - 2rem);
+    max-width: none;
+    flex-wrap: nowrap;
+    gap: 0.4rem;
+    padding-right: 1rem;
+  }
+
+  .breadcrumb-link,
+  .breadcrumb-current,
+  .breadcrumb-separator,
+  .breadcrumbs > span {
+    flex: 0 0 auto;
+    white-space: nowrap;
+  }
 }
 
 /* ============================================
@@ -2525,13 +2594,17 @@ body.light .bg-orb {
 
 .hero-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: minmax(0, 1.2fr) minmax(320px, 0.8fr);
   align-items: center;
   gap: 4rem;
 }
 
 @media (max-width: 1024px) {
-  .hero-grid { gap: 3rem; text-align: center; }
+  .hero-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 3rem;
+    text-align: center;
+  }
   .hero-actions { justify-content: center; }
   .hero-points { align-items: center; }
 }
@@ -2556,6 +2629,104 @@ body.light .bg-orb {
   color: var(--muted);
   padding-left: 1.5rem;
   position: relative;
+}
+
+/* Mobile hardening for hero surfaces and fixed assistants */
+@media (max-width: 768px) {
+  .section-first.hero {
+    padding-top: 4.75rem;
+  }
+
+  .hero > .hero-grid,
+  .page-hero .hero-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 2rem;
+    text-align: left;
+  }
+
+  .hero > .hero-grid > div:first-child,
+  .page-hero .hero-grid > div:first-child {
+    min-width: 0;
+  }
+
+  .hero h1,
+  .page-hero h1,
+  .page-hero .h1 {
+    font-size: clamp(2.15rem, 12vw, 3.2rem);
+    line-height: 1.04;
+    overflow-wrap: anywhere;
+  }
+
+  .hero-copy,
+  .page-hero p {
+    max-width: 100%;
+  }
+
+  .hero-actions {
+    align-items: stretch;
+    justify-content: flex-start;
+  }
+
+  .hero-points {
+    align-items: stretch;
+  }
+
+  .hero-points li {
+    text-align: left;
+  }
+
+  .hero-card,
+  .hero-diagnostic {
+    width: 100%;
+    max-width: min(100%, 420px);
+    margin: 0 auto;
+    order: 0;
+  }
+
+  .page-hero .hero-card:not(.hero-diagnostic) {
+    max-width: 300px;
+  }
+
+  .hero-diagnostic {
+    padding: 1rem;
+    gap: 0.75rem;
+  }
+
+  .diagnostic-map {
+    min-height: 170px;
+    gap: 0.5rem;
+    padding: 0.75rem;
+  }
+
+  .diagnostic-map span {
+    font-size: 0.68rem;
+    padding: 0.3rem 0.45rem;
+  }
+
+  .diagnostic-topline,
+  .diagnostic-score {
+    padding: 0.85rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .chat-toggle {
+    width: 48px !important;
+    height: 48px !important;
+    right: 14px !important;
+    top: 128px !important;
+    bottom: auto !important;
+    box-shadow: 0 8px 24px rgba(18, 214, 255, 0.26) !important;
+  }
+
+  .chat-window {
+    right: 12px !important;
+    top: 84px !important;
+    bottom: calc(env(safe-area-inset-bottom) + 12px) !important;
+    width: calc(100vw - 24px) !important;
+    height: auto !important;
+    border-radius: 14px !important;
+  }
 }
 
 .hero-points li::before {
@@ -4141,26 +4312,19 @@ html {
 /* Mobile Testimonials Swipe Gestures Support */
 @media (max-width: 768px) {
   .testimonials-grid {
-    display: flex;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
+    display: grid;
+    grid-template-columns: 1fr;
+    overflow-x: visible;
+    scroll-snap-type: none;
     gap: 1.5rem;
-    padding-bottom: 1.5rem;
-    scrollbar-width: thin;
-  }
-  
-  .testimonials-grid::-webkit-scrollbar {
-    height: 6px;
-  }
-  
-  .testimonials-grid::-webkit-scrollbar-thumb {
-    background: var(--panel-border);
-    border-radius: 3px;
+    max-width: 500px;
+    margin-inline: auto;
+    padding-bottom: 0;
   }
   
   .testimonial-card {
-    min-width: 85%;
-    scroll-snap-align: start;
+    min-width: 0;
+    scroll-snap-align: none;
   }
 }
 
