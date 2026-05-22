@@ -18,8 +18,7 @@ jobs:
       - run: npm run build
 
       - name: Deploy to Cloudflare Pages
-        uses: cloudflare/wrangler-action@v3
-        with:
-          apiToken: ${{ secrets.CF_API_TOKEN }}
-          accountId: a55a43856c7029505b79300ec82f1629
-          command: pages deploy dist --project-name=stcatharinesdigital --branch=main
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: a55a43856c7029505b79300ec82f1629
+        run: npx wrangler@latest pages deploy dist --project-name=stcatharinesdigital --branch=main
