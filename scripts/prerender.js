@@ -16,6 +16,7 @@ const baseRoutes = [
   '/services/web-design-for-plumbers',
   '/services/web-design-for-hvac',
   '/services/web-design-for-electricians',
+  '/services/web-design-for-landlords',
   '/services/local-seo-for-service-businesses',
   '/about',
   '/contact',

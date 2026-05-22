@@ -204,6 +204,7 @@ export default function ServicesPage() {
             { label: 'Plumbers', path: '/services/web-design-for-plumbers', desc: 'Emergency call CTAs, service area pages, review integration, and GBP optimization.' },
             { label: 'HVAC Companies', path: '/services/web-design-for-hvac', desc: 'Seasonal service pages, maintenance plan landing pages, and local SEO.' },
             { label: 'Electricians', path: '/services/web-design-for-electricians', desc: 'Residential and commercial service pages, license display, and click-to-call.' },
+            { label: 'Landlords & Property Managers', path: '/services/web-design-for-landlords', desc: 'Property listing showcases, tenant portal integrations, and neighborhood-specific local SEO.' },
           ].map(page => (
             <AnimatedSection key={page.label}>
               <Link to={page.path} style={{ textDecoration: 'none', display: 'block' }}>

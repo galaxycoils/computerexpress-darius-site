@@ -115,6 +115,14 @@ export const testimonials = [
     initials: 'MM',
     image: '/images/client_hvac.webp',
     metric: 'Top 3 map pack rank'
+  },
+  {
+    text: 'Our new property management website looks incredible and integrates perfectly with our tenant portal. We\'ve seen a 40% increase in inquiries from quality tenants in just two months.',
+    name: 'Jessica Thorne',
+    role: 'Owner, Thorne Property Management',
+    initials: 'JT',
+    image: '/images/client_landlord.webp',
+    metric: '40% increase in inquiries'
   }
 ]
 
@@ -216,5 +224,14 @@ export const caseStudies = [
     solution: 'Professional redesign with high-quality imagery, clear messaging, and technical SEO structure.',
     results: 'Improved brand perception and an increase in inquiries from qualified prospects.',
     testimonial: 'The team at St. Catharines Digital made a huge difference. Our old site looked generic — the new site actually positions us as a premium firm. Clients comment on how professional it is. - Sarah Jenkins'
+  },
+  {
+    slug: 'landlord-case-study',
+    title: 'Thorne Property Management',
+    clientOverview: 'A growing property management company needing to streamline operations and attract new tenants.',
+    challenge: 'Their previous website lacked modern tenant portal integration and failed to rank for local property management searches.',
+    solution: 'Built a new, conversion-optimized website with dedicated property galleries, seamless portal integration, and local SEO campaigns.',
+    results: '40% increase in inquiries from prospective tenants and streamlined maintenance request flow.',
+    testimonial: 'Our new property management website looks incredible and integrates perfectly with our tenant portal. We\'ve seen a 40% increase in inquiries from quality tenants in just two months. - Jessica Thorne'
   }
 ];

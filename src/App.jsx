@@ -33,6 +33,7 @@ export function AppRoutes() {
         <Route path="services/web-design-for-plumbers" element={<ServiceLandingPage slug="web-design-for-plumbers" />} />
         <Route path="services/web-design-for-hvac" element={<ServiceLandingPage slug="web-design-for-hvac" />} />
         <Route path="services/web-design-for-electricians" element={<ServiceLandingPage slug="web-design-for-electricians" />} />
+        <Route path="services/web-design-for-landlords" element={<ServiceLandingPage slug="web-design-for-landlords" />} />
         <Route path="services/local-seo-for-service-businesses" element={<ServiceLandingPage slug="local-seo-for-service-businesses" />} />
         <Route path="about" element={<AboutPage />} />
         <Route path="contact" element={<ContactPage />} />
