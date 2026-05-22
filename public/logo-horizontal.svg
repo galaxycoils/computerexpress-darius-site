@@ -1,19 +1,23 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 180" role="img" aria-labelledby="title desc">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 750 180" role="img" aria-labelledby="title desc">
   <title>St. Catharines Digital horizontal logo</title>
-  <desc>St. Catharines Digital wordmark with cyan icon and descriptive tagline.</desc>
+  <desc>St. Catharines Digital modern wordmark with cyber-blue icon and descriptive tagline.</desc>
   <defs>
-    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#091427"/>
-      <stop offset="100%" stop-color="#12284d"/>
+    <linearGradient id="iconGradient" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#00f2fe"/>
+      <stop offset="100%" stop-color="#4facfe"/>
     </linearGradient>
-    <linearGradient id="cyan" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#7df9ff"/>
-      <stop offset="100%" stop-color="#12d6ff"/>
+    <linearGradient id="textGradient" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#e0e7ff"/>
     </linearGradient>
   </defs>
-  <rect x="0" y="0" width="160" height="160" rx="34" fill="url(#bg)"/>
-  <path d="M28 80c0-24.301 19.699-44 44-44h47v18H72c-14.359 0-26 11.641-26 26s11.641 26 26 26h47v18H72c-24.301 0-44-19.699-44-44Z" fill="url(#cyan)"/>
-  <path d="M86 54h50v16H86zM86 90h50v16H86z" fill="#d8ffff"/>
-  <text x="196" y="78" fill="#ecf5ff" font-family="Inter, Arial, sans-serif" font-size="40" font-weight="800">St. Catharines Digital</text>
-  <text x="196" y="118" fill="#9ab4d2" font-family="Inter, Arial, sans-serif" font-size="20" font-weight="500">Web design, SEO &amp; local growth</text>
+  <!-- Modern Geometric Icon -->
+  <path d="M40 90 L80 20 L120 90 L80 160 Z" fill="url(#iconGradient)" opacity="0.9"/>
+  <path d="M40 90 L80 60 L120 90 L80 120 Z" fill="#ffffff" opacity="0.3"/>
+  
+  <!-- Wordmark -->
+  <text x="160" y="85" fill="url(#textGradient)" font-family="Inter, -apple-system, sans-serif" font-size="44" font-weight="900" letter-spacing="-1">St. Catharines Digital</text>
+  
+  <!-- Tagline -->
+  <text x="162" y="125" fill="#94a3b8" font-family="Inter, -apple-system, sans-serif" font-size="22" font-weight="500" letter-spacing="0.5">High-Performance Web Design &amp; Local SEO</text>
 </svg>
