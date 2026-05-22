@@ -34,7 +34,7 @@ const ROUTES = [
     .flatMap((city) => [`/service-areas/web-design/${city}`, `/service-areas/local-seo/${city}`])
 ]
 
-export function onRequestGet() {
+function sitemapResponse() {
   const today = new Date().toISOString().split('T')[0]
   const urls = ROUTES.map((route) => {
     const priority = route === '/' ? '1.0' : ['/services', '/contact', '/free-audit'].includes(route) ? '0.9' : route.startsWith('/services/') || route.startsWith('/service-areas/') ? '0.8' : '0.7'
@@ -54,3 +54,6 @@ export function onRequestGet() {
     }
   })
 }
+
+export const onRequestGet = sitemapResponse
+export const onRequestHead = sitemapResponse
