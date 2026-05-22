@@ -2,7 +2,7 @@
 
 > Last updated: May 14, 2026
 > Project: St. Catharines Digital v0.5.2 (React + Vite + React Router 7)
-> Live: stcatharinesdigital.pages.dev (transitioning to stcatharinesdigital.com)
+> Live: stcatharinesdigital.ca
 
 ---
 

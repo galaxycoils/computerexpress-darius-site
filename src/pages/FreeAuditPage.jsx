@@ -206,7 +206,7 @@ export default function FreeAuditPage() {
       checklist = [
         { title: 'Ditch Heavy CMS Templates', desc: 'Switch from slow page-builders like WordPress or Elementor to custom static React/Vite builds.' },
         { title: 'Adopt WebP Image Standards', desc: 'Compress background assets and convert standard images to modern lightweight WebP formats.' },
-        { title: 'Enable Edge CDN Delivery', desc: 'Deploy assets globally using Netlify or Vercel static networks to achieve sub-second load times.' }
+        { title: 'Enable Edge CDN Delivery', desc: 'Deploy assets globally using Cloudflare Pages edge network to achieve sub-second load times.' }
       ]
     } else if (painPoint === 'hard_update') {
       checklist = [

@@ -35,7 +35,7 @@ const localBusinessJsonLd = {
   logo: `${BASE_URL}/logo-horizontal.svg`,
   image: `${BASE_URL}/og-card.webp`,
   telephone: '+13653595973',
-  email: 'hello@stcatharinesdigital.com',
+  email: 'hello@stcatharinesdigital.ca',
   address: {
     '@type': 'PostalAddress',
     addressLocality: 'St. Catharines',
@@ -143,7 +143,7 @@ export default function ContactPage() {
                     <div className="contact-method-icon" aria-hidden="true">📧</div>
                     <div>
                       <div className="contact-method-label">Email</div>
-                      <a href="mailto:hello@stcatharinesdigital.com">hello@stcatharinesdigital.com</a>
+                      <a href="mailto:hello@stcatharinesdigital.ca">hello@stcatharinesdigital.ca</a>
                     </div>
                   </div>
                   <div className="contact-method">
