@@ -4,7 +4,9 @@ out/
 .DS_Store
 *.log
 .env.local
-node_modules/
+agentdb.rvf
+agentdb.rvf.lock
+ruvector.db
 
 # Local Netlify folder
 .netlify

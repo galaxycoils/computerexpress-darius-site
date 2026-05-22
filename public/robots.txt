@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://stcatharinesdigital.pages.dev/sitemap.xml
+Sitemap: https://stcatharinesdigital.ca/sitemap.xml
