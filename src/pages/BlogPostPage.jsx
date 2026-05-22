@@ -620,33 +620,113 @@ Want to see how your own website measures up against these high-conversion stand
   },
 }
 
-// Simple markdown-to-HTML converter
 function renderMarkdown(md) {
   if (!md) return ''
-  let html = md
+  
+  const lines = md.split('\n')
+  let html = ''
+  let inList = null // null, 'ul', 'ol', 'checklist'
+  
+  for (let i = 0; i < lines.length; i++) {
+    let line = lines[i].trim()
+    
     // Headers
-    .replace(/^### (.+)$/gm, '<h3 style="color:var(--text-bright);font-size:1.1rem;margin:1.5rem 0 0.75rem;">$1</h3>')
-    .replace(/^## (.+)$/gm, '<h2 style="color:var(--text-bright);font-size:1.3rem;margin:2rem 0 1rem;">$1</h2>')
+    if (line.startsWith('### ')) {
+      html += closeList(inList)
+      inList = null
+      html += `<h3 style="color:var(--text-bright);font-size:1.1rem;margin:1.5rem 0 0.75rem;">${inlineFormatting(line.substring(4))}</h3>\n`
+      continue
+    }
+    if (line.startsWith('## ')) {
+      html += closeList(inList)
+      inList = null
+      html += `<h2 style="color:var(--text-bright);font-size:1.3rem;margin:2rem 0 1rem;">${inlineFormatting(line.substring(3))}</h2>\n`
+      continue
+    }
+    if (line.startsWith('# ')) {
+      html += closeList(inList)
+      inList = null
+      html += `<h1 style="color:var(--text-bright);font-size:1.6rem;margin:2rem 0 1rem;">${inlineFormatting(line.substring(2))}</h1>\n`
+      continue
+    }
+    
+    // Checkbox list
+    if (line.startsWith('- [ ] ') || line.startsWith('- [x] ')) {
+      const isChecked = line.startsWith('- [x] ')
+      const content = inlineFormatting(line.substring(6))
+      if (inList !== 'checklist') {
+        html += closeList(inList)
+        inList = 'checklist'
+        html += `<ul style="margin:0.75rem 0;padding-left:1.5rem;list-style:none;">\n`
+      }
+      if (isChecked) {
+        html += `  <li style="color:var(--success);margin:0.25rem 0;">✅ ${content}</li>\n`
+      } else {
+        html += `  <li style="margin:0.25rem 0;">⬜ ${content}</li>\n`
+      }
+      continue
+    }
+    
+    // Unordered list
+    if (line.startsWith('- ') || line.startsWith('* ')) {
+      const content = inlineFormatting(line.substring(2))
+      if (inList !== 'ul') {
+        html += closeList(inList)
+        inList = 'ul'
+        html += `<ul style="margin:0.75rem 0;padding-left:1.5rem;">\n`
+      }
+      html += `  <li style="margin:0.25rem 0;">${content}</li>\n`
+      continue
+    }
+    
+    // Ordered list
+    const matchOl = line.match(/^(\d+)\.\s+(.+)$/)
+    if (matchOl) {
+      const content = inlineFormatting(matchOl[2])
+      if (inList !== 'ol') {
+        html += closeList(inList)
+        inList = 'ol'
+        html += `<ol style="margin:0.75rem 0;padding-left:1.5rem;">\n`
+      }
+      html += `  <li style="margin:0.25rem 0;">${content}</li>\n`
+      continue
+    }
+    
+    // Empty line
+    if (!line) {
+      html += closeList(inList)
+      inList = null
+      continue
+    }
+    
+    // Normal paragraph line or line continuation
+    html += closeList(inList)
+    inList = null
+    html += `<p style="margin:0.75rem 0;line-height:1.7;">${inlineFormatting(line)}</p>\n`
+  }
+  
+  html += closeList(inList)
+  return html
+}
+
+function closeList(inList) {
+  if (inList === 'ul' || inList === 'checklist') {
+    return '</ul>\n'
+  }
+  if (inList === 'ol') {
+    return '</ol>\n'
+  }
+  return ''
+}
+
+function inlineFormatting(text) {
+  return text
     // Bold
     .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
     // Italic
     .replace(/\*(.+?)\*/g, '<em>$1</em>')
     // Links
     .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" style="color:var(--primary);text-decoration:none;" onmouseover="this.style.textDecoration=\'underline\'" onmouseout="this.style.textDecoration=\'none\'">$1</a>')
-    // Checkboxes
-    .replace(/- \[x\] (.+)/g, '<li style="list-style:none;color:var(--success);">✅ $1</li>')
-    .replace(/- \[ \] (.+)/g, '<li style="list-style:none;">⬜ $1</li>')
-    // Unordered lists
-    .replace(/^- (.+)$/gm, '<li style="margin:0.25rem 0;">$1</li>')
-    // Ordered lists
-    .replace(/^\d+\. (.+)$/gm, '<li style="margin:0.25rem 0;">$1</li>')
-    // Paragraphs
-    .replace(/\n\n/g, '</p><p style="margin:0.75rem 0;line-height:1.7;">')
-    // Wrap in paragraph
-  html = '<p style="margin:0.75rem 0;line-height:1.7;">' + html + '</p>'
-  // Clean up empty paragraphs
-  html = html.replace(/<p style="[^"]*"><\/p>/g, '')
-  return html
 }
 
 export default function BlogPostPage({ slug }) {
