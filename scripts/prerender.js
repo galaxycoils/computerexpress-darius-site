@@ -5,7 +5,7 @@ import { execSync } from 'node:child_process'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const rootDir = path.resolve(__dirname, '..')
-const BASE_URL = 'https://stcatharinesdigital.pages.dev'
+const BASE_URL = 'https://stcatharinesdigital.ca'
 
 const baseRoutes = [
   '/',
@@ -35,6 +35,8 @@ const baseRoutes = [
   '/case-studies/legal-case-study',
   '/what-to-expect',
   '/free-audit',
+  '/privacy',
+  '/terms',
   '/404' // Render 404 page separately
 ]
 

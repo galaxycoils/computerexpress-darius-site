@@ -10,9 +10,9 @@ const localBusinessSchema = {
   "@context": "https://schema.org",
   "@type": "LocalBusiness",
   "name": "St. Catharines Digital",
-  "image": "https://stcatharinesdigital.pages.dev/og-card.webp",
-  "@id": "https://stcatharinesdigital.pages.dev/",
-  "url": "https://stcatharinesdigital.pages.dev/",
+  "image": "https://stcatharinesdigital.ca/og-card.webp",
+  "@id": "https://stcatharinesdigital.ca/",
+  "url": "https://stcatharinesdigital.ca/",
   "telephone": "(365) 359-5973",
   "address": {
     "@type": "PostalAddress",

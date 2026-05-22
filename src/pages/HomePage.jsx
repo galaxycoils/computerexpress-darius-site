@@ -1,6 +1,6 @@
 import Seo, { BASE_URL } from '../components/Seo'
 import { Link } from 'react-router-dom'
-import { useState } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { IconWeb, IconSearch, IconMap, HeroIllustration } from '../components/Icons'
 import AnimatedCounter from '../components/AnimatedCounter'
 import AnimatedSection from '../hooks/useInView'
@@ -8,7 +8,7 @@ import BeforeAfterSlider from '../components/BeforeAfterSlider'
 import AnimatedHeroBg from '../components/AnimatedHeroBg'
 import {
   services, packages, steps, testimonials, faqItems,
-  portfolioItems, stats, guarantee
+  portfolioItems, stats, guarantee, certifications
 } from '../data/siteData'
 
 const homePageJsonLd = [
@@ -72,7 +72,7 @@ const serviceImages = [
 ]
 
 function FAQAccordion({ items }) {
-  const [openIndex, setOpenIndex] = useState(null)
+  const [openIndex, setOpenIndex] = useState(0)
   return (
     <div className="faq-list">
       {items.map((item, i) => (
@@ -98,6 +98,163 @@ function FAQAccordion({ items }) {
           </div>
         </div>
       ))}
+    </div>
+  )
+}
+
+function CustomVideoPlayer() {
+  const videoRef = useRef(null)
+  const [isPlaying, setIsPlaying] = useState(false)
+
+  const togglePlay = () => {
+    if (isPlaying) {
+      videoRef.current.pause()
+    } else {
+      videoRef.current.play().catch(err => console.log('Video playback error:', err))
+    }
+    setIsPlaying(!isPlaying)
+  }
+
+  return (
+    <div className="custom-video-player-card">
+      <div className="video-wrapper">
+        <video 
+          ref={videoRef} 
+          src="/st-catharines-digital-blueprint.mp4" 
+          preload="metadata"
+          controls
+          onPlay={() => setIsPlaying(true)}
+          onPause={() => setIsPlaying(false)}
+        />
+      </div>
+      <div style={{ marginTop: '0.5rem' }}>
+        <h3 style={{ fontSize: '1.15rem', color: 'var(--text-bright)', marginBottom: '0.25rem' }}>
+          St. Catharines Digital Conversion Blueprint
+        </h3>
+        <p style={{ fontSize: '0.85rem', color: 'var(--muted)', lineHeight: '1.5' }}>
+          Watch our screen share detailing the website setup, local SEO optimizations, and specific performance audit details.
+        </p>
+      </div>
+    </div>
+  )
+}
+
+function CustomAudioPlayer() {
+  const audioRef = useRef(null)
+  const [isPlaying, setIsPlaying] = useState(false)
+  const [currentTime, setCurrentTime] = useState(0)
+  const [duration, setDuration] = useState(0)
+  const [volume, setVolume] = useState(0.8)
+
+  useEffect(() => {
+    const audio = audioRef.current
+    if (!audio) return
+
+    const updateTime = () => setCurrentTime(audio.currentTime)
+    const updateDuration = () => setDuration(audio.duration || 0)
+    const onEnded = () => setIsPlaying(false)
+
+    audio.addEventListener('timeupdate', updateTime)
+    audio.addEventListener('loadedmetadata', updateDuration)
+    audio.addEventListener('ended', onEnded)
+
+    return () => {
+      audio.removeEventListener('timeupdate', updateTime)
+      audio.removeEventListener('loadedmetadata', updateDuration)
+      audio.removeEventListener('ended', onEnded)
+    }
+  }, [])
+
+  const togglePlay = () => {
+    if (isPlaying) {
+      audioRef.current.pause()
+    } else {
+      audioRef.current.play().catch(err => console.log('Audio playback error:', err))
+    }
+    setIsPlaying(!isPlaying)
+  }
+
+  const handleTimelineClick = (e) => {
+    const timeline = e.currentTarget
+    const rect = timeline.getBoundingClientRect()
+    const clickX = e.clientX - rect.left
+    const percentage = clickX / rect.width
+    const newTime = percentage * duration
+    audioRef.current.currentTime = newTime
+    setCurrentTime(newTime)
+  }
+
+  const handleVolumeChange = (e) => {
+    const newVolume = parseFloat(e.target.value)
+    audioRef.current.volume = newVolume
+    setVolume(newVolume)
+  }
+
+  const formatTime = (time) => {
+    const mins = Math.floor(time / 60)
+    const secs = Math.floor(time % 60)
+    return `${mins}:${secs < 10 ? '0' : ''}${secs}`
+  }
+
+  const progressPercent = duration > 0 ? (currentTime / duration) * 100 : 0
+
+  return (
+    <div className="custom-audio-player-card">
+      <audio ref={audioRef} src="/audio-overview.m4a" preload="metadata" />
+      <div className="audio-header">
+        <div className="audio-icon-wrapper">
+          {isPlaying ? (
+            <div className="waveform" style={{ display: 'flex', gap: '2px', alignItems: 'flex-end', height: '20px' }}>
+              <div className="bar" style={{ width: '3px', background: 'var(--accent)', animation: 'bounce 1s infinite alternate', height: '100%' }}></div>
+              <div className="bar" style={{ width: '3px', background: 'var(--accent)', animation: 'bounce 0.8s infinite alternate', height: '80%' }}></div>
+              <div className="bar" style={{ width: '3px', background: 'var(--accent)', animation: 'bounce 1.2s infinite alternate', height: '60%' }}></div>
+              <div className="bar" style={{ width: '3px', background: 'var(--accent)', animation: 'bounce 0.9s infinite alternate', height: '90%' }}></div>
+            </div>
+          ) : (
+            <span>🎙️</span>
+          )}
+        </div>
+        <div className="audio-title-info">
+          <h3>St. Catharines Digital Audio Overview</h3>
+          <p>Listen to our briefing on the conversion blueprint</p>
+        </div>
+      </div>
+
+      <div className="audio-player-controls">
+        <div className="audio-timeline-container">
+          <div className="audio-timeline" onClick={handleTimelineClick}>
+            <div className="audio-progress" style={{ width: `${progressPercent}%` }}></div>
+          </div>
+          <div className="audio-time-stamps">
+            <span>{formatTime(currentTime)}</span>
+            <span>{formatTime(duration || 600)}</span>
+          </div>
+        </div>
+
+        <div className="audio-buttons-row">
+          <button className="play-pause-btn" onClick={togglePlay} aria-label={isPlaying ? 'Pause' : 'Play'}>
+            {isPlaying ? (
+              <svg viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+            ) : (
+              <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+            )}
+          </button>
+          
+          <div className="volume-control">
+            <span style={{ fontSize: '0.85rem' }} aria-hidden="true">🔊</span>
+            <input 
+              type="range" 
+              className="volume-slider" 
+              min="0" 
+              max="1" 
+              step="0.05" 
+              value={volume} 
+              onChange={handleVolumeChange}
+              aria-label="Volume"
+            />
+          </div>
+        </div>
+      </div>
     </div>
   )
 }
@@ -136,29 +293,33 @@ export default function HomePage() {
               <a href="https://calendly.com/tahamtandariush/30min" target="_blank" rel="noopener noreferrer" className="button button-secondary">Book a Free Call</a>
             </div>
             
+            <p className="hero-micro-copy" style={{ fontSize: '0.8rem', color: 'var(--muted)', marginTop: '0.75rem', marginLeft: '0.25rem' }}>
+              Get a Free SEO Audit — No obligation, 3-page report sent in 24 hours.
+            </p>
+            
             {/* Google Partner Trust Badges strip */}
             <div className="hero-trust-badges">
-              <span className="hero-trust-badge">
+              <a href={certifications[0].url} target="_blank" rel="noopener noreferrer" className="hero-trust-badge" style={{ textDecoration: 'none' }}>
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                   <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
                   <path d="m9 12 2 2 4-4"/>
                 </svg>
                 Google Partner Certified
-              </span>
-              <span className="hero-trust-badge">
+              </a>
+              <Link to={certifications[1].url} className="hero-trust-badge" style={{ textDecoration: 'none' }}>
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--secondary)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                   <polyline points="16 18 22 12 16 6"/>
                   <polyline points="8 6 2 12 8 18"/>
                 </svg>
                 Premium Stack Developers
-              </span>
-              <span className="hero-trust-badge">
+              </Link>
+              <Link to={certifications[2].url} className="hero-trust-badge" style={{ textDecoration: 'none' }}>
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--success)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                   <circle cx="12" cy="12" r="10"/>
                   <polyline points="12 6 12 12 16 14"/>
                 </svg>
                 100% PageSpeed Guaranteed
-              </span>
+              </Link>
             </div>
 
             <ul className="hero-points">
@@ -244,8 +405,28 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* ===== INSIDE THE CONVERSION ENGINE ===== */}
+      <section className="section" id="media-overview" aria-label="Inside the Conversion Engine" style={{ position: 'relative' }}>
+        <div className="container">
+          <AnimatedSection>
+            <div className="section-heading">
+              <div className="glow-line" aria-hidden="true"></div>
+              <h2>Inside the Conversion Blueprint</h2>
+              <p>Explore the design strategies, technical SEO audits, and optimization blueprints we use to double local lead generation.</p>
+            </div>
+          </AnimatedSection>
+          
+          <AnimatedSection>
+            <div className="media-grid page-block">
+              <CustomVideoPlayer />
+              <CustomAudioPlayer />
+            </div>
+          </AnimatedSection>
+        </div>
+      </section>
+
       {/* ===== SERVICES ===== */}
-      <section className="section" id="services" aria-label="Services">
+      <section className="section section-alt" id="services" aria-label="Services">
         <div className="container">
           <AnimatedSection>
             <div className="section-heading">
@@ -300,7 +481,7 @@ export default function HomePage() {
       </section>
 
       {/* ===== PORTFOLIO ===== */}
-      <section className="section section-alt" id="portfolio" aria-label="Portfolio">
+      <section className="section" id="portfolio" aria-label="Portfolio">
         <div className="container">
           <AnimatedSection>
             <div className="section-heading">
@@ -352,7 +533,7 @@ export default function HomePage() {
       </section>
 
       {/* ===== PROCESS ===== */}
-      <section className="section" id="process" aria-label="Our process">
+      <section className="section section-alt" id="process" aria-label="Our process">
         <div className="container">
           <AnimatedSection>
             <div className="section-heading">
@@ -380,7 +561,7 @@ export default function HomePage() {
       </section>
 
       {/* ===== TESTIMONIALS — ENHANCED ===== */}
-      <section className="section section-alt" id="testimonials" aria-label="Client testimonials">
+      <section className="section" id="testimonials" aria-label="Client testimonials">
         <div className="container">
           <AnimatedSection>
             <div className="section-heading">
@@ -395,6 +576,30 @@ export default function HomePage() {
                 <article className="testimonial-card">
                   <div className="testimonial-stars" aria-label="5 out of 5 stars">{'★'.repeat(5)}</div>
                   <blockquote className="testimonial-text">{t.text}</blockquote>
+                  
+                  {/* Mock Keyword Tracking / Maps Position Grid */}
+                  <div className="testimonial-ranking-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.5rem', margin: '1.25rem 0', padding: '0.75rem', background: 'var(--bg-alt)', borderRadius: 'var(--radius-sm)', border: '1px solid var(--panel-border)', fontSize: '0.75rem' }}>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
+                      <span style={{ color: 'var(--muted)', fontSize: '0.65rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Target Keyword</span>
+                      <span style={{ color: 'var(--text-bright)', fontWeight: 500 }}>
+                        {i === 0 ? 'Plumber St. Catharines' :
+                         i === 1 ? 'Family Lawyer Niagara' :
+                         i === 2 ? 'HVAC St. Catharines' :
+                         'Property Management St. Catharines'}
+                      </span>
+                    </div>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.25rem', alignItems: 'flex-end' }}>
+                      <span style={{ color: 'var(--muted)', fontSize: '0.65rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Search Rank</span>
+                      <span style={{ color: 'var(--success)', fontWeight: 'bold', display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
+                        <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: 'var(--success)' }}></span>
+                        {i === 0 ? '#1 Map Pack' :
+                         i === 1 ? '#2 Organic' :
+                         i === 2 ? '#1 Map Pack' :
+                         '#1 Organic'}
+                      </span>
+                    </div>
+                  </div>
+
                   <div className="testimonial-metric">
                     <span className="testimonial-metric-value">{t.metric}</span>
                   </div>
@@ -419,13 +624,13 @@ export default function HomePage() {
       </section>
 
       {/* ===== GUARANTEE ===== */}
-      <section className="section guarantee-section" aria-label="Our guarantee">
+      <section className="section guarantee-section section-alt" aria-label="Our guarantee">
         <div className="container">
           <AnimatedSection>
             <div className="guarantee-card">
               <div className="guarantee-icon" aria-hidden="true">🛡️</div>
               <h2>{guarantee.title}</h2>
-              <p>{guarantee.description}</p>
+              <p>If you are not happy with our work within 30 days of kickoff, we will refund 100% of your money. Every package includes this full refund guarantee so you can commit with zero risk.</p>
               <div className="guarantee-badges">
                 <span className="guarantee-badge">No risk</span>
                 <span className="guarantee-badge">No lock-in</span>
@@ -544,9 +749,14 @@ export default function HomePage() {
                 <h2>Ready to rank higher and get more leads?</h2>
                 <p>St. Catharines Digital blends modern design, technical SEO, and practical local growth strategy — built for service businesses that need results.</p>
               </div>
-              <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
-                <Link to="/free-audit" className="button button-primary">Get Free Audit</Link>
-                <a href="https://calendly.com/tahamtandariush/30min" target="_blank" rel="noopener noreferrer" className="button button-secondary">Book a Call</a>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', alignItems: 'flex-start' }}>
+                <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
+                  <Link to="/free-audit" className="button button-primary">Get Free Audit</Link>
+                  <a href="https://calendly.com/tahamtandariush/30min" target="_blank" rel="noopener noreferrer" className="button button-secondary">Book a Call</a>
+                </div>
+                <p style={{ fontSize: '0.75rem', color: 'var(--muted)', marginTop: '0.25rem' }}>
+                  No commitment required. We deliver your custom audit within 1 business day.
+                </p>
               </div>
             </div>
           </AnimatedSection>
