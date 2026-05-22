@@ -5,8 +5,9 @@ import { execSync } from 'node:child_process'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const rootDir = path.resolve(__dirname, '..')
+const BASE_URL = 'https://stcatharinesdigital.pages.dev'
 
-const routes = [
+const baseRoutes = [
   '/',
   '/services',
   '/services/website-design',
@@ -36,8 +37,54 @@ const routes = [
   '/404' // Render 404 page separately
 ]
 
+// Programmatic SEO Generation
+const CITIES = ['st-catharines', 'niagara-falls', 'welland', 'grimsby', 'thorold', 'fort-erie']
+const SERVICES = ['web-design', 'local-seo']
+
+const programmaticRoutes = []
+for (const service of SERVICES) {
+  for (const city of CITIES) {
+    programmaticRoutes.push(`/service-areas/${service}/${city}`)
+  }
+}
+
+const allRoutes = [...baseRoutes, ...programmaticRoutes]
+
+function generateSitemap(routes) {
+  let xml = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n`
+  const today = new Date().toISOString().split('T')[0]
+
+  for (const route of routes) {
+    if (route === '/404') continue
+
+    // Determine priority and changefreq based on route type
+    let priority = '0.7'
+    let changefreq = 'monthly'
+
+    if (route === '/') {
+      priority = '1.0'
+      changefreq = 'weekly'
+    } else if (route === '/services' || route === '/contact' || route === '/free-audit') {
+      priority = '0.9'
+      changefreq = 'monthly'
+    } else if (route.startsWith('/services/')) {
+      priority = '0.8'
+    } else if (route.startsWith('/service-areas/')) {
+      priority = '0.8'
+      changefreq = 'monthly'
+    }
+
+    const loc = `${BASE_URL}${route === '/' ? '' : route}`
+    xml += `  <url>\n    <loc>${loc}</loc>\n    <lastmod>${today}</lastmod>\n    <changefreq>${changefreq}</changefreq>\n    <priority>${priority}</priority>\n  </url>\n`
+  }
+
+  xml += `</urlset>`
+  return xml
+}
+
 async function run() {
   console.log('--- Starting Static Prerendering (SSG) ---')
+  console.log(`Discovered ${allRoutes.length} total routes to render.`)
 
   // 1. Build the server-side bundle
   console.log('Building SSR bundle...')
@@ -57,7 +104,7 @@ async function run() {
   const { render } = await import(`file://${serverEntryPath}`)
 
   // 3. Render each route
-  for (const url of routes) {
+  for (const url of allRoutes) {
     console.log(`Prerendering route: ${url}`)
     const helmetContext = {}
     const { html } = render(url === '/404' ? '/404-not-found-route-trigger' : url, helmetContext)
@@ -100,10 +147,14 @@ async function run() {
 
     const outputPath = path.resolve(outputDir, outputFileName)
     fs.writeFileSync(outputPath, pageHtml, 'utf8')
-    console.log(`Saved: ${outputPath}`)
   }
 
-  // 4. Clean up SSR build folder
+  // 4. Generate dynamic sitemap
+  console.log('Generating dynamic sitemap.xml...')
+  const sitemapXml = generateSitemap(allRoutes)
+  fs.writeFileSync(path.resolve(rootDir, 'dist/sitemap.xml'), sitemapXml, 'utf8')
+
+  // 5. Clean up SSR build folder
   console.log('Cleaning up temporary SSR build directory...')
   fs.rmSync(path.resolve(rootDir, 'dist-ssr'), { recursive: true, force: true })
 
