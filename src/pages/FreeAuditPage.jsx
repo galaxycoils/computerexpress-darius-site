@@ -14,6 +14,7 @@ const INDUSTRIES = [
   { id: 'hvac', title: 'HVAC Services', val: 280, icon: '🔥', desc: 'Average job value: $280' },
   { id: 'electrical', title: 'Electrical', val: 150, icon: '⚡', desc: 'Average job value: $150' },
   { id: 'legal', title: 'Family Law', val: 600, icon: '⚖️', desc: 'Average case value: $600' },
+  { id: 'property-management', title: 'Property Management', val: 350, icon: '🏢', desc: 'Average client value: $350' },
   { id: 'other', title: 'Other Service', val: 150, icon: '🛠️', desc: 'Average job value: $150' }
 ]
 

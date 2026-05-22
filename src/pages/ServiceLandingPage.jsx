@@ -65,6 +65,26 @@ const servicePages = [
     cta: 'Get a Free Electrician Website Audit',
   },
   {
+    slug: 'web-design-for-landlords',
+    title: 'Web Design for Landlords & Property Managers',
+    headline: 'Property Management Websites That Attract Quality Tenants',
+    description: 'Professional websites for landlords and property managers. Showcase properties, integrate tenant portals, and rank locally on Google.',
+    keywords: ['property management web design', 'landlord website', 'property manager SEO', 'real estate website'],
+    services: [
+      'Property listing showcases and galleries',
+      'Tenant portal and payment gateway integration',
+      'Local SEO for property management',
+      'Maintenance request forms',
+      'Google Business Profile optimization',
+      'Mobile-first design for on-the-go tenants',
+    ],
+    faqs: [
+      { q: "Can you integrate our existing tenant portal software?", a: "Yes, we can seamlessly link to or embed most major property management and tenant portal software systems directly into your new website." },
+      { q: "How do you help us rank for property management searches?", a: "We build dedicated pages targeting specific neighborhoods and property types, and fully optimize your Google Business Profile to capture local search traffic." }
+    ],
+    cta: 'Get a Free Property Management Website Audit',
+  },
+  {
     slug: 'local-seo-for-service-businesses',
     title: 'Local SEO for Service Businesses',
     headline: 'Local SEO That Puts You on Top of Google Maps',
