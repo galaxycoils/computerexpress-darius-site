@@ -7,6 +7,7 @@ out/
 agentdb.rvf
 agentdb.rvf.lock
 ruvector.db
+graphify-out/
 
 # Local Netlify folder
 .netlify
