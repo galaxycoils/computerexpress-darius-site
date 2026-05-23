@@ -1,6 +1,7 @@
 import React from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { caseStudies } from '../data/siteData';
+import Seo from '../components/Seo';
 
 const CaseStudyPage = () => {
   const { slug } = useParams();
@@ -20,8 +21,15 @@ const CaseStudyPage = () => {
   }
 
   return (
-    <div className="bg-white min-h-screen py-16 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-3xl mx-auto">
+    <>
+      <Seo
+        title={`${caseStudy.title} | St. Catharines Digital`}
+        description={`${caseStudy.clientOverview} ${caseStudy.challenge}`.slice(0, 155)}
+        path={`/case-studies/${caseStudy.slug}`}
+        type="article"
+      />
+      <div className="bg-white min-h-screen py-16 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-3xl mx-auto">
         <div className="mb-8">
           <Link to="/" className="text-blue-600 hover:text-blue-800 font-medium">&larr; Back to Home</Link>
         </div>
@@ -73,8 +81,9 @@ const CaseStudyPage = () => {
             Get a Free Website Audit
           </Link>
         </div>
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

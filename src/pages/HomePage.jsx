@@ -10,36 +10,10 @@ import {
   portfolioItems, stats, guarantee
 } from '../data/siteData'
 import { siteConfig } from '../data/siteConfig'
+import { getLocalBusinessSchema } from '../data/schema'
 
 const homePageJsonLd = [
-  {
-    '@context': 'https://schema.org',
-    '@type': 'LocalBusiness',
-    name: 'St. Catharines Digital',
-    '@id': BASE_URL,
-    url: BASE_URL,
-    logo: `${BASE_URL}/logo-horizontal.svg`,
-    image: `${BASE_URL}/og-card.webp`,
-    telephone: siteConfig.phone,
-    email: siteConfig.email,
-    address: {
-      '@type': 'PostalAddress',
-      addressLocality: siteConfig.city,
-      addressRegion: siteConfig.region,
-      addressCountry: siteConfig.country
-    },
-    geo: {
-      '@type': 'GeoCoordinates',
-      latitude: siteConfig.geo.latitude,
-      longitude: siteConfig.geo.longitude
-    },
-    description: 'St. Catharines Digital builds premium websites, technical SEO systems, and local growth engines for service businesses that need better visibility and more qualified leads.',
-    areaServed: [
-      { '@type': 'City', name: 'St. Catharines', containedInPlace: { '@type': 'State', name: 'Ontario' } },
-      { '@type': 'State', name: 'Ontario' },
-      { '@type': 'Country', name: 'Canada' },
-    ],
-    knowsAbout: ['Web Design', 'Technical SEO', 'Local SEO', 'Google Business Profile', 'React', 'Vite'],
+  getLocalBusinessSchema({
     hasOfferCatalog: {
       '@type': 'OfferCatalog',
       name: 'Services',
@@ -48,7 +22,7 @@ const homePageJsonLd = [
         itemOffered: { '@type': 'Service', name: s.title, description: s.description }
       }))
     },
-  },
+  }),
   {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
@@ -124,7 +98,8 @@ function CustomVideoPlayer() {
         <video 
           ref={videoRef} 
           src="/st-catharines-digital-blueprint.mp4" 
-          preload="metadata"
+          preload="none"
+          poster="/images/video_preview.webp"
           controls
           onPlay={() => setIsPlaying(true)}
           onPause={() => setIsPlaying(false)}
@@ -203,7 +178,7 @@ function CustomAudioPlayer() {
 
   return (
     <div className="custom-audio-player-card">
-      <audio ref={audioRef} src="/audio-overview.m4a" preload="metadata" />
+      <audio ref={audioRef} src="/audio-overview.m4a" preload="none" />
       <div className="audio-header">
         <div className="audio-icon-wrapper">
           {isPlaying ? (
@@ -294,7 +269,14 @@ export default function HomePage() {
             <div className="hero-actions">
               <Link to="/free-audit" className="button button-primary">Get a Free SEO Audit</Link>
               <a href={`tel:${siteConfig.phone}`} className="button button-secondary">Call {siteConfig.phoneDisplay}</a>
-              <a href={siteConfig.calendlyUrl} target="_blank" rel="noopener noreferrer" className="button button-ghost">Book Call</a>
+              <a
+                href={siteConfig.calendlyUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="button button-ghost"
+              >
+                Book Call
+              </a>
             </div>
             
             <p className="hero-micro-copy" style={{ fontSize: '0.8rem', color: 'var(--muted)', marginTop: '0.75rem', marginLeft: '0.25rem' }}>

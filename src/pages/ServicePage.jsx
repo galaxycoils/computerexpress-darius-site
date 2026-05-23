@@ -3,6 +3,9 @@ import Seo, { BASE_URL } from '../components/Seo'
 import { Link } from 'react-router-dom'
 import AnimatedSection from '../hooks/useInView'
 import { IconWeb, IconSearch, IconMap } from '../components/Icons'
+import AuditMedia, { AUDIT_VIDEO } from '../components/AuditMedia'
+import { getLocalBusinessSchema, getVideoObjectSchema } from '../data/schema'
+import { serviceAreaCities, siteConfig } from '../data/siteConfig'
 
 const serviceData = {
   'website-design': {
@@ -84,7 +87,7 @@ const serviceData = {
     description: 'Get found by customers searching for your services in your area. We optimize your Google Business Profile to improve trust signals, service clarity, and contact paths.',
     keywords: ['Google Business Profile', 'GBP optimization', 'Google Maps ranking', 'local SEO', 'local pack'],
     features: [
-      'Complete GBP setup and verification',
+      'Google Business Profile setup and verification support',
       'Keyword-optimized business description',
       'Service and product listings',
       'Photo and video optimization',
@@ -201,6 +204,16 @@ export default function ServicePage({ slug }) {
     ]
   }
 
+  const pageJsonLd = [service.jsonLd, getLocalBusinessSchema(), webpageJsonLd, breadcrumbJsonLd]
+  if (slug === 'gbp-optimization') {
+    pageJsonLd.push(getVideoObjectSchema({
+      name: AUDIT_VIDEO.title,
+      description: AUDIT_VIDEO.description,
+      path: AUDIT_VIDEO.path,
+      thumbnailPath: AUDIT_VIDEO.poster,
+    }))
+  }
+
   return (
     <>
       <Seo
@@ -208,7 +221,7 @@ export default function ServicePage({ slug }) {
         description={service.description}
         path={`/services/${slug}`}
         type="service"
-        jsonLd={[service.jsonLd, webpageJsonLd, breadcrumbJsonLd]}
+        jsonLd={pageJsonLd}
       />
 
       <div className="bg-orb bg-orb-1" aria-hidden="true"></div>
@@ -227,6 +240,42 @@ export default function ServicePage({ slug }) {
           </AnimatedSection>
         </div>
       </section>
+
+      {slug === 'gbp-optimization' && (
+        <section className="section" aria-label="Google Business Profile launch plan">
+          <div className="container">
+            <AnimatedSection>
+              <div className="gbp-feature-grid">
+                <div>
+                  <span className="eyebrow">Google Maps readiness</span>
+                  <h2>Built for a hidden-address service-area profile</h2>
+                  <p>
+                    The profile setup uses St. Catharines and Niagara service areas without publishing a private storefront address. Profile links and review CTAs stay disabled until Google verification is complete.
+                  </p>
+                  <div className="gbp-checklist">
+                    <div><strong>Primary category</strong><span>{siteConfig.googleBusinessProfile.primaryCategory}</span></div>
+                    <div><strong>Service areas</strong><span>{serviceAreaCities.map(city => city.name).join(', ')}</span></div>
+                    <div><strong>Address mode</strong><span>Hidden service-area business</span></div>
+                    <div><strong>Status</strong><span>{siteConfig.googleBusinessProfile.verificationNote}</span></div>
+                  </div>
+                  <div className="gbp-actions">
+                    {siteConfig.googleBusinessProfile.profileUrl ? (
+                      <a className="button button-primary" href={siteConfig.googleBusinessProfile.profileUrl} target="_blank" rel="noopener noreferrer">View on Google</a>
+                    ) : (
+                      <button className="button button-secondary" type="button" disabled>Google profile pending verification</button>
+                    )}
+                    <Link className="button button-primary" to="/free-audit">Start Free Audit</Link>
+                  </div>
+                </div>
+                <div className="gbp-media-stack">
+                  <img src="/images/gbp/maps-visibility.webp" alt="Google Maps visibility diagnostic for Niagara service areas" loading="lazy" />
+                  <AuditMedia title="Audit walkthrough preview" description="Preview how we verify Maps, mobile, and conversion gaps before making recommendations." />
+                </div>
+              </div>
+            </AnimatedSection>
+          </div>
+        </section>
+      )}
 
       <section className="section" aria-label="What's included">
         <div className="container" style={{ maxWidth: '800px' }}>

@@ -1,4 +1,5 @@
 import { useState, useRef } from 'react'
+import { trackEvent, trackLead } from '../utils/analytics'
 
 const CONTACT_API = '/api/contact'
 
@@ -97,6 +98,13 @@ export default function ContactForm({ onSuccess }) {
         const result = await res.json()
 
         if (res.ok) {
+          trackLead('contact_form', {
+            page_path: window.location.pathname,
+          })
+          trackEvent('contact_submit', {
+            form_id: 'contact_form',
+            page_path: window.location.pathname,
+          })
           setSubmitted(true)
           setFields({ name: '', email: '', message: '' })
           setTouched({})
@@ -135,7 +143,7 @@ export default function ContactForm({ onSuccess }) {
   }
 
   return (
-    <form ref={formRef} className="contact-form" onSubmit={handleSubmit} noValidate>
+    <form ref={formRef} name="contact" data-form-id="contact_form" className="contact-form" onSubmit={handleSubmit} noValidate>
       {error && (
         <div className="contact-form-error" role="alert">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">

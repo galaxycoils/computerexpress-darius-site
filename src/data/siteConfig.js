@@ -21,6 +21,22 @@ export const siteConfig = {
   description:
     'Premium web design, technical SEO, and local growth systems for service businesses in St. Catharines, Niagara, and Ontario.',
   defaultImage: '/og-card.webp',
+  googleBusinessProfile: {
+    status: 'pending-verification',
+    addressMode: 'hidden-service-area',
+    profileUrl: '',
+    reviewUrl: '',
+    mapsUrl: '',
+    mapEmbedUrl: 'https://www.google.com/maps?q=St.%20Catharines%2C%20ON&output=embed',
+    primaryCategory: 'Website designer',
+    secondaryCategories: [
+      'Internet marketing service',
+      'Marketing agency',
+      'Business development service',
+    ],
+    hoursNote: 'By appointment for service-area clients.',
+    verificationNote: 'Profile links will be enabled after Google Business Profile verification.',
+  },
 }
 
 export const serviceAreaCities = [

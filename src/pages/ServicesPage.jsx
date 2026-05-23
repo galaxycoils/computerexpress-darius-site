@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { useState } from 'react'
 import AnimatedSection from '../hooks/useInView'
 import { packages, guarantee } from '../data/siteData'
+import { getLocalBusinessSchema } from '../data/schema'
 
 const servicesPageJsonLd = {
   '@context': 'https://schema.org',
@@ -29,32 +30,7 @@ const servicesPageJsonLd = {
   }
 }
 
-const localBusinessJsonLd = {
-  '@context': 'https://schema.org',
-  '@type': 'LocalBusiness',
-  name: 'St. Catharines Digital',
-  url: BASE_URL,
-  logo: `${BASE_URL}/logo-horizontal.svg`,
-  image: `${BASE_URL}/og-card.webp`,
-  telephone: '+13653595973',
-  email: 'hello@stcatharinesdigital.ca',
-  address: {
-    '@type': 'PostalAddress',
-    addressLocality: 'St. Catharines',
-    addressRegion: 'ON',
-    addressCountry: 'CA'
-  },
-  geo: {
-    '@type': 'GeoCoordinates',
-    latitude: 43.1594,
-    longitude: -79.2449
-  },
-  areaServed: [
-    { '@type': 'City', name: 'St. Catharines' },
-    { '@type': 'State', name: 'Ontario' },
-    { '@type': 'Country', name: 'Canada' }
-  ]
-}
+const localBusinessJsonLd = getLocalBusinessSchema()
 
 const breadcrumbJsonLd = {
   '@context': 'https://schema.org',

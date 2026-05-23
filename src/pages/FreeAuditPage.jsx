@@ -1,6 +1,9 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import Seo, { BASE_URL } from '../components/Seo'
+import AuditMedia, { AUDIT_VIDEO } from '../components/AuditMedia'
+import { getVideoObjectSchema } from '../data/schema'
+import { trackEvent, trackLead } from '../utils/analytics'
 
 const CONTACT_API = '/api/contact'
 
@@ -74,6 +77,13 @@ const freeAuditJsonLd = [
   }
 ]
 
+freeAuditJsonLd.push(getVideoObjectSchema({
+  name: AUDIT_VIDEO.title,
+  description: AUDIT_VIDEO.description,
+  path: AUDIT_VIDEO.path,
+  thumbnailPath: AUDIT_VIDEO.poster,
+}))
+
 export default function FreeAuditPage() {
   const [stage, setStage] = useState(STAGE_QUIZ)
   const [step, setStep] = useState(1)
@@ -141,6 +151,10 @@ export default function FreeAuditPage() {
   // Trigger analysis simulation
   function handleStartAnalysis() {
     if (!industry || !maps || !traffic || !painPoint) return
+    trackEvent('free_audit_start', {
+      form_id: 'website_grader',
+      step_count: step,
+    })
     setStage(STAGE_LOADING)
     setActivePhaseIndex(0)
     setCompletedPhases([])
@@ -225,6 +239,10 @@ export default function FreeAuditPage() {
       ]
     }
     setRecommendations(checklist)
+    trackEvent('free_audit_complete', {
+      form_id: 'website_grader',
+      score_band: finalScore < 55 ? 'high_priority_gaps' : 'optimization_opportunity',
+    })
   }
 
   // Handle lead form submit
@@ -273,6 +291,13 @@ Primary Challenge: ${selectedPain}
 
       const data = await res.json()
       if (res.ok) {
+        trackLead('free_audit_walkthrough', {
+          page_path: '/free-audit',
+        })
+        trackEvent('free_audit_submit', {
+          form_id: 'free_audit_walkthrough',
+          page_path: '/free-audit',
+        })
         setStage(STAGE_SUCCESS)
       } else {
         if (window.location.hostname === 'localhost') {
@@ -546,25 +571,7 @@ Primary Challenge: ${selectedPain}
                 </div>
 
                 <div className="grader-step-card" style={{ padding: '2.5rem' }}>
-                  <div 
-                    className="grader-video-preview-wrapper" 
-                    onClick={() => document.getElementById('lead-name')?.focus()}
-                    role="button"
-                    tabIndex={0}
-                    aria-label="Click to request video audit walkthrough"
-                    onKeyDown={(e) => {
-                      if (e.key === 'Enter' || e.key === ' ') {
-                        document.getElementById('lead-name')?.focus();
-                      }
-                    }}
-                  >
-                    <img 
-                      src="/images/video_preview.webp" 
-                      alt="Sample video website audit walkthrough" 
-                      className="grader-video-preview-image"
-                    />
-                    <div className="grader-video-preview-overlay" />
-                  </div>
+                  <AuditMedia title="Audit walkthrough preview" description="Watch a short sample of the mobile, Maps, and conversion checks used before the manual walkthrough." />
 
                   <h3 style={{ fontFamily: 'var(--font-display)', fontSize: '1.5rem', color: 'var(--text-bright)', marginBottom: '0.75rem' }}>
                     Claim Your Complete Audit Walkthrough
@@ -579,7 +586,7 @@ Primary Challenge: ${selectedPain}
                     </div>
                   )}
 
-                  <form onSubmit={handleLeadSubmit} noValidate style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+                  <form name="free-audit-walkthrough" data-form-id="free_audit_walkthrough" onSubmit={handleLeadSubmit} noValidate style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
                     <div>
                       <label htmlFor="lead-name" style={{ display: 'block', fontFamily: 'var(--font-mono)', fontSize: '0.7rem', textTransform: 'uppercase', color: 'var(--muted)', marginBottom: '0.5rem' }}>
                         Your Name

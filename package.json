@@ -7,7 +7,11 @@
     "dev": "vite",
     "build": "vite build && npm run prerender",
     "prerender": "node scripts/prerender.js",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "assets:gbp": "node scripts/generate-gbp-assets.js",
+    "audit:schema": "node scripts/audit-schema.js",
+    "audit:lighthouse": "node scripts/audit-lighthouse.js",
+    "audit:visual": "node scripts/audit-visual.js"
   },
   "dependencies": {
     "@mlc-ai/web-llm": "^0.2.83",
@@ -17,8 +21,10 @@
     "react-router-dom": "^7.9.4"
   },
   "devDependencies": {
+    "@playwright/test": "^1.60.0",
     "@tailwindcss/postcss": "^4.3.0",
     "@vitejs/plugin-react": "^4.7.0",
+    "lighthouse": "^13.3.0",
     "sharp": "^0.34.5",
     "vite": "^6.0.0"
   }

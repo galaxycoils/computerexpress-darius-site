@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect, Suspense, lazy } from 'react';
+import { trackEvent } from '../utils/analytics';
 
 const CHAT_API = '/api/chat';
 
@@ -79,6 +80,7 @@ export default function AIChatWidget() {
   const [mobileDockReady, setMobileDockReady] = useState(false);
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
+  const trackedOpenRef = useRef(false);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -203,11 +205,20 @@ export default function AIChatWidget() {
     }
   }
 
+  function toggleChat() {
+    const nextOpen = !open;
+    setOpen(nextOpen);
+    if (nextOpen && !trackedOpenRef.current) {
+      trackedOpenRef.current = true;
+      trackEvent('chat_open', { mode });
+    }
+  }
+
   return (
     <>
       {/* Chat Toggle Button */}
       <button
-        onClick={() => setOpen(!open)}
+        onClick={toggleChat}
         className={`chat-toggle${!open && !mobileDockReady ? ' chat-toggle-mobile-hidden' : ''}`}
         aria-label={open ? 'Close chat' : 'Open AI chat'}
         style={{

@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { trackEvent, trackLead } from '../utils/analytics'
 
 const AUDIT_API = '/api/contact'
 
@@ -77,6 +78,13 @@ export default function ExitIntentPopup() {
       const result = await res.json()
 
       if (res.ok) {
+        trackLead('exit_intent_audit', {
+          page_path: window.location.pathname,
+        })
+        trackEvent('free_audit_submit', {
+          form_id: 'exit_intent_audit',
+          page_path: window.location.pathname,
+        })
         setSuccess(true)
         localStorage.setItem('exit_intent_seen', 'true')
       } else {
@@ -113,7 +121,7 @@ export default function ExitIntentPopup() {
             </button>
           </div>
         ) : (
-          <form onSubmit={handleSubmit} noValidate>
+          <form name="exit-intent-audit" data-form-id="exit_intent_audit" onSubmit={handleSubmit} noValidate>
             <span className="exit-intent-badge" aria-hidden="true">Limited Offer</span>
             <h2 id="exit-intent-title" className="gradient-text">Wait! Get a Free SEO & Speed Audit</h2>
             <p className="exit-intent-intro">Don't leave empty-handed. Enter your website and email below, and we will send you a personalized analysis of your site's SEO, speed, and conversion gaps — completely free.</p>
