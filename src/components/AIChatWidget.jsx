@@ -76,6 +76,7 @@ export default function AIChatWidget() {
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [mobileDockReady, setMobileDockReady] = useState(false);
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
 
@@ -88,6 +89,21 @@ export default function AIChatWidget() {
       inputRef.current.focus();
     }
   }, [open, mode]);
+
+  useEffect(() => {
+    function updateMobileDock() {
+      const isSmallViewport = window.matchMedia('(max-width: 480px)').matches;
+      setMobileDockReady(!isSmallViewport || window.scrollY > 420);
+    }
+
+    updateMobileDock();
+    window.addEventListener('scroll', updateMobileDock, { passive: true });
+    window.addEventListener('resize', updateMobileDock);
+    return () => {
+      window.removeEventListener('scroll', updateMobileDock);
+      window.removeEventListener('resize', updateMobileDock);
+    };
+  }, []);
 
   async function sendMessage(text) {
     if (!text.trim() || loading) return;
@@ -192,7 +208,7 @@ export default function AIChatWidget() {
       {/* Chat Toggle Button */}
       <button
         onClick={() => setOpen(!open)}
-        className="chat-toggle"
+        className={`chat-toggle${!open && !mobileDockReady ? ' chat-toggle-mobile-hidden' : ''}`}
         aria-label={open ? 'Close chat' : 'Open AI chat'}
         style={{
           position: 'fixed',

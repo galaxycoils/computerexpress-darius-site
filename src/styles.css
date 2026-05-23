@@ -2713,19 +2713,25 @@ body.light .section-first.hero .eyebrow {
   .chat-toggle {
     width: 48px !important;
     height: 48px !important;
-    right: 14px !important;
-    top: 128px !important;
-    bottom: auto !important;
+    right: 16px !important;
+    top: auto !important;
+    bottom: calc(env(safe-area-inset-bottom) + 16px) !important;
     box-shadow: 0 8px 24px rgba(18, 214, 255, 0.26) !important;
   }
 
   .chat-window {
     right: 12px !important;
-    top: 84px !important;
-    bottom: calc(env(safe-area-inset-bottom) + 12px) !important;
+    top: auto !important;
+    bottom: calc(env(safe-area-inset-bottom) + 76px) !important;
     width: calc(100vw - 24px) !important;
-    height: auto !important;
+    height: min(560px, calc(100dvh - 112px)) !important;
     border-radius: 14px !important;
+  }
+
+  .chat-toggle-mobile-hidden {
+    opacity: 0 !important;
+    pointer-events: none !important;
+    transform: translateY(12px) scale(0.94) !important;
   }
 }
 
