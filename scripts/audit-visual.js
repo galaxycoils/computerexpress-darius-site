@@ -9,6 +9,7 @@ const baseUrl = 'http://127.0.0.1:4173'
 const routes = ['/', '/free-audit', '/contact', '/services/gbp-optimization', '/service-areas/web-design/grimsby']
 const viewports = [
   { name: 'mobile', width: 390, height: 844 },
+  { name: 'tablet', width: 768, height: 1024 },
   { name: 'desktop', width: 1440, height: 1000 },
 ]
 

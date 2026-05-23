@@ -349,7 +349,7 @@ Primary Challenge: ${selectedPain}
         <div className="grader-container">
           <div className="section-heading">
             <span className="eyebrow eyebrow-center" aria-hidden="true">Interactive Tool</span>
-            <h2>Website Audit & SEO Grader</h2>
+            <h1>Website Audit & SEO Grader</h1>
             <p>Analyze your local performance, uncover technical layout flaws, and estimate potential monthly lead opportunity with clear proof-safe assumptions.</p>
           </div>
 

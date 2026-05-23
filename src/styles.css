@@ -966,6 +966,7 @@ body.light .section-first.hero .eyebrow {
   margin: 0 auto 3.5rem;
 }
 
+.section-heading h1,
 .section-heading h2 {
   font-family: var(--font-display);
   font-size: clamp(1.75rem, 3.5vw, 2.75rem);
@@ -2307,7 +2308,7 @@ body.light .section-first.hero .eyebrow {
 .back-to-top {
   position: fixed;
   bottom: 2rem;
-  right: 2rem;
+  right: 6rem;
   width: 44px;
   height: 44px;
   border-radius: 50%;
@@ -2710,6 +2711,11 @@ body.light .section-first.hero .eyebrow {
 }
 
 @media (max-width: 480px) {
+  .back-to-top {
+    right: 76px;
+    bottom: calc(env(safe-area-inset-bottom) + 16px);
+  }
+
   .chat-toggle {
     width: 48px !important;
     height: 48px !important;
