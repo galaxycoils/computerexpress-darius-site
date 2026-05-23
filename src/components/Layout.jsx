@@ -4,6 +4,7 @@ import { Link, NavLink } from 'react-router-dom'
 import SearchModal from './SearchModal'
 import CustomCursor from './CustomCursor'
 import { siteConfig } from '../data/siteConfig'
+import { trackEvent } from '../utils/analytics'
 
 const AIChatWidget = lazy(() => import('./AIChatWidget'))
 const ExitIntentPopup = lazy(() => import('./ExitIntentPopup'))
@@ -109,6 +110,27 @@ export default function Layout() {
     }
     window.addEventListener('keydown', handleGlobalKey)
     return () => window.removeEventListener('keydown', handleGlobalKey)
+  }, [])
+
+  useEffect(() => {
+    const handleTrackedClick = (e) => {
+      const link = e.target.closest?.('a')
+      if (!link) return
+
+      const href = link.getAttribute('href') || ''
+      const clickLocation = link.closest('header') ? 'header' : link.closest('footer') ? 'footer' : 'page'
+
+      if (href.startsWith('tel:')) {
+        trackEvent('phone_click', { click_location: clickLocation })
+      }
+
+      if (href.startsWith(siteConfig.calendlyUrl)) {
+        trackEvent('calendly_click', { click_location: clickLocation })
+      }
+    }
+
+    document.addEventListener('click', handleTrackedClick)
+    return () => document.removeEventListener('click', handleTrackedClick)
   }, [])
 
   useEffect(() => {

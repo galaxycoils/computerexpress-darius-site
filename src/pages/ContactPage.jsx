@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom'
 import AnimatedSection from '../hooks/useInView'
 import ContactForm from '../components/ContactForm'
 import { guarantee } from '../data/siteData'
+import { getLocalBusinessSchema } from '../data/schema'
+import { siteConfig } from '../data/siteConfig'
 
 const contactPageJsonLd = {
   '@context': 'https://schema.org',
@@ -27,32 +29,7 @@ const contactPageJsonLd = {
   }
 }
 
-const localBusinessJsonLd = {
-  '@context': 'https://schema.org',
-  '@type': 'LocalBusiness',
-  name: 'St. Catharines Digital',
-  url: BASE_URL,
-  logo: `${BASE_URL}/logo-horizontal.svg`,
-  image: `${BASE_URL}/og-card.webp`,
-  telephone: '+13653595973',
-  email: 'hello@stcatharinesdigital.ca',
-  address: {
-    '@type': 'PostalAddress',
-    addressLocality: 'St. Catharines',
-    addressRegion: 'ON',
-    addressCountry: 'CA'
-  },
-  geo: {
-    '@type': 'GeoCoordinates',
-    latitude: 43.1594,
-    longitude: -79.2449
-  },
-  areaServed: [
-    { '@type': 'City', name: 'St. Catharines' },
-    { '@type': 'State', name: 'Ontario' },
-    { '@type': 'Country', name: 'Canada' }
-  ]
-}
+const localBusinessJsonLd = getLocalBusinessSchema()
 
 const breadcrumbJsonLd = {
   '@context': 'https://schema.org',
@@ -136,21 +113,21 @@ export default function ContactPage() {
                     <div className="contact-method-icon" aria-hidden="true">📞</div>
                     <div>
                       <div className="contact-method-label">Phone</div>
-                      <a href="tel:+13653595973">(365) 359-5973</a>
+                      <a href={`tel:${siteConfig.phone}`}>{siteConfig.phoneDisplay}</a>
                     </div>
                   </div>
                   <div className="contact-method">
                     <div className="contact-method-icon" aria-hidden="true">📧</div>
                     <div>
                       <div className="contact-method-label">Email</div>
-                      <a href="mailto:hello@stcatharinesdigital.ca">hello@stcatharinesdigital.ca</a>
+                      <a href={`mailto:${siteConfig.email}`}>{siteConfig.email}</a>
                     </div>
                   </div>
                   <div className="contact-method">
                     <div className="contact-method-icon" aria-hidden="true">📞</div>
                     <div>
                       <div className="contact-method-label">Book a call</div>
-                      <a href="https://calendly.com/tahamtandariush/30min" target="_blank" rel="noopener noreferrer">30-minute free consultation</a>
+                      <a href={siteConfig.calendlyUrl} target="_blank" rel="noopener noreferrer">30-minute free consultation</a>
                     </div>
                   </div>
                 </div>
