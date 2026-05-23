@@ -250,7 +250,7 @@ export default function ServicePage({ slug }) {
                   <span className="eyebrow">Google Maps readiness</span>
                   <h2>Built for a hidden-address service-area profile</h2>
                   <p>
-                    The profile setup uses St. Catharines and Niagara service areas without publishing a private storefront address. Profile links and review CTAs stay disabled until Google verification is complete.
+                    The profile uses St. Catharines and Niagara service areas without publishing a private storefront address. The public Maps profile is live; direct review CTAs will be enabled after the Google Place ID or review link is confirmed.
                   </p>
                   <div className="gbp-checklist">
                     <div><strong>Primary category</strong><span>{siteConfig.googleBusinessProfile.primaryCategory}</span></div>
