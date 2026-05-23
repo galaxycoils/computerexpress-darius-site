@@ -1,0 +1,93 @@
+{
+  "version": 1,
+  "workspace": "computerexpress-netlify",
+  "project": "St. Catharines Digital",
+  "canonicalDomain": "https://stcatharinesdigital.ca",
+  "teamName": "St. Catharines Digital Growth Swarm",
+  "orchestrator": "Ariadne",
+  "agents": [
+    {
+      "name": "Helmholtz",
+      "role": "test-engineer",
+      "source": "existing-antigravity-ui",
+      "responsibilities": [
+        "Build validation",
+        "Schema validation",
+        "Visual and mobile regression checks",
+        "Accessibility and overflow checks",
+        "Deploy verification"
+      ]
+    },
+    {
+      "name": "Cicero",
+      "role": "search-specialist",
+      "source": "existing-antigravity-ui",
+      "responsibilities": [
+        "Current external research",
+        "Competitor and market checks",
+        "Google and platform policy verification",
+        "Source-backed claim review"
+      ]
+    },
+    {
+      "name": "Mendel",
+      "role": "explorer",
+      "source": "existing-antigravity-ui",
+      "responsibilities": [
+        "Repo exploration",
+        "Route and component mapping",
+        "Source ownership discovery",
+        "Implementation constraint discovery"
+      ]
+    },
+    {
+      "name": "Vitruvius",
+      "role": "ui-ux-pro",
+      "source": "workspace-spec",
+      "definition": ".antigravity/subagents/vitruvius.md",
+      "responsibilities": [
+        "Mobile-first UX review",
+        "Accessibility review",
+        "Visual hierarchy",
+        "Conversion flow quality",
+        "Interaction states",
+        "CTA and chat placement"
+      ]
+    },
+    {
+      "name": "Seshat",
+      "role": "seo-expert",
+      "source": "workspace-spec",
+      "definition": ".antigravity/subagents/seshat.md",
+      "responsibilities": [
+        "Technical SEO",
+        "Local SEO",
+        "Google Business Profile and Maps alignment",
+        "Schema and metadata",
+        "Sitemap and robots coverage",
+        "Proof-safe copy"
+      ]
+    },
+    {
+      "name": "Ariadne",
+      "role": "site-growth-orchestrator",
+      "source": "workspace-spec",
+      "definition": ".antigravity/subagents/ariadne.md",
+      "responsibilities": [
+        "Coordinate Helmholtz, Cicero, Mendel, Vitruvius, and Seshat",
+        "Decompose work into research, UX, SEO, implementation review, and validation lanes",
+        "Rank findings by business impact and risk",
+        "Resolve duplicate or conflicting recommendations",
+        "Require build, schema, visual/mobile, and deploy verification"
+      ]
+    }
+  ],
+  "guardrails": [
+    "Do not edit or stage generated dist output.",
+    "Do not invent fake proof, badges, metrics, reviews, ratings, certifications, or storefront claims.",
+    "Use https://stcatharinesdigital.ca as the canonical domain.",
+    "Keep Google Business Profile guidance service-area safe unless a public address is verified and intended.",
+    "Require verification before declaring site work complete."
+  ],
+  "dryRunPrompt": "Ariadne, review the live St. Catharines Digital site using Mendel, Cicero, Vitruvius, Seshat, and Helmholtz, then return a ranked action plan only."
+}
