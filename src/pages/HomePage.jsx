@@ -99,11 +99,19 @@ function CustomVideoPlayer() {
           ref={videoRef} 
           src="/st-catharines-digital-blueprint.mp4" 
           preload="none"
-          poster="/images/video_preview.webp"
+          poster="/images/responsive/video-preview-384.webp"
           controls
           onPlay={() => setIsPlaying(true)}
           onPause={() => setIsPlaying(false)}
-        />
+        >
+          <track
+            kind="captions"
+            src="/captions/st-catharines-digital-blueprint.vtt"
+            srcLang="en"
+            label="English"
+            default
+          />
+        </video>
       </div>
       <div style={{ marginTop: '0.5rem' }}>
         <h3 style={{ fontSize: '1.15rem', color: 'var(--text-bright)', marginBottom: '0.25rem' }}>

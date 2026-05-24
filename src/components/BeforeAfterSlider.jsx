@@ -4,8 +4,10 @@ const slides = [
   {
     id: 'plumbing',
     title: 'Plumbing',
-    beforeImage: '/before-redesign.webp',
-    afterImage: '/after-redesign.webp',
+    beforeImage: '/images/responsive/before-redesign-640.webp',
+    beforeSrcSet: '/images/responsive/before-redesign-384.webp 384w, /images/responsive/before-redesign-640.webp 640w',
+    afterImage: '/images/responsive/after-redesign-640.webp',
+    afterSrcSet: '/images/responsive/after-redesign-384.webp 384w, /images/responsive/after-redesign-640.webp 640w',
     beforeAlt: 'Outdated plumbing website design before optimization',
     afterAlt: 'Premium dark plumbing website design by St. Catharines Digital'
   },
@@ -65,6 +67,8 @@ export default function BeforeAfterSlider() {
           <div className="ba-slider-label ba-slider-label-before">BEFORE</div>
           <img 
             src={currentSlide.beforeImage} 
+            srcSet={currentSlide.beforeSrcSet}
+            sizes="(max-width: 700px) 92vw, 662px"
             alt={currentSlide.beforeAlt} 
             className="ba-slider-image ba-slider-image-before"
             loading="lazy"
@@ -79,6 +83,8 @@ export default function BeforeAfterSlider() {
           <div className="ba-slider-label ba-slider-label-after">AFTER (St. Catharines Digital)</div>
           <img 
             src={currentSlide.afterImage} 
+            srcSet={currentSlide.afterSrcSet}
+            sizes="(max-width: 700px) 92vw, 662px"
             alt={currentSlide.afterAlt} 
             className="ba-slider-image ba-slider-image-after"
             loading="lazy"

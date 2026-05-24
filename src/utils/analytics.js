@@ -1,6 +1,10 @@
 export function trackEvent(eventName, params = {}) {
   if (typeof window === 'undefined' || typeof window.gtag !== 'function') return
 
+  if (typeof window.__loadAnalytics === 'function') {
+    window.__loadAnalytics()
+  }
+
   const safeParams = Object.fromEntries(
     Object.entries(params).filter(([, value]) => value !== undefined && value !== null && value !== '')
   )
