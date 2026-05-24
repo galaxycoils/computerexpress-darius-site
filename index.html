@@ -11,13 +11,45 @@
     <link rel="apple-touch-icon" href="/apple-touch-icon.svg" />
     <link rel="preload" as="image" href="/logo-mark.svg" fetchpriority="high" />
     <link rel="manifest" href="/site.webmanifest" />
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-HDESV0NDX4"></script>
+    <!-- Google tag (gtag.js): deferred until idle or first interaction to protect mobile LCP. -->
     <script>
+      window.__analyticsId = 'G-HDESV0NDX4';
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-HDESV0NDX4', { 'anonymize_ip': true });
+
+      (function () {
+        var loaded = false;
+        var interactionEvents = ['pointerdown', 'keydown', 'scroll'];
+
+        function loadAnalytics() {
+          if (loaded) return;
+          loaded = true;
+
+          interactionEvents.forEach(function (eventName) {
+            window.removeEventListener(eventName, loadAnalytics, { passive: true });
+          });
+
+          var script = document.createElement('script');
+          script.async = true;
+          script.src = 'https://www.googletagmanager.com/gtag/js?id=' + window.__analyticsId;
+          document.head.appendChild(script);
+
+          gtag('js', new Date());
+          gtag('config', window.__analyticsId, { anonymize_ip: true });
+        }
+
+        window.__loadAnalytics = loadAnalytics;
+
+        interactionEvents.forEach(function (eventName) {
+          window.addEventListener(eventName, loadAnalytics, { once: true, passive: true });
+        });
+
+        if ('requestIdleCallback' in window) {
+          window.requestIdleCallback(loadAnalytics, { timeout: 3500 });
+        } else {
+          window.setTimeout(loadAnalytics, 2500);
+        }
+      })();
     </script>
     <script type="speculationrules">
       {
