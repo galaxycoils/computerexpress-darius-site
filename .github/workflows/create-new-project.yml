@@ -3,22 +3,19 @@ name: Create New Cloudflare Pages Project
 on:
   workflow_dispatch:
 
-env:
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
-
 jobs:
   create-project:
     runs-on: ubuntu-latest
     steps:
       - name: Create Cloudflare Pages project
-        uses: cloudflare/wrangler-action@v3
+        uses: cloudflare/wrangler-action@v4
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           accountId: a55a43856c7029505b79300ec82f1629
           command: pages project create stcatharinesdigital --production-branch=main
 
       - name: Deploy to new project
-        uses: cloudflare/wrangler-action@v3
+        uses: cloudflare/wrangler-action@v4
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           accountId: a55a43856c7029505b79300ec82f1629
