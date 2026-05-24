@@ -3,6 +3,9 @@ name: Create New Cloudflare Pages Project
 on:
   workflow_dispatch:
 
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 jobs:
   create-project:
     runs-on: ubuntu-latest
