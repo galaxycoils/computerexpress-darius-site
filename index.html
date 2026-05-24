@@ -11,7 +11,7 @@
     <link rel="apple-touch-icon" href="/apple-touch-icon.svg" />
     <link rel="preload" as="image" href="/logo-mark.svg" fetchpriority="high" />
     <link rel="manifest" href="/site.webmanifest" />
-    <!-- Google tag (gtag.js): deferred until idle or first interaction to protect mobile LCP. -->
+    <!-- Google tag (gtag.js): deferred until first interaction or a late fallback to protect mobile LCP. -->
     <script>
       window.__analyticsId = 'G-HDESV0NDX4';
       window.dataLayer = window.dataLayer || [];
@@ -44,11 +44,7 @@
           window.addEventListener(eventName, loadAnalytics, { once: true, passive: true });
         });
 
-        if ('requestIdleCallback' in window) {
-          window.requestIdleCallback(loadAnalytics, { timeout: 3500 });
-        } else {
-          window.setTimeout(loadAnalytics, 2500);
-        }
+        window.setTimeout(loadAnalytics, 8000);
       })();
     </script>
     <script type="speculationrules">
