@@ -4,8 +4,13 @@ import { siteConfig, BASE_URL } from '../data/siteConfig'
 export { BASE_URL }
 
 const SITE = siteConfig.name
-const BASE = BASE_URL
+const BASE = BASE_URL.replace(/\/$/, '')
 const DEFAULT_IMG = siteConfig.defaultImage
+
+function canonicalUrl(path) {
+  if (path === '/') return `${BASE}/`
+  return `${BASE}${path.replace(/\/$/, '')}/`
+}
 
 export default function Seo({
   title,
@@ -16,7 +21,7 @@ export default function Seo({
   noIndex = false,
   jsonLd
 }) {
-  const url = `${BASE}${path}`
+  const url = canonicalUrl(path)
   const img = image.startsWith('http') ? image : `${BASE}${image}`
 
   const defaults = {
@@ -69,7 +74,7 @@ export default function Seo({
       <meta property="og:image:width" content="1200" />
       <meta property="og:image:height" content="630" />
       <meta property="og:image:alt" content={`${finalTitle}`} />
-      <meta property="og:locale" content={siteConfig.locale} />
+      <meta property="og:locale" content={siteConfig.locale.replace('-', '_')} />
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={finalTitle} />
       <meta name="twitter:description" content={finalDesc} />

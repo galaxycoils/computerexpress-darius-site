@@ -50,13 +50,19 @@ export function getRouteSitemapMeta(route) {
   return { priority: '0.7', changefreq: 'monthly' }
 }
 
+export function canonicalRouteUrl(route) {
+  const base = BASE_URL.replace(/\/$/, '')
+  if (route === '/') return `${base}/`
+  return `${base}${route.replace(/\/$/, '')}/`
+}
+
 export function createSitemapXml(routes = sitemapRoutes, date = new Date()) {
   const today = date.toISOString().split('T')[0]
   const urls = routes
     .filter((route) => route !== '/404')
     .map((route) => {
       const { priority, changefreq } = getRouteSitemapMeta(route)
-      const loc = `${BASE_URL}${route === '/' ? '' : route}`
+      const loc = canonicalRouteUrl(route)
       return `  <url>
     <loc>${loc}</loc>
     <lastmod>${today}</lastmod>
