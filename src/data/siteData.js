@@ -259,5 +259,136 @@ export const certifications = [
     name: '90+ PageSpeed target',
     url: '/services/technical-seo',
     icon: 'clock'
-  }
+  },
+]
+
+export const retainerTiers = [
+  {
+    id: 'foundation',
+    name: 'Foundation',
+    price: '$497',
+    period: '/mo',
+    ideal: 'For service businesses new to SEO, under $5k/mo revenue.',
+    features: [
+      'GBP optimization + monthly monitoring',
+      'Monthly ranking & visibility report',
+      'Quarterly 30-min strategy call',
+      'Technical SEO health checks',
+      'Citation accuracy monitoring',
+      '30-day satisfaction guarantee',
+    ],
+    featured: false,
+    ctaText: 'Apply for Foundation',
+  },
+  {
+    id: 'growth',
+    name: 'Growth',
+    price: '$897',
+    period: '/mo',
+    ideal: 'For established businesses ($10k+/mo) ready to scale local visibility.',
+    features: [
+      'Everything in Foundation, plus:',
+      '2 SEO-optimized blog posts/month',
+      'Service-area page updates & expansion',
+      'Citation cleanup & suppression',
+      'Competitor keyword gap analysis',
+      'Review generation workflow',
+      'Priority email support',
+    ],
+    featured: true,
+    ctaText: 'Apply for Growth',
+  },
+  {
+    id: 'dominance',
+    name: 'Dominance',
+    price: '$1,497',
+    period: '/mo',
+    ideal: 'For market leaders ($20k+/mo) pursuing total local dominance.',
+    features: [
+      'Everything in Growth, plus:',
+      '4 SEO-optimized blog posts/month',
+      'Monthly content strategy & calendar',
+      'Automated review generation system',
+      'Annual full-site technical audit',
+      'Priority Slack/phone support',
+      'Quarterly 60-min strategy deep-dive',
+    ],
+    featured: false,
+    ctaText: 'Apply for Dominance',
+  },
+]
+
+export const partnerFAQ = [
+  {
+    q: 'Is there a long-term contract?',
+    a: 'Month-to-month after an initial 3-month commitment. Local SEO compounds over time — 90 days is the minimum to see meaningful movement. After 3 months, cancel anytime with 30 days notice.'
+  },
+  {
+    q: 'What happens in the quarterly strategy call?',
+    a: 'We review rankings, traffic, leads, and revenue impact. We adjust the content calendar, identify new service-area opportunities, and set priorities for the next quarter. You get a 1-page PDF summary + Loom walkthrough.'
+  },
+  {
+    q: 'Do you write the blog posts or do I?',
+    a: 'We write, optimize, and publish them. You approve topics via a shared Notion board. Posts target your service-area keywords and include local schema, internal links, and GBP post syndication.'
+  },
+  {
+    q: 'How do you track rankings?',
+    a: 'We use LocalFalcon / Places Scout for grid-based Maps tracking across your service areas, plus standard organic rank tracking for your top 20 keywords. Reports delivered monthly.'
+  },
+  {
+    q: 'What if I need to pause?',
+    a: 'Life happens. One pause per 12 months (up to 60 days) at 50% retainer to hold your slot. No penalty, no awkward conversations.'
+  },
+  {
+    q: 'Can I upgrade/downgrade tiers?',
+    a: 'Yes, anytime. Changes take effect next billing cycle. Prorated adjustments applied automatically.'
+  },
+]
+
+export const partnerCaseStudies = [
+  {
+    slug: 'plumber-niagara',
+    industry: 'Plumbing',
+    location: 'Niagara Region',
+    tier: 'Growth',
+    duration: '8 months',
+    results: {
+      mapsPositions: '3 keywords → Top 3 (was 0)',
+      organicTraffic: '+240%',
+      monthlyLeads: '12 → 38',
+      estimatedRevenue: '$180k → $570k',
+    },
+    quote: 'We went from invisible on Maps to the first call for emergency plumbing in Welland and St. Catharines. The blog posts alone bring in 8-10 qualified leads a month.',
+    anonymized: true,
+  },
+  {
+    slug: 'hvac-stcatharines',
+    industry: 'HVAC',
+    location: 'St. Catharines + Thorold',
+    tier: 'Dominance',
+    duration: '14 months',
+    results: {
+      mapsPositions: '5/5 target keywords in Top 3',
+      organicTraffic: '+410%',
+      monthlyLeads: '8 → 42',
+      estimatedRevenue: '$320k → $1.2M',
+    },
+    quote: 'The seasonal content calendar meant we owned "furnace repair" in October and "AC install" in June. Competitors stopped showing up.',
+    anonymized: true,
+  },
+  {
+    slug: 'legal-family-law',
+    industry: 'Family Law',
+    location: 'St. Catharines',
+    tier: 'Foundation',
+    duration: '6 months',
+    results: {
+      mapsPositions: '2/3 keywords Top 3',
+      organicTraffic: '+180%',
+      monthlyLeads: '3 → 14',
+      estimatedRevenue: 'Confidential',
+    },
+    quote: 'Professional, low-touch, high-ROI. The GBP optimization and review system did the heavy lifting. We just show up for consults.',
+    anonymized: true,
+  },
 ]
