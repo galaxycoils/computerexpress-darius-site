@@ -4,7 +4,7 @@ import AnimatedSection from '../hooks/useInView'
 import { retainerTiers, partnerFAQ, partnerCaseStudies } from '../data/siteData'
 import { getPartnerPageSchema } from '../data/schema'
 
-const localBusinessJsonLd = getPartnerPageSchema()
+const localBusinessJsonLd = getPartnerPageSchema({ retainerTiers })
 
 const breadcrumbJsonLd = {
   '@context': 'https://schema.org',
