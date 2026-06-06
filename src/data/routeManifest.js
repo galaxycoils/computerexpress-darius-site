@@ -28,6 +28,7 @@ export const baseRoutes = [
   '/case-studies/legal-case-study',
   '/what-to-expect',
   '/free-audit',
+  '/partner',
   '/privacy',
   '/terms',
 ]
