@@ -570,6 +570,39 @@ Primary Challenge: ${selectedPain}
                   </div>
                 </div>
 
+                {/* Deep-Dive Audit Upsell */}
+                <div className="grader-upsell-card" style={{
+                  background: 'linear-gradient(135deg, rgba(99, 102, 241, 0.15), rgba(139, 92, 246, 0.1))',
+                  border: '1px solid rgba(99, 102, 241, 0.3)',
+                  borderRadius: '1rem',
+                  padding: '1.5rem',
+                  marginBottom: '1.5rem',
+                  textAlign: 'center'
+                }}>
+                  <h3 style={{ fontFamily: 'var(--font-display)', fontSize: '1.25rem', color: 'var(--text-bright)', marginBottom: '0.5rem' }}>
+                    Want the Full 42-Point Technical Audit?
+                  </h3>
+                  <p style={{ color: 'var(--muted)', fontSize: '0.9rem', marginBottom: '1rem', maxWidth: '500px', margin: '0 auto 1rem' }}>
+                    The grader is an estimate. The deep-dive verifies every signal: crawl, schema, Maps, citations, content gaps, competitor keywords — plus a 90-day roadmap delivered as a Notion doc + Loom walkthrough.
+                  </p>
+                  <ul style={{ textAlign: 'left', maxWidth: '400px', margin: '0 auto 1.5rem', display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '0.5rem 1.5rem', fontSize: '0.85rem', color: 'var(--muted)' }}>
+                    <li>✓ 42 technical + local SEO checkpoints</li>
+                    <li>✓ Competitor keyword gap map</li>
+                    <li>✓ GBP optimization scorecard</li>
+                    <li>✓ Service-area coverage audit</li>
+                    <li>✓ Prioritized 90-day roadmap</li>
+                    <li>✓ Notion doc + Loom walkthrough</li>
+                  </ul>
+                  <Link
+                    to="/contact?audit=deep-dive"
+                    className="button button-primary"
+                    style={{ display: 'inline-block' }}
+                    onClick={() => trackEvent('free_audit_upsell_click', { form_id: 'website_grader' })}
+                  >
+                    Upgrade to Deep-Dive Audit — $497
+                  </Link>
+                </div>
+
                 <div className="grader-step-card" style={{ padding: '2.5rem' }}>
                   <AuditMedia title="Audit walkthrough preview" description="Watch a short sample of the mobile, Maps, and conversion checks used before the manual walkthrough." />
 
