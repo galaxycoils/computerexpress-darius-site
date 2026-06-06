@@ -231,6 +231,7 @@ export default function Layout() {
           <nav className={`nav-links ${menuOpen ? 'open' : ''}`} aria-label="Primary">
             <NavLink to="/services" onClick={closeMenu}>Services</NavLink>
             <NavLink to="/blog" onClick={closeMenu}>Blog</NavLink>
+            <NavLink to="/partner" onClick={closeMenu}>Partner</NavLink>
             <NavLink to="/what-to-expect" onClick={closeMenu}>What to Expect</NavLink>
             <NavLink to="/about" onClick={closeMenu}>About</NavLink>
             <a href={`tel:${siteConfig.phone}`} className="nav-phone" aria-label={`Call ${siteConfig.phoneDisplay}`} style={{color:'var(--primary)',fontSize:'0.85rem',fontWeight:600,textDecoration:'none',display:'flex',alignItems:'center',gap:'0.25rem'}}>
@@ -271,6 +272,7 @@ export default function Layout() {
               <nav className="footer-col-links" aria-label="Company links">
                 <Link to="/about">About</Link>
                 <Link to="/what-to-expect">What to Expect</Link>
+                <Link to="/partner">Partner</Link>
                 <Link to="/contact">Contact</Link>
                 <Link to="/free-audit">Free Audit</Link>
               </nav>
