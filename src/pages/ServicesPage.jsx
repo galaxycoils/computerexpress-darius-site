@@ -2,7 +2,7 @@ import Seo, { BASE_URL } from '../components/Seo'
 import { Link } from 'react-router-dom'
 import { useState } from 'react'
 import AnimatedSection from '../hooks/useInView'
-import { packages, guarantee } from '../data/siteData'
+import { packages, guarantee, retainerTiers } from '../data/siteData'
 import { getLocalBusinessSchema } from '../data/schema'
 
 const servicesPageJsonLd = {
@@ -18,16 +18,36 @@ const servicesPageJsonLd = {
     { '@type': 'State', name: 'Ontario' },
     { '@type': 'Country', name: 'Canada' },
   ],
-  hasOfferCatalog: {
-    '@type': 'OfferCatalog',
-    name: 'St. Catharines Digital Services',
-    itemListElement: packages.map(p => ({
-      '@type': 'Offer',
-      name: p.name,
-      price: p.price,
-      itemOffered: { '@type': 'Service', name: p.name, description: p.ideal }
-    }))
-  }
+  hasOfferCatalog: [
+    {
+      '@type': 'OfferCatalog',
+      name: 'One-Time Website Projects',
+      itemListElement: packages.map(p => ({
+        '@type': 'Offer',
+        name: p.name,
+        price: p.price.replace(/[$,]/g, ''),
+        priceCurrency: 'USD',
+        itemOffered: { '@type': 'Service', name: p.name, description: p.ideal }
+      }))
+    },
+    {
+      '@type': 'OfferCatalog',
+      name: 'Local Authority Partner (Monthly Retainers)',
+      itemListElement: retainerTiers.map(t => ({
+        '@type': 'Offer',
+        name: t.name,
+        price: t.price.replace(/[$,]/g, ''),
+        priceCurrency: 'USD',
+        priceSpecification: {
+          '@type': 'UnitPriceSpecification',
+          price: t.price.replace(/[$,]/g, ''),
+          priceCurrency: 'USD',
+          billingDuration: 'P1M'
+        },
+        itemOffered: { '@type': 'Service', name: t.name, description: t.ideal }
+      }))
+    }
+  ]
 }
 
 const localBusinessJsonLd = getLocalBusinessSchema()
@@ -186,17 +206,25 @@ export default function ServicesPage() {
         </div>
       </section>
 
-      {/* Pricing */}
+      {/* Pricing - Dual Track */}
       <section className="section" aria-label="Pricing packages">
         <div className="container">
           <AnimatedSection>
             <div className="section-heading">
               <div className="glow-line" aria-hidden="true"></div>
-              <h2>Transparent pricing</h2>
-              <p>No bloated retainers. No vague deliverables. One clear price, one clear scope.</p>
+              <h2>Two Ways to Work Together</h2>
+              <p>One-time website projects or ongoing local authority partnership. Choose what fits.</p>
             </div>
           </AnimatedSection>
-          <div className="card-grid three-up page-block stagger-children" style={{ alignItems: 'start' }}>
+
+          {/* Track 1: One-Time Projects */}
+          <div className="card-grid three-up page-block stagger-children" style={{ alignItems: 'start', marginBottom: '4rem' }}>
+            <AnimatedSection>
+              <div style={{ gridColumn: '1 / -1', textAlign: 'center', marginBottom: '1.5rem' }}>
+                <h3 style={{ fontSize: '1.5rem', marginBottom: '0.5rem' }}>One-Time Website Projects</h3>
+                <p style={{ color: 'var(--muted)' }}>Fixed scope, fixed price. Launch fast, own forever.</p>
+              </div>
+            </AnimatedSection>
             {packages.map((p, i) => (
               <AnimatedSection key={p.name} delay={i * 100}>
                 <article className={`pricing-card ${p.featured ? 'featured' : ''}`} style={{ position: 'relative' }}>
@@ -224,6 +252,41 @@ export default function ServicesPage() {
                   <div style={{ marginTop: '1rem', paddingTop: '0.75rem', borderTop: '1px solid var(--panel-border)', fontSize: '0.8rem', color: 'var(--muted)' }}>
                     <strong style={{ color: 'var(--success)' }}>✓</strong> {guarantee.title}
                   </div>
+                </article>
+              </AnimatedSection>
+            ))}
+          </div>
+
+          {/* Track 2: Monthly Retainers */}
+          <div className="card-grid three-up page-block stagger-children" style={{ alignItems: 'stretch' }}>
+            <AnimatedSection>
+              <div style={{ gridColumn: '1 / -1', textAlign: 'center', marginBottom: '1.5rem' }}>
+                <h3 style={{ fontSize: '1.5rem', marginBottom: '0.5rem' }}>Local Authority Partner (Monthly)</h3>
+                <p style={{ color: 'var(--muted)' }}>Done-for-you SEO, content, and GBP. Month-to-month after 3 months.</p>
+              </div>
+            </AnimatedSection>
+            {retainerTiers.map((t, i) => (
+              <AnimatedSection key={t.id} delay={i * 100}>
+                <article className={`pricing-card ${t.featured ? 'featured' : ''}`} style={{ position: 'relative', display: 'flex', flexDirection: 'column' }}>
+                  {t.featured && (
+                    <div style={{ textAlign: 'center', marginBottom: '0.5rem' }}>
+                      <span className="portfolio-tag" style={{ fontSize: '0.65rem', background: 'var(--primary)', color: 'var(--bg)' }}>MOST POPULAR</span>
+                    </div>
+                  )}
+                  <div className="pricing-top">
+                    <h3>{t.name}</h3>
+                    <div style={{ textAlign: 'right' }}>
+                      <span style={{ fontSize: '0.7rem', color: 'var(--muted-lite)', display: 'block' }}>{t.period}</span>
+                      <strong style={{ fontSize: '2rem' }}>{t.price}</strong>
+                    </div>
+                  </div>
+                  <p className="pricing-ideal">{t.ideal}</p>
+                  <ul style={{ flex: 1, margin: '1rem 0' }}>
+                    {t.features.map(f => <li key={f}>{f}</li>)}
+                  </ul>
+                  <Link to="/partner" className={`button ${t.featured ? 'button-primary' : 'button-secondary'}`} style={{ marginTop: 'auto', width: '100%', textAlign: 'center' }}>
+                    {t.ctaText}
+                  </Link>
                 </article>
               </AnimatedSection>
             ))}
