@@ -275,7 +275,7 @@ export default function HomePage() {
               St. Catharines Digital builds high-performance websites with technical SEO, Google Business Profile alignment, and service-area pages for businesses across St. Catharines and Niagara.
             </p>
             <div className="hero-actions">
-              <Link to="/free-audit" className="button button-primary">Get a Free SEO Audit</Link>
+              <Link to="/free-audit" className="button button-primary">Get Your Free Website Grade</Link>
               <a href={`tel:${siteConfig.phone}`} className="button button-secondary">Call {siteConfig.phoneDisplay}</a>
               <a
                 href={siteConfig.calendlyUrl}
