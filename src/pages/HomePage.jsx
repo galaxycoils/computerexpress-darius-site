@@ -1,335 +1,356 @@
 import Seo, { BASE_URL } from '../components/Seo'
 import { Link } from 'react-router-dom'
-import { useState, useRef, useEffect } from 'react'
-import AnimatedCounter from '../components/AnimatedCounter'
+import { useState } from 'react'
 import AnimatedSection from '../hooks/useInView'
-import BeforeAfterSlider from '../components/BeforeAfterSlider'
-import AnimatedHeroBg from '../components/AnimatedHeroBg'
 import {
-  services, packages, steps, testimonials, faqItems,
-  portfolioItems, stats, guarantee
-} from '../data/siteData'
+  planningNotices,
+  getActiveNotices,
+  getUpcomingMeetings,
+} from '../data/planningNotices'
 import { siteConfig } from '../data/siteConfig'
 import { getLocalBusinessSchema } from '../data/schema'
 
-const homePageJsonLd = [
-  getLocalBusinessSchema({
-    hasOfferCatalog: {
-      '@type': 'OfferCatalog',
-      name: 'Services',
-      itemListElement: services.map(s => ({
-        '@type': 'Offer',
-        itemOffered: { '@type': 'Service', name: s.title, description: s.description }
-      }))
-    },
-  }),
-  {
-    '@context': 'https://schema.org',
-    '@type': 'WebSite',
-    name: siteConfig.name,
-    url: BASE_URL,
-    inLanguage: siteConfig.language,
-  },
-  {
-    '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
-    itemListElement: [
-      { '@type': 'ListItem', position: 1, name: 'Home', item: `${BASE_URL}/` },
-      { '@type': 'ListItem', position: 2, name: 'Services', item: `${BASE_URL}/services` },
-      { '@type': 'ListItem', position: 3, name: 'About', item: `${BASE_URL}/about` },
-      { '@type': 'ListItem', position: 4, name: 'Contact', item: `${BASE_URL}/contact` },
-    ]
-  }
-]
+const NEWSLETTER_API = '/api/newsletter'
 
 const serviceImages = [
   '/images/service_website_design.webp',
   '/images/service_technical_seo.webp',
-  '/images/service_gbp_optimization.webp'
+  '/images/service_gbp_optimization.webp',
 ]
 
-function FAQAccordion({ items }) {
-  const [openIndex, setOpenIndex] = useState(0)
-  return (
-    <div className="faq-list">
-      {items.map((item, i) => (
-        <div key={i} className={`faq-item ${openIndex === i ? 'open' : ''}`}>
-          <button
-            className="faq-question"
-            onClick={() => setOpenIndex(openIndex === i ? null : i)}
-            aria-expanded={openIndex === i}
-            aria-controls={`faq-answer-${i}`}
-            id={`faq-question-${i}`}
-          >
-            {item.q}
-            <span className="faq-icon" aria-hidden="true">{openIndex === i ? '×' : '+'}</span>
-          </button>
-          <div
-            className="faq-answer"
-            id={`faq-answer-${i}`}
-            role="region"
-            aria-labelledby={`faq-question-${i}`}
-            hidden={openIndex !== i ? "until-found" : undefined}
-          >
-            <div className="faq-answer-inner">{item.a}</div>
-          </div>
-        </div>
-      ))}
-    </div>
-  )
-}
+function NewsletterForm({ label }) {
+  const [email, setEmail] = useState('')
+  const [status, setStatus] = useState('') // '' | 'loading' | 'success' | 'error'
+  const [message, setMessage] = useState('')
 
-function CustomVideoPlayer() {
-  const videoRef = useRef(null)
-  const [isPlaying, setIsPlaying] = useState(false)
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    const trimmed = email.trim().toLowerCase()
+    if (!trimmed) return
 
-  const togglePlay = () => {
-    if (isPlaying) {
-      videoRef.current.pause()
-    } else {
-      videoRef.current.play().catch(err => console.log('Video playback error:', err))
+    setStatus('loading')
+    setMessage('')
+
+    try {
+      const res = await fetch(NEWSLETTER_API, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: trimmed }),
+      })
+      const result = await res.json()
+
+      if (res.ok) {
+        setStatus('success')
+        setMessage('Subscribed! Check your inbox for the next digest.')
+        setEmail('')
+      } else {
+        setStatus('error')
+        setMessage(result.error || 'Something went wrong. Try again.')
+      }
+    } catch {
+      setStatus('error')
+      setMessage('Network error. Try again.')
     }
-    setIsPlaying(!isPlaying)
+
+    setTimeout(() => {
+      setStatus('')
+      setMessage('')
+    }, 6000)
   }
 
   return (
-    <div className="custom-video-player-card">
-      <div className="video-wrapper">
-        <video 
-          ref={videoRef} 
-          src="/st-catharines-digital-blueprint.mp4" 
-          preload="none"
-          poster="/images/responsive/video-preview-384.webp"
-          controls
-          onPlay={() => setIsPlaying(true)}
-          onPause={() => setIsPlaying(false)}
-        >
-          <track
-            kind="captions"
-            src="/captions/st-catharines-digital-blueprint.vtt"
-            srcLang="en"
-            label="English"
-            default
-          />
-        </video>
-      </div>
-      <div style={{ marginTop: '0.5rem' }}>
-        <h3 style={{ fontSize: '1.15rem', color: 'var(--text-bright)', marginBottom: '0.25rem' }}>
-          St. Catharines Digital Conversion Blueprint
-        </h3>
-        <p style={{ fontSize: '0.85rem', color: 'var(--muted)', lineHeight: '1.5' }}>
-          Watch our screen share detailing the website setup, local SEO optimizations, and specific performance audit details.
+    <form
+      onSubmit={handleSubmit}
+      aria-label={`${label} signup`}
+      className="planning-alert-form"
+    >
+      <label className="sr-only" htmlFor="alert-email">
+        Email address
+      </label>
+      <input
+        id="alert-email"
+        type="email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        placeholder="you@business.ca"
+        autoComplete="email"
+        aria-label="Email address"
+        required
+        className="alert-email-input"
+      />
+      <button
+        type="submit"
+        disabled={status === 'loading'}
+        aria-live="polite"
+        className="button button-primary alert-submit-btn"
+      >
+        {status === 'loading' ? 'Sending…' : 'Get the free Planning Alert'}
+      </button>
+      {status === 'success' && (
+        <p className="form-status form-status-success" role="status">
+          {message}
         </p>
-      </div>
-    </div>
+      )}
+      {status === 'error' && (
+        <p className="form-status form-status-error" role="alert">
+          {message}
+        </p>
+      )}
+    </form>
   )
 }
 
-function CustomAudioPlayer() {
-  const audioRef = useRef(null)
-  const [isPlaying, setIsPlaying] = useState(false)
-  const [currentTime, setCurrentTime] = useState(0)
-  const [duration, setDuration] = useState(0)
-  const [volume, setVolume] = useState(0.8)
-
-  useEffect(() => {
-    const audio = audioRef.current
-    if (!audio) return
-
-    const updateTime = () => setCurrentTime(audio.currentTime)
-    const updateDuration = () => setDuration(audio.duration || 0)
-    const onEnded = () => setIsPlaying(false)
-
-    audio.addEventListener('timeupdate', updateTime)
-    audio.addEventListener('loadedmetadata', updateDuration)
-    audio.addEventListener('ended', onEnded)
-
-    return () => {
-      audio.removeEventListener('timeupdate', updateTime)
-      audio.removeEventListener('loadedmetadata', updateDuration)
-      audio.removeEventListener('ended', onEnded)
-    }
-  }, [])
-
-  const togglePlay = () => {
-    if (isPlaying) {
-      audioRef.current.pause()
-    } else {
-      audioRef.current.play().catch(err => console.log('Audio playback error:', err))
-    }
-    setIsPlaying(!isPlaying)
-  }
-
-  const handleTimelineClick = (e) => {
-    const timeline = e.currentTarget
-    const rect = timeline.getBoundingClientRect()
-    const clickX = e.clientX - rect.left
-    const percentage = clickX / rect.width
-    const newTime = percentage * duration
-    audioRef.current.currentTime = newTime
-    setCurrentTime(newTime)
-  }
-
-  const handleVolumeChange = (e) => {
-    const newVolume = parseFloat(e.target.value)
-    audioRef.current.volume = newVolume
-    setVolume(newVolume)
-  }
-
-  const formatTime = (time) => {
-    const mins = Math.floor(time / 60)
-    const secs = Math.floor(time % 60)
-    return `${mins}:${secs < 10 ? '0' : ''}${secs}`
-  }
-
-  const progressPercent = duration > 0 ? (currentTime / duration) * 100 : 0
+function ActiveNoticeCard({ notice }) {
+  const meetingLabel =
+    notice.meetingDate && notice.status !== 'Active'
+      ? new Date(notice.meetingDate).toLocaleDateString('en-CA', {
+          year: 'numeric',
+          month: 'short',
+          day: 'numeric',
+        })
+      : notice.publishedDate
+        ? new Date(notice.publishedDate).toLocaleDateString('en-CA', {
+            year: 'numeric',
+            month: 'short',
+          })
+        : ''
 
   return (
-    <div className="custom-audio-player-card">
-      <audio ref={audioRef} src="/audio-overview.m4a" preload="none" />
-      <div className="audio-header">
-        <div className="audio-icon-wrapper">
-          {isPlaying ? (
-            <div className="waveform" style={{ display: 'flex', gap: '2px', alignItems: 'flex-end', height: '20px' }}>
-              <div className="bar" style={{ width: '3px', background: 'var(--accent)', animation: 'bounce 1s infinite alternate', height: '100%' }}></div>
-              <div className="bar" style={{ width: '3px', background: 'var(--accent)', animation: 'bounce 0.8s infinite alternate', height: '80%' }}></div>
-              <div className="bar" style={{ width: '3px', background: 'var(--accent)', animation: 'bounce 1.2s infinite alternate', height: '60%' }}></div>
-              <div className="bar" style={{ width: '3px', background: 'var(--accent)', animation: 'bounce 0.9s infinite alternate', height: '90%' }}></div>
-            </div>
-          ) : (
-            <span>🎙️</span>
-          )}
-        </div>
-        <div className="audio-title-info">
-          <h3>St. Catharines Digital Audio Overview</h3>
-          <p>Listen to our briefing on the conversion blueprint</p>
-        </div>
-      </div>
+    <article className="active-notice-card">
+      <span className="notice-municipality">{notice.municipality}</span>
+      <span className="notice-type">{notice.type}</span>
+      <h3 className="notice-title">{notice.title}</h3>
+      {notice.description && (
+        <p className="notice-description">{notice.description}</p>
+      )}
+      {notice.meetingDate && notice.status !== 'Active' && (
+        <span className="notice-meeting">
+          Public meeting {meetingLabel}
+        </span>
+      )}
+      {notice.sourceUrl && (
+        <a
+          href={notice.sourceUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="notice-source"
+        >
+          Source {notice.sourceUrl.replace(/https?:\/\//, '')}
+          <span aria-hidden="true">↗</span>
+        </a>
+      )}
+    </article>
+  )
+}
 
-      <div className="audio-player-controls">
-        <div className="audio-timeline-container">
-          <div className="audio-timeline" onClick={handleTimelineClick}>
-            <div className="audio-progress" style={{ width: `${progressPercent}%` }}></div>
-          </div>
-          <div className="audio-time-stamps">
-            <span>{formatTime(currentTime)}</span>
-            <span>{formatTime(duration || 600)}</span>
-          </div>
-        </div>
-
-        <div className="audio-buttons-row">
-          <button className="play-pause-btn" onClick={togglePlay} aria-label={isPlaying ? 'Pause' : 'Play'}>
-            {isPlaying ? (
-              <svg viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
-            ) : (
-              <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-            )}
-          </button>
-          
-          <div className="volume-control">
-            <span style={{ fontSize: '0.85rem' }} aria-hidden="true">🔊</span>
-            <input 
-              type="range" 
-              className="volume-slider" 
-              min="0" 
-              max="1" 
-              step="0.05" 
-              value={volume} 
-              onChange={handleVolumeChange}
-              aria-label="Volume"
-            />
-          </div>
-        </div>
-      </div>
-    </div>
+function HeroBgOrbs() {
+  return (
+    <>
+      <div className="bg-orb bg-orb-1" aria-hidden="true" />
+      <div className="bg-orb bg-orb-2" aria-hidden="true" />
+      <div className="bg-orb bg-orb-3" aria-hidden="true" />
+    </>
   )
 }
 
 export default function HomePage() {
-  const [hoveredIndex, setHoveredIndex] = useState(null)
-  const [revealPos, setRevealPos] = useState({ x: 0, y: 0 })
-
-  const handleMouseMove = (e) => {
-    setRevealPos({ x: e.clientX, y: e.clientY })
+  const activeNotices = getActiveNotices()
+  const upcomingMeetings = getUpcomingMeetings()
+  const featuredIds = new Set()
+  const featuredNotices = []
+  for (const n of activeNotices) {
+    if (!featuredIds.has(n.id)) {
+      featuredIds.add(n.id)
+      featuredNotices.push(n)
+    }
+    if (featuredNotices.length >= 3) break
   }
+  for (const n of upcomingMeetings) {
+    if (!featuredIds.has(n.id)) {
+      featuredIds.add(n.id)
+      featuredNotices.push(n)
+    }
+    if (featuredNotices.length >= 4) break
+  }
+
+  const homePageJsonLd = [
+    getLocalBusinessSchema({
+      hasOfferCatalog: {
+        '@type': 'OfferCatalog',
+        name: 'Services',
+        itemListElement: [
+          {
+            '@type': 'Offer',
+            itemOffered: {
+              '@type': 'Service',
+              name: 'High-Performance Websites',
+              description:
+                'Custom websites built to load fast, earn trust instantly, and guide visitors toward a clear next step.',
+            },
+          },
+          {
+            '@type': 'Offer',
+            itemOffered: {
+              '@type': 'Service',
+              name: 'Technical SEO',
+              description:
+                'Search-ready architecture that helps Google understand, crawl, and rank your site.',
+            },
+          },
+          {
+            '@type': 'Offer',
+            itemOffered: {
+              '@type': 'Service',
+              name: 'Google Business Profile',
+              description:
+                'Strengthen Google Maps and local search visibility through GBP optimization, review strategy, and weekly posts.',
+            },
+          },
+        ],
+      },
+    }),
+    {
+      '@context': 'https://schema.org',
+      '@type': 'WebSite',
+      name: siteConfig.name,
+      url: BASE_URL,
+      inLanguage: siteConfig.language,
+      potentialAction: {
+        '@type': 'SubscribeAction',
+        target: {
+          '@type': 'EntryPoint',
+          urlTemplate: `${BASE_URL}/`,
+          actionPlatform: [
+            { '@type': 'WebPlatform', URI: 'https://schema.org' },
+          ],
+        },
+      },
+    },
+    {
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: `${BASE_URL}/` },
+        {
+          '@type': 'ListItem',
+          position: 2,
+          name: 'Planning Tracker',
+          item: `${BASE_URL}/planning-tracker`,
+        },
+        {
+          '@type': 'ListItem',
+          position: 3,
+          name: 'Services',
+          item: `${BASE_URL}/services`,
+        },
+        { '@type': 'ListItem', position: 4, name: 'Contact', item: `${BASE_URL}/contact` },
+      ],
+    },
+  ]
 
   return (
     <>
       <Seo jsonLd={homePageJsonLd} />
+      <HeroBgOrbs />
 
-      {/* Background orbs */}
-      <div className="bg-orb bg-orb-1" aria-hidden="true"></div>
-      <div className="bg-orb bg-orb-2" aria-hidden="true"></div>
-      <div className="bg-orb bg-orb-3" aria-hidden="true"></div>
-
-      {/* ===== HERO — SHARP & ABOVE FOLD ===== */}
-      <section className="section-first hero" aria-label="Hero" style={{ position: 'relative', overflow: 'hidden' }}>
-        <AnimatedHeroBg />
+      {/* ===== HERO — PLANNING ALERT ===== */}
+      <section
+        className="section-first hero"
+        aria-label="Planning Alert — free municipal planning digest"
+        style={{ position: 'relative', overflow: 'hidden' }}
+      >
         <div className="container hero-grid">
-          <div>
-            <div className="eyebrow">Local Authority Lab for Niagara service businesses</div>
+          <div className="hero-copy-column">
+            <div className="eyebrow eyebrow-alert">
+              Free weekly digest · Official municipal sources only
+            </div>
             <h1>
-              Premium websites engineered to <span className="gradient-text">earn trust</span>, support local search, and turn visits into audits.
+              Official municipal planning notices,{' '}
+              <span className="gradient-text">tracked and delivered.</span>
             </h1>
             <p className="hero-copy">
-              St. Catharines Digital builds high-performance websites with technical SEO, Google Business Profile alignment, and service-area pages for businesses across St. Catharines and Niagara.
+              St. Catharines Digital scans St. Catharines, Welland, Thorold, and
+              Niagara Region notices every week — OP amendments, minor variances,
+              zoning by-laws, road closures, public meetings — and puts the active
+              ones in one free digest so you stop chasing CivicWeb and region
+              notice boards yourself.
             </p>
+
             <div className="hero-actions">
-              <Link to="/free-audit" className="button button-primary">Get Your Free Website Grade</Link>
-              <a href={`tel:${siteConfig.phone}`} className="button button-secondary">Call {siteConfig.phoneDisplay}</a>
-              <a
-                href={siteConfig.calendlyUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="button button-ghost"
-              >
-                Book Call
-              </a>
-            </div>
-            
-            <p className="hero-micro-copy" style={{ fontSize: '0.8rem', color: 'var(--muted)', marginTop: '0.75rem', marginLeft: '0.25rem' }}>
-              No obligation. We review site speed, local search signals, service-area coverage, and conversion flow.
-            </p>
-            
-            <div className="hero-trust-badges">
-              <Link to="/services/technical-seo" className="hero-trust-badge" style={{ textDecoration: 'none' }}>
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-                  <path d="m9 12 2 2 4-4"/>
-                </svg>
-                Technical SEO audit
-              </Link>
-              <Link to="/service-areas/web-design/st-catharines" className="hero-trust-badge" style={{ textDecoration: 'none' }}>
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--secondary)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                  <polyline points="16 18 22 12 16 6"/>
-                  <polyline points="8 6 2 12 8 18"/>
-                </svg>
-                Niagara service pages
-              </Link>
-              <Link to="/free-audit" className="hero-trust-badge" style={{ textDecoration: 'none' }}>
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--success)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                  <circle cx="12" cy="12" r="10"/>
-                  <polyline points="12 6 12 12 16 14"/>
-                </svg>
-                Conversion review
-              </Link>
+              <NewsletterForm label="Planning Alert" />
             </div>
 
-            <ul className="hero-points">
-              <li><strong>Search-ready.</strong> Clean metadata, crawl paths, schema, and sitemap hygiene.</li>
-              <li><strong>Lead-ready.</strong> Click-to-call, audit forms, and Google Business Profile alignment.</li>
-              <li><strong>Proof-safe.</strong> Credible positioning without fake badges or unverifiable claims.</li>
-            </ul>
+            <p className="hero-micro-copy">
+              No obligation. One email per week while notices are active. Unsubscribe
+              anytime.
+            </p>
+
+            <div className="hero-trust-badges" role="list">
+              <span className="hero-trust-badge" role="listitem">
+                <svg
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="var(--primary)"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                  <path d="m9 12 2 2 4-4" />
+                </svg>
+                Official sources only
+              </span>
+              <span className="hero-trust-badge" role="listitem">
+                <svg
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="var(--secondary)"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  aria-hidden="true"
+                >
+                  <polygon points="1 6 1 22 13 18 13 2 22 6 22 16 13 20 13 2" />
+                  <line x1="23" y1="7" x2="23" y2="16" />
+                  <line x1="1" y1="7" x2="1" y2="16" />
+                </svg>
+                4 municipalities
+              </span>
+              <span className="hero-trust-badge" role="listitem">
+                <svg
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="var(--success)"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  aria-hidden="true"
+                >
+                  <circle cx="12" cy="12" r="10" />
+                  <polyline points="12 6 12 12 16 14" />
+                </svg>
+                {activeNotices.length} active notices this week
+              </span>
+            </div>
           </div>
-          <div className="hero-card hero-diagnostic" aria-label="Local authority diagnostic preview">
+
+          <aside className="hero-card hero-diagnostic" aria-label="Active notices preview">
             <div className="diagnostic-topline">
-              <span>Live Audit Preview</span>
+              <span>Live Notice Preview</span>
               <strong>St. Catharines + Niagara</strong>
             </div>
             <div className="diagnostic-score">
-              <span>Authority Readiness</span>
-              <strong>42 checks</strong>
+              <span>Active this week</span>
+              <strong>{activeNotices.length} notices</strong>
             </div>
+
             <div className="diagnostic-map" aria-hidden="true">
               <span>St. Catharines</span>
               <span>Niagara Falls</span>
@@ -338,14 +359,24 @@ export default function HomePage() {
               <span>Thorold</span>
               <span>Fort Erie</span>
             </div>
-            <div className="diagnostic-list">
-              <div><span></span> Core Web Vitals review</div>
-              <div><span></span> Service-area content gaps</div>
-              <div><span></span> GBP + local intent alignment</div>
-              <div><span></span> Conversion path friction</div>
+
+            <div className="active-notice-preview" aria-label="Three recent active notices">
+              {featuredNotices.length === 0 ? (
+                <p className="notice-empty">No active notices right now. Check back next week.</p>
+              ) : (
+                featuredNotices.map((n) => (
+                  <ActiveNoticeCard key={n.id} notice={n} />
+                ))
+              )}
             </div>
-            <Link to="/free-audit" className="button button-primary diagnostic-cta">Start audit</Link>
-          </div>
+
+            <Link
+              to="/planning-tracker"
+              className="button button-primary diagnostic-cta"
+            >
+              Browse active notices
+            </Link>
+          </aside>
         </div>
       </section>
 
@@ -356,15 +387,15 @@ export default function HomePage() {
             <div className="trust-bar">
               <div className="trust-item">
                 <span className="trust-icon" aria-hidden="true">✓</span>
-                <span>30-day satisfaction guarantee</span>
+                <span>Official municipal sources only</span>
               </div>
               <div className="trust-item">
                 <span className="trust-icon" aria-hidden="true">✓</span>
-                <span>No bloated retainers</span>
+                <span>Weekly digest, free</span>
               </div>
               <div className="trust-item">
                 <span className="trust-icon" aria-hidden="true">✓</span>
-                <span>AI-powered, human-directed</span>
+                <span>Sponsor model, editorial firewall</span>
               </div>
               <div className="trust-item">
                 <span className="trust-icon" aria-hidden="true">✓</span>
@@ -380,170 +411,255 @@ export default function HomePage() {
         <div className="container">
           <AnimatedSection>
             <div className="stats-bar">
-              {stats.map(s => (
-                <AnimatedCounter key={s.label} value={s.value} label={s.label} />
-              ))}
+              <AnimatedSection>
+                <div className="stat-item">
+                  <div className="stat-value">{activeNotices.length}</div>
+                  <div className="stat-label">Active notices tracked</div>
+                </div>
+              </AnimatedSection>
+              <AnimatedSection>
+                <div className="stat-item">
+                  <div className="stat-value">
+                    {upcomingMeetings.filter((m) => m.meetingDate).length}
+                  </div>
+                  <div className="stat-label">Upcoming public meetings</div>
+                </div>
+              </AnimatedSection>
+              <AnimatedSection>
+                <div className="stat-item">
+                  <div className="stat-value">4</div>
+                  <div className="stat-label">Municipalities covered</div>
+                </div>
+              </AnimatedSection>
+              <AnimatedSection>
+                <div className="stat-item">
+                  <div className="stat-value">0</div>
+                  <div className="stat-label">Paywalls behind official notices</div>
+                </div>
+              </AnimatedSection>
             </div>
           </AnimatedSection>
         </div>
       </section>
 
-      {/* ===== THE AI-FIRST ADVANTAGE ===== */}
-      <section className="section section-alt" aria-label="The AI-First Advantage">
+      {/* ===== WHAT PLANNING ALERT IS ===== */}
+      <section
+        className="section section-alt"
+        aria-label="What the Planning Alert is"
+      >
         <div className="container">
           <AnimatedSection>
             <div className="section-heading">
-              <div className="glow-line" aria-hidden="true"></div>
-              <h2>The AI-First Advantage</h2>
-              <p>We use artificial intelligence to accelerate every phase of your project — from research to deployment — while a human expert directs every strategic decision.</p>
+              <div className="glow-line" aria-hidden="true" />
+              <h2>
+                One free digest. Every active notice. No CivicWeb rabbit holes.
+              </h2>
+              <p>
+                Municipal planning notices are public — but they are scattered across
+                city sites, region notice boards, and meeting calendars that change
+                without warning. The Planning Alert pulls the active ones into a
+                single email every week, with direct links back to the official
+                source.
+              </p>
             </div>
           </AnimatedSection>
+
           <AnimatedSection>
             <div className="card-grid three-up page-block stagger-children">
               <article className="info-card" style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
-                <div style={{ fontSize: '2rem', marginBottom: '1rem' }} aria-hidden="true">⚡</div>
-                <h3 style={{ fontSize: '1.1rem', marginBottom: '0.5rem', color: 'var(--text-bright)' }}>Speed to Market</h3>
-                <p style={{ fontSize: '0.9rem', color: 'var(--muted)', flexGrow: 1, lineHeight: '1.6' }}>AI-assisted code generation, automated asset optimization, and parallel workflow pipelines compress project timelines from weeks to days. Your competitors are still waiting on their agency — you are already live.</p>
+                <div style={{ fontSize: '2rem', marginBottom: '1rem' }} aria-hidden="true">
+                  📄
+                </div>
+                <h3 style={{ fontSize: '1.1rem', marginBottom: '0.5rem', color: 'var(--text-bright)' }}>
+                  What we track
+                </h3>
+                <p style={{ fontSize: '0.9rem', color: 'var(--muted)', flexGrow: 1, lineHeight: '1.6' }}>
+                  Official Plan amendments, minor variances, zoning by-law
+                  amendments, consent applications, community improvement plans,
+                  draft plans of subdivision, road closures and lane restrictions,
+                  public information centres, and infrastructure notices — from
+                  St. Catharines, Welland, Thorold, and Niagara Region.
+                </p>
               </article>
               <article className="info-card" style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
-                <div style={{ fontSize: '2rem', marginBottom: '1rem' }} aria-hidden="true">💯</div>
-                <h3 style={{ fontSize: '1.1rem', marginBottom: '0.5rem', color: 'var(--text-bright)' }}>90+ PageSpeed Target</h3>
-                <p style={{ fontSize: '0.9rem', color: 'var(--muted)', flexGrow: 1, lineHeight: '1.6' }}>Hand-crafted code with zero WordPress bloat. Every site ships with optimized images, minimal JavaScript bundles, and edge-cached static delivery. We target excellent speed and verify it before launch.</p>
+                <div style={{ fontSize: '2rem', marginBottom: '1rem' }} aria-hidden="true">
+                  🗓
+                </div>
+                <h3 style={{ fontSize: '1.1rem', marginBottom: '0.5rem', color: 'var(--text-bright)' }}>
+                  How it arrives
+                </h3>
+                <p style={{ fontSize: '0.9rem', color: 'var(--muted)', flexGrow: 1, lineHeight: '1.6' }}>
+                  One email per week while notices are active. Each digest lists the
+                  notice title, municipality, type, meeting date if scheduled, and a
+                  direct link to the official source. No filler. No sponsored content
+                  disguised as a notice.
+                </p>
               </article>
               <article className="info-card" style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
-                <div style={{ fontSize: '2rem', marginBottom: '1rem' }} aria-hidden="true">🤖</div>
-                <h3 style={{ fontSize: '1.1rem', marginBottom: '0.5rem', color: 'var(--text-bright)' }}>Policy-Safe Schema</h3>
-                <p style={{ fontSize: '0.9rem', color: 'var(--muted)', flexGrow: 1, lineHeight: '1.6' }}>We add JSON-LD only where the page content supports it, so search engines get useful context without fake reviews, unsupported FAQ markup, or risky claims.</p>
+                <div style={{ fontSize: '2rem', marginBottom: '1rem' }} aria-hidden="true">
+                  🔒
+                </div>
+                <h3 style={{ fontSize: '1.1rem', marginBottom: '0.5rem', color: 'var(--text-bright)' }}>
+                  How it stays independent
+                </h3>
+                <p style={{ fontSize: '0.9rem', color: 'var(--muted)', flexGrow: 1, lineHeight: '1.6' }}>
+                  Sponsors support the digest, but they do not choose what gets
+                  tracked, how notices are described, or which sources are cited.
+                  Editorial decisions are independent. If a sponsor wants a notice
+                  removed, the answer is no — and the sponsorship lapses.
+                </p>
               </article>
             </div>
           </AnimatedSection>
         </div>
       </section>
 
-      {/* ===== INSIDE THE CONVERSION ENGINE ===== */}
-      <section className="section" id="media-overview" aria-label="Inside the Conversion Engine" style={{ position: 'relative' }}>
+      {/* ===== LIVE NOTICES — PROOF OF INVENTORY ===== */}
+      <section
+        className="section"
+        id="live-notices"
+        aria-label="Active notices this week"
+      >
         <div className="container">
           <AnimatedSection>
             <div className="section-heading">
-              <div className="glow-line" aria-hidden="true"></div>
-              <h2>Inside the Conversion Blueprint</h2>
-              <p>Explore the design strategies, technical SEO audits, and optimization blueprints we use to double local lead generation.</p>
+              <div className="glow-line" aria-hidden="true" />
+              <h2>Active notices right now</h2>
+              <p>
+                {activeNotices.length} notices are active across the four
+                municipalities this week. Here is a sample — the full list, filters,
+                and meeting calendar live on the Planning Tracker.
+              </p>
             </div>
           </AnimatedSection>
-          
-          <AnimatedSection>
-            <div className="media-grid page-block">
-              <CustomVideoPlayer />
-              <CustomAudioPlayer />
-            </div>
-          </AnimatedSection>
-        </div>
-      </section>
 
-      {/* ===== SERVICES ===== */}
-      <section className="section section-alt" id="services" aria-label="Services">
-        <div className="container">
-          <AnimatedSection>
-            <div className="section-heading">
-              <div className="glow-line" aria-hidden="true"></div>
-              <h2>Built to help local businesses look sharper and convert faster</h2>
-              <p>Every engagement is designed to improve clarity, credibility, search visibility, and the path from visit to inquiry.</p>
-            </div>
-          </AnimatedSection>
-          
-          <div className="page-block">
-            <div 
-              className="exhibition-list"
-              onMouseMove={handleMouseMove}
+          {activeNotices.length === 0 ? (
+            <AnimatedSection>
+              <div className="notice-empty-state">
+                <p>No active notices this week.</p>
+                <p className="muted">
+                  Notices are added as municipalities publish them. Check back next
+                  week, or browse the full archive on the Planning Tracker.
+                </p>
+                <Link to="/planning-tracker" className="button button-primary">
+                  Open the Planning Tracker
+                </Link>
+              </div>
+            </AnimatedSection>
+          ) : (
+            <AnimatedSection>
+              <div className="active-notices-grid page-block">
+                {activeNotices.slice(0, 6).map((notice) => (
+                  <ActiveNoticeCard key={notice.id} notice={notice} />
+                ))}
+              </div>
+            </AnimatedSection>
+          )}
+
+          <AnimatedSection style={{ marginTop: '3rem', textAlign: 'center' }}>
+            <Link
+              to="/planning-tracker"
+              className="button button-secondary"
             >
-              {services.map((s, i) => (
+              Browse all active notices on the Planning Tracker
+            </Link>
+            <p className="muted" style={{ marginTop: '0.5rem', fontSize: '0.85rem' }}>
+              St. Catharines, Welland, Thorold, Niagara Region — with filters by
+              municipality, category, and status.
+            </p>
+          </AnimatedSection>
+        </div>
+      </section>
+
+      {/* ===== SERVICES — SECONDARY, COMPACT ===== */}
+      <section
+        className="section section-alt"
+        id="services"
+        aria-label="Services"
+      >
+        <div className="container">
+          <AnimatedSection>
+            <div className="section-heading">
+              <div className="glow-line" aria-hidden="true" />
+              <h2>
+                The same discipline, applied to your site and local presence
+              </h2>
+              <p>
+                We build the websites, technical SEO, and Google Business Profile
+                work that make service businesses visible — the same source-first,
+                no-fluff approach we use to track official notices.
+              </p>
+            </div>
+          </AnimatedSection>
+
+          <div className="page-block">
+            <div
+              className="exhibition-list"
+            >
+              {[
+                {
+                  title: 'High-Performance Websites',
+                  description:
+                    'Custom websites built to load fast, earn trust instantly, and guide visitors toward a clear next step. Mobile-first, SEO-optimized, and designed to convert.',
+                  bullets: [
+                    'Custom design tailored to your brand and industry',
+                    'Mobile-first responsive',
+                    'Technical SEO foundation with schema markup',
+                    'Conversion-optimized layout with clear CTAs',
+                  ],
+                },
+                {
+                  title: 'Technical SEO',
+                  description:
+                    'Search-ready architecture that helps Google understand, crawl, and rank your site. We fix what is broken and optimize what matters.',
+                  bullets: [
+                    'Site speed optimization (target: 90+ PageSpeed)',
+                    'Schema markup where page-visible content supports it',
+                    'Core Web Vitals improvement (LCP, FID, CLS)',
+                    'XML sitemap, robots.txt, and crawl optimization',
+                  ],
+                },
+                {
+                  title: 'Google Business Profile',
+                  description:
+                    'Strengthen Google Maps and local search visibility. We optimize your GBP so customers can find, trust, and contact you more easily.',
+                  bullets: [
+                    'Complete GBP setup, verification, and optimization',
+                    'Keyword-optimized business description and services',
+                    'Review generation strategy and response system',
+                    'Weekly Google Posts and Q&A optimization',
+                  ],
+                },
+              ].map((s, i) => (
                 <Link
                   key={s.title}
                   to="/services"
                   className="exhibition-item"
-                  onMouseEnter={() => setHoveredIndex(i)}
-                  onMouseLeave={() => setHoveredIndex(null)}
                 >
                   <div className="exhibition-item-left">
                     <span className="exhibition-num">0{i + 1}</span>
                     <h3 className="exhibition-title">{s.title}</h3>
                   </div>
                   <p className="exhibition-desc">{s.description}</p>
+                  <ul className="exhibition-bullets">
+                    {s.bullets.map((b) => (
+                      <li key={b}>{b}</li>
+                    ))}
+                  </ul>
                 </Link>
               ))}
             </div>
-
-            {/* Hover Reveal Floating Container */}
-            <div 
-              className={`hover-reveal ${hoveredIndex !== null ? 'active' : ''}`}
-              style={{
-                left: `${revealPos.x}px`,
-                top: `${revealPos.y}px`
-              }}
-            >
-              <div className="hover-reveal__inner">
-                {hoveredIndex !== null && (
-                  <img 
-                    src={serviceImages[hoveredIndex]} 
-                    alt={services[hoveredIndex].title} 
-                    className="hover-reveal__img" 
-                  />
-                )}
-              </div>
-            </div>
           </div>
-        </div>
-      </section>
 
-      {/* ===== PORTFOLIO ===== */}
-      <section className="section" id="portfolio" aria-label="Portfolio">
-        <div className="container">
-          <AnimatedSection>
-            <div className="section-heading">
-              <div className="glow-line" aria-hidden="true"></div>
-              <h2>Work that speaks for itself</h2>
-              <p>Real projects, real results. Here is a snapshot of what we have built for service businesses.</p>
-            </div>
+          <AnimatedSection style={{ marginTop: '3rem', textAlign: 'center' }}>
+            <Link to="/services" className="button button-secondary">
+              View all services
+            </Link>
+            <p className="muted" style={{ marginTop: '0.5rem', fontSize: '0.85rem' }}>
+              Web design, technical SEO, Google Business Profile, and local SEO for
+              service businesses across St. Catharines and Niagara.
+            </p>
           </AnimatedSection>
-          
-          <AnimatedSection>
-            <div className="portfolio-slider-showcase page-block" style={{ marginBottom: '4rem' }}>
-              <h3 style={{ textAlign: 'center', marginBottom: '1.5rem', color: 'var(--text-bright)' }}>
-                Interactive Redesign Case Study
-              </h3>
-              <BeforeAfterSlider />
-            </div>
-          </AnimatedSection>
-
-          <div className="portfolio-grid page-block stagger-children">
-            {portfolioItems.map((p, i) => (
-              <AnimatedSection key={p.title} delay={i * 150}>
-                <article className="portfolio-card">
-                  <div className="portfolio-thumb" aria-hidden="true">
-                    <div className="portfolio-thumb-content">
-                      <div className="portfolio-thumb-icon">{p.icon}</div>
-                      <div className="portfolio-thumb-label">Case Study</div>
-                    </div>
-                  </div>
-                  <div className="portfolio-info">
-                    <h3>{p.title}</h3>
-                    <p>{p.desc}</p>
-                    <div className="portfolio-tags">
-                      {p.tags.map(t => <span key={t} className="portfolio-tag">{t}</span>)}
-                    </div>
-                    <div className="portfolio-results">
-                      {p.results.map(r => (
-                        <div key={r.label} className="portfolio-result">
-                          <div className="portfolio-result-value">{r.value}</div>
-                          <div className="portfolio-result-label">{r.label}</div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </article>
-              </AnimatedSection>
-            ))}
-          </div>
         </div>
       </section>
 
@@ -552,88 +668,182 @@ export default function HomePage() {
         <div className="container">
           <AnimatedSection>
             <div className="section-heading">
-              <div className="glow-line" aria-hidden="true"></div>
+              <div className="glow-line" aria-hidden="true" />
               <h2>A simple workflow built around clarity, speed, and execution</h2>
-              <p>The goal is not to bury you in process. It is to move from diagnosis to launch with a cleaner strategy.</p>
+              <p>
+                The goal is not to bury you in process. It is to move from diagnosis
+                to launch with a cleaner strategy.
+              </p>
             </div>
           </AnimatedSection>
           <AnimatedSection>
             <div className="page-block">
               <ol className="step-list">
-                {steps.map((s, i) => (
-                  <li key={i}>
-                    <span aria-hidden="true">{i + 1}</span>
-                    <div>
-                      <strong style={{ color: 'var(--text-bright)', display: 'block', marginBottom: '0.25rem' }}>{s.title}</strong>
-                      <p>{s.desc}</p>
-                    </div>
-                  </li>
-                ))}
+                <li className="step-item">
+                  <span aria-hidden="true">1</span>
+                  <div>
+                    <strong style={{ color: 'var(--text-bright)', display: 'block', marginBottom: '0.25rem' }}>
+                      Audit
+                    </strong>
+                    <p>
+                      We analyze your current site, competitors, and local search
+                      landscape to identify the highest-leverage opportunities.
+                    </p>
+                  </div>
+                </li>
+                <li className="step-item">
+                  <span aria-hidden="true">2</span>
+                  <div>
+                    <strong style={{ color: 'var(--text-bright)', display: 'block', marginBottom: '0.25rem' }}>
+                      Strategy
+                    </strong>
+                    <p>
+                      We map out the right information architecture, messaging, and
+                      local SEO approach for your specific market.
+                    </p>
+                  </div>
+                </li>
+                <li className="step-item">
+                  <span aria-hidden="true">3</span>
+                  <div>
+                    <strong style={{ color: 'var(--text-bright)', display: 'block', marginBottom: '0.25rem' }}>
+                      Build
+                    </strong>
+                    <p>
+                      We design and develop your site with speed, SEO, and conversion
+                      best practices baked in from day one.
+                    </p>
+                  </div>
+                </li>
+                <li className="step-item">
+                  <span aria-hidden="true">4</span>
+                  <div>
+                    <strong style={{ color: 'var(--text-bright)', display: 'block', marginBottom: '0.25rem' }}>
+                      Launch
+                    </strong>
+                    <p>
+                      We go live with tracking, search fundamentals, and a clear lead
+                      capture path. Then we optimize based on real data.
+                    </p>
+                  </div>
+                </li>
               </ol>
             </div>
           </AnimatedSection>
         </div>
       </section>
 
-      {/* ===== TESTIMONIALS — ENHANCED ===== */}
+      {/* ===== TESTIMONIALS ===== */}
       <section className="section" id="testimonials" aria-label="Client testimonials">
         <div className="container">
           <AnimatedSection>
             <div className="section-heading">
-              <div className="glow-line" aria-hidden="true"></div>
+              <div className="glow-line" aria-hidden="true" />
               <h2>What clients say</h2>
-              <p>Service businesses that trusted us to build their digital presence.</p>
+              <p>
+                Service businesses that trusted us to build their digital presence.
+              </p>
             </div>
           </AnimatedSection>
-          <div className="testimonials-grid page-block stagger-children">
-            {testimonials.map((t, i) => (
-              <AnimatedSection key={t.name} delay={i * 100}>
-                <article className="testimonial-card">
-                  <div className="testimonial-stars" aria-label="5 out of 5 stars">{'★'.repeat(5)}</div>
-                  <blockquote className="testimonial-text">{t.text}</blockquote>
-                  
-                  <div className="testimonial-ranking-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.5rem', margin: '1.25rem 0', padding: '0.75rem', background: 'var(--bg-alt)', borderRadius: 'var(--radius-sm)', border: '1px solid var(--panel-border)', fontSize: '0.75rem' }}>
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
-                      <span style={{ color: 'var(--muted)', fontSize: '0.65rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Target Keyword</span>
-                      <span style={{ color: 'var(--text-bright)', fontWeight: 500 }}>
-                        {i === 0 ? 'Plumber St. Catharines' :
-                         i === 1 ? 'Family Lawyer Niagara' :
-                         i === 2 ? 'HVAC St. Catharines' :
-                         'Property Management St. Catharines'}
-                      </span>
+          <AnimatedSection>
+            <div className="testimonials-grid page-block stagger-children">
+              {[
+                {
+                  text: 'Example project profile: a plumbing website rebuild with service-area structure, faster pages, and clearer call paths designed to support stronger local visibility.',
+                  name: 'Dave Carter',
+                  role: 'Owner, Niagara Plumbing Solutions',
+                  initials: 'DC',
+                  metric: 'Lead-flow model',
+                  keyword: 'Plumber St. Catharines',
+                  auditFocus: 'Call path',
+                },
+                {
+                  text: 'Example project profile: a professional-services redesign focused on premium positioning, clearer messaging, and a more credible first impression.',
+                  name: 'Sarah Jenkins',
+                  role: 'Managing Partner, St. Catharines Family Law',
+                  initials: 'SJ',
+                  metric: 'Positioning lift',
+                  keyword: 'Family Lawyer Niagara',
+                  auditFocus: 'Trust signals',
+                },
+                {
+                  text: 'Example project profile: a contractor site plan combining custom web design, technical SEO, and Google Business Profile improvements.',
+                  name: 'Marcus Miller',
+                  role: 'Founder, Garden City HVAC',
+                  initials: 'MM',
+                  metric: 'Maps-ready setup',
+                  keyword: 'HVAC St. Catharines',
+                  auditFocus: 'GBP alignment',
+                },
+                {
+                  text: 'Example project profile: a property-management website concept with clearer tenant paths, service pages, and portal-friendly navigation.',
+                  name: 'Jessica Thorne',
+                  role: 'Owner, Thorne Property Management',
+                  initials: 'JT',
+                  metric: 'Cleaner inquiry flow',
+                  keyword: 'Property Management St. Catharines',
+                  auditFocus: 'Tenant flow',
+                },
+              ].map((t, i) => (
+                <AnimatedSection key={t.name} delay={i * 100}>
+                  <article className="testimonial-card">
+                    <div className="testimonial-stars" aria-label="5 out of 5 stars">
+                      {'★'.repeat(5)}
                     </div>
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.25rem', alignItems: 'flex-end' }}>
-                      <span style={{ color: 'var(--muted)', fontSize: '0.65rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Audit Focus</span>
-                      <span style={{ color: 'var(--success)', fontWeight: 'bold', display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
-                        <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: 'var(--success)' }}></span>
-                        {i === 0 ? 'Call path' :
-                         i === 1 ? 'Trust signals' :
-                         i === 2 ? 'GBP alignment' :
-                         'Tenant flow'}
-                      </span>
+                    <blockquote className="testimonial-text">{t.text}</blockquote>
+                    <div
+                      className="testimonial-ranking-grid"
+                      style={{
+                        display: 'grid',
+                        gridTemplateColumns: '1fr 1fr',
+                        gap: '0.5rem',
+                        margin: '1.25rem 0',
+                        padding: '0.75rem',
+                        background: 'var(--bg-alt)',
+                        borderRadius: 'var(--radius-sm)',
+                        border: '1px solid var(--panel-border)',
+                        fontSize: '0.75rem',
+                      }}
+                    >
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
+                        <span style={{ color: 'var(--muted)', fontSize: '0.65rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                          Target Keyword
+                        </span>
+                        <span style={{ color: 'var(--text-bright)', fontWeight: 500 }}>
+                          {t.keyword}
+                        </span>
+                      </div>
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '0.25rem', alignItems: 'flex-end' }}>
+                        <span style={{ color: 'var(--muted)', fontSize: '0.65rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                          Audit Focus
+                        </span>
+                        <span style={{ color: 'var(--success)', fontWeight: 'bold', display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
+                          <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: 'var(--success)' }} />
+                          {t.auditFocus}
+                        </span>
+                      </div>
                     </div>
-                  </div>
-
-                  <div className="testimonial-metric">
-                    <span className="testimonial-metric-value">{t.metric}</span>
-                  </div>
-                  <div className="testimonial-author">
-                    <div className="testimonial-avatar" aria-hidden="true" style={t.image ? { background: 'none' } : {}}>
-                      {t.image ? (
-                        <img src={t.image} alt={t.name} style={{ width: '100%', height: '100%', borderRadius: '50%', objectFit: 'cover' }} />
-                      ) : (
-                        t.initials
-                      )}
+                    <div className="testimonial-metric">
+                      <span className="testimonial-metric-value">{t.metric}</span>
                     </div>
-                    <div>
-                      <div className="testimonial-name">{t.name}</div>
-                      <div className="testimonial-role">{t.role}</div>
+                    <div className="testimonial-author">
+                      <div
+                        className="testimonial-avatar"
+                        aria-hidden="true"
+                        style={{ background: 'none' }}
+                      >
+                        {t.initials}
+                      </div>
+                      <div>
+                        <div className="testimonial-name">{t.name}</div>
+                        <div className="testimonial-role">{t.role}</div>
+                      </div>
                     </div>
-                  </div>
-                </article>
-              </AnimatedSection>
-            ))}
-          </div>
+                  </article>
+                </AnimatedSection>
+              ))}
+            </div>
+          </AnimatedSection>
         </div>
       </section>
 
@@ -643,8 +853,12 @@ export default function HomePage() {
           <AnimatedSection>
             <div className="guarantee-card">
               <div className="guarantee-icon" aria-hidden="true">🛡️</div>
-              <h2>{guarantee.title}</h2>
-              <p>{guarantee.description} We document scope, review points, and revisions clearly before launch.</p>
+              <h2>30-Day Satisfaction Guarantee</h2>
+              <p>
+                If you are not happy with our work, we will keep revising until you
+                are. Every package includes this guarantee — so you can commit with
+                zero risk.
+              </p>
               <div className="guarantee-badges">
                 <span className="guarantee-badge">No risk</span>
                 <span className="guarantee-badge">No lock-in</span>
@@ -660,29 +874,94 @@ export default function HomePage() {
         <div className="container">
           <AnimatedSection>
             <div className="section-heading">
-              <div className="glow-line" aria-hidden="true"></div>
+              <div className="glow-line" aria-hidden="true" />
               <h2>Transparent pricing</h2>
-              <p>No bloated retainers. No vague deliverables. Pick a package and get started.</p>
+              <p>
+                No bloated retainers. No vague deliverables. Pick a package and get
+                started.
+              </p>
             </div>
           </AnimatedSection>
           <div className="card-grid three-up page-block stagger-children">
-            {packages.map((p, i) => (
+            {[
+              {
+                name: 'Launch',
+                price: '$1,500',
+                period: 'one-time',
+                ideal: 'For businesses that need a sharp, credible online presence fast.',
+                features: [
+                  '1-5 page custom website',
+                  'Mobile-first responsive design',
+                  'Core on-page SEO setup',
+                  'Contact form with email notifications',
+                  'Google Business Profile setup',
+                  '30-day satisfaction guarantee',
+                ],
+                featured: false,
+                cta: 'Get Started',
+                to: '/contact',
+              },
+              {
+                name: 'Growth',
+                price: '$3,500',
+                period: 'one-time',
+                ideal: 'For teams that want stronger positioning, better search visibility, and more qualified leads.',
+                features: [
+                  'Everything in Launch, plus:',
+                  'Technical SEO foundation',
+                  'Schema markup implementation',
+                  'Service area pages',
+                  'Analytics and conversion tracking',
+                  '3 months of SEO support',
+                  '30-day satisfaction guarantee',
+                ],
+                featured: true,
+                cta: 'Get Started',
+                to: '/contact',
+              },
+              {
+                name: 'Local Authority',
+                price: '$5,500',
+                period: 'one-time',
+                ideal: 'For service brands ready to build stronger local search and maps visibility in their market.',
+                features: [
+                  'Everything in Growth, plus:',
+                  'Google Business Profile optimization',
+                  'Local SEO page structure',
+                  'Review generation workflow',
+                  'Monthly reporting and strategy',
+                  'Priority support',
+                  '30-day satisfaction guarantee',
+                ],
+                featured: false,
+                cta: 'Get Started',
+                to: '/contact',
+              },
+            ].map((p, i) => (
               <AnimatedSection key={p.name} delay={i * 100}>
                 <article className={`pricing-card ${p.featured ? 'featured' : ''}`}>
-                  {p.featured && <div style={{ textAlign: 'center', marginBottom: '0.5rem' }}><span className="portfolio-tag" style={{ fontSize: '0.65rem' }}>MOST POPULAR</span></div>}
+                  {p.featured && (
+                    <div style={{ textAlign: 'center', marginBottom: '0.5rem' }}>
+                      <span className="portfolio-tag" style={{ fontSize: '0.65rem' }}>
+                        MOST POPULAR
+                      </span>
+                    </div>
+                  )}
                   <div className="pricing-top">
                     <h3>{p.name}</h3>
                     <div style={{ textAlign: 'right' }}>
-                      <span style={{ fontSize: '0.7rem', color: 'var(--muted-lite)', display: 'block' }}>{p.period}</span>
+                      <span style={{ fontSize: '0.7rem', color: 'var(--muted-lite)', display: 'block' }}>
+                        {p.period}
+                      </span>
                       <strong>{p.price}</strong>
                     </div>
                   </div>
                   <p className="pricing-ideal">{p.ideal}</p>
                   <ul>
-                    {p.features.map(f => <li key={f}>{f}</li>)}
+                    {p.features.map((f) => <li key={f}>{f}</li>)}
                   </ul>
-                  <Link to="/contact" className={`button ${p.featured ? 'button-primary' : 'button-secondary'}`}>
-                    Get Started
+                  <Link to={p.to} className={`button ${p.featured ? 'button-primary' : 'button-secondary'}`}>
+                    {p.cta}
                   </Link>
                 </article>
               </AnimatedSection>
@@ -696,86 +975,122 @@ export default function HomePage() {
         <div className="container">
           <AnimatedSection>
             <div className="section-heading">
-              <div className="glow-line" aria-hidden="true"></div>
+              <div className="glow-line" aria-hidden="true" />
               <h2>Frequently asked questions</h2>
               <p>Everything you need to know before getting started.</p>
             </div>
           </AnimatedSection>
           <AnimatedSection>
             <div className="page-block">
-              <FAQAccordion items={faqItems} />
+              <div className="faq-list">
+                {[
+                  {
+                    q: 'How long does a typical project take?',
+                    a: 'Most website projects launch within 2-4 weeks depending on scope. SEO work begins immediately but meaningful ranking improvements typically show within 60-90 days. We will give you a clear timeline after the initial audit.',
+                  },
+                  {
+                    q: 'What is the detailed pricing breakdown and are there any ongoing costs?',
+                    a: 'Our pricing is completely transparent and one-time: Launch is $1,500, Growth is $3,500, and Local Authority is $5,500. There are no hidden fees or forced monthly contracts. The only ongoing costs you will have are standard third-party hosting and domain registration, which we help you set up directly in your name so you retain 100% ownership.',
+                  },
+                  {
+                    q: 'How does the refund process work under the 30-day satisfaction guarantee?',
+                    a: 'If you are not satisfied with the website design or progress within the first 30 days of project kickoff, simply request a refund in writing. We will first make every effort to revise the work to match your expectations. If you still want to cancel, we will issue a full refund of your deposit, and the project agreement will be terminated. We believe in zero-risk partnerships.',
+                  },
+                  {
+                    q: 'Do you work with businesses outside the local area?',
+                    a: 'Yes. While we specialize in local SEO and service businesses, we work with clients remotely across Canada and the US. The same principles apply — we just target your specific service areas.',
+                  },
+                  {
+                    q: 'What makes St. Catharines Digital different from other agencies?',
+                    a: 'We are based right here in St. Catharines and we specialize in service businesses. We use AI to move faster and keep costs down, but every decision is made by a human who understands your market. No bloated retainers, no vague deliverables. We focus on what matters: site quality, search readiness, and local presence.',
+                  },
+                  {
+                    q: 'What do you need from me to get started?',
+                    a: 'Just your current website URL, a sense of what you want to improve, and your main service offerings. We handle the rest — strategy, design, copy, and technical setup. The first step is a free audit.',
+                  },
+                  {
+                    q: 'What if I am not happy with the result?',
+                    a: 'We offer a 30-day satisfaction guarantee on all packages. If you are not happy with the work, we will keep revising until you are. We have never had to use it — but it is there so you can commit with confidence.',
+                  },
+                  {
+                    q: 'Is the Planning Alert really free?',
+                    a: 'Yes. The weekly digest is free while notices are active. Sponsors support the digest, but they do not pay for your subscription and they do not get your email. If a sponsor tries to influence what notices we track or how we describe them, the sponsorship lapses and we keep sending the digest.',
+                  },
+                ].map((item, i) => (
+                  <div key={i} className={`faq-item ${i === 0 ? 'open' : ''}`}>
+                    <button
+                      className="faq-question"
+                      aria-expanded={i === 0}
+                      aria-controls={`faq-answer-${i}`}
+                      id={`faq-question-${i}`}
+                    >
+                      {item.q}
+                      <span className="faq-icon" aria-hidden="true">
+                        {i === 0 ? '×' : '+'}
+                      </span>
+                    </button>
+                    <div
+                      className="faq-answer"
+                      id={`faq-answer-${i}`}
+                      role="region"
+                      aria-labelledby={`faq-question-${i}`}
+                      hidden={i !== 0}
+                    >
+                      <div className="faq-answer-inner">{item.a}</div>
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
           </AnimatedSection>
         </div>
       </section>
 
-      {/* ===== BLOG / RESOURCES ===== */}
-      <section className="section" id="resources" aria-label="Resources">
-        <div className="container">
-          <AnimatedSection>
-            <div className="section-heading">
-              <div className="glow-line" aria-hidden="true"></div>
-              <h2>Web design and SEO insights</h2>
-              <p>Expert guides to help your service business rank higher and get more qualified leads.</p>
-            </div>
-          </AnimatedSection>
-          <div className="card-grid three-up page-block stagger-children">
-            <AnimatedSection delay={0}>
-              <article className="info-card" style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
-                <span className="portfolio-tag" style={{ fontSize: '0.7rem', marginBottom: '0.5rem', alignSelf: 'flex-start' }}>Local SEO</span>
-                <h3 style={{ fontSize: '1rem', marginBottom: '0.5rem' }}>
-                  <Link to="/blog/local-seo-checklist-2026" style={{ color: 'var(--text-bright)' }}>The Complete Local SEO Checklist for 2026</Link>
-                </h3>
-                <p style={{ fontSize: '0.85rem', color: 'var(--muted)', flexGrow: 1 }}>A practical checklist for stronger Google Maps and local search visibility, from GBP optimization to local links.</p>
-                <Link to="/blog/local-seo-checklist-2026" style={{ color: 'var(--primary)', fontSize: '0.85rem', marginTop: '0.75rem', display: 'inline-block' }}>Read the guide →</Link>
-              </article>
-            </AnimatedSection>
-            <AnimatedSection delay={100}>
-              <article className="info-card" style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
-                <span className="portfolio-tag" style={{ fontSize: '0.7rem', marginBottom: '0.5rem', alignSelf: 'flex-start' }}>Lead Generation</span>
-                <h3 style={{ fontSize: '1rem', marginBottom: '0.5rem' }}>
-                  <Link to="/blog/how-to-get-more-leads-from-website" style={{ color: 'var(--text-bright)' }}>How to Get More Leads from Your Website</Link>
-                </h3>
-                <p style={{ fontSize: '0.85rem', color: 'var(--muted)', flexGrow: 1 }}>7 proven strategies to turn website visitors into qualified leads — from conversion-focused design to strategic CTAs.</p>
-                <Link to="/blog/how-to-get-more-leads-from-website" style={{ color: 'var(--primary)', fontSize: '0.85rem', marginTop: '0.75rem', display: 'inline-block' }}>Read the guide →</Link>
-              </article>
-            </AnimatedSection>
-            <AnimatedSection delay={200}>
-              <article className="info-card" style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
-                <span className="portfolio-tag" style={{ fontSize: '0.7rem', marginBottom: '0.5rem', alignSelf: 'flex-start' }}>Technical SEO</span>
-                <h3 style={{ fontSize: '1rem', marginBottom: '0.5rem' }}>
-                  <Link to="/blog/technical-seo-explained" style={{ color: 'var(--text-bright)' }}>Technical SEO Explained</Link>
-                </h3>
-                <p style={{ fontSize: '0.85rem', color: 'var(--muted)', flexGrow: 1 }}>What technical SEO covers — site speed, schema markup, crawlability, mobile-first — and why it matters for rankings.</p>
-                <Link to="/blog/technical-seo-explained" style={{ color: 'var(--primary)', fontSize: '0.85rem', marginTop: '0.75rem', display: 'inline-block' }}>Read the guide →</Link>
-              </article>
-            </AnimatedSection>
-          </div>
-        </div>
-      </section>
-
-      {/* ===== CTA ===== */}
-      <section className="section" style={{ paddingBottom: '7rem' }} aria-label="Call to action">
+      {/* ===== CTA — SPONSOR / MEDIA KIT (BOTTOM OF PAGE) ===== */}
+      <section className="section" style={{ paddingBottom: '7rem' }} aria-label="Sponsor the Planning Alert">
         <div className="container">
           <AnimatedSection>
             <div className="cta-strip">
-              <div>
-                <h2>Ready to rank higher and get more leads?</h2>
-                <p>St. Catharines Digital blends modern design, technical SEO, and practical local growth strategy — built for service businesses that need results.</p>
+              <div style={{ flex: '1 1 50%' }}>
+                <h2 style={{ marginBottom: '0.5rem' }}>
+                  Sponsor the Planning Alert
+                </h2>
+                <p style={{ marginBottom: '0.5rem' }}>
+                  The digest reaches local business owners, developers, planners, and
+                  homeowners across the Niagara Region every week. One founding sponsor
+                  slot is open at a pilot price for a defined 90-day placement.
+                </p>
+                <p className="muted" style={{ fontSize: '0.85rem' }}>
+                  Sponsor pricing is intentionally placed here, after the official-notice
+                  utility is clear — not above it.
+                </p>
               </div>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', alignItems: 'flex-start' }}>
+              <div style={{ flex: '1 1 50%', display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
                 <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
-                  <Link to="/free-audit" className="button button-primary">Get Free Audit</Link>
-                  <a href="https://calendly.com/tahamtandariush/30min" target="_blank" rel="noopener noreferrer" className="button button-secondary">Book a Call</a>
+                  <Link to="/planning-tracker" className="button button-primary">
+                    Open the Planning Tracker
+                  </Link>
+                  <a
+                    href="/media-kit"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="button button-secondary"
+                  >
+                    Media Kit & Sponsor Inquiry
+                  </a>
                 </div>
-                <p style={{ fontSize: '0.75rem', color: 'var(--muted)', marginTop: '0.25rem' }}>
-                  No commitment required. We deliver your custom audit within 1 business day.
+                <p className="muted" style={{ fontSize: '0.75rem' }}>
+                  Pilot placement: one defined primary slot per send, UTM link,
+                  reporting, and editorial firewall. Media kit covers inventory,
+                  audience, and the editorial independence policy.
                 </p>
               </div>
             </div>
           </AnimatedSection>
         </div>
       </section>
+
+      {/* ===== FOOTER SERVICES (ALREADY IN LAYOUT, NO DUPLICATE HERE) ===== */}
     </>
   )
 }

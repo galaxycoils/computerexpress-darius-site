@@ -26,8 +26,8 @@ export default function Seo({
 
   const defaults = {
     '/': {
-      title: `${SITE} | Web Design, SEO & Digital Marketing for Service Businesses`,
-      description: `${SITE} builds premium websites, technical SEO systems, and local growth engines for service businesses in St. Catharines and across Ontario. AI-first web design + local SEO that ranks.`,
+      title: `${SITE} | Official Municipal Planning Notices, Tracked & Delivered`,
+      description: `${SITE} scans St. Catharines, Welland, Thorold, and Niagara Region notices every week and puts the active ones in one free digest. Official municipal sources only, no paywalls, no editorial interference.`,
     },
     '/services': {
       title: `${SITE} | Web Design, Technical SEO & GBP Optimization Services`,

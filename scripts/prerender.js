@@ -8,6 +8,24 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const rootDir = path.resolve(__dirname, '..')
 const allRoutes = prerenderRoutes
 
+/**
+ * Strip stale SEO tags that the client build baked into dist/index.html
+ * before we inject the SSR-produced <title>/<meta>/<link>/<script> from
+ * react-helmet-async. Otherwise crawlers see the first tag (client build)
+ * and ignore the SSR-injected one, so the homepage meta shows old copy.
+ */
+function stripStaleHeadTags(html) {
+  // Remove any existing <title>...</title>
+  html = html.replace(/<title[^>]*>[\s\S]*?<\/title>\s*/gi, '')
+  // Remove any existing <meta name="description" ...>
+  html = html.replace(/<meta\s+[^>]*name=["']description["'][^>]*>\s*/gi, '')
+  // Remove any existing <meta property="og:title" ...>
+  html = html.replace(/<meta\s+[^>]*property=["']og:title["'][^>]*>\s*/gi, '')
+  // Remove any existing <meta property="og:description" ...>
+  html = html.replace(/<meta\s+[^>]*property=["']og:description["'][^>]*>\s*/gi, '')
+  return html
+}
+
 async function run() {
   console.log('--- Starting Static Prerendering (SSG) ---')
   console.log(`Discovered ${allRoutes.length} total routes to render.`)
@@ -24,7 +42,10 @@ async function run() {
   if (!fs.existsSync(templatePath)) {
     throw new Error('Client-side build index.html not found! Run npm run build first.')
   }
-  const template = fs.readFileSync(templatePath, 'utf8')
+  let template = fs.readFileSync(templatePath, 'utf8')
+
+  // Remove stale SEO tags baked into the client build so SSR tags win.
+  template = stripStaleHeadTags(template)
 
   const serverEntryPath = path.resolve(rootDir, 'dist-ssr/entry-server.js')
   const { render } = await import(`file://${serverEntryPath}`)
@@ -50,6 +71,22 @@ async function run() {
     // Inject content into template
     let pageHtml = template
       .replace('<div id="root"></div>', `<div id="root">${html}</div>`)
+
+
+    // DEBUG: dump helmet output for homepage
+    if (url === '/' || url === '/') {
+      const fs2 = await import('node:fs')
+      const debugPath = path.resolve(rootDir, 'dist/_debug_homepage_helmet.txt')
+      fs2.writeFileSync(debugPath, [
+        'HELMET TITLE:', String(helmet.title),
+        '\nHELMET META:', String(helmet.meta),
+        '\nHELMET LINK:', String(helmet.link),
+        '\nHELMET SCRIPT:', String(helmet.script),
+        '\n--- raw meta toString ---',
+        String(helmet.meta?.toString())
+      ].join('\n'), 'utf8')
+      console.log('DEBUG homepage helmet dumped to dist/_debug_homepage_helmet.txt')
+    }
 
     if (headTags) {
       // Inject tags right before </head>
