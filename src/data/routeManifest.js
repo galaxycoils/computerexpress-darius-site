@@ -29,6 +29,7 @@ export const baseRoutes = [
   '/what-to-expect',
   '/free-audit',
   '/partner',
+  '/planning-tracker',
   '/privacy',
   '/terms',
 ]
