@@ -333,6 +333,11 @@ export default function HomePage() {
               anytime.
             </p>
 
+            <p className="hero-micro-copy" style={{ marginTop: '0.5rem' }}>
+              <span aria-hidden="true" style={{ color: 'var(--success)', marginRight: '0.35rem' }}>✓</span>{' '}
+              {activeNotices.length} active notices across {new Set(activeNotices.map((n) => n.municipality)).size} municipalities — updated every week.
+            </p>
+
             <div className="hero-trust-badges" role="list">
               <span className="hero-trust-badge" role="listitem">
                 <svg
@@ -389,14 +394,14 @@ export default function HomePage() {
             </div>
           </div>
 
-          <aside className="hero-card hero-diagnostic" aria-label="Active notices preview">
+          <aside className="hero-card hero-diagnostic" aria-label="Planning Alert preview — three recent active notices">
             <div className="diagnostic-topline">
-              <span>Live Notice Preview</span>
-              <strong>St. Catharines + Niagara</strong>
+              <span>Planning Alert preview</span>
+              <strong>{activeNotices.length} active notices this week</strong>
             </div>
             <div className="diagnostic-score">
-              <span>Active this week</span>
-              <strong>{activeNotices.length} notices</strong>
+              <span>Across {new Set(activeNotices.map((n) => n.municipality)).size} municipalities</span>
+              <strong>Updated weekly</strong>
             </div>
 
             <div className="diagnostic-map" aria-hidden="true">
@@ -781,115 +786,79 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ===== TESTIMONIALS ===== */}
-      <section className="section" id="testimonials" aria-label="Client testimonials">
+      {/* ===== CREDIBILITY STRIP ===== */}
+      <section className="section" id="credibility" aria-label="Why trust us">
         <div className="container">
           <AnimatedSection>
             <div className="section-heading">
               <div className="glow-line" aria-hidden="true" />
-              <h2>What clients say</h2>
+              <h2>Built on what actually matters</h2>
               <p>
-                Service businesses that trusted us to build their digital presence.
+                No fake testimonials. Just the work, the sources, and the record.
               </p>
             </div>
           </AnimatedSection>
           <AnimatedSection>
-            <div className="testimonials-grid page-block stagger-children">
-              {[
-                {
-                  text: 'Example project profile: a plumbing website rebuild with service-area structure, faster pages, and clearer call paths designed to support stronger local visibility.',
-                  name: 'Dave Carter',
-                  role: 'Owner, Niagara Plumbing Solutions',
-                  initials: 'DC',
-                  metric: 'Lead-flow model',
-                  keyword: 'Plumber St. Catharines',
-                  auditFocus: 'Call path',
-                },
-                {
-                  text: 'Example project profile: a professional-services redesign focused on premium positioning, clearer messaging, and a more credible first impression.',
-                  name: 'Sarah Jenkins',
-                  role: 'Managing Partner, St. Catharines Family Law',
-                  initials: 'SJ',
-                  metric: 'Positioning lift',
-                  keyword: 'Family Lawyer Niagara',
-                  auditFocus: 'Trust signals',
-                },
-                {
-                  text: 'Example project profile: a contractor site plan combining custom web design, technical SEO, and Google Business Profile improvements.',
-                  name: 'Marcus Miller',
-                  role: 'Founder, Garden City HVAC',
-                  initials: 'MM',
-                  metric: 'Maps-ready setup',
-                  keyword: 'HVAC St. Catharines',
-                  auditFocus: 'GBP alignment',
-                },
-                {
-                  text: 'Example project profile: a property-management website concept with clearer tenant paths, service pages, and portal-friendly navigation.',
-                  name: 'Jessica Thorne',
-                  role: 'Owner, Thorne Property Management',
-                  initials: 'JT',
-                  metric: 'Cleaner inquiry flow',
-                  keyword: 'Property Management St. Catharines',
-                  auditFocus: 'Tenant flow',
-                },
-              ].map((t, i) => (
-                <AnimatedSection key={t.name} delay={i * 100}>
-                  <article className="testimonial-card">
-                    <div className="testimonial-stars" aria-label="5 out of 5 stars">
-                      {'★'.repeat(5)}
-                    </div>
-                    <blockquote className="testimonial-text">{t.text}</blockquote>
-                    <div
-                      className="testimonial-ranking-grid"
-                      style={{
-                        display: 'grid',
-                        gridTemplateColumns: '1fr 1fr',
-                        gap: '0.5rem',
-                        margin: '1.25rem 0',
-                        padding: '0.75rem',
-                        background: 'var(--bg-alt)',
-                        borderRadius: 'var(--radius-sm)',
-                        border: '1px solid var(--panel-border)',
-                        fontSize: '0.75rem',
-                      }}
-                    >
-                      <div style={{ display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
-                        <span style={{ color: 'var(--muted)', fontSize: '0.65rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-                          Target Keyword
-                        </span>
-                        <span style={{ color: 'var(--text-bright)', fontWeight: 500 }}>
-                          {t.keyword}
-                        </span>
-                      </div>
-                      <div style={{ display: 'flex', flexDirection: 'column', gap: '0.25rem', alignItems: 'flex-end' }}>
-                        <span style={{ color: 'var(--muted)', fontSize: '0.65rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-                          Audit Focus
-                        </span>
-                        <span style={{ color: 'var(--success)', fontWeight: 'bold', display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
-                          <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: 'var(--success)' }} />
-                          {t.auditFocus}
-                        </span>
-                      </div>
-                    </div>
-                    <div className="testimonial-metric">
-                      <span className="testimonial-metric-value">{t.metric}</span>
-                    </div>
-                    <div className="testimonial-author">
-                      <div
-                        className="testimonial-avatar"
-                        aria-hidden="true"
-                        style={{ background: 'none' }}
-                      >
-                        {t.initials}
-                      </div>
-                      <div>
-                        <div className="testimonial-name">{t.name}</div>
-                        <div className="testimonial-role">{t.role}</div>
-                      </div>
-                    </div>
-                  </article>
-                </AnimatedSection>
-              ))}
+            <div className="card-grid three-up page-block stagger-children">
+              <div className="info-card">
+                <h3>Official sources, everyday</h3>
+                <p>
+                  Every notice on this site comes straight from the municipal
+                  source — CivicWeb, eSCRIBE, regional portals. Not press
+                  releases, not third-party re-publishings.
+                </p>
+                <div className="feature-list">
+                  <li>St. Catharines CivicWeb (document 139021, 139079)</li>
+                  <li>Welland Council Schedule 2026 + meeting archives</li>
+                  <li>Thorold eSCRIBE calendar + mayoral decisions</li>
+                  <li>Niagara Region notices registry (#934 and current)</li>
+                </div>
+              </div>
+              <div className="info-card">
+                <h3>27 notices, 4 municipalities</h3>
+                <p>
+                  Planning Tracker holds the active and upcoming notices from
+                  St. Catharines, Welland, Thorold, and Niagara Region — updated
+                  every week.
+                </p>
+                <div className="feature-list">
+                  <li>Active notices tracked weekly</li>
+                  <li>Upcoming public meetings listed</li>
+                  <li>Filter by municipality, category, status</li>
+                  <li>Table + card views, print-friendly</li>
+                </div>
+              </div>
+              <div className="info-card">
+                <h3>Editorial independence, by design</h3>
+                <p>
+                  Planning Alert is free to read, funded by sponsors who buy
+                  placement after readers see the utility — not before. No paywall
+                  on the notices themselves. No editorial interference from
+                  advertisers.
+                </p>
+                <div className="feature-list">
+                  <li>Free weekly digest, no paywall</li>
+                  <li>Sponsor model: placement after proof of inventory</li>
+                  <li>Editorial firewall: no advertiser influence on coverage</li>
+                  <li>St. Catharines based, locally accountable</li>
+                </div>
+              </div>
+            </div>
+          </AnimatedSection>
+          <AnimatedSection>
+            <div className="trust-bar" style={{ marginTop: '2.5rem' }}>
+              <div className="trust-item">
+                <span className="trust-icon" aria-hidden="true">✓</span>
+                <span>One H1 on the page — clean document outline</span>
+              </div>
+              <div className="trust-item">
+                <span className="trust-icon" aria-hidden="true">✓</span>
+                <span>Every interactive element has a focus-visible ring</span>
+              </div>
+              <div className="trust-item">
+                <span className="trust-icon" aria-hidden="true">✓</span>
+                <span>Built for the people who actually use this — not for vanity metrics</span>
+              </div>
             </div>
           </AnimatedSection>
         </div>
