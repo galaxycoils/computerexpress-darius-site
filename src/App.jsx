@@ -18,6 +18,7 @@ import LocalServiceAreaPage from './pages/LocalServiceAreaPage'
 import PrivacyPage from './pages/PrivacyPage'
 import TermsPage from './pages/TermsPage'
 import PartnerPage from './pages/PartnerPage'
+import PlanningTrackerPage from './pages/PlanningTrackerPage'
 
 function BlogPostWrapper() {
   const { slug } = useParams()
@@ -50,6 +51,7 @@ export function AppRoutes() {
         <Route path="privacy" element={<PrivacyPage />} />
         <Route path="terms" element={<TermsPage />} />
         <Route path="partner" element={<PartnerPage />} />
+        <Route path="planning-tracker" element={<PlanningTrackerPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Route>
     </Routes>

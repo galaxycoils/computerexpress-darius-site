@@ -230,6 +230,7 @@ export default function Layout() {
 
           <nav className={`nav-links ${menuOpen ? 'open' : ''}`} aria-label="Primary">
             <NavLink to="/services" onClick={closeMenu}>Services</NavLink>
+            <NavLink to="/planning-tracker" onClick={closeMenu}>Planning Tracker</NavLink>
             <NavLink to="/blog" onClick={closeMenu}>Blog</NavLink>
             <NavLink to="/partner" onClick={closeMenu}>Partner</NavLink>
             <NavLink to="/what-to-expect" onClick={closeMenu}>What to Expect</NavLink>
