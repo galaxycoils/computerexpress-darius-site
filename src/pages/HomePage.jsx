@@ -119,7 +119,7 @@ function ActiveNoticeCard({ notice }) {
     <article className="active-notice-card">
       <span className="notice-municipality">{notice.municipality}</span>
       <span className="notice-type">{notice.type}</span>
-      <h3 className="notice-title">{notice.title}</h3>
+      <h2 className="notice-title">{notice.title}</h2>
       {notice.description && (
         <p className="notice-description">{notice.description}</p>
       )}
