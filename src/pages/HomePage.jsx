@@ -173,41 +173,81 @@ export default function HomePage() {
     if (featuredNotices.length >= 4) break
   }
 
-  const homePageJsonLd = [
-    getLocalBusinessSchema({
-      hasOfferCatalog: {
-        '@type': 'OfferCatalog',
-        name: 'Services',
-        itemListElement: [
-          {
-            '@type': 'Offer',
-            itemOffered: {
-              '@type': 'Service',
-              name: 'High-Performance Websites',
-              description:
-                'Custom websites built to load fast, earn trust instantly, and guide visitors toward a clear next step.',
-            },
-          },
-          {
-            '@type': 'Offer',
-            itemOffered: {
-              '@type': 'Service',
-              name: 'Technical SEO',
-              description:
-                'Search-ready architecture that helps Google understand, crawl, and rank your site.',
-            },
-          },
-          {
-            '@type': 'Offer',
-            itemOffered: {
-              '@type': 'Service',
-              name: 'Google Business Profile',
-              description:
-                'Strengthen Google Maps and local search visibility through GBP optimization, review strategy, and weekly posts.',
-            },
-          },
-        ],
+  const planningAlertDataset = {
+    '@context': 'https://schema.org',
+    '@type': 'Dataset',
+    name: 'Official Municipal Planning Notices — Tracked &amp; Delivered',
+    description:
+      'Weekly digest of active official municipal planning notices from St. Catharines, Welland, Thorold, and Niagara Region. Official municipal sources only; no paywalls, no editorial interference. Free while notices are active; unsubscribe anytime.',
+    url: `${BASE_URL}/`,
+    isAccessibleForFree: true,
+    keyword: 'municipal planning notices, planning alert, official sources, st catharines, welland, thorold, niagara region',
+    subjectOf: {
+      '@type': 'WebApplication',
+      name: 'Planning Alert',
+      url: `${BASE_URL}/`,
+      applicationCategory: 'News/Magazine',
+      applicationSubCategory: 'Government',
+      description:
+        'Free weekly digest of active municipal planning notices, delivered by email. One email per week while notices are active; unsubscribe anytime.',
+      operatingSystem: 'Web',
+      offer: {
+        '@type': 'Offer',
+        price: '0',
+        priceCurrency: 'USD',
+        availability: 'https://schema.org/InStock',
       },
+    },
+    distribution: [
+      {
+        '@type': 'DataDownload',
+        encodingFormat: 'application/json',
+        contentUrl: `${BASE_URL}/planning-tracker`,
+        description: 'Full active notice list with filters by municipality, category, and status.',
+      },
+    ],
+  }
+
+  const webServicesOfferCatalog = {
+    '@type': 'OfferCatalog',
+    name: 'Web Design, Technical SEO & Local Growth Services',
+    description:
+      'Custom websites, technical SEO, and Google Business Profile work for service businesses in St. Catharines and Niagara — the same source-first discipline used to track official notices.',
+    itemListElement: [
+      {
+        '@type': 'Offer',
+        itemOffered: {
+          '@type': 'Service',
+          name: 'High-Performance Websites',
+          description:
+            'Custom websites built to load fast, earn trust instantly, and guide visitors toward a clear next step. Mobile-first, SEO-optimized, and designed to convert.',
+        },
+      },
+      {
+        '@type': 'Offer',
+        itemOffered: {
+          '@type': 'Service',
+          name: 'Technical SEO',
+          description:
+            'Search-ready architecture that helps Google understand, crawl, and rank your site. We fix what is broken and optimize what matters.',
+        },
+      },
+      {
+        '@type': 'Offer',
+        itemOffered: {
+          '@type': 'Service',
+          name: 'Google Business Profile',
+          description:
+            'Strengthen Google Maps and local search visibility through GBP optimization, review strategy, and weekly posts.',
+        },
+      },
+    ],
+  }
+
+  const homePageJsonLd = [
+    planningAlertDataset,
+    getLocalBusinessSchema({
+      hasOfferCatalog: webServicesOfferCatalog,
     }),
     {
       '@context': 'https://schema.org',
@@ -215,16 +255,24 @@ export default function HomePage() {
       name: siteConfig.name,
       url: BASE_URL,
       inLanguage: siteConfig.language,
-      potentialAction: {
-        '@type': 'SubscribeAction',
-        target: {
-          '@type': 'EntryPoint',
-          urlTemplate: `${BASE_URL}/`,
-          actionPlatform: [
-            { '@type': 'WebPlatform', URI: 'https://schema.org' },
-          ],
+      potentialAction: [
+        {
+          '@type': 'SubscribeAction',
+          target: {
+            '@type': 'EntryPoint',
+            urlTemplate: `${BASE_URL}/api/newsletter`,
+            actionPlatform: [{ '@type': 'WebPlatform', URI: 'https://schema.org' }],
+          },
         },
-      },
+        {
+          '@type': 'SearchAction',
+          target: {
+            '@type': 'EntryPoint',
+            urlTemplate: `${BASE_URL}/planning-tracker?q={search_term}`,
+          },
+          'query-input': 'required name=search_term',
+        },
+      ],
     },
     {
       '@context': 'https://schema.org',

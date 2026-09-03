@@ -42,6 +42,11 @@ export function getLocalBusinessSchema(overrides = {}) {
       { '@type': 'Country', name: 'Canada' },
     ],
     knowsAbout: [
+      'Planning Alert',
+      'Official Municipal Planning Notices',
+      'Municipal Notice Tracking',
+      'Local Government Transparency',
+      'Official Sources',
       'Web Design',
       'Technical SEO',
       'Local SEO',
