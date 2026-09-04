@@ -1,163 +1,152 @@
 import Seo, { BASE_URL } from '../components/Seo'
-import { useState } from 'react'
-import AnimatedSection from '../hooks/useInView'
-import { steps, guarantee } from '../data/siteData'
 
 const aboutPageJsonLd = {
   '@context': 'https://schema.org',
-  '@type': 'Organization',
+  '@type': 'NewsMediaOrganization',
   name: 'St. Catharines Digital',
   url: BASE_URL,
-  description: 'St. Catharines Digital is a web design and local SEO agency for service businesses in St. Catharines and across Ontario.',
-  areaServed: {
-    '@type': 'City',
-    name: 'St. Catharines',
-    containedInPlace: {
-      '@type': 'State',
-      name: 'Ontario',
-      containedInPlace: {
-        '@type': 'Country',
-        name: 'Canada'
-      }
-    }
+  description:
+    'Independent local news for St. Catharines, Welland and Thorold. Council decisions, police releases, planning notices and municipal updates from official sources only.',
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: 'St. Catharines',
+    addressRegion: 'ON',
+    addressCountry: 'CA',
   },
-  knowsAbout: ['Web Design', 'Technical SEO', 'Local SEO', 'Google Business Profile'],
-  foundingDate: '2024'
+  areaServed: [
+    { '@type': 'City', name: 'St. Catharines' },
+    { '@type': 'City', name: 'Welland' },
+    { '@type': 'City', name: 'Thorold' },
+  ],
 }
-
-// FAQ items from siteData — kept here for about page FAQ section
-const aboutFaqs = [
-  {
-    q: 'What does "AI-first" mean?',
-    a: 'We use AI tools to speed up research, copywriting, and design tasks — but every decision is made by a human. AI helps us move faster and keep costs lower, never to cut corners.'
-  },
-  {
-    q: 'Do you work with businesses outside of St. Catharines?',
-    a: 'Yes. While we are based locally, we work with service businesses across Ontario. The same principles of local SEO and conversion-focused design apply to any market.'
-  }
-]
 
 const breadcrumbJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'BreadcrumbList',
   itemListElement: [
-    {
-      '@type': 'ListItem',
-      position: 1,
-      name: 'Home',
-      item: BASE_URL
-    },
-    {
-      '@type': 'ListItem',
-      position: 2,
-      name: 'About',
-      item: `${BASE_URL}/about`
-    }
-  ]
+    { '@type': 'ListItem', position: 1, name: 'Home', item: BASE_URL },
+    { '@type': 'ListItem', position: 2, name: 'About', item: `${BASE_URL}/about` },
+  ],
 }
 
-const valueItems = [
-  { icon: '⚡', title: 'Premium positioning', desc: 'Agency-quality work, zero agency overhead.' },
-  { icon: '🔍', title: 'Search-ready structure', desc: 'Built for rankings from day one.' },
-  { icon: '📍', title: 'Local-first mindset', desc: 'Tailored for service-area businesses.' },
-  { icon: '🎯', title: 'Conversion-focused', desc: 'Clear CTAs and lead flow on every page.' }
-]
-
 export default function AboutPage() {
-  const [openIndex, setOpenIndex] = useState(null)
-
   return (
     <>
       <Seo
-        title="About | St. Catharines Digital — Web Design & SEO Agency"
-        description="St. Catharines Digital builds high-performance websites with technical SEO and local growth for service businesses. AI-powered, human-directed, no bloated process."
+        title="About — St. Catharines Digital"
+        description="Independent local news for St. Catharines, Welland and Thorold. We report only from official primary sources."
         path="/about"
         jsonLd={[aboutPageJsonLd, breadcrumbJsonLd]}
       />
 
-      {/* Background orbs */}
-      <div className="bg-orb bg-orb-1" aria-hidden="true"></div>
-      <div className="bg-orb bg-orb-2" aria-hidden="true"></div>
-
-      {/* Hero */}
-      <section className="section-first page-hero" aria-label="About overview">
+      <section className="section-first" style={{ paddingTop: '3rem', paddingBottom: '2rem' }}>
         <div className="container">
-          <div className="eyebrow" style={{ justifyContent: 'center' }}>About us</div>
-          <h1>We build websites that rank and convert</h1>
-          <p>Web design and local SEO for service businesses. Higher Google rankings, more qualified leads, and a credible online presence — no bloated process, no vague deliverables.</p>
+          <p style={{
+            fontSize: '0.7rem',
+            letterSpacing: '0.12em',
+            textTransform: 'uppercase',
+            color: 'var(--primary)',
+            fontWeight: 600,
+            marginBottom: '0.6rem'
+          }}>
+            About
+          </p>
+          <h1 style={{
+            fontSize: 'clamp(1.6rem, 3.5vw, 2.2rem)',
+            fontWeight: 650,
+            letterSpacing: '-0.02em',
+            marginBottom: '0.85rem',
+            maxWidth: '28rem'
+          }}>
+            Local news from official sources only.
+          </h1>
+          <p style={{
+            fontSize: '1.05rem',
+            color: 'var(--text-muted)',
+            maxWidth: '36rem',
+            lineHeight: 1.6
+          }}>
+            St. Catharines Digital covers St. Catharines, Welland and Thorold.
+            We focus on city council decisions, Niagara Regional Police releases,
+            planning notices and municipal updates — always linked back to the
+            primary documents.
+          </p>
         </div>
       </section>
 
-      {/* Values */}
-      <section className="section" aria-label="Our values">
-        <div className="container">
-          <AnimatedSection>
-            <div className="section-heading">
-              <h2>What we stand for</h2>
-            </div>
-          </AnimatedSection>
-          <div className="values-grid">
-            {valueItems.map(v => (
-              <AnimatedSection key={v.title}>
-                <article className="info-card">
-                  <div style={{ fontSize: '1.5rem', marginBottom: '0.5rem' }} aria-hidden="true">{v.icon}</div>
-                  <h3>{v.title}</h3>
-                  <p>{v.desc}</p>
-                </article>
-              </AnimatedSection>
-            ))}
-          </div>
-        </div>
-      </section>
+      <section className="section" style={{ paddingTop: '0.5rem' }}>
+        <div className="container" style={{ maxWidth: '40rem' }}>
 
-      {/* Process */}
-      <section className="section" style={{ paddingBottom: '7rem' }} aria-label="Our process">
-        <div className="container">
-          <AnimatedSection>
-            <div className="section-heading">
-              <div className="glow-line" aria-hidden="true"></div>
-              <h2>Simple process, clear outputs</h2>
-              <p>Transparent steps from audit to launch, built around your business.</p>
-            </div>
-          </AnimatedSection>
-          <AnimatedSection>
-            <div className="page-block">
-              <ol className="step-list">
-                {steps.map((s, i) => (
-                  <li key={i}>
-                    <span aria-hidden="true">{i + 1}</span>
-                    <div>
-                      <strong style={{ color: 'var(--text-bright)', display: 'block', marginBottom: '0.25rem' }}>{s.title}</strong>
-                      <p>{s.desc}</p>
-                    </div>
-                  </li>
-                ))}
-              </ol>
-            </div>
-          </AnimatedSection>
+          <article style={{
+            background: 'var(--surface)',
+            border: '1px solid var(--border)',
+            borderRadius: '12px',
+            padding: '1.5rem',
+            marginBottom: '1rem'
+          }}>
+            <h2 style={{ fontSize: '1.05rem', fontWeight: 600, marginBottom: '0.6rem' }}>
+              What we do
+            </h2>
+            <p style={{ fontSize: '0.95rem', color: 'var(--text-muted)', lineHeight: 1.6, marginBottom: '0.75rem' }}>
+              We surface official information that affects residents of the three cities:
+            </p>
+            <ul style={{
+              margin: 0,
+              paddingLeft: '1.2rem',
+              fontSize: '0.95rem',
+              color: 'var(--text-muted)',
+              lineHeight: 1.7
+            }}>
+              <li>City council agendas, minutes and decisions</li>
+              <li>Official Niagara Regional Police media releases</li>
+              <li>Planning applications, zoning notices and public meetings</li>
+              <li>Municipal budgets, road closures and public notices</li>
+            </ul>
+          </article>
 
-          {/* FAQ accordion */}
-          <div className="section-heading" style={{ marginTop: '4rem' }}>
-            <h2>Common questions</h2>
-          </div>
-          <div className="page-block">
-            {aboutFaqs.map((faq, i) => (
-              <div key={i} className="faq-item" style={{ borderBottom: '1px solid var(--line)', padding: '1rem 0' }}>
-                <button
-                  className="faq-question"
-                  onClick={() => setOpenIndex(openIndex === i ? null : i)}
-                  style={{ width: '100%', textAlign: 'left', background: 'none', border: 'none', color: 'var(--text-bright)', fontSize: '1.1rem', cursor: 'pointer', padding: '0.5rem 0', fontFamily: 'inherit', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}
-                  aria-expanded={openIndex === i}
-                >
-                  {faq.q}
-                  <span style={{ fontSize: '1.5rem', fontWeight: '300' }}>{openIndex === i ? '×' : '+'}</span>
-                </button>
-                {openIndex === i && (
-                  <p style={{ color: 'var(--muted)', marginTop: '0.5rem', lineHeight: '1.6' }}>{faq.a}</p>
-                )}
-              </div>
-            ))}
-          </div>
+          <article style={{
+            background: 'var(--surface)',
+            border: '1px solid var(--border)',
+            borderRadius: '12px',
+            padding: '1.5rem',
+            marginBottom: '1rem'
+          }}>
+            <h2 style={{ fontSize: '1.05rem', fontWeight: 600, marginBottom: '0.6rem' }}>
+              How we work
+            </h2>
+            <p style={{ fontSize: '0.95rem', color: 'var(--text-muted)', lineHeight: 1.6 }}>
+              Everything published here comes from official primary sources:
+              the Niagara Regional Police Service, the City of St. Catharines,
+              the City of Welland, the City of Thorold, and Niagara Region.
+              We do not use social media, Facebook groups or Reddit as sources.
+            </p>
+          </article>
+
+          <article style={{
+            background: 'rgba(59,130,246,0.06)',
+            border: '1px solid rgba(59,130,246,0.2)',
+            borderRadius: '12px',
+            padding: '1.5rem'
+          }}>
+            <h2 style={{ fontSize: '1.05rem', fontWeight: 600, marginBottom: '0.6rem', color: 'var(--primary)' }}>
+              Public safety policy
+            </h2>
+            <p style={{ fontSize: '0.95rem', color: 'var(--text-muted)', lineHeight: 1.6 }}>
+              Ontario does not maintain a public searchable sex offender map.
+              St. Catharines Digital never creates maps, lists or location trackers
+              of individuals. For official community notifications, always check
+              the Niagara Regional Police media releases at{' '}
+              <a
+                href="https://www.niagarapolice.ca/"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ color: 'var(--primary)' }}
+              >
+                niagarapolice.ca
+              </a>.
+            </p>
+          </article>
+
         </div>
       </section>
     </>
