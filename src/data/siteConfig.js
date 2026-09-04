@@ -19,7 +19,7 @@ export const siteConfig = {
     longitude: -79.2449,
   },
   description:
-    'Premium web design, technical SEO, and local growth systems for service businesses in St. Catharines, Niagara, and Ontario.',
+    'Independent local news for St. Catharines, Welland and Thorold. Council decisions, police releases, planning notices and municipal updates from official sources only.',
   defaultImage: '/og-card.webp',
   googleBusinessProfile: {
     status: 'verified',
@@ -29,14 +29,13 @@ export const siteConfig = {
     reviewUrl: '',
     mapsUrl: 'https://www.google.com/maps?cid=17016497002048344369',
     mapEmbedUrl: 'https://www.google.com/maps?q=St.%20Catharines%2C%20ON&output=embed',
-    primaryCategory: 'Website designer',
+    primaryCategory: 'News publisher',
     secondaryCategories: [
+      'Local news service',
       'Internet marketing service',
-      'Marketing agency',
-      'Business development service',
     ],
-    hoursNote: 'By appointment for service-area clients.',
-    verificationNote: 'Google Business Profile is live. Direct review link will be enabled after the Google Place ID or review URL is confirmed.',
+    hoursNote: 'Digital news service.',
+    verificationNote: 'Google Business Profile is live.',
   },
 }
 
@@ -45,41 +44,22 @@ export const serviceAreaCities = [
     slug: 'st-catharines',
     name: 'St. Catharines',
     region: 'Niagara',
-    searchAngle: 'competitive home-service searches around downtown, north end, and surrounding Niagara neighbourhoods',
-  },
-  {
-    slug: 'niagara-falls',
-    name: 'Niagara Falls',
-    region: 'Niagara',
-    searchAngle: 'tourism-adjacent local competition, mobile searches, and high-intent service-area queries',
+    searchAngle: 'local news, council, planning and municipal updates',
   },
   {
     slug: 'welland',
     name: 'Welland',
     region: 'Niagara',
-    searchAngle: 'contractor, repair, professional-service, and neighbourhood-intent searches across south Niagara',
-  },
-  {
-    slug: 'grimsby',
-    name: 'Grimsby',
-    region: 'Niagara West',
-    searchAngle: 'premium local services, commuter households, and west-Niagara buyer-intent searches',
+    searchAngle: 'local news, council and planning updates',
   },
   {
     slug: 'thorold',
     name: 'Thorold',
     region: 'Niagara',
-    searchAngle: 'fast-growing residential searches, service-area visibility, and Google Maps discovery',
-  },
-  {
-    slug: 'fort-erie',
-    name: 'Fort Erie',
-    region: 'Niagara South',
-    searchAngle: 'border-area searches, seasonal demand, and local service discovery across Niagara South',
+    searchAngle: 'local news, council and planning updates',
   },
 ]
 
 export const serviceAreaServices = [
-  { slug: 'web-design', name: 'Web Design', keyword: 'web design' },
-  { slug: 'local-seo', name: 'Local SEO', keyword: 'local SEO' },
+  { slug: 'local-news', name: 'Local News', keyword: 'local news' },
 ]
