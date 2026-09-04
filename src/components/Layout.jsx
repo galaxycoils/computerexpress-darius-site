@@ -29,8 +29,12 @@ export default function Layout() {
   }, [])
 
   useEffect(() => {
-    document.documentElement.dataset.theme = theme
+    // Force dark news theme by default and lock body classes
+    document.documentElement.style.background = theme === 'dark' ? '#0b0d12' : '#f7f8fa'
+    document.body.style.background = theme === 'dark' ? '#0b0d12' : '#f7f8fa'
+    document.body.style.color = theme === 'dark' ? '#e8eaef' : '#111827'
     document.body.classList.toggle('light', theme === 'light')
+    document.body.classList.add('news-mode')
     localStorage.setItem('theme', theme)
   }, [theme])
 
@@ -48,13 +52,18 @@ export default function Layout() {
   }, [])
 
   return (
-    <div className="page-shell news-shell">
+    <div className={`news-root ${theme === 'light' ? 'is-light' : 'is-dark'}`}>
       <a href="#main-content" className="skip-link">Skip to main content</a>
 
-      <header className={`scd-header ${scrolled ? 'scrolled' : ''}`}>
-        <div className="scd-header-inner">
+      <header className={`scd-h ${scrolled ? 'scrolled' : ''}`}>
+        <div className="scd-h-inner">
           <Link to="/" className="scd-brand" aria-label="St. Catharines Digital home">
-            <img src="/logo-horizontal.svg?v=2" alt="St. Catharines Digital" height="28" />
+            {/* Inline SVG so nothing can cache the old marketing logo */}
+            <svg width="210" height="28" viewBox="0 0 420 56" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M10 28 L24 8 L38 28 L24 48 Z" fill="#3b82f6"/>
+              <path d="M10 28 L24 18 L38 28 L24 38 Z" fill="#fff" fillOpacity="0.25"/>
+              <text x="50" y="36" fill="currentColor" fontFamily="Inter, system-ui, sans-serif" fontSize="22" fontWeight="700" letterSpacing="-0.4">St. Catharines Digital</text>
+            </svg>
           </Link>
 
           <nav className="scd-nav" aria-label="Primary">
@@ -63,15 +72,15 @@ export default function Layout() {
                 key={item.to}
                 to={item.to}
                 end={item.end}
-                className={({ isActive }) => (isActive ? 'scd-link active' : 'scd-link')}
+                className={({ isActive }) => (isActive ? 'scd-a active' : 'scd-a')}
               >
                 {item.label}
               </NavLink>
             ))}
           </nav>
 
-          <div className="scd-actions">
-            <button type="button" className="scd-icon-btn" onClick={toggleTheme} aria-label="Toggle theme">
+          <div className="scd-right">
+            <button type="button" className="scd-theme" onClick={toggleTheme} aria-label="Toggle theme">
               {theme === 'dark' ? '☀' : '☾'}
             </button>
             <button
@@ -87,19 +96,19 @@ export default function Layout() {
         </div>
 
         {menuOpen && (
-          <div className="scd-mobile">
+          <nav className="scd-drawer" aria-label="Mobile">
             {NAV.map((item) => (
               <NavLink
                 key={item.to}
                 to={item.to}
                 end={item.end}
                 onClick={() => setMenuOpen(false)}
-                className={({ isActive }) => (isActive ? 'scd-mobile-link active' : 'scd-mobile-link')}
+                className={({ isActive }) => (isActive ? 'scd-drawer-a active' : 'scd-drawer-a')}
               >
                 {item.label}
               </NavLink>
             ))}
-          </div>
+          </nav>
         )}
       </header>
 
@@ -107,28 +116,28 @@ export default function Layout() {
         <Outlet />
       </main>
 
-      <footer className="scd-footer">
-        <div className="scd-footer-grid">
+      <footer className="scd-f">
+        <div className="scd-f-grid">
           <div>
-            <img src="/logo-horizontal.svg?v=2" alt="St. Catharines Digital" height="24" loading="lazy" />
-            <p className="scd-footer-tag">Independent local news for St. Catharines, Welland &amp; Thorold. Official sources only.</p>
+            <div className="scd-f-name">St. Catharines Digital</div>
+            <p>Independent local news for St. Catharines, Welland &amp; Thorold. Official sources only.</p>
           </div>
           <div>
-            <div className="scd-footer-label">Sections</div>
+            <div className="scd-f-label">Sections</div>
             <Link to="/council">Council</Link>
             <Link to="/police">Police</Link>
             <Link to="/planning-tracker">Planning</Link>
             <Link to="/about">About</Link>
           </div>
           <div>
-            <div className="scd-footer-label">Official Sources</div>
+            <div className="scd-f-label">Official Sources</div>
             <a href="https://www.niagarapolice.ca/" target="_blank" rel="noopener noreferrer">Niagara Regional Police</a>
             <a href="https://www.stcatharines.ca/" target="_blank" rel="noopener noreferrer">City of St. Catharines</a>
             <a href="https://www.welland.ca/" target="_blank" rel="noopener noreferrer">City of Welland</a>
             <a href="https://www.thorold.ca/" target="_blank" rel="noopener noreferrer">City of Thorold</a>
           </div>
         </div>
-        <div className="scd-footer-bottom">
+        <div className="scd-f-bottom">
           <span>© {new Date().getFullYear()} St. Catharines Digital</span>
           <span>
             <Link to="/privacy">Privacy</Link>
@@ -138,127 +147,101 @@ export default function Layout() {
       </footer>
 
       <style>{`
-        /* ========== FORCE NEWS VISUAL SYSTEM ========== */
-        .news-shell,
-        .news-shell * {
-          box-sizing: border-box;
-        }
-
-        .news-shell {
+        .news-root {
           min-height: 100vh;
           display: flex;
           flex-direction: column;
           background: #0b0d12 !important;
           color: #e8eaef !important;
-          font-family: Inter, system-ui, -apple-system, sans-serif;
+          font-family: Inter, system-ui, -apple-system, sans-serif !important;
         }
-
-        body.light .news-shell {
+        .news-root.is-light {
           background: #f7f8fa !important;
           color: #111827 !important;
         }
 
-        /* Header */
-        .scd-header {
+        .scd-h {
           position: sticky;
           top: 0;
-          z-index: 200;
-          background: rgba(11, 13, 18, 0.9);
+          z-index: 300;
+          background: rgba(11,13,18,0.92) !important;
           backdrop-filter: blur(16px);
-          border-bottom: 1px solid #1c2030;
+          border-bottom: 1px solid #1c2030 !important;
+        }
+        .is-light .scd-h {
+          background: rgba(247,248,250,0.94) !important;
+          border-bottom-color: #e5e7eb !important;
+        }
+        .scd-h.scrolled {
+          box-shadow: 0 8px 28px rgba(0,0,0,0.3);
         }
 
-        body.light .scd-header {
-          background: rgba(247, 248, 250, 0.92);
-          border-bottom-color: #e5e7eb;
-        }
-
-        .scd-header.scrolled {
-          box-shadow: 0 10px 30px rgba(0,0,0,0.25);
-        }
-
-        .scd-header-inner {
-          max-width: 1100px;
+        .scd-h-inner {
+          max-width: 1080px;
           margin: 0 auto;
           padding: 0 1.25rem;
           height: 56px;
           display: flex;
           align-items: center;
-          gap: 1.25rem;
+          gap: 1rem;
         }
 
         .scd-brand {
           display: flex;
           align-items: center;
-          flex-shrink: 0;
           color: #e8eaef;
+          text-decoration: none;
+          flex-shrink: 0;
         }
-
-        body.light .scd-brand {
-          color: #111827;
-        }
-
-        .scd-brand img {
-          height: 26px;
-          width: auto;
-          display: block;
-        }
+        .is-light .scd-brand { color: #0f172a; }
 
         .scd-nav {
           display: none;
-          align-items: center;
-          gap: 0.15rem;
+          gap: 0.1rem;
+          margin-left: 0.5rem;
         }
 
-        .scd-link {
-          padding: 0.4rem 0.75rem;
+        .scd-a {
+          padding: 0.4rem 0.7rem;
           border-radius: 8px;
           font-size: 0.875rem;
           font-weight: 500;
-          color: #94a3b8;
-          text-decoration: none;
-          transition: color 0.15s, background 0.15s;
+          color: #94a3b8 !important;
+          text-decoration: none !important;
         }
-
-        .scd-link:hover {
-          color: #e2e8f0;
+        .scd-a:hover {
+          color: #e2e8f0 !important;
           background: rgba(255,255,255,0.05);
         }
-
-        .scd-link.active {
-          color: #fff;
-          background: rgba(59, 130, 246, 0.15);
+        .scd-a.active {
+          color: #fff !important;
+          background: rgba(59,130,246,0.16) !important;
+        }
+        .is-light .scd-a { color: #64748b !important; }
+        .is-light .scd-a:hover,
+        .is-light .scd-a.active {
+          color: #0f172a !important;
+          background: rgba(15,23,42,0.06) !important;
         }
 
-        body.light .scd-link {
-          color: #64748b;
-        }
-
-        body.light .scd-link:hover,
-        body.light .scd-link.active {
-          color: #0f172a;
-          background: rgba(15, 23, 42, 0.06);
-        }
-
-        .scd-actions {
+        .scd-right {
           margin-left: auto;
           display: flex;
           align-items: center;
-          gap: 0.25rem;
+          gap: 0.2rem;
         }
 
-        .scd-icon-btn {
+        .scd-theme {
           border: none;
           background: transparent;
           color: #94a3b8;
-          font-size: 1rem;
           width: 36px;
           height: 36px;
           border-radius: 8px;
           cursor: pointer;
+          font-size: 1rem;
         }
-
-        .scd-icon-btn:hover {
+        .scd-theme:hover {
           background: rgba(255,255,255,0.06);
           color: #e2e8f0;
         }
@@ -275,7 +258,6 @@ export default function Layout() {
           cursor: pointer;
           padding: 10px;
         }
-
         .scd-burger span {
           display: block;
           height: 2px;
@@ -284,102 +266,84 @@ export default function Layout() {
           border-radius: 1px;
           transition: 0.2s;
         }
-
-        body.light .scd-burger span {
-          background: #0f172a;
-        }
-
+        .is-light .scd-burger span { background: #0f172a; }
         .scd-burger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
         .scd-burger.open span:nth-child(2) { opacity: 0; }
         .scd-burger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
-        .scd-mobile {
+        .scd-drawer {
           display: flex;
           flex-direction: column;
-          padding: 0.25rem 1.25rem 1rem;
+          padding: 0.4rem 1.25rem 1rem;
           border-top: 1px solid #1c2030;
           background: #0b0d12;
         }
-
-        body.light .scd-mobile {
+        .is-light .scd-drawer {
           background: #f7f8fa;
           border-top-color: #e5e7eb;
         }
-
-        .scd-mobile-link {
-          padding: 0.9rem 0.2rem;
+        .scd-drawer-a {
+          padding: 0.9rem 0.15rem;
           font-size: 1rem;
           font-weight: 500;
-          color: #94a3b8;
-          text-decoration: none;
+          color: #94a3b8 !important;
+          text-decoration: none !important;
           border-bottom: 1px solid #1c2030;
         }
+        .scd-drawer-a.active { color: #fff !important; }
+        .is-light .scd-drawer-a.active { color: #0f172a !important; }
 
-        .scd-mobile-link.active {
-          color: #fff;
-        }
+        .scd-main { flex: 1; }
 
-        body.light .scd-mobile-link.active {
-          color: #0f172a;
-        }
-
-        .scd-main {
-          flex: 1;
-        }
-
-        /* Footer */
-        .scd-footer {
+        .scd-f {
           border-top: 1px solid #1c2030;
-          padding: 2.75rem 0 1.5rem;
+          padding: 2.5rem 0 1.4rem;
           margin-top: auto;
         }
+        .is-light .scd-f { border-top-color: #e5e7eb; }
 
-        body.light .scd-footer {
-          border-top-color: #e5e7eb;
-        }
-
-        .scd-footer-grid {
-          max-width: 1100px;
+        .scd-f-grid {
+          max-width: 1080px;
           margin: 0 auto;
           padding: 0 1.25rem;
           display: grid;
-          grid-template-columns: 1.6fr 1fr 1fr;
+          grid-template-columns: 1.5fr 1fr 1fr;
           gap: 2rem;
         }
 
-        .scd-footer-tag {
-          margin-top: 0.75rem;
+        .scd-f-name {
+          font-weight: 700;
+          font-size: 0.95rem;
+          margin-bottom: 0.5rem;
+        }
+        .scd-f-grid p {
           font-size: 0.9rem;
           line-height: 1.5;
           color: #94a3b8;
           max-width: 22rem;
+          margin: 0;
         }
-
-        .scd-footer-label {
+        .scd-f-label {
           font-size: 0.7rem;
           letter-spacing: 0.1em;
           text-transform: uppercase;
           color: #64748b;
           font-weight: 600;
-          margin-bottom: 0.7rem;
+          margin-bottom: 0.65rem;
         }
-
-        .scd-footer-grid a {
+        .scd-f-grid a {
           display: block;
           font-size: 0.9rem;
-          color: #94a3b8;
-          text-decoration: none;
-          margin-bottom: 0.45rem;
+          color: #94a3b8 !important;
+          text-decoration: none !important;
+          margin-bottom: 0.4rem;
         }
+        .scd-f-grid a:hover { color: #e2e8f0 !important; }
 
-        .scd-footer-grid a:hover {
-          color: #e2e8f0;
-        }
-
-        .scd-footer-bottom {
-          max-width: 1100px;
-          margin: 2rem auto 0;
-          padding: 1.1rem 1.25rem 0;
+        .scd-f-bottom {
+          max-width: 1080px;
+          margin: 1.75rem auto 0;
+          padding: 1rem 1.25rem 0;
           border-top: 1px solid #1c2030;
           display: flex;
           justify-content: space-between;
@@ -387,14 +351,10 @@ export default function Layout() {
           font-size: 0.8rem;
           color: #64748b;
         }
-
-        body.light .scd-footer-bottom {
-          border-top-color: #e5e7eb;
-        }
-
-        .scd-footer-bottom a {
-          color: #64748b;
-          text-decoration: none;
+        .is-light .scd-f-bottom { border-top-color: #e5e7eb; }
+        .scd-f-bottom a {
+          color: #64748b !important;
+          text-decoration: none !important;
           margin-left: 1rem;
         }
 
@@ -402,26 +362,25 @@ export default function Layout() {
           .scd-nav { display: flex; }
           .scd-burger { display: none; }
         }
-
         @media (max-width: 859px) {
-          .scd-footer-grid {
-            grid-template-columns: 1fr;
-            gap: 1.75rem;
-          }
-          .scd-footer-bottom {
-            flex-direction: column;
-          }
+          .scd-f-grid { grid-template-columns: 1fr; gap: 1.6rem; }
+          .scd-f-bottom { flex-direction: column; }
         }
 
-        /* Kill leftover marketing chrome */
+        /* Nuke old marketing chrome hard */
         .site-header,
         .nav-links,
         .nav-phone,
-        .hero-trust-badges,
         .bg-orb,
-        .exit-intent,
-        .ai-chat-widget {
+        .hero-trust-badges,
+        .custom-cursor,
+        .exit-intent-popup,
+        .ai-chat-widget,
+        [class*="ExitIntent"],
+        [class*="AIChat"] {
           display: none !important;
+          visibility: hidden !important;
+          pointer-events: none !important;
         }
       `}</style>
     </div>
