@@ -10,6 +10,9 @@ import TermsPage from './pages/TermsPage'
 import PlanningTrackerPage from './pages/PlanningTrackerPage'
 import CouncilPage from './pages/CouncilPage'
 import PolicePage from './pages/PolicePage'
+import NewsPage from './pages/NewsPage'
+import PoliceNewsPage from './pages/PoliceNewsPage'
+import PartnerPage from './pages/PartnerPage'
 
 // Keep a few legacy routes that still have value or inbound links
 import BlogPage from './pages/BlogPage'
@@ -32,6 +35,9 @@ export function AppRoutes() {
         <Route path="contact" element={<ContactPage />} />
         <Route path="privacy" element={<PrivacyPage />} />
         <Route path="terms" element={<TermsPage />} />
+        <Route path="partner" element={<PartnerPage />} />
+        <Route path="news" element={<NewsPage />} />
+        <Route path="news/police" element={<PoliceNewsPage />} />
         <Route path="blog" element={<BlogPage />} />
         <Route path="blog/:slug" element={<BlogPostWrapper />} />
         <Route path="*" element={<NotFoundPage />} />
