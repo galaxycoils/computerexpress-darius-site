@@ -1,5 +1,15 @@
-import { useState, useEffect, useCallback } from 'react'
-import { Outlet, useLocation, Link, NavLink } from 'react-router-dom'
+import { lazy, Suspense, useState, useEffect, useCallback, useRef } from 'react'
+import { Outlet, useLocation } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
+import SearchModal from './SearchModal'
+import CustomCursor from './CustomCursor'
+import { siteConfig } from '../data/siteConfig'
+import { trackEvent } from '../utils/analytics'
+
+const AIChatWidget = lazy(() => import('./AIChatWidget'))
+const ExitIntentPopup = lazy(() => import('./ExitIntentPopup'))
+
+const NEWSLETTER_API = '/api/newsletter'
 
 function getInitialTheme() {
   if (typeof window === 'undefined') return 'dark'
@@ -13,6 +23,8 @@ const NAV = [
   { to: '/council', label: 'Council' },
   { to: '/police', label: 'Police' },
   { to: '/planning-tracker', label: 'Planning' },
+  { to: '/news', label: 'News' },
+  { to: '/news/police', label: 'Police Releases' },
   { to: '/about', label: 'About' },
 ]
 
@@ -50,6 +62,8 @@ export default function Layout() {
   const toggleTheme = useCallback(() => {
     setTheme((t) => (t === 'dark' ? 'light' : 'dark'))
   }, [])
+
+  function closeMenu() { setMenuOpen(false) }
 
   return (
     <div className={`news-root ${theme === 'light' ? 'is-light' : 'is-dark'}`}>
@@ -93,6 +107,23 @@ export default function Layout() {
               <span /><span /><span />
             </button>
           </div>
+
+          <nav className={`nav-links ${menuOpen ? 'open' : ''}`} aria-label="Primary">
+            <NavLink to="/services" onClick={closeMenu}>Services</NavLink>
+            <NavLink to="/planning-tracker" onClick={closeMenu}>Planning Tracker</NavLink>
+            <NavLink to="/news" onClick={closeMenu}>News</NavLink>
+            <NavLink to="/news/police" onClick={closeMenu}>Police Releases</NavLink>
+            <NavLink to="/blog" onClick={closeMenu}>Blog</NavLink>
+            <NavLink to="/partner" onClick={closeMenu}>Partner</NavLink>
+            <NavLink to="/what-to-expect" onClick={closeMenu}>What to Expect</NavLink>
+            <NavLink to="/about" onClick={closeMenu}>About</NavLink>
+            <a href={`tel:${siteConfig.phone}`} className="nav-phone" aria-label={`Call ${siteConfig.phoneDisplay}`} style={{color:'var(--primary)',fontSize:'0.85rem',fontWeight:600,textDecoration:'none',display:'flex',alignItems:'center',gap:'0.25rem'}}>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+              {siteConfig.phoneDisplay}
+            </a>
+            <a href={siteConfig.calendlyUrl} target="_blank" rel="noopener noreferrer" className="button button-ghost" style={{fontSize:'0.8rem',padding:'0.4rem 0.8rem'}}>Book Call</a>
+            <Link to="/free-audit" className="button button-ghost" onClick={closeMenu}>Free Audit</Link>
+          </nav>
         </div>
 
         {menuOpen && (
