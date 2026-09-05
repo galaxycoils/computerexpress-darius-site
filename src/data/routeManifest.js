@@ -30,7 +30,6 @@ export const baseRoutes = [
   '/free-audit',
   '/partner',
   '/planning-tracker',
-  '/news',
   '/news/police',
   '/privacy',
   '/terms',

@@ -23,7 +23,6 @@ const NAV = [
   { to: '/council', label: 'Council' },
   { to: '/police', label: 'Police' },
   { to: '/planning-tracker', label: 'Planning' },
-  { to: '/news', label: 'News' },
   { to: '/news/police', label: 'Police Releases' },
   { to: '/about', label: 'About' },
 ]
@@ -111,7 +110,6 @@ export default function Layout() {
           <nav className={`nav-links ${menuOpen ? 'open' : ''}`} aria-label="Primary">
             <NavLink to="/services" onClick={closeMenu}>Services</NavLink>
             <NavLink to="/planning-tracker" onClick={closeMenu}>Planning Tracker</NavLink>
-            <NavLink to="/news" onClick={closeMenu}>News</NavLink>
             <NavLink to="/news/police" onClick={closeMenu}>Police Releases</NavLink>
             <NavLink to="/blog" onClick={closeMenu}>Blog</NavLink>
             <NavLink to="/partner" onClick={closeMenu}>Partner</NavLink>
