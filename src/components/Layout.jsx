@@ -1,13 +1,10 @@
-import { lazy, Suspense, useState, useEffect, useCallback, useRef } from 'react'
+import { lazy, Suspense, useState, useEffect, useCallback } from 'react'
 import { Outlet, useLocation } from 'react-router-dom'
 import { Link, NavLink } from 'react-router-dom'
 import SearchModal from './SearchModal'
-import CustomCursor from './CustomCursor'
 import { siteConfig } from '../data/siteConfig'
-import { trackEvent } from '../utils/analytics'
 
 const AIChatWidget = lazy(() => import('./AIChatWidget'))
-const ExitIntentPopup = lazy(() => import('./ExitIntentPopup'))
 
 const NEWSLETTER_API = '/api/newsletter'
 
@@ -40,7 +37,6 @@ export default function Layout() {
   }, [])
 
   useEffect(() => {
-    // Force dark news theme by default and lock body classes
     document.documentElement.style.background = theme === 'dark' ? '#0b0d12' : '#f7f8fa'
     document.body.style.background = theme === 'dark' ? '#0b0d12' : '#f7f8fa'
     document.body.style.color = theme === 'dark' ? '#e8eaef' : '#111827'
@@ -71,11 +67,10 @@ export default function Layout() {
       <header className={`scd-h ${scrolled ? 'scrolled' : ''}`}>
         <div className="scd-h-inner">
           <Link to="/" className="scd-brand" aria-label="St. Catharines Digital home">
-            {/* Inline SVG so nothing can cache the old marketing logo */}
             <svg width="210" height="28" viewBox="0 0 420 56" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-              <path d="M10 28 L24 8 L38 28 L24 48 Z" fill="#3b82f6"/>
+              <path d="M10 28 L24 8 L38 28 L24 48 Z" fill="#9ce4c1"/>
               <path d="M10 28 L24 18 L38 28 L24 38 Z" fill="#fff" fillOpacity="0.25"/>
-              <text x="50" y="36" fill="currentColor" fontFamily="Inter, system-ui, sans-serif" fontSize="22" fontWeight="700" letterSpacing="-0.4">St. Catharines Digital</text>
+              <text x="50" y="36" fill="currentColor" fontFamily="'IBM Plex Sans', sans-serif" fontSize="20" fontWeight="700" letterSpacing="-0.4">St. Catharines Digital</text>
             </svg>
           </Link>
 
@@ -108,19 +103,16 @@ export default function Layout() {
           </div>
 
           <nav className={`nav-links ${menuOpen ? 'open' : ''}`} aria-label="Primary">
-            <NavLink to="/services" onClick={closeMenu}>Services</NavLink>
-            <NavLink to="/planning-tracker" onClick={closeMenu}>Planning Tracker</NavLink>
+            <NavLink to="/council" onClick={closeMenu}>Council</NavLink>
+            <NavLink to="/police" onClick={closeMenu}>Police</NavLink>
+            <NavLink to="/planning-tracker" onClick={closeMenu}>Planning</NavLink>
             <NavLink to="/news/police" onClick={closeMenu}>Police Releases</NavLink>
-            <NavLink to="/blog" onClick={closeMenu}>Blog</NavLink>
-            <NavLink to="/partner" onClick={closeMenu}>Partner</NavLink>
-            <NavLink to="/what-to-expect" onClick={closeMenu}>What to Expect</NavLink>
             <NavLink to="/about" onClick={closeMenu}>About</NavLink>
-            <a href={`tel:${siteConfig.phone}`} className="nav-phone" aria-label={`Call ${siteConfig.phoneDisplay}`} style={{color:'var(--primary)',fontSize:'0.85rem',fontWeight:600,textDecoration:'none',display:'flex',alignItems:'center',gap:'0.25rem'}}>
+            <a href={`tel:${siteConfig.phone}`} className="nav-phone" aria-label={`Call ${siteConfig.phoneDisplay}`}>
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
               {siteConfig.phoneDisplay}
             </a>
-            <a href={siteConfig.calendlyUrl} target="_blank" rel="noopener noreferrer" className="button button-ghost" style={{fontSize:'0.8rem',padding:'0.4rem 0.8rem'}}>Book Call</a>
-            <Link to="/free-audit" className="button button-ghost" onClick={closeMenu}>Free Audit</Link>
+            <a href={siteConfig.calendlyUrl} target="_blank" rel="noopener noreferrer" className="button button-ghost" style={{ fontSize: '0.8rem', padding: '0.4rem 0.8rem' }}>Book</a>
           </nav>
         </div>
 
@@ -149,7 +141,7 @@ export default function Layout() {
         <div className="scd-f-grid">
           <div>
             <div className="scd-f-name">St. Catharines Digital</div>
-            <p>Independent local news for St. Catharines, Welland &amp; Thorold. Official sources only.</p>
+            <p>Independent local news for St. Catharines, Welland & Thorold. Official sources only.</p>
           </div>
           <div>
             <div className="scd-f-label">Sections</div>
@@ -182,7 +174,7 @@ export default function Layout() {
           flex-direction: column;
           background: #0b0d12 !important;
           color: #e8eaef !important;
-          font-family: Inter, system-ui, -apple-system, sans-serif !important;
+          font-family: 'IBM Plex Sans', ui-sans-serif, -apple-system, sans-serif !important;
         }
         .news-root.is-light {
           background: #f7f8fa !important;
@@ -201,9 +193,7 @@ export default function Layout() {
           background: rgba(247,248,250,0.94) !important;
           border-bottom-color: #e5e7eb !important;
         }
-        .scd-h.scrolled {
-          box-shadow: 0 8px 28px rgba(0,0,0,0.3);
-        }
+        .scd-h.scrolled { box-shadow: 0 8px 28px rgba(0,0,0,0.3); }
 
         .scd-h-inner {
           max-width: 1080px;
@@ -215,202 +205,56 @@ export default function Layout() {
           gap: 1rem;
         }
 
-        .scd-brand {
-          display: flex;
-          align-items: center;
-          color: #e8eaef;
-          text-decoration: none;
-          flex-shrink: 0;
-        }
+        .scd-brand { display: flex; align-items: center; color: #e8eaef; text-decoration: none; flex-shrink: 0; }
         .is-light .scd-brand { color: #0f172a; }
 
-        .scd-nav {
-          display: none;
-          gap: 0.1rem;
-          margin-left: 0.5rem;
-        }
-
-        .scd-a {
-          padding: 0.4rem 0.7rem;
-          border-radius: 8px;
-          font-size: 0.875rem;
-          font-weight: 500;
-          color: #94a3b8 !important;
-          text-decoration: none !important;
-        }
-        .scd-a:hover {
-          color: #e2e8f0 !important;
-          background: rgba(255,255,255,0.05);
-        }
-        .scd-a.active {
-          color: #fff !important;
-          background: rgba(59,130,246,0.16) !important;
-        }
+        .scd-nav { display: none; gap: 0.1rem; margin-left: 0.5rem; }
+        .scd-a { padding: 0.4rem 0.7rem; border-radius: 8px; font-size: 0.875rem; font-weight: 500; color: #94a3b8 !important; text-decoration: none !important; }
+        .scd-a:hover { color: #e2e8f0 !important; background: rgba(255,255,255,0.05); }
+        .scd-a.active { color: #fff !important; background: rgba(156,228,193,0.16) !important; }
         .is-light .scd-a { color: #64748b !important; }
-        .is-light .scd-a:hover,
-        .is-light .scd-a.active {
-          color: #0f172a !important;
-          background: rgba(15,23,42,0.06) !important;
-        }
+        .is-light .scd-a:hover, .is-light .scd-a.active { color: #0f172a !important; background: rgba(15,23,42,0.06) !important; }
 
-        .scd-right {
-          margin-left: auto;
-          display: flex;
-          align-items: center;
-          gap: 0.2rem;
-        }
-
-        .scd-theme {
-          border: none;
-          background: transparent;
-          color: #94a3b8;
-          width: 36px;
-          height: 36px;
-          border-radius: 8px;
-          cursor: pointer;
-          font-size: 1rem;
-        }
-        .scd-theme:hover {
-          background: rgba(255,255,255,0.06);
-          color: #e2e8f0;
-        }
-
-        .scd-burger {
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          gap: 5px;
-          width: 40px;
-          height: 40px;
-          border: none;
-          background: transparent;
-          cursor: pointer;
-          padding: 10px;
-        }
-        .scd-burger span {
-          display: block;
-          height: 2px;
-          width: 100%;
-          background: #e2e8f0;
-          border-radius: 1px;
-          transition: 0.2s;
-        }
+        .scd-right { margin-left: auto; display: flex; align-items: center; gap: 0.2rem; }
+        .scd-theme { border: none; background: transparent; color: #94a3b8; width: 36px; height: 36px; border-radius: 8px; cursor: pointer; font-size: 1rem; }
+        .scd-theme:hover { background: rgba(255,255,255,0.06); color: #e2e8f0; }
+        .scd-burger { display: flex; flex-direction: column; justify-content: center; gap: 5px; width: 40px; height: 40px; border: none; background: transparent; cursor: pointer; padding: 10px; }
+        .scd-burger span { display: block; height: 2px; width: 100%; background: #e2e8f0; border-radius: 1px; transition: 0.2s; }
         .is-light .scd-burger span { background: #0f172a; }
         .scd-burger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
         .scd-burger.open span:nth-child(2) { opacity: 0; }
         .scd-burger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
-        .scd-drawer {
-          display: flex;
-          flex-direction: column;
-          padding: 0.4rem 1.25rem 1rem;
-          border-top: 1px solid #1c2030;
-          background: #0b0d12;
-        }
-        .is-light .scd-drawer {
-          background: #f7f8fa;
-          border-top-color: #e5e7eb;
-        }
-        .scd-drawer-a {
-          padding: 0.9rem 0.15rem;
-          font-size: 1rem;
-          font-weight: 500;
-          color: #94a3b8 !important;
-          text-decoration: none !important;
-          border-bottom: 1px solid #1c2030;
-        }
+        .nav-links { display: flex; align-items: center; gap: 0.75rem; margin-left: auto; }
+        .nav-links a { color: #94a3b8; font-size: 0.85rem; text-decoration: none; padding: 0.4rem 0; transition: color 0.15s; }
+        .nav-links a:hover { color: #e2e8f0; }
+        .nav-phone { color: #9ce4c1; font-size: 0.85rem; font-weight: 600; text-decoration: none; display: flex; align-items: center; gap: 0.25rem; }
+
+        .scd-drawer { display: flex; flex-direction: column; padding: 0.4rem 1.25rem 1rem; border-top: 1px solid #1c2030; background: #0b0d12; }
+        .is-light .scd-drawer { background: #f7f8fa; border-top-color: #e5e7eb; }
+        .scd-drawer-a { padding: 0.9rem 0.15rem; font-size: 1rem; font-weight: 500; color: #94a3b8 !important; text-decoration: none !important; border-bottom: 1px solid #1c2030; }
         .scd-drawer-a.active { color: #fff !important; }
         .is-light .scd-drawer-a.active { color: #0f172a !important; }
 
         .scd-main { flex: 1; }
 
-        .scd-f {
-          border-top: 1px solid #1c2030;
-          padding: 2.5rem 0 1.4rem;
-          margin-top: auto;
-        }
+        .scd-f { border-top: 1px solid #1c2030; padding: 2.5rem 0 1.4rem; margin-top: auto; }
         .is-light .scd-f { border-top-color: #e5e7eb; }
-
-        .scd-f-grid {
-          max-width: 1080px;
-          margin: 0 auto;
-          padding: 0 1.25rem;
-          display: grid;
-          grid-template-columns: 1.5fr 1fr 1fr;
-          gap: 2rem;
-        }
-
-        .scd-f-name {
-          font-weight: 700;
-          font-size: 0.95rem;
-          margin-bottom: 0.5rem;
-        }
-        .scd-f-grid p {
-          font-size: 0.9rem;
-          line-height: 1.5;
-          color: #94a3b8;
-          max-width: 22rem;
-          margin: 0;
-        }
-        .scd-f-label {
-          font-size: 0.7rem;
-          letter-spacing: 0.1em;
-          text-transform: uppercase;
-          color: #64748b;
-          font-weight: 600;
-          margin-bottom: 0.65rem;
-        }
-        .scd-f-grid a {
-          display: block;
-          font-size: 0.9rem;
-          color: #94a3b8 !important;
-          text-decoration: none !important;
-          margin-bottom: 0.4rem;
-        }
+        .scd-f-grid { max-width: 1080px; margin: 0 auto; padding: 0 1.25rem; display: grid; grid-template-columns: 1.5fr 1fr 1fr; gap: 2rem; }
+        .scd-f-name { font-weight: 700; font-size: 0.95rem; margin-bottom: 0.5rem; }
+        .scd-f-grid p { font-size: 0.9rem; line-height: 1.5; color: #94a3b8; max-width: 22rem; margin: 0; }
+        .scd-f-label { font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: #64748b; font-weight: 600; margin-bottom: 0.65rem; }
+        .scd-f-grid a { display: block; font-size: 0.9rem; color: #94a3b8 !important; text-decoration: none !important; margin-bottom: 0.4rem; }
         .scd-f-grid a:hover { color: #e2e8f0 !important; }
-
-        .scd-f-bottom {
-          max-width: 1080px;
-          margin: 1.75rem auto 0;
-          padding: 1rem 1.25rem 0;
-          border-top: 1px solid #1c2030;
-          display: flex;
-          justify-content: space-between;
-          gap: 1rem;
-          font-size: 0.8rem;
-          color: #64748b;
-        }
+        .scd-f-bottom { max-width: 1080px; margin: 1.75rem auto 0; padding: 1rem 1.25rem 0; border-top: 1px solid #1c2030; display: flex; justify-content: space-between; gap: 1rem; font-size: 0.8rem; color: #64748b; }
         .is-light .scd-f-bottom { border-top-color: #e5e7eb; }
-        .scd-f-bottom a {
-          color: #64748b !important;
-          text-decoration: none !important;
-          margin-left: 1rem;
-        }
+        .scd-f-bottom a { color: #64748b !important; text-decoration: none !important; margin-left: 1rem; }
 
-        @media (min-width: 860px) {
-          .scd-nav { display: flex; }
-          .scd-burger { display: none; }
-        }
-        @media (max-width: 859px) {
-          .scd-f-grid { grid-template-columns: 1fr; gap: 1.6rem; }
-          .scd-f-bottom { flex-direction: column; }
-        }
+        @media (min-width: 860px) { .scd-nav { display: flex; } .scd-burger { display: none; } }
+        @media (max-width: 859px) { .scd-f-grid { grid-template-columns: 1fr; gap: 1.6rem; } .scd-f-bottom { flex-direction: column; } }
 
-        /* Nuke old marketing chrome hard */
-        .site-header,
-        .nav-links,
-        .nav-phone,
-        .bg-orb,
-        .hero-trust-badges,
-        .custom-cursor,
-        .exit-intent-popup,
-        .ai-chat-widget,
-        [class*="ExitIntent"],
-        [class*="AIChat"] {
-          display: none !important;
-          visibility: hidden !important;
-          pointer-events: none !important;
-        }
+        /* Nuke old marketing chrome */
+        .site-header, .bg-orb, .hero-trust-badges, .custom-cursor, .exit-intent-popup, .ai-chat-widget, [class*="ExitIntent"], [class*="AIChat"] { display: none !important; visibility: hidden !important; pointer-events: none !important; }
       `}</style>
     </div>
   )

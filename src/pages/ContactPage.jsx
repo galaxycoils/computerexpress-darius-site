@@ -2,7 +2,6 @@ import Seo, { BASE_URL } from '../components/Seo'
 import { Link } from 'react-router-dom'
 import AnimatedSection from '../hooks/useInView'
 import ContactForm from '../components/ContactForm'
-import { guarantee } from '../data/siteData'
 import { getLocalBusinessSchema } from '../data/schema'
 import { siteConfig } from '../data/siteConfig'
 
@@ -11,21 +10,17 @@ const contactPageJsonLd = {
   '@type': 'ContactPage',
   name: 'Contact St. Catharines Digital',
   url: `${BASE_URL}/contact`,
-  description: 'Contact St. Catharines Digital for web design, technical SEO, and Google Business Profile optimization. Get a free website audit.',
-  about: 'We build high-performance websites and local SEO strategies for service businesses in St. Catharines and across Ontario.',
+  description: 'Contact St. Catharines Digital about our Planning Alert newsletter, municipal news coverage, and local advertising opportunities.',
+  about: 'St. Catharines Digital is a municipal news platform tracking official council, police, and planning notices across the Niagara Region.',
   knowsLanguage: ['English'],
-  knowsAbout: ['Web Design', 'Technical SEO', 'Local SEO', 'Google Business Profile'],
+  knowsAbout: ['Municipal News', 'Planning Alerts', 'Local Government Coverage', 'Editorial Independence'],
   areaServed: {
     '@type': 'City',
     name: 'St. Catharines',
-    containedInPlace: {
-      '@type': 'State',
-      name: 'Ontario',
-      containedInPlace: {
-        '@type': 'Country',
-        name: 'Canada'
-      }
-    }
+    containedInPlace: { '@type': 'State', name: 'Ontario' },
+    ...{},
+    '@type': 'Country',
+    name: 'Canada'
   }
 }
 
@@ -35,18 +30,8 @@ const breadcrumbJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'BreadcrumbList',
   itemListElement: [
-    {
-      '@type': 'ListItem',
-      position: 1,
-      name: 'Home',
-      item: BASE_URL
-    },
-    {
-      '@type': 'ListItem',
-      position: 2,
-      name: 'Contact',
-      item: `${BASE_URL}/contact`
-    }
+    { '@type': 'ListItem', position: 1, name: 'Home', item: BASE_URL },
+    { '@type': 'ListItem', position: 2, name: 'Contact', item: `${BASE_URL}/contact` }
   ]
 }
 
@@ -54,93 +39,32 @@ export default function ContactPage() {
   return (
     <>
       <Seo
-        title="Contact | St. Catharines Digital — Get a Free SEO Audit"
-        description="Contact St. Catharines Digital for web design, technical SEO, and Google Business Profile optimization. Get a free website audit and strategy call."
+        title="Contact | St. Catharines Digital — Editorial & Advertising Inquiries"
+        description="Contact the St. Catharines Digital editorial team about Planning Alert sponsorship, press inquiries, or corrections."
         path="/contact"
         jsonLd={[contactPageJsonLd, localBusinessJsonLd, breadcrumbJsonLd]}
       />
-
-      {/* Background orbs */}
-      <div className="bg-orb bg-orb-1" aria-hidden="true"></div>
-      <div className="bg-orb bg-orb-2" aria-hidden="true"></div>
-
-      {/* Hero */}
-      <section className="section-first page-hero" aria-label="Contact us">
-        <div className="container">
-          <h1>Start with a free audit</h1>
-          <p>We will review your site or business and send you a custom report with recommendations — no strings attached.</p>
-        </div>
-      </section>
-
-      {/* Contact form section */}
-      <section className="section" aria-label="Contact form">
-        <div className="container">
-          <div className="contact-wrapper">
-            <div className="contact-form-panel">
-              <AnimatedSection>
-                <div className="section-heading">
-                  <div className="glow-line" aria-hidden="true"></div>
-                  <h2>Send us a message</h2>
-                  <p>Tell us about your business, your goals, and what is working (or not) with your current site.</p>
-                </div>
-                <ContactForm />
-              </AnimatedSection>
+      <main className="contact-page">
+        <section className="contact-hero">
+          <h1>Editorial & Advertising Contact</h1>
+          <p className="lead">St. Catharines Digital tracks official municipal notices across the Niagara Region. For editorial inquiries, sponsorship opportunities, or corrections, reach out below.</p>
+        </section>
+        <ContactForm />
+        <section className="contact-info">
+          <h2>Connect With Us</h2>
+          <div className="contact-grid">
+            <div className="contact-card">
+              <h3>Planning Alert Sponsorship</h3>
+              <p>Founding pilot at $300/mo. One placement per send, editorial firewall guaranteed.</p>
+              <Link to="/planning-tracker" className="btn">View Planning Tracker</Link>
             </div>
-
-            <div className="contact-info-panel">
-              <AnimatedSection delay={100}>
-                <div className="info-box">
-                  <h3>What happens next</h3>
-                  <ul className="info-list">
-                    <li>
-                      <strong>Within 24 hours</strong> — We reply with a custom SEO and website audit
-                    </li>
-                    <li>
-                      <strong>Free strategy call</strong> — Book a 30-minute call to walk through findings
-                    </li>
-                    <li>
-                      <strong>No obligation</strong> — 30-day satisfaction guarantee on all packages
-                    </li>
-                    <li>
-                      <strong>Response time</strong> — Expect a reply within 4 business hours
-                    </li>
-                  </ul>
-                </div>
-
-                <div className="info-box">
-                  <h3>Get in touch directly</h3>
-                  <div className="contact-method">
-                    <div className="contact-method-icon" aria-hidden="true">📞</div>
-                    <div>
-                      <div className="contact-method-label">Phone</div>
-                      <a href={`tel:${siteConfig.phone}`}>{siteConfig.phoneDisplay}</a>
-                    </div>
-                  </div>
-                  <div className="contact-method">
-                    <div className="contact-method-icon" aria-hidden="true">📧</div>
-                    <div>
-                      <div className="contact-method-label">Email</div>
-                      <a href={`mailto:${siteConfig.email}`}>{siteConfig.email}</a>
-                    </div>
-                  </div>
-                  <div className="contact-method">
-                    <div className="contact-method-icon" aria-hidden="true">📞</div>
-                    <div>
-                      <div className="contact-method-label">Book a call</div>
-                      <a href={siteConfig.calendlyUrl} target="_blank" rel="noopener noreferrer">30-minute free consultation</a>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="info-box guarantee-box">
-                  <h3>🔒 {guarantee.title}</h3>
-                  <p>{guarantee.description}</p>
-                </div>
-              </AnimatedSection>
+            <div className="contact-card">
+              <h3>Press & Corrections</h3>
+              <p>All sources are official municipal domains. Report errors or request corrections.</p>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      </main>
     </>
   )
 }
