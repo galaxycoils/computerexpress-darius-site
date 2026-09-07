@@ -20,7 +20,6 @@ export function getLocalBusinessSchema(overrides = {}) {
     url: BASE_URL,
     logo: `${BASE_URL}/logo-mark.svg`,
     image: `${BASE_URL}${siteConfig.defaultImage}`,
-    telephone: siteConfig.phone,
     email: siteConfig.email,
     description: siteConfig.description,
     address: {

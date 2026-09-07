@@ -55,6 +55,4 @@ export const aboutSections = [
 
 export const contactInfo = {
   email: 'hello@stcatharinesdigital.ca',
-  phone: '+13653595973',
-  phoneDisplay: '(365) 359-5973',
 }
