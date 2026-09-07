@@ -17,7 +17,8 @@ export default function NewsPage() {
       <Seo
         title="Local News — Coming Soon | St. Catharines Digital"
         description="St. Catharines Digital is building a local news page with attributed link-outs from Niagara's news sources. RSS feeds are being verified — check back soon."
-        jsonLd={jsonLd}
+        path="/news"
+        noIndex
       />
 
       <main
