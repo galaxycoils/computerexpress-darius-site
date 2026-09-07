@@ -18,8 +18,7 @@ export const siteConfig = {
     latitude: 43.1594,
     longitude: -79.2449,
   },
-  description:
-    'Independent local news for St. Catharines, Welland and Thorold. Council decisions, police releases, planning notices and municipal updates from official sources only.',
+  description: 'Scans St. Catharines, Welland, Thorold, and Niagara Region notices every week and puts the active ones in one free digest. Official municipal sources only, no paywalls, no editorial interference.',
   defaultImage: '/og-card.webp',
   googleBusinessProfile: {
     status: 'verified',
@@ -32,7 +31,6 @@ export const siteConfig = {
     primaryCategory: 'News publisher',
     secondaryCategories: [
       'Local news service',
-      'Internet marketing service',
     ],
     hoursNote: 'Digital news service.',
     verificationNote: 'Google Business Profile is live.',
@@ -58,8 +56,4 @@ export const serviceAreaCities = [
     region: 'Niagara',
     searchAngle: 'local news, council and planning updates',
   },
-]
-
-export const serviceAreaServices = [
-  { slug: 'local-news', name: 'Local News', keyword: 'local news' },
 ]
