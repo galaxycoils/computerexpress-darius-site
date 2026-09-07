@@ -2,11 +2,45 @@
  * NRPS Police Media Releases for St. Catharines Digital
  * Sourced exclusively from https://www.niagarapolice.ca/news/posts/
  * Official Niagara Regional Police Service media releases & community notifications.
- * Updated: 2026-09-05
+ * Updated: 2026-09-07
  * Next review: Daily (cron) — refresh from niagarapolice.ca
  */
 
 export const nrpsReleases = [
+  // SEP 7, 2026
+  {
+    id: 'nrps-2026-09-07-fort-erie-collision',
+    date: '2026-09-07',
+    headline: 'Detectives Investigating Serious Collision in Fort Erie',
+    municipality: 'Fort Erie',
+    type: 'Media Release (Collision Investigation)',
+    url: 'https://www.niagarapolice.ca/news/posts/detectives-investigating-serious-collision-in-fort-erie/',
+    source: 'Niagara Regional Police Service',
+    tags: ['Collision', 'Serious Injuries', 'Fort Erie', 'Investigation'],
+    category: 'collision',
+  },
+  {
+    id: 'nrps-2026-09-07-ride-checks',
+    date: '2026-09-07',
+    headline: 'NRPS RIDE Checks Result in Impaired Driving Arrests and Licence Suspensions',
+    municipality: 'Fort Erie',
+    type: 'Community Notification / Public Safety',
+    url: 'https://www.niagarapolice.ca/news/posts/nrps-ride-checks-result-in-impaired-driving-arrests-and-licence-suspensions/',
+    source: 'Niagara Regional Police Service',
+    tags: ['RIDE', 'Impaired Driving', 'Arrests', 'Licence Suspensions', 'Fort Erie', 'Public Safety'],
+    category: 'impaired-driving',
+  },
+  {
+    id: 'nrps-2026-09-07-welland-escooter-collision',
+    date: '2026-09-07',
+    headline: 'Police Investigating Serious E-Scooter Collision in Welland',
+    municipality: 'Welland',
+    type: 'Media Release (Collision Investigation)',
+    url: 'https://www.niagarapolice.ca/news/posts/police-investigating-serious-e-scooter-collision-in-welland/',
+    source: 'Niagara Regional Police Service',
+    tags: ['E-Scooter', 'Collision', 'Serious Injuries', 'Welland', 'Investigation'],
+    category: 'collision',
+  },
   // SEP 4, 2026
   {
     id: 'nrps-2026-09-04-wellandport-bne',
