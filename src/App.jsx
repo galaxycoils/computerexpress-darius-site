@@ -11,6 +11,7 @@ import PlanningTrackerPage from './pages/PlanningTrackerPage'
 import CouncilPage from './pages/CouncilPage'
 import PolicePage from './pages/PolicePage'
 import NewsPage from './pages/NewsPage'
+import CityNewsPage from './pages/CityNewsPage'
 import PoliceNewsPage from './pages/PoliceNewsPage'
 import PartnerPage from './pages/PartnerPage'
 
@@ -38,6 +39,7 @@ export function AppRoutes() {
         <Route path="partner" element={<PartnerPage />} />
         <Route path="news" element={<NewsPage />} />
         <Route path="news/police" element={<PoliceNewsPage />} />
+        <Route path="news/:citySlug" element={<CityNewsPage />} />
         <Route path="blog" element={<BlogPage />} />
         <Route path="blog/:slug" element={<BlogPostWrapper />} />
         <Route path="*" element={<NotFoundPage />} />

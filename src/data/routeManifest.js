@@ -14,6 +14,9 @@ export const baseRoutes = [
   '/partner',
   '/news',
   '/news/police',
+  '/news/st-catharines',
+  '/news/welland',
+  '/news/thorold',
 ]
 
 export const programmaticRoutes = []
