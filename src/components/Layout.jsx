@@ -2,7 +2,6 @@ import { lazy, Suspense, useState, useEffect, useCallback } from 'react'
 import { Outlet, useLocation } from 'react-router-dom'
 import { Link, NavLink } from 'react-router-dom'
 import SearchModal from './SearchModal'
-import { siteConfig } from '../data/siteConfig'
 
 const AIChatWidget = lazy(() => import('./AIChatWidget'))
 
@@ -108,11 +107,6 @@ export default function Layout() {
             <NavLink to="/planning-tracker" onClick={closeMenu}>Planning</NavLink>
             <NavLink to="/news/police" onClick={closeMenu}>Police Releases</NavLink>
             <NavLink to="/about" onClick={closeMenu}>About</NavLink>
-            <a href={`tel:${siteConfig.phone}`} className="nav-phone" aria-label={`Call ${siteConfig.phoneDisplay}`}>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-              {siteConfig.phoneDisplay}
-            </a>
-            <a href={siteConfig.calendlyUrl} target="_blank" rel="noopener noreferrer" className="button button-ghost" style={{ fontSize: '0.8rem', padding: '0.4rem 0.8rem' }}>Book</a>
           </nav>
         </div>
 
@@ -228,7 +222,6 @@ export default function Layout() {
         .nav-links { display: flex; align-items: center; gap: 0.75rem; margin-left: auto; }
         .nav-links a { color: #94a3b8; font-size: 0.85rem; text-decoration: none; padding: 0.4rem 0; transition: color 0.15s; }
         .nav-links a:hover { color: #e2e8f0; }
-        .nav-phone { color: #9ce4c1; font-size: 0.85rem; font-weight: 600; text-decoration: none; display: flex; align-items: center; gap: 0.25rem; }
 
         .scd-drawer { display: flex; flex-direction: column; padding: 0.4rem 1.25rem 1rem; border-top: 1px solid #1c2030; background: #0b0d12; }
         .is-light .scd-drawer { background: #f7f8fa; border-top-color: #e5e7eb; }

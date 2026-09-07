@@ -17,10 +17,8 @@ const contactPageJsonLd = {
   areaServed: {
     '@type': 'City',
     name: 'St. Catharines',
-    containedInPlace: { '@type': 'State', name: 'Ontario' },
-    ...{},
-    '@type': 'Country',
-    name: 'Canada'
+    containedInPlace: { '@type': 'AdministrativeArea', name: 'Ontario' },
+    addressCountry: { '@type': 'Country', name: 'Canada' }
   }
 }
 
