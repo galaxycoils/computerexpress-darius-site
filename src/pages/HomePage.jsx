@@ -46,8 +46,8 @@ export default function HomePage() {
   return (
     <>
       <Seo
-        title="Local News for St. Catharines, Welland & Thorold"
-        description={siteConfig.description}
+        title="St. Catharines Digital | Official Municipal Planning Notices, Tracked & Delivered"
+        description="Scans St. Catharines, Welland, Thorold, and Niagara Region notices every week and puts the active ones in one free digest. Official municipal sources only, no paywalls, no editorial interference."
         jsonLd={jsonLd}
       />
 
