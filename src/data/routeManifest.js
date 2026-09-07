@@ -9,6 +9,9 @@ export const baseRoutes = [
   '/privacy',
   '/terms',
   '/planning-tracker',
+  '/council',
+  '/police',
+  '/partner',
   '/news',
   '/news/police',
 ]
