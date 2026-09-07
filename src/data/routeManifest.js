@@ -30,6 +30,7 @@ export const baseRoutes = [
   '/free-audit',
   '/partner',
   '/planning-tracker',
+  '/news',
   '/news/police',
   '/privacy',
   '/terms',
@@ -39,8 +40,8 @@ export const programmaticRoutes = serviceAreaServices.flatMap((service) =>
   serviceAreaCities.map((city) => `/service-areas/${service.slug}/${city.slug}`)
 )
 
-export const sitemapRoutes = [...baseRoutes, ...programmaticRoutes]
-export const prerenderRoutes = [...sitemapRoutes, '/404']
+export const sitemapRoutes = baseRoutes.filter((r) => !r.endsWith('/news')).concat(programmaticRoutes)
+export const prerenderRoutes = [...baseRoutes, '/404']
 
 export function getRouteSitemapMeta(route) {
   if (route === '/') return { priority: '1.0', changefreq: 'weekly' }
