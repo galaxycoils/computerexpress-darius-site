@@ -7,8 +7,6 @@ export const siteConfig = {
   url: BASE_URL,
   locale: 'en_CA',
   language: 'en-CA',
-  phone: '+13653595973',
-  phoneDisplay: '(365) 359-5973',
   email: 'hello@stcatharinesdigital.ca',
   calendlyUrl: 'https://calendly.com/tahamtandariush/30min',
   city: 'St. Catharines',

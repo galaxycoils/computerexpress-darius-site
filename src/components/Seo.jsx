@@ -26,24 +26,16 @@ export default function Seo({
 
   const defaults = {
     '/': {
-      title: `${SITE} | Official Municipal Planning Notices, Tracked & Delivered`,
-      description: `${SITE} scans St. Catharines, Welland, Thorold, and Niagara Region notices every week and puts the active ones in one free digest. Official municipal sources only, no paywalls, no editorial interference.`,
-    },
-    '/services': {
-      title: `${SITE} | Web Design, Technical SEO & GBP Optimization Services`,
-      description: `Expert web design, technical SEO, and Google Business Profile optimization for service businesses. Custom websites that rank on Google and convert visitors into qualified leads.`,
+      title: `${SITE} | Municipal News, Council & Planning`,
+      description: `Independent local news from official sources. Council decisions, police releases, planning notices and municipal updates for St. Catharines, Welland and Thorold.`,
     },
     '/about': {
-      title: `About ${SITE} | Web Design & SEO Agency`,
-      description: `${SITE} is a St. Catharines-based web design and local SEO agency. We combine modern design, technical SEO, and local growth systems for service businesses.`,
+      title: `About ${SITE} | Local News & Community`,
+      description: `${SITE} is a St. Catharines-based local news site delivering official municipal sources directly to residents, workers and visitors.`,
     },
     '/contact': {
-      title: `Contact ${SITE} | Get a Free SEO Audit`,
-      description: `Contact ${SITE} for web design, technical SEO, and local SEO services. Book a free 30-minute call or send us a message.`,
-    },
-    '/success': {
-      title: `Request Received | ${SITE}`,
-      description: 'Your request has been submitted.',
+      title: `Contact ${SITE} | Newsroom`,
+      description: `Contact the ${SITE} newsroom with tips, press releases or community announcements.`,
     },
   }
 
