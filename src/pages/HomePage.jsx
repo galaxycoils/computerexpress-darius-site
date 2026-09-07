@@ -50,8 +50,8 @@ export default function HomePage() {
   return (
     <>
       <Seo
-        title="St. Catharines Digital | Official Municipal Planning Notices, Tracked & Delivered"
-        description="Independent local news from official sources only. Council decisions, Niagara Regional Police releases, planning notices and municipal updates for St. Catharines, Welland and Thorold."
+        title="St. Catharines Digital | Municipal News, Council & Planning"
+        description="Independent local news from official sources. Council decisions, police releases, planning notices and municipal updates for St. Catharines, Welland and Thorold."
         path="/"
         jsonLd={jsonLd}
       />
