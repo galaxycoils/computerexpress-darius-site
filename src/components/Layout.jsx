@@ -89,12 +89,14 @@ export default function Layout() {
               className="scd-dropdown"
               onMouseEnter={() => setNewsDropdown(true)}
               onMouseLeave={() => setNewsDropdown(false)}
+              onKeyDown={(e) => { if (e.key === 'Escape') setNewsDropdown(false) }}
             >
               <button
                 type="button"
                 className={`scd-a ${newsDropdown ? 'active' : ''}`}
                 onClick={() => setNewsDropdown(!newsDropdown)}
                 aria-expanded={newsDropdown}
+                aria-haspopup="true"
               >
                 News ▾
               </button>
