@@ -6,7 +6,7 @@
  * - thorold.ca
  * - niagararegion.ca
  * 
- * Updated: 2026-09-03
+ * Updated: 2026-09-16
  * Next review: Weekly
  */
 
@@ -19,7 +19,7 @@ export const planningNotices = [
     title: 'Ontario Street Corridor Secondary Plan',
     description: 'Adopt Ontario Street Corridor Secondary Plan (QEW to Welland Ave, incl. 282/285 Ontario St).',
     fileNumber: '26 111925 OP',
-    status: 'Public Meeting Scheduled',
+    status: 'Meeting Complete',
     meetingDate: '2026-09-14T18:00:00',
     meetingLocation: 'Council Chambers, 50 Church St',
     submissionDeadline: '2026-09-11T12:00:00',
@@ -32,11 +32,11 @@ export const planningNotices = [
   {
     id: 'stc-455-welland-ave',
     municipality: 'St. Catharines',
-    type: 'Minor Variance (Committee of Adjustment)',
+    type: 'Minor Variance (Commit of Adjustment)',
     title: '455 Welland Avenue — Parking Variance',
     description: 'Variance to reduce minimum parking from 1.25 to 0.85 spaces/unit for 248 residential + 12 commercial units.',
     fileNumber: 'A-20/26',
-    status: 'Hearing Scheduled',
+    status: 'Meeting Complete',
     meetingDate: '2026-09-16T17:00:00',
     meetingLocation: 'Council Chambers, 50 Church St',
     publishedDate: '2026-08-25',
@@ -50,7 +50,7 @@ export const planningNotices = [
     type: 'Committee of Adjustment Hearing',
     title: '12 Stepney Street — Minor Variance',
     description: 'Minor Variance application.',
-    status: 'Hearing Scheduled',
+    status: 'Meeting Complete',
     meetingDate: '2026-09-16T17:00:00',
     meetingLocation: 'Council Chambers, 50 Church St',
     publishedDate: '2026-08',
@@ -64,7 +64,7 @@ export const planningNotices = [
     type: 'Committee of Adjustment Hearing',
     title: '60 Thomas Street — Minor Variance',
     description: 'Minor Variance application.',
-    status: 'Hearing Scheduled',
+    status: 'Meeting Complete',
     publishedDate: '2026-08',
     sourceUrl: 'https://www.stcatharines.ca/news/posts/notice-of-hearing-60-thomas-street/',
     category: 'minor-variance',
@@ -76,7 +76,7 @@ export const planningNotices = [
     type: 'Committee of Adjustment Hearing',
     title: '75 Corporate Park Drive — Minor Variance',
     description: 'Minor Variance application.',
-    status: 'Hearing Scheduled',
+    status: 'Meeting Complete',
     publishedDate: '2026-08',
     sourceUrl: 'https://www.stcatharines.ca/news/posts/public-hearing-75-corporate-park-drive/',
     category: 'minor-variance',
@@ -288,6 +288,31 @@ export const planningNotices = [
     category: 'zoning-bylaw-amendment',
     tags: ['Zoning', 'Blocks 232-239', 'LH Thorold', 'Mountainview Homes', 'KLM Planning']
   },
+  {
+    id: 'thorold-pamela-drive-watermain',
+    municipality: 'Thorold',
+    type: 'Project Notice',
+    title: 'Pamela Drive Watermain Replacement — Project Commencement',
+    description: 'Project commencement for watermain replacement on Pamela Drive (between Lawrence Drive and Sullivan Avenue). Pre-construction inspections by Pre-Con Inspection Services Inc.',
+    status: 'Pre-construction',
+    publishedDate: '2026-09-03',
+    sourceUrl: 'https://www.thorold.ca/news/news/notice-of-project-commencement-pamela-drive-watermain-replacement',
+    category: 'infrastructure',
+    tags: ['Watermain', 'Thorold', 'Project Commencement', 'Construction']
+  },
+  {
+    id: 'thorold-crompton-blvd-closure',
+    municipality: 'Thorold',
+    type: 'Road Closure / Lane Restriction',
+    title: 'Temporary Road Closure — Crompton Boulevard (Richmond St to south end)',
+    description: 'Crompton Boulevard closed to through traffic from Richmond Street to the south end of Crompton Boulevard for road construction. Bolton Avenue remains open.',
+    status: 'Active',
+    effectiveDate: '2026-09-09',
+    publishedDate: '2026-09-02',
+    sourceUrl: 'https://www.thorold.ca/news/news/temporary-road-closure-crompton-blvd',
+    category: 'road-closure',
+    tags: ['Road Closure', 'Crompton Boulevard', 'Thorold', 'Construction']
+  },
   // NIAGARA REGION - ROAD CLOSURES & SERVICE NOTICES
   {
     id: 'niagara-road-closure-ontario-st',
@@ -433,11 +458,24 @@ export function getUpcomingMeetings() {
 
 export function getActiveNotices() {
   const now = new Date();
+  const thirtyDaysAgo = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
   return planningNotices.filter(n => {
-    if (n.status === 'Approved' || n.status === 'Complete' || n.status === 'Meeting Complete' || n.status === 'Hearing Complete' || n.status === 'Open House Complete') {
-      return false;
+    // Exclude notices in final/completed states
+    const completedStatuses = [
+      'Approved', 'Complete', 'Meeting Complete', 'Hearing Complete',
+      'Open House Complete', 'Application Complete', 'Passed', 'By-law Passed'
+    ];
+    if (completedStatuses.includes(n.status)) return false;
+    // Exclude past meetings that are not ongoing projects
+    if (n.meetingDate && new Date(n.meetingDate) < now) {
+      if (!['Active', 'Under Construction', 'Pre-construction'].includes(n.status)) {
+        return false;
+      }
     }
-    if (n.meetingDate && new Date(n.meetingDate) < now && n.status !== 'Active' && n.status !== 'Under Construction' && n.status !== 'Pre-construction') {
+    // Exclude road closures / time-limited events past their end date
+    if (n.endDate && new Date(n.endDate) < now) return false;
+    // Exclude road closures whose effective date is more than 30 days ago with no end date
+    if (n.effectiveDate && !n.endDate && n.category === 'road-closure' && new Date(n.effectiveDate) < thirtyDaysAgo) {
       return false;
     }
     return true;
