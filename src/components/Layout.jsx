@@ -68,8 +68,8 @@ export default function Layout() {
         <div className="scd-h-inner">
           <Link to="/" className="scd-brand" aria-label="St. Catharines Digital home">
             <svg width="180" height="24" viewBox="0 0 400 52" fill="none" aria-hidden="true">
-              <path d="M8 26 L20 6 L32 26 L20 46 Z" fill="#9ce4c1" />
-              <path d="M8 26 L20 16 L32 26 L20 36 Z" fill="#fff" fillOpacity="0.22" />
+              <path d="M8 26 L20 6 L32 26 L20 46 Z" fill="#c9a06a" />
+              <path d="M8 26 L20 16 L32 26 L20 36 Z" fill="#fff" fillOpacity="0.2" />
               <text
                 x="42"
                 y="33"
@@ -178,7 +178,7 @@ export default function Layout() {
           <div>
             <div className="scd-f-name">St. Catharines Digital</div>
             <p>
-              Independent local news for St. Catharines, Welland &amp; Thorold. Official sources
+              Independent local news for St. Catharines, Welland & Thorold. Official sources
               only.
             </p>
           </div>
