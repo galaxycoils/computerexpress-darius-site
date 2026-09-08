@@ -88,7 +88,7 @@ export const planningNotices = [
     type: 'Committee of Adjustment Hearing',
     title: '90-92 St. Paul Street West — Minor Variance',
     description: 'Minor Variance application.',
-    status: 'Hearing Scheduled',
+    status: 'Meeting Complete',
     publishedDate: '2026-08',
     sourceUrl: 'https://www.stcatharines.ca/news/posts/notice-of-hearing-90-92-st-paul-street-west/',
     category: 'minor-variance',
