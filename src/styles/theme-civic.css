@@ -1,0 +1,85 @@
+/**
+ * Civic Wire Desk — brand theme for St. Catharines Digital
+ * Warm night desk, copper signal (not mint), document-edge cards.
+ * Tokens flow into styles.css / layout / news via :root overrides.
+ */
+
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,650;9..144,700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap');
+
+:root {
+  /* Surfaces — warm ink, not cool slate */
+  --ink: #12100e;
+  --ink-soft: #1a1714;
+  --ink-card: #1e1b18;
+  --ink-hover: #26221e;
+
+  /* Signal — copper wire, not mint AI green */
+  --signal: #c9a06a;
+  --signal-bright: #e0b87a;
+  --signal-dim: rgba(201, 160, 106, 0.14);
+  --signal-line: rgba(201, 160, 106, 0.35);
+
+  /* Text — warm paper */
+  --text: #cfc6b8;
+  --text-bright: #f4efe6;
+  --muted: #958b7c;
+  --muted-lite: #7a7165;
+
+  /* Semantic map (compat with existing CSS) */
+  --bg: var(--ink);
+  --bg-soft: var(--ink-soft);
+  --bg-card: var(--ink-card);
+  --bg-card-hover: var(--ink-hover);
+  --surface: var(--ink-card);
+  --border: rgba(244, 239, 230, 0.08);
+  --border-strong: rgba(244, 239, 230, 0.14);
+  --panel-border: rgba(244, 239, 230, 0.08);
+  --line: rgba(244, 239, 230, 0.09);
+  --line-strong: rgba(244, 239, 230, 0.16);
+  --primary: var(--signal);
+  --primary-dim: var(--signal-dim);
+  --primary-glow: rgba(201, 160, 106, 0.22);
+  --emerald: var(--signal);
+  --emerald-dim: var(--signal-dim);
+  --emerald-glow: rgba(201, 160, 106, 0.22);
+  --accent: #7a9bb5;
+  --accent-dim: rgba(122, 155, 181, 0.12);
+  --success: #8fbc8f;
+  --warning: #d4a574;
+  --danger: #c97b6a;
+  --info: #7a9bb5;
+
+  --gradient-1: linear-gradient(135deg, #e8d5b5 0%, #c9a06a 55%, #8a7a5c 100%);
+
+  --font-display: 'Fraunces', 'Newsreader', Georgia, serif;
+  --font-body: 'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, Menlo, monospace;
+
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+}
+
+/* Light mode — reading desk paper */
+.news-root.is-light,
+body.light,
+.is-light {
+  --ink: #f3efe6;
+  --ink-soft: #e9e3d6;
+  --ink-card: #fffcf5;
+  --ink-hover: #f7f2e8;
+  --signal: #8b6914;
+  --signal-bright: #6b5010;
+  --signal-dim: rgba(139, 105, 20, 0.12);
+  --text: #3a342c;
+  --text-bright: #1a1612;
+  --muted: #6b6358;
+  --muted-lite: #8a8174;
+  --border: rgba(26, 22, 18, 0.1);
+  --border-strong: rgba(26, 22, 18, 0.16);
+  --panel-border: rgba(26, 22, 18, 0.1);
+  --line: rgba(26, 22, 18, 0.1);
+  --primary: var(--signal);
+  --emerald: var(--signal);
+  --emerald-dim: var(--signal-dim);
+}
