@@ -1,148 +1,57 @@
 import { Link } from 'react-router-dom'
-import Seo, { BASE_URL } from '../components/Seo'
-
-const jsonLd = {
-  '@context': 'https://schema.org',
-  '@type': 'WebPage',
-  name: 'Local News — Coming Soon',
-  url: BASE_URL + '/news',
-  description:
-    'St. Catharines Digital is building a local news page with attributed link-outs from Niagara\'s news sources.',
-  admissionToAttendance: 'Coming Soon',
-}
+import Seo from '../components/Seo'
+import { cities } from '../data/cityConfig'
 
 export default function NewsPage() {
   return (
     <>
       <Seo
-        title="Local News — Coming Soon | St. Catharines Digital"
-        description="St. Catharines Digital is building a local news page with attributed link-outs from Niagara's news sources. RSS feeds are being verified — check back soon."
+        title="Local News | St. Catharines Digital"
+        description="Independent local news from official sources for St. Catharines, Welland, and Thorold."
         path="/news"
-        noIndex
       />
+      <main className="page news-index">
+        <header className="news-index-header">
+          <p className="kicker">Official Sources Only</p>
+          <h1>Local News</h1>
+          <p className="lead">Independent coverage from official municipal and police sources across the Niagara Region.</p>
+        </header>
 
-      <main
-        style={{
-          minHeight: '60vh',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center',
-          textAlign: 'center',
-          padding: '4rem 1.5rem',
-          background: 'var(--surface)',
-          borderRadius: '16px',
-          margin: '2rem auto',
-          maxWidth: '720px',
-        }}
-      >
-        <div
-          style={{
-            width: '48px',
-            height: '48px',
-            borderRadius: '50%',
-            background: 'var(--border)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            marginBottom: '1.5rem',
-          }}
-        >
-          <svg
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="var(--text-muted)"
-            strokeWidth="1.5"
-          >
-            <path d="M12 2a10 10 0 1 0 10 10h-10V2z" />
-            <path d="M12 12 16 9v6l-4-3z" />
-          </svg>
-        </div>
+        <section className="city-hubs">
+          <h2>City Hubs</h2>
+          <div className="card-grid">
+            {cities.map(city => (
+              <Link key={city.slug} to={`/news/${city.slug}`} className="card city-card">
+                <h3>{city.name}</h3>
+                <p>{city.description}</p>
+                <span className="source-link">Official source → <a href={city.officialSite} target="_blank" rel="noopener noreferrer">City of {city.name}</a></span>
+              </Link>
+            ))}
+          </div>
+        </section>
 
-        <h1
-          style={{
-            fontSize: 'clamp(1.5rem, 3vw, 2rem)',
-            fontWeight: 650,
-            marginBottom: '0.75rem',
-            letterSpacing: '-0.02em',
-            color: 'var(--text)',
-          }}
-        >
-          Local News — Coming Soon
-        </h1>
+        <section className="news-index-links">
+          <h2>Other Coverage</h2>
+          <div className="card-grid">
+            <Link to="/news/police" className="card">
+              <h3>Police Media Releases</h3>
+              <p>Official NRPS releases across the Niagara Region.</p>
+            </Link>
+            <Link to="/planning-tracker" className="card">
+              <h3>Planning Tracker</h3>
+              <p>Active planning notices from all four municipalities.</p>
+            </Link>
+            <Link to="/council" className="card">
+              <h3>Council Coverage</h3>
+              <p>Council agendas, minutes, and decisions.</p>
+            </Link>
+          </div>
+        </section>
 
-        <p
-          style={{
-            fontSize: '1rem',
-            color: 'var(--text-muted)',
-            maxWidth: '480px',
-            lineHeight: 1.6,
-            marginBottom: '2rem',
-          }}
-        >
-          We're building a local news page with attributed link-outs from Niagara's news sources,
-          including the St. Catharines Standard, Niagara This Week, Welland Tribune, and Niagara Falls Review.
-          RSS feeds are being verified — check back soon.
-        </p>
-
-        <div
-          style={{
-            display: 'flex',
-            gap: '0.75rem',
-            justifyContent: 'center',
-            flexWrap: 'wrap',
-          }}
-        >
-          <Link
-            to="/news/police"
-            style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '0.4rem',
-              padding: '0.6rem 1.25rem',
-              background: 'var(--primary)',
-              color: '#fff',
-              borderRadius: '8px',
-              fontWeight: 500,
-              fontSize: '0.9rem',
-              textDecoration: 'none',
-            }}
-          >
-            <svg
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-            >
-              <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z" />
-              <line x1="4" y1="22" x2="4" y2="15" />
-            </svg>
-            Police Releases (live)
-          </Link>
-
-          <Link
-            to="/planning-tracker"
-            style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '0.4rem',
-              padding: '0.6rem 1.25rem',
-              background: 'transparent',
-              color: 'var(--primary)',
-              border: '1px solid var(--primary)',
-              borderRadius: '8px',
-              fontWeight: 500,
-              fontSize: '0.9rem',
-              textDecoration: 'none',
-            }}
-          >
-            Planning Tracker
-          </Link>
-        </div>
+        <section className="editorial-standards">
+          <h2>Editorial Standards</h2>
+          <p>St. Catharines Digital reports only from official primary sources. We do not use social media or unofficial lists for public safety information. Every item links back to a verifiable document or release.</p>
+        </section>
       </main>
     </>
   )
