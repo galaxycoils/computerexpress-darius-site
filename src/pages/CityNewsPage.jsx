@@ -97,6 +97,7 @@ function CityNewsPageContent() {
                   <div className="card-meta">
                     <span className={`category-${item.category}`}>{item.category}</span>
                     <span className="card-date">{item.publishedAt}</span>
+                    {item.fetchedAt && <span className="card-verified">Verified {item.fetchedAt}</span>}
                   </div>
                   <h3><a href={item.sourceUrl} target="_blank" rel="noopener noreferrer">{item.title}</a></h3>
                   <p>{item.summary}</p>
