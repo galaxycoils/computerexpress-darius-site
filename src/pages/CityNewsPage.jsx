@@ -28,10 +28,18 @@ function CityNewsPageContent() {
   ).sort((a, b) => new Date(b.publishedDate || 0) - new Date(a.publishedDate || 0))
 
   const police = nrpsReleases.filter(r => {
-    const searchTerms = [city.name.toLowerCase(), city.slug.replace('-', ' ')]
+    const municipality = (r.municipality || '').toLowerCase().trim()
+    // Exact-match city: only tag a release for a city hub when the NRPS
+    // municipality field clearly names that city, not when it merely contains
+    // the city name as a substring (e.g. "Wellandport" must NOT match "Welland").
+    const exactCity = [city.name.toLowerCase(), city.slug.replace('-', ' ')].some(
+      term => municipality === term || municipality.startsWith(term + ',')
+    )
     const headline = (r.headline || '').toLowerCase()
-    const municipality = (r.municipality || '').toLowerCase()
-    return searchTerms.some(term => headline.includes(term) || municipality.includes(term))
+    const headlineCity = [city.name.toLowerCase(), city.slug.replace('-', ' ')].some(
+      term => headline.includes(term) && !municipality.includes('wellandport')
+    )
+    return exactCity || headlineCity
   }).sort((a, b) => new Date(b.date || 0) - new Date(a.date || 0))
 
   const allItems = [
