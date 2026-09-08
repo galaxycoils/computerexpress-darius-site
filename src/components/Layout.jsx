@@ -100,14 +100,15 @@ export default function Layout() {
               >
                 News ▾
               </button>
-              {newsDropdown && (
-                <div className="scd-dropdown-menu">
+              {(
+                <div className="scd-dropdown-menu" hidden={!newsDropdown}>
                   {NEWS_DROPDOWN.map((item) => (
                     <NavLink
                       key={item.to}
                       to={item.to}
                       onClick={() => setNewsDropdown(false)}
                       className="scd-dropdown-item"
+                      tabIndex={newsDropdown ? 0 : -1}
                     >
                       {item.label}
                     </NavLink>
@@ -178,6 +179,13 @@ export default function Layout() {
             <Link to="/police">Police</Link>
             <Link to="/planning-tracker">Planning</Link>
             <Link to="/about">About</Link>
+          </div>
+          <div>
+            <div className="scd-f-label">News</div>
+            <Link to="/news/st-catharines">St. Catharines</Link>
+            <Link to="/news/welland">Welland</Link>
+            <Link to="/news/thorold">Thorold</Link>
+            <Link to="/news/police">Police Releases</Link>
           </div>
           <div>
             <div className="scd-f-label">Official Sources</div>
