@@ -16,8 +16,16 @@ const NAV = [
   { to: '/about', label: 'About' },
 ]
 
+const NEWS_DROPDOWN = [
+  { to: '/news/st-catharines', label: 'St. Catharines' },
+  { to: '/news/welland', label: 'Welland' },
+  { to: '/news/thorold', label: 'Thorold' },
+  { to: '/news/police', label: 'Police Releases' },
+]
+
 export default function Layout() {
   const [menuOpen, setMenuOpen] = useState(false)
+  const [newsDropdown, setNewsDropdown] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const [theme, setTheme] = useState(getInitialTheme)
   const location = useLocation()
@@ -77,6 +85,34 @@ export default function Layout() {
                 {item.label}
               </NavLink>
             ))}
+            <div
+              className="scd-dropdown"
+              onMouseEnter={() => setNewsDropdown(true)}
+              onMouseLeave={() => setNewsDropdown(false)}
+            >
+              <button
+                type="button"
+                className={`scd-a ${newsDropdown ? 'active' : ''}`}
+                onClick={() => setNewsDropdown(!newsDropdown)}
+                aria-expanded={newsDropdown}
+              >
+                News ▾
+              </button>
+              {newsDropdown && (
+                <div className="scd-dropdown-menu">
+                  {NEWS_DROPDOWN.map((item) => (
+                    <NavLink
+                      key={item.to}
+                      to={item.to}
+                      onClick={() => setNewsDropdown(false)}
+                      className="scd-dropdown-item"
+                    >
+                      {item.label}
+                    </NavLink>
+                  ))}
+                </div>
+              )}
+            </div>
           </nav>
 
           <div className="scd-right">
@@ -102,6 +138,18 @@ export default function Layout() {
                 key={item.to}
                 to={item.to}
                 end={item.end}
+                onClick={() => setMenuOpen(false)}
+                className={({ isActive }) => (isActive ? 'scd-drawer-a active' : 'scd-drawer-a')}
+              >
+                {item.label}
+              </NavLink>
+            ))}
+            <div className="scd-drawer-separator" />
+            <p className="scd-drawer-label">News</p>
+            {NEWS_DROPDOWN.map((item) => (
+              <NavLink
+                key={item.to}
+                to={item.to}
                 onClick={() => setMenuOpen(false)}
                 className={({ isActive }) => (isActive ? 'scd-drawer-a active' : 'scd-drawer-a')}
               >
