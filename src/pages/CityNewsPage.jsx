@@ -18,6 +18,24 @@ function toNoticeShape(item) {
   }
 }
 
+function belongsToCity(notice, city) {
+  const muni = (notice.municipality || '').toLowerCase()
+  const title = (notice.title || '').toLowerCase()
+  const desc = (notice.description || '').toLowerCase()
+  const name = city.name.toLowerCase()
+  const alt = city.slug.replace(/-/g, ' ')
+
+  if (muni === name || muni.includes(name)) return true
+  if (city.planningKey && muni === city.planningKey.toLowerCase()) return true
+
+  // Niagara Region packet: only if the notice clearly names this city
+  if (muni.includes('niagara region')) {
+    return title.includes(name) || title.includes(alt) || desc.includes(name)
+  }
+
+  return false
+}
+
 export default function CityNewsPage() {
   const { citySlug } = useParams()
   const city = cityBySlug[citySlug]
@@ -37,12 +55,7 @@ export default function CityNewsPage() {
   }
 
   const planning = planningNotices
-    .filter(
-      (n) =>
-        n.municipality === city.planningKey ||
-        n.municipality?.includes(city.name) ||
-        (citySlug === 'st-catharines' && n.municipality?.includes('Niagara Region'))
-    )
+    .filter((n) => belongsToCity(n, city))
     .sort((a, b) => new Date(b.publishedDate || 0) - new Date(a.publishedDate || 0))
 
   const police = nrpsReleases
@@ -141,7 +154,10 @@ export default function CityNewsPage() {
                   Planning
                 </div>
                 {planning.map((n) => (
-                  <NoticeCard key={`p-${n.id}`} notice={toNoticeShape({ ...n, type: n.type || 'Planning' })} />
+                  <NoticeCard
+                    key={`p-${n.id}`}
+                    notice={toNoticeShape({ ...n, type: n.type || 'Planning' })}
+                  />
                 ))}
               </>
             )}
