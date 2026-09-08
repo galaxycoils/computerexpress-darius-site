@@ -32,7 +32,7 @@ export const planningNotices = [
   {
     id: 'stc-455-welland-ave',
     municipality: 'St. Catharines',
-    type: 'Minor Variance (Commit of Adjustment)',
+    type: 'Minor Variance (Committee of Adjustment)',
     title: '455 Welland Avenue — Parking Variance',
     description: 'Variance to reduce minimum parking from 1.25 to 0.85 spaces/unit for 248 residential + 12 commercial units.',
     fileNumber: 'A-20/26',
@@ -93,6 +93,122 @@ export const planningNotices = [
     sourceUrl: 'https://www.stcatharines.ca/news/posts/notice-of-hearing-90-92-st-paul-street-west/',
     category: 'minor-variance',
     tags: ['Minor Variance', 'St. Paul Street West']
+  },
+
+  // Past hearings marked complete in the Sep 16 live scan
+  {
+    id: 'stc-8-graham-avenue',
+    municipality: 'St. Catharines',
+    type: 'Committee of Adjustment Hearing',
+    title: '8 Graham Avenue — Minor Variance',
+    description: 'Minor Variance application.',
+    status: 'Meeting Complete',
+    publishedDate: '2026-07',
+    sourceUrl: 'https://www.stcatharines.ca/en/news/notice-of-hearing-8-graham-avenue.aspx',
+    category: 'minor-variance',
+    tags: ['Minor Variance', 'Graham Avenue']
+  },
+  {
+    id: 'stc-p23-061-brimley-crescent',
+    municipality: 'St. Catharines',
+    type: 'Project Notice',
+    title: 'P23-061 Brimley Crescent Project Notice',
+    description: 'Project notice for Brimley Crescent.',
+    status: 'Active',
+    publishedDate: '2026-07',
+    sourceUrl: 'https://www.stcatharines.ca/news/posts/p23-061-brimley-crescent-project-notice/',
+    category: 'project-notice',
+    tags: ['Project Notice', 'Brimley Crescent']
+  },
+  {
+    id: 'stc-163-165-bradley-st',
+    municipality: 'St. Catharines',
+    type: 'Committee of Adjustment Hearing',
+    title: '163-165 Bradley Street — Minor Variance',
+    description: 'Minor Variance application.',
+    status: 'Meeting Complete',
+    meetingDate: '2026-07-22T17:00:00',
+    publishedDate: '2026-07',
+    sourceUrl: 'https://www.stcatharines.ca/news/posts/public-hearing-163-165-bradley-street/',
+    category: 'minor-variance',
+    tags: ['Minor Variance', 'Bradley Street']
+  },
+  {
+    id: 'stc-35-glen-2-chetwood',
+    municipality: 'St. Catharines',
+    type: 'Committee of Adjustment Hearing',
+    title: '35 Glen Avenue / 2 Chetwood Street — Minor Variance',
+    description: 'Minor Variance application.',
+    status: 'Meeting Complete',
+    meetingDate: '2026-07-22T17:00:00',
+    publishedDate: '2026-07',
+    sourceUrl: 'https://www.stcatharines.ca/news/posts/public-hearing-35-glen-avenue-2-chetwood-street/',
+    category: 'minor-variance',
+    tags: ['Minor Variance', 'Glen Avenue', 'Chetwood Street']
+  },
+  {
+    id: 'stc-267-lakeshore-rd',
+    municipality: 'St. Catharines',
+    type: 'Committee of Adjustment Hearing',
+    title: '267 Lakeshore Road — Minor Variance',
+    description: 'Minor Variance application.',
+    status: 'Meeting Complete',
+    meetingDate: '2026-07-22T17:00:00',
+    publishedDate: '2026-07',
+    sourceUrl: 'https://www.stcatharines.ca/news/posts/public-hearing-267-lakeshore-road/',
+    category: 'minor-variance',
+    tags: ['Minor Variance', 'Lakeshore Road']
+  },
+  {
+    id: 'stc-40-st-paul-st-w-2',
+    municipality: 'St. Catharines',
+    type: 'Committee of Adjustment Hearing',
+    title: '40 St Paul Street West — Minor Variance',
+    description: 'Minor Variance application.',
+    status: 'Meeting Complete',
+    publishedDate: '2026-07',
+    sourceUrl: 'https://www.stcatharines.ca/news/posts/notice-of-hearing-40-st-paul-street-west/',
+    category: 'minor-variance',
+    tags: ['Minor Variance', 'St. Paul Street West']
+  },
+  {
+    id: 'stc-2360-first-st-louth',
+    municipality: 'St. Catharines',
+    type: 'Public Meeting',
+    title: '2360 First Street Louth — Notice of Public Meeting',
+    description: 'Notice of public meeting for development application.',
+    status: 'Meeting Complete',
+    meetingDate: '2026-06-22T18:00:00',
+    publishedDate: '2026-06',
+    sourceUrl: 'https://www.stcatharines.ca/news/posts/2360-first-street-louth-notice-of-public-meeting/',
+    category: 'public-meeting',
+    tags: ['Public Meeting', 'First Street Louth']
+  },
+  {
+    id: 'stc-40-linkle-dr',
+    municipality: 'St. Catharines',
+    type: 'Committee of Adjustment Hearing',
+    title: '40 Linlake Drive — Minor Variance',
+    description: 'Minor Variance application.',
+    status: 'Meeting Complete',
+    meetingDate: '2026-06-17T17:00:00',
+    publishedDate: '2026-06',
+    sourceUrl: 'https://www.stcatharines.ca/news/posts/public-hearing-40-linkle-drive/',
+    category: 'minor-variance',
+    tags: ['Minor Variance', 'Linlake Drive']
+  },
+  {
+    id: 'stc-1262-1290-fourth-ave',
+    municipality: 'St. Catharines',
+    type: 'Public Meeting',
+    title: '1262 and 1290 Fourth Avenue — Notice of Public Meeting',
+    description: 'Notice of public meeting for development application.',
+    status: 'Meeting Complete',
+    meetingDate: '2026-08-10T18:00:00',
+    publishedDate: '2026-08',
+    sourceUrl: 'https://www.stcatharines.ca/news/posts/1262-and-1290-fourth-avenue-notice-of-public-meeting/',
+    category: 'public-meeting',
+    tags: ['Public Meeting', 'Fourth Avenue']
   },
   {
     id: 'stc-cip-strategic-sites',
@@ -255,7 +371,6 @@ export const planningNotices = [
     category: 'consent-application',
     tags: ['Consent', 'Rolling Meadows', 'Phase 11']
   },
-
   {
     id: 'thorold-1201-egerter-rd',
     municipality: 'Thorold',
@@ -313,6 +428,7 @@ export const planningNotices = [
     category: 'road-closure',
     tags: ['Road Closure', 'Crompton Boulevard', 'Thorold', 'Construction']
   },
+
   // NIAGARA REGION - ROAD CLOSURES & SERVICE NOTICES
   {
     id: 'niagara-road-closure-ontario-st',
@@ -418,7 +534,7 @@ export const planningNotices = [
     category: 'road-closure',
     tags: ['Road Closure', 'Fourth Avenue', 'Lincoln']
   }
-];
+]
 
 export const noticeCategories = [
   { key: 'official-plan-amendment', label: 'Official Plan Amendment', color: 'var(--primary)' },
@@ -432,65 +548,65 @@ export const noticeCategories = [
   { key: 'public-information-centre', label: 'Public Information Centre', color: 'var(--info)' },
   { key: 'bridge-repair', label: 'Bridge Repair / Pre-construction', color: 'var(--warning)' },
   { key: 'sewage-infrastructure', label: 'Sewage Infrastructure', color: 'var(--success)' }
-];
+]
 
 export const municipalities = [
   { key: 'st-catharines', label: 'St. Catharines', region: 'Niagara' },
   { key: 'welland', label: 'Welland', region: 'Niagara' },
   { key: 'thorold', label: 'Thorold', region: 'Niagara' },
   { key: 'niagara-region', label: 'Niagara Region', region: 'Niagara' }
-];
+]
 
 export function getNoticesByMunicipality(municipality) {
-  return planningNotices.filter(n => n.municipality.toLowerCase().includes(municipality.toLowerCase()));
+  return planningNotices.filter(n => n.municipality.toLowerCase().includes(municipality.toLowerCase()))
 }
 
 export function getNoticesByCategory(category) {
-  return planningNotices.filter(n => n.category === category);
+  return planningNotices.filter(n => n.category === category)
 }
 
 export function getUpcomingMeetings() {
-  const now = new Date();
+  const now = new Date()
   return planningNotices
     .filter(n => n.meetingDate && new Date(n.meetingDate) > now)
-    .sort((a, b) => new Date(a.meetingDate) - new Date(b.meetingDate));
+    .sort((a, b) => new Date(a.meetingDate) - new Date(b.meetingDate))
 }
 
 export function getActiveNotices() {
-  const now = new Date();
-  const thirtyDaysAgo = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
+  const now = new Date()
+  const thirtyDaysAgo = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000)
   return planningNotices.filter(n => {
     // Exclude notices in final/completed states
     const completedStatuses = [
       'Approved', 'Complete', 'Meeting Complete', 'Hearing Complete',
       'Open House Complete', 'Application Complete', 'Passed', 'By-law Passed'
-    ];
-    if (completedStatuses.includes(n.status)) return false;
+    ]
+    if (completedStatuses.includes(n.status)) return false
     // Exclude past meetings that are not ongoing projects
     if (n.meetingDate && new Date(n.meetingDate) < now) {
       if (!['Active', 'Under Construction', 'Pre-construction'].includes(n.status)) {
-        return false;
+        return false
       }
     }
     // Exclude road closures / time-limited events past their end date
-    if (n.endDate && new Date(n.endDate) < now) return false;
+    if (n.endDate && new Date(n.endDate) < now) return false
     // Exclude road closures whose effective date is more than 30 days ago with no end date
     if (n.effectiveDate && !n.endDate && n.category === 'road-closure' && new Date(n.effectiveDate) < thirtyDaysAgo) {
-      return false;
+      return false
     }
-    return true;
-  });
+    return true
+  })
 }
 
 export function getNoticeStats() {
-  const active = getActiveNotices();
-  const byMunicipality = {};
-  const byCategory = {};
+  const active = getActiveNotices()
+  const byMunicipality = {}
+  const byCategory = {}
   
   active.forEach(n => {
-    byMunicipality[n.municipality] = (byMunicipality[n.municipality] || 0) + 1;
-    byCategory[n.category] = (byCategory[n.category] || 0) + 1;
-  });
+    byMunicipality[n.municipality] = (byMunicipality[n.municipality] || 0) + 1
+    byCategory[n.category] = (byCategory[n.category] || 0) + 1
+  })
   
   return {
     total: planningNotices.length,
@@ -498,5 +614,5 @@ export function getNoticeStats() {
     byMunicipality,
     byCategory,
     upcomingMeetings: getUpcomingMeetings().length
-  };
+  }
 }
