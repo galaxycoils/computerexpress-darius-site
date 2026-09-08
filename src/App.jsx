@@ -14,8 +14,6 @@ import NewsPage from './pages/NewsPage'
 import CityNewsPage from './pages/CityNewsPage'
 import PoliceNewsPage from './pages/PoliceNewsPage'
 import PartnerPage from './pages/PartnerPage'
-
-// Keep a few legacy routes that still have value or inbound links
 import BlogPage from './pages/BlogPage'
 import BlogPostPage from './pages/BlogPostPage'
 
@@ -37,13 +35,9 @@ export function AppRoutes() {
         <Route path="privacy" element={<PrivacyPage />} />
         <Route path="terms" element={<TermsPage />} />
         <Route path="partner" element={<PartnerPage />} />
-        <Route path="news" element={<NewsPage />}>
-          <Route index element={<NewsIndexPage />} />
-          <Route path="st-catharines" element={<CityNewsPage citySlug="st-catharines" />} />
-          <Route path="welland" element={<CityNewsPage citySlug="welland" />} />
-          <Route path="thorold" element={<CityNewsPage citySlug="thorold" />} />
-          <Route path="police" element={<PoliceNewsPage />} />
-        </Route>
+        <Route path="news" element={<NewsPage />} />
+        <Route path="news/police" element={<PoliceNewsPage />} />
+        <Route path="news/:citySlug" element={<CityNewsPage />} />
         <Route path="blog" element={<BlogPage />} />
         <Route path="blog/:slug" element={<BlogPostWrapper />} />
         <Route path="*" element={<NotFoundPage />} />
