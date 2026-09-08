@@ -1,73 +1,87 @@
 import { useParams, Link } from 'react-router-dom'
 import Seo from '../components/Seo'
-import { cities, cityBySlug } from '../data/cityConfig'
+import { cityBySlug } from '../data/cities'
 import { planningNotices } from '../data/planningNotices'
 import { nrpsReleases } from '../data/nrpsReleases'
+import NoticeCard from '../components/news/NoticeCard'
+import '../components/news/news.css'
 
-function CityNewsPageContent() {
+function toNoticeShape(item) {
+  return {
+    id: item.id,
+    municipality: item.municipality || item.city,
+    type: item.type || item.category,
+    title: item.title,
+    description: item.description || item.summary,
+    sourceUrl: item.sourceUrl || item.url,
+    publishedDate: item.publishedDate || item.publishedAt || item.date,
+  }
+}
+
+export default function CityNewsPage() {
   const { citySlug } = useParams()
   const city = cityBySlug[citySlug]
 
   if (!city) {
     return (
       <>
-        <Seo title="City Not Found | St. Catharines Digital" description="City not found." />
-        <main className="page">
-          <h1>City not found</h1>
-          <Link to="/">Return home</Link>
-        </main>
+        <Seo title="City not found | St. Catharines Digital" description="City not found." />
+        <div className="scd-page">
+          <h1 className="scd-hero-title">City not found</h1>
+          <Link to="/" className="scd-more">
+            Return home →
+          </Link>
+        </div>
       </>
     )
   }
 
-  // Filter data for this city
-  const planning = planningNotices.filter(n => 
-    n.municipality === city.planningKey || 
-    n.municipality?.includes(city.name) ||
-    citySlug === 'st-catharines' && n.municipality?.includes('Niagara Region')
-  ).sort((a, b) => new Date(b.publishedDate || 0) - new Date(a.publishedDate || 0))
-
-  const police = nrpsReleases.filter(r => {
-    const municipality = (r.municipality || '').toLowerCase().trim()
-    // Exact-match city: only tag a release for a city hub when the NRPS
-    // municipality field clearly names that city, not when it merely contains
-    // the city name as a substring (e.g. "Wellandport" must NOT match "Welland").
-    const exactCity = [city.name.toLowerCase(), city.slug.replace('-', ' ')].some(
-      term => municipality === term || municipality.startsWith(term + ',')
+  const planning = planningNotices
+    .filter(
+      (n) =>
+        n.municipality === city.planningKey ||
+        n.municipality?.includes(city.name) ||
+        (citySlug === 'st-catharines' && n.municipality?.includes('Niagara Region'))
     )
-    const headline = (r.headline || '').toLowerCase()
-    const headlineCity = [city.name.toLowerCase(), city.slug.replace('-', ' ')].some(
-      term => headline.includes(term) && !municipality.includes('wellandport')
-    )
-    return exactCity || headlineCity
-  }).sort((a, b) => new Date(b.date || 0) - new Date(a.date || 0))
+    .sort((a, b) => new Date(b.publishedDate || 0) - new Date(a.publishedDate || 0))
 
-  const allItems = [
-    ...planning.map(n => ({
-      id: n.id,
-      city: city.name,
-      category: 'planning',
-      title: n.title,
-      summary: n.description || n.title,
-      sourceName: n.municipality || 'City of ' + city.name,
-      sourceUrl: n.sourceUrl,
-      publishedAt: n.publishedDate,
-      fetchedAt: n.fetchedAt,
-    })),
-    ...police.map(r => ({
-      id: r.id,
-      city: city.name,
-      category: 'police',
-      title: r.headline,
-      summary: r.headline,
-      sourceName: r.source || 'NRPS',
-      sourceUrl: r.url,
-      publishedAt: r.date,
-      fetchedAt: r.fetchedAt,
-    })),
-  ].sort((a, b) => new Date(b.publishedAt || 0) - new Date(a.publishedAt || 0))
+  const police = nrpsReleases
+    .filter((r) => {
+      const municipality = (r.municipality || '').toLowerCase().trim()
+      const terms = [city.name.toLowerCase(), city.slug.replace(/-/g, ' ')]
+      const exactCity = terms.some(
+        (term) => municipality === term || municipality.startsWith(term + ',')
+      )
+      const headline = (r.headline || '').toLowerCase()
+      const headlineCity = terms.some(
+        (term) => headline.includes(term) && !municipality.includes('wellandport')
+      )
+      return exactCity || headlineCity
+    })
+    .sort((a, b) => new Date(b.date || 0) - new Date(a.date || 0))
 
-  const lastUpdated = new Date().toISOString().split('T')[0]
+  const latest = [
+    ...planning.map((n) =>
+      toNoticeShape({
+        ...n,
+        category: n.type || 'Planning',
+        city: city.name,
+      })
+    ),
+    ...police.map((r) =>
+      toNoticeShape({
+        id: r.id,
+        municipality: city.name,
+        type: 'Police',
+        title: r.headline,
+        description: r.headline,
+        url: r.url,
+        date: r.date,
+      })
+    ),
+  ].sort((a, b) => new Date(b.publishedDate || 0) - new Date(a.publishedDate || 0))
+
+  const lastUpdated = new Date().toISOString().slice(0, 10)
 
   return (
     <>
@@ -76,84 +90,116 @@ function CityNewsPageContent() {
         description={city.description}
         path={`/news/${citySlug}`}
       />
-      <main className="page city-page">
-        <header className="city-header">
-          <p className="kicker">Official Sources Only</p>
-          <h1>{city.name}</h1>
-          <p className="lead">{city.description}</p>
-          <p className="last-updated">Last updated: {lastUpdated}</p>
-        </header>
 
-        <section className="city-section">
-          <h2>Latest</h2>
-          {allItems.length === 0 ? (
-            <p className="empty-state">
-              No items yet. Check the official <a href={city.officialSite} target="_blank" rel="noopener noreferrer">city site</a> or <Link to="/planning-tracker">Planning Tracker</Link>.
-            </p>
-          ) : (
-            <div className="card-grid">
-              {allItems.map(item => (
-                <article key={item.id} className="card">
-                  <div className="card-meta">
-                    <span className={`category-${item.category}`}>{item.category}</span>
-                    <span className="card-date">{item.publishedAt}</span>
-                    {item.fetchedAt && <span className="card-verified">Verified {item.fetchedAt}</span>}
-                  </div>
-                  <h3><a href={item.sourceUrl} target="_blank" rel="noopener noreferrer">{item.title}</a></h3>
-                  <p>{item.summary}</p>
-                  <p className="source-link">Official source → <a href={item.sourceUrl} target="_blank" rel="noopener noreferrer">{item.sourceName}</a></p>
-                </article>
-              ))}
+      <div className="scd-page">
+        <p className="scd-kicker">
+          <span className="scd-kicker-dot" aria-hidden="true" />
+          Official sources · {city.name}
+        </p>
+        <h1 className="scd-hero-title">{city.name}</h1>
+        <p className="scd-hero-lead">{city.description}</p>
+        <p className="scd-side-text" style={{ marginBottom: '1.5rem' }}>
+          Last updated: {lastUpdated}
+        </p>
+
+        <div className="scd-city-row" role="navigation" aria-label="Other cities">
+          <Link to="/news/st-catharines" className="scd-city-chip">
+            St. Catharines
+          </Link>
+          <Link to="/news/welland" className="scd-city-chip">
+            Welland
+          </Link>
+          <Link to="/news/thorold" className="scd-city-chip">
+            Thorold
+          </Link>
+          <Link to="/planning-tracker" className="scd-city-chip">
+            Planning tracker
+          </Link>
+        </div>
+
+        <div className="scd-layout">
+          <div>
+            <div className="scd-feed-label">
+              <span className="scd-kicker-dot" aria-hidden="true" />
+              Latest
             </div>
-          )}
-        </section>
+            {latest.length === 0 ? (
+              <div className="scd-empty">
+                No items yet. Check the{' '}
+                <a href={city.officialSite} target="_blank" rel="noopener noreferrer">
+                  official city site
+                </a>{' '}
+                or the <Link to="/planning-tracker">Planning Tracker</Link>.
+              </div>
+            ) : (
+              latest.map((n) => <NoticeCard key={n.id} notice={n} />)
+            )}
 
-        {planning.length > 0 && (
-          <section className="city-section">
-            <h2>Planning</h2>
-            <div className="card-grid">
-              {planning.map(n => (
-                <article key={n.id} className="card">
-                  <h3><a href={n.sourceUrl} target="_blank" rel="noopener noreferrer">{n.title}</a></h3>
-                  <p>{n.fileNumber} — {n.status}</p>
-                  <p className="source-link">Official source → <a href={n.sourceUrl} target="_blank" rel="noopener noreferrer">{n.municipality}</a></p>
-                </article>
-              ))}
+            {planning.length > 0 && (
+              <>
+                <div className="scd-feed-label" style={{ marginTop: '2rem' }}>
+                  Planning
+                </div>
+                {planning.map((n) => (
+                  <NoticeCard key={`p-${n.id}`} notice={toNoticeShape({ ...n, type: n.type || 'Planning' })} />
+                ))}
+              </>
+            )}
+
+            {police.length > 0 && (
+              <>
+                <div className="scd-feed-label" style={{ marginTop: '2rem' }}>
+                  Police / public safety
+                </div>
+                {police.map((r) => (
+                  <NoticeCard
+                    key={`r-${r.id}`}
+                    notice={toNoticeShape({
+                      id: r.id,
+                      municipality: city.name,
+                      type: 'Police',
+                      title: r.headline,
+                      description: r.headline,
+                      url: r.url,
+                      date: r.date,
+                    })}
+                  />
+                ))}
+              </>
+            )}
+          </div>
+
+          <aside>
+            <div className="scd-side-block">
+              <h4 className="scd-side-label">Official sources</h4>
+              <ul className="scd-side-list">
+                <li>
+                  <a href={city.officialSite} target="_blank" rel="noopener noreferrer">
+                    City of {city.name} ↗
+                  </a>
+                </li>
+                <li>
+                  <a href="https://www.niagarapolice.ca/" target="_blank" rel="noopener noreferrer">
+                    Niagara Regional Police ↗
+                  </a>
+                </li>
+                <li>
+                  <a href="https://www.niagararegion.ca/" target="_blank" rel="noopener noreferrer">
+                    Niagara Region ↗
+                  </a>
+                </li>
+              </ul>
             </div>
-          </section>
-        )}
-
-        {police.length > 0 && (
-          <section className="city-section">
-            <h2>Police / Public Safety</h2>
-            <div className="card-grid">
-              {police.map(r => (
-                <article key={r.id} className="card">
-                  <div className="card-meta">
-                    <span className="category-police">police</span>
-                    <span className="card-date">{r.date}</span>
-                  </div>
-                  <h3><a href={r.url} target="_blank" rel="noopener noreferrer">{r.headline}</a></h3>
-                  <p className="source-link">Official source → <a href={r.url} target="_blank" rel="noopener noreferrer">NRPS</a></p>
-                </article>
-              ))}
+            <div className="scd-side-block">
+              <h4 className="scd-side-label">How we report</h4>
+              <p className="scd-side-text">
+                Only official primary sources. City hubs list planning notices and NRPS releases that
+                clearly name this municipality.
+              </p>
             </div>
-          </section>
-        )}
-
-        <section className="city-section official-sources">
-          <h2>Official Sources</h2>
-          <ul>
-            <li><a href={city.officialSite} target="_blank" rel="noopener noreferrer">City of {city.name}</a></li>
-            <li><a href="https://www.niagarapolice.ca/" target="_blank" rel="noopener noreferrer">Niagara Regional Police Service</a></li>
-            <li><a href="https://www.niagararegion.ca/" target="_blank" rel="noopener noreferrer">Niagara Region</a></li>
-          </ul>
-        </section>
-      </main>
+          </aside>
+        </div>
+      </div>
     </>
   )
-}
-
-export default function CityNewsPage() {
-  return <CityNewsPageContent />
 }
