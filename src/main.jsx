@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client'
 import { HelmetProvider } from 'react-helmet-async'
 import App from './App'
 import ErrorBoundary from './components/ErrorBoundary'
+import './styles/theme-civic.css'
 import './styles.css'
 import './styles/layout-news.css'
 
