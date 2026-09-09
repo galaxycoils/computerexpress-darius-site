@@ -1,17 +1,33 @@
-import { OFFICIAL_SOURCES } from '../../data/cities'
-
 export default function OfficialSourcesPanel() {
   return (
-    <div className="scd-side-block">
-      <h4 className="scd-side-label">Official Sources</h4>
-      <ul className="scd-side-list">
-        {OFFICIAL_SOURCES.map((s) => (
-          <li key={s.href}>
-            <a href={s.href} target="_blank" rel="noopener noreferrer">
-              {s.label} ↗
-            </a>
-          </li>
-        ))}
+    <div className="scd-rail-block">
+      <h2 className="scd-rail-label">Official sources</h2>
+      <ul className="scd-rail-list">
+        <li>
+          <a href="https://www.niagarapolice.ca/" target="_blank" rel="noopener noreferrer">
+            Niagara Regional Police ↗
+          </a>
+        </li>
+        <li>
+          <a href="https://www.stcatharines.ca/" target="_blank" rel="noopener noreferrer">
+            City of St. Catharines ↗
+          </a>
+        </li>
+        <li>
+          <a href="https://www.welland.ca/" target="_blank" rel="noopener noreferrer">
+            City of Welland ↗
+          </a>
+        </li>
+        <li>
+          <a href="https://www.thorold.ca/" target="_blank" rel="noopener noreferrer">
+            City of Thorold ↗
+          </a>
+        </li>
+        <li>
+          <a href="https://www.niagararegion.ca/" target="_blank" rel="noopener noreferrer">
+            Niagara Region ↗
+          </a>
+        </li>
       </ul>
     </div>
   )
