@@ -2,10 +2,10 @@ import { useState, useEffect, useCallback } from 'react'
 import { Outlet, useLocation, Link, NavLink } from 'react-router-dom'
 
 function getInitialTheme() {
-  if (typeof window === 'undefined') return 'dark'
+  if (typeof window === 'undefined') return 'light'
   const stored = localStorage.getItem('theme')
   if (stored === 'light' || stored === 'dark') return stored
-  return 'dark'
+  return 'light'
 }
 
 const NAV = [
@@ -22,6 +22,15 @@ const NEWS_DROPDOWN = [
   { to: '/news/thorold', label: 'Thorold' },
   { to: '/news/police', label: 'Police Releases' },
 ]
+
+function formatDateline() {
+  return new Date().toLocaleDateString('en-CA', {
+    weekday: 'long',
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  })
+}
 
 export default function Layout() {
   const [menuOpen, setMenuOpen] = useState(false)
@@ -65,26 +74,35 @@ export default function Layout() {
       </a>
 
       <header className={`scd-h ${scrolled ? 'scrolled' : ''}`}>
-        <div className="scd-h-inner">
-          <Link to="/" className="scd-brand" aria-label="St. Catharines Digital home">
-            <svg width="180" height="24" viewBox="0 0 400 52" fill="none" aria-hidden="true">
-              <path d="M8 26 L20 6 L32 26 L20 46 Z" fill="#c9a06a" />
-              <path d="M8 26 L20 16 L32 26 L20 36 Z" fill="#fff" fillOpacity="0.2" />
-              <text
-                x="42"
-                y="33"
-                fill="currentColor"
-                fontFamily="IBM Plex Sans, system-ui, sans-serif"
-                fontSize="18"
-                fontWeight="700"
-                letterSpacing="-0.3"
+        <div className="scd-mast">
+          <div className="scd-mast-top">
+            <p className="scd-dateline" suppressHydrationWarning>
+              {formatDateline()}
+            </p>
+            <div className="scd-h-tools">
+              <button type="button" className="scd-theme" onClick={toggleTheme} aria-label="Toggle theme">
+                {theme === 'dark' ? '☀' : '☾'}
+              </button>
+              <button
+                type="button"
+                className={`scd-burger ${menuOpen ? 'open' : ''}`}
+                onClick={() => setMenuOpen((v) => !v)}
+                aria-label="Menu"
+                aria-expanded={menuOpen}
               >
-                St. Catharines Digital
-              </text>
-            </svg>
+                <span />
+                <span />
+                <span />
+              </button>
+            </div>
+          </div>
+
+          <Link to="/" className="scd-brand" aria-label="St. Catharines Digital home">
+            <span className="scd-brand-name">St. Catharines Digital</span>
+            <span className="scd-brand-tag">Official sources · Niagara</span>
           </Link>
 
-          <nav className="scd-nav" aria-label="Primary">
+          <nav className="scd-nav-row" aria-label="Primary">
             {NAV.map((item) => (
               <NavLink
                 key={item.to}
@@ -122,23 +140,6 @@ export default function Layout() {
               )}
             </div>
           </nav>
-
-          <div className="scd-right">
-            <button type="button" className="scd-theme" onClick={toggleTheme} aria-label="Toggle theme">
-              {theme === 'dark' ? '☀' : '☾'}
-            </button>
-            <button
-              type="button"
-              className={`scd-burger ${menuOpen ? 'open' : ''}`}
-              onClick={() => setMenuOpen((v) => !v)}
-              aria-label="Menu"
-              aria-expanded={menuOpen}
-            >
-              <span />
-              <span />
-              <span />
-            </button>
-          </div>
         </div>
 
         {menuOpen && (
@@ -178,8 +179,8 @@ export default function Layout() {
           <div>
             <div className="scd-f-name">St. Catharines Digital</div>
             <p>
-              Independent local news for St. Catharines, Welland & Thorold. Official sources
-              only.
+              Independent local coverage for St. Catharines, Welland &amp; Thorold. Every item
+              links to an official primary source.
             </p>
           </div>
           <div>
@@ -190,14 +191,14 @@ export default function Layout() {
             <Link to="/about">About</Link>
           </div>
           <div>
-            <div className="scd-f-label">News</div>
+            <div className="scd-f-label">City desks</div>
             <Link to="/news/st-catharines">St. Catharines</Link>
             <Link to="/news/welland">Welland</Link>
             <Link to="/news/thorold">Thorold</Link>
             <Link to="/news/police">Police Releases</Link>
           </div>
           <div>
-            <div className="scd-f-label">Official Sources</div>
+            <div className="scd-f-label">Official sources</div>
             <a href="https://www.niagarapolice.ca/" target="_blank" rel="noopener noreferrer">
               Niagara Regional Police
             </a>

@@ -7,6 +7,15 @@ import NoticeCard from '../components/news/NoticeCard'
 import OfficialSourcesPanel from '../components/news/OfficialSourcesPanel'
 import '../components/news/news.css'
 
+function formatDate(iso) {
+  if (!iso) return null
+  return new Date(iso).toLocaleDateString('en-CA', {
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric',
+  })
+}
+
 export default function HomePage() {
   const activeNotices = getActiveNotices()
   const upcomingMeetings = getUpcomingMeetings()
@@ -18,8 +27,11 @@ export default function HomePage() {
       seen.add(n.id)
       featured.push(n)
     }
-    if (featured.length >= 8) break
+    if (featured.length >= 10) break
   }
+
+  const lead = featured[0] || null
+  const river = featured.slice(1)
 
   const jsonLd = [
     {
@@ -48,83 +60,112 @@ export default function HomePage() {
   return (
     <>
       <Seo
-        title="St. Catharines Digital | Municipal News, Council & Planning"
+        title="St. Catharines Digital | Municipal News from Official Sources"
         description="Independent local news from official sources for St. Catharines, Welland and Thorold."
         path="/"
         jsonLd={jsonLd}
       />
 
       <div className="scd-page">
-        <p className="scd-kicker">
-          <span className="scd-kicker-dot" aria-hidden="true" />
-          Official sources · Niagara
-        </p>
-
-        <h1 className="scd-hero-title">Local news from primary documents</h1>
-
-        <p className="scd-hero-lead">
-          Council decisions, police releases, and planning notices for St. Catharines,
-          Welland, and Thorold — each item linked to the official source.
-        </p>
-
-        <div className="scd-city-row" role="navigation" aria-label="City news">
+        <nav className="scd-sections" aria-label="City desks">
           {CITIES.map((c) => (
-            <Link key={c.slug} to={`/news/${c.slug}`} className="scd-city-chip">
+            <Link key={c.slug} to={`/news/${c.slug}`} className="scd-section-link">
               {c.name}
             </Link>
           ))}
-          <Link to="/planning-tracker" className="scd-city-chip">
-            Planning tracker
+          <Link to="/planning-tracker" className="scd-section-link">
+            Planning
+          </Link>
+          <Link to="/news/police" className="scd-section-link">
+            Police releases
           </Link>
           <a
             href="https://www.niagarapolice.ca/"
             target="_blank"
             rel="noopener noreferrer"
-            className="scd-city-chip"
+            className="scd-section-link"
           >
             NRPS ↗
           </a>
-        </div>
+        </nav>
 
-        <div className="scd-layout">
+        <div className="scd-front">
           <div>
-            <div className="scd-feed-label">
-              <span className="scd-kicker-dot" aria-hidden="true" />
-              Latest official notices
-            </div>
-
-            {featured.length === 0 ? (
-              <div className="scd-empty">
-                No active notices right now. Check the planning tracker or a city page.
-              </div>
+            {lead ? (
+              <article className="scd-lead">
+                <p className="scd-lead-kicker">
+                  {lead.municipality || 'Municipal'}
+                  {lead.type ? ` · ${lead.type}` : ''}
+                </p>
+                <h1 className="scd-lead-title">
+                  {lead.sourceUrl ? (
+                    <a href={lead.sourceUrl} target="_blank" rel="noopener noreferrer">
+                      {lead.title}
+                    </a>
+                  ) : (
+                    lead.title
+                  )}
+                </h1>
+                {lead.description && (
+                  <p className="scd-lead-dek">
+                    {lead.description.length > 220
+                      ? lead.description.slice(0, 220) + '…'
+                      : lead.description}
+                  </p>
+                )}
+                <div className="scd-lead-meta">
+                  {formatDate(lead.publishedDate) && <span>{formatDate(lead.publishedDate)}</span>}
+                  {lead.sourceUrl && (
+                    <a
+                      className="scd-lead-source"
+                      href={lead.sourceUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      Official source →
+                    </a>
+                  )}
+                </div>
+              </article>
             ) : (
-              featured.map((n) => <NoticeCard key={n.id} notice={n} />)
+              <div className="scd-empty">
+                No active notices right now. Check the planning tracker or a city desk.
+              </div>
+            )}
+
+            {river.length > 0 && (
+              <>
+                <h2 className="scd-section-label">More from the desk</h2>
+                {river.map((n) => (
+                  <NoticeCard key={n.id} notice={n} />
+                ))}
+              </>
             )}
 
             <Link to="/planning-tracker" className="scd-more">
-              View all active notices →
+              All active notices →
             </Link>
           </div>
 
-          <aside>
+          <aside className="scd-rail">
             <OfficialSourcesPanel />
 
-            <div className="scd-side-block">
-              <h4 className="scd-side-label">How we report</h4>
-              <p className="scd-side-text">
-                Only official primary sources. No social media or unofficial lists for
-                public safety information.
+            <div className="scd-rail-block">
+              <h2 className="scd-rail-label">How we report</h2>
+              <p className="scd-rail-text">
+                Only official primary documents — city sites, NRPS releases, and planning
+                notices. No social media lists for public safety.
               </p>
             </div>
 
-            <div className="scd-side-block">
-              <h4 className="scd-side-label">Public safety</h4>
-              <p className="scd-side-text">
-                Ontario does not maintain a public searchable sex offender map. Use{' '}
+            <div className="scd-rail-block">
+              <h2 className="scd-rail-label">Public safety</h2>
+              <p className="scd-rail-text">
+                Ontario does not publish a searchable offender map. Use{' '}
                 <a href="https://www.niagarapolice.ca/" target="_blank" rel="noopener noreferrer">
                   NRPS media releases
                 </a>{' '}
-                for official community notifications.
+                for official community notices.
               </p>
             </div>
           </aside>
