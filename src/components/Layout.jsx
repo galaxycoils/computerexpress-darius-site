@@ -1,9 +1,10 @@
 import { useState, useEffect, useCallback } from 'react'
 import { Outlet, useLocation, Link, NavLink } from 'react-router-dom'
 
+/** theme-v2 resets old localStorage dark preference so paper light is the default */
 function getInitialTheme() {
   if (typeof window === 'undefined') return 'light'
-  const stored = localStorage.getItem('theme')
+  const stored = localStorage.getItem('theme-v2')
   if (stored === 'light' || stored === 'dark') return stored
   return 'light'
 }
@@ -41,7 +42,7 @@ export default function Layout() {
   useEffect(() => {
     document.body.classList.toggle('light', theme === 'light')
     document.body.classList.add('news-mode')
-    localStorage.setItem('theme', theme)
+    localStorage.setItem('theme-v2', theme)
   }, [theme])
 
   useEffect(() => {
