@@ -1,4 +1,4 @@
-/* Front page + story surfaces — dense, readable, mobile-first */
+/* Front page + story surfaces */
 
 .scd-page {
   max-width: 1080px;
@@ -12,17 +12,16 @@
   }
 }
 
-/* Horizontal city strip — scroll on mobile */
+/* City strip — horizontal scroll on mobile */
 .scd-sections {
   display: flex;
-  gap: 0.35rem;
-  margin: 0 0 1.25rem;
-  padding: 0 0 0.85rem;
+  gap: 0.4rem;
+  margin: 0 0 1.35rem;
+  padding: 0 0 0.9rem;
   border-bottom: 1px solid var(--line);
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
-  overscroll-behavior-x: contain;
 }
 
 .scd-sections::-webkit-scrollbar {
@@ -34,11 +33,11 @@
   font-family: var(--font-ui);
   font-size: 0.78rem;
   font-weight: 500;
-  padding: 0.4rem 0.7rem;
-  color: var(--muted);
+  padding: 0.42rem 0.75rem;
+  color: var(--text);
   text-decoration: none;
   border: 1px solid var(--line);
-  background: var(--raised);
+  background: var(--bg-soft);
   white-space: nowrap;
   min-height: 36px;
   display: inline-flex;
@@ -52,7 +51,6 @@
   background: var(--signal-soft);
 }
 
-/* Front grid */
 .scd-front {
   display: grid;
   grid-template-columns: 1fr;
@@ -67,10 +65,9 @@
   }
 }
 
-/* Lead */
 .scd-lead {
-  padding: 0 0 1.35rem;
-  margin: 0 0 0.25rem;
+  padding: 0 0 1.4rem;
+  margin: 0 0 0.15rem;
   border-bottom: 1px solid var(--line-strong);
 }
 
@@ -87,7 +84,7 @@
 
 .scd-lead-title {
   font-family: var(--font-display);
-  font-size: clamp(1.65rem, 5vw, 2.6rem);
+  font-size: clamp(1.7rem, 5.2vw, 2.65rem);
   font-weight: 700;
   letter-spacing: -0.035em;
   line-height: 1.08;
@@ -133,32 +130,24 @@
   text-decoration: underline;
 }
 
-/* Section label */
 .scd-section-label {
   font-family: var(--font-mono);
   font-size: 0.62rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--text-bright);
-  margin: 1.25rem 0 0;
+  margin: 1.35rem 0 0;
   padding: 0 0 0.5rem;
   border-bottom: 2px solid var(--text-bright);
   font-weight: 600;
 }
 
-/* Story rows */
 .scd-notice,
 .scd-story {
-  padding: 1rem 0;
+  padding: 1.05rem 0;
   border-bottom: 1px solid var(--line);
-  border-left: none;
   background: transparent;
   margin: 0;
-}
-
-.scd-notice:last-of-type,
-.scd-story:last-of-type {
-  border-bottom: 1px solid var(--line);
 }
 
 .scd-notice-meta,
@@ -185,7 +174,7 @@
 .scd-notice-title,
 .scd-story-title {
   font-family: var(--font-display);
-  font-size: clamp(1.05rem, 2.5vw, 1.2rem);
+  font-size: clamp(1.05rem, 2.5vw, 1.22rem);
   font-weight: 650;
   line-height: 1.28;
   letter-spacing: -0.02em;
@@ -225,7 +214,6 @@
   text-decoration: underline;
 }
 
-/* Rail */
 .scd-rail {
   display: flex;
   flex-direction: column;
@@ -235,10 +223,9 @@
 .scd-rail-block,
 .scd-side-block {
   border: 1px solid var(--line);
-  background: var(--raised);
+  background: var(--bg-soft);
   padding: 1rem 1.05rem;
   margin: 0;
-  box-shadow: none;
 }
 
 .scd-rail-label,
@@ -267,7 +254,7 @@
 .scd-rail-list a,
 .scd-side-list a {
   font-size: 0.875rem;
-  color: var(--text);
+  color: var(--text-bright);
   text-decoration: none;
   font-family: var(--font-ui);
   font-weight: 500;
@@ -317,7 +304,7 @@
   line-height: 1.5;
 }
 
-/* Legacy bridges for city pages */
+/* City page bridges */
 .scd-kicker {
   font-family: var(--font-mono);
   font-size: 0.68rem;
@@ -369,12 +356,12 @@
   font-weight: 500;
   padding: 0.35rem 0.65rem;
   border: 1px solid var(--line);
-  color: var(--muted);
+  color: var(--text);
   text-decoration: none;
   min-height: 36px;
   display: inline-flex;
   align-items: center;
-  background: var(--raised);
+  background: var(--bg-soft);
 }
 
 .scd-city-chip:hover {
