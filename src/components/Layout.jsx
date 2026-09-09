@@ -35,15 +35,8 @@ function formatDateline() {
 export default function Layout() {
   const [menuOpen, setMenuOpen] = useState(false)
   const [newsDropdown, setNewsDropdown] = useState(false)
-  const [scrolled, setScrolled] = useState(false)
   const [theme, setTheme] = useState(getInitialTheme)
   const location = useLocation()
-
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 8)
-    window.addEventListener('scroll', onScroll, { passive: true })
-    return () => window.removeEventListener('scroll', onScroll)
-  }, [])
 
   useEffect(() => {
     document.body.classList.toggle('light', theme === 'light')
@@ -73,12 +66,16 @@ export default function Layout() {
         Skip to main content
       </a>
 
-      <header className={`scd-h ${scrolled ? 'scrolled' : ''}`}>
+      <header className="scd-h">
         <div className="scd-mast">
           <div className="scd-mast-top">
             <p className="scd-dateline" suppressHydrationWarning>
               {formatDateline()}
             </p>
+            <Link to="/" className="scd-brand" aria-label="St. Catharines Digital home">
+              <span className="scd-brand-name">St. Catharines Digital</span>
+              <span className="scd-brand-tag">Official sources · Niagara</span>
+            </Link>
             <div className="scd-h-tools">
               <button type="button" className="scd-theme" onClick={toggleTheme} aria-label="Toggle theme">
                 {theme === 'dark' ? '☀' : '☾'}
@@ -96,11 +93,6 @@ export default function Layout() {
               </button>
             </div>
           </div>
-
-          <Link to="/" className="scd-brand" aria-label="St. Catharines Digital home">
-            <span className="scd-brand-name">St. Catharines Digital</span>
-            <span className="scd-brand-tag">Official sources · Niagara</span>
-          </Link>
 
           <nav className="scd-nav-row" aria-label="Primary">
             {NAV.map((item) => (
