@@ -1,83 +1,85 @@
 /**
- * Niagara Desk — digital broadsheet tokens
- * Light paper default (real newsrooms). Dark mode optional.
+ * Niagara Desk — premium paper newsroom
+ * Warm paper, ink, single press-red signal.
  */
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,650;9..144,700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap');
 
 :root {
-  /* Paper & ink */
-  --paper: #f7f4ed;
-  --paper-raised: #fffcf7;
-  --ink: #1c1917;
-  --ink-soft: #44403c;
-  --rule: #d6d0c4;
-  --rule-strong: #a8a29e;
+  --paper: #faf8f4;
+  --paper-2: #f3f0e8;
+  --raised: #ffffff;
+  --ink: #111110;
+  --ink-2: #3a3835;
+  --ink-3: #6b6760;
+  --ink-4: #9c968c;
+  --rule: #e4e0d6;
+  --rule-2: #cfc9bb;
+  --signal: #b91c1c;
+  --signal-soft: rgba(185, 28, 28, 0.08);
 
-  /* Signal — press crimson, not SaaS mint */
-  --signal: #9b2335;
-  --signal-soft: rgba(155, 35, 53, 0.08);
-  --signal-line: rgba(155, 35, 53, 0.35);
-
-  /* Semantic map */
   --bg: var(--paper);
-  --bg-soft: #efebe3;
-  --bg-card: var(--paper-raised);
-  --bg-card-hover: #f3efe6;
-  --surface: var(--paper-raised);
-  --text: var(--ink-soft);
+  --bg-soft: var(--paper-2);
+  --bg-card: var(--raised);
+  --text: var(--ink-2);
   --text-bright: var(--ink);
-  --muted: #78716c;
-  --muted-lite: #a8a29e;
-  --border: var(--rule);
-  --border-strong: var(--rule-strong);
+  --muted: var(--ink-3);
+  --muted-lite: var(--ink-4);
   --line: var(--rule);
-  --line-strong: var(--rule-strong);
+  --line-strong: var(--rule-2);
+  --border: var(--rule);
+  --border-strong: var(--rule-2);
+  --panel-border: var(--rule);
   --primary: var(--signal);
   --primary-dim: var(--signal-soft);
   --emerald: var(--signal);
   --emerald-dim: var(--signal-soft);
   --accent: #1e3a5f;
-  --success: #3f6b4a;
-  --warning: #9a6b2f;
+  --success: #166534;
+  --warning: #a16207;
   --danger: var(--signal);
   --info: #1e3a5f;
 
-  --font-display: 'Fraunces', 'Source Serif 4', Georgia, serif;
+  --font-display: 'Fraunces', Georgia, serif;
   --font-body: 'Source Serif 4', Georgia, serif;
   --font-ui: 'IBM Plex Sans', system-ui, sans-serif;
   --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
 
-  --radius-sm: 2px;
-  --radius-md: 4px;
-  --radius-lg: 6px;
-  --ease: cubic-bezier(0.32, 0.72, 0, 1);
+  --radius: 0;
+  --ease: cubic-bezier(0.25, 1, 0.5, 1);
+  --shadow-soft: 0 1px 2px rgba(17, 17, 16, 0.04), 0 4px 16px rgba(17, 17, 16, 0.04);
 }
 
-/* Dark mode — night desk */
-.news-root.is-dark,
-body:not(.light) .news-root.is-dark {
-  --paper: #12100e;
-  --paper-raised: #1c1916;
-  --ink: #f5f0e8;
-  --ink-soft: #d6d0c4;
-  --rule: rgba(245, 240, 232, 0.12);
-  --rule-strong: rgba(245, 240, 232, 0.2);
-  --signal: #d4a0a8;
-  --signal-soft: rgba(212, 160, 168, 0.12);
+.news-root.is-dark {
+  --paper: #0f0e0d;
+  --paper-2: #171614;
+  --raised: #1c1b19;
+  --ink: #f5f2eb;
+  --ink-2: #d4cfc4;
+  --ink-3: #9c968c;
+  --ink-4: #6b6760;
+  --rule: rgba(245, 242, 235, 0.1);
+  --rule-2: rgba(245, 242, 235, 0.18);
+  --signal: #f07167;
+  --signal-soft: rgba(240, 113, 103, 0.12);
   --bg: var(--paper);
-  --bg-soft: #1a1714;
-  --bg-card: var(--paper-raised);
-  --text: var(--ink-soft);
+  --bg-soft: var(--paper-2);
+  --bg-card: var(--raised);
+  --text: var(--ink-2);
   --text-bright: var(--ink);
-  --muted: #a8a29e;
-  --muted-lite: #78716c;
-  --border: var(--rule);
+  --muted: var(--ink-3);
+  --muted-lite: var(--ink-4);
   --line: var(--rule);
+  --line-strong: var(--rule-2);
+  --border: var(--rule);
+  --panel-border: var(--rule);
   --primary: var(--signal);
+  --primary-dim: var(--signal-soft);
   --emerald: var(--signal);
+  --shadow-soft: 0 1px 2px rgba(0, 0, 0, 0.3), 0 8px 24px rgba(0, 0, 0, 0.25);
 }
 
 body {
   background: var(--bg);
   color: var(--text);
+  -webkit-font-smoothing: antialiased;
 }
