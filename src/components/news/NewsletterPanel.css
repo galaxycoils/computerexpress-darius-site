@@ -2,8 +2,8 @@
 .scd-newsletter-form {
   display: flex;
   flex-direction: column;
-  gap: 0.55rem;
-  margin-top: 0.7rem;
+  gap: 8px;
+  margin-top: 12px;
 }
 
 .scd-newsletter-sr {
@@ -20,11 +20,11 @@
 
 .scd-newsletter-form input[type="email"] {
   font-family: var(--font-ui);
-  font-size: 0.875rem;
+  font-size: var(--t-sm);
   color: var(--text-bright);
   background: var(--bg);
   border: 1px solid var(--line-strong);
-  padding: 0.55rem 0.7rem;
+  padding: 6px 12px;
   width: 100%;
   box-sizing: border-box;
 }
@@ -41,12 +41,12 @@
 
 .scd-newsletter-form button[type="submit"] {
   font-family: var(--font-ui);
-  font-size: 0.8rem;
+  font-size: var(--t-xs);
   font-weight: 600;
-  color: #fff;
+  color: var(--on-signal);
   background: var(--signal);
   border: 1px solid var(--signal);
-  padding: 0.55rem 0.7rem;
+  padding: 6px 12px;
   cursor: pointer;
 }
 
@@ -61,14 +61,14 @@
 
 .scd-newsletter-error {
   font-family: var(--font-ui);
-  font-size: 0.8rem;
+  font-size: var(--t-xs);
   color: #b3261e;
-  margin: 0.55rem 0 0;
+  margin: 8px 0 0;
 }
 
 .scd-newsletter-note {
   font-family: var(--font-ui);
-  font-size: 0.75rem;
+  font-size: var(--t-xs);
   color: var(--muted-lite);
-  margin: 0.55rem 0 0;
+  margin: 8px 0 0;
 }

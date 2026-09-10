@@ -11,8 +11,24 @@ export async function onRequestPost(context) {
   }
 
   try {
-    const body = await context.request.json();
-    const { email } = body;
+    let email = null;
+    const contentType = context.request.headers.get('content-type') || '';
+    let body = await context.request.text();
+    if (contentType.includes('application/json')) {
+      const json = JSON.parse(body);
+      ({ email } = json);
+    } else if (contentType.includes('application/x-www-form-urlencoded')) {
+      const params = new URLSearchParams(body);
+      email = params.get('email') || null;
+    } else {
+      try {
+        const json = JSON.parse(body);
+        ({ email } = json);
+      } catch {
+        const params = new URLSearchParams(body);
+        email = params.get('email') || null;
+      }
+    }
 
     if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       return jsonResponse({ error: 'Invalid email' }, 400);
@@ -51,7 +67,7 @@ export async function onRequestPost(context) {
     }
 
     console.log('Newsletter welcome sent to:', email);
-    return jsonResponse({ success: true });
+    return jsonResponse({ success: true, message: 'You\'re on the list. Check your inbox for a welcome email.' });
   } catch (err) {
     console.error('Newsletter error:', err);
     return jsonResponse({ error: 'Internal server error' }, 500);
