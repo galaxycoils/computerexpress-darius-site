@@ -229,13 +229,13 @@
   line-height: 1.4;
 }
 
-/* Chip: municipality — Standard blue chip register */
+/* Chip: municipality — Standard chip register (text color is mode-aware via --on-signal) */
 .scd-notice-chip {
   font-family: var(--font-mono);
   font-size: 0.6rem;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: #fff;
+  color: var(--on-signal);
   background: var(--signal);
   padding: 0.12rem 0.5rem;
   border-radius: 2px;
@@ -325,7 +325,7 @@
   font-size: 0.6rem;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: #fff;
+  color: var(--on-signal);
   background: var(--signal);
   padding: 0.12rem 0.5rem;
   border-radius: 2px;

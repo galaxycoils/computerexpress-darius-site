@@ -1,6 +1,14 @@
 import { useState, useEffect, useCallback } from 'react'
 import { Outlet, useLocation, Link, NavLink } from 'react-router-dom'
 
+/** theme-v2: persists light/dark choice in localStorage; light is the default for v1. */
+function getInitialTheme() {
+  if (typeof window === 'undefined') return 'light'
+  const stored = localStorage.getItem('theme-v2')
+  if (stored === 'light' || stored === 'dark') return stored
+  return 'light'
+}
+
 const NAV = [
   { to: '/', label: 'Home', end: true },
   { to: '/news/st-catharines', label: 'News', isDropdown: true },
@@ -29,11 +37,14 @@ function formatDateline() {
 export default function Layout() {
   const [menuOpen, setMenuOpen] = useState(false)
   const [newsDropdown, setNewsDropdown] = useState(false)
+  const [theme, setTheme] = useState(getInitialTheme)
   const location = useLocation()
 
   useEffect(() => {
+    document.body.classList.toggle('light', theme === 'light')
     document.body.classList.add('news-mode')
-  }, [])
+    localStorage.setItem('theme-v2', theme)
+  }, [theme])
 
   useEffect(() => {
     setMenuOpen(false)
@@ -47,13 +58,17 @@ export default function Layout() {
     }
   }, [menuOpen])
 
+  const toggleTheme = useCallback(() => {
+    setTheme((t) => (t === 'dark' ? 'light' : 'dark'))
+  }, [])
+
   const handleNewsToggle = useCallback((e) => {
     e.preventDefault()
     setNewsDropdown((v) => !v)
   }, [])
 
   return (
-    <div className="news-root">
+    <div className={`news-root ${theme === 'light' ? 'is-light' : 'is-dark'}`}>
       <a href="#main-content" className="skip-link">
         Skip to main content
       </a>
@@ -70,6 +85,14 @@ export default function Layout() {
               <span className="scd-brand-tag">Official sources · Niagara</span>
             </Link>
             <div className="scd-h-tools">
+              <button
+                type="button"
+                className="scd-theme"
+                onClick={toggleTheme}
+                aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+              >
+                {theme === 'dark' ? '☀' : '☾'}
+              </button>
               <button
                 type="button"
                 className={`scd-burger ${menuOpen ? 'open' : ''}`}

@@ -152,8 +152,8 @@
 /* ── Blue nav bar (Standard register) ── */
 
 .scd-nav-bar {
-  background: var(--signal);
-  border-bottom: 1px solid var(--signal);
+  background: var(--nav-bg);
+  border-bottom: 1px solid var(--nav-bg);
 }
 
 .scd-nav-bar-inner {
@@ -179,7 +179,7 @@
   padding: 0.4rem 0.85rem;
   font-size: 0.8125rem;
   font-weight: 500;
-  color: #fff;
+  color: var(--on-primary);
   text-decoration: none;
   background: transparent;
   border: none;
@@ -192,7 +192,7 @@
 
 .scd-nav-a:hover {
   background: rgba(255, 255, 255, 0.15);
-  color: #fff;
+  color: var(--on-primary);
 }
 
 .scd-nav-a.active {

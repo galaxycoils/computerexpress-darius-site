@@ -204,7 +204,7 @@ export default function PoliceNewsPage() {
                         </div>
                         <div className="release-body">
                           <div className="release-meta">
-                            <span className="badge" style={{ backgroundColor: 'var(--danger)', color: '#fff' }}>
+                            <span className="badge" style={{ backgroundColor: 'var(--danger)', color: 'var(--on-signal)' }}>
                               {release.category.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}
                             </span>
                             <span className="news-municipality">{release.municipality}</span>

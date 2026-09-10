@@ -1,20 +1,27 @@
-/** St. Catharines Digital — Standard visual register: paper-white theme, blue accent.
+/** St. Catharines Digital — Standard visual register: paper-white + dark-navy surfaces.
 
-    Phase 1 token layer. Replaces the prior "Niagara Desk" token set (Fraunces / IBM Plex Sans /
-    red accent / dark surface) with the Standard-aligned register: Playfair Display display serif,
-    Source Serif 4 body serif, Inter UI sans, IBM Plex Mono datelines, blue #0072bc accent,
-    paper-white surface. Dark surface dropped for v1 — light is the only theme.
+    Phase 1 token layer, extended with Phase 6b dark-navy surface (user call 2026-09-10).
 
-    Every component must flow through these tokens. No hardcoded hex accent values anywhere in
-    component CSS — grep gate for Phase 1.
+    Light mode (default): paper-white body, blue #0072bc signal + nav bar + button surfaces,
+    Playfair Display / Source Serif 4 / Inter / IBM Plex Mono.
+
+    Dark mode (v1 reintroduction): dark-navy newsprint body (#0f1a26), navy panels, near-white
+    ink hierarchy, amber #c9a227 signal (high-contrast night accent on navy — signal shifts
+    blue->amber per mode), BLUE nav bar and blue button/skip-link surfaces retained in both
+    modes (white text on blue is correct in both). Toggle in Layout.jsx restores is-light /
+    is-dark on .news-root, persisted in localStorage key "theme-v2".
+
+    Every component must flow through these tokens. No hardcoded hex accent values anywhere
+    in component CSS — grep gate for Phase 1 and Phase 6b.
 */
 
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600;1,700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap');
 
-/* ── Token set: Standard visual register (paper surface is the only surface for v1) ── */
+/* ── Token set: light paper surface (default) ── */
 
 :root,
-.news-root {
+.news-root,
+.news-root.is-light {
   /* Paper — near-white warm newsprint, not clinical white */
   --paper: #faf8f4;
   --paper-2: #f2ede3;
@@ -30,9 +37,17 @@
   --rule: #e3ddd2;
   --rule-2: #c9c2b2;
 
-  /* Accent — Standard blue */
+  /* Accent — Standard blue (light mode: signal + nav bar + button surfaces) */
   --signal: #0072bc;
   --signal-soft: rgba(0, 114, 188, 0.09);
+
+  /* Nav bar surface — blue in both modes for brand consistency */
+  --nav-bg: #0072bc;
+
+  /* Text on primary (blue) surfaces — buttons, skip-link, nav links: white always */
+  --on-primary: #ffffff;
+  /* Text on signal-colored surfaces — chips/accents: white in light (blue), dark ink in dark (amber) */
+  --on-signal: #ffffff;
 
   /* Mapped surfaces */
   --bg: var(--paper);
@@ -72,6 +87,68 @@
   --shadow-soft: 0 1px 2px rgba(17, 17, 16, 0.04), 0 6px 20px rgba(17, 17, 16, 0.05);
 }
 
+/* ── Dark-navy newsprint surface (Phase 6b, user call 2026-09-10) ── */
+
+.news-root.is-dark {
+  /* Paper — dark navy newsprint, not black */
+  --paper: #0f1a26;
+  --paper-2: #142231;
+  --raised: #1a2c3d;
+
+  /* Ink — near-white hierarchy on navy */
+  --ink: #eef2f7;
+  --ink-2: #d4dce6;
+  --ink-3: #b0bcc8;
+  --ink-4: #8a9baa;
+
+  /* Rules — hairlines on dark */
+  --rule: rgba(238, 242, 247, 0.10);
+  --rule-2: rgba(238, 242, 247, 0.18);
+
+  /* Signal — amber: high-contrast night accent on navy (shifts blue->amber per mode) */
+  --signal: #c9a227;
+  --signal-soft: rgba(201, 162, 39, 0.15);
+
+  /* Nav bar surface — stays blue in both modes for brand consistency */
+  --nav-bg: #0072bc;
+
+  /* Text on primary (blue) surfaces — white on blue is correct in both modes */
+  --on-primary: #ffffff;
+  /* Text on signal-colored surfaces — dark ink on amber chips/accents in dark mode */
+  --on-signal: #111110;
+
+  /* Mapped surfaces */
+  --bg: var(--paper);
+  --bg-soft: var(--paper-2);
+  --bg-card: var(--raised);
+
+  --text: var(--ink-2);
+  --text-bright: var(--ink);
+  --muted: var(--ink-3);
+  --muted-lite: var(--ink-4);
+
+  --line: var(--rule);
+  --line-strong: var(--rule-2);
+  --border: var(--rule);
+  --border-strong: var(--rule-2);
+  --panel-border: var(--rule);
+
+  --primary: var(--nav-bg);          /* blue — button / skip-link / nav-link surfaces */
+  --primary-dim: rgba(0, 114, 188, 0.15); /* blue tint for tag backgrounds on dark */
+
+  /* Semantic aliases */
+  --emerald: var(--signal);
+  --emerald-dim: var(--signal-soft);
+  --accent: var(--signal);
+  --success: #4ade80;
+  --warning: #f59e0b;
+  --danger: var(--signal);
+  --info: var(--signal);
+
+  /* Shadow — deeper on dark */
+  --shadow-soft: 0 1px 2px rgba(0, 0, 0, 0.4), 0 8px 28px rgba(0, 0, 0, 0.45);
+}
+
 /* ── Body surface ── */
 
 body {
@@ -80,12 +157,3 @@ body {
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
-
-/* ── Deprecation note ──
-
-    Prior theme-civic.css had a .news-root.is-dark / body.dark token block (dark emerald surface).
-    That block is removed for v1: the Standard register is a paper-white surface; dark mode is out
-    of scope. The theme toggle in Layout.jsx still flips localStorage key "theme-v2" between
-    "light" and "dark", but both states now resolve to the same paper tokens above, so the surface
-    does not change. A future phase can reintroduce a dark-navy newsprint surface if desired.
-*/
