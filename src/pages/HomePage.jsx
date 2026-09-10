@@ -5,6 +5,7 @@ import { siteConfig } from '../data/siteConfig'
 import { CITIES } from '../data/cities'
 import NoticeCard from '../components/news/NoticeCard'
 import OfficialSourcesPanel from '../components/news/OfficialSourcesPanel'
+import NewsletterPanel from '../components/news/NewsletterPanel'
 import '../components/news/news.css'
 
 function formatDate(iso) {
@@ -149,6 +150,7 @@ export default function HomePage() {
 
           <aside className="scd-rail">
             <OfficialSourcesPanel />
+            <NewsletterPanel />
 
             <div className="scd-rail-block">
               <h2 className="scd-rail-label">How we report</h2>
