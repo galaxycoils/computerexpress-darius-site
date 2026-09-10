@@ -2,11 +2,24 @@
  * NRPS Police Media Releases for St. Catharines Digital
  * Sourced exclusively from https://www.niagarapolice.ca/news/posts/
  * Official Niagara Regional Police Service media releases & community notifications.
- * Updated: 2026-09-07
+ * Updated: 2026-09-10
  * Next review: Daily (cron) — refresh from niagarapolice.ca
+ * Note: added Sep 9 Welland break-and-enter arrests.
  */
 
 export const nrpsReleases = [
+  // SEP 9, 2026
+  {
+    id: 'nrps-2026-09-09-welland-bne-arrests',
+    date: '2026-09-09',
+    headline: 'Two Arrested in Welland Break and Enter Investigation',
+    municipality: 'Welland',
+    type: 'Media Release (Break & Enter Investigation)',
+    url: 'https://www.niagarapolice.ca/news/posts/two-arrested-in-welland-break-and-enter-investigation/',
+    source: 'Niagara Regional Police Service',
+    tags: ['Break & Enter', 'Welland', 'Arrest', 'Investigation'],
+    category: 'break-and-enter',
+  },
   // SEP 7, 2026
   {
     id: 'nrps-2026-09-07-fort-erie-collision',
@@ -189,7 +202,6 @@ export function getNrpsStats() {
 
   recent.forEach(r => {
     byCategory[r.category] = (byCategory[r.category] || 0) + 1;
-    // Extract primary municipality (first comma-separated value)
     const primaryMuni = r.municipality.split(',')[0].trim();
     byMunicipality[primaryMuni] = (byMunicipality[primaryMuni] || 0) + 1;
     if (!latestDate || r.date > latestDate) latestDate = r.date;

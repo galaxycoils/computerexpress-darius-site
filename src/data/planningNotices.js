@@ -5,8 +5,9 @@
  * - welland.ca
  * - thorold.ca
  * - niagararegion.ca
- * 
- * Updated: 2026-09-16
+ *
+ * Updated: 2026-09-10
+ * Note: added Welland First Street CoA hearing; CIP meeting details filled.
  * Next review: Weekly
  */
 
@@ -17,9 +18,9 @@ export const planningNotices = [
     municipality: 'St. Catharines',
     type: 'Official Plan Amendment (City-initiated)',
     title: 'Ontario Street Corridor Secondary Plan',
-    description: 'Adopt Ontario Street Corridor Secondary Plan (QEW to Welland Ave, incl. 282/285 Ontario St).',
+    description: 'City-initiated Official Plan amendment to adopt the Ontario Street Corridor Secondary Plan (QEW to Welland Ave, including 282 and 285 Ontario St).',
     fileNumber: '26 111925 OP',
-    status: 'Meeting Complete',
+    status: 'Public Meeting Scheduled',
     meetingDate: '2026-09-14T18:00:00',
     meetingLocation: 'Council Chambers, 50 Church St',
     submissionDeadline: '2026-09-11T12:00:00',
@@ -95,7 +96,6 @@ export const planningNotices = [
     tags: ['Minor Variance', 'St. Paul Street West']
   },
 
-  // Past hearings marked complete in the Sep 16 live scan
   {
     id: 'stc-8-graham-avenue',
     municipality: 'St. Catharines',
@@ -215,15 +215,34 @@ export const planningNotices = [
     municipality: 'St. Catharines',
     type: 'Community Improvement Plan',
     title: 'Community Improvement Plan for Strategic Sites',
-    description: 'City-initiated CIP for strategic sites.',
+    description: 'City-initiated site-specific CIP for long-term remediation and redevelopment of 282 Ontario St, 285 Ontario St, and 142 Queenston St.',
     status: 'Public Meeting Scheduled',
-    publishedDate: '2026-08',
+    meetingDate: '2026-09-14T18:00:00',
+    meetingLocation: 'Council Chambers, 3rd Floor City Hall, 50 Church St',
+    publishedDate: '2026-08-24',
     sourceUrl: 'https://www.stcatharines.ca/news/posts/city-of-st-catharines-notice-of-public-meeting-community-improvement-plan-for-strategic-sites/',
     category: 'community-improvement-plan',
-    tags: ['CIP', 'Strategic Sites', 'Community Improvement Plan']
+    tags: ['CIP', 'Strategic Sites', 'Community Improvement Plan', 'Ontario Street', 'Queenston Street']
   },
 
   // WELLAND
+  {
+    id: 'welland-first-st-coa-2026-09-28',
+    municipality: 'Welland',
+    type: 'Committee of Adjustment Hearing',
+    title: '37-40 First Street — Consents and Access-Aisle Variances',
+    description: 'Consent applications to create new lots for future multiple dwellings with reciprocal access easements, plus minor variances to permit 3 m access aisles instead of 6 m. Existing semi-detached dwellings and accessory buildings are proposed to be demolished.',
+    fileNumber: 'PLCON202600193 / PLCON202600195',
+    status: 'Hearing Scheduled',
+    meetingDate: '2026-09-28T17:00:00',
+    meetingLocation: 'Council Chambers, Civic Square, 60 East Main St',
+    submissionDeadline: '2026-09-22',
+    submissionEmail: 'cofa@welland.ca',
+    publishedDate: '2026-09-02',
+    sourceUrl: 'https://www.welland.ca/news/posts/notice-of-public-hearing-concerning-applications-for-consent-and-minor-variance-37-to-39-and-38-to-40-first-street/',
+    category: 'consent-application',
+    tags: ['Consent', 'Minor Variance', 'First Street', 'Welland', 'Committee of Adjustment']
+  },
   {
     id: 'welland-opa-55',
     municipality: 'Welland',
@@ -576,21 +595,17 @@ export function getActiveNotices() {
   const now = new Date()
   const thirtyDaysAgo = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000)
   return planningNotices.filter(n => {
-    // Exclude notices in final/completed states
     const completedStatuses = [
       'Approved', 'Complete', 'Meeting Complete', 'Hearing Complete',
       'Open House Complete', 'Application Complete', 'Passed', 'By-law Passed'
     ]
     if (completedStatuses.includes(n.status)) return false
-    // Exclude past meetings that are not ongoing projects
     if (n.meetingDate && new Date(n.meetingDate) < now) {
       if (!['Active', 'Under Construction', 'Pre-construction'].includes(n.status)) {
         return false
       }
     }
-    // Exclude road closures / time-limited events past their end date
     if (n.endDate && new Date(n.endDate) < now) return false
-    // Exclude road closures whose effective date is more than 30 days ago with no end date
     if (n.effectiveDate && !n.endDate && n.category === 'road-closure' && new Date(n.effectiveDate) < thirtyDaysAgo) {
       return false
     }
@@ -602,12 +617,12 @@ export function getNoticeStats() {
   const active = getActiveNotices()
   const byMunicipality = {}
   const byCategory = {}
-  
+
   active.forEach(n => {
     byMunicipality[n.municipality] = (byMunicipality[n.municipality] || 0) + 1
     byCategory[n.category] = (byCategory[n.category] || 0) + 1
   })
-  
+
   return {
     total: planningNotices.length,
     active: active.length,
