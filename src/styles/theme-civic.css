@@ -1,89 +1,91 @@
-/**
- * Niagara Desk — premium paper newsroom
- */
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap');
+/** St. Catharines Digital — Standard visual register: paper-white theme, blue accent.
+
+    Phase 1 token layer. Replaces the prior "Niagara Desk" token set (Fraunces / IBM Plex Sans /
+    red accent / dark surface) with the Standard-aligned register: Playfair Display display serif,
+    Source Serif 4 body serif, Inter UI sans, IBM Plex Mono datelines, blue #0072bc accent,
+    paper-white surface. Dark surface dropped for v1 — light is the only theme.
+
+    Every component must flow through these tokens. No hardcoded hex accent values anywhere in
+    component CSS — grep gate for Phase 1.
+*/
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600;1,700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap');
+
+/* ── Token set: Standard visual register (paper surface is the only surface for v1) ── */
 
 :root,
-.news-root.is-light,
-body.light {
+.news-root {
+  /* Paper — near-white warm newsprint, not clinical white */
   --paper: #faf8f4;
-  --paper-2: #f0ece4;
+  --paper-2: #f2ede3;
   --raised: #ffffff;
-  --ink: #111110;
-  --ink-2: #3a3835;
-  --ink-3: #5c5852;
-  --ink-4: #8a847a;
-  --rule: #e2ddd3;
-  --rule-2: #c9c2b4;
-  --signal: #b91c1c;
-  --signal-soft: rgba(185, 28, 28, 0.09);
 
+  /* Ink */
+  --ink: #111110;
+  --ink-2: #333331;
+  --ink-3: #5c5a54;
+  --ink-4: #8a877e;
+
+  /* Rules */
+  --rule: #e3ddd2;
+  --rule-2: #c9c2b2;
+
+  /* Accent — Standard blue */
+  --signal: #0072bc;
+  --signal-soft: rgba(0, 114, 188, 0.09);
+
+  /* Mapped surfaces */
   --bg: var(--paper);
   --bg-soft: var(--paper-2);
   --bg-card: var(--raised);
+
   --text: var(--ink-2);
   --text-bright: var(--ink);
   --muted: var(--ink-3);
   --muted-lite: var(--ink-4);
+
   --line: var(--rule);
   --line-strong: var(--rule-2);
   --border: var(--rule);
   --border-strong: var(--rule-2);
   --panel-border: var(--rule);
+
   --primary: var(--signal);
   --primary-dim: var(--signal-soft);
+
+  /* Semantic aliases kept for backward compat with existing component CSS */
   --emerald: var(--signal);
   --emerald-dim: var(--signal-soft);
-  --accent: #1e3a5f;
+  --accent: var(--signal);
   --success: #166534;
   --warning: #a16207;
   --danger: var(--signal);
-  --info: #1e3a5f;
+  --info: var(--signal);
 
-  --font-display: 'Fraunces', Georgia, serif;
+  /* Type */
+  --font-display: 'Playfair Display', Georgia, serif;
   --font-body: 'Source Serif 4', Georgia, serif;
-  --font-ui: 'IBM Plex Sans', system-ui, sans-serif;
+  --font-ui: 'Inter', system-ui, sans-serif;
   --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
 
   --ease: cubic-bezier(0.25, 1, 0.5, 1);
   --shadow-soft: 0 1px 2px rgba(17, 17, 16, 0.04), 0 6px 20px rgba(17, 17, 16, 0.05);
 }
 
-.news-root.is-dark,
-body:not(.light) .news-root.is-dark {
-  --paper: #0f0e0d;
-  --paper-2: #181714;
-  --raised: #1f1d1a;
-  --ink: #f5f2eb;
-  --ink-2: #d4cfc4;
-  --ink-3: #a39e94;
-  --ink-4: #7a746a;
-  --rule: rgba(245, 242, 235, 0.12);
-  --rule-2: rgba(245, 242, 235, 0.2);
-  --signal: #f07167;
-  --signal-soft: rgba(240, 113, 103, 0.14);
-
-  --bg: var(--paper);
-  --bg-soft: var(--paper-2);
-  --bg-card: var(--raised);
-  --text: var(--ink-2);
-  --text-bright: var(--ink);
-  --muted: var(--ink-3);
-  --muted-lite: var(--ink-4);
-  --line: var(--rule);
-  --line-strong: var(--rule-2);
-  --border: var(--rule);
-  --border-strong: var(--rule-2);
-  --panel-border: var(--rule);
-  --primary: var(--signal);
-  --primary-dim: var(--signal-soft);
-  --emerald: var(--signal);
-  --emerald-dim: var(--signal-soft);
-  --shadow-soft: 0 1px 2px rgba(0, 0, 0, 0.35), 0 8px 28px rgba(0, 0, 0, 0.3);
-}
+/* ── Body surface ── */
 
 body {
   background: var(--bg);
   color: var(--text);
   -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
+
+/* ── Deprecation note ──
+
+    Prior theme-civic.css had a .news-root.is-dark / body.dark token block (dark emerald surface).
+    That block is removed for v1: the Standard register is a paper-white surface; dark mode is out
+    of scope. The theme toggle in Layout.jsx still flips localStorage key "theme-v2" between
+    "light" and "dark", but both states now resolve to the same paper tokens above, so the surface
+    does not change. A future phase can reintroduce a dark-navy newsprint surface if desired.
+*/
