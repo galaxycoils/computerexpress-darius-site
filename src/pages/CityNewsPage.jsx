@@ -111,7 +111,7 @@ export default function CityNewsPage() {
         </p>
         <h1 className="scd-hero-title">{city.name}</h1>
         <p className="scd-hero-lead">{city.description}</p>
-        <p className="scd-side-text" style={{ marginBottom: '1.5rem' }}>
+        <p className="scd-rail-text" style={{ marginBottom: '1.5rem' }}>
           Last updated: {lastUpdated}
         </p>
 
