@@ -1,4 +1,4 @@
-/** Premium news shell — masthead, nav, footer */
+/** Premium news shell — Standard register: masthead (logo-left), blue nav bar, footer */
 
 .news-root {
   min-height: 100dvh;
@@ -9,41 +9,46 @@
   font-family: var(--font-ui);
 }
 
-/* ── Header ── */
+/* ── Masthead (top bar: logo left, utilities right) ── */
+
 .scd-h {
   position: sticky;
   top: 0;
   z-index: 300;
-  background: color-mix(in srgb, var(--bg) 94%, transparent);
-  backdrop-filter: blur(14px) saturate(1.2);
-  -webkit-backdrop-filter: blur(14px) saturate(1.2);
+  background: var(--bg);
   border-bottom: 1px solid var(--line);
 }
 
 .scd-mast {
   max-width: 1080px;
   margin: 0 auto;
-  padding: 0.75rem 1rem 0;
+  padding: 0.6rem 1rem 0;
 }
 
 @media (min-width: 768px) {
   .scd-mast {
-    padding: 1rem 1.5rem 0;
+    padding: 0.85rem 1.5rem 0;
   }
 }
 
 .scd-mast-top {
   display: grid;
-  grid-template-columns: 1fr auto 1fr;
+  grid-template-columns: auto 1fr auto;
   align-items: center;
-  gap: 0.5rem;
-  margin-bottom: 0.65rem;
+  gap: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+@media (max-width: 640px) {
+  .scd-mast-top {
+    grid-template-columns: 1fr auto;
+  }
 }
 
 .scd-dateline {
   font-family: var(--font-mono);
-  font-size: 0.62rem;
-  letter-spacing: 0.04em;
+  font-size: 0.6rem;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--muted-lite);
   margin: 0;
@@ -54,27 +59,14 @@
   .scd-dateline {
     display: none;
   }
-  .scd-mast-top {
-    grid-template-columns: 1fr auto;
-  }
 }
 
 .scd-brand {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   text-decoration: none;
   color: var(--text-bright);
-  justify-self: center;
-  grid-column: 2;
-}
-
-@media (max-width: 640px) {
-  .scd-brand {
-    grid-column: 1;
-    justify-self: start;
-    align-items: flex-start;
-  }
 }
 
 .scd-brand-name {
@@ -87,10 +79,10 @@
 }
 
 .scd-brand-tag {
-  margin-top: 0.2rem;
+  margin-top: 0.15rem;
   font-family: var(--font-mono);
-  font-size: 0.58rem;
-  letter-spacing: 0.16em;
+  font-size: 0.55rem;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--muted-lite);
 }
@@ -100,12 +92,11 @@
   align-items: center;
   gap: 0.15rem;
   justify-self: end;
-  grid-column: 3;
 }
 
 @media (max-width: 640px) {
   .scd-h-tools {
-    grid-column: 2;
+    justify-self: end;
   }
 }
 
@@ -158,38 +149,58 @@
   transform: translateY(-6.5px) rotate(-45deg);
 }
 
-.scd-nav-row {
-  display: none;
-  align-items: center;
-  justify-content: center;
-  gap: 0.1rem;
-  padding: 0.5rem 0 0.65rem;
-  border-top: 1px solid var(--line);
+/* ── Blue nav bar (Standard register) ── */
+
+.scd-nav-bar {
+  background: var(--signal);
+  border-bottom: 1px solid var(--signal);
 }
 
-.scd-a {
-  padding: 0.4rem 0.75rem;
+.scd-nav-bar-inner {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.1rem;
+  min-height: 44px;
+}
+
+@media (min-width: 768px) {
+  .scd-nav-bar-inner {
+    padding: 0 1.5rem;
+  }
+}
+
+.scd-nav-a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.4rem 0.85rem;
   font-size: 0.8125rem;
   font-weight: 500;
-  color: var(--muted);
+  color: #fff;
   text-decoration: none;
   background: transparent;
   border: none;
   cursor: pointer;
   font-family: var(--font-ui);
   border-radius: 4px;
-  transition: color 0.2s var(--ease), background 0.2s var(--ease);
+  transition: background 0.2s var(--ease), color 0.2s var(--ease);
+  white-space: nowrap;
 }
 
-.scd-a:hover {
-  color: var(--text-bright);
-  background: var(--bg-soft);
+.scd-nav-a:hover {
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
 }
 
-.scd-a.active {
-  color: var(--signal);
+.scd-nav-a.active {
+  background: rgba(255, 255, 255, 0.2);
   font-weight: 600;
 }
+
+/* Dropdown in the blue bar */
 
 .scd-dropdown {
   position: relative;
@@ -197,15 +208,24 @@
 
 .scd-dropdown-menu {
   position: absolute;
-  top: calc(100% + 6px);
-  left: 50%;
-  transform: translateX(-50%);
-  min-width: 180px;
+  top: calc(100% + 2px);
+  left: 0;
+  min-width: 200px;
   background: var(--raised);
   border: 1px solid var(--line);
+  border-top: none;
   padding: 0.35rem;
   box-shadow: var(--shadow-soft);
   z-index: 50;
+  border-radius: 0 0 4px 4px;
+}
+
+@media (max-width: 640px) {
+  .scd-dropdown-menu {
+    left: 0;
+    right: 0;
+    min-width: auto;
+  }
 }
 
 .scd-dropdown-item {
@@ -215,6 +235,7 @@
   color: var(--muted);
   text-decoration: none;
   border-radius: 3px;
+  font-family: var(--font-ui);
 }
 
 .scd-dropdown-item:hover {
@@ -222,25 +243,27 @@
   color: var(--signal);
 }
 
+/* ── Mobile drawer ── */
+
 .scd-drawer {
   display: flex;
   flex-direction: column;
   padding: 0.25rem 1rem 1.5rem;
   border-top: 1px solid var(--line);
   background: var(--bg);
-  max-height: calc(100dvh - 72px);
+  max-height: calc(100dvh - 120px);
   overflow-y: auto;
 }
 
 .scd-drawer-a {
-  padding: 0.95rem 0.1rem;
+  display: block;
+  padding: 0.85rem 0.1rem;
   font-size: 1.05rem;
   font-weight: 500;
   color: var(--muted);
   text-decoration: none;
   border-bottom: 1px solid var(--line);
   min-height: 52px;
-  display: flex;
   align-items: center;
 }
 
@@ -257,11 +280,56 @@
   color: var(--muted-lite);
 }
 
+/* Drawer dropdown (for News in mobile) */
+
+.scd-drawer-dropdown {
+  border-top: 1px solid var(--line);
+  margin-top: 0.25rem;
+}
+
+.scd-drawer-toggle {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.85rem 0.1rem;
+  font-size: 1.05rem;
+  font-weight: 500;
+  color: var(--muted);
+  text-decoration: none;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-family: var(--font-ui);
+}
+
+.scd-drawer-dropdown-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding-left: 1rem;
+  margin-top: 0.25rem;
+  border-left: 2px solid var(--signal-soft);
+}
+
+.scd-drawer-dropdown-menu .scd-drawer-a {
+  font-size: 0.95rem;
+  padding: 0.65rem 0.1rem;
+  border-bottom: none;
+}
+
+.scd-drawer-dropdown-menu .scd-drawer-a:last-child {
+  border-bottom: 1px solid var(--line);
+}
+
+/* ── Main ── */
+
 .scd-main {
   flex: 1;
 }
 
 /* ── Footer ── */
+
 .scd-f {
   border-top: 2px solid var(--text-bright);
   padding: 2.25rem 0 1.5rem;
@@ -283,12 +351,6 @@
     grid-template-columns: 1.6fr 1fr 1fr 1fr;
     gap: 2rem;
     padding: 0 1.5rem;
-  }
-  .scd-nav-row {
-    display: flex;
-  }
-  .scd-burger {
-    display: none;
   }
 }
 
@@ -361,6 +423,8 @@
 .scd-f-bottom a:hover {
   color: var(--signal);
 }
+
+/* ── Legacy cleanup (hidden by default) ── */
 
 .site-header,
 .nav-links,

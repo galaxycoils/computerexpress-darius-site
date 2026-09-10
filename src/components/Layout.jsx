@@ -11,9 +11,10 @@ function getInitialTheme() {
 
 const NAV = [
   { to: '/', label: 'Home', end: true },
-  { to: '/council', label: 'Council' },
-  { to: '/police', label: 'Police' },
+  { to: '/news/st-catharines', label: 'News', isDropdown: true },
   { to: '/planning-tracker', label: 'Planning' },
+  { to: '/police', label: 'Police' },
+  { to: '/council', label: 'Council' },
   { to: '/about', label: 'About' },
 ]
 
@@ -61,6 +62,11 @@ export default function Layout() {
     setTheme((t) => (t === 'dark' ? 'light' : 'dark'))
   }, [])
 
+  const handleNewsToggle = useCallback((e) => {
+    e.preventDefault()
+    setNewsDropdown((v) => !v)
+  }, [])
+
   return (
     <div className={`news-root ${theme === 'light' ? 'is-light' : 'is-dark'}`}>
       <a href="#main-content" className="skip-link">
@@ -68,6 +74,7 @@ export default function Layout() {
       </a>
 
       <header className="scd-h">
+        {/* Masthead: logo left, dateline left, utilities right */}
         <div className="scd-mast">
           <div className="scd-mast-top">
             <p className="scd-dateline" suppressHydrationWarning>
@@ -78,7 +85,12 @@ export default function Layout() {
               <span className="scd-brand-tag">Official sources · Niagara</span>
             </Link>
             <div className="scd-h-tools">
-              <button type="button" className="scd-theme" onClick={toggleTheme} aria-label="Toggle theme">
+              <button
+                type="button"
+                className="scd-theme"
+                onClick={toggleTheme}
+                aria-label="Toggle theme"
+              >
                 {theme === 'dark' ? '☀' : '☾'}
               </button>
               <button
@@ -94,71 +106,101 @@ export default function Layout() {
               </button>
             </div>
           </div>
-
-          <nav className="scd-nav-row" aria-label="Primary">
-            {NAV.map((item) => (
-              <NavLink
-                key={item.to}
-                to={item.to}
-                end={item.end}
-                className={({ isActive }) => (isActive ? 'scd-a active' : 'scd-a')}
-              >
-                {item.label}
-              </NavLink>
-            ))}
-            <div className="scd-dropdown">
-              <button
-                type="button"
-                className={`scd-a ${newsDropdown ? 'active' : ''}`}
-                onClick={() => setNewsDropdown((v) => !v)}
-                aria-expanded={newsDropdown}
-                aria-haspopup="true"
-              >
-                News ▾
-              </button>
-              {newsDropdown && (
-                <div className="scd-dropdown-menu" role="menu">
-                  {NEWS_DROPDOWN.map((item) => (
-                    <NavLink
-                      key={item.to}
-                      to={item.to}
-                      role="menuitem"
-                      onClick={() => setNewsDropdown(false)}
-                      className="scd-dropdown-item"
-                    >
-                      {item.label}
-                    </NavLink>
-                  ))}
-                </div>
-              )}
-            </div>
-          </nav>
         </div>
+
+        {/* Blue nav bar — Standard register */}
+        <nav className="scd-nav-bar" aria-label="Primary">
+          <div className="scd-nav-bar-inner">
+            {NAV.map((item) => {
+              if (item.isDropdown) {
+                return (
+                  <div key={item.to} className="scd-dropdown">
+                    <button
+                      type="button"
+                      className={`scd-nav-a ${newsDropdown ? 'active' : ''}`}
+                      onClick={handleNewsToggle}
+                      aria-expanded={newsDropdown}
+                      aria-haspopup="true"
+                    >
+                      {item.label} ▾
+                    </button>
+                    {newsDropdown && (
+                      <div className="scd-dropdown-menu" role="menu">
+                        {NEWS_DROPDOWN.map((ddItem) => (
+                          <NavLink
+                            key={ddItem.to}
+                            to={ddItem.to}
+                            role="menuitem"
+                            onClick={() => setNewsDropdown(false)}
+                            className="scd-dropdown-item"
+                          >
+                            {ddItem.label}
+                          </NavLink>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                )
+              }
+              return (
+                <NavLink
+                  key={item.to}
+                  to={item.to}
+                  end={item.end}
+                  className={({ isActive }) => (isActive ? 'scd-nav-a active' : 'scd-nav-a')}
+                >
+                  {item.label}
+                </NavLink>
+              )
+            })}
+          </div>
+        </nav>
 
         {menuOpen && (
           <nav className="scd-drawer" aria-label="Mobile navigation">
-            {NAV.map((item) => (
-              <NavLink
-                key={item.to}
-                to={item.to}
-                end={item.end}
-                onClick={() => setMenuOpen(false)}
-                className={({ isActive }) => (isActive ? 'scd-drawer-a active' : 'scd-drawer-a')}
-              >
-                {item.label}
-              </NavLink>
-            ))}
-            <p className="scd-drawer-label">News by city</p>
-            {NEWS_DROPDOWN.map((item) => (
-              <NavLink
-                key={item.to}
-                to={item.to}
-                onClick={() => setMenuOpen(false)}
-                className={({ isActive }) => (isActive ? 'scd-drawer-a active' : 'scd-drawer-a')}
-              >
-                {item.label}
-              </NavLink>
-            ))}
+            {NAV.map((item) => {
+              if (item.isDropdown) {
+                return (
+                  <div key={item.to} className="scd-drawer-dropdown">
+                    <button
+                      type="button"
+                      className="scd-drawer-toggle"
+                      onClick={() => setNewsDropdown((v) => !v)}
+                    >
+                      {item.label} ▾
+                    </button>
+                    {newsDropdown && (
+                      <div className="scd-drawer-dropdown-menu">
+                        {NEWS_DROPDOWN.map((ddItem) => (
+                          <NavLink
+                            key={ddItem.to}
+                            to={ddItem.to}
+                            onClick={() => {
+                              setNewsDropdown(false)
+                              setMenuOpen(false)
+                            }}
+                            className="scd-drawer-a"
+                          >
+                            {ddItem.label}
+                          </NavLink>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                )
+              }
+              return (
+                <NavLink
+                  key={item.to}
+                  to={item.to}
+                  end={item.end}
+                  onClick={() => setMenuOpen(false)}
+                  className={({ isActive }) => (isActive ? 'scd-drawer-a active' : 'scd-drawer-a')}
+                >
+                  {item.label}
+                </NavLink>
+              )
+            })}
           </nav>
         )}
       </header>
@@ -172,7 +214,7 @@ export default function Layout() {
           <div>
             <div className="scd-f-name">St. Catharines Digital</div>
             <p>
-              Independent local coverage for St. Catharines, Welland &amp; Thorold. Every item
+              Independent local coverage for St. Catharines, Welland & Thorold. Every item
               links to an official primary source.
             </p>
           </div>
