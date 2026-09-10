@@ -2,7 +2,7 @@
 
 **Project:** St. Catharines Digital (`stcatharinesdigital.ca`)  
 **Reference:** `stcatharinesstandard.ca` — visual register only (not a CMS clone)  
-**Status:** Approved, execution started (Phase 1 live)  
+**Status:** Approved, execution started (Phases 1–6b live; Phase 7 pending)  
 **Author:** @lead-orchestrator-2  
 **Approved by:** @user (verbal sign-off, 2026-09-10)  
 **Companion review:** @architect (scope framing), @hermes (design-language pull)
@@ -59,7 +59,7 @@ Re-skin St. Catharines Digital to the **visual register** of the St. Catharines 
 
 **Semantic aliases preserved for backward compat:** `--emerald` → `--signal`, `--accent` → `--signal`, `--danger` → `--signal`, `--info` → `--signal`. Existing component CSS that references `--emerald`, `--accent`, etc. continues to resolve to the blue accent.
 
-**Dark surface:** dropped for v1. The theme toggle in `Layout.jsx` still flips `localStorage` key `theme-v2` between `"light"` and `"dark"`, but both states now resolve to the same paper tokens — the surface does not change. A future phase can reintroduce a dark-navy newsprint surface if desired.
+**Dark surface (Phase 6b — reintroduction, user call 2026-09-10):** dark-navy newsprint surface on `.news-root.is-dark`. Tokens: `--paper` `#0f1a26`, `--paper-2` `#142231`, `--raised` `#1a2c3d`, `--ink` `#eef2f7`, `--ink-2` `#d4dce6`, `--ink-3` `#b0bcc8`, `--ink-4` `#8a9baa`, `--rule` `rgba(238,242,247,0.10)`, `--rule-2` `rgba(238,242,247,0.18)`, `--signal` `#c9a227` (amber night accent — shifts blue→amber per mode for high-contrast on navy), `--nav-bg` `#0072bc` (blue nav bar retained in BOTH modes for brand consistency), `--on-primary` `#ffffff` (white text on blue, both modes), `--on-signal` `#ffffff` light / `#111110` dark (text on signal-colored chips/accents). `--primary` on dark maps to `--nav-bg` so button/skip-link/nav-link surfaces stay blue. Phase 6b: `Layout.jsx` toggle reinstated (☾/☀, aria-label, localStorage `theme-v2`), 6-component `#fff` hardcode cleanup (`styles.css`, `layout-news.css`, `news.css`, `PoliceNewsPage.jsx`), build + grep gates. Light-mode tokens unchanged; light remains the default for v1.
 
 **Fonts loaded:** Playfair Display (600/700/800 + italic 600/700), Source Serif 4, Inter (400/500/600/700), IBM Plex Mono — all via one Google Fonts import in `theme-civic.css`.
 
@@ -174,7 +174,7 @@ Adapt the Standard's section-spread density to our real sections. No invented se
 1. **Accent blue:** `#0072bc` — confirmed.
 2. **Display serif:** Playfair Display — confirmed.
 3. **UI sans:** Inter — confirmed.
-4. **Dark mode:** dropped for v1 — confirmed.
+4. **Dark mode:** dropped for v1 — **reversed by user call 2026-09-10**: dark-navy surface + working toggle in for v1 (Phase 6b); light still the default.
 5. **Logo:** text logotype only, v1 — confirmed.
 6. **Lead row:** 3-column featured row on Home only — confirmed.
 
