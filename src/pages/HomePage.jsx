@@ -31,7 +31,8 @@ export default function HomePage() {
   }
 
   const lead = featured[0] || null
-  const river = featured.slice(1)
+  const supporting = featured.slice(1, 4) // 2-3 supporting notices for the 3-col row
+  const river = featured.slice(4)
 
   const jsonLd = [
     {
@@ -67,6 +68,7 @@ export default function HomePage() {
       />
 
       <div className="scd-page">
+        {/* City strip — Standard register */}
         <nav className="scd-sections" aria-label="City desks">
           {CITIES.map((c) => (
             <Link key={c.slug} to={`/news/${c.slug}`} className="scd-section-link">
@@ -90,9 +92,11 @@ export default function HomePage() {
         </nav>
 
         <div className="scd-front">
-          <div>
+          {/* Lead row — Standard 3-col "Most Popular" register (Home only) */}
+          <div className="scd-lead-row">
+            {/* Lead story — largest */}
             {lead ? (
-              <article className="scd-lead">
+              <article className="scd-lead scd-lead--main">
                 <p className="scd-lead-kicker">
                   {lead.municipality || 'Municipal'}
                   {lead.type ? ` · ${lead.type}` : ''}
@@ -133,43 +137,88 @@ export default function HomePage() {
               </div>
             )}
 
-            {river.length > 0 && (
-              <>
-                <h2 className="scd-section-label">More from the desk</h2>
-                {river.map((n) => (
-                  <NoticeCard key={n.id} notice={n} />
+            {/* Supporting notices — 2-3 columns beneath/beside lead */}
+            {supporting.length > 0 && (
+              <div className="scd-lead-supporting">
+                {supporting.map((n) => (
+                  <article key={n.id} className="scd-lead scd-lead--supporting">
+                    <p className="scd-lead-kicker">
+                      {n.municipality || 'Municipal'}
+                      {n.type ? ` · ${n.type}` : ''}
+                    </p>
+                    <h2 className="scd-lead-title">
+                      {n.sourceUrl ? (
+                        <a href={n.sourceUrl} target="_blank" rel="noopener noreferrer">
+                          {n.title}
+                        </a>
+                      ) : (
+                        n.title
+                      )}
+                    </h2>
+                    {n.description && (
+                      <p className="scd-lead-dek">
+                        {n.description.length > 140
+                          ? n.description.slice(0, 140) + '…'
+                          : n.description}
+                      </p>
+                    )}
+                    <div className="scd-lead-meta">
+                      {formatDate(n.publishedDate) && <span>{formatDate(n.publishedDate)}</span>}
+                      {n.sourceUrl && (
+                        <a
+                          className="scd-lead-source"
+                          href={n.sourceUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          Official source →
+                        </a>
+                      )}
+                    </div>
+                  </article>
                 ))}
-              </>
+              </div>
             )}
-
-            <Link to="/planning-tracker" className="scd-more">
-              All active notices →
-            </Link>
           </div>
 
-          <aside className="scd-rail">
-            <OfficialSourcesPanel />
+          {/* River — Standard article feed */}
+          {river.length > 0 && (
+            <>
+              <h2 className="scd-section-label">More from the desk</h2>
+              {river.map((n) => (
+                <NoticeCard key={n.id} notice={n} />
+              ))}
+            </>
+          )}
 
-            <div className="scd-rail-block">
-              <h2 className="scd-rail-label">How we report</h2>
-              <p className="scd-rail-text">
-                Only official primary documents — city sites, NRPS releases, and planning
-                notices. No social media lists for public safety.
-              </p>
-            </div>
-
-            <div className="scd-rail-block">
-              <h2 className="scd-rail-label">Public safety</h2>
-              <p className="scd-rail-text">
-                Ontario does not publish a searchable offender map. Use{' '}
-                <a href="https://www.niagarapolice.ca/" target="_blank" rel="noopener noreferrer">
-                  NRPS media releases
-                </a>{' '}
-                for official community notices.
-              </p>
-            </div>
-          </aside>
+          <Link to="/planning-tracker" className="scd-more">
+            All active notices →
+          </Link>
         </div>
+
+        {/* Sidebar — Standard register */}
+        <aside className="scd-rail">
+          <OfficialSourcesPanel />
+
+          <div className="scd-rail-block">
+            <h2 className="scd-rail-label">How we report</h2>
+            <p className="scd-rail-text">
+              Only official primary documents — city sites, NRPS releases, and planning
+              notices. No social media lists for public safety.
+            </p>
+          </div>
+
+          <div className="scd-rail-block">
+            <h2 className="scd-rail-label">Public safety</h2>
+            <p className="scd-rail-text">
+              Ontario does not publish a searchable offender map. Use{' '}
+              <a href="https://www.niagarapolice.ca/" target="_blank" rel="noopener noreferrer">
+                NRPS media releases
+              </a>{' '}
+              for official community notices.
+            </p>
+          </div>
+        </aside>
       </div>
     </>
   )
