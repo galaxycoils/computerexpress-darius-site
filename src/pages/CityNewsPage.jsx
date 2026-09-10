@@ -186,9 +186,9 @@ export default function CityNewsPage() {
           </div>
 
           <aside>
-            <div className="scd-side-block">
-              <h4 className="scd-side-label">Official sources</h4>
-              <ul className="scd-side-list">
+            <div className="scd-rail-block">
+              <h2 className="scd-rail-label">Official sources</h2>
+              <ul className="scd-rail-list">
                 <li>
                   <a href={city.officialSite} target="_blank" rel="noopener noreferrer">
                     City of {city.name} ↗
@@ -206,9 +206,9 @@ export default function CityNewsPage() {
                 </li>
               </ul>
             </div>
-            <div className="scd-side-block">
-              <h4 className="scd-side-label">How we report</h4>
-              <p className="scd-side-text">
+            <div className="scd-rail-block">
+              <h2 className="scd-rail-label">How we report</h2>
+              <p className="scd-rail-text">
                 Only official primary sources. City hubs list planning notices and NRPS releases that
                 clearly name this municipality.
               </p>
