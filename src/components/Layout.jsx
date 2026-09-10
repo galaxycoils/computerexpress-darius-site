@@ -1,14 +1,6 @@
 import { useState, useEffect, useCallback } from 'react'
 import { Outlet, useLocation, Link, NavLink } from 'react-router-dom'
 
-/** theme-v2: persists light/dark choice in localStorage; light is the default for v1. */
-function getInitialTheme() {
-  if (typeof window === 'undefined') return 'light'
-  const stored = localStorage.getItem('theme-v2')
-  if (stored === 'light' || stored === 'dark') return stored
-  return 'light'
-}
-
 const NAV = [
   { to: '/', label: 'Home', end: true },
   { to: '/news/st-catharines', label: 'News', isDropdown: true },
@@ -25,6 +17,13 @@ const NEWS_DROPDOWN = [
   { to: '/news/police', label: 'Police Releases' },
 ]
 
+function getInitialTheme() {
+  if (typeof window === 'undefined') return 'light'
+  const stored = localStorage.getItem('theme-v2')
+  if (stored === 'light' || stored === 'dark') return stored
+  return 'light'
+}
+
 function formatDateline() {
   return new Date().toLocaleDateString('en-CA', {
     weekday: 'long',
@@ -40,10 +39,19 @@ export default function Layout() {
   const [theme, setTheme] = useState(getInitialTheme)
   const location = useLocation()
 
+  // Apply theme class to root + persist + update theme-color meta
   useEffect(() => {
-    document.body.classList.toggle('light', theme === 'light')
+    const root = document.querySelector('.news-root')
+    if (root) {
+      root.classList.toggle('is-light', theme === 'light')
+      root.classList.toggle('is-dark', theme === 'dark')
+    }
     document.body.classList.add('news-mode')
     localStorage.setItem('theme-v2', theme)
+    const meta = document.querySelector('meta[name="theme-color"]')
+    if (meta) {
+      meta.setAttribute('content', theme === 'dark' ? '#112233' : '#faf8f4')
+    }
   }, [theme])
 
   useEffect(() => {

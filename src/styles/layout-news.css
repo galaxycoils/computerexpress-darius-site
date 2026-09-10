@@ -152,8 +152,15 @@
 /* ── Blue nav bar (Standard register) ── */
 
 .scd-nav-bar {
-  background: var(--nav-bg);
-  border-bottom: 1px solid var(--nav-bg);
+  background: var(--signal);
+  border-bottom: 1px solid var(--signal);
+}
+
+/* Dark-mode nav bar: navy surface, amber signal */
+
+.news-root.is-dark .scd-nav-bar {
+  background: var(--paper-2);
+  border-bottom-color: var(--rule-2);
 }
 
 .scd-nav-bar-inner {
@@ -179,7 +186,7 @@
   padding: 0.4rem 0.85rem;
   font-size: 0.8125rem;
   font-weight: 500;
-  color: var(--on-primary);
+  color: #fff;
   text-decoration: none;
   background: transparent;
   border: none;
@@ -192,11 +199,28 @@
 
 .scd-nav-a:hover {
   background: rgba(255, 255, 255, 0.15);
-  color: var(--on-primary);
+  color: #fff;
 }
 
 .scd-nav-a.active {
   background: rgba(255, 255, 255, 0.2);
+  font-weight: 600;
+}
+
+/* Dark nav link colors */
+
+.news-root.is-dark .scd-nav-a {
+  color: var(--ink);
+}
+
+.news-root.is-dark .scd-nav-a:hover {
+  background: var(--signal-soft);
+  color: var(--signal);
+}
+
+.news-root.is-dark .scd-nav-a.active {
+  background: var(--signal-soft);
+  color: var(--signal);
   font-weight: 600;
 }
 
