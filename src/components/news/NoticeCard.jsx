@@ -16,13 +16,13 @@ export default function NoticeCard({ notice }) {
       : notice.description
 
   return (
-    <article className="scd-notice scd-story">
-      <div className="scd-notice-meta scd-story-meta">
-        <span className="scd-notice-city scd-story-city">{notice.municipality || 'Municipal'}</span>
-        {notice.type && <span>{notice.type}</span>}
-        {dateLabel && <span>· {dateLabel}</span>}
+    <article className="scd-notice">
+      <div className="scd-notice-meta">
+        <span className="scd-notice-chip">{notice.municipality || 'Municipal'}</span>
+        {notice.type && <span className="scd-notice-type">{notice.type}</span>}
+        {dateLabel && <span className="scd-notice-date">· {dateLabel}</span>}
       </div>
-      <h3 className="scd-notice-title scd-story-title">
+      <h3 className="scd-notice-title">
         {notice.sourceUrl ? (
           <a href={notice.sourceUrl} target="_blank" rel="noopener noreferrer">
             {notice.title}
@@ -31,7 +31,7 @@ export default function NoticeCard({ notice }) {
           notice.title
         )}
       </h3>
-      {summary && <p className="scd-notice-summary scd-story-dek">{summary}</p>}
+      {summary && <p className="scd-notice-summary">{summary}</p>}
       {notice.sourceUrl && (
         <a
           className="scd-notice-source"
