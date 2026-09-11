@@ -129,10 +129,10 @@ export default function Layout() {
 
       <header className="scd-h">
         <div className="scd-mast">
+          <p className="scd-dateline" suppressHydrationWarning>
+            {formatDateline()}
+          </p>
           <div className="scd-mast-top">
-            <p className="scd-dateline" suppressHydrationWarning>
-              {formatDateline()}
-            </p>
             <Link to="/" className="scd-brand" aria-label="St. Catharines Digital home">
               <span className="scd-brand-name">St. Catharines Digital</span>
               <span className="scd-brand-tag">Official sources · Niagara</span>
