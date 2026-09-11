@@ -1,10 +1,12 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, useRef } from 'react'
 import { Outlet, useLocation, Link, NavLink } from 'react-router-dom'
 
 function getInitialTheme() {
   if (typeof window === 'undefined') return 'light'
-  const stored = localStorage.getItem('theme-v2')
-  if (stored === 'light' || stored === 'dark') return stored
+  try {
+    const stored = localStorage.getItem('theme-v2')
+    if (stored === 'light' || stored === 'dark') return stored
+  } catch { /* Storage can be disabled by the browser. */ }
   return 'light'
 }
 
@@ -12,7 +14,7 @@ const NAV = [
   { to: '/', label: 'News', end: true },
   { to: '/council', label: 'Council' },
   { to: '/planning-tracker', label: 'Planning' },
-  { to: '/police', label: 'Crime' },
+  { to: '/police', label: 'Police' },
   { to: '/about', label: 'About' },
 ]
 
@@ -20,12 +22,6 @@ const CITY_LINKS = [
   { to: '/news/st-catharines', label: 'St. Catharines' },
   { to: '/news/welland', label: 'Welland' },
   { to: '/news/thorold', label: 'Thorold' },
-]
-
-const DESK_LINKS = [
-  { to: '/news/st-catharines', label: 'St. Catharines desk' },
-  { to: '/news/welland', label: 'Welland desk' },
-  { to: '/news/thorold', label: 'Thorold desk' },
 ]
 
 function formatDateline() {
@@ -39,7 +35,7 @@ function formatDateline() {
 
 function MobileDrawer({ onClose }) {
   return (
-    <nav className="scd-drawer" aria-label="Mobile navigation">
+    <nav id="mobile-navigation" className="scd-drawer" aria-label="Mobile navigation">
       {NAV.map((item) => (
         <NavLink
           key={item.to + item.label}
@@ -61,16 +57,6 @@ function MobileDrawer({ onClose }) {
           {item.label}
         </NavLink>
       ))}
-      {DESK_LINKS.map((item) => (
-        <NavLink
-          key={'desk-' + item.to}
-          to={item.to}
-          onClick={onClose}
-          className={({ isActive }) => (isActive ? 'scd-drawer-a active' : 'scd-drawer-a')}
-        >
-          {item.label}
-        </NavLink>
-      ))}
     </nav>
   )
 }
@@ -79,11 +65,12 @@ export default function Layout() {
   const [menuOpen, setMenuOpen] = useState(false)
   const [theme, setTheme] = useState(getInitialTheme)
   const location = useLocation()
+  const menuButton = useRef(null)
 
   useEffect(() => {
     document.body.classList.toggle('light', theme === 'light')
     document.body.classList.add('news-mode')
-    localStorage.setItem('theme-v2', theme)
+    try { localStorage.setItem('theme-v2', theme) } catch { /* Keep theme usable without storage. */ }
   }, [theme])
 
   useEffect(() => {
@@ -91,9 +78,20 @@ export default function Layout() {
   }, [location.pathname])
 
   useEffect(() => {
-    document.body.style.overflow = menuOpen ? 'hidden' : ''
+    if (!menuOpen) return
+    const closeOnEscape = (event) => {
+      if (event.key === 'Escape') {
+        setMenuOpen(false)
+        menuButton.current?.focus()
+      }
+    }
+    const desktop = window.matchMedia('(min-width: 960px)')
+    const closeOnDesktop = () => { if (desktop.matches) setMenuOpen(false) }
+    document.addEventListener('keydown', closeOnEscape)
+    desktop.addEventListener('change', closeOnDesktop)
     return () => {
-      document.body.style.overflow = ''
+      document.removeEventListener('keydown', closeOnEscape)
+      desktop.removeEventListener('change', closeOnDesktop)
     }
   }, [menuOpen])
 
@@ -114,11 +112,11 @@ export default function Layout() {
           </p>
           <div className="scd-mast-top">
             <Link to="/" className="scd-brand" aria-label="St. Catharines Digital home">
-              <span className="scd-brand-name">St. Catharines Digital</span>
+              <span className="scd-brand-name">St. Catharines <em>Digital</em></span>
               <span className="scd-brand-tag">Local news for Niagara</span>
             </Link>
             <div className="scd-h-tools">
-              <button type="button" className="scd-theme" onClick={toggleTheme} aria-label="Toggle theme">
+              <button type="button" className="scd-theme" onClick={toggleTheme} aria-label={theme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme'}>
                 {theme === 'dark' ? '☀' : '☾'}
               </button>
               <button
@@ -127,6 +125,8 @@ export default function Layout() {
                 onClick={() => setMenuOpen((v) => !v)}
                 aria-label={menuOpen ? 'Close menu' : 'Open menu'}
                 aria-expanded={menuOpen}
+                aria-controls="mobile-navigation"
+                ref={menuButton}
               >
                 {menuOpen ? (
                   <span className="scd-burger-x" aria-hidden="true">
@@ -189,7 +189,7 @@ export default function Layout() {
             <div className="scd-f-label">Sections</div>
             <Link to="/council">Council</Link>
             <Link to="/planning-tracker">Planning</Link>
-            <Link to="/police">Crime</Link>
+            <Link to="/police">Police</Link>
             <Link to="/news/st-catharines">St. Catharines</Link>
             <Link to="/news/welland">Welland</Link>
             <Link to="/news/thorold">Thorold</Link>
@@ -219,9 +219,10 @@ export default function Layout() {
         </div>
         <div className="scd-f-bottom">
           <span>© {new Date().getFullYear()} St. Catharines Digital</span>
-          <span>Not affiliated with The Standard or Metroland Media.</span>
+          <div className="scd-legal-links"><Link to="/contact">Contact</Link><Link to="/privacy">Privacy</Link><Link to="/terms">Terms</Link></div>
         </div>
       </footer>
     </div>
   )
 }
+

@@ -8,28 +8,42 @@ import NewsletterPanel from '../components/news/NewsletterPanel'
 import AnimatedSection from '../hooks/useInView'
 import '../components/news/news.css'
 
-/** Editorial hero/thumb images for the newspaper front page (mock-aligned). */
-const STORY_IMAGES = {
-  'stc-455-welland-ave':
-    'https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=1200&q=80',
-  'stc-ontario-st-corridor':
-    'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&q=80',
-  'stc-12-stepney-st':
-    'https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?w=800&q=80',
-  'stc-cip-strategic-sites':
-    'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=800&q=80',
-  'stc-p23-061-brimley-crescent':
-    'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1200&q=80',
-  'welland-op-update':
-    'https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=1200&q=80',
-  'welland-opa-55':
-    'https://images.unsplash.com/photo-1586281380349-632531db7ed4?w=1200&q=80',
-  'thorold-pamela-drive-watermain':
-    'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1200&q=80',
-  'thorold-1201-egerter-rd':
-    'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1200&q=80',
-  'welland-first-st-coa-2026-09-28':
-    'https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=1200&q=80',
+const LOCAL_PHOTOS = {
+  'stc-455-welland-ave': {
+    src: '/images/local/st-catharines-city-hall.webp',
+    alt: 'Stone facade of St. Catharines City Hall',
+    caption: 'St. Catharines City Hall · File photo, December 2023',
+    credit: 'Hannah Clover',
+    license: '4.0',
+    source: 'https://commons.wikimedia.org/wiki/File:St._Catharines_City_Hall_2023.jpg',
+  },
+  'welland-op-update': {
+    src: '/images/local/welland-city-hall.webp',
+    alt: 'Welland City Hall and Public Library',
+    caption: 'Welland City Hall & Public Library · File photo, 2023',
+    credit: 'JFVoll',
+    license: '4.0',
+    source: 'https://commons.wikimedia.org/wiki/File:Welland_City_Hall_%26_Public_Library_-_Welland,_ON.jpg',
+  },
+  'thorold-pamela-drive-watermain': {
+    src: '/images/local/thorold-canal.webp',
+    alt: 'Historic-site sign for the Old Welland Canal in Thorold',
+    caption: 'Old Welland Canal historic-site sign, Thorold · File photo, 2016',
+    credit: 'Ken Lund',
+    license: '2.0',
+    source: 'https://commons.wikimedia.org/wiki/File:Old_Welland_Canal,_Thorold,_Ontario_(29951124456).jpg',
+  },
+}
+
+function LocalPhoto({ photo, lead = false }) {
+  return (
+    <figure className={lead ? 'scd-lead-figure' : 'scd-local-figure'}>
+      <div className={lead ? 'scd-lead-media' : 'scd-latest-media'}>
+        <img src={photo.src} alt={photo.alt} loading={lead ? 'eager' : 'lazy'} fetchpriority={lead ? 'high' : undefined} />
+      </div>
+      <figcaption>{photo.caption}<br /><a href={photo.source} target="_blank" rel="noopener noreferrer">{photo.credit}</a> · <a href={`https://creativecommons.org/licenses/by-sa/${photo.license}/`} target="_blank" rel="noopener noreferrer">CC BY-SA {photo.license}</a> · Cropped & resized</figcaption>
+    </figure>
+  )
 }
 
 const LEAD_ORDER = [
@@ -94,7 +108,7 @@ function categoryLabel(notice) {
 function withImage(n) {
   return {
     ...n,
-    imageUrl: n.imageUrl || STORY_IMAGES[n.id] || null,
+    photo: LOCAL_PHOTOS[n.id] || null,
   }
 }
 
@@ -175,19 +189,16 @@ export default function HomePage() {
       />
 
       <div className="scd-page scd-paper">
+        <div className="scd-intro">
+          <div><p className="scd-eyebrow">St. Catharines · Welland · Thorold</p>
+          <p className="scd-intro-title">Your region. On the record.</p></div>
+          <p className="scd-intro-note">Local news from primary documents.<br />Council, planning and public safety — with the source in reach.</p>
+        </div>
+        <div className="scd-front-grid">
         {lead ? (
           <AnimatedSection className="scd-lead-block" delay={0}>
             <article className="scd-lead-story">
-              {lead.imageUrl && (
-                <a
-                  className="scd-lead-media"
-                  href={lead.sourceUrl || '#'}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <img src={lead.imageUrl} alt="" loading="eager" />
-                </a>
-              )}
+              {lead.photo && <LocalPhoto photo={lead.photo} lead />}
               <p className="scd-cat">{categoryLabel(lead)}</p>
               <h1 className="scd-lead-headline">
                 {lead.sourceUrl ? (
@@ -226,21 +237,11 @@ export default function HomePage() {
           <AnimatedSection delay={40}>
             <section className="scd-top-stories" aria-labelledby="top-stories-h">
               <h2 id="top-stories-h" className="scd-section-rule">
-                Top Stories
+                Also on the record
               </h2>
               <ul className="scd-top-list">
                 {topStories.map((n) => (
                   <li key={n.id} className="scd-top-item">
-                    {n.imageUrl && (
-                      <a
-                        className="scd-top-thumb"
-                        href={n.sourceUrl || '#'}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        <img src={n.imageUrl} alt="" loading="lazy" />
-                      </a>
-                    )}
                     <div className="scd-top-body">
                       <p className="scd-cat">{categoryLabel(n)}</p>
                       <h3 className="scd-top-title">
@@ -261,26 +262,19 @@ export default function HomePage() {
           </AnimatedSection>
         )}
 
+        </div>
+
         {latest.length > 0 && (
           <AnimatedSection delay={80}>
             <section className="scd-latest" aria-labelledby="latest-h">
               <h2 id="latest-h" className="scd-section-rule">
-                Latest from Niagara
+                More from Niagara
               </h2>
               <div className="scd-latest-list">
                 {latest.map((n, i) => (
                   <AnimatedSection key={n.id} delay={40 + i * 30}>
                     <article className="scd-latest-card">
-                      {n.imageUrl && (
-                        <a
-                          className="scd-latest-media"
-                          href={n.sourceUrl || '#'}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          <img src={n.imageUrl} alt="" loading="lazy" />
-                        </a>
-                      )}
+                      {n.photo && <LocalPhoto photo={n.photo} />}
                       <p className="scd-cat">{categoryLabel(n)}</p>
                       <h3 className="scd-latest-title">
                         {n.sourceUrl ? (
@@ -304,7 +298,7 @@ export default function HomePage() {
 
         <div className="scd-cta-row">
           <Link to="/planning-tracker" className="scd-outline-btn">
-            See all planning notices
+            Planning Tracker
           </Link>
         </div>
 
@@ -322,3 +316,4 @@ export default function HomePage() {
     </>
   )
 }
+

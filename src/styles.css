@@ -502,3 +502,15 @@ p {
 ::-webkit-scrollbar-thumb {
   background: var(--line);
 }
+
+
+/* Readable controls and restrained shared surfaces across the existing routes. */
+.badge { font-size: .75rem; white-space: normal; overflow-wrap: anywhere; }
+.meeting-municipality, .meeting-details { font-size: .875rem; }
+.meeting-desc { font-size: 1rem; }
+.filter-input, .filter-select { min-height: 44px; font-size: 1rem; max-width: 100%; }
+.card, .meeting-card, .table-wrapper { border-radius: 4px; }
+.page-header h1 { font-size: clamp(2rem, 4vw, 3rem); margin-bottom: 16px; }
+.page-header { padding: 40px 0 28px; margin-bottom: 28px; }
+.scd-main { min-width: 0; }
+.news-root :where(h1, h2, h3, a) { overflow-wrap: break-word; }
