@@ -1,9 +1,9 @@
 /* Base utilities — tokens live in theme-civic.css */
 
 :root {
-  --container: 1080px;
+  --container: 1120px;
 
-  /* Spacing scale: 4/8/16/24/32/48/64 (refactoring-ui constrained) */
+  /* Spacing scale: 4/8/16/24/32/48/64 */
   --sp-1: 4px;
   --sp-2: 8px;
   --sp-3: 16px;
@@ -12,7 +12,7 @@
   --sp-6: 48px;
   --sp-7: 64px;
 
-  /* Type scale: modular 12/14/16/20/24/30/36 */
+  /* Type scale */
   --t-xs: 12px;
   --t-sm: 14px;
   --t-base: 16px;
@@ -23,14 +23,14 @@
 
   --radius-sm: 2px;
   --radius-md: 4px;
-  --radius-lg: 6px;
+  --radius-lg: 8px;
   --radius-full: 9999px;
 
-  /* Prose width constraint — Standard register: 65ch */
   --max-prose: 65ch;
 
-  --transition-fast: 150ms cubic-bezier(0.25, 1, 0.5, 1);
-  --transition-base: 280ms cubic-bezier(0.25, 1, 0.5, 1);
+  /* High-end motion */
+  --transition-fast: 180ms cubic-bezier(0.32, 0.72, 0, 1);
+  --transition-base: 320ms cubic-bezier(0.32, 0.72, 0, 1);
 }
 
 .skip-link {
@@ -149,7 +149,7 @@ h6 {
   font-weight: 700;
   line-height: 1.15;
   color: var(--text-bright);
-  letter-spacing: -0.02em;
+  letter-spacing: -0.025em;
 }
 
 p {
@@ -176,6 +176,7 @@ p {
   font-family: var(--font-ui);
   background: var(--primary);
   color: var(--on-signal);
+  border-radius: 6px;
 }
 .button-primary {
   background: var(--primary);
@@ -210,6 +211,7 @@ p {
   background: var(--bg-card);
   border: 1px solid var(--panel-border);
   padding: 18px;
+  border-radius: 10px;
 }
 
 .stats-bar {
@@ -254,6 +256,7 @@ p {
   color: var(--text);
   font-size: var(--t-sm);
   outline: none;
+  border-radius: 6px;
 }
 .filter-input:focus,
 .filter-select:focus {
@@ -292,6 +295,7 @@ p {
   background: var(--bg-card);
   border: 1px solid var(--panel-border);
   padding: 16px 18px;
+  border-radius: 10px;
 }
 .meeting-title {
   font-size: var(--t-md);
@@ -313,6 +317,7 @@ p {
 .table-wrapper {
   overflow-x: auto;
   border: 1px solid var(--panel-border);
+  border-radius: 8px;
 }
 .planning-table {
   width: 100%;
@@ -373,6 +378,7 @@ p {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  border-radius: 6px;
 }
 .view-btn.active {
   color: var(--text-bright);
