@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom'
 import { getActiveNotices, getUpcomingMeetings } from '../data/planningNotices'
 import { siteConfig } from '../data/siteConfig'
 import { CITIES } from '../data/cities'
-import NoticeCard from '../components/news/NoticeCard'
 import OfficialSourcesPanel from '../components/news/OfficialSourcesPanel'
 import NewsletterPanel from '../components/news/NewsletterPanel'
 import AnimatedSection from '../hooks/useInView'
@@ -18,6 +17,30 @@ function formatDate(iso) {
   })
 }
 
+function relativeAgo(iso) {
+  if (!iso) return ''
+  try {
+    const then = new Date(iso)
+    if (isNaN(then.getTime())) return ''
+    const days = Math.floor((Date.now() - then.getTime()) / 86400000)
+    if (days < 0) return formatDate(iso)
+    if (days === 0) return 'Today'
+    if (days === 1) return '1 day ago'
+    if (days < 7) return `${days} days ago`
+    if (days < 14) return '1 wk ago'
+    if (days < 60) return `${Math.floor(days / 7)} wks ago`
+    return formatDate(iso)
+  } catch {
+    return formatDate(iso)
+  }
+}
+
+function categoryLabel(notice) {
+  if (notice.municipality) return String(notice.municipality).toUpperCase()
+  if (notice.category) return String(notice.category).replace(/-/g, ' ').toUpperCase()
+  return 'MUNICIPAL'
+}
+
 export default function HomePage() {
   const activeNotices = getActiveNotices()
   const upcomingMeetings = getUpcomingMeetings()
@@ -29,12 +52,12 @@ export default function HomePage() {
       seen.add(n.id)
       featured.push(n)
     }
-    if (featured.length >= 10) break
+    if (featured.length >= 12) break
   }
 
   const lead = featured[0] || null
-  const cascade = featured.slice(1, 4) // asymmetrical supporting cascade
-  const river = featured.slice(4)
+  const topStories = featured.slice(1, 4)
+  const latest = featured.slice(4)
 
   const jsonLd = [
     {
@@ -69,165 +92,150 @@ export default function HomePage() {
         jsonLd={jsonLd}
       />
 
-      <div className="scd-page">
-        <nav className="scd-sections" aria-label="City desks">
-          {CITIES.map((c) => (
-            <Link key={c.slug} to={`/news/${c.slug}`} className="scd-section-link">
-              {c.name}
-            </Link>
-          ))}
-          <Link to="/planning-tracker" className="scd-section-link">
-            Planning
-          </Link>
-          <Link to="/news/police" className="scd-section-link">
-            Police releases
-          </Link>
-          <a
-            href="https://www.niagarapolice.ca/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="scd-section-link"
-          >
-            NRPS ↗
-          </a>
-        </nav>
+      <div className="scd-page scd-paper">
+        {/* Lead story — newspaper hero */}
+        {lead ? (
+          <AnimatedSection className="scd-lead-block" delay={0}>
+            <article className="scd-lead-story">
+              {lead.imageUrl && (
+                <a
+                  className="scd-lead-media"
+                  href={lead.sourceUrl || '#'}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <img src={lead.imageUrl} alt="" loading="eager" />
+                </a>
+              )}
+              <p className="scd-cat">{categoryLabel(lead)}</p>
+              <h1 className="scd-lead-headline">
+                {lead.sourceUrl ? (
+                  <a href={lead.sourceUrl} target="_blank" rel="noopener noreferrer">
+                    {lead.title}
+                  </a>
+                ) : (
+                  lead.title
+                )}
+              </h1>
+              {lead.description && (
+                <p className="scd-lead-dek">
+                  {lead.description.length > 240
+                    ? lead.description.slice(0, 240) + '…'
+                    : lead.description}
+                </p>
+              )}
+              <p className="scd-lead-byline">
+                {relativeAgo(lead.publishedDate)}
+                {lead.sourceUrl && (
+                  <>
+                    {' · '}
+                    <a href={lead.sourceUrl} target="_blank" rel="noopener noreferrer">
+                      Official source
+                    </a>
+                  </>
+                )}
+              </p>
+            </article>
+          </AnimatedSection>
+        ) : (
+          <div className="scd-empty">No active notices right now. Check the planning tracker.</div>
+        )}
 
-        <div className="scd-front">
-          <div>
-            {/* Asymmetrical lead cascade */}
-            {lead ? (
-              <AnimatedSection className="scd-lead-cascade" delay={0}>
-                <article className="scd-lead">
-                  <p className="scd-lead-kicker">
-                    {lead.municipality || 'Municipal'}
-                    {lead.type ? ` · ${lead.type}` : ''}
-                  </p>
-                  <h1 className="scd-lead-title">
-                    {lead.sourceUrl ? (
-                      <a href={lead.sourceUrl} target="_blank" rel="noopener noreferrer">
-                        {lead.title}
-                      </a>
-                    ) : (
-                      lead.title
-                    )}
-                  </h1>
-                  {lead.description && (
-                    <p className="scd-lead-dek">
-                      {lead.description.length > 220
-                        ? lead.description.slice(0, 220) + '…'
-                        : lead.description}
-                    </p>
-                  )}
-                  <div className="scd-lead-meta">
-                    {formatDate(lead.publishedDate) && <span>{formatDate(lead.publishedDate)}</span>}
-                    {lead.sourceUrl && (
+        {/* Top Stories — compact list */}
+        {topStories.length > 0 && (
+          <AnimatedSection delay={40}>
+            <section className="scd-top-stories" aria-labelledby="top-stories-h">
+              <h2 id="top-stories-h" className="scd-section-rule">
+                Top Stories
+              </h2>
+              <ul className="scd-top-list">
+                {topStories.map((n) => (
+                  <li key={n.id} className="scd-top-item">
+                    {n.imageUrl && (
                       <a
-                        className="scd-lead-source"
-                        href={lead.sourceUrl}
+                        className="scd-top-thumb"
+                        href={n.sourceUrl || '#'}
                         target="_blank"
                         rel="noopener noreferrer"
                       >
-                        Official source →
+                        <img src={n.imageUrl} alt="" loading="lazy" />
                       </a>
                     )}
-                  </div>
-                </article>
+                    <div className="scd-top-body">
+                      <p className="scd-cat">{categoryLabel(n)}</p>
+                      <h3 className="scd-top-title">
+                        {n.sourceUrl ? (
+                          <a href={n.sourceUrl} target="_blank" rel="noopener noreferrer">
+                            {n.title}
+                          </a>
+                        ) : (
+                          n.title
+                        )}
+                      </h3>
+                      <p className="scd-top-time">{relativeAgo(n.publishedDate)}</p>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          </AnimatedSection>
+        )}
 
-                {cascade.length > 0 && (
-                  <div className="scd-cascade-grid">
-                    {cascade.map((n, i) => (
-                      <AnimatedSection key={n.id} delay={80 + i * 60}>
-                        <article className="scd-cascade-item">
-                          <p className="scd-cascade-kicker">
-                            {n.municipality || 'Municipal'}
-                            {n.type ? ` · ${n.type}` : ''}
-                          </p>
-                          <h2 className="scd-cascade-title">
-                            {n.sourceUrl ? (
-                              <a href={n.sourceUrl} target="_blank" rel="noopener noreferrer">
-                                {n.title}
-                              </a>
-                            ) : (
-                              n.title
-                            )}
-                          </h2>
-                          {n.description && (
-                            <p className="scd-cascade-dek">
-                              {n.description.length > 110
-                                ? n.description.slice(0, 110) + '…'
-                                : n.description}
-                            </p>
-                          )}
-                          <div className="scd-cascade-meta">
-                            {formatDate(n.publishedDate) && <span>{formatDate(n.publishedDate)}</span>}
-                            {n.sourceUrl && (
-                              <a
-                                className="scd-lead-source"
-                                href={n.sourceUrl}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                              >
-                                Source →
-                              </a>
-                            )}
-                          </div>
-                        </article>
-                      </AnimatedSection>
-                    ))}
-                  </div>
-                )}
-              </AnimatedSection>
-            ) : (
-              <div className="scd-empty">
-                No active notices right now. Check the planning tracker or a city desk.
-              </div>
-            )}
-
-            {river.length > 0 && (
-              <AnimatedSection delay={120}>
-                <h2 className="scd-section-label">More from the desk</h2>
-                {river.map((n, i) => (
-                  <AnimatedSection key={n.id} delay={40 + i * 40}>
-                    <NoticeCard notice={n} />
+        {/* Latest from Niagara — stacked story cards */}
+        {latest.length > 0 && (
+          <AnimatedSection delay={80}>
+            <section className="scd-latest" aria-labelledby="latest-h">
+              <h2 id="latest-h" className="scd-section-rule">
+                Latest from Niagara
+              </h2>
+              <div className="scd-latest-list">
+                {latest.map((n, i) => (
+                  <AnimatedSection key={n.id} delay={40 + i * 30}>
+                    <article className="scd-latest-card">
+                      {n.imageUrl && (
+                        <a
+                          className="scd-latest-media"
+                          href={n.sourceUrl || '#'}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          <img src={n.imageUrl} alt="" loading="lazy" />
+                        </a>
+                      )}
+                      <p className="scd-cat">{categoryLabel(n)}</p>
+                      <h3 className="scd-latest-title">
+                        {n.sourceUrl ? (
+                          <a href={n.sourceUrl} target="_blank" rel="noopener noreferrer">
+                            {n.title}
+                          </a>
+                        ) : (
+                          n.title
+                        )}
+                      </h3>
+                      <p className="scd-latest-time">
+                        {formatDate(n.publishedDate) || relativeAgo(n.publishedDate)}
+                      </p>
+                    </article>
                   </AnimatedSection>
                 ))}
-              </AnimatedSection>
-            )}
+              </div>
+            </section>
+          </AnimatedSection>
+        )}
 
-            <Link to="/planning-tracker" className="scd-more">
-              All active notices →
-            </Link>
-          </div>
+        <div className="scd-cta-row">
+          <Link to="/planning-tracker" className="scd-outline-btn">
+            See all planning notices
+          </Link>
+        </div>
 
+        <div className="scd-front scd-front-rail">
           <aside className="scd-rail">
             <AnimatedSection delay={60}>
               <OfficialSourcesPanel />
             </AnimatedSection>
             <AnimatedSection delay={100}>
               <NewsletterPanel />
-            </AnimatedSection>
-
-            <AnimatedSection delay={140}>
-              <div className="scd-rail-block">
-                <h2 className="scd-rail-label">How we report</h2>
-                <p className="scd-rail-text">
-                  Only official primary documents — city sites, NRPS releases, and planning
-                  notices. No social media lists for public safety.
-                </p>
-              </div>
-            </AnimatedSection>
-
-            <AnimatedSection delay={180}>
-              <div className="scd-rail-block">
-                <h2 className="scd-rail-label">Public safety</h2>
-                <p className="scd-rail-text">
-                  Ontario does not publish a searchable offender map. Use{' '}
-                  <a href="https://www.niagarapolice.ca/" target="_blank" rel="noopener noreferrer">
-                    NRPS media releases
-                  </a>{' '}
-                  for official community notices.
-                </p>
-              </div>
             </AnimatedSection>
           </aside>
         </div>
