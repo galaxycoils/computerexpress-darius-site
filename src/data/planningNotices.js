@@ -447,6 +447,31 @@ export const planningNotices = [
     category: 'road-closure',
     tags: ['Road Closure', 'Crompton Boulevard', 'Thorold', 'Construction']
   },
+  {
+    id: 'thorold-kottmeier-park-phase2',
+    municipality: 'Thorold',
+    type: 'Project Notice',
+    title: 'Kottmeier Road Park — Second Phase Project Commencement',
+    description: 'Notice of project commencement for Kottmeier Road Park second phase construction.',
+    status: 'Pre-construction',
+    publishedDate: '2026-09-18',
+    sourceUrl: 'https://www.thorold.ca/news/news/notice-of-project-commencement-kottmeier-road-park-second-phase/',
+    category: 'infrastructure',
+    tags: ['Park', 'Kottmeier Road', 'Project Commencement', 'Construction']
+  },
+  {
+    id: 'thorold-museum-cultural-pic2',
+    municipality: 'Thorold',
+    type: 'Public Information Centre',
+    title: 'Museum & Cultural Centre — PIC #2: Interpretation Plan and Exhibit Design',
+    description: 'Public Information Centre #2 for the Museum & Cultural Centre Interpretation Plan and Exhibit Design.',
+    status: 'Active',
+    meetingDate: '2026-09-24T18:30:00',
+    publishedDate: '2026-09-18',
+    sourceUrl: 'https://www.thorold.ca/news/news/notice-of-pic-2-museum-cultural-centre-interpretation-plan-and-exhibit-design/',
+    category: 'public-information-centre',
+    tags: ['Museum', 'Cultural Centre', 'PIC', 'Interpretation Plan', 'Exhibit Design']
+  },
 
   // NIAGARA REGION - ROAD CLOSURES & SERVICE NOTICES
   {
