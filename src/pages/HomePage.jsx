@@ -1,6 +1,6 @@
 import Seo, { BASE_URL } from '../components/Seo'
 import { Link } from 'react-router-dom'
-import { getActiveNotices, getUpcomingMeetings } from '../data/planningNotices'
+import { planningNotices, getUpcomingMeetings } from '../data/planningNotices'
 import { siteConfig } from '../data/siteConfig'
 import { CITIES } from '../data/cities'
 import OfficialSourcesPanel from '../components/news/OfficialSourcesPanel'
@@ -8,13 +8,56 @@ import NewsletterPanel from '../components/news/NewsletterPanel'
 import AnimatedSection from '../hooks/useInView'
 import '../components/news/news.css'
 
+/** Editorial hero/thumb images for the newspaper front page (mock-aligned). */
+const STORY_IMAGES = {
+  'stc-455-welland-ave':
+    'https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=1200&q=80',
+  'stc-ontario-st-corridor':
+    'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&q=80',
+  'stc-12-stepney-st':
+    'https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?w=800&q=80',
+  'stc-cip-strategic-sites':
+    'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=800&q=80',
+  'stc-p23-061-brimley-crescent':
+    'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1200&q=80',
+  'welland-op-update':
+    'https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=1200&q=80',
+  'welland-opa-55':
+    'https://images.unsplash.com/photo-1586281380349-632531db7ed4?w=1200&q=80',
+  'thorold-pamela-drive-watermain':
+    'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1200&q=80',
+  'thorold-1201-egerter-rd':
+    'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1200&q=80',
+  'welland-first-st-coa-2026-09-28':
+    'https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=1200&q=80',
+}
+
+const LEAD_ORDER = [
+  'stc-455-welland-ave',
+  'stc-ontario-st-corridor',
+  'stc-12-stepney-st',
+  'stc-cip-strategic-sites',
+  'stc-p23-061-brimley-crescent',
+  'welland-op-update',
+  'welland-opa-55',
+  'thorold-pamela-drive-watermain',
+  'thorold-1201-egerter-rd',
+  'welland-first-st-coa-2026-09-28',
+]
+
 function formatDate(iso) {
   if (!iso) return null
-  return new Date(iso).toLocaleDateString('en-CA', {
-    month: 'short',
-    day: 'numeric',
-    year: 'numeric',
-  })
+  try {
+    const d = new Date(iso)
+    if (isNaN(d.getTime())) return iso
+    return d.toLocaleDateString('en-CA', {
+      month: 'short',
+      day: 'numeric',
+      year: 'numeric',
+    })
+  } catch {
+    return iso
+  }
 }
 
 function relativeAgo(iso) {
@@ -36,25 +79,64 @@ function relativeAgo(iso) {
 }
 
 function categoryLabel(notice) {
+  const type = (notice.type || '').toLowerCase()
+  if (type.includes('official plan') || type.includes('community improvement') || type.includes('council')) {
+    if (type.includes('community improvement')) return 'COUNCIL'
+    if (type.includes('official plan')) return notice.municipality?.toUpperCase() || 'COUNCIL'
+  }
+  if (type.includes('minor variance') || type.includes('committee of adjustment') || type.includes('zoning')) {
+    return 'PLANNING'
+  }
   if (notice.municipality) return String(notice.municipality).toUpperCase()
-  if (notice.category) return String(notice.category).replace(/-/g, ' ').toUpperCase()
   return 'MUNICIPAL'
 }
 
-export default function HomePage() {
-  const activeNotices = getActiveNotices()
-  const upcomingMeetings = getUpcomingMeetings()
+function withImage(n) {
+  return {
+    ...n,
+    imageUrl: n.imageUrl || STORY_IMAGES[n.id] || null,
+  }
+}
 
-  const featured = []
+function buildFeatured() {
+  const byId = Object.fromEntries(planningNotices.map((n) => [n.id, n]))
+  const ordered = []
   const seen = new Set()
-  for (const n of [...activeNotices, ...upcomingMeetings]) {
-    if (!seen.has(n.id)) {
-      seen.add(n.id)
-      featured.push(n)
+
+  for (const id of LEAD_ORDER) {
+    if (byId[id] && !seen.has(id)) {
+      seen.add(id)
+      ordered.push(withImage(byId[id]))
     }
-    if (featured.length >= 12) break
   }
 
+  const rest = [...planningNotices]
+    .filter((n) => !seen.has(n.id))
+    .sort((a, b) => {
+      const da = new Date(a.publishedDate || 0).getTime()
+      const db = new Date(b.publishedDate || 0).getTime()
+      return db - da
+    })
+
+  for (const n of rest) {
+    if (ordered.length >= 12) break
+    ordered.push(withImage(n))
+  }
+
+  // Prefer upcoming meetings near the top if thin
+  if (ordered.length < 6) {
+    for (const n of getUpcomingMeetings()) {
+      if (seen.has(n.id)) continue
+      ordered.push(withImage(n))
+      if (ordered.length >= 12) break
+    }
+  }
+
+  return ordered
+}
+
+export default function HomePage() {
+  const featured = buildFeatured()
   const lead = featured[0] || null
   const topStories = featured.slice(1, 4)
   const latest = featured.slice(4)
@@ -93,7 +175,6 @@ export default function HomePage() {
       />
 
       <div className="scd-page scd-paper">
-        {/* Lead story — newspaper hero */}
         {lead ? (
           <AnimatedSection className="scd-lead-block" delay={0}>
             <article className="scd-lead-story">
@@ -138,10 +219,9 @@ export default function HomePage() {
             </article>
           </AnimatedSection>
         ) : (
-          <div className="scd-empty">No active notices right now. Check the planning tracker.</div>
+          <div className="scd-empty">No notices right now. Check the planning tracker.</div>
         )}
 
-        {/* Top Stories — compact list */}
         {topStories.length > 0 && (
           <AnimatedSection delay={40}>
             <section className="scd-top-stories" aria-labelledby="top-stories-h">
@@ -181,7 +261,6 @@ export default function HomePage() {
           </AnimatedSection>
         )}
 
-        {/* Latest from Niagara — stacked story cards */}
         {latest.length > 0 && (
           <AnimatedSection delay={80}>
             <section className="scd-latest" aria-labelledby="latest-h">
