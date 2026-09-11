@@ -31,12 +31,12 @@ export default function NewsletterPanel() {
       <h2 className="scd-rail-label">Planning alerts by email</h2>
       {status === 'success' ? (
         <p className="scd-rail-text" role="status">
-          You&apos;re on the list. Watch your inbox for the next digest.
+          You're on the list. Watch your inbox for the next digest.
         </p>
       ) : (
         <>
           <p className="scd-rail-text">
-            New notices, upcoming hearings, and what changed — one weekly digest.
+            New notices, upcoming hearings, and what changed — one weekly digest that stays with you.
           </p>
           <form className="scd-newsletter-form" onSubmit={onSubmit} noValidate={false}>
             <label className="scd-newsletter-sr" htmlFor="scd-newsletter-email">
@@ -53,8 +53,9 @@ export default function NewsletterPanel() {
               required
               disabled={status === 'sending'}
             />
-            <button type="submit" disabled={status === 'sending'}>
-              {status === 'sending' ? 'Subscribing…' : 'Subscribe free'}
+            <button type="submit" className="island-btn" disabled={status === 'sending'}>
+              <span>{status === 'sending' ? 'Subscribing…' : 'Subscribe free'}</span>
+              <span className="island-icon" aria-hidden="true">→</span>
             </button>
           </form>
           {status === 'error' && (
