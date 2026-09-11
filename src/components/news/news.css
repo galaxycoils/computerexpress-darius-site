@@ -1,24 +1,23 @@
-/* Front page + story surfaces */
+/* Front page + story surfaces — elevated editorial */
 
 .scd-page {
-  max-width: 1080px;
+  max-width: 1120px;
   margin: 0 auto;
-  padding: var(--sp-3) var(--sp-3) var(--sp-6);
+  padding: 20px 20px 56px;
 }
 
 @media (min-width: 768px) {
   .scd-page {
-    padding: var(--sp-4) var(--sp-4) 64px;
+    padding: 28px 28px 72px;
   }
 }
 
-/* City strip — Standard register */
-
+/* City strip */
 .scd-sections {
   display: flex;
-  gap: 6px;
-  margin: 0 0 var(--sp-4);
-  padding: 0 0 14px;
+  gap: 8px;
+  margin: 0 0 28px;
+  padding: 0 0 16px;
   border-bottom: 1px solid var(--line);
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
@@ -32,9 +31,9 @@
 .scd-section-link {
   flex: 0 0 auto;
   font-family: var(--font-ui);
-  font-size: var(--t-sm);
-  font-weight: 500;
-  padding: 6px 12px;
+  font-size: 13.5px;
+  font-weight: 550;
+  padding: 7px 14px;
   color: var(--text);
   text-decoration: none;
   border: 1px solid var(--line);
@@ -43,86 +42,64 @@
   min-height: 36px;
   display: inline-flex;
   align-items: center;
-  transition: color 0.15s var(--ease), border-color 0.15s var(--ease), background 0.15s var(--ease);
+  border-radius: 9999px;
+  transition: color 0.25s var(--ease), border-color 0.25s var(--ease), background 0.25s var(--ease), transform 0.25s var(--ease);
 }
 
 .scd-section-link:hover {
   color: var(--signal);
   border-color: var(--signal);
   background: var(--signal-soft);
+  transform: translateY(-1px);
 }
 
-/* Front layout: main + rail */
-
+/* Front layout */
 .scd-front {
   display: grid;
   grid-template-columns: 1fr;
-  gap: var(--sp-4);
+  gap: 32px;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 900px) {
   .scd-front {
-    grid-template-columns: minmax(0, 1.7fr) minmax(240px, 0.85fr);
-    gap: 32px;
+    grid-template-columns: minmax(0, 1.75fr) minmax(260px, 0.85fr);
+    gap: 40px;
     align-items: start;
   }
 }
 
-/* ── Tablet breakpoint (900px) — intermediate layout for lead row ── */
-
-@media (min-width: 900px) {
-  .scd-front {
-    gap: var(--sp-5);
-  }
-}
-
-/* ── Lead row (Home only) — Standard 3-col "Most Popular" register ── */
-
-.scd-lead-row {
-  margin-bottom: var(--sp-4);
-}
-
-@media (min-width: 900px) {
-  .scd-lead-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: var(--sp-4);
-    margin-bottom: 32px;
-  }
-}
-
-/* ── Lead article ── */
-
+/* Lead */
 .scd-lead {
-  padding: 0 0 24px;
-  margin: 0 0 2px;
-  border-bottom: 1px solid var(--line-strong);
+  padding: 0 0 28px;
+  margin: 0 0 8px;
+  border-bottom: 2px solid var(--text-bright);
 }
 
 .scd-lead-kicker {
   font-family: var(--font-mono);
-  font-size: var(--t-xs);
-  letter-spacing: 0.08em;
+  font-size: 11px;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--signal);
   font-weight: 500;
-  margin: 0 0 6px;
+  margin: 0 0 10px;
   line-height: 1.4;
 }
 
 .scd-lead-title {
   font-family: var(--font-display);
-  font-size: var(--t-xxl);
+  font-size: clamp(1.75rem, 4.2vw, 2.35rem);
   font-weight: 700;
-  letter-spacing: -0.035em;
-  line-height: 1.1;
-  margin: 0 0 10px;
+  letter-spacing: -0.038em;
+  line-height: 1.08;
+  margin: 0 0 14px;
   color: var(--text-bright);
 }
 
 .scd-lead-title a {
   color: inherit;
   text-decoration: none;
+  transition: color 0.25s var(--ease);
 }
 
 .scd-lead-title a:hover {
@@ -131,228 +108,181 @@
 
 .scd-lead-dek {
   font-family: var(--font-body);
-  font-size: var(--t-base);
+  font-size: 17px;
   line-height: 1.55;
   color: var(--muted);
-  margin: 0 0 12px;
-  max-width: var(--max-prose);
+  margin: 0 0 16px;
+  max-width: 58ch;
 }
 
 .scd-lead-meta {
   font-family: var(--font-mono);
-  font-size: var(--t-xs);
+  font-size: 12px;
   color: var(--muted-lite);
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 8px 14px;
+  gap: 10px 16px;
 }
 
 .scd-lead-source {
   color: var(--signal);
   text-decoration: none;
-  font-weight: 500;
+  font-weight: 550;
 }
 
 .scd-lead-source:hover {
   text-decoration: underline;
 }
 
-/* Section label — Standard eyebrow */
-
+/* Section label */
 .scd-section-label {
   font-family: var(--font-mono);
-  font-size: var(--t-xs);
+  font-size: 11px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--text-bright);
-  margin: var(--sp-4) 0 0;
-  padding: 0 0 6px;
+  margin: 32px 0 0;
+  padding: 0 0 8px;
   border-bottom: 2px solid var(--text-bright);
   font-weight: 600;
 }
 
-/* Notice cards — river items — Standard register */
-
+/* Notice cards — elevated with subtle bezel feel on hover */
 .scd-notice {
-  padding: var(--sp-3) 0;
+  padding: 18px 0;
   border-bottom: 1px solid var(--line);
   background: transparent;
   margin: 0;
+  transition: background 0.3s var(--ease);
+}
+
+.scd-notice:hover {
+  background: color-mix(in srgb, var(--bg-soft) 60%, transparent);
 }
 
 .scd-notice-meta {
   display: flex;
   flex-wrap: wrap;
   align-items: baseline;
-  gap: 6px 10px;
+  gap: 8px 10px;
   font-family: var(--font-mono);
-  font-size: var(--t-xs);
+  font-size: 11px;
   color: var(--muted-lite);
-  margin-bottom: 6px;
+  margin-bottom: 8px;
   line-height: 1.4;
 }
 
-/* Chip: municipality — Standard blue chip register */
-
-.scd-notice-chip {
+.scd-notice-chip,
+.scd-notice-city,
+.scd-story-city {
   font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: 0.06em;
+  font-size: 10.5px;
+  letter-spacing: 0.07em;
   text-transform: uppercase;
   color: var(--on-signal);
   background: var(--signal);
-  padding: 2px 6px;
-  border-radius: 2px;
-  font-weight: 500;
+  padding: 3px 7px;
+  border-radius: 3px;
+  font-weight: 550;
 }
-
-/* Type label: Planning / Police / etc. */
 
 .scd-notice-type {
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 10.5px;
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--muted);
   background: var(--bg-soft);
-  padding: 2px 6px;
-  border-radius: 2px;
+  padding: 3px 7px;
+  border-radius: 3px;
   font-weight: 500;
   border: 1px solid var(--line);
 }
-
-/* Date */
 
 .scd-notice-date {
   color: var(--muted-lite);
 }
 
-.scd-notice-title {
+.scd-notice-title,
+.scd-story-title {
   font-family: var(--font-display);
-  font-size: var(--t-lg);
+  font-size: clamp(1.15rem, 2.2vw, 1.35rem);
   font-weight: 650;
-  line-height: 1.28;
-  letter-spacing: -0.02em;
-  margin: 0 0 6px;
+  line-height: 1.25;
+  letter-spacing: -0.025em;
+  margin: 0 0 8px;
   color: var(--text-bright);
 }
 
-.scd-notice-title a {
+.scd-notice-title a,
+.scd-story-title a {
   color: inherit;
   text-decoration: none;
+  transition: color 0.25s var(--ease);
 }
 
-.scd-notice-title a:hover {
+.scd-notice-title a:hover,
+.scd-story-title a:hover {
   color: var(--signal);
 }
 
-.scd-notice-summary {
+.scd-notice-summary,
+.scd-story-dek {
   font-family: var(--font-body);
-  font-size: var(--t-sm);
+  font-size: 14.5px;
   line-height: 1.5;
   color: var(--muted);
-  margin: 0 0 6px;
-  max-width: var(--max-prose);
+  margin: 0 0 8px;
+  max-width: 58ch;
 }
 
 .scd-notice-source {
   font-family: var(--font-mono);
-  font-size: var(--t-xs);
+  font-size: 11.5px;
   color: var(--signal);
   text-decoration: none;
-  font-weight: 500;
+  font-weight: 550;
 }
 
 .scd-notice-source:hover {
   text-decoration: underline;
 }
 
-/* Legacy alias support (for any remaining scd-story usage) */
-
+/* Legacy story alias */
 .scd-story {
-  padding: var(--sp-3) 0;
+  padding: 18px 0;
   border-bottom: 1px solid var(--line);
   background: transparent;
   margin: 0;
 }
 
-.scd-story-meta {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  gap: 6px 10px;
-  font-family: var(--font-mono);
-  font-size: var(--t-xs);
-  color: var(--muted-lite);
-  margin-bottom: 6px;
-  line-height: 1.4;
-}
-
-.scd-story-city {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--on-signal);
-  background: var(--signal);
-  padding: 2px 6px;
-  border-radius: 2px;
-  font-weight: 500;
-}
-
-.scd-story-title {
-  font-family: var(--font-display);
-  font-size: var(--t-lg);
-  font-weight: 650;
-  line-height: 1.28;
-  letter-spacing: -0.02em;
-  margin: 0 0 6px;
-  color: var(--text-bright);
-}
-
-.scd-story-title a {
-  color: inherit;
-  text-decoration: none;
-}
-
-.scd-story-title a:hover {
-  color: var(--signal);
-}
-
-.scd-story-dek {
-  font-family: var(--font-body);
-  font-size: var(--t-sm);
-  line-height: 1.5;
-  color: var(--muted);
-  margin: 0 0 6px;
-}
-
-/* ── Rail / Sidebar — Standard register ── */
-
+/* Rail — double-bezel blocks */
 .scd-rail {
   display: flex;
   flex-direction: column;
-  gap: var(--sp-3);
+  gap: 16px;
 }
 
 .scd-rail-block {
-  border: 1px solid var(--line);
   background: var(--bg-soft);
-  padding: var(--sp-3) 18px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 18px 18px;
   margin: 0;
+  box-shadow: var(--shadow-bezel);
 }
 
 .scd-rail-label {
   font-family: var(--font-mono);
-  font-size: var(--t-xs);
+  font-size: 11px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--muted-lite);
-  margin: 0 0 10px;
-  padding: 0 0 6px;
+  margin: 0 0 12px;
+  padding: 0 0 8px;
   border-bottom: 1px solid var(--line);
-  font-weight: 500;
+  font-weight: 550;
 }
 
 .scd-rail-list {
@@ -361,15 +291,16 @@
   padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 8px;
 }
 
 .scd-rail-list a {
-  font-size: var(--t-sm);
+  font-size: 14px;
   color: var(--text-bright);
   text-decoration: none;
   font-family: var(--font-ui);
-  font-weight: 500;
+  font-weight: 550;
+  transition: color 0.2s var(--ease);
 }
 
 .scd-rail-list a:hover {
@@ -378,7 +309,7 @@
 
 .scd-rail-text {
   font-family: var(--font-body);
-  font-size: var(--t-sm);
+  font-size: 14px;
   line-height: 1.55;
   color: var(--muted);
   margin: 0;
@@ -386,50 +317,52 @@
 
 .scd-rail-text a {
   color: var(--signal);
-  font-weight: 500;
+  font-weight: 550;
 }
 
 /* More link */
-
 .scd-more {
-  display: inline-block;
-  margin-top: 18px;
-  font-family: var(--font-mono);
-  font-size: var(--t-xs);
+  display: inline-flex;
+  align-items: center;
+  margin-top: 24px;
+  font-family: var(--font-ui);
+  font-size: 13.5px;
   font-weight: 600;
   color: var(--signal);
   text-decoration: none;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.01em;
+  padding: 8px 0;
+  transition: gap 0.3s var(--ease);
+  gap: 6px;
 }
 
 .scd-more:hover {
   text-decoration: underline;
 }
 
-/* Empty state */
-
+/* Empty */
 .scd-empty {
   border: 1px dashed var(--line-strong);
-  padding: 24px 18px;
+  border-radius: 10px;
+  padding: 28px 20px;
   color: var(--muted);
   font-family: var(--font-body);
-  font-size: var(--t-sm);
+  font-size: 15px;
   line-height: 1.5;
 }
 
-/* ── City page bridges ── */
-
+/* City page bridges */
 .scd-kicker {
   font-family: var(--font-mono);
-  font-size: var(--t-xs);
+  font-size: 11px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--signal);
-  margin-bottom: 10px;
+  margin-bottom: 12px;
   display: flex;
   align-items: center;
-  gap: 6px;
-  font-weight: 500;
+  gap: 8px;
+  font-weight: 550;
 }
 
 .scd-kicker-dot {
@@ -441,34 +374,34 @@
 
 .scd-hero-title {
   font-family: var(--font-display);
-  font-size: var(--t-xxl);
+  font-size: clamp(1.7rem, 3.8vw, 2.2rem);
   font-weight: 700;
-  letter-spacing: -0.03em;
-  line-height: 1.12;
+  letter-spacing: -0.035em;
+  line-height: 1.1;
   color: var(--text-bright);
-  margin: 0 0 10px;
+  margin: 0 0 12px;
 }
 
 .scd-hero-lead {
   font-family: var(--font-body);
-  font-size: var(--t-base);
+  font-size: 16.5px;
   line-height: 1.55;
   color: var(--muted);
-  margin: 0 0 18px;
-  max-width: var(--max-prose);
+  margin: 0 0 20px;
+  max-width: 58ch;
 }
 
 .scd-city-row {
   display: flex;
   flex-wrap: wrap;
-  gap: 6px;
-  margin-bottom: 18px;
+  gap: 8px;
+  margin-bottom: 20px;
 }
 
 .scd-city-chip {
-  font-size: var(--t-sm);
-  font-weight: 500;
-  padding: 6px 10px;
+  font-size: 13.5px;
+  font-weight: 550;
+  padding: 7px 12px;
   border: 1px solid var(--line);
   color: var(--text);
   text-decoration: none;
@@ -476,21 +409,25 @@
   display: inline-flex;
   align-items: center;
   background: var(--bg-soft);
+  border-radius: 9999px;
+  font-family: var(--font-ui);
+  transition: border-color 0.25s var(--ease), color 0.25s var(--ease), background 0.25s var(--ease);
 }
 
 .scd-city-chip:hover {
   border-color: var(--signal);
   color: var(--signal);
+  background: var(--signal-soft);
 }
 
 .scd-feed-label {
   font-family: var(--font-mono);
-  font-size: var(--t-xs);
+  font-size: 11px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--text-bright);
-  margin-bottom: 2px;
-  padding-bottom: 6px;
+  margin-bottom: 4px;
+  padding-bottom: 8px;
   border-bottom: 2px solid var(--text-bright);
   font-weight: 600;
 }
@@ -498,19 +435,20 @@
 .scd-layout {
   display: grid;
   grid-template-columns: 1fr;
-  gap: var(--sp-4);
+  gap: 32px;
 }
 
 @media (min-width: 900px) {
   .scd-layout {
-    grid-template-columns: minmax(0, 1fr) 240px;
-    gap: 32px;
+    grid-template-columns: minmax(0, 1fr) 260px;
+    gap: 40px;
   }
 }
 
-/* ── Dark mode overrides for notice components ── */
-
-.news-root.is-dark .scd-notice-chip {
+/* Dark overrides */
+.news-root.is-dark .scd-notice-chip,
+.news-root.is-dark .scd-notice-city,
+.news-root.is-dark .scd-story-city {
   background: var(--signal);
   color: var(--on-signal);
 }
@@ -521,79 +459,7 @@
   border-color: var(--line);
 }
 
-.news-root.is-dark .scd-notice-source {
-  color: var(--signal);
-}
-
-.news-root.is-dark .scd-lead-kicker {
-  color: var(--signal);
-}
-
-.news-root.is-dark .scd-lead-source {
-  color: var(--signal);
-}
-
-.news-root.is-dark .scd-section-label {
-  color: var(--text-bright);
-  border-bottom-color: var(--text-bright);
-}
-
-.news-root.is-dark .scd-city-chip {
-  border-color: var(--line);
-  background: var(--bg-soft);
-  color: var(--text);
-}
-
-.news-root.is-dark .scd-city-chip:hover {
-  border-color: var(--signal);
-  color: var(--signal);
-}
-
-.news-root.is-dark .scd-feed-label {
-  color: var(--text-bright);
-  border-bottom-color: var(--text-bright);
-}
-
 .news-root.is-dark .scd-rail-block {
   background: var(--bg-soft);
   border-color: var(--line);
-}
-
-.news-root.is-dark .scd-rail-label {
-  color: var(--muted-lite);
-  border-bottom-color: var(--line);
-}
-
-.news-root.is-dark .scd-rail-list a {
-  color: var(--text-bright);
-}
-
-.news-root.is-dark .scd-rail-list a:hover {
-  color: var(--signal);
-}
-
-.news-root.is-dark .scd-rail-text {
-  color: var(--muted);
-}
-
-.news-root.is-dark .scd-rail-text a {
-  color: var(--signal);
-}
-
-.news-root.is-dark .scd-empty {
-  border-color: var(--line-strong);
-  color: var(--muted);
-}
-
-.news-root.is-dark .scd-more {
-  color: var(--signal);
-}
-
-.news-root.is-dark .scd-story-city {
-  background: var(--signal);
-  color: var(--on-signal);
-}
-
-.news-root.is-dark .scd-story-source {
-  color: var(--signal);
 }
