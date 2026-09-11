@@ -1,4 +1,4 @@
-/* Front page + story surfaces — elevated editorial + cascade + motion */
+/* Front page + story surfaces — elevated editorial + cascade + GPU motion */
 
 .scd-page {
   max-width: 1120px;
@@ -534,30 +534,29 @@
   }
 }
 
-/* ── Deep scroll-entry choreography ── */
+/* ── GPU-accelerated scroll-entry (transform + opacity only) ──
+   filter:blur was removed — it forces expensive paint and large
+   intermediate textures. will-change is also dropped so layers
+   are not permanently retained after the one-shot reveal.
+   Compositor properties only → true GPU path on modern engines. */
 
 .animate-on-scroll {
   opacity: 0;
-  transform: translateY(18px);
-  filter: blur(6px);
+  transform: translate3d(0, 20px, 0);
   transition:
-    opacity 0.7s var(--ease),
-    transform 0.7s var(--ease),
-    filter 0.7s var(--ease);
-  will-change: opacity, transform, filter;
+    opacity 0.65s var(--ease),
+    transform 0.65s var(--ease);
 }
 
 .animate-on-scroll.visible {
   opacity: 1;
-  transform: translateY(0);
-  filter: blur(0);
+  transform: translate3d(0, 0, 0);
 }
 
 @media (prefers-reduced-motion: reduce) {
   .animate-on-scroll {
     opacity: 1;
     transform: none;
-    filter: none;
     transition: none;
   }
 }
