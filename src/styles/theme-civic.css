@@ -1,22 +1,20 @@
-/** St. Catharines Digital — Standard visual register: paper-white + dark-navy, blue/amber accent.
+/** St. Catharines Digital — Elevated editorial register
 
-    Phase 1 token layer (light) + Phase 6b token block (dark navy newsprint).
-    Light surface: Playfair Display / Source Serif 4 / Inter / IBM Plex Mono, blue #0072bc accent,
-    warm newsprint white. Dark surface: deep navy newsprint, amber #c9a227 accent, near-white ink.
-    Toggle in Layout.jsx flips .news-root between is-light and is-dark; localStorage key "theme-v2"
-    persists the choice. Light is the default for first visit.
+    Agency-grade civic newsprint. Warm paper, single signal accent,
+    Playfair Display + Source Serif 4 + Manrope (premium UI, no Inter).
+    Double-bezel utilities, custom cubic-bezier, film-grain restraint.
 
-    Every component must flow through these tokens. No hardcoded hex accent values anywhere in
-    component CSS — grep gate for Phase 1 + Phase 6b.
+    Light = default paper. Dark = deep navy newsprint + amber signal.
+    Toggle in Layout.jsx (theme-v2). All components must use tokens only.
 */
 
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600;1,700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600;1,700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=Manrope:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap');
 
-/* ── Token set: Standard visual register — LIGHT surface (default) ── */
+/* ── LIGHT surface (default) ── */
 
 :root,
 .news-root.is-light {
-  /* Paper — near-white warm newsprint, not clinical white */
+  /* Paper — warm newsprint, never pure clinical white */
   --paper: #faf8f4;
   --paper-2: #f2ede3;
   --raised: #ffffff;
@@ -31,7 +29,7 @@
   --rule: #e3ddd2;
   --rule-2: #c9c2b2;
 
-  /* Accent — Standard blue */
+  /* Accent — Standard blue, elevated */
   --signal: #0072bc;
   --signal-soft: rgba(0, 114, 188, 0.09);
 
@@ -54,10 +52,9 @@
   --primary: var(--signal);
   --primary-dim: var(--signal-soft);
 
-  /* Chip text on signal-colored backgrounds (mode-aware contrast var) */
   --on-signal: #ffffff;
 
-  /* Semantic aliases kept for backward compat with existing component CSS */
+  /* Semantic aliases (backward compat) */
   --emerald: var(--signal);
   --emerald-dim: var(--signal-soft);
   --accent: var(--signal);
@@ -66,39 +63,37 @@
   --danger: var(--signal);
   --info: var(--signal);
 
-  /* Type */
+  /* Type — premium stack, Inter banned */
   --font-display: 'Playfair Display', Georgia, serif;
   --font-body: 'Source Serif 4', Georgia, serif;
-  --font-ui: 'Inter', system-ui, sans-serif;
+  --font-ui: 'Manrope', system-ui, sans-serif;
   --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
 
-  --ease: cubic-bezier(0.25, 1, 0.5, 1);
-  --shadow-soft: 0 1px 2px rgba(17, 17, 16, 0.04), 0 6px 20px rgba(17, 17, 16, 0.05);
+  /* High-end motion */
+  --ease: cubic-bezier(0.32, 0.72, 0, 1);
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --shadow-soft: 0 1px 2px rgba(17, 17, 16, 0.04), 0 8px 24px rgba(17, 17, 16, 0.06);
+  --shadow-bezel: 0 0 0 1px rgba(17, 17, 16, 0.04), 0 1px 2px rgba(17, 17, 16, 0.03);
 }
 
-/* ── Token set: Standard visual register — DARK navy newsprint surface (Phase 6b) ── */
+/* ── DARK navy newsprint ── */
 
 .news-root.is-dark {
-  /* Paper — deep navy newsprint, not black */
-  --paper: #112233;
-  --paper-2: #0e1a28;
-  --raised: #0a1420;
+  --paper: #0e1a28;
+  --paper-2: #0a1420;
+  --raised: #112233;
 
-  /* Ink — near-white, warm-tinted */
   --ink: #eef2f7;
   --ink-2: #c8d0da;
   --ink-3: #a8b4c4;
   --ink-4: #7a8699;
 
-  /* Rules — subtle light rail on dark */
   --rule: rgba(238, 242, 247, 0.1);
   --rule-2: rgba(238, 242, 247, 0.18);
 
-  /* Accent — amber signal on dark (Standard night-register feel) */
   --signal: #c9a227;
   --signal-soft: rgba(201, 162, 39, 0.12);
 
-  /* Mapped surfaces */
   --bg: var(--paper);
   --bg-soft: var(--paper-2);
   --bg-card: var(--raised);
@@ -117,10 +112,8 @@
   --primary: var(--signal);
   --primary-dim: var(--signal-soft);
 
-  /* Chip text on signal-colored backgrounds (mode-aware contrast var) */
-  --on-signal: #112233;
+  --on-signal: #0e1a28;
 
-  /* Semantic aliases — remapped to dark register */
   --emerald: var(--signal);
   --emerald-dim: var(--signal-soft);
   --accent: var(--signal);
@@ -129,21 +122,99 @@
   --danger: #f87171;
   --info: var(--signal);
 
-  /* Type — same type stack, both modes */
   --font-display: 'Playfair Display', Georgia, serif;
   --font-body: 'Source Serif 4', Georgia, serif;
-  --font-ui: 'Inter', system-ui, sans-serif;
+  --font-ui: 'Manrope', system-ui, sans-serif;
   --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
 
-  --ease: cubic-bezier(0.25, 1, 0.5, 1);
-  --shadow-soft: 0 1px 2px rgba(0, 0, 0, 0.4), 0 8px 28px rgba(0, 0, 0, 0.5);
+  --ease: cubic-bezier(0.32, 0.72, 0, 1);
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --shadow-soft: 0 1px 2px rgba(0, 0, 0, 0.4), 0 10px 32px rgba(0, 0, 0, 0.45);
+  --shadow-bezel: 0 0 0 1px rgba(255, 255, 255, 0.06), 0 1px 2px rgba(0, 0, 0, 0.3);
 }
 
-/* ── Body surface ── */
+/* ── Body ── */
 
 body {
   background: var(--bg);
   color: var(--text);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+}
+
+/* ── Double-bezel utility (high-end composition) ── */
+
+.bezel {
+  background: color-mix(in srgb, var(--bg-soft) 70%, transparent);
+  border-radius: 1.25rem;
+  padding: 6px;
+  box-shadow: var(--shadow-bezel);
+}
+
+.bezel-inner {
+  background: var(--bg-card);
+  border-radius: calc(1.25rem - 4px);
+  border: 1px solid var(--line);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  overflow: hidden;
+}
+
+.news-root.is-dark .bezel-inner {
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+/* Island CTA pattern */
+
+.island-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0;
+  border-radius: 9999px;
+  padding: 2px 2px 2px 18px;
+  background: var(--signal);
+  color: var(--on-signal);
+  font-family: var(--font-ui);
+  font-weight: 600;
+  font-size: var(--t-sm);
+  text-decoration: none;
+  transition: transform 0.35s var(--ease), box-shadow 0.35s var(--ease);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+}
+
+.island-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(0, 114, 188, 0.25);
+  color: var(--on-signal);
+}
+
+.news-root.is-dark .island-btn:hover {
+  box-shadow: 0 4px 14px rgba(201, 162, 39, 0.3);
+}
+
+.island-btn .island-icon {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  margin-left: 10px;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.18);
+  font-size: 14px;
+}
+
+/* Subtle grain (fixed, pointer-events none) */
+.news-root::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.028;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  mix-blend-mode: multiply;
+}
+
+.news-root.is-dark::before {
+  opacity: 0.04;
+  mix-blend-mode: soft-light;
 }
