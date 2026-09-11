@@ -1,7 +1,6 @@
 import { useState, useEffect, useCallback } from 'react'
 import { Outlet, useLocation, Link, NavLink } from 'react-router-dom'
 
-/** theme-v2 resets old localStorage dark preference so paper light is the default */
 function getInitialTheme() {
   if (typeof window === 'undefined') return 'light'
   const stored = localStorage.getItem('theme-v2')
@@ -10,18 +9,23 @@ function getInitialTheme() {
 }
 
 const NAV = [
-  { to: '/', label: 'Home', end: true },
+  { to: '/', label: 'News', end: true },
   { to: '/council', label: 'Council' },
-  { to: '/police', label: 'Police' },
   { to: '/planning-tracker', label: 'Planning' },
+  { to: '/police', label: 'Crime' },
   { to: '/about', label: 'About' },
 ]
 
-const NEWS_DROPDOWN = [
+const CITY_LINKS = [
   { to: '/news/st-catharines', label: 'St. Catharines' },
   { to: '/news/welland', label: 'Welland' },
   { to: '/news/thorold', label: 'Thorold' },
-  { to: '/news/police', label: 'Police Releases' },
+]
+
+const DESK_LINKS = [
+  { to: '/news/st-catharines', label: 'St. Catharines desk' },
+  { to: '/news/welland', label: 'Welland desk' },
+  { to: '/news/thorold', label: 'Thorold desk' },
 ]
 
 function formatDateline() {
@@ -33,43 +37,12 @@ function formatDateline() {
   })
 }
 
-function NewsDropdown({ isOpen, onToggle, items }) {
-  return (
-    <div className="scd-dropdown">
-      <button
-        type="button"
-        className={`scd-dropdown-trigger ${isOpen ? 'active' : ''}`}
-        onClick={onToggle}
-        aria-expanded={isOpen}
-        aria-haspopup="true"
-      >
-        News <span aria-hidden="true">▾</span>
-      </button>
-      {isOpen && (
-        <div className="scd-dropdown-menu" role="menu">
-          {items.map((item) => (
-            <NavLink
-              key={item.to}
-              to={item.to}
-              role="menuitem"
-              onClick={() => onToggle(false)}
-              className="scd-dropdown-item"
-            >
-              {item.label}
-            </NavLink>
-          ))}
-        </div>
-      )}
-    </div>
-  )
-}
-
-function MobileDrawer({ isOpen, onClose, navItems, dropdownItems }) {
+function MobileDrawer({ onClose }) {
   return (
     <nav className="scd-drawer" aria-label="Mobile navigation">
-      {navItems.map((item) => (
+      {NAV.map((item) => (
         <NavLink
-          key={item.to}
+          key={item.to + item.label}
           to={item.to}
           end={item.end}
           onClick={onClose}
@@ -78,10 +51,19 @@ function MobileDrawer({ isOpen, onClose, navItems, dropdownItems }) {
           {item.label}
         </NavLink>
       ))}
-      <p className="scd-drawer-label">News by city</p>
-      {dropdownItems.map((item) => (
+      {CITY_LINKS.map((item) => (
         <NavLink
           key={item.to}
+          to={item.to}
+          onClick={onClose}
+          className={({ isActive }) => (isActive ? 'scd-drawer-a active' : 'scd-drawer-a')}
+        >
+          {item.label}
+        </NavLink>
+      ))}
+      {DESK_LINKS.map((item) => (
+        <NavLink
+          key={'desk-' + item.to}
           to={item.to}
           onClick={onClose}
           className={({ isActive }) => (isActive ? 'scd-drawer-a active' : 'scd-drawer-a')}
@@ -95,7 +77,6 @@ function MobileDrawer({ isOpen, onClose, navItems, dropdownItems }) {
 
 export default function Layout() {
   const [menuOpen, setMenuOpen] = useState(false)
-  const [newsDropdown, setNewsDropdown] = useState(false)
   const [theme, setTheme] = useState(getInitialTheme)
   const location = useLocation()
 
@@ -107,7 +88,6 @@ export default function Layout() {
 
   useEffect(() => {
     setMenuOpen(false)
-    setNewsDropdown(false)
   }, [location.pathname])
 
   useEffect(() => {
@@ -127,7 +107,7 @@ export default function Layout() {
         Skip to main content
       </a>
 
-      <header className="scd-h">
+      <header className={`scd-h ${menuOpen ? 'is-menu-open' : ''}`}>
         <div className="scd-mast">
           <p className="scd-dateline" suppressHydrationWarning>
             {formatDateline()}
@@ -135,7 +115,7 @@ export default function Layout() {
           <div className="scd-mast-top">
             <Link to="/" className="scd-brand" aria-label="St. Catharines Digital home">
               <span className="scd-brand-name">St. Catharines Digital</span>
-              <span className="scd-brand-tag">Official sources · Niagara</span>
+              <span className="scd-brand-tag">Local news for Niagara</span>
             </Link>
             <div className="scd-h-tools">
               <button type="button" className="scd-theme" onClick={toggleTheme} aria-label="Toggle theme">
@@ -145,21 +125,30 @@ export default function Layout() {
                 type="button"
                 className={`scd-burger ${menuOpen ? 'open' : ''}`}
                 onClick={() => setMenuOpen((v) => !v)}
-                aria-label="Menu"
+                aria-label={menuOpen ? 'Close menu' : 'Open menu'}
                 aria-expanded={menuOpen}
               >
-                <span />
-                <span />
-                <span />
+                {menuOpen ? (
+                  <span className="scd-burger-x" aria-hidden="true">
+                    ×
+                  </span>
+                ) : (
+                  <>
+                    <span />
+                    <span />
+                    <span />
+                  </>
+                )}
               </button>
             </div>
           </div>
 
-          <nav className="scd-nav-row" aria-label="Primary">
+          {/* Desktop nav — hidden on mobile */}
+          <nav className="scd-nav-row scd-nav-desktop" aria-label="Primary">
             <div className="scd-nav-row-inner">
               {NAV.map((item) => (
                 <NavLink
-                  key={item.to}
+                  key={item.to + item.label}
                   to={item.to}
                   end={item.end}
                   className={({ isActive }) => (isActive ? 'scd-nav-a active' : 'scd-nav-a')}
@@ -167,51 +156,50 @@ export default function Layout() {
                   {item.label}
                 </NavLink>
               ))}
-              <NewsDropdown
-                isOpen={newsDropdown}
-                onToggle={setNewsDropdown}
-                items={NEWS_DROPDOWN}
-              />
+              {CITY_LINKS.map((item) => (
+                <NavLink
+                  key={item.to}
+                  to={item.to}
+                  className={({ isActive }) => (isActive ? 'scd-nav-a active' : 'scd-nav-a')}
+                >
+                  {item.label}
+                </NavLink>
+              ))}
             </div>
           </nav>
         </div>
 
-        {menuOpen && (
-          <MobileDrawer
-            isOpen={menuOpen}
-            onClose={() => setMenuOpen(false)}
-            navItems={NAV}
-            dropdownItems={NEWS_DROPDOWN}
-          />
-        )}
+        {menuOpen && <MobileDrawer onClose={() => setMenuOpen(false)} />}
       </header>
 
       <main id="main-content" className="scd-main">
         <Outlet />
       </main>
 
-      <footer className="scd-f">
+      <footer className="scd-f scd-f-dark">
         <div className="scd-f-grid">
           <div>
             <div className="scd-f-name">St. Catharines Digital</div>
             <p>
-              Independent local coverage for St. Catharines, Welland & Thorold. Every item
+              Independent local coverage for St. Catharines, Welland and Thorold. Every item
               links to an official primary source.
             </p>
           </div>
           <div>
             <div className="scd-f-label">Sections</div>
             <Link to="/council">Council</Link>
-            <Link to="/police">Police</Link>
             <Link to="/planning-tracker">Planning</Link>
-            <Link to="/about">About</Link>
-          </div>
-          <div>
-            <div className="scd-f-label">City desks</div>
+            <Link to="/police">Crime</Link>
             <Link to="/news/st-catharines">St. Catharines</Link>
             <Link to="/news/welland">Welland</Link>
             <Link to="/news/thorold">Thorold</Link>
-            <Link to="/news/police">Police Releases</Link>
+            <Link to="/about">About</Link>
+          </div>
+          <div>
+            <div className="scd-f-label">Cities</div>
+            <Link to="/news/st-catharines">St. Catharines</Link>
+            <Link to="/news/welland">Welland</Link>
+            <Link to="/news/thorold">Thorold</Link>
           </div>
           <div>
             <div className="scd-f-label">Official sources</div>
@@ -231,10 +219,7 @@ export default function Layout() {
         </div>
         <div className="scd-f-bottom">
           <span>© {new Date().getFullYear()} St. Catharines Digital</span>
-          <span>
-            <Link to="/privacy">Privacy</Link>
-            <Link to="/terms">Terms</Link>
-          </span>
+          <span>Not affiliated with The Standard or Metroland Media.</span>
         </div>
       </footer>
     </div>
