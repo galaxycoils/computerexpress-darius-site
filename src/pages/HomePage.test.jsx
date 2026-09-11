@@ -17,6 +17,14 @@ describe('HomePage — Editorial Newsroom', () => {
     expect(screen.getByText(/primary documents/i)).toBeInTheDocument()
   })
 
+  it('uses local file photos with dates and credits', () => {
+    renderWithProviders(<HomePage />)
+    const photo = screen.getByRole('img', { name: /Stone facade of St. Catharines City Hall/i })
+    expect(photo).toHaveAttribute('src', '/images/local/st-catharines-city-hall.webp')
+    expect(screen.getByText(/File photo, December 2023/i)).toBeInTheDocument()
+    expect(screen.getByRole('link', { name: /Hannah Clover/i })).toHaveAttribute('href', 'https://commons.wikimedia.org/wiki/File:St._Catharines_City_Hall_2023.jpg')
+  })
+
   it('renders city location labels', () => {
     renderWithProviders(<HomePage />)
     expect(screen.getByText(/St. Catharines · Welland · Thorold/i)).toBeInTheDocument()
@@ -31,7 +39,7 @@ describe('HomePage — Editorial Newsroom', () => {
 
   it('has NRPS Releases external link', () => {
     renderWithProviders(<HomePage />)
-    const nrps = screen.getByRole('link', { name: /NRPS Releases/i })
+    const nrps = screen.getByRole('link', { name: /Niagara Regional Police/i })
     expect(nrps).toBeInTheDocument()
     expect(nrps.getAttribute('href')).toBe('https://www.niagarapolice.ca/')
   })
@@ -42,8 +50,8 @@ describe('HomePage — Editorial Newsroom', () => {
     expect(notices.length).toBeGreaterThan(0)
   })
 
-  it('renders stat counters', () => {
+  it('keeps the newsletter form accessible', () => {
     renderWithProviders(<HomePage />)
-    expect(screen.getByText(/Municipalities/i)).toBeInTheDocument()
+    expect(screen.getByRole('textbox', { name: /email address/i })).toHaveAttribute('type', 'email')
   })
 })

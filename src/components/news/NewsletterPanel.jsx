@@ -18,7 +18,7 @@ export default function NewsletterPanel() {
         body: JSON.stringify({ email: email.trim() }),
       })
       const data = await res.json().catch(() => ({}))
-      if (!res.ok) throw new Error(data.error || 'Something went wrong. Try again later.')
+      if (!res.ok || data.success !== true) throw new Error(data.error || 'Subscription could not be confirmed. Please try again later.')
       setStatus('success')
     } catch (err) {
       setError(err.message || 'Something went wrong. Try again later.')
@@ -67,3 +67,4 @@ export default function NewsletterPanel() {
     </div>
   )
 }
+

@@ -475,3 +475,67 @@
     transition: none;
   }
 }
+
+
+/* Front page: lead and briefing side by side, followed by a compact notice grid. */
+.scd-page { max-width: 1240px; padding: 0 32px 64px; }
+.scd-intro { display: flex; justify-content: space-between; align-items: center; gap: 32px; padding: 32px 0; border-bottom: 1px solid var(--line); margin-bottom: 32px; }
+.scd-eyebrow { font-family: var(--font-ui); font-size: .75rem; letter-spacing: .06em; color: var(--signal); margin-bottom: 8px; }
+.scd-intro-title { font-family: var(--font-display); font-size: clamp(1.5rem, 3vw, 2rem); color: var(--text-bright); line-height: 1.2; }
+.scd-intro-note { font-family: var(--font-ui); font-size: .875rem; line-height: 1.7; }
+.scd-front-grid { display: grid; grid-template-columns: minmax(0, 1.8fr) minmax(0, 1fr); gap: 40px; margin-bottom: 48px; }
+.scd-front-grid > * { min-width: 0; }
+.scd-front-grid > :last-child { border-left: 1px solid var(--line); padding-left: 32px; }
+.scd-lead-block, .scd-top-stories { margin: 0; }
+.scd-lead-figure { margin-bottom: 20px; }
+.scd-lead-media { aspect-ratio: 16 / 9; margin-bottom: 0; border-radius: 3px; }
+.scd-lead-figure figcaption { font-family: var(--font-ui); font-size: .75rem; color: var(--muted); margin-top: 6px; }
+.scd-cat, .news-root.is-dark .scd-cat { font-size: .75rem; color: var(--signal); line-height: 1.5; margin-bottom: 10px; letter-spacing: .07em; }
+.scd-lead-headline { font-size: clamp(2rem, 3.1vw, 2.75rem); line-height: 1.13; margin-bottom: 16px; }
+.scd-lead-dek { font-size: 1.125rem; line-height: 1.65; margin-bottom: 18px; }
+.scd-lead-byline, .scd-top-time, .scd-latest-time { font-size: .8125rem; color: var(--muted); }
+.scd-section-rule { font-size: .875rem; letter-spacing: .055em; padding-bottom: 14px; margin-bottom: 0; border-bottom: 2px solid var(--text-bright); }
+.scd-top-item { padding: 24px 0; }
+.scd-top-title { font-size: 1.4rem; line-height: 1.3; margin-bottom: 14px; }
+.scd-top-thumb { flex-basis: 72px; width: 72px; height: 72px; }
+.scd-latest-list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0 32px; }
+.scd-latest-list > * { min-width: 0; border-bottom: 1px solid var(--line); padding: 28px 0; }
+.scd-latest-title { font-size: 1.4rem; line-height: 1.3; margin-bottom: 16px; }
+.scd-latest { margin-bottom: 32px; }
+.scd-cta-row { justify-content: flex-start; margin-bottom: 48px; }
+.scd-outline-btn { border: 1px solid var(--signal); color: var(--signal); border-radius: 3px; }
+.scd-front-rail { display: block; border-top: 1px solid var(--line); padding-top: 32px; }
+.scd-rail { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: start; }
+.scd-rail-block { padding: 24px; border-radius: 3px; }
+.scd-rail-label { font-size: .8125rem; color: var(--text-bright); }
+.scd-rail-text { font-size: 1rem; }
+.scd-rail-list a { display: inline-block; padding: 5px 0; }
+.scd-source-direct { display: inline-block; font-size: .875rem; color: var(--signal); padding: 12px 0; }
+.scd-notice-meta, .scd-notice-chip, .scd-notice-city, .scd-story-city { font-size: .75rem; }
+.scd-notice-summary, .scd-story-dek { font-size: 1rem; }
+.scd-notice-source { display: inline-block; font-size: .875rem; padding: 8px 0; }
+@media (max-width: 959px) {
+  .scd-intro { align-items: start; flex-direction: column; gap: 16px; }
+  .scd-front-grid { grid-template-columns: minmax(0, 1fr); gap: 32px; }
+  .scd-front-grid > :last-child { border-left: 0; padding-left: 0; }
+  .scd-top-list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
+  .scd-top-title { font-size: 1.2rem; }
+  .scd-latest-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 599px) {
+  .scd-page { padding: 0 20px 40px; }
+  .scd-intro { padding: 24px 0; margin-bottom: 24px; }
+  .scd-eyebrow { letter-spacing: 0; }
+  .scd-intro-note { font-size: .875rem; }
+  .scd-top-list, .scd-latest-list, .scd-rail { grid-template-columns: minmax(0, 1fr); gap: 0; }
+  .scd-top-title, .scd-latest-title { font-size: 1.4rem; }
+  .scd-lead-headline { font-size: 2rem; }
+  .scd-front-grid { margin-bottom: 32px; }
+  .scd-rail { gap: 20px; }
+}
+
+.scd-local-figure { margin-bottom: 18px; }
+.scd-local-figure figcaption { font-family: var(--font-ui); font-size: .75rem; line-height: 1.5; color: var(--muted); }
+.scd-local-figure figcaption a, .scd-lead-figure figcaption a { text-decoration: underline; text-underline-offset: 3px; }
+.scd-lead-media img, .scd-latest-media img { aspect-ratio: 16 / 9; }
+.scd-latest-media { aspect-ratio: 16 / 9; margin-bottom: 8px; }
