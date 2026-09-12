@@ -1,9 +1,9 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import Seo, { BASE_URL } from '../components/Seo'
-import AnimatedSection from '../hooks/useInView'
 import { getLocalBusinessSchema } from '../data/schema'
-import { siteConfig } from '../data/siteConfig'
+import '../components/news/news.css'
+import '../components/news/sponsor.css'
 
 const sponsorshipPageJsonLd = {
   '@context': 'https://schema.org',
@@ -75,6 +75,54 @@ const faqSponsorshipJsonLd = {
   ]
 }
 
+const TIERS = [
+  {
+    key: 'primary',
+    kicker: 'Primary sponsor',
+    badge: 'Most requested',
+    title: 'The full dispatch',
+    price: '$300',
+    per: '/mo',
+    features: [
+      'One placement in every weekly Planning Alert email',
+      'Logo + link on the Planning Tracker page',
+      '41 active notices across 4 municipalities',
+      'Founding pilot pricing, first 6 months'
+    ],
+    audience: 'Real estate lawyers, agents, mortgage brokers, title insurers'
+  },
+  {
+    key: 'category',
+    kicker: 'Category sponsor',
+    badge: null,
+    title: 'Own the Tracker page',
+    price: '$150',
+    per: '/mo',
+    features: [
+      '"Planning Tracker powered by [Your Business]"',
+      'Logo on all planning-related coverage',
+      'Linked from every digest footer',
+      'Monthly commitment, cancel anytime'
+    ],
+    audience: 'Builders, engineering firms, contractors, trades'
+  },
+  {
+    key: 'notice',
+    kicker: 'Notice sponsor',
+    badge: null,
+    title: 'A single file number',
+    price: '$50',
+    per: '/notice',
+    features: [
+      'Your name beside one planning notice',
+      'Paired with that notice email alert',
+      'Pay per notice, no subscription',
+      'Good for testing a neighbourhood'
+    ],
+    audience: 'Surveyors, consultants, agents with a nearby listing'
+  }
+]
+
 export default function SponsorPage() {
   const [formData, setFormData] = useState({
     businessName: '',
@@ -127,21 +175,20 @@ export default function SponsorPage() {
           description="Thank you for your interest in sponsoring the Planning Alert. We will send you a sample digest and payment link within 1 business day."
           path="/sponsor"
         />
-        <main className="sponsor-page">
-          <section className="sponsor-success">
-            <div className="container">
-              <div className="success-icon" aria-hidden="true">
-                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                  <polyline points="20 6 9 17 4 12"/>
-                </svg>
-              </div>
-              <h1>Request received</h1>
-              <p>Thank you for your interest in sponsoring St. Catharines Digital. We will send you a sample Planning Alert digest and a Stripe payment link within 1 business day.</p>
-              <p>If you need a faster response, email <a href="mailto:hello@stcatharinesdigital.ca">hello@stcatharinesdigital.ca</a>.</p>
-              <Link to="/planning-tracker" className="button button-primary">View Planning Tracker</Link>
+        <div className="scd-page scd-sponsor">
+          <div className="card scd-sponsor-success" role="status">
+            <div className="scd-sponsor-success-icon" aria-hidden="true">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <polyline points="20 6 9 17 4 12" />
+              </svg>
             </div>
-          </section>
-        </main>
+            <p className="scd-cat">Request received</p>
+            <h1>We have your request.</h1>
+            <p>Thank you for your interest in sponsoring St. Catharines Digital. We will send a sample Planning Alert digest and a Stripe payment link within 1 business day.</p>
+            <p>If you need a faster response, email <a href="mailto:hello@stcatharinesdigital.ca">hello@stcatharinesdigital.ca</a>.</p>
+            <Link to="/planning-tracker" className="button button-primary">View Planning Tracker</Link>
+          </div>
+        </div>
       </>
     )
   }
@@ -154,221 +201,219 @@ export default function SponsorPage() {
         path="/sponsor"
         jsonLd={[sponsorshipPageJsonLd, faqSponsorshipJsonLd, getLocalBusinessSchema()]}
       />
-      <main className="sponsor-page">
-        <section className="sponsor-hero">
-          <div className="container">
-            <p className="eyebrow">SPONSORSHIP</p>
-            <h1>Reach the people affected by Niagara planning decisions</h1>
-            <p className="lead">Your business featured in the weekly Planning Alert sent to residents across St. Catharines, Welland, and Thorold. Editorial firewall guaranteed.</p>
+      <div className="scd-page scd-sponsor">
+        {/* ── Dateline header: editorial, not SaaS hero ── */}
+        <header className="scd-intro scd-sponsor-intro">
+          <div>
+            <p className="scd-eyebrow">Sponsorship — Planning Alert</p>
+            <h1 className="scd-intro-title">Reach the people affected by Niagara planning decisions</h1>
+            <p className="scd-intro-note">Your business in the weekly Planning Alert read across St. Catharines, Welland, and Thorold. One placement per send. Editorial firewall guaranteed — sponsors never shape coverage.</p>
+            <ul className="scd-sponsor-facts" aria-label="Coverage at a glance">
+              <li><span className="badge badge-status">41 active notices</span></li>
+              <li><span className="badge badge-status">4 municipalities</span></li>
+              <li><span className="badge badge-default">Official sources only</span></li>
+            </ul>
           </div>
+          <aside className="scd-rail-block scd-sponsor-rail" aria-label="Sponsorship at a glance">
+            <p className="scd-rail-label">Founding pilot</p>
+            <p className="scd-sponsor-railprice">$300<span>/mo · primary</span></p>
+            <p>From $50 per notice. Cancel with 30 days notice. Live within 24 hours of payment.</p>
+            <a className="button button-primary" href="#sponsor-form">Request details</a>
+            <p className="scd-sponsor-fineprint">Or email hello@stcatharinesdigital.ca</p>
+          </aside>
+        </header>
+
+        {/* ── Tiers ── */}
+        <section className="scd-sponsor-section" aria-labelledby="sponsor-tiers">
+          <h2 id="sponsor-tiers" className="scd-section-rule">Sponsorship options</h2>
+          <p className="scd-sponsor-standfirst">Three ways in. Every tier carries the same guarantee: your logo appears, your words do not touch the reporting.</p>
+          <div className="scd-sponsor-grid">
+            {TIERS.map((tier) => (
+              <article
+                key={tier.key}
+                className={`card meeting-card scd-sponsor-card${tier.key === 'primary' ? ' scd-sponsor-card--featured' : ''}`}
+              >
+                <div className="scd-sponsor-kicker">
+                  <p className="scd-cat" style={{ margin: 0 }}>{tier.kicker}</p>
+                  {tier.badge && <span className="badge badge-status">{tier.badge}</span>}
+                </div>
+                <h3>{tier.title}</h3>
+                <p className="scd-sponsor-price">{tier.price}<span>{tier.per}</span></p>
+                <ul className="scd-sponsor-list">
+                  {tier.features.map((f) => (
+                    <li key={f}>{f}</li>
+                  ))}
+                </ul>
+                <p className="scd-sponsor-audience"><strong>Best for:</strong> {tier.audience}</p>
+              </article>
+            ))}
+          </div>
+          <p className="scd-sponsor-firewall">Sponsors have zero influence over what we cover or how we cover it. Coverage is sourced exclusively from official municipal domains. Non-negotiable.</p>
         </section>
 
-        <section className="sponsor-tiers">
-          <div className="container">
-            <h2>Sponsorship Options</h2>
-            <div className="tiers-grid">
-              <div className="tier-card tier-primary">
-                <div className="tier-badge">Most Popular</div>
-                <h3>Primary Sponsor</h3>
-                <div className="tier-price">$300<span>/mo</span></div>
-                <ul className="tier-features">
-                  <li>One placement per weekly Planning Alert email</li>
-                  <li>Logo + link on the Planning Tracker page</li>
-                  <li>41 active notices, 4 municipalities</li>
-                  <li>Editorial firewall guaranteed</li>
-                  <li>Founding pilot pricing (first 6 months)</li>
-                </ul>
-                <div className="tier-audience">
-                  <strong>Best for:</strong> Real estate lawyers, real estate agents, mortgage brokers, title insurance companies
-                </div>
-              </div>
-
-              <div className="tier-card">
-                <h3>Category Sponsor</h3>
-                <div className="tier-price">$150<span>/mo</span></div>
-                <ul className="tier-features">
-                  <li>Sponsor the Planning Tracker page</li>
-                  <li>"Planning Tracker powered by [Your Business]"</li>
-                  <li>Logo on all planning-related content</li>
-                  <li>Editorial firewall guaranteed</li>
-                </ul>
-                <div className="tier-audience">
-                  <strong>Best for:</strong> Construction companies, engineering firms, home builders, municipal contractors
-                </div>
-              </div>
-
-              <div className="tier-card">
-                <h3>Notice Sponsor</h3>
-                <div className="tier-price">$50<span>/notice</span></div>
-                <ul className="tier-features">
-                  <li>Sponsor a specific planning notice</li>
-                  <li>Your name next to the notice description</li>
-                  <li>Paired with that notice's email alert</li>
-                  <li>Pay per notice, no monthly commitment</li>
-                </ul>
-                <div className="tier-audience">
-                  <strong>Best for:</strong> Traffic engineers, environmental consultants, surveyors, real estate agents with specific listings
-                </div>
-              </div>
+        {/* ── Sample dispatch ── */}
+        <section className="scd-sponsor-section" aria-labelledby="sponsor-sample">
+          <h2 id="sponsor-sample" className="scd-section-rule">What your audience sees</h2>
+          <div className="scd-sponsor-demo-grid">
+            <div className="scd-sponsor-demo-copy">
+              <p>Each Thursday the digest lands with new notices, meeting dates, and links to the primary documents. Your placement sits inside the email residents open because a decision affects their street.</p>
+              <p>Below is the shape of it — three notices, your box, one link to the full Tracker.</p>
+              <Link to="/planning-tracker" className="scd-more">View all 41 notices →</Link>
             </div>
-          </div>
-        </section>
-
-        <section className="sponsor-demo">
-          <div className="container">
-            <h2>What your audience sees</h2>
-            <div className="demo-email">
-              <div className="demo-email-header">
-                <span className="demo-email-from">St. Catharines Digital &lt;alerts@stcatharinesdigital.ca&gt;</span>
-                <span className="demo-email-subject">Planning Alert: 3 new notices in St. Catharines</span>
+            <figure className="scd-rail-block scd-sponsor-demo" aria-label="Sample Planning Alert email">
+              <div className="scd-sponsor-demo-head">
+                <p className="scd-sponsor-demo-from">St. Catharines Digital &lt;alerts@stcatharinesdigital.ca&gt;</p>
+                <p className="scd-sponsor-demo-subject">Planning Alert: 3 new notices in St. Catharines</p>
               </div>
-              <div className="demo-email-body">
+              <div className="scd-sponsor-demo-body">
                 <p>New planning notices for the week of September 8, 2026:</p>
-                <ul>
+                <ul className="scd-sponsor-demo-list">
                   <li>455 Welland Avenue — Parking Variance (248 units)</li>
                   <li>Ontario Street Corridor Secondary Plan</li>
                   <li>Pamela Drive Watermain Replacement</li>
                 </ul>
-                <div className="demo-sponsor">
-                  <div className="demo-sponsor-badge">
-                    <span className="demo-sponsored-label">Sponsored by</span>
-                    <span className="demo-sponsor-name">[Your Business Name]</span>
-                    <span className="demo-sponsor-desc">Your tagline or offer here</span>
-                  </div>
+                <div className="scd-sponsor-demo-box">
+                  <p className="scd-cat">Sponsored</p>
+                  <p className="scd-sponsor-demo-name">[Your Business Name]</p>
+                  <p className="scd-sponsor-demo-tag">Your tagline or offer here</p>
                 </div>
-                <p><a href="#">View all 41 notices →</a></p>
+                <a className="scd-sponsor-demo-link" href="/planning-tracker">View all 41 notices →</a>
               </div>
-            </div>
+              <figcaption className="scd-sponsor-demo-cap">Sample placement. Your logo and link appear here.</figcaption>
+            </figure>
           </div>
         </section>
 
-        <section className="sponsor-form-section">
-          <div className="container">
-            <div className="form-wrapper">
-              <h2>Get started</h2>
-              <p className="form-intro">Fill out the form and we will send you a sample digest + Stripe payment link within 1 business day.</p>
+        {/* ── Inquiry form ── */}
+        <section className="scd-sponsor-section" aria-labelledby="sponsor-form-title" id="sponsor-form">
+          <h2 id="sponsor-form-title" className="scd-section-rule">Request details</h2>
+          <div className="card scd-sponsor-formcard">
+            <h3>Get started</h3>
+            <p className="scd-sponsor-form-intro">Fill this in and we send a sample digest plus a Stripe payment link within 1 business day.</p>
 
-              {error && (
-                <div className="form-error" role="alert">{error}</div>
-              )}
+            {error && (
+              <p className="scd-sponsor-error" role="alert">{error}</p>
+            )}
 
-              <form onSubmit={handleSubmit} className="sponsor-form">
-                <div className="form-row">
-                  <div className="form-field">
-                    <label htmlFor="businessName">Business name *</label>
-                    <input
-                      type="text"
-                      id="businessName"
-                      name="businessName"
-                      required
-                      value={formData.businessName}
-                      onChange={handleChange}
-                      placeholder="Your Company Inc."
-                    />
-                  </div>
-                  <div className="form-field">
-                    <label htmlFor="contactName">Contact name *</label>
-                    <input
-                      type="text"
-                      id="contactName"
-                      name="contactName"
-                      required
-                      value={formData.contactName}
-                      onChange={handleChange}
-                      placeholder="Your name"
-                    />
-                  </div>
-                </div>
-
-                <div className="form-row">
-                  <div className="form-field">
-                    <label htmlFor="email">Email *</label>
-                    <input
-                      type="email"
-                      id="email"
-                      name="email"
-                      required
-                      value={formData.email}
-                      onChange={handleChange}
-                      placeholder="you@company.com"
-                    />
-                  </div>
-                  <div className="form-field">
-                    <label htmlFor="phone">Phone</label>
-                    <input
-                      type="tel"
-                      id="phone"
-                      name="phone"
-                      value={formData.phone}
-                      onChange={handleChange}
-                      placeholder="(905) 555-0123"
-                    />
-                  </div>
-                </div>
-
-                <div className="form-field">
-                  <label htmlFor="sponsorshipType">Sponsorship type</label>
-                  <select
-                    id="sponsorshipType"
-                    name="sponsorshipType"
-                    value={formData.sponsorshipType}
+            <form onSubmit={handleSubmit} className="scd-sponsor-form">
+              <div className="scd-sponsor-row">
+                <div className="scd-sponsor-field">
+                  <label htmlFor="businessName">Business name *</label>
+                  <input
+                    type="text"
+                    id="businessName"
+                    name="businessName"
+                    required
+                    autoComplete="organization"
+                    value={formData.businessName}
                     onChange={handleChange}
-                  >
-                    <option value="primary">Primary Sponsor — $300/mo</option>
-                    <option value="category">Category Sponsor — $150/mo</option>
-                    <option value="notice">Notice Sponsor — $50/notice</option>
-                  </select>
-                </div>
-
-                <div className="form-field">
-                  <label htmlFor="message">Message (optional)</label>
-                  <textarea
-                    id="message"
-                    name="message"
-                    rows="3"
-                    value={formData.message}
-                    onChange={handleChange}
-                    placeholder="Tell us about your business, who you want to reach, or any questions..."
+                    placeholder="Your Company Inc."
                   />
                 </div>
+                <div className="scd-sponsor-field">
+                  <label htmlFor="contactName">Contact name *</label>
+                  <input
+                    type="text"
+                    id="contactName"
+                    name="contactName"
+                    required
+                    autoComplete="name"
+                    value={formData.contactName}
+                    onChange={handleChange}
+                    placeholder="Your name"
+                  />
+                </div>
+              </div>
 
-                <button
-                  type="submit"
-                  className={`button button-primary ${loading ? 'is-loading' : ''}`}
-                  disabled={loading}
+              <div className="scd-sponsor-row">
+                <div className="scd-sponsor-field">
+                  <label htmlFor="email">Email *</label>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    required
+                    autoComplete="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    placeholder="you@company.com"
+                  />
+                </div>
+                <div className="scd-sponsor-field">
+                  <label htmlFor="phone">Phone</label>
+                  <input
+                    type="tel"
+                    id="phone"
+                    name="phone"
+                    autoComplete="tel"
+                    value={formData.phone}
+                    onChange={handleChange}
+                    placeholder="(905) 555-0123"
+                  />
+                </div>
+              </div>
+
+              <div className="scd-sponsor-field">
+                <label htmlFor="sponsorshipType">Sponsorship type</label>
+                <select
+                  id="sponsorshipType"
+                  name="sponsorshipType"
+                  value={formData.sponsorshipType}
+                  onChange={handleChange}
                 >
-                  {loading ? 'Sending...' : 'Request Sponsorship Details'}
-                </button>
-                <p className="form-privacy">By submitting, you agree to be contacted about sponsorship. No spam. Unsubscribe anytime.</p>
-              </form>
-            </div>
+                  <option value="primary">Primary Sponsor — $300/mo</option>
+                  <option value="category">Category Sponsor — $150/mo</option>
+                  <option value="notice">Notice Sponsor — $50/notice</option>
+                </select>
+              </div>
+
+              <div className="scd-sponsor-field">
+                <label htmlFor="message">Message (optional)</label>
+                <textarea
+                  id="message"
+                  name="message"
+                  rows="3"
+                  value={formData.message}
+                  onChange={handleChange}
+                  placeholder="Tell us about your business, who you want to reach, or any questions..."
+                />
+              </div>
+
+              <button
+                type="submit"
+                className={`button button-primary${loading ? ' is-loading' : ''}`}
+                disabled={loading}
+              >
+                {loading ? 'Sending...' : 'Request Sponsorship Details'}
+              </button>
+              <p className="scd-sponsor-privacy">By submitting, you agree to be contacted about sponsorship. No spam. Unsubscribe anytime.</p>
+            </form>
           </div>
         </section>
 
-        <section className="sponsor-faq">
-          <div className="container">
-            <h2>Frequently Asked Questions</h2>
-            <div className="faq-grid">
-              <div className="faq-item">
-                <h3>What does the sponsorship include?</h3>
-                <p>One placement per weekly Planning Alert email, your logo/link on the Planning Tracker page (41 active notices, 4 municipalities), and editorial firewall guarantee — no influence over coverage.</p>
-              </div>
-              <div className="faq-item">
-                <h3>How many people receive the digest?</h3>
-                <p>Subscribers are residents directly affected by planning notices, city council decisions, and public safety updates across St. Catharines, Welland, and Thorold.</p>
-              </div>
-              <div className="faq-item">
-                <h3>Is there an editorial firewall?</h3>
-                <p>Yes. Sponsors have zero influence over what we cover, how we cover it, or what we say. Our coverage is sourced exclusively from official municipal domains.</p>
-              </div>
-              <div className="faq-item">
-                <h3>Can I cancel anytime?</h3>
-                <p>Yes. No long-term contract. Cancel with 30 days notice. Your sponsorship ends at the end of your current billing period.</p>
-              </div>
-            </div>
-          </div>
+        {/* ── FAQ ── */}
+        <section className="scd-sponsor-section" aria-labelledby="sponsor-faq">
+          <h2 id="sponsor-faq" className="scd-section-rule">Questions, answered</h2>
+          <ul className="scd-sponsor-faq">
+            <li>
+              <h3>What does the sponsorship include?</h3>
+              <p>One placement per weekly Planning Alert email, your logo and link on the Planning Tracker page (41 active notices, 4 municipalities), and the editorial firewall guarantee.</p>
+            </li>
+            <li>
+              <h3>Who receives the digest?</h3>
+              <p>Residents directly affected by planning notices, council decisions, and public safety updates across St. Catharines, Welland, and Thorold.</p>
+            </li>
+            <li>
+              <h3>Is there an editorial firewall?</h3>
+              <p>Yes. Sponsors have zero influence over what we cover, how we cover it, or what we say. Coverage comes only from official municipal domains.</p>
+            </li>
+            <li>
+              <h3>Can I cancel anytime?</h3>
+              <p>Yes. No long-term contract. Cancel with 30 days notice. Your sponsorship runs to the end of the current billing period.</p>
+            </li>
+          </ul>
         </section>
-      </main>
+      </div>
     </>
   )
 }
