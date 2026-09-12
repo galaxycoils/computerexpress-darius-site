@@ -16,6 +16,7 @@ import PoliceNewsPage from './pages/PoliceNewsPage'
 import PartnerPage from './pages/PartnerPage'
 import BlogPage from './pages/BlogPage'
 import BlogPostPage from './pages/BlogPostPage'
+import SponsorPage from './pages/SponsorPage'
 
 function BlogPostWrapper() {
   const { slug } = useParams()
@@ -35,6 +36,7 @@ export function AppRoutes() {
         <Route path="privacy" element={<PrivacyPage />} />
         <Route path="terms" element={<TermsPage />} />
         <Route path="partner" element={<PartnerPage />} />
+        <Route path="sponsor" element={<SponsorPage />} />
         <Route path="news" element={<NewsPage />} />
         <Route path="news/police" element={<PoliceNewsPage />} />
         <Route path="news/:citySlug" element={<CityNewsPage />} />

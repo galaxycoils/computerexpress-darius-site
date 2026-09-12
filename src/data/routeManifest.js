@@ -5,6 +5,7 @@ export const baseRoutes = [
   '/about',
   '/contact',
   '/success',
+  '/sponsor',
   '/blog',
   '/privacy',
   '/terms',

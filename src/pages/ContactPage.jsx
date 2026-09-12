@@ -54,7 +54,8 @@ export default function ContactPage() {
             <div className="contact-card">
               <h3>Planning Alert Sponsorship</h3>
               <p>Founding pilot at $300/mo. One placement per send, editorial firewall guaranteed.</p>
-              <Link to="/planning-tracker" className="btn">View Planning Tracker</Link>
+              <Link to="/sponsor" className="button button-primary">View Sponsorship Details</Link>
+              <span style={{ display: 'block', marginTop: '0.75rem', fontSize: '0.85rem', color: 'var(--muted)' }}>or <Link to="/planning-tracker">view Planning Tracker</Link></span>
             </div>
             <div className="contact-card">
               <h3>Press & Corrections</h3>
