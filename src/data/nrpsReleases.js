@@ -2,12 +2,24 @@
  * NRPS Police Media Releases for St. Catharines Digital
  * Sourced exclusively from https://www.niagarapolice.ca/news/posts/
  * Official Niagara Regional Police Service media releases & community notifications.
- * Updated: 2026-09-10
+ * Updated: 2026-09-12
  * Next review: Daily (cron) — refresh from niagarapolice.ca
- * Note: added Sep 9 Welland break-and-enter arrests.
+ * Note: added Sep 9 Welland break-and-enter arrests; Sep 11 NRPS officer impaired-operation investigation (1 District responded).
  */
 
 export const nrpsReleases = [
+  // SEP 11, 2026
+  {
+    id: 'nrps-2026-09-11-officer-impaired-operation',
+    date: '2026-09-11',
+    headline: 'NRPS Officer Charged in Impaired Operation Investigation',
+    municipality: 'St. Catharines, Thorold',
+    type: 'Media Release (Impaired Operation Investigation)',
+    url: 'https://www.niagarapolice.ca/news/posts/nrps-officer-charged-in-impaired-operation-investigation/',
+    source: 'Niagara Regional Police Service',
+    tags: ['Impaired Operation', 'St. Catharines', 'Thorold', '1 District', 'Investigation'],
+    category: 'impaired-driving',
+  },
   // SEP 9, 2026
   {
     id: 'nrps-2026-09-09-welland-bne-arrests',
