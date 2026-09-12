@@ -2,6 +2,16 @@
 
 export const CITIES = [
   {
+    slug: 'niagara-falls',
+    name: 'Niagara Falls',
+    planningKey: 'Niagara Falls',
+    planningKeys: ['Niagara Falls', 'Niagara Falls'],
+    officialUrl: 'https://www.niagarafalls.ca/',
+    officialSite: 'https://www.niagarafalls.ca/',
+    description:
+      'Official municipal notices, council decisions, and planning updates for Niagara Falls.',
+  },
+  {
     slug: 'st-catharines',
     name: 'St. Catharines',
     planningKey: 'St. Catharines',
@@ -41,6 +51,7 @@ export const OFFICIAL_SOURCES = [
   { label: 'City of St. Catharines', href: 'https://www.stcatharines.ca/' },
   { label: 'City of Welland', href: 'https://www.welland.ca/' },
   { label: 'City of Thorold', href: 'https://www.thorold.ca/' },
+  { label: 'City of Niagara Falls', href: 'https://www.niagarafalls.ca/' },
   { label: 'Niagara Region', href: 'https://www.niagararegion.ca/' },
 ]
 

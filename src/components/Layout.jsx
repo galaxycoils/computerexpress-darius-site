@@ -23,6 +23,7 @@ const CITY_LINKS = [
   { to: '/news/st-catharines', label: 'St. Catharines' },
   { to: '/news/welland', label: 'Welland' },
   { to: '/news/thorold', label: 'Thorold' },
+  { to: '/news/niagara-falls', label: 'Niagara Falls' },
 ]
 
 function formatDateline() {
@@ -194,6 +195,7 @@ export default function Layout() {
             <Link to="/news/st-catharines">St. Catharines</Link>
             <Link to="/news/welland">Welland</Link>
             <Link to="/news/thorold">Thorold</Link>
+            <Link to="/news/niagara-falls">Niagara Falls</Link>
             <Link to="/about">About</Link>
           </div>
           <div>
@@ -201,6 +203,7 @@ export default function Layout() {
             <Link to="/news/st-catharines">St. Catharines</Link>
             <Link to="/news/welland">Welland</Link>
             <Link to="/news/thorold">Thorold</Link>
+            <Link to="/news/niagara-falls">Niagara Falls</Link>
             <Link to="/sponsor">Sponsor the Planning Alert</Link>
           </div>
           <div>

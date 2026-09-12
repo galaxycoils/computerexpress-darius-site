@@ -18,6 +18,7 @@ export const baseRoutes = [
   '/news/st-catharines',
   '/news/welland',
   '/news/thorold',
+  '/news/niagara-falls',
 ]
 
 export const programmaticRoutes = []

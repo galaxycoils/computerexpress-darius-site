@@ -1,6 +1,7 @@
 import { useParams, Link } from 'react-router-dom'
 import Seo from '../components/Seo'
 import { cityBySlug } from '../data/cities'
+import { localNews, getNewsByMunicipality } from '../data/localNews'
 import { planningNotices } from '../data/planningNotices'
 import { nrpsReleases } from '../data/nrpsReleases'
 import NoticeCard from '../components/news/NoticeCard'
@@ -74,6 +75,15 @@ export default function CityNewsPage() {
     .sort((a, b) => new Date(b.date || 0) - new Date(a.date || 0))
 
   const latest = [
+    ...localNews
+      .filter((n) => belongsToCity(n, city))
+      .map((n) =>
+        toNoticeShape({
+          ...n,
+          category: n.category || 'News',
+          city: city.name,
+        })
+      ),
     ...planning.map((n) =>
       toNoticeShape({
         ...n,
@@ -124,6 +134,9 @@ export default function CityNewsPage() {
           </Link>
           <Link to="/news/thorold" className="scd-city-chip">
             Thorold
+          </Link>
+          <Link to="/news/niagara-falls" className="scd-city-chip">
+            Niagara Falls
           </Link>
           <Link to="/planning-tracker" className="scd-city-chip">
             Planning tracker
