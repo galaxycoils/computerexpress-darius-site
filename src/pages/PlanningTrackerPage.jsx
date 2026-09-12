@@ -1,5 +1,6 @@
 import { useState, useMemo } from 'react'
 import { Link } from 'react-router-dom'
+import Seo from '../components/Seo'
 import { planningNotices, noticeCategories, municipalities, getNoticeStats, getUpcomingMeetings, getActiveNotices } from '../data/planningNotices'
 import { siteConfig } from '../data/siteConfig'
 
@@ -150,6 +151,12 @@ export default function PlanningTrackerPage() {
   )
 
   return (
+    <>
+      <Seo
+        title="Planning Tracker | St. Catharines Digital"
+        description="Official planning notices, zoning changes, and public meetings for St. Catharines, Welland, Thorold, and Niagara Region. Sourced exclusively from municipal websites."
+        path="/planning-tracker"
+      />
     <div className="planning-tracker-page">
       <header className="page-header">
         <div className="container">
@@ -437,5 +444,6 @@ export default function PlanningTrackerPage() {
         </section>
       </div>
     </div>
+    </>
   )
 }

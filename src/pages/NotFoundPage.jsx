@@ -22,8 +22,8 @@ export default function NotFoundPage() {
             <Link to="/" className="button button-primary">
               Go to Homepage
             </Link>
-            <Link to="/services" className="button button-secondary">
-              View Services
+            <Link to="/planning-tracker" className="button button-secondary">
+              View Planning Tracker
             </Link>
           </div>
         </div>

@@ -13,7 +13,6 @@ import PolicePage from './pages/PolicePage'
 import NewsPage from './pages/NewsPage'
 import CityNewsPage from './pages/CityNewsPage'
 import PoliceNewsPage from './pages/PoliceNewsPage'
-import PartnerPage from './pages/PartnerPage'
 import BlogPage from './pages/BlogPage'
 import BlogPostPage from './pages/BlogPostPage'
 import SponsorPage from './pages/SponsorPage'
@@ -35,7 +34,6 @@ export function AppRoutes() {
         <Route path="contact" element={<ContactPage />} />
         <Route path="privacy" element={<PrivacyPage />} />
         <Route path="terms" element={<TermsPage />} />
-        <Route path="partner" element={<PartnerPage />} />
         <Route path="sponsor" element={<SponsorPage />} />
         <Route path="news" element={<NewsPage />} />
         <Route path="news/police" element={<PoliceNewsPage />} />
