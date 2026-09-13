@@ -10,14 +10,96 @@ const CITY_VOTERS = 'https://www.welland.ca/city-hall/municipal-elections/inform
 const CITY_WARDS = 'https://www.welland.ca/city-hall/municipal-elections/ward-boundary-changes/'
 
 const MAYORAL_CANDIDATES = [
-  { name: 'Natashia Bergen', site: 'https://natashiabergen.com', label: 'natashiabergen.com' },
-  { name: 'Pat Chiocchio', site: 'https://www.patformayor.ca', label: 'patformayor.ca' },
-  { name: 'David Clow', site: null, label: null },
-  { name: 'Gary Graziani', site: 'https://garygraziani.ca', label: 'garygraziani.ca' },
-  { name: 'April Jeffs', site: 'https://www.apriljeffs.ca', label: 'apriljeffs.ca' },
-  { name: 'David McLeod', site: null, label: null },
-  { name: 'Brandon Simon', site: 'https://mayorsimon.ca', label: 'mayorsimon.ca' },
-  { name: 'Graham Speck', site: 'https://grahamspeck.ca', label: 'grahamspeck.ca' },
+  {
+    name: 'Natashia Bergen',
+    office: 'Newcomer — no municipal office held',
+    site: 'https://www.natashiabergen.com/platform',
+    label: 'natashiabergen.com',
+    points: [
+      'Food security: community food programs, urban agriculture, fewer barriers for small vendors',
+      'Housing First approach to affordable and supportive housing',
+      'Keep the Welland hospital open; mobile clinics and community health hubs',
+      'Mental-health, addiction, anti-trafficking, and accessibility initiatives',
+    ],
+  },
+  {
+    name: 'Pat Chiocchio',
+    office: 'Regional councillor; 14+ years on council including vice-mayor; police board chair roles',
+    site: 'https://patformayor.ca/#/issues',
+    label: 'patformayor.ca',
+    points: [
+      'Accountable government: public KPIs and spending tied to outcomes',
+      'Lower, predictable taxes via efficiency audit and zero-based budgeting',
+      'Public safety: police collaboration, expanded CORE crisis response, visible patrols',
+      'Housing aligned with infrastructure plus mental-health and addiction supports',
+      'Save Welland Hospital campaign; treatment and HART Hub expansion',
+    ],
+  },
+  {
+    name: 'David Clow',
+    office: 'No municipal office held — ran for mayor in 2018; community arts activist',
+    site: null,
+    label: null,
+    points: [],
+  },
+  {
+    name: 'Gary Graziani',
+    office: 'Newcomer — building inspector; no elected office held',
+    site: 'https://www.garygraziani.ca/policies',
+    label: 'garygraziani.ca',
+    points: [
+      'Affordability: best value from existing spending before new taxes',
+      'Accountability and plain-language explanations for overruns',
+      'Transparency in why decisions are made',
+      'Infrastructure first: roads, sidewalks, parks, sewers, beautification',
+      'Hospital advocacy; evidence-led shelter decisions with regional partnership',
+    ],
+  },
+  {
+    name: 'April Jeffs',
+    office: 'Ex-mayor of Wainfleet (2010–2018); not on Welland council',
+    site: 'https://apriljeffs.ca/',
+    label: 'apriljeffs.ca',
+    points: [
+      'Property tax relief and a record of low increases cited from Wainfleet tenure',
+      'Rein in city spending and budgets described as out of control',
+      'Alleviate homelessness blocking downtown potential',
+      'A council described as ineffective brought back on track',
+    ],
+  },
+  {
+    name: 'David McLeod',
+    office: 'Ward 2 councillor since 2014; budget chair; former vice-mayor',
+    site: null,
+    label: null,
+    points: [],
+  },
+  {
+    name: 'Brandon Simon',
+    office: 'Newcomer — never held political office',
+    site: 'https://mayorsimon.ca/plan',
+    label: 'mayorsimon.ca',
+    points: [
+      'Tax increases kept below inflation; four-year freeze of the mayor salary',
+      'Affordable-housing tax incentives tied to below-market rents; anti-renoviction work',
+      '24-hour Work-to-Live housing, employment, and supports program',
+      'MyWelland citizen app with verified voting and issue reporting',
+      'Livestreamed town halls; biennial rental inspections; downtown conversion incentives',
+    ],
+  },
+  {
+    name: 'Graham Speck',
+    office: 'Ward 5 councillor since 2018',
+    site: 'https://grahamspeck.ca/a-vision-for-welland/',
+    label: 'grahamspeck.ca',
+    points: [
+      'Cut wasteful spending; amendments against tax increases deemed unnecessary',
+      'Challenge regional tax growth and question service value',
+      'Shelter policy that works for residents, neighbours, and businesses',
+      'Protect farmland; build where services exist',
+      'Fight for Welland hospital services; 1.1 parking spaces per new unit',
+    ],
+  },
 ]
 
 const KEY_DATES = [
@@ -98,6 +180,14 @@ const faqJsonLd = {
     },
     {
       '@type': 'Question',
+      name: 'Is there a Welland mayoral debate?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'The South Niagara Chambers of Commerce hosts a Municipal Debate in Welland on Tuesday, October 6, 2026, 6:30–8:30 p.m. at Royal Canadian Legion Rose City Branch 4. No organizer has published a confirmed participant list.'
+      }
+    },
+    {
+      '@type': 'Question',
       name: 'How does voting work in Welland?',
       acceptedAnswer: {
         '@type': 'Answer',
@@ -145,17 +235,51 @@ export default function WellandVotesPage() {
               <article key={c.name} className="card meeting-card scd-votes-card">
                 <p className="scd-cat">Certified · Mayor</p>
                 <h3>{c.name}</h3>
+                <p className="scd-votes-office">{c.office}</p>
+                {c.points.length > 0 ? (
+                  <ul className="scd-votes-points">
+                    {c.points.map((p) => (
+                      <li key={p}>{p}</li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p className="scd-votes-nosite">No platform published — <a href={CITY_CANDIDATES} target="_blank" rel="noopener noreferrer">registry contact list</a>.</p>
+                )}
                 {c.site ? (
                   <a className="scd-votes-link" href={c.site} target="_blank" rel="noopener noreferrer">
                     {c.label} ↗
                   </a>
                 ) : (
-                  <p className="scd-votes-nosite">No campaign site on the city registry — <a href={CITY_CANDIDATES} target="_blank" rel="noopener noreferrer">full contact list</a>.</p>
+                  <p className="scd-votes-nosite">No campaign site on the city registry.</p>
                 )}
               </article>
             ))}
           </div>
-          <p className="scd-votes-firewall">Candidate websites are the candidates' own words. Our list mirrors the city's registry and endorses no one.</p>
+          <p className="scd-votes-firewall">Platforms above are the candidates' own words, condensed from their campaign sites and linked for verification. Office histories come from city, regional, and police-board records plus on-record reporting. This list mirrors the registry and endorses no one.</p>
+        </section>
+
+        <section className="scd-votes-section" aria-labelledby="debates">
+          <h2 id="debates" className="scd-section-rule">Debates</h2>
+          <p className="scd-votes-standfirst">One confirmed all-candidates event so far. No organizer has published a confirmed participant list — appearances below will update once organizers confirm them.</p>
+          <div className="scd-votes-howto">
+            <div className="card">
+              <h3>Municipal Debate — Welland</h3>
+              <ul>
+                <li>Tuesday, October 6, 2026, 6:30–8:30 p.m.</li>
+                <li>Royal Canadian Legion Rose City Branch 4, 383 Morningstar Ave</li>
+                <li>Organizer: South Niagara Chambers of Commerce — open attendance, no sign-up</li>
+                <li><a href="https://southniagaracc.com/event/municipal-debate-welland/" target="_blank" rel="noopener noreferrer">Event details</a></li>
+              </ul>
+            </div>
+            <div className="card">
+              <h3>How we list appearances</h3>
+              <ul>
+                <li>Only organizer-confirmed events appear here</li>
+                <li>Self-organized social-media sessions are not listed as debates</li>
+                <li>Equal rule for all eight candidates, no exceptions</li>
+              </ul>
+            </div>
+          </div>
         </section>
 
         <section className="scd-votes-section" aria-labelledby="key-dates">
@@ -236,6 +360,10 @@ export default function WellandVotesPage() {
             <li>
               <h3>Is it true there are new ward boundaries?</h3>
               <p>Yes. Welland redrew its ward boundaries ahead of this election. Read the <a href={CITY_WARDS} target="_blank" rel="noopener noreferrer">city's ward boundary page</a> to find your ward.</p>
+            </li>
+            <li>
+              <h3>Is there a debate?</h3>
+              <p>Yes — the Chambers of Commerce debate is October 6 at the Rose City Legion. Organizers have not confirmed which candidates attend; this page updates when they do.</p>
             </li>
             <li>
               <h3>Where does this information come from?</h3>

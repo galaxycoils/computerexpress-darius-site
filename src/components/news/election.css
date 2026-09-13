@@ -98,6 +98,44 @@
   margin-bottom: 8px;
 }
 
+.scd-votes-office {
+  font-family: var(--font-ui);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--signal);
+  margin: 0 0 10px;
+}
+
+.scd-votes-points {
+  list-style: none;
+  margin: 0 0 6px;
+  padding: 0;
+}
+
+.scd-votes-points li {
+  font-family: var(--font-body);
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--text);
+  padding: 6px 0 6px 18px;
+  border-bottom: 1px dotted var(--line);
+  position: relative;
+}
+
+.scd-votes-points li:last-child {
+  border-bottom: none;
+}
+
+.scd-votes-points li::before {
+  content: "—";
+  position: absolute;
+  left: 0;
+  top: 6px;
+  color: var(--signal);
+  font-family: var(--font-ui);
+  font-weight: 700;
+}
+
 .scd-votes-link {
   display: inline-block;
   font-family: var(--font-ui);
