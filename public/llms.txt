@@ -1,34 +1,42 @@
 # St. Catharines Digital
 
-Premium Web Design, Technical SEO, and Google Business Profile Optimization for service businesses in St. Catharines, Niagara, and across Ontario.
+St. Catharines Digital is an independent local-news service for Niagara Region. It tracks public information from official primary sources and links readers to the original municipal or Niagara Regional Police Service material.
 
-## Core Offerings
+## Editorial scope
 
-- **Website Design for Service Businesses**: Premium, mobile-first, and conversion-optimized custom websites tailored to local service companies (plumbers, HVAC, electricians, etc.).
-- **Technical SEO Services**: Optimization of site speed, schema markup (JSON-LD), crawlability, and Core Web Vitals to support stronger search visibility.
-- **Google Business Profile (GBP) Optimization**: Map pack setup, keyword-optimized descriptions, reviews strategy, local citations, and maps positioning.
+- Municipal planning notices, public meetings, zoning matters, road closures, and infrastructure notices.
+- Council agendas, minutes, bylaws, staff reports, and decisions from St. Catharines, Welland, and Thorold.
+- Niagara Regional Police Service media releases and public-safety notices.
+- Coverage is sourced from official municipal and NRPS domains. The site does not present social-media claims or unofficial public-safety lists as reporting.
 
-## Key Information
+## Coverage area
 
-- **Service Areas**: St. Catharines, Niagara Region, and all of Ontario.
-- **Target Keywords**: web design st catharines, seo st catharines, local seo ontario, web design for contractors.
-- **Approach**: AI-first research and copywriting combined with human engineering for premium quality, speed, and cost efficiency.
+- St. Catharines
+- Welland
+- Thorold
+- Niagara Falls
+- Niagara Region
 
-## Navigation & Site Structure
+## Primary routes
 
-- Homepage: [/](https://stcatharinesdigital.ca/)
-- Services Directory: [/services](https://stcatharinesdigital.ca/services)
-  - Website Design: [/services/website-design](https://stcatharinesdigital.ca/services/website-design)
-  - Technical SEO: [/services/technical-seo](https://stcatharinesdigital.ca/services/technical-seo)
-  - Google Business Profile: [/services/gbp-optimization](https://stcatharinesdigital.ca/services/gbp-optimization)
-  - Plumbers Web Design Landing Page: [/services/web-design-for-plumbers](https://stcatharinesdigital.ca/services/web-design-for-plumbers)
-  - HVAC Web Design Landing Page: [/services/web-design-for-hvac](https://stcatharinesdigital.ca/services/web-design-for-hvac)
-  - Electricians Web Design Landing Page: [/services/web-design-for-electricians](https://stcatharinesdigital.ca/services/web-design-for-electricians)
-  - Local SEO Landing Page: [/services/local-seo-for-service-businesses](https://stcatharinesdigital.ca/services/local-seo-for-service-businesses)
-- About Us: [/about](https://stcatharinesdigital.ca/about)
-- Contact & Free SEO Audit: [/contact](https://stcatharinesdigital.ca/contact)
-- What To Expect Process: [/what-to-expect](https://stcatharinesdigital.ca/what-to-expect)
-- Insights Blog: [/blog](https://stcatharinesdigital.ca/blog)
-  - Local SEO Checklist: [/blog/local-seo-checklist-2026](https://stcatharinesdigital.ca/blog/local-seo-checklist-2026)
-  - Web Lead Generation: [/blog/how-to-get-more-leads-from-website](https://stcatharinesdigital.ca/blog/how-to-get-more-leads-from-website)
-  - Technical SEO Explained: [/blog/technical-seo-explained](https://stcatharinesdigital.ca/blog/technical-seo-explained)
+- Homepage: [/](/)
+- Local-news hub: [/news/](/news/)
+- St. Catharines desk: [/news/st-catharines/](/news/st-catharines/)
+- Welland desk: [/news/welland/](/news/welland/)
+- Thorold desk: [/news/thorold/](/news/thorold/)
+- Niagara Falls desk: [/news/niagara-falls/](/news/niagara-falls/)
+- Police releases: [/news/police/](/news/police/)
+- Council coverage: [/council/](/council/)
+- Planning tracker: [/planning-tracker/](/planning-tracker/)
+- Sponsorship: [/sponsor/](/sponsor/)
+- Editorial and advertising contact: [/contact/](/contact/)
+- Editorial standards and ownership: [/about/](/about/)
+
+## Source policy
+
+Each notice or release should link to its original official source. Current source health is shown on the Council page; a failed source is not represented as current reporting.
+
+## Contact
+
+Email: hello@stcatharinesdigital.ca
+Website: https://stcatharinesdigital.ca/

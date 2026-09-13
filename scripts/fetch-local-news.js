@@ -7,7 +7,7 @@
 
 import fs from 'fs';
 import path from 'path';
-import { DOMParser } from 'xmldom';
+import { DOMParser } from '@xmldom/xmldom';
 import { localNewsSources } from '../src/data/localNews.js';
 
 const SCRIPT_DIR = path.dirname(new URL(import.meta.url).pathname);

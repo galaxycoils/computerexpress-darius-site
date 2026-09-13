@@ -86,7 +86,7 @@ async function sendWithAgentMail(apiKey, { name, email, textBody }) {
       reply_to: email,
       subject: `Contact: ${name}`,
       text: textBody,
-      labels: ['audit-request', 'website-form'],
+      labels: ['editorial-contact', 'website-form'],
     }),
   });
 
@@ -107,10 +107,10 @@ async function sendWithFormSubmit(recipientEmail, { name, email, message, textBo
       name,
       email,
       message,
-      _subject: `Website audit request: ${name}`,
+      _subject: `Website contact: ${name}`,
       _template: 'table',
       _captcha: 'false',
-      _autoresponse: 'Thanks for requesting your St. Catharines Digital audit walkthrough. We received your details and will follow up within 1 business day.',
+      _autoresponse: 'Thanks for contacting St. Catharines Digital. We received your message and will follow up within one business day.',
       diagnostics: textBody,
     }),
   });

@@ -1,19 +1,21 @@
 // Cloudflare Pages Function: AI Chat for St. Catharines Digital
 // POST /api/chat — Powered by Cloudflare Workers AI (Llama 3.1 8B)
 
-const SYSTEM_PROMPT = `You are the AI assistant for St. Catharines Digital, a web design and local SEO agency in St. Catharines, Ontario.
+const SYSTEM_PROMPT = `You are the AI assistant for St. Catharines Digital, an independent Niagara Region local-news service.
 
-Services:
-- High-Performance Websites (from $1,500)
-- Technical SEO (site speed, schema, Core Web Vitals)
-- Google Business Profile optimization
-- Local SEO (service area pages, local link building)
+Scope:
+- Official municipal planning notices, public meetings, council documents, road closures, and infrastructure notices.
+- Official Niagara Regional Police Service media releases and public-safety notices.
+- Coverage areas: St. Catharines, Welland, Thorold, Niagara Falls, and Niagara Region.
 
-Pricing: Launch $1,500 | Growth $3,500 | Local Authority $5,500
-Phone: (365) 359-5973
-Calendly: https://calendly.com/tahamtandariush/30min
+Rules:
+- Describe the site as a guide to official sources, not as a government authority or emergency service.
+- Do not invent facts, dates, public-safety advice, or source material.
+- When a visitor needs urgent help, direct them to 911 for emergencies or to the relevant official municipal/NRPS source.
+- Keep responses concise and point people to the relevant site section: /planning-tracker, /council, /news/police, or /news.
+- For editorial corrections, sponsorship, or advertising inquiries, direct visitors to /contact.
 
-Be helpful, professional, concise. Guide visitors toward booking a free audit. Keep responses under 150 words.`;
+Keep responses under 150 words.`;
 
 const CORS_HEADERS = {
   'Access-Control-Allow-Origin': '*',
@@ -38,10 +40,25 @@ export async function onRequestPost(context) {
       );
     }
 
-    // Limit conversation history to last 10 messages to keep context window manageable
-    const trimmedMessages = messages.slice(-10);
+    // Accept only bounded user/assistant text turns. This protects the Worker
+    // from oversized requests and prevents callers from injecting a second
+    // system prompt into the model context.
+    const trimmedMessages = messages.slice(-10)
+    const validMessages = trimmedMessages.every((message) => (
+      message
+      && (message.role === 'user' || message.role === 'assistant')
+      && typeof message.content === 'string'
+      && message.content.length > 0
+      && message.content.length <= 4_000
+    ))
+    if (!validMessages) {
+      return new Response(
+        JSON.stringify({ error: 'Messages must be user or assistant text under 4,000 characters' }),
+        { status: 400, headers: { 'Content-Type': 'application/json', ...CORS_HEADERS } }
+      );
+    }
 
-    const stream = await env.AI.run('@cf/meta/llama-3.1-8b-instruct', {
+    const stream = await env.AI.run('@cf/meta/llama-3.1-8b-instruct-fast', {
       messages: [
         { role: 'system', content: SYSTEM_PROMPT },
         ...trimmedMessages,
