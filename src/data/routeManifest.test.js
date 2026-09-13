@@ -3,16 +3,7 @@ import { prerenderRoutes, sitemapRoutes } from './routeManifest'
 
 const GUIDE = '/guides/st-catharines-ontario-street-corridor-plan'
 
-const BLOG_SLUGS = [
-  'local-seo-checklist-2026',
-  'how-to-get-more-leads-from-website',
-  'technical-seo-explained',
-  'google-business-profile-tips-local-seo',
-  'how-to-rank-1-on-google-maps',
-  'website-speed-optimization-tips',
-  'how-much-does-local-seo-cost',
-  'service-business-website-examples',
-]
+const BLOG_SLUGS = []
 
 describe('route manifest guides', () => {
   it('includes guide routes in prerendering and the sitemap', () => {

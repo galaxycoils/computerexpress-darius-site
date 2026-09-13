@@ -15,18 +15,11 @@ import PolicePage from './pages/PolicePage'
 import NewsPage from './pages/NewsPage'
 import CityNewsPage from './pages/CityNewsPage'
 import PoliceNewsPage from './pages/PoliceNewsPage'
-import BlogPage from './pages/BlogPage'
-import BlogPostPage from './pages/BlogPostPage'
 import SponsorPage from './pages/SponsorPage'
 import WellandVotesPage from './pages/WellandVotesPage'
 import PlanningAlertsPage from './pages/PlanningAlertsPage'
 import MembershipPage from './pages/MembershipPage'
 import GuidePage from './pages/GuidePage'
-
-function BlogPostWrapper() {
-  const { slug } = useParams()
-  return <BlogPostPage slug={slug} />
-}
 
 function GuidePageWrapper() {
   const { slug } = useParams()
@@ -52,8 +45,6 @@ export function AppRoutes() {
           <Route path="news" element={<NewsPage />} />
           <Route path="news/police" element={<PoliceNewsPage />} />
           <Route path="news/:citySlug" element={<CityNewsPage />} />
-          <Route path="blog" element={<BlogPage />} />
-          <Route path="blog/:slug" element={<BlogPostWrapper />} />
           <Route path="guides/:slug" element={<GuidePageWrapper />} />
           <Route path="*" element={<NotFoundPage />} />
         </Route>

@@ -1,1 +1,4 @@
 /partner /sponsor 301
+/what-we-offer /sponsor 301
+/blog /news 301
+/blog/* /news 301

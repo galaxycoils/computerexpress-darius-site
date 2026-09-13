@@ -12,7 +12,6 @@ export const baseRoutes = [
   '/contact',
   '/sponsor',
   '/welland-votes',
-  '/blog',
   '/privacy',
   '/terms',
   '/planning-tracker',
@@ -29,16 +28,7 @@ export const baseRoutes = [
   ...guideRoutes,
 ]
 
-export const programmaticRoutes = [
-  '/blog/local-seo-checklist-2026',
-  '/blog/how-to-get-more-leads-from-website',
-  '/blog/technical-seo-explained',
-  '/blog/google-business-profile-tips-local-seo',
-  '/blog/how-to-rank-1-on-google-maps',
-  '/blog/website-speed-optimization-tips',
-  '/blog/how-much-does-local-seo-cost',
-  '/blog/service-business-website-examples',
-]
+export const programmaticRoutes = []
 
 export const sitemapRoutes = baseRoutes.filter((r) => r !== '/404').concat(programmaticRoutes)
 export const prerenderRoutes = [...baseRoutes, ...programmaticRoutes, '/404']
