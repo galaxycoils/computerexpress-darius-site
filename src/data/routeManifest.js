@@ -11,6 +11,7 @@ export const baseRoutes = [
   '/about',
   '/contact',
   '/sponsor',
+  '/welland-votes',
   '/blog',
   '/privacy',
   '/terms',

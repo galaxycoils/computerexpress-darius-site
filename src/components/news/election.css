@@ -1,0 +1,352 @@
+/* Welland Votes 2026 — additive editorial layer. Tokens + fonts only. */
+
+.scd-votes-intro {
+  align-items: start;
+}
+
+.scd-votes-facts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 18px;
+  list-style: none;
+  padding: 0;
+}
+
+.scd-votes-rail {
+  max-width: 340px;
+}
+
+.scd-votes-rail p {
+  font-family: var(--font-ui);
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--muted);
+  margin: 0 0 12px;
+}
+
+.scd-votes-railprice {
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--text-bright);
+  line-height: 1.1;
+  margin: 0 0 4px;
+}
+
+.scd-votes-railprice span {
+  font-family: var(--font-ui);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--muted);
+}
+
+.scd-votes-section {
+  margin: 0 0 48px;
+}
+
+.scd-votes-section > .scd-section-rule {
+  margin-bottom: 20px;
+}
+
+.scd-votes-standfirst {
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--muted);
+  max-width: 68ch;
+  margin: 0 0 20px;
+}
+
+/* Candidate cards reuse card/meeting-card; grid is page-scoped */
+.scd-votes-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media (min-width: 640px) {
+  .scd-votes-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1024px) {
+  .scd-votes-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.scd-votes-card {
+  display: flex;
+  flex-direction: column;
+  border-radius: 3px;
+  padding: 22px 20px;
+  border-top: 3px solid var(--line-strong);
+}
+
+.scd-votes-card h3 {
+  font-size: 21px;
+  margin: 0 0 4px;
+}
+
+.scd-votes-card .scd-cat {
+  margin-bottom: 8px;
+}
+
+.scd-votes-link {
+  display: inline-block;
+  font-family: var(--font-ui);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--signal);
+  padding: 8px 0;
+  margin-top: auto;
+  overflow-wrap: anywhere;
+}
+
+.scd-votes-link:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.scd-votes-nosite {
+  font-family: var(--font-ui);
+  font-size: 13px;
+  color: var(--muted-lite);
+  margin: auto 0 0;
+  padding: 8px 0;
+}
+
+/* Key-dates ruled timeline */
+.scd-votes-dates {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--line);
+}
+
+.scd-votes-dates li {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+@media (min-width: 640px) {
+  .scd-votes-dates li {
+    grid-template-columns: 220px 1fr;
+    gap: 20px;
+    align-items: baseline;
+  }
+}
+
+.scd-votes-date {
+  font-family: var(--font-ui);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--signal);
+}
+
+.scd-votes-dates p {
+  font-size: 15.5px;
+  margin: 0;
+}
+
+/* How-to-vote two-column */
+.scd-votes-howto {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+@media (min-width: 900px) {
+  .scd-votes-howto {
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+}
+
+.scd-votes-howto .card {
+  border-radius: 3px;
+  padding: 22px 20px;
+}
+
+.scd-votes-howto h3 {
+  font-size: 19px;
+  margin: 0 0 10px;
+}
+
+.scd-votes-howto ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.scd-votes-howto li {
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--text);
+  padding: 8px 0 8px 22px;
+  border-bottom: 1px solid var(--line);
+  position: relative;
+}
+
+.scd-votes-howto li:last-child {
+  border-bottom: none;
+}
+
+.scd-votes-howto li::before {
+  content: "—";
+  position: absolute;
+  left: 0;
+  top: 8px;
+  color: var(--signal);
+  font-family: var(--font-ui);
+  font-weight: 700;
+}
+
+.scd-votes-howto a {
+  color: var(--signal);
+  font-weight: 600;
+}
+
+/* Down-ballot strip */
+.scd-votes-downballot {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0;
+  border-top: 1px solid var(--line);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media (min-width: 640px) {
+  .scd-votes-downballot {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0 32px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .scd-votes-downballot {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.scd-votes-downballot li {
+  padding: 14px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.scd-votes-downballot h3 {
+  font-size: 17px;
+  margin: 0 0 4px;
+}
+
+.scd-votes-downballot p {
+  font-family: var(--font-ui);
+  font-size: 13.5px;
+  margin: 0;
+}
+
+/* Related coverage list */
+.scd-votes-related {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--line);
+}
+
+.scd-votes-related li {
+  padding: 16px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.scd-votes-related h3 {
+  font-size: 18px;
+  margin: 0 0 4px;
+}
+
+.scd-votes-related h3 a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.scd-votes-related h3 a:hover {
+  color: var(--signal);
+}
+
+.scd-votes-related p {
+  font-size: 14.5px;
+  margin: 0;
+}
+
+/* FAQ + sources */
+.scd-votes-faq {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--line);
+}
+
+.scd-votes-faq li {
+  padding: 20px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.scd-votes-faq h3 {
+  font-size: 18px;
+  margin: 0 0 8px;
+}
+
+.scd-votes-faq p {
+  font-size: 15.5px;
+  margin: 0;
+}
+
+.scd-votes-sources {
+  font-family: var(--font-ui);
+  font-size: 13.5px;
+  line-height: 1.7;
+  color: var(--muted);
+  margin: 0;
+  padding: 16px 18px;
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  background: var(--bg-soft);
+}
+
+.scd-votes-sources a {
+  color: var(--signal);
+  font-weight: 600;
+}
+
+.scd-votes-firewall {
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-style: italic;
+  color: var(--muted);
+  margin: 20px 0 0;
+  padding-left: 14px;
+  border-left: 2px solid var(--signal);
+  max-width: 72ch;
+}
+
+@media (max-width: 599px) {
+  .scd-votes-rail {
+    max-width: none;
+  }
+  .scd-votes-section {
+    margin-bottom: 36px;
+  }
+}

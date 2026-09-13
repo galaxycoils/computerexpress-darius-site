@@ -63,6 +63,13 @@ export default function NewsPage() {
                 Read council coverage →
               </Link>
             </article>
+            <article className="card">
+              <h3>Welland Votes 2026</h3>
+              <p>Mayoral race, key dates, and how to vote on Oct 26.</p>
+              <Link to="/welland-votes" className="scd-hub-more">
+                Open the voter guide →
+              </Link>
+            </article>
           </div>
         </section>
 
