@@ -18,6 +18,7 @@ import BlogPostPage from './pages/BlogPostPage'
 import SponsorPage from './pages/SponsorPage'
 import WellandVotesPage from './pages/WellandVotesPage'
 import PlanningAlertsPage from './pages/PlanningAlertsPage'
+import MembershipPage from './pages/MembershipPage'
 
 import GuidePage from './pages/GuidePage'
 
@@ -46,6 +47,7 @@ export function AppRoutes() {
         <Route path="sponsor" element={<SponsorPage />} />
         <Route path="welland-votes" element={<WellandVotesPage />} />
         <Route path="planning-alerts" element={<PlanningAlertsPage />} />
+        <Route path="membership" element={<MembershipPage />} />
         <Route path="news" element={<NewsPage />} />
         <Route path="news/police" element={<PoliceNewsPage />} />
         <Route path="news/:citySlug" element={<CityNewsPage />} />

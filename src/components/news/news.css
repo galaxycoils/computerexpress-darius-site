@@ -501,6 +501,18 @@
 .scd-rail-list a { display: inline-block; padding: 5px 0; }
 .scd-source-direct { display: inline-block; font-size: .875rem; color: var(--signal); padding: 12px 0; }
 .scd-notice-meta, .scd-notice-chip, .scd-notice-city, .scd-story-city { font-size: .75rem; }
+
+/* Membership tiers */
+.scd-membership-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px; margin: 32px 0; }
+.scd-membership-tier { background: var(--bg-soft); border: 1px solid var(--line); border-radius: 6px; padding: 24px; }
+.scd-membership-tier h2 { font-family: var(--font-display); font-size: 1.3rem; color: var(--text-bright); margin: 0 0 8px; }
+.scd-tier-price { font-family: var(--font-ui); font-size: 1.5rem; font-weight: 700; color: var(--signal); margin: 0 0 16px; }
+.scd-membership-tier ul { list-style: none; padding: 0; margin: 0 0 24px; }
+.scd-membership-tier li { font-family: var(--font-ui); font-size: .875rem; color: var(--muted); padding: 6px 0; border-bottom: 1px solid var(--line); }
+.scd-membership-tier li:last-child { border-bottom: none; }
+.scd-tier-featured { background: var(--bg-soft); border: 1.5px solid var(--signal); position: relative; }
+.scd-tier-featured::before { content: 'Best Value'; position: absolute; top: -10px; left: 20px; background: var(--signal); color: #fff; font-size: .7rem; font-weight: 700; padding: 2px 8px; border-radius: 3px; letter-spacing: .05em; text-transform: uppercase; }
+.scd-membership-note { font-family: var(--font-ui); font-size: .8rem; color: var(--muted-lite); text-align: center; margin-top: 24px; }
 .scd-notice-summary, .scd-story-dek { font-size: 1rem; }
 .scd-notice-source { display: inline-block; font-size: .875rem; padding: 8px 0; }
 @media (max-width: 959px) {
