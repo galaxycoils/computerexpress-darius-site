@@ -297,6 +297,12 @@ export default function HomePage() {
         )}
 
         <div className="scd-cta-row">
+          <Link to="/planning-alerts" className="scd-cta-primary">
+            Get Planning Alerts
+          </Link>
+          <Link to="/sponsor" className="scd-outline-btn">
+            Sponsor Us
+          </Link>
           <Link to="/planning-tracker" className="scd-outline-btn">
             Planning Tracker
           </Link>
