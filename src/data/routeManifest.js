@@ -1,5 +1,11 @@
 import { BASE_URL, serviceAreaCities } from './siteConfig.js'
 
+export const guideRoutes = [
+  '/guides/st-catharines-ontario-street-corridor-plan',
+  '/guides/welland-first-street-consent-variance',
+  '/guides/thorold-pamela-drive-watermain',
+]
+
 export const baseRoutes = [
   '/',
   '/about',
@@ -17,6 +23,7 @@ export const baseRoutes = [
   '/news/welland',
   '/news/thorold',
   '/news/niagara-falls',
+  ...guideRoutes,
 ]
 
 export const programmaticRoutes = []

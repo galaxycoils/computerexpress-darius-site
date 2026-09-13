@@ -17,9 +17,16 @@ import BlogPage from './pages/BlogPage'
 import BlogPostPage from './pages/BlogPostPage'
 import SponsorPage from './pages/SponsorPage'
 
+import GuidePage from './pages/GuidePage'
+
 function BlogPostWrapper() {
   const { slug } = useParams()
   return <BlogPostPage slug={slug} />
+}
+
+function GuidePageWrapper() {
+  const { slug } = useParams()
+  return <GuidePage slug={slug} />
 }
 
 export function AppRoutes() {
@@ -40,6 +47,7 @@ export function AppRoutes() {
         <Route path="news/:citySlug" element={<CityNewsPage />} />
         <Route path="blog" element={<BlogPage />} />
         <Route path="blog/:slug" element={<BlogPostWrapper />} />
+        <Route path="guides/:slug" element={<GuidePageWrapper />} />
         <Route path="*" element={<NotFoundPage />} />
       </Route>
     </Routes>
