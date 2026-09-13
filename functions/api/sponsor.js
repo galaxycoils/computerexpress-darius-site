@@ -165,7 +165,7 @@ Your selected package: ${typeLabel}
 To get started:
 1. Reply to this email with your logo file (PNG/SVG, 300x100px ideal)
 2. Tell us your tagline and website URL
-3. We'll send you a Stripe payment link
+3. We'll send you a manual invoice and next steps
 4. Sponsorship goes live within 24 hours of payment
 
 Questions? Reply to this email or call (365) 359-5973.
@@ -205,7 +205,7 @@ https://stcatharinesdigital.ca`
   <ol>
     <li>Reply with your logo (PNG/SVG, 300x100px ideal)</li>
     <li>Send your tagline and website URL</li>
-    <li>We'll send a Stripe payment link</li>
+    <li>We'll send you a manual invoice and next steps</li>
     <li>Sponsorship goes live within 24 hours</li>
   </ol>
 

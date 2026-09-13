@@ -95,9 +95,9 @@ These are **founding pilot prices**, not a published rate card. Industry newslet
 
 | Tier | Monthly | Placement | Deliverables |
 |------|---------|-----------|--------------|
-| **Digest Only** | **$300/mo** | Email header (above "Upcoming Meetings") | 1 logo + 1 line copy + UTM link per send; monthly performance email |
-| **Website Only** | **$250/mo** | Planning Tracker sidebar card | Branded card + link; visible on all filter views |
-| **Full Suite** | **$500/mo** | Email header + website sidebar + "Presented by" callout | Both above + "Presented by [Sponsor]" in Upcoming Meetings section; monthly metrics |
+| **Primary** | **$300/mo** | One placement in every weekly Planning Alert email | Logo + link on the Planning Tracker page; 41 active notices across 4 municipalities; founding pilot pricing, first 6 months |
+| **Category** | **$150/mo** | "Planning Tracker powered by [Your Business]" | Logo on all planning-related coverage; linked from every digest footer; monthly commitment, cancel anytime |
+| **Notice** | **$50/notice** | Your name beside one planning notice | Paired with that notice email alert; pay per notice, no subscription; good for testing a neighbourhood |
 
 **What sponsors do NOT get:**
 - No placement next to specific applications (no "Sponsored by X on this variance")

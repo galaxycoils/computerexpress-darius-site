@@ -69,7 +69,7 @@ const faqSponsorshipJsonLd = {
       name: 'How do I get started?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'Fill out the form below or email hello@stcatharinesdigital.ca. We will send you a sample digest and a Stripe payment link. Sponsorship begins within 24 hours of payment.'
+        text: 'Fill out the form below or email hello@stcatharinesdigital.ca. We will send you a sample digest and a manual invoice within 1 business day. Sponsorship begins within 24 hours of payment.'
       }
     }
   ]
@@ -184,7 +184,7 @@ export default function SponsorPage() {
             </div>
             <p className="scd-cat">Request received</p>
             <h1>We have your request.</h1>
-            <p>Thank you for your interest in sponsoring St. Catharines Digital. We will send a sample Planning Alert digest and a Stripe payment link within 1 business day.</p>
+            <p>Thank you for your interest in sponsoring St. Catharines Digital. We will send a sample Planning Alert digest and a manual invoice within 1 business day.</p>
             <p>If you need a faster response, email <a href="mailto:hello@stcatharinesdigital.ca">hello@stcatharinesdigital.ca</a>.</p>
             <Link to="/planning-tracker" className="button button-primary">View Planning Tracker</Link>
           </div>
@@ -289,7 +289,7 @@ export default function SponsorPage() {
           <h2 id="sponsor-form-title" className="scd-section-rule">Request details</h2>
           <div className="card scd-sponsor-formcard">
             <h3>Get started</h3>
-            <p className="scd-sponsor-form-intro">Fill this in and we send a sample digest plus a Stripe payment link within 1 business day.</p>
+            <p className="scd-sponsor-form-intro">Fill this in and we send a sample digest plus a manual invoice within 1 business day.</p>
 
             {error && (
               <p className="scd-sponsor-error" role="alert">{error}</p>
