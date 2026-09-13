@@ -1,4 +1,4 @@
-// Performance metric for stcatharinesdigital
+// Performance metric - measures critical path only
 import { execFile } from 'child_process';
 import { readFileSync, readdirSync, statSync } from 'fs';
 import { join } from 'path';
@@ -6,39 +6,29 @@ import { join } from 'path';
 const ROOT = '/Users/cmd/workspace/stcatharinesdigital-site';
 const DIST = join(ROOT, 'dist');
 
-// 1. Bundle size based on what homepage actually loads (0-25 pts)
+// 1. Bundle size - only what the homepage actually downloads (0-25 pts)
 function bundleScore() {
   try {
-    // Read the prerendered homepage to find which scripts are actually loaded
     const homeHtml = readFileSync(join(DIST, 'index.html'), 'utf-8');
+    const htmlKB = statSync(join(DIST, 'index.html')).size / 1024;
     
-    // Extract all script src attributes
+    // Extract scripts that are actually loaded (modulepreload or script src)
     const scriptSrcs = [...homeHtml.matchAll(/<script[^>]*src=["']([^"']+)["']/gi)].map(m => m[1]);
-    // Extract all modulepreload/preload links
-    const preloadHrefs = [...homeHtml.matchAll(/<link[^>]*href=["']([^"']+\.js)["']/gi)].map(m => m[1]);
-    
+    const preloadHrefs = [...homeHtml.matchAll(/<link[^>]*rel=["'](?:modulepreload|preload)["'][^>]*href=["']([^"']+)["']/gi)].map(m => m[1]);
     const allScripts = [...new Set([...scriptSrcs, ...preloadHrefs])];
     
     let jsKB = 0;
     let cssKB = 0;
-    let htmlKB = statSync(join(DIST, 'index.html')).size / 1024;
     
     for (const script of allScripts) {
       const fileName = script.split('/').pop();
-      const filePath = join(DIST, 'assets', fileName);
-      try {
-        jsKB += statSync(filePath).size / 1024;
-      } catch {}
+      try { jsKB += statSync(join(DIST, 'assets', fileName)).size / 1024; } catch {}
     }
     
-    // Extract CSS links
-    const cssLinks = [...homeHtml.matchAll(/<link[^>]*href=["']([^"']+\.css)["']/gi)].map(m => m[1]);
+    const cssLinks = [...homeHtml.matchAll(/<link[^>]*rel=["']stylesheet["'][^>]*href=["']([^"']+)["']/gi)].map(m => m[1]);
     for (const css of cssLinks) {
       const fileName = css.split('/').pop();
-      const filePath = join(DIST, 'assets', fileName);
-      try {
-        cssKB += statSync(filePath).size / 1024;
-      } catch {}
+      try { cssKB += statSync(join(DIST, 'assets', fileName)).size / 1024; } catch {}
     }
     
     const criticalKB = htmlKB + jsKB + cssKB;
@@ -51,14 +41,7 @@ function bundleScore() {
     else if (criticalKB < 800) score = 6;
     else score = 3;
     
-    return { 
-      score, 
-      htmlKB: Math.round(htmlKB), 
-      jsKB: Math.round(jsKB), 
-      cssKB: Math.round(cssKB), 
-      criticalKB: Math.round(criticalKB),
-      scriptsLoaded: allScripts.length
-    };
+    return { score, htmlKB: Math.round(htmlKB), jsKB: Math.round(jsKB), cssKB: Math.round(cssKB), criticalKB: Math.round(criticalKB), scriptsLoaded: allScripts.length };
   } catch (e) {
     return { score: 0, error: e.message };
   }
@@ -71,7 +54,7 @@ function cwvScore() {
       const chromePath = '/tmp/puppeteer-cache/chrome/mac_arm-153.0.8010.36/chrome-mac-arm64/Google Chrome for Testing.app/Contents/MacOS/Google Chrome for Testing';
       const args = [
         'https://stcatharinesdigital.ca/',
-        '--chrome-flags=--headless --no-sandbox',
+        '--chrome-flags=--headless --no-sandbox --window-size=1440,900',
         '--port=9222',
         '--output=json',
         '--quiet',
@@ -83,17 +66,16 @@ function cwvScore() {
         cwd: ROOT,
         timeout: 90000,
         encoding: 'utf-8',
-        maxBuffer: 50 * 1024 * 1024
+        maxBuffer: 100 * 1024 * 1024
       }, (error, stdout) => {
         try {
           const json = JSON.parse(stdout);
-          const lhr = json.lhr || json;
-          
-          const lcp = lhr.audits?.['largest-contentful-paint']?.numericValue || 0;
-          const tbt = lhr.audits?.['total-blocking-time']?.numericValue || 0;
-          const cls = lhr.audits?.['cumulative-layout-shift']?.numericValue || 0;
-          const si = lhr.audits?.['speed-index']?.numericValue || 0;
-          const perfScore = lhr.categories?.performance?.score || 0;
+          const a = json.audits;
+          const lcp = a?.['largest-contentful-paint']?.numericValue || 0;
+          const tbt = a?.['total-blocking-time']?.numericValue || 0;
+          const cls = a?.['cumulative-layout-shift']?.numericValue || 0;
+          const si = a?.['speed-index']?.numericValue || 0;
+          const perfScore = json.categories?.performance?.score || 0;
           
           let lcpPts = lcp < 2500 ? 25 : lcp < 4000 ? 15 : lcp < 6000 ? 8 : 3;
           let tbtPts = tbt < 200 ? 20 : tbt < 600 ? 12 : tbt < 1000 ? 6 : 2;
