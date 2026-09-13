@@ -57,6 +57,7 @@ jobs:
           printf '%s' "$AGENTMAIL_API_KEY" | npx wrangler pages secret put AGENTMAIL_API_KEY --project-name=stcatharinesdigital
 
       - name: Deploy to Cloudflare Pages
+        id: deploy
         uses: cloudflare/wrangler-action@v4
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN || secrets.CF_API_TOKEN }}
