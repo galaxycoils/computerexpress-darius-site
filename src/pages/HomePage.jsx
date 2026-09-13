@@ -297,17 +297,20 @@ export default function HomePage() {
         )}
 
         <div className="scd-cta-row">
-          <Link to="/planning-alerts" className="scd-cta-primary">
+          <Link to="/planning-tracker" className="scd-cta-primary">
+            Planning Tracker
+          </Link>
+          <Link to="/planning-alerts" className="scd-outline-btn">
             Get Planning Alerts
           </Link>
           <Link to="/sponsor" className="scd-outline-btn">
             Sponsor Us
           </Link>
-          <Link to="/planning-alerts" className="scd-outline-btn">
-            Pay with eTransfer
-          </Link>
           <Link to="/membership" className="scd-outline-btn">
             Founding Supporter
+          </Link>
+          <Link to="/planning-alerts" className="scd-outline-btn">
+            Pay with eTransfer
           </Link>
         </div>
 
