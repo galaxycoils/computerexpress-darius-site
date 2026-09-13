@@ -91,11 +91,15 @@ export default defineConfig({
     outDir: 'dist',
     assetsDir: 'assets',
     sourcemap: false,
+    minify: 'esbuild',
+    target: 'es2020',
+    cssCodeSplit: true,
     rollupOptions: {
       output: {
         manualChunks(id) {
           if (id.includes('node_modules')) {
             if (id.includes('@mlc-ai') || id.includes('@mlc-ai/web-llm')) return 'webllm';
+            if (id.includes('react-router') || id.includes('react-dom') || id.includes('react/')) return 'react-vendor';
             return 'vendor';
           }
         }
