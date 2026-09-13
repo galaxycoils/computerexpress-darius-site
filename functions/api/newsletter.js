@@ -14,16 +14,21 @@ export async function onRequestPost(context) {
     let email = null;
     const contentType = context.request.headers.get('content-type') || '';
     let body = await context.request.text();
+    let json = {};
     if (contentType.includes('application/json')) {
-      const json = JSON.parse(body);
-      ({ email } = json);
+      try {
+        json = JSON.parse(body);
+        email = json.email;
+      } catch {
+        // invalid json
+      }
     } else if (contentType.includes('application/x-www-form-urlencoded')) {
       const params = new URLSearchParams(body);
       email = params.get('email') || null;
     } else {
       try {
-        const json = JSON.parse(body);
-        ({ email } = json);
+        json = JSON.parse(body);
+        email = json.email;
       } catch {
         const params = new URLSearchParams(body);
         email = params.get('email') || null;
@@ -34,22 +39,22 @@ export async function onRequestPost(context) {
       return jsonResponse({ error: 'Invalid email' }, 400);
     }
 
-    const inbox = await getPrimaryInbox(apiKey)
+    const inbox = await getPrimaryInbox(apiKey);
 
-        const ALLOWED_PLACEMENTS = new Set(['site_rail', 'guide_inline', 'planning_tracker', 'home'])
-        const placement = ALLOWED_PLACEMENTS.has(json?.placement) ? json.placement : 'site_rail'
+    const ALLOWED_PLACEMENTS = new Set(['site_rail', 'guide_inline', 'planning_tracker', 'home']);
+    const placement = ALLOWED_PLACEMENTS.has(json?.placement) ? json.placement : 'site_rail';
 
-        const sendRes = await fetch(`${AGENTMAIL_BASE}/inboxes/${inbox.inbox_id}/messages/send`, {
-          method: 'POST',
-          headers: {
-            'Authorization': `Bearer ${apiKey}`,
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            to: email,
-            subject: 'Welcome to St. Catharines Digital — your planning alerts digest',
-            text: `Welcome to St. Catharines Digital!\n\nYou're on the list. Expect new planning notices, upcoming hearings, and what changed across St. Catharines, Welland and Thorold.\n\nNo spam. Unsubscribe anytime by replying.\n\nVisit: https://stcatharinesdigital.ca`,
-            html: `<!DOCTYPE html><html><head><meta charset="utf-8"></head>
+    const sendRes = await fetch(`${AGENTMAIL_BASE}/inboxes/${inbox.inbox_id}/messages/send`, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${apiKey}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        to: email,
+        subject: 'Welcome to St. Catharines Digital — your planning alerts digest',
+        text: `Welcome to St. Catharines Digital!\n\nYou're on the list. Expect new planning notices, upcoming hearings, and what changed across St. Catharines, Welland and Thorold.\n\nNo spam. Unsubscribe anytime by replying.\n\nVisit: https://stcatharinesdigital.ca`,
+        html: `<!DOCTYPE html><html><head><meta charset="utf-8"></head>
     <body style="font-family:Inter,-apple-system,sans-serif;color:#e8f0fe;background:#060d1b;padding:2rem;">
     <div style="max-width:600px;margin:0 auto;text-align:center;">
     <h1 style="color:#12d6ff;">Welcome to St. Catharines Digital</h1>
@@ -59,9 +64,9 @@ export async function onRequestPost(context) {
     </div>
     <a href="https://stcatharinesdigital.ca" style="display:inline-block;padding:.75rem 2rem;background:#12d6ff;color:#060d1b;text-decoration:none;border-radius:8px;font-weight:700;">Visit St. Catharines Digital</a>
     </div></body></html>`,
-            labels: ['newsletter', 'welcome', `placement:${placement}`],
-          }),
-        })
+        labels: ['newsletter', 'welcome', `placement:${placement}`],
+      }),
+    });
 
     if (!sendRes.ok) {
       const errText = await sendRes.text();
@@ -70,7 +75,7 @@ export async function onRequestPost(context) {
     }
 
     console.log('Newsletter welcome sent to:', email);
-    return jsonResponse({ success: true, message: 'You\'re on the list. Check your inbox for a welcome email.' });
+    return jsonResponse({ success: true, message: "You're on the list. Check your inbox for a welcome email." });
   } catch (err) {
     console.error('Newsletter error:', err);
     return jsonResponse({ error: 'Internal server error' }, 500);

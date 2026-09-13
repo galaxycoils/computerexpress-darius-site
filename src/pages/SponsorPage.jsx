@@ -69,7 +69,7 @@ const faqSponsorshipJsonLd = {
       name: 'How do I get started?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'Fill out the form below or email hello@stcatharinesdigital.ca. We will send you a sample digest and a manual invoice within 1 business day. Sponsorship begins within 24 hours of payment.'
+        text: 'Fill out the form below or email cccemt@pm.me. We will send you a sample digest and a manual invoice within 1 business day. Sponsorship begins within 24 hours of payment.'
       }
     }
   ]
@@ -158,10 +158,10 @@ export default function SponsorPage() {
       if (res.ok) {
         setSubmitted(true)
       } else {
-        setError(result.error || 'Something went wrong. Please try again or email hello@stcatharinesdigital.ca')
+        setError(result.error || 'Something went wrong. Please try again or email cccemt@pm.me')
       }
     } catch (err) {
-      setError('Network error. Please email hello@stcatharinesdigital.ca')
+      setError('Network error. Please email cccemt@pm.me')
     } finally {
       setLoading(false)
     }
@@ -185,7 +185,7 @@ export default function SponsorPage() {
             <p className="scd-cat">Request received</p>
             <h1>We have your request.</h1>
             <p>Thank you for your interest in sponsoring St. Catharines Digital. We will send a sample Planning Alert digest and a manual invoice within 1 business day.</p>
-            <p>If you need a faster response, email <a href="mailto:hello@stcatharinesdigital.ca">hello@stcatharinesdigital.ca</a>.</p>
+            <p>If you need a faster response, email <a href="mailto:cccemt@pm.me">cccemt@pm.me</a>.</p>
             <Link to="/planning-tracker" className="button button-primary">View Planning Tracker</Link>
           </div>
         </div>
@@ -219,7 +219,7 @@ export default function SponsorPage() {
             <p className="scd-sponsor-railprice">$300<span>/mo · primary</span></p>
             <p>From $50 per notice. Cancel with 30 days notice. Live within 24 hours of payment.</p>
             <a className="button button-primary" href="#sponsor-form">Request details</a>
-            <p className="scd-sponsor-fineprint">Or email hello@stcatharinesdigital.ca</p>
+            <p className="scd-sponsor-fineprint">Or email cccemt@pm.me</p>
           </aside>
         </header>
 

@@ -54,5 +54,5 @@ export const aboutSections = [
 ]
 
 export const contactInfo = {
-  email: 'hello@stcatharinesdigital.ca',
+  email: 'cccemt@pm.me',
 }

@@ -5,7 +5,6 @@ pages_build_output_dir = "dist"
 binding = "STC_D1"
 database_name = "stcatharinesdigital_d1"
 database_id = "58b9ee2e-c86a-4469-8729-f71ce89e6326"
-remote = true
 
 [ai]
 binding = "AI"

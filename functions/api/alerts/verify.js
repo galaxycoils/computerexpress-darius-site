@@ -20,7 +20,18 @@ export async function onRequestGet(context) {
   }
 
   try {
-    const decoded = Buffer.from(token, 'base64url').toString('utf-8');
+    // Use atob for base64url decoding (Cloudflare Workers doesn't have Buffer)
+    let decoded;
+    try {
+      // Convert base64url to base64
+      const base64 = token.replace(/-/g, '+').replace(/_/g, '/');
+      // Add padding if needed
+      const padded = base64 + '='.repeat((4 - base64.length % 4) % 4);
+      decoded = atob(padded);
+    } catch (e) {
+      console.error('[verify] Failed to decode token:', e);
+      return jsonResponse({ error: 'Invalid token format' }, 400);
+    }
     const [id, createdStr] = decoded.split(':');
     const created = parseInt(createdStr, 10);
     const now = Date.now();
@@ -30,13 +41,24 @@ export async function onRequestGet(context) {
       return jsonResponse({ error: 'Verification link expired. Please sign up again.' }, 410);
     }
 
-    const result = await STC_D1.prepare(
+    const updateResult = await STC_D1.prepare(
       'UPDATE alerts SET verified = 1, updated_at = ? WHERE id = ? AND verified = 0 AND created_at = ?'
-    ).bind(now, id, created).first();
+    ).bind(now, id, created).run();
 
-    if (!result) {
+    if (updateResult.changes === 0) {
       return jsonResponse({ error: 'Invalid or already verified link' }, 404);
     }
+
+    // Fetch the updated alert to get email for confirmation
+    const selectResult = await STC_D1.prepare(
+      'SELECT id, email FROM alerts WHERE id = ? AND created_at = ?'
+    ).bind(id, created).first();
+
+    if (!selectResult || !selectResult.email) {
+      return jsonResponse({ error: 'Alert not found after update' }, 500);
+    }
+
+    const result = selectResult;
 
     // Send confirmation email
     if (apiKey) {

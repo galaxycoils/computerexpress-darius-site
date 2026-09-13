@@ -23,15 +23,13 @@ export async function onRequest(context) {
 
   try {
     if (request.method === 'GET') {
-      const rows = await STC_D1.prepare(
+      const row = await STC_D1.prepare(
         'SELECT id, email, verified, frequency, wards, types, statuses, keywords, created_at, last_sent_at FROM alerts WHERE id = ?'
-      ).bind(auth.id).all();
+      ).bind(auth.id).first();
 
-      if (!rows || rows.length === 0) {
+      if (!row) {
         return jsonResponse({ alert: null });
       }
-
-      const row = rows[0];
       return jsonResponse({
         alert: {
           id: row.id,
@@ -126,7 +124,10 @@ function authenticate(request) {
   if (!header) return null;
 
   try {
-    const decoded = Buffer.from(header, 'base64url').toString('utf-8');
+    // Use atob for base64url decoding (Cloudflare Workers doesn't have Buffer)
+    const base64 = header.replace(/-/g, '+').replace(/_/g, '/');
+    const padded = base64 + '='.repeat((4 - base64.length % 4) % 4);
+    const decoded = atob(padded);
     const [id, created] = decoded.split(':');
     return { id, created: parseInt(created, 10) };
   } catch {

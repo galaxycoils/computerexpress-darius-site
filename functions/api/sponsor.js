@@ -82,12 +82,12 @@ ${new Date().toISOString()}`
         return jsonResponse({ success: true, message: 'Check your email for the sample digest and next steps.' })
       } catch (err) {
         console.error('AgentMail failed:', err)
-        return jsonResponse({ error: 'Failed to send. Please email hello@stcatharinesdigital.ca' }, 502)
+        return jsonResponse({ error: 'Failed to send. Please email cccemt@pm.me' }, 502)
       }
     }
 
     // No API key configured
-    return jsonResponse({ error: 'Service not configured. Please email hello@stcatharinesdigital.ca' }, 503)
+    return jsonResponse({ error: 'Service not configured. Please email cccemt@pm.me' }, 503)
   } catch (err) {
     console.error('Sponsor form error:', err)
     return jsonResponse({ error: 'Internal server error' }, 500)

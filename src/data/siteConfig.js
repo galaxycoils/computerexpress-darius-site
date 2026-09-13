@@ -7,7 +7,7 @@ export const siteConfig = {
   url: BASE_URL,
   locale: 'en_CA',
   language: 'en-CA',
-  email: 'hello@stcatharinesdigital.ca',
+  email: 'cccemt@pm.me',
   calendlyUrl: 'https://calendly.com/tahamtandariush/30min',
   city: 'St. Catharines',
   region: 'ON',
