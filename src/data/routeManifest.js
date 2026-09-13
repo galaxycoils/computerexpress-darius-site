@@ -25,6 +25,7 @@ export const baseRoutes = [
   '/news/thorold',
   '/news/niagara-falls',
   '/planning-alerts',
+  '/membership',
   ...guideRoutes,
 ]
 
