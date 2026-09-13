@@ -29,10 +29,19 @@ export const baseRoutes = [
   ...guideRoutes,
 ]
 
-export const programmaticRoutes = []
+export const programmaticRoutes = [
+  '/blog/local-seo-checklist-2026',
+  '/blog/how-to-get-more-leads-from-website',
+  '/blog/technical-seo-explained',
+  '/blog/google-business-profile-tips-local-seo',
+  '/blog/how-to-rank-1-on-google-maps',
+  '/blog/website-speed-optimization-tips',
+  '/blog/how-much-does-local-seo-cost',
+  '/blog/service-business-website-examples',
+]
 
 export const sitemapRoutes = baseRoutes.filter((r) => r !== '/404').concat(programmaticRoutes)
-export const prerenderRoutes = [...baseRoutes, '/404']
+export const prerenderRoutes = [...baseRoutes, ...programmaticRoutes, '/404']
 
 export function getRouteSitemapMeta(route) {
   if (route === '/') return { priority: '1.0', changefreq: 'weekly' }

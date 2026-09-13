@@ -1,33 +1,51 @@
-import React from 'react'
 import { Link } from 'react-router-dom'
 import Seo from '../components/Seo'
+import '../components/news/news.css'
+import '../components/news/news-hub.css'
 
 export default function NotFoundPage() {
   return (
     <>
       <Seo title="Page Not Found | St. Catharines Digital" noIndex />
-      <div className="bg-orb bg-orb-1" aria-hidden="true"></div>
-      <div className="bg-orb bg-orb-2" aria-hidden="true"></div>
-
-      <section className="section-first page-hero" style={{ minHeight: '80vh', display: 'flex', alignItems: 'center' }}>
-        <div className="container" style={{ textAlign: 'center', maxWidth: '600px' }}>
-          <span style={{ fontSize: '6rem', display: 'block', marginBottom: '1rem', filter: 'drop-shadow(0 0 20px rgba(18, 214, 255, 0.3))' }} aria-hidden="true">
-            404
-          </span>
-          <h1 className="gradient-text" style={{ fontSize: '2.5rem', marginBottom: '1rem' }}>Page Not Found</h1>
-          <p style={{ fontSize: '1.1rem', color: 'var(--muted)', marginBottom: '2rem' }}>
-            The page you are looking for might have been removed, had its name changed, or is temporarily unavailable. Let's get you back on track.
-          </p>
-          <div className="hero-actions" style={{ justifyContent: 'center', gap: '1rem' }}>
-            <Link to="/" className="button button-primary">
-              Go to Homepage
-            </Link>
-            <Link to="/planning-tracker" className="button button-secondary">
-              View Planning Tracker
-            </Link>
+      <div className="scd-page">
+        <header className="scd-intro">
+          <div>
+            <p className="scd-eyebrow">404 · Off the record</p>
+            <h1 className="scd-intro-title">This page is not on file.</h1>
+            <p className="scd-intro-note">It may have been removed, renamed, or never existed. The sections below are all current.</p>
           </div>
-        </div>
-      </section>
+        </header>
+
+        <section aria-labelledby="lost-sections-h">
+          <h2 id="lost-sections-h" className="scd-section-rule">Start here instead</h2>
+          <div className="scd-hub-grid">
+            <article className="card">
+              <h3>Local News</h3>
+              <p>St. Catharines, Welland, Thorold, and Niagara Falls from official sources.</p>
+              <Link to="/news" className="scd-hub-more">
+                Browse local news →
+              </Link>
+            </article>
+            <article className="card">
+              <h3>Planning Tracker</h3>
+              <p>Active planning notices, zoning files, and public meetings.</p>
+              <Link to="/planning-tracker" className="scd-hub-more">
+                Open the tracker →
+              </Link>
+            </article>
+            <article className="card">
+              <h3>Welland Votes 2026</h3>
+              <p>Mayoral race, key dates, and how to vote on Oct 26.</p>
+              <Link to="/welland-votes" className="scd-hub-more">
+                Open the voter guide →
+              </Link>
+            </article>
+          </div>
+          <p>
+            <Link to="/" className="button button-primary">Go to Homepage</Link>
+          </p>
+        </section>
+      </div>
     </>
   )
 }
