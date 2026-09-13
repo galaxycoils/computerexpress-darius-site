@@ -303,11 +303,11 @@ export default function HomePage() {
           <Link to="/sponsor" className="scd-outline-btn">
             Sponsor Us
           </Link>
-          <Link to="/membership" className="scd-outline-btn">
-            Become a Founding Supporter
+          <Link to="/planning-alerts" className="scd-outline-btn">
+            Pay with eTransfer
           </Link>
-          <Link to="/planning-tracker" className="scd-outline-btn">
-            Planning Tracker
+          <Link to="/membership" className="scd-outline-btn">
+            Founding Supporter
           </Link>
         </div>
 
