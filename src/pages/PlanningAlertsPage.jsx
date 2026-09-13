@@ -286,7 +286,10 @@ export default function PlanningAlertsPage() {
               </button>
 
               <p className="scd-alerts-fineprint">
-                No payment required for beta. You can pause or delete your alert anytime.
+                Beta: <strong>$49/month</strong> via Interac e-Transfer. Cancel anytime — reply to any alert email.
+              </p>
+              <p className="scd-alerts-fineprint">
+                Send your first $49 to <strong>hello@stcatharinesdigital.ca</strong> with your email as the memo. We'll confirm within 1 business day.
               </p>
             </form>
           </div>

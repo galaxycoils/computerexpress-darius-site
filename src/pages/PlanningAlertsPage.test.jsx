@@ -14,9 +14,12 @@ describe('PlanningAlertsPage', () => {
       </HelmetProvider>,
     )
     expect(screen.getByRole('heading', { name: /The notices that matter, in your inbox/i })).toBeInTheDocument()
-    expect(screen.getByText(/\$49\/month/i)).toBeInTheDocument()
+    expect(screen.getAllByText(/\$49\/month/i).length).toBeGreaterThanOrEqual(1)
     expect(screen.getByRole('button', { name: /Create Alert/i })).toBeInTheDocument()
-    expect(screen.queryByText(/checkout|pay now|subscribe now/i)).not.toBeInTheDocument()
+    expect(screen.queryByText(/checkout/i)).not.toBeInTheDocument()
+    expect(screen.queryByText(/pay now/i)).not.toBeInTheDocument()
+    expect(screen.queryByText(/subscribe now/i)).not.toBeInTheDocument()
+    expect(screen.getByText(/Interac e-Transfer/)).toBeInTheDocument()
   })
 
   it('renders the filter chips and CTA links', () => {
