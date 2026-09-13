@@ -75,4 +75,19 @@ describe('HomePage — Editorial Newsroom', () => {
     renderWithProviders(<HomePage />)
     expect(screen.queryByRole('link', { name: /Pay with eTransfer/i })).not.toBeInTheDocument()
   })
+
+  it('links lead photo to its official source', () => {
+    renderWithProviders(<HomePage />)
+    const img = screen.getByRole('img', { name: /Stone facade of St. Catharines City Hall/i })
+    const link = img.closest('a')
+    expect(link).not.toBeNull()
+    expect(link.getAttribute('href')).toMatch(/^https?:\/\//)
+    expect(link.getAttribute('target')).toBe('_blank')
+  })
+
+  it('marks story times machine-readable', () => {
+    const { container } = renderWithProviders(<HomePage />)
+    const times = container.querySelectorAll('time[dateTime]')
+    expect(times.length).toBeGreaterThan(0)
+  })
 })

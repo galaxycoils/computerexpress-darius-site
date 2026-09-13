@@ -36,12 +36,21 @@ const LOCAL_PHOTOS = {
   },
 }
 
-function LocalPhoto({ photo, lead = false }) {
+function LocalPhoto({ photo, lead = false, href = null }) {
+  const media = (
+    <div className={lead ? 'scd-lead-media' : 'scd-latest-media'}>
+      <img src={photo.src} alt={photo.alt} loading={lead ? 'eager' : 'lazy'} fetchpriority={lead ? 'high' : undefined} />
+    </div>
+  )
   return (
     <figure className={lead ? 'scd-lead-figure' : 'scd-local-figure'}>
-      <div className={lead ? 'scd-lead-media' : 'scd-latest-media'}>
-        <img src={photo.src} alt={photo.alt} loading={lead ? 'eager' : 'lazy'} fetchpriority={lead ? 'high' : undefined} />
-      </div>
+      {href ? (
+        <a href={href} target="_blank" rel="noopener noreferrer" aria-label={photo.alt}>
+          {media}
+        </a>
+      ) : (
+        media
+      )}
       <figcaption>{photo.caption}<br /><a href={photo.source} target="_blank" rel="noopener noreferrer">{photo.credit}</a> · <a href={`https://creativecommons.org/licenses/by-sa/${photo.license}/`} target="_blank" rel="noopener noreferrer">CC BY-SA {photo.license}</a> · Cropped & resized</figcaption>
     </figure>
   )
@@ -210,7 +219,7 @@ export default function HomePage() {
         {lead ? (
           <AnimatedSection className="scd-lead-block" delay={0}>
             <article className="scd-lead-story">
-              {lead.photo && <LocalPhoto photo={lead.photo} lead />}
+              {lead.photo && <LocalPhoto photo={lead.photo} lead href={lead.sourceUrl} />}
               <p className="scd-cat">{categoryLabel(lead)}</p>
               <h1 className="scd-lead-headline">
                 {lead.sourceUrl ? (
@@ -229,7 +238,11 @@ export default function HomePage() {
                 </p>
               )}
               <p className="scd-lead-byline">
-                {relativeAgo(lead.publishedDate)}
+                {lead.publishedDate ? (
+                  <time dateTime={new Date(lead.publishedDate).toISOString()}>{relativeAgo(lead.publishedDate)}</time>
+                ) : (
+                  relativeAgo(lead.publishedDate)
+                )}
                 {lead.sourceUrl && (
                   <>
                     {' · '}
@@ -265,7 +278,7 @@ export default function HomePage() {
                           n.title
                         )}
                       </h3>
-                      <p className="scd-top-time">{relativeAgo(n.publishedDate)}</p>
+                      <p className="scd-top-time">{n.publishedDate ? (<time dateTime={new Date(n.publishedDate).toISOString()}>{relativeAgo(n.publishedDate)}</time>) : relativeAgo(n.publishedDate)}</p>
                     </div>
                   </li>
                 ))}
@@ -305,7 +318,7 @@ export default function HomePage() {
                 {latest.map((n, i) => (
                   <AnimatedSection key={n.id} delay={40 + i * 30}>
                     <article className="scd-latest-card">
-                      {n.photo && <LocalPhoto photo={n.photo} />}
+                      {n.photo && <LocalPhoto photo={n.photo} href={n.sourceUrl} />}
                       <p className="scd-cat">{categoryLabel(n)}</p>
                       <h3 className="scd-latest-title">
                         {n.sourceUrl ? (
@@ -317,7 +330,7 @@ export default function HomePage() {
                         )}
                       </h3>
                       <p className="scd-latest-time">
-                        {formatDate(n.publishedDate) || relativeAgo(n.publishedDate)}
+                        {n.publishedDate ? (<time dateTime={new Date(n.publishedDate).toISOString()}>{formatDate(n.publishedDate) || relativeAgo(n.publishedDate)}</time>) : (formatDate(n.publishedDate) || relativeAgo(n.publishedDate))}
                       </p>
                     </article>
                   </AnimatedSection>
