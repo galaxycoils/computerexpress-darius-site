@@ -22,4 +22,9 @@ describe('GuidePage', () => {
     expect(screen.getByRole('link', { name: /planning tracker/i })).toHaveAttribute('href', '/planning-tracker')
     expect(screen.getByRole('textbox', { name: /email address/i })).toBeInTheDocument()
   })
+
+  it('shows a contextual CTA above the newsletter form', () => {
+    renderPage()
+    expect(screen.getByText(/Get new hearings and notice changes by email/i)).toBeInTheDocument()
+  })
 })

@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import './NewsletterPanel.css'
 
-export default function NewsletterPanel() {
+export default function NewsletterPanel({ placement = 'site_rail' }) {
   const [email, setEmail] = useState('')
   const [status, setStatus] = useState('idle') // idle | sending | success | error
   const [error, setError] = useState('')
@@ -15,7 +15,7 @@ export default function NewsletterPanel() {
       const res = await fetch('/api/newsletter', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: email.trim() }),
+        body: JSON.stringify({ email: email.trim(), placement }),
       })
       const data = await res.json().catch(() => ({}))
       if (!res.ok || data.success !== true) throw new Error(data.error || 'Subscription could not be confirmed. Please try again later.')
