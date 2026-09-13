@@ -6,8 +6,8 @@
  * - thorold.ca
  * - niagararegion.ca
  *
- * Updated: 2026-09-10
- * Note: added Welland First Street CoA hearing; CIP meeting details filled.
+ * Updated: 2026-09-13
+ * Note: added Welland Sep 16 CoA bundle (Niagara/Forks/Clare/Clifford); restored STC CoA hearings still scheduled for Sep 16.
  * Next review: Weekly
  */
 
@@ -37,7 +37,7 @@ export const planningNotices = [
     title: '455 Welland Avenue — Parking Variance',
     description: 'Variance to reduce minimum parking from 1.25 to 0.85 spaces/unit for 248 residential + 12 commercial units.',
     fileNumber: 'A-20/26',
-    status: 'Meeting Complete',
+    status: 'Hearing Scheduled',
     meetingDate: '2026-09-16T17:00:00',
     meetingLocation: 'Council Chambers, 50 Church St',
     publishedDate: '2026-08-25',
@@ -51,7 +51,7 @@ export const planningNotices = [
     type: 'Committee of Adjustment Hearing',
     title: '12 Stepney Street — Minor Variance',
     description: 'Minor Variance application.',
-    status: 'Meeting Complete',
+    status: 'Hearing Scheduled',
     meetingDate: '2026-09-16T17:00:00',
     meetingLocation: 'Council Chambers, 50 Church St',
     publishedDate: '2026-08',
@@ -244,6 +244,23 @@ export const planningNotices = [
     tags: ['Consent', 'Minor Variance', 'First Street', 'Welland', 'Committee of Adjustment']
   },
   {
+    id: 'welland-coa-2026-09-16',
+    municipality: 'Welland',
+    type: 'Committee of Adjustment Hearing',
+    title: '373 Niagara St, 112-116 Forks Rd, 657-661 Clare Ave, 37-39 Clifford Ave — Consents and Variances',
+    description: 'Committee of Adjustment hearing for consent and minor-variance applications: new lot at 373 Niagara St; lot split and lot-area variances for the existing semi-detached dwellings at 112 and 116 Forks Rd; lot split for semi-detached units under construction at 657 and 661 Clare Ave; and a lot-addition plus setback, parking-width, lot-area and frontage variances at 37 and 39 Clifford Ave.',
+    fileNumber: 'PLCON202600172 / PLCON202600181 / PLMV202600185 / PLMV202600186 / PLCON202600201 / PLCON202600199 / PLMV202600204 / PLMV202600205',
+    status: 'Hearing Scheduled',
+    meetingDate: '2026-09-16T17:00:00',
+    meetingLocation: 'Council Chambers, Civic Square, 60 East Main St',
+    submissionDeadline: '2026-09-10',
+    submissionEmail: 'cofa@welland.ca',
+    publishedDate: '2026-08-20',
+    sourceUrl: 'https://www.welland.ca/news/posts/notice-of-public-hearing-concerning-applications-for-consent-and-minor-variance/',
+    category: 'consent-application',
+    tags: ['Consent', 'Minor Variance', 'Niagara Street', 'Forks Road', 'Clare Avenue', 'Clifford Avenue', 'Welland', 'Committee of Adjustment']
+  },
+  {
     id: 'welland-opa-55',
     municipality: 'Welland',
     type: 'Official Plan Amendment (OPA No. 55)',
@@ -277,7 +294,7 @@ export const planningNotices = [
     type: 'Official Plan Update',
     title: 'Welland Official Plan Update — Statutory Public Meeting',
     description: 'Statutory Public Meeting for Official Plan Update. No adoption decision at this meeting. Draft OPA posted.',
-    status: 'Meeting Scheduled',
+    status: 'Meeting Complete',
     meetingDate: '2025-12-09T18:00:00',
     meetingLocation: 'Council Chambers, 60 East Main St',
     publishedDate: '2025-11',
