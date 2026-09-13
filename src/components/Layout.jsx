@@ -14,6 +14,7 @@ const NAV = [
   { to: '/', label: 'News', end: true },
   { to: '/council', label: 'Council' },
   { to: '/planning-tracker', label: 'Planning' },
+  { to: '/membership', label: 'Support Us' },
   { to: '/police', label: 'Police' },
   { to: '/sponsor', label: 'Sponsor' },
   { to: '/about', label: 'About' },
