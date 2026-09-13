@@ -32,3 +32,4 @@ NEWS_SHORTLIST.md
 results.tsv
 src/data/generated/*.bak
 src/data/generated/*.baseline.json
+chrome/
