@@ -1,16 +1,21 @@
 {
-  "generationId": "gen-2026-09-13T01:18:28Z",
-  "lastAttemptedAt": "2026-09-13T01:18:28Z",
+  "generationId": "gen-2026-09-13T16:24:03Z",
+  "lastAttemptedAt": "2026-09-13T16:24:03Z",
   "sources": {
     "nrps": {
       "source": "Niagara Regional Police Service",
       "sourcePageUrl": "https://www.niagarapolice.ca/news/media-releases/",
       "sourceType": "official_press_release",
       "status": "healthy",
-      "itemCount": 6,
+      "itemCount": 7,
       "rejectedLinks": 4,
-      "lastSuccessfulScanAt": "2026-09-13T01:18:28Z",
+      "lastSuccessfulScanAt": "2026-09-13T16:24:03Z",
       "items": [
+        {
+          "title": "Motorcycle Collision Results in Two Fatalities - Welland",
+          "link": "https://www.niagarapolice.ca/news/posts/motorcycle-collision-results-in-two-fatalities-welland/",
+          "publishedAt": "2026-09-12T00:00:00Z"
+        },
         {
           "title": "Two Arrested in Welland Break and Enter Investigation",
           "link": "https://www.niagarapolice.ca/news/posts/two-arrested-in-welland-break-and-enter-investigation/",
@@ -37,7 +42,7 @@
           "publishedAt": "2026-09-02T00:00:00Z"
         },
         {
-          "title": "Single Vehicle Collision Results in Serious Injuries \u2013 Witnesses Sought \u2013 Thorold",
+          "title": "Single Vehicle Collision Results in Serious Injuries – Witnesses Sought – Thorold",
           "link": "https://www.niagarapolice.ca/news/posts/single-vehicle-collision-results-in-serious-injuries-witnesses-sought-thorold/",
           "publishedAt": "2026-09-01T00:00:00Z"
         }

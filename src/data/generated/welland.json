@@ -4,7 +4,7 @@
   "sourceType": "council_document",
   "status": "failed",
   "lastSuccessfulScanAt": null,
-  "lastAttemptedAt": "2026-09-12T19:50:49Z",
+  "lastAttemptedAt": "2026-09-13T16:24:03Z",
   "itemCount": 0,
   "rejectedLinks": 31,
   "reason": "dates are meeting dates, not publication dates; no explicit publication date on official page",
