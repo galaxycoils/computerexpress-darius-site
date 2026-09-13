@@ -2,12 +2,24 @@
  * NRPS Police Media Releases for St. Catharines Digital
  * Sourced exclusively from https://www.niagarapolice.ca/news/posts/
  * Official Niagara Regional Police Service media releases & community notifications.
- * Updated: 2026-09-12
+ * Updated: 2026-09-13
  * Next review: Daily (cron) — refresh from niagarapolice.ca
- * Note: added Sep 9 Welland break-and-enter arrests; Sep 11 NRPS officer impaired-operation investigation (1 District responded).
+ * Note: added Sep 9 Welland break-and-enter arrests; Sep 11 NRPS officer impaired-operation investigation (1 District responded); Sep 12 Welland motorcycle collision fatalities.
  */
 
 export const nrpsReleases = [
+  // SEP 12, 2026
+  {
+    id: 'nrps-2026-09-12-welland-motorcycle-fatalities',
+    date: '2026-09-12',
+    headline: 'Motorcycle Collision Results in Two Fatalities - Welland',
+    municipality: 'Welland',
+    type: 'Media Release (Collision Investigation)',
+    url: 'https://www.niagarapolice.ca/news/posts/motorcycle-collision-results-in-two-fatalities-welland/',
+    source: 'Niagara Regional Police Service',
+    tags: ['Collision', 'Motorcycle', 'Fatalities', 'Welland', 'Investigation'],
+    category: 'collision',
+  },
   // SEP 11, 2026
   {
     id: 'nrps-2026-09-11-officer-impaired-operation',
