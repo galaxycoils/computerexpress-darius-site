@@ -39,7 +39,7 @@ export default function AboutPage() {
         jsonLd={[aboutPageJsonLd, breadcrumbJsonLd]}
       />
 
-      <section className="section-first" style={{ paddingTop: '3rem', paddingBottom: '2rem' }}>
+      <section className="section" style={{ paddingTop: '3rem', paddingBottom: '2rem' }}>
         <div className="container">
           <p style={{
             fontSize: '0.7rem',
@@ -62,7 +62,7 @@ export default function AboutPage() {
           </h1>
           <p style={{
             fontSize: '1.05rem',
-            color: 'var(--text-muted)',
+            color: 'var(--muted)',
             maxWidth: '36rem',
             lineHeight: 1.6
           }}>
@@ -78,7 +78,7 @@ export default function AboutPage() {
         <div className="container" style={{ maxWidth: '40rem' }}>
 
           <article style={{
-            background: 'var(--surface)',
+            background: 'var(--bg-card)',
             border: '1px solid var(--border)',
             borderRadius: '12px',
             padding: '1.5rem',
@@ -87,14 +87,14 @@ export default function AboutPage() {
             <h2 style={{ fontSize: '1.05rem', fontWeight: 600, marginBottom: '0.6rem' }}>
               What we do
             </h2>
-            <p style={{ fontSize: '0.95rem', color: 'var(--text-muted)', lineHeight: 1.6, marginBottom: '0.75rem' }}>
+            <p style={{ fontSize: '0.95rem', color: 'var(--muted)', lineHeight: 1.6, marginBottom: '0.75rem' }}>
               We surface official information that affects residents of the three cities:
             </p>
             <ul style={{
               margin: 0,
               paddingLeft: '1.2rem',
               fontSize: '0.95rem',
-              color: 'var(--text-muted)',
+              color: 'var(--muted)',
               lineHeight: 1.7
             }}>
               <li>City council agendas, minutes and decisions</li>
@@ -105,7 +105,7 @@ export default function AboutPage() {
           </article>
 
           <article style={{
-            background: 'var(--surface)',
+            background: 'var(--bg-card)',
             border: '1px solid var(--border)',
             borderRadius: '12px',
             padding: '1.5rem',
@@ -114,7 +114,7 @@ export default function AboutPage() {
             <h2 style={{ fontSize: '1.05rem', fontWeight: 600, marginBottom: '0.6rem' }}>
               How we work
             </h2>
-            <p style={{ fontSize: '0.95rem', color: 'var(--text-muted)', lineHeight: 1.6 }}>
+            <p style={{ fontSize: '0.95rem', color: 'var(--muted)', lineHeight: 1.6 }}>
               Everything published here comes from official primary sources:
               the Niagara Regional Police Service, the City of St. Catharines,
               the City of Welland, the City of Thorold, and Niagara Region.
@@ -123,15 +123,15 @@ export default function AboutPage() {
           </article>
 
           <article style={{
-            background: 'rgba(59,130,246,0.06)',
-            border: '1px solid rgba(59,130,246,0.2)',
+            background: 'var(--signal-soft)',
+            border: '1px solid color-mix(in srgb, var(--signal) 30%, transparent)',
             borderRadius: '12px',
             padding: '1.5rem'
           }}>
             <h2 style={{ fontSize: '1.05rem', fontWeight: 600, marginBottom: '0.6rem', color: 'var(--primary)' }}>
               Public safety policy
             </h2>
-            <p style={{ fontSize: '0.95rem', color: 'var(--text-muted)', lineHeight: 1.6 }}>
+            <p style={{ fontSize: '0.95rem', color: 'var(--muted)', lineHeight: 1.6 }}>
               Ontario does not maintain a public searchable sex offender map.
               St. Catharines Digital never creates maps, lists or location trackers
               of individuals. For official community notifications, always check

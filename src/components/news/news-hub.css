@@ -1,0 +1,37 @@
+/* News hub grid — page-scoped layout only. No colors, no fonts. */
+
+.scd-hub-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--sp-4);
+  margin: 0 0 var(--sp-5);
+  padding: 0;
+  list-style: none;
+}
+
+@media (min-width: 640px) {
+  .scd-hub-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 900px) {
+  .scd-hub-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.scd-hub-grid .card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.scd-hub-more {
+  display: inline-block;
+  margin-top: 10px;
+  font-family: var(--font-ui);
+  font-size: var(--t-sm);
+  font-weight: 600;
+  color: var(--signal);
+}

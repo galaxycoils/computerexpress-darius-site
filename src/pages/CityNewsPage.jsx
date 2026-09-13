@@ -46,7 +46,7 @@ export default function CityNewsPage() {
       <>
         <Seo title="City not found | St. Catharines Digital" description="City not found." />
         <div className="scd-page">
-          <h1 className="scd-hero-title">City not found</h1>
+          <h1 className="scd-intro-title">City not found</h1>
           <Link to="/" className="scd-more">
             Return home →
           </Link>
@@ -115,40 +115,42 @@ export default function CityNewsPage() {
       />
 
       <div className="scd-page">
-        <p className="scd-kicker">
-          <span className="scd-kicker-dot" aria-hidden="true" />
-          Official sources · {city.name}
-        </p>
-        <h1 className="scd-hero-title">{city.name}</h1>
-        <p className="scd-hero-lead">{city.description}</p>
-        <p className="scd-side-text" style={{ marginBottom: '1.5rem' }}>
-          Last updated: {lastUpdated}
-        </p>
-
-        <div className="scd-city-row" role="navigation" aria-label="Other cities">
-          <Link to="/news/st-catharines" className="scd-city-chip">
-            St. Catharines
-          </Link>
-          <Link to="/news/welland" className="scd-city-chip">
-            Welland
-          </Link>
-          <Link to="/news/thorold" className="scd-city-chip">
-            Thorold
-          </Link>
-          <Link to="/news/niagara-falls" className="scd-city-chip">
-            Niagara Falls
-          </Link>
-          <Link to="/planning-tracker" className="scd-city-chip">
-            Planning tracker
-          </Link>
-        </div>
-
-        <div className="scd-layout">
+        <header className="scd-intro">
           <div>
-            <div className="scd-feed-label">
-              <span className="scd-kicker-dot" aria-hidden="true" />
-              Latest
+            <p className="scd-eyebrow">
+              Official sources · {city.name}
+            </p>
+            <h1 className="scd-intro-title">{city.name}</h1>
+            <p className="scd-intro-note">{city.description}</p>
+            <p className="scd-lead-byline">
+              Last updated: {lastUpdated}
+            </p>
+
+            <div className="filter-row" role="navigation" aria-label="Other cities">
+              <Link to="/news/st-catharines" className="badge badge-status" aria-current={city.slug === 'st-catharines' ? 'page' : undefined}>
+                St. Catharines
+              </Link>
+              <Link to="/news/welland" className="badge badge-status" aria-current={city.slug === 'welland' ? 'page' : undefined}>
+                Welland
+              </Link>
+              <Link to="/news/thorold" className="badge badge-status" aria-current={city.slug === 'thorold' ? 'page' : undefined}>
+                Thorold
+              </Link>
+              <Link to="/news/niagara-falls" className="badge badge-status" aria-current={city.slug === 'niagara-falls' ? 'page' : undefined}>
+                Niagara Falls
+              </Link>
+              <Link to="/planning-tracker" className="badge badge-default">
+                Planning tracker
+              </Link>
             </div>
+          </div>
+        </header>
+
+        <div className="scd-front-rail">
+          <div>
+            <h2 id="latest-h" className="scd-section-rule">
+              Latest
+            </h2>
             {latest.length === 0 ? (
               <div className="scd-empty">
                 No items yet. Check the{' '}
@@ -163,9 +165,9 @@ export default function CityNewsPage() {
 
             {planning.length > 0 && (
               <>
-                <div className="scd-feed-label" style={{ marginTop: '2rem' }}>
+                <h2 id="planning-h" className="scd-section-rule">
                   Planning
-                </div>
+                </h2>
                 {planning.map((n) => (
                   <NoticeCard
                     key={`p-${n.id}`}
@@ -177,9 +179,9 @@ export default function CityNewsPage() {
 
             {police.length > 0 && (
               <>
-                <div className="scd-feed-label" style={{ marginTop: '2rem' }}>
+                <h2 id="police-h" className="scd-section-rule">
                   Police / public safety
-                </div>
+                </h2>
                 {police.map((r) => (
                   <NoticeCard
                     key={`r-${r.id}`}
@@ -198,10 +200,10 @@ export default function CityNewsPage() {
             )}
           </div>
 
-          <aside>
-            <div className="scd-side-block">
-              <h4 className="scd-side-label">Official sources</h4>
-              <ul className="scd-side-list">
+          <aside className="scd-rail" aria-label="About this coverage">
+            <div className="scd-rail-block">
+              <p className="scd-rail-label">Official sources</p>
+              <ul className="scd-rail-list">
                 <li>
                   <a href={city.officialSite} target="_blank" rel="noopener noreferrer">
                     City of {city.name} ↗
@@ -219,9 +221,9 @@ export default function CityNewsPage() {
                 </li>
               </ul>
             </div>
-            <div className="scd-side-block">
-              <h4 className="scd-side-label">How we report</h4>
-              <p className="scd-side-text">
+            <div className="scd-rail-block">
+              <p className="scd-rail-label">How we report</p>
+              <p className="scd-rail-text">
                 Only official primary sources. City hubs list planning notices and NRPS releases that
                 clearly name this municipality.
               </p>
