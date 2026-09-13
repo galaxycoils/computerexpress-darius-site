@@ -1,115 +1,154 @@
-import Seo, { BASE_URL } from '../components/Seo'
+import { Helmet } from 'react-helmet-async'
 import { Link } from 'react-router-dom'
+import manifest from '../data/generated/manifest.json'
+import '../components/news/CouncilPage.css'
 
-const CITIES = [
-  {
-    name: 'St. Catharines',
-    url: 'https://www.stcatharines.ca/',
-    agendaNote: 'Council agendas, minutes and public notices',
-  },
-  {
-    name: 'Welland',
-    url: 'https://www.welland.ca/',
-    agendaNote: 'Council agendas, minutes and public notices',
-  },
-  {
-    name: 'Thorold',
-    url: 'https://www.thorold.ca/',
-    agendaNote: 'Council agendas, minutes and public notices',
-  },
-]
+function SourceStatusBadge({ status }) {
+  const config = {
+    healthy  : { label: 'Healthy',      color: 'var(--success)' },
+    'no-new' : { label: 'No new items', color: 'var(--info)' },
+    failed   : { label: 'Failed',       color: 'var(--error)' },
+  }
+  const entry = config[status] || { label: status, color: 'var(--muted)' }
+  return (
+    <span
+      className="badge badge-status"
+      style={{ '--badge-tint': entry.color }}
+      title={entry.label}
+    >
+      {entry.label}
+    </span>
+  )
+}
 
-export default function CouncilPage() {
+function formatStaleDate(ts) {
+  if (!ts) return ''
+  const d = new Date(ts)
+  if (isNaN(d.getTime())) return ts
+  return d.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })
+}
+
+const councilJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  name: 'City Council — St. Catharines, Welland & Thorold',
+  url: 'https://stcatharinesdigital.ca/council/',
+  description: 'Official city council agendas, minutes and decisions for St. Catharines, Welland and Thorold. Links to primary municipal sources only.',
+  about: { '@type': 'Thing', name: 'Municipal Council' },
+  inLanguage: 'en-CA',
+}
+
+function CouncilPage() {
+  const COUNCIL_SOURCES = (manifest?.sources
+    ? Object.entries(manifest.sources).filter(([, src]) => src.sourceType === 'council_document')
+    : [])
+
+  const allFailedNull = COUNCIL_SOURCES.length > 0 &&
+    COUNCIL_SOURCES.every(([, src]) => src.status === 'failed' && src.lastSuccessfulScanAt === null)
+
   return (
     <>
-      <Seo
-        title="City Council — St. Catharines, Welland & Thorold"
-        description="Official city council agendas, minutes and decisions for St. Catharines, Welland and Thorold. Links to primary municipal sources only."
-      />
+      <Helmet>
+        <title>City Council — St. Catharines, Welland & Thorold</title>
+        <meta name="description" content="Official city council agendas, minutes and decisions for St. Catharines, Welland and Thorold. Links to primary municipal sources only." />
+        <meta property="og:title" content="City Council — St. Catharines, Welland & Thorold" />
+        <meta property="og:description" content="Official city council agendas, minutes and decisions for St. Catharines, Welland and Thorold. Links to primary municipal sources only." />
+        <meta property="og:type" content="website" />
+        <script type="application/ld+json">{JSON.stringify(councilJsonLd)}</script>
+        <link rel="canonical" href="/council/" />
+      </Helmet>
 
-      <section className="section-first" style={{ paddingTop: '3rem', paddingBottom: '2rem' }}>
-        <div className="container">
-          <p style={{
-            fontSize: '0.7rem',
-            letterSpacing: '0.12em',
-            textTransform: 'uppercase',
-            color: 'var(--primary)',
-            fontWeight: 600,
-            marginBottom: '0.6rem'
-          }}>
-            Official Sources
-          </p>
-          <h1 style={{
-            fontSize: 'clamp(1.6rem, 3.5vw, 2.1rem)',
-            fontWeight: 650,
-            letterSpacing: '-0.02em',
-            marginBottom: '0.75rem'
-          }}>
-            City Council
-          </h1>
-          <p style={{
-            fontSize: '1rem',
-            color: 'var(--text-muted)',
-            maxWidth: '36rem',
-            lineHeight: 1.55
-          }}>
-            Agendas, minutes and decisions from the three cities. We only link to official municipal documents.
-          </p>
-        </div>
-      </section>
+      <section className="scd-page">
+        <div className="scd-eyebrow">Official Sources</div>
+        <h1 className="scd-page-title">City Council</h1>
+        <p className="scd-page-desc">
+          Agendas, minutes and decisions from the three cities. We only link to official municipal documents.
+        </p>
 
-      <section className="section" style={{ paddingTop: '0.5rem' }}>
-        <div className="container" style={{ display: 'grid', gap: '1rem', maxWidth: '42rem' }}>
-          {CITIES.map((city) => (
-            <article
-              key={city.name}
-              style={{
-                background: 'var(--surface)',
-                border: '1px solid var(--border)',
-                borderRadius: '12px',
-                padding: '1.35rem 1.5rem'
-              }}
-            >
-              <h2 style={{ fontSize: '1.1rem', fontWeight: 600, marginBottom: '0.35rem' }}>
-                {city.name}
-              </h2>
-              <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)', marginBottom: '0.85rem' }}>
-                {city.agendaNote}
-              </p>
-              <a
-                href={city.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="button button-secondary"
-                style={{ fontSize: '0.85rem' }}
-              >
-                Official city website ↗
-              </a>
-            </article>
-          ))}
-
-          <div style={{
-            marginTop: '1rem',
-            padding: '1.1rem 1.25rem',
-            background: 'rgba(59,130,246,0.06)',
-            border: '1px solid rgba(59,130,246,0.18)',
-            borderRadius: '10px',
-            fontSize: '0.875rem',
-            color: 'var(--text-muted)',
-            lineHeight: 1.5
-          }}>
-            <strong style={{ color: 'var(--primary)' }}>How we report</strong>
-            <br />
-            CouncilWatch only summarizes official agendas, minutes, bylaws and staff reports published by the three cities. No social media or secondary sources.
+        {allFailedNull && COUNCIL_SOURCES.length === 3 && (
+          <div className="scd-source-rows">
+            {COUNCIL_SOURCES.map(([, src]) => (
+              <article key={src.sourcePageUrl} className="meeting-card">
+                <div className="scd-source-header">
+                  <h2>{src.municipality}</h2>
+                  <SourceStatusBadge status="failed" />
+                </div>
+                <p className="scd-stale-null">No successful scan yet.</p>
+                <a
+                  href={src.sourcePageUrl}
+                  target="_blank" rel="noopener noreferrer"
+                  className="button button-secondary scd-source-link"
+                >
+                  Visit official city page ↗
+                </a>
+              </article>
+            ))}
           </div>
+        )}
 
-          <p style={{ marginTop: '0.5rem' }}>
-            <Link to="/planning-tracker" style={{ color: 'var(--primary)', fontSize: '0.9rem' }}>
-              Also see Planning Tracker →
-            </Link>
-          </p>
+        {!allFailedNull && COUNCIL_SOURCES.length === 3 && (
+          <div className="scd-source-rows">
+            {COUNCIL_SOURCES.map(([, src]) => {
+              const isFailedNull = src.status === 'failed' && src.lastSuccessfulScanAt === null
+              const isFailedOk   = src.status === 'failed' && src.lastSuccessfulScanAt !== null
+              const hasItems     = src.items?.length > 0
+
+              return (
+                <article key={src.sourcePageUrl} className="meeting-card">
+                  <div className="scd-source-header">
+                    <h2>{src.municipality}</h2>
+                    <SourceStatusBadge status={src.status} />
+                  </div>
+
+                  {isFailedNull && (
+                    <p className="scd-stale-null">No successful scan yet.</p>
+                  )}
+
+                  {isFailedOk && (
+                    <div className="scd-stale-timestamp">
+                      <span className="scd-stale-label">Stale — </span>
+                      <span className="scd-stale-time">last successful scan: {formatStaleDate(src.lastSuccessfulScanAt)}</span>
+                    </div>
+                  )}
+
+                  <a
+                    href={src.sourcePageUrl}
+                    target="_blank" rel="noopener noreferrer"
+                    className="button button-secondary scd-source-link"
+                  >
+                    Visit official city page ↗
+                  </a>
+
+                  {hasItems && (
+                    <ul className="scd-doc-list">
+                      {src.items.map((item) => (
+                        <li key={item.link} className="scd-doc-item">
+                          <a href={item.link} target="_blank" rel="noopener noreferrer">
+                            {item.title}
+                          </a>
+                          <span className="scd-doc-date">{item.publishedAt?.slice(0, 10)}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </article>
+              )
+            })}
+          </div>
+        )}
+
+        <div className="scd-how-we-report">
+          <strong>How we report</strong>
+          <br />
+          CouncilWatch only summarizes official agendas, minutes, bylaws and staff reports published by the three cities. No social media or secondary sources.
         </div>
+
+        <p className="scd-see-also">
+          <Link to="/planning-tracker">Also see Planning Tracker →</Link>
+        </p>
       </section>
     </>
   )
 }
+
+export default CouncilPage

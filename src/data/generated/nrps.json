@@ -1,0 +1,39 @@
+{
+  "source": "Niagara Regional Police Service",
+  "url": "https://www.niagarapolice.ca/news/media-releases/",
+  "lastSuccessfulScanAt": "2026-09-12T19:49:01Z",
+  "lastAttemptedAt": "2026-09-12T19:49:01Z",
+  "status": "healthy",
+  "items": [
+    {
+      "title": "Two Arrested in Welland Break and Enter Investigation",
+      "link": "https://www.niagarapolice.ca/news/posts/two-arrested-in-welland-break-and-enter-investigation/",
+      "publishedAt": "2026-09-09T00:00:00Z"
+    },
+    {
+      "title": "Police Investigating Serious E-Scooter Collision in Welland",
+      "link": "https://www.niagarapolice.ca/news/posts/police-investigating-serious-e-scooter-collision-in-welland/",
+      "publishedAt": "2026-09-07T00:00:00Z"
+    },
+    {
+      "title": "Suspects to Identify in Wellandport Break and Enter",
+      "link": "https://www.niagarapolice.ca/news/posts/suspects-to-identify-in-wellandport-break-and-enter/",
+      "publishedAt": "2026-09-04T00:00:00Z"
+    },
+    {
+      "title": "24-Year-Old Welland Man Arrested for Child Sexual Abuse and Exploitation Material",
+      "link": "https://www.niagarapolice.ca/news/posts/24-year-old-welland-man-arrested-for-child-sexual-abuse-and-exploitation-material/",
+      "publishedAt": "2026-09-03T00:00:00Z"
+    },
+    {
+      "title": "Mississauga Male Arrested in Thorold and Welland Search Warrants",
+      "link": "https://www.niagarapolice.ca/news/posts/mississauga-male-arrested-in-thorold-and-welland-search-warrants/",
+      "publishedAt": "2026-09-02T00:00:00Z"
+    },
+    {
+      "title": "Single Vehicle Collision Results in Serious Injuries \u2013 Witnesses Sought \u2013 Thorold",
+      "link": "https://www.niagarapolice.ca/news/posts/single-vehicle-collision-results-in-serious-injuries-witnesses-sought-thorold/",
+      "publishedAt": "2026-09-01T00:00:00Z"
+    }
+  ]
+}

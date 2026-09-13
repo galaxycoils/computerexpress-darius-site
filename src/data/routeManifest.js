@@ -21,7 +21,7 @@ export const baseRoutes = [
 
 export const programmaticRoutes = []
 
-export const sitemapRoutes = baseRoutes.filter((r) => !r.endsWith('/news')).concat(programmaticRoutes)
+export const sitemapRoutes = baseRoutes.filter((r) => r !== '/404').concat(programmaticRoutes)
 export const prerenderRoutes = [...baseRoutes, '/404']
 
 export function getRouteSitemapMeta(route) {

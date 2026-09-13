@@ -1,0 +1,80 @@
+{
+  "generationId": "gen-2026-09-13T01:18:28Z",
+  "lastAttemptedAt": "2026-09-13T01:18:28Z",
+  "sources": {
+    "nrps": {
+      "source": "Niagara Regional Police Service",
+      "sourcePageUrl": "https://www.niagarapolice.ca/news/media-releases/",
+      "sourceType": "official_press_release",
+      "status": "healthy",
+      "itemCount": 6,
+      "rejectedLinks": 4,
+      "lastSuccessfulScanAt": "2026-09-13T01:18:28Z",
+      "items": [
+        {
+          "title": "Two Arrested in Welland Break and Enter Investigation",
+          "link": "https://www.niagarapolice.ca/news/posts/two-arrested-in-welland-break-and-enter-investigation/",
+          "publishedAt": "2026-09-09T00:00:00Z"
+        },
+        {
+          "title": "Police Investigating Serious E-Scooter Collision in Welland",
+          "link": "https://www.niagarapolice.ca/news/posts/police-investigating-serious-e-scooter-collision-in-welland/",
+          "publishedAt": "2026-09-07T00:00:00Z"
+        },
+        {
+          "title": "Suspects to Identify in Wellandport Break and Enter",
+          "link": "https://www.niagarapolice.ca/news/posts/suspects-to-identify-in-wellandport-break-and-enter/",
+          "publishedAt": "2026-09-04T00:00:00Z"
+        },
+        {
+          "title": "24-Year-Old Welland Man Arrested for Child Sexual Abuse and Exploitation Material",
+          "link": "https://www.niagarapolice.ca/news/posts/24-year-old-welland-man-arrested-for-child-sexual-abuse-and-exploitation-material/",
+          "publishedAt": "2026-09-03T00:00:00Z"
+        },
+        {
+          "title": "Mississauga Male Arrested in Thorold and Welland Search Warrants",
+          "link": "https://www.niagarapolice.ca/news/posts/mississauga-male-arrested-in-thorold-and-welland-search-warrants/",
+          "publishedAt": "2026-09-02T00:00:00Z"
+        },
+        {
+          "title": "Single Vehicle Collision Results in Serious Injuries \u2013 Witnesses Sought \u2013 Thorold",
+          "link": "https://www.niagarapolice.ca/news/posts/single-vehicle-collision-results-in-serious-injuries-witnesses-sought-thorold/",
+          "publishedAt": "2026-09-01T00:00:00Z"
+        }
+      ]
+    },
+    "st_catharines": {
+      "municipality": "St. Catharines",
+      "sourcePageUrl": "https://www.stcatharines.ca/council-and-administration/mayor-and-council/",
+      "sourceType": "council_document",
+      "status": "failed",
+      "itemCount": 0,
+      "rejectedLinks": 8,
+      "lastSuccessfulScanAt": null,
+      "reason": "no qualifying documents",
+      "items": []
+    },
+    "welland": {
+      "municipality": "Welland",
+      "sourcePageUrl": "https://www.welland.ca/city-hall/mayor-and-council/council-agendas-and-minutes/",
+      "sourceType": "council_document",
+      "status": "failed",
+      "itemCount": 0,
+      "rejectedLinks": 31,
+      "lastSuccessfulScanAt": null,
+      "reason": "dates are meeting dates, not publication dates",
+      "items": []
+    },
+    "thorold": {
+      "municipality": "Thorold",
+      "sourcePageUrl": "https://www.thorold.ca/council-administration/council/council-meetings/",
+      "sourceType": "council_document",
+      "status": "failed",
+      "itemCount": 0,
+      "rejectedLinks": 0,
+      "lastSuccessfulScanAt": null,
+      "reason": "no qualifying documents",
+      "items": []
+    }
+  }
+}

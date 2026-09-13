@@ -1,0 +1,12 @@
+{
+  "municipality": "Welland",
+  "sourcePageUrl": "https://www.welland.ca/city-hall/mayor-and-council/council-agendas-and-minutes/",
+  "sourceType": "council_document",
+  "status": "failed",
+  "lastSuccessfulScanAt": null,
+  "lastAttemptedAt": "2026-09-12T19:50:49Z",
+  "itemCount": 0,
+  "rejectedLinks": 31,
+  "reason": "dates are meeting dates, not publication dates; no explicit publication date on official page",
+  "items": []
+}

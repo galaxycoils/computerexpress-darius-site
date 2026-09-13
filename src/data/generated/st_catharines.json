@@ -1,0 +1,12 @@
+{
+  "municipality": "St. Catharines",
+  "sourcePageUrl": "https://www.stcatharines.ca/council-and-administration/mayor-and-council/",
+  "sourceType": "council_document",
+  "status": "failed",
+  "lastSuccessfulScanAt": null,
+  "lastAttemptedAt": "2026-09-12T19:47:44Z",
+  "itemCount": 0,
+  "rejectedLinks": 8,
+  "reason": "no qualifying documents",
+  "items": []
+}

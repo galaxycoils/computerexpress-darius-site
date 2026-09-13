@@ -1,0 +1,12 @@
+{
+  "municipality": "Thorold",
+  "sourcePageUrl": "https://www.thorold.ca/council-administration/council/council-meetings/",
+  "sourceType": "council_document",
+  "status": "failed",
+  "lastSuccessfulScanAt": null,
+  "lastAttemptedAt": "2026-09-12T19:47:44Z",
+  "itemCount": 0,
+  "rejectedLinks": 0,
+  "reason": "no qualifying documents",
+  "items": []
+}

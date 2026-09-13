@@ -14,3 +14,6 @@ test-results/
 # Local Netlify folder
 .netlify
 dist/
+
+# Cloudflare Pages local secrets — never commit real tokens
+.dev.vars

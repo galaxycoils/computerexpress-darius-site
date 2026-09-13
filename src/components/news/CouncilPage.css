@@ -1,0 +1,175 @@
+/*
+ * CouncilPage — additive-only CSS.
+ * Uses existing var(--*) tokens and color-mix() only.
+ * No modifications to theme-civic.css / layout-news.css / styles.css.
+ * RGBA replaced with color-mix(in srgb, var(--X) ALPHA%, transparent) to match
+ * existing badge pattern from src/styles.css (lines ~277-285).
+ */
+
+.scd-page {
+  padding-top: 3rem;
+  padding-bottom: 2rem;
+}
+
+.scd-eyebrow {
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--primary);
+  font-weight: 600;
+  margin-bottom: 0.6rem;
+}
+
+.scd-page-title {
+  font-size: clamp(1.6rem, 3.5vw, 2.1rem);
+  font-weight: 650;
+  letter-spacing: -0.02em;
+  margin-bottom: 0.75rem;
+}
+
+.scd-page-desc {
+  font-size: 1rem;
+  color: var(--text-muted);
+  max-width: 36rem;
+  line-height: 1.55;
+  margin-bottom: 1.5rem;
+}
+
+.scd-source-rows {
+  display: grid;
+  gap: 1rem;
+  max-width: 42rem;
+  margin-top: 1rem;
+}
+
+.scd-source-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.25rem;
+}
+
+.scd-source-header h2 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 0;
+  margin-right: auto;
+}
+
+.scd-stale-null {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-top: 0.25rem;
+  margin-bottom: 1rem;
+}
+
+.scd-stale-timestamp {
+  margin-bottom: 1rem;
+}
+
+.scd-stale-label {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  font-weight: 600;
+  margin-right: 0.25rem;
+}
+
+.scd-stale-time {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  font-family: var(--mono);
+}
+
+.scd-source-link {
+  font-size: 0.85rem;
+  margin-top: 0.25rem;
+}
+
+.scd-error-banner {
+  padding: 1.25rem;
+  margin-top: 1.5rem;
+  background: color-mix(in srgb, var(--error) 6%, transparent);
+  border: 1px solid color-mix(in srgb, var(--error) 18%, transparent);
+  border-radius: 10px;
+  font-family: var(--mono);
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+.scd-error-banner strong {
+  color: var(--error);
+}
+
+.scd-loading {
+  padding: 1.25rem;
+  margin-top: 1.5rem;
+  background: var(--surface-variant);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+.scd-loading-spinner {
+  display: inline-block;
+  width: 1rem;
+  height: 1rem;
+  border: 2px solid var(--border);
+  border-top-color: var(--primary);
+  border-radius: 50%;
+  animation: scd-spin 0.8s linear infinite;
+  margin-right: 0.5rem;
+  vertical-align: middle;
+}
+
+@keyframes scd-spin {
+  to { transform: rotate(360deg); }
+}
+
+.scd-how-we-report {
+  margin-top: 1rem;
+  padding: 1.1rem 1.25rem;
+  background: color-mix(in srgb, var(--primary) 6%, transparent);
+  border: 1px solid color-mix(in srgb, var(--primary) 18%, transparent);
+  border-radius: 10px;
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+.scd-how-we-report strong {
+  color: var(--primary);
+}
+
+.scd-see-also {
+  margin-top: 0.5rem;
+}
+
+.scd-see-also a {
+  color: var(--primary);
+  font-size: 0.9rem;
+}
+
+.scd-doc-list {
+  margin-top: 1rem;
+  padding: 0 0 0 1rem;
+  list-style: none;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.scd-doc-item {
+  margin-bottom: 0.4rem;
+}
+
+.scd-doc-item a {
+  color: var(--primary);
+}
+
+.scd-doc-date {
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  margin-left: 0.25rem;
+}

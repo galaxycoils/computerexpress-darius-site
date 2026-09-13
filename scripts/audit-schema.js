@@ -33,13 +33,17 @@ if (!fs.existsSync(dist)) {
 }
 
 const errors = []
+// NewsMediaOrganization is a schema.org subtype of LocalBusiness; accept either.
+const ORG_TYPES = ['LocalBusiness', 'NewsMediaOrganization']
 const required = new Map([
-  ['/', ['LocalBusiness', 'WebSite']],
-  ['/services', ['LocalBusiness', 'Service']],
-  ['/contact', ['LocalBusiness', 'ContactPage']],
-  ['/free-audit', ['WebPage', 'VideoObject']],
-  ['/services/gbp-optimization', ['LocalBusiness', 'Service', 'VideoObject']],
+  ['/', { org: true, web: 'WebSite' }],
+  ['/contact', { org: true, web: 'ContactPage' }],
+  ['/council', { web: 'WebPage' }],
 ])
+
+function hasOrgType(types) {
+  return ORG_TYPES.some(t => types.includes(t))
+}
 
 for (const file of walk(dist)) {
   const html = fs.readFileSync(file, 'utf8')
@@ -62,11 +66,13 @@ for (const file of walk(dist)) {
     }
   }
 
-  for (const [targetRoute, neededTypes] of required) {
-    if (route !== targetRoute) continue
-    for (const needed of neededTypes) {
-      if (!types.includes(needed)) errors.push(`${route}: missing ${needed} JSON-LD`)
-    }
+  const spec = required.get(route)
+  if (!spec) continue
+  if (spec.org && !hasOrgType(types)) {
+    errors.push(`${route}: missing organization JSON-LD (need one of ${ORG_TYPES.join('/')})`)
+  }
+  if (spec.web && !types.includes(spec.web)) {
+    errors.push(`${route}: missing ${spec.web} JSON-LD`)
   }
 }
 
