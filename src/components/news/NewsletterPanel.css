@@ -84,3 +84,41 @@
   color: var(--muted-lite);
   margin: 10px 0 0;
 }
+
+.scd-newsletter-topics {
+  border: none;
+  padding: 0;
+  margin: 2px 0 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  align-items: center;
+}
+
+.scd-newsletter-topics legend {
+  font-family: var(--font-ui);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--muted);
+  padding: 0;
+  margin-right: 4px;
+}
+
+.scd-newsletter-topics label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-ui);
+  font-size: 13.5px;
+  font-weight: 550;
+  color: var(--text-bright);
+  cursor: pointer;
+  min-height: 32px;
+}
+
+.scd-newsletter-topics input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--signal);
+  cursor: pointer;
+}

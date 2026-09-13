@@ -7,6 +7,7 @@ import OfficialSourcesPanel from '../components/news/OfficialSourcesPanel'
 import NewsletterPanel from '../components/news/NewsletterPanel'
 import AnimatedSection from '../hooks/useInView'
 import '../components/news/news.css'
+import '../components/news/election.css'
 
 const LOCAL_PHOTOS = {
   'stc-455-welland-ave': {
@@ -177,6 +178,17 @@ export default function HomePage() {
       url: BASE_URL,
       inLanguage: 'en-CA',
     },
+    {
+      '@context': 'https://schema.org',
+      '@type': 'ItemList',
+      name: 'Top municipal stories',
+      itemListElement: [lead, ...topStories].filter(Boolean).slice(0, 4).map((n, i) => ({
+        '@type': 'ListItem',
+        position: i + 1,
+        name: n.title,
+        ...(n.sourceUrl ? { url: n.sourceUrl } : {}),
+      })),
+    },
   ]
 
   return (
@@ -264,6 +276,25 @@ export default function HomePage() {
 
         </div>
 
+        <section className="scd-election-band" aria-labelledby="decision-2026-h">
+          <div className="scd-intro">
+            <div>
+              <p className="scd-eyebrow">Decision 2026 · Welland votes Oct 26</p>
+              <p className="scd-intro-title">Eight candidates. One mayor.</p>
+              <p className="scd-intro-note">The certified field, key dates, advance polls, and how to vote — drawn from City of Welland sources.</p>
+              <ul className="scd-votes-facts" aria-label="Race at a glance">
+                <li><span className="badge badge-status">Voting Day Oct 26</span></li>
+                <li><span className="badge badge-status">8 certified for mayor</span></li>
+                <li><span className="badge badge-default">Paper ballot</span></li>
+              </ul>
+            </div>
+            <div className="scd-election-band-cta">
+              <Link to="/welland-votes" className="button button-primary">Open the voter guide</Link>
+              <Link to="/news/welland" className="scd-more">All Welland coverage →</Link>
+            </div>
+          </div>
+        </section>
+
         {latest.length > 0 && (
           <AnimatedSection delay={80}>
             <section className="scd-latest" aria-labelledby="latest-h">
@@ -296,6 +327,10 @@ export default function HomePage() {
           </AnimatedSection>
         )}
 
+        <section aria-label="Get planning alerts by email">
+          <NewsletterPanel placement="home" topics={['Council', 'Planning', 'Police']} />
+        </section>
+
         <div className="scd-cta-row">
           <Link to="/planning-tracker" className="scd-cta-primary">
             Planning Tracker
@@ -308,9 +343,6 @@ export default function HomePage() {
           </Link>
           <Link to="/membership" className="scd-outline-btn">
             Founding Supporter
-          </Link>
-          <Link to="/planning-alerts" className="scd-outline-btn">
-            Pay with eTransfer
           </Link>
         </div>
 

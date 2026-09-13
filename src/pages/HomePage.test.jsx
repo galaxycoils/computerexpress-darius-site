@@ -50,8 +50,29 @@ describe('HomePage — Editorial Newsroom', () => {
     expect(notices.length).toBeGreaterThan(0)
   })
 
-  it('keeps the newsletter form accessible', () => {
+  it('keeps the newsletter forms accessible', () => {
     renderWithProviders(<HomePage />)
-    expect(screen.getByRole('textbox', { name: /email address/i })).toHaveAttribute('type', 'email')
+    const boxes = screen.getAllByRole('textbox', { name: /email address/i })
+    expect(boxes.length).toBeGreaterThanOrEqual(2)
+    boxes.forEach((box) => expect(box).toHaveAttribute('type', 'email'))
+  })
+
+  it('surfaces the Welland election band with voter guide link', () => {
+    renderWithProviders(<HomePage />)
+    expect(screen.getByText(/Eight candidates\. One mayor\./i)).toBeInTheDocument()
+    const guide = screen.getByRole('link', { name: /Open the voter guide/i })
+    expect(guide.getAttribute('href')).toBe('/welland-votes')
+  })
+
+  it('offers topic checkboxes in the home capture', () => {
+    renderWithProviders(<HomePage />)
+    expect(screen.getByRole('checkbox', { name: /Council/i })).toBeInTheDocument()
+    expect(screen.getByRole('checkbox', { name: /Planning/i })).toBeInTheDocument()
+    expect(screen.getByRole('checkbox', { name: /Police/i })).toBeInTheDocument()
+  })
+
+  it('has no duplicate-destination CTAs', () => {
+    renderWithProviders(<HomePage />)
+    expect(screen.queryByRole('link', { name: /Pay with eTransfer/i })).not.toBeInTheDocument()
   })
 })

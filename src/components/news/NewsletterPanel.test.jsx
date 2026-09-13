@@ -24,7 +24,26 @@ describe('NewsletterPanel', () => {
 
     const [, init] = fetchMock.mock.calls[0]
     const body = JSON.parse(init.body)
-    expect(body).toEqual({ email: 'reader@example.com', placement: 'guide_inline' })
+    expect(body).toEqual({ email: 'reader@example.com', placement: 'guide_inline', topics: [] })
+  })
+
+  it('sends selected topics in the request body', async () => {
+    const fetchMock = vi.fn().mockResolvedValue({
+      ok: true,
+      json: async () => ({ success: true }),
+    })
+    vi.stubGlobal('fetch', fetchMock)
+
+    render(<NewsletterPanel placement="home" topics={['Council', 'Planning', 'Police']} />)
+    fireEvent.click(screen.getByRole('checkbox', { name: /council/i }))
+
+    const input = screen.getByRole('textbox', { name: /email address/i })
+    fireEvent.change(input, { target: { value: 'reader@example.com' } })
+    fireEvent.click(screen.getByRole('button', { name: /subscribe free/i }))
+
+    await waitFor(() => expect(fetchMock).toHaveBeenCalled())
+    const body = JSON.parse(fetchMock.mock.calls[0][1].body)
+    expect(body.topics).toEqual(['council'])
   })
 
   it('defaults placement to site_rail when no prop is passed', async () => {

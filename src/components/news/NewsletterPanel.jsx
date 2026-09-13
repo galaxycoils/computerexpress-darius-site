@@ -1,10 +1,22 @@
-import { useState } from 'react'
+import { useId, useState } from 'react'
 import './NewsletterPanel.css'
 
-export default function NewsletterPanel({ placement = 'site_rail' }) {
+export default function NewsletterPanel({ placement = 'site_rail', topics = null }) {
+  const uid = useId().replace(/[^a-zA-Z0-9]/g, '')
+  const emailId = `scd-newsletter-email-${uid}`
   const [email, setEmail] = useState('')
   const [status, setStatus] = useState('idle') // idle | sending | success | error
   const [error, setError] = useState('')
+  const [selected, setSelected] = useState(() => new Set())
+
+  function toggleTopic(value) {
+    setSelected((prev) => {
+      const next = new Set(prev)
+      if (next.has(value)) next.delete(value)
+      else next.add(value)
+      return next
+    })
+  }
 
   async function onSubmit(e) {
     e.preventDefault()
@@ -15,7 +27,7 @@ export default function NewsletterPanel({ placement = 'site_rail' }) {
       const res = await fetch('/api/newsletter', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: email.trim(), placement }),
+        body: JSON.stringify({ email: email.trim(), placement, topics: [...selected] }),
       })
       const data = await res.json().catch(() => ({}))
       if (!res.ok || data.success !== true) throw new Error(data.error || 'Subscription could not be confirmed. Please try again later.')
@@ -39,11 +51,29 @@ export default function NewsletterPanel({ placement = 'site_rail' }) {
             New notices, upcoming hearings, and what changed — one weekly digest that stays with you.
           </p>
           <form className="scd-newsletter-form" onSubmit={onSubmit} noValidate={false}>
-            <label className="scd-newsletter-sr" htmlFor="scd-newsletter-email">
+            <label className="scd-newsletter-sr" htmlFor={emailId}>
               Email address
             </label>
+            {topics && topics.length > 0 && (
+              <fieldset className="scd-newsletter-topics">
+                <legend>Follow</legend>
+                {topics.map((topic) => {
+                  const value = topic.toLowerCase()
+                  return (
+                    <label key={value}>
+                      <input
+                        type="checkbox"
+                        checked={selected.has(value)}
+                        onChange={() => toggleTopic(value)}
+                      />
+                      {topic}
+                    </label>
+                  )
+                })}
+              </fieldset>
+            )}
             <input
-              id="scd-newsletter-email"
+              id={emailId}
               type="email"
               name="email"
               value={email}

@@ -388,3 +388,34 @@
     margin-bottom: 36px;
   }
 }
+
+/* Homepage election band — intro rhythm with ruled top edge */
+.scd-election-band {
+  border-top: 2px solid var(--text-bright);
+  padding: 32px 0 8px;
+  margin-bottom: 48px;
+}
+
+.scd-election-band .scd-intro {
+  padding: 32px 0;
+  margin-bottom: 0;
+}
+
+.scd-election-band-cta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  min-width: 220px;
+}
+
+.scd-election-band-cta .button {
+  width: 100%;
+}
+
+@media (max-width: 599px) {
+  .scd-election-band {
+    padding: 24px 0 4px;
+    margin-bottom: 36px;
+  }
+}

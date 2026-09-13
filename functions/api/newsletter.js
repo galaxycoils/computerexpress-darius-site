@@ -44,6 +44,12 @@ export async function onRequestPost(context) {
     const ALLOWED_PLACEMENTS = new Set(['site_rail', 'guide_inline', 'planning_tracker', 'home']);
     const placement = ALLOWED_PLACEMENTS.has(json?.placement) ? json.placement : 'site_rail';
 
+    const ALLOWED_TOPICS = new Set(['council', 'planning', 'police']);
+    const topics = Array.isArray(json?.topics)
+      ? [...new Set(json.topics.filter((t) => ALLOWED_TOPICS.has(String(t).toLowerCase())))]
+      : [];
+    const topicLabels = topics.map((t) => `topic:${String(t).toLowerCase()}`);
+
     const sendRes = await fetch(`${AGENTMAIL_BASE}/inboxes/${inbox.inbox_id}/messages/send`, {
       method: 'POST',
       headers: {
@@ -64,7 +70,7 @@ export async function onRequestPost(context) {
     </div>
     <a href="https://stcatharinesdigital.ca" style="display:inline-block;padding:.75rem 2rem;background:#12d6ff;color:#060d1b;text-decoration:none;border-radius:8px;font-weight:700;">Visit St. Catharines Digital</a>
     </div></body></html>`,
-        labels: ['newsletter', 'welcome', `placement:${placement}`],
+        labels: ['newsletter', 'welcome', `placement:${placement}`, ...topicLabels],
       }),
     });
 

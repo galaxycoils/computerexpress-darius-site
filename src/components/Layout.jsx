@@ -16,6 +16,7 @@ const NAV = [
   { to: '/planning-tracker', label: 'Planning' },
   { to: '/membership', label: 'Support Us' },
   { to: '/police', label: 'Police' },
+  { to: '/welland-votes', label: 'Welland Votes' },
   { to: '/sponsor', label: 'Sponsor' },
   { to: '/about', label: 'About' },
 ]
