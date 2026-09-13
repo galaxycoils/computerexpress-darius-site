@@ -23,6 +23,7 @@ export const baseRoutes = [
   '/news/welland',
   '/news/thorold',
   '/news/niagara-falls',
+  '/planning-alerts',
   ...guideRoutes,
 ]
 

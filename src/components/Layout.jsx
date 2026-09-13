@@ -204,6 +204,7 @@ export default function Layout() {
             <Link to="/news/welland">Welland</Link>
             <Link to="/news/thorold">Thorold</Link>
             <Link to="/news/niagara-falls">Niagara Falls</Link>
+            <Link to="/planning-alerts">Planning Alerts</Link>
             <Link to="/sponsor">Sponsor the Planning Alert</Link>
           </div>
           <div>
