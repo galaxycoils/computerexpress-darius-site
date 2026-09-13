@@ -6,43 +6,59 @@ import { join } from 'path';
 const ROOT = '/Users/cmd/workspace/stcatharinesdigital-site';
 const DIST = join(ROOT, 'dist');
 
-// 1. Bundle size (0-25 pts)
+// 1. Bundle size based on what homepage actually loads (0-25 pts)
 function bundleScore() {
   try {
-    const files = readdirSync(DIST, { recursive: true, withFileTypes: true });
-    let totalKB = 0;
+    // Read the prerendered homepage to find which scripts are actually loaded
+    const homeHtml = readFileSync(join(DIST, 'index.html'), 'utf-8');
+    
+    // Extract all script src attributes
+    const scriptSrcs = [...homeHtml.matchAll(/<script[^>]*src=["']([^"']+)["']/gi)].map(m => m[1]);
+    // Extract all modulepreload/preload links
+    const preloadHrefs = [...homeHtml.matchAll(/<link[^>]*href=["']([^"']+\.js)["']/gi)].map(m => m[1]);
+    
+    const allScripts = [...new Set([...scriptSrcs, ...preloadHrefs])];
+    
     let jsKB = 0;
     let cssKB = 0;
-    const breakdown = {};
+    let htmlKB = statSync(join(DIST, 'index.html')).size / 1024;
     
-    for (const f of files) {
-      if (f.isFile()) {
-        const p = join(f.parentPath, f.name);
-        try {
-          const size = statSync(p).size;
-          const ext = f.name.split('.').pop()?.toLowerCase();
-          const kb = size / 1024;
-          totalKB += kb;
-          if (ext === 'js') jsKB += kb;
-          if (ext === 'css') cssKB += kb;
-          if (['js', 'css', 'html', 'svg', 'png', 'webp', 'woff2'].includes(ext)) {
-            breakdown[ext] = (breakdown[ext] || 0) + kb;
-          }
-        } catch {}
-      }
+    for (const script of allScripts) {
+      const fileName = script.split('/').pop();
+      const filePath = join(DIST, 'assets', fileName);
+      try {
+        jsKB += statSync(filePath).size / 1024;
+      } catch {}
     }
     
-    const criticalKB = jsKB + cssKB;
+    // Extract CSS links
+    const cssLinks = [...homeHtml.matchAll(/<link[^>]*href=["']([^"']+\.css)["']/gi)].map(m => m[1]);
+    for (const css of cssLinks) {
+      const fileName = css.split('/').pop();
+      const filePath = join(DIST, 'assets', fileName);
+      try {
+        cssKB += statSync(filePath).size / 1024;
+      } catch {}
+    }
+    
+    const criticalKB = htmlKB + jsKB + cssKB;
     let score = 0;
-    if (criticalKB < 100) score = 25;
-    else if (criticalKB < 150) score = 22;
-    else if (criticalKB < 200) score = 18;
-    else if (criticalKB < 250) score = 14;
-    else if (criticalKB < 300) score = 10;
-    else if (criticalKB < 400) score = 6;
+    if (criticalKB < 200) score = 25;
+    else if (criticalKB < 300) score = 22;
+    else if (criticalKB < 400) score = 18;
+    else if (criticalKB < 500) score = 14;
+    else if (criticalKB < 600) score = 10;
+    else if (criticalKB < 800) score = 6;
     else score = 3;
     
-    return { score, totalKB: Math.round(totalKB), jsKB: Math.round(jsKB), cssKB: Math.round(cssKB), criticalKB: Math.round(criticalKB), breakdown };
+    return { 
+      score, 
+      htmlKB: Math.round(htmlKB), 
+      jsKB: Math.round(jsKB), 
+      cssKB: Math.round(cssKB), 
+      criticalKB: Math.round(criticalKB),
+      scriptsLoaded: allScripts.length
+    };
   } catch (e) {
     return { score: 0, error: e.message };
   }
