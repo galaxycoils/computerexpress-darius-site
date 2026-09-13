@@ -17,3 +17,18 @@ dist/
 
 # Cloudflare Pages local secrets — never commit real tokens
 .dev.vars
+
+# Local-only tooling and agent workspaces — never ship
+.wrangler/
+.agents/
+.claude/
+.hermes/skills/
+skills-lock.json
+
+# Scan-loop and task scratch artifacts — never ship
+.generation-duplicate-check.json
+.generation-evidence.json
+NEWS_SHORTLIST.md
+results.tsv
+src/data/generated/*.bak
+src/data/generated/*.baseline.json
