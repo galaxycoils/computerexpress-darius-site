@@ -1,27 +1,27 @@
-import React, { lazy, Suspense } from 'react'
+import React from 'react'
 import { BrowserRouter, Routes, Route, useParams } from 'react-router-dom'
 import Layout from './components/Layout'
 
-// Lazy load pages not needed on first paint
-const HomePage = lazy(() => import('./pages/HomePage'))
-const AboutPage = lazy(() => import('./pages/AboutPage'))
-const ContactPage = lazy(() => import('./pages/ContactPage'))
-const NotFoundPage = lazy(() => import('./pages/NotFoundPage'))
-const PrivacyPage = lazy(() => import('./pages/PrivacyPage'))
-const TermsPage = lazy(() => import('./pages/TermsPage'))
-const PlanningTrackerPage = lazy(() => import('./pages/PlanningTrackerPage'))
-const CouncilPage = lazy(() => import('./pages/CouncilPage'))
-const PolicePage = lazy(() => import('./pages/PolicePage'))
-const NewsPage = lazy(() => import('./pages/NewsPage'))
-const CityNewsPage = lazy(() => import('./pages/CityNewsPage'))
-const PoliceNewsPage = lazy(() => import('./pages/PoliceNewsPage'))
-const BlogPage = lazy(() => import('./pages/BlogPage'))
-const BlogPostPage = lazy(() => import('./pages/BlogPostPage'))
-const SponsorPage = lazy(() => import('./pages/SponsorPage'))
-const WellandVotesPage = lazy(() => import('./pages/WellandVotesPage'))
-const PlanningAlertsPage = lazy(() => import('./pages/PlanningAlertsPage'))
-const MembershipPage = lazy(() => import('./pages/MembershipPage'))
-const GuidePage = lazy(() => import('./pages/GuidePage'))
+// Static imports keep renderToString prerendering complete.
+import HomePage from './pages/HomePage'
+import AboutPage from './pages/AboutPage'
+import ContactPage from './pages/ContactPage'
+import NotFoundPage from './pages/NotFoundPage'
+import PrivacyPage from './pages/PrivacyPage'
+import TermsPage from './pages/TermsPage'
+import PlanningTrackerPage from './pages/PlanningTrackerPage'
+import CouncilPage from './pages/CouncilPage'
+import PolicePage from './pages/PolicePage'
+import NewsPage from './pages/NewsPage'
+import CityNewsPage from './pages/CityNewsPage'
+import PoliceNewsPage from './pages/PoliceNewsPage'
+import BlogPage from './pages/BlogPage'
+import BlogPostPage from './pages/BlogPostPage'
+import SponsorPage from './pages/SponsorPage'
+import WellandVotesPage from './pages/WellandVotesPage'
+import PlanningAlertsPage from './pages/PlanningAlertsPage'
+import MembershipPage from './pages/MembershipPage'
+import GuidePage from './pages/GuidePage'
 
 function BlogPostWrapper() {
   const { slug } = useParams()
@@ -35,7 +35,6 @@ function GuidePageWrapper() {
 
 export function AppRoutes() {
   return (
-    <Suspense fallback={<div className="scd-page scd-paper"><div className="animate-on-scroll"><p style={{ padding: '2rem', textAlign: 'center', color: 'var(--muted)' }}>Loading…</p></div></div>}>
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<HomePage />} />
@@ -59,7 +58,6 @@ export function AppRoutes() {
           <Route path="*" element={<NotFoundPage />} />
         </Route>
       </Routes>
-    </Suspense>
   )
 }
 
