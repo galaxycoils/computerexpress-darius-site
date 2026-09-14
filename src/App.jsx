@@ -15,13 +15,18 @@ import PolicePage from './pages/PolicePage'
 import NewsPage from './pages/NewsPage'
 import CityNewsPage from './pages/CityNewsPage'
 import PoliceNewsPage from './pages/PoliceNewsPage'
+import BlogPage from './pages/BlogPage'
+import BlogPostPage from './pages/BlogPostPage'
+import VotesHubPage from './pages/VotesHubPage'
+import EditorialPolicyPage from './pages/EditorialPolicyPage'
+import CorrectionsPage from './pages/CorrectionsPage'
 import SponsorPage from './pages/SponsorPage'
 import WellandVotesPage from './pages/WellandVotesPage'
 import PlanningAlertsPage from './pages/PlanningAlertsPage'
 import MembershipPage from './pages/MembershipPage'
 import GuidePage from './pages/GuidePage'
 
-function GuidePageWrapper() {
+function BlogPostWrapper() {\n  const { slug } = useParams()\n  return <BlogPostPage slug={slug} />\n}\n\nfunction GuidePageWrapper() {
   const { slug } = useParams()
   return <GuidePage slug={slug} />
 }
@@ -45,7 +50,7 @@ export function AppRoutes() {
           <Route path="news" element={<NewsPage />} />
           <Route path="news/police" element={<PoliceNewsPage />} />
           <Route path="news/:citySlug" element={<CityNewsPage />} />
-          <Route path="guides/:slug" element={<GuidePageWrapper />} />
+          <Route path="blog" element={<BlogPage />} />\n          <Route path="blog/:slug" element={<BlogPostWrapper />} />\n          <Route path="votes" element={<VotesHubPage />} />\n          <Route path="editorial-policy" element={<EditorialPolicyPage />} />\n          <Route path="corrections" element={<CorrectionsPage />} />\n          <Route path="guides/:slug" element={<GuidePageWrapper />} />
           <Route path="*" element={<NotFoundPage />} />
         </Route>
       </Routes>
