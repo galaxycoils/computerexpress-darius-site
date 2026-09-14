@@ -33,7 +33,7 @@ function getStories() {
     if (status.includes('construction')) return 1
     return 2
   }
-  return [...planningNotices].sort((a, b) => rank(a) - rank(b) || new Date(b.meetingDate || b.publishedDate || 0) - new Date(a.meetingDate || a.publishedDate || 0)).slice(0, 8)
+  return [...planningNotices].sort((a, b) => rank(a) - rank(b) || Number(Boolean(LOCAL_PHOTOS[b.id])) - Number(Boolean(LOCAL_PHOTOS[a.id])) || new Date(b.meetingDate || b.publishedDate || 0) - new Date(a.meetingDate || a.publishedDate || 0)).slice(0, 8)
 }
 
 function StoryLink({ story, className = '' }) {
