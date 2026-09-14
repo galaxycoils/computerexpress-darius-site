@@ -10,7 +10,7 @@ export const baseRoutes = [
   '/',
   '/about',
   '/contact',
-  '/sponsor',
+  '/sponsor',\n  '/votes',\n  '/blog',\n  '/editorial-policy',\n  '/corrections',
   '/welland-votes',
   '/privacy',
   '/terms',
