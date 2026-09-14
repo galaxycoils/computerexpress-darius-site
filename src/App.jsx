@@ -26,7 +26,12 @@ import PlanningAlertsPage from './pages/PlanningAlertsPage'
 import MembershipPage from './pages/MembershipPage'
 import GuidePage from './pages/GuidePage'
 
-function BlogPostWrapper() {\n  const { slug } = useParams()\n  return <BlogPostPage slug={slug} />\n}\n\nfunction GuidePageWrapper() {
+function BlogPostWrapper() {
+  const { slug } = useParams()
+  return <BlogPostPage slug={slug} />
+}
+
+function GuidePageWrapper() {
   const { slug } = useParams()
   return <GuidePage slug={slug} />
 }
