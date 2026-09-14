@@ -16,6 +16,7 @@ const NAV = [
   { to: '/planning-tracker', label: 'Planning' },
   { to: '/membership', label: 'Support Us' },
   { to: '/police', label: 'Police' },
+  { to: '/votes', label: 'Votes' },
   { to: '/welland-votes', label: 'Welland Votes' },
   { to: '/sponsor', label: 'Sponsor' },
   { to: '/about', label: 'About' },
@@ -199,6 +200,8 @@ export default function Layout() {
             <Link to="/news/thorold">Thorold</Link>
             <Link to="/news/niagara-falls">Niagara Falls</Link>
             <Link to="/about">About</Link>
+            <Link to="/editorial-policy">Editorial Policy</Link>
+            <Link to="/corrections">Corrections</Link>
           </div>
           <div>
             <div className="scd-f-label">Cities</div>
