@@ -1,18 +1,11 @@
 import { BASE_URL, serviceAreaCities } from './siteConfig.js'
 
-export const guideRoutes = [
-  '/guides/st-catharines-ontario-street-corridor-plan',
-  '/guides/welland-first-street-consent-variance',
-  '/guides/thorold-pamela-drive-watermain',
-]
-
 export const baseRoutes = [
   '/',
   '/about',
   '/contact',
   '/sponsor',
   '/votes',
-  '/blog',
   '/editorial-policy',
   '/corrections',
   '/welland-votes',
@@ -29,7 +22,6 @@ export const baseRoutes = [
   '/news/niagara-falls',
   '/planning-alerts',
   '/membership',
-  ...guideRoutes,
 ]
 
 export const programmaticRoutes = []
@@ -41,9 +33,6 @@ export function getRouteSitemapMeta(route) {
   if (route === '/') return { priority: '1.0', changefreq: 'weekly' }
   if (['/about', '/contact', '/privacy', '/terms'].includes(route)) {
     return { priority: '0.8', changefreq: 'monthly' }
-  }
-  if (route.startsWith('/blog/')) {
-    return { priority: '0.7', changefreq: 'monthly' }
   }
   return { priority: '0.6', changefreq: 'monthly' }
 }
