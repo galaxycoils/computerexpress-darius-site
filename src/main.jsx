@@ -7,6 +7,7 @@ import './styles/theme-civic.css'
 import './styles.css'
 import './styles/layout-news.css'
 import './styles/alerts.css'
+import './styles/redesign.css'
 
 window.addEventListener('error', (event) => {
   const err = event.error || event.message
