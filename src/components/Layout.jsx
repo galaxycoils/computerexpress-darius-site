@@ -7,7 +7,6 @@ const SECTIONS = [
   { to: '/planning-tracker', label: 'Development' },
   { to: '/votes', label: 'Votes' },
   { to: '/police', label: 'Police' },
-  { to: '/blog', label: 'Guides' },
 ]
 
 const CITIES = [
@@ -94,7 +93,7 @@ export default function Layout() {
       <footer className="scd-f scd-f-dark">
         <div className="scd-f-grid">
           <div><div className="scd-f-name">St. Catharines Digital</div><p>Independent local coverage for St. Catharines, Welland, Thorold and Niagara Falls. Every civic record links to its primary source.</p></div>
-          <div><div className="scd-f-label">Coverage</div><Link to="/news">Latest news</Link><Link to="/council">Council</Link><Link to="/planning-tracker">Development</Link><Link to="/votes">Votes</Link><Link to="/police">Police</Link><Link to="/blog">Guides</Link></div>
+          <div><div className="scd-f-label">Coverage</div><Link to="/news">Latest news</Link><Link to="/council">Council</Link><Link to="/planning-tracker">Development</Link><Link to="/votes">Votes</Link><Link to="/police">Police</Link></div>
           <div><div className="scd-f-label">Reader services</div><Link to="/planning-alerts">Planning alerts</Link><Link to="/membership">Support the newsroom</Link><Link to="/sponsor">Sponsor</Link><Link to="/about">About</Link><Link to="/editorial-policy">Editorial policy</Link><Link to="/corrections">Corrections</Link></div>
           <div><div className="scd-f-label">Official sources</div><a href="https://www.stcatharines.ca/" target="_blank" rel="noopener noreferrer">St. Catharines</a><a href="https://www.welland.ca/" target="_blank" rel="noopener noreferrer">Welland</a><a href="https://www.thorold.ca/" target="_blank" rel="noopener noreferrer">Thorold</a><a href="https://www.niagarapolice.ca/" target="_blank" rel="noopener noreferrer">Niagara Regional Police</a></div>
         </div>
