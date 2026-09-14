@@ -183,7 +183,24 @@ export default function HomePage() {
         jsonLd={jsonLd}
       />
 
-      <div className="scd-page scd-paper">
+      <section className="scd-home-hero" aria-labelledby="home-title">
+          <div className="scd-home-hero-copy">
+            <p className="scd-kicker">Independent Niagara newsroom</p>
+            <h1 id="home-title">Know what is changing where you live.</h1>
+            <p>Local news, council decisions, planning notices and public-safety updates—organized for residents, with the original source close at hand.</p>
+            <div className="scd-hero-actions"><Link to="/news" className="scd-primary-btn">Read the latest <span aria-hidden="true">→</span></Link><Link to="/planning-tracker" className="scd-text-btn">Track local development</Link></div>
+          </div>
+          <div className="scd-hero-index" aria-label="Coverage snapshot">
+            <div><strong>{planningNotices.length}</strong><span>planning records</span></div>
+            <div><strong>{CITIES.length}</strong><span>city hubs</span></div>
+            <div><strong>01</strong><span>source-first rule</span></div>
+          </div>
+        </section>
+        <nav className="scd-topic-nav" aria-label="Explore coverage">
+          <span>Explore</span><Link to="/news/st-catharines">St. Catharines</Link><Link to="/news/welland">Welland</Link><Link to="/news/thorold">Thorold</Link><Link to="/council">Council</Link><Link to="/votes">Votes</Link>
+        </nav>
+
+        <div className="scd-page scd-paper">
         <div className="scd-intro">
           <div><p className="scd-eyebrow">St. Catharines · Welland · Thorold</p>
           <p className="scd-intro-title">Your region. On the record.</p></div>
