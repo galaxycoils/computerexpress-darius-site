@@ -56,19 +56,6 @@ function LocalPhoto({ photo, lead = false, href = null }) {
   )
 }
 
-const LEAD_ORDER = [
-  'stc-455-welland-ave',
-  'stc-ontario-st-corridor',
-  'stc-12-stepney-st',
-  'stc-cip-strategic-sites',
-  'stc-p23-061-brimley-crescent',
-  'welland-op-update',
-  'welland-opa-55',
-  'thorold-pamela-drive-watermain',
-  'thorold-1201-egerter-rd',
-  'welland-first-st-coa-2026-09-28',
-]
-
 function formatDate(iso) {
   if (!iso) return null
   try {
@@ -123,40 +110,26 @@ function withImage(n) {
 }
 
 function buildFeatured() {
-  const byId = Object.fromEntries(planningNotices.map((n) => [n.id, n]))
-  const ordered = []
-  const seen = new Set()
-
-  for (const id of LEAD_ORDER) {
-    if (byId[id] && !seen.has(id)) {
-      seen.add(id)
-      ordered.push(withImage(byId[id]))
-    }
+  const activeRank = (notice) => {
+    const status = (notice.status || '').toLowerCase()
+    if (status.includes('scheduled') || status === 'active') return 0
+    if (status.includes('construction')) return 1
+    return 2
   }
 
-  const rest = [...planningNotices]
-    .filter((n) => !seen.has(n.id))
+  return [...planningNotices]
     .sort((a, b) => {
-      const da = new Date(a.publishedDate || 0).getTime()
-      const db = new Date(b.publishedDate || 0).getTime()
-      return db - da
+      const rank = activeRank(a) - activeRank(b)
+      if (rank) return rank
+      const imageRank = Number(Boolean(LOCAL_PHOTOS[b.id])) - Number(Boolean(LOCAL_PHOTOS[a.id]))
+      if (imageRank) return imageRank
+      const aMeeting = new Date(a.meetingDate || 0).getTime()
+      const bMeeting = new Date(b.meetingDate || 0).getTime()
+      if (aMeeting !== bMeeting) return bMeeting - aMeeting
+      return new Date(b.publishedDate || 0).getTime() - new Date(a.publishedDate || 0).getTime()
     })
-
-  for (const n of rest) {
-    if (ordered.length >= 12) break
-    ordered.push(withImage(n))
-  }
-
-  // Prefer upcoming meetings near the top if thin
-  if (ordered.length < 6) {
-    for (const n of getUpcomingMeetings()) {
-      if (seen.has(n.id)) continue
-      ordered.push(withImage(n))
-      if (ordered.length >= 12) break
-    }
-  }
-
-  return ordered
+    .slice(0, 12)
+    .map(withImage)
 }
 
 export default function HomePage() {
@@ -164,6 +137,7 @@ export default function HomePage() {
   const lead = featured[0] || null
   const topStories = featured.slice(1, 4)
   const latest = featured.slice(4)
+  const weekAhead = getUpcomingMeetings().slice(0, 3)
 
   const jsonLd = [
     {
@@ -336,6 +310,30 @@ export default function HomePage() {
                   </AnimatedSection>
                 ))}
               </div>
+            </section>
+          </AnimatedSection>
+        )}
+
+        {weekAhead.length > 0 && (
+          <AnimatedSection delay={100}>
+            <section className="scd-week-ahead" aria-labelledby="week-ahead-h">
+              <div>
+                <p className="scd-cat">LOCAL CALENDAR</p>
+                <h2 id="week-ahead-h">What affects you this week</h2>
+                <p>Upcoming public meetings and hearings from official municipal notices.</p>
+              </div>
+              <ol>
+                {weekAhead.map((notice) => (
+                  <li key={notice.id}>
+                    <time dateTime={notice.meetingDate}>{formatDate(notice.meetingDate)}</time>
+                    <div>
+                      <strong>{notice.title}</strong>
+                      <span>{notice.municipality}{notice.meetingLocation ? ` · ${notice.meetingLocation}` : ''}</span>
+                    </div>
+                    <a href={notice.sourceUrl} target="_blank" rel="noopener noreferrer">Source</a>
+                  </li>
+                ))}
+              </ol>
             </section>
           </AnimatedSection>
         )}
