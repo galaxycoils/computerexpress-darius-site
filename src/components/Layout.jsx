@@ -11,15 +11,13 @@ function getInitialTheme() {
 }
 
 const NAV = [
-  { to: '/', label: 'News', end: true },
+  { to: '/news', label: 'Latest News' },
   { to: '/council', label: 'Council' },
   { to: '/planning-tracker', label: 'Planning' },
-  { to: '/membership', label: 'Support Us' },
-  { to: '/police', label: 'Police' },
   { to: '/votes', label: 'Votes' },
-  { to: '/welland-votes', label: 'Welland Votes' },
-  { to: '/sponsor', label: 'Sponsor' },
-  { to: '/about', label: 'About' },
+  { to: '/police', label: 'Police' },
+  { to: '/blog', label: 'Guides' },
+  { to: '/membership', label: 'Support Us' },
 ]
 
 const CITY_LINKS = [
@@ -121,6 +119,8 @@ export default function Layout() {
               <span className="scd-brand-tag">Local news for Niagara</span>
             </Link>
             <div className="scd-h-tools">
+              <Link to="/news" className="scd-header-link">Latest</Link>
+              <Link to="/planning-tracker" className="scd-header-link">Track a project</Link>
               <button type="button" className="scd-theme" onClick={toggleTheme} aria-label={theme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme'}>
                 {theme === 'dark' ? '☀' : '☾'}
               </button>
