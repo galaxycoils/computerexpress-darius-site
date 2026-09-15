@@ -495,3 +495,6 @@
   .scd-subscribe-link{padding:0 10px;font-size:.7rem}
   .scd-mobile-dock a>strong{font-size:.58rem}
 }
+
+/* Prevent subpixel card/grid rounding from creating a mobile horizontal scroll. */
+.news-root{overflow-x:clip}
