@@ -22,6 +22,8 @@ import SponsorPage from './pages/SponsorPage'
 import WellandVotesPage from './pages/WellandVotesPage'
 import PlanningAlertsPage from './pages/PlanningAlertsPage'
 import MembershipPage from './pages/MembershipPage'
+import ReaderServicesPage from './pages/ReaderServicesPage'
+import SearchPage from './pages/SearchPage'
 
 export function AppRoutes() {
   return (
@@ -39,6 +41,8 @@ export function AppRoutes() {
           <Route path="welland-votes" element={<WellandVotesPage />} />
           <Route path="planning-alerts" element={<PlanningAlertsPage />} />
           <Route path="membership" element={<MembershipPage />} />
+          <Route path="reader-services" element={<ReaderServicesPage />} />
+          <Route path="search" element={<SearchPage />} />
           <Route path="news" element={<NewsPage />} />
           <Route path="news/police" element={<PoliceNewsPage />} />
           <Route path="news/:citySlug" element={<CityNewsPage />} />
