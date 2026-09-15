@@ -1,0 +1,203 @@
+import { createHash } from 'node:crypto'
+import { mkdir, readFile, rename, writeFile } from 'node:fs/promises'
+import path from 'node:path'
+import { fileURLToPath } from 'node:url'
+import { sourceRegistry } from '../src/data/sourceRegistry.js'
+
+const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
+const OUTPUT = path.join(ROOT, 'src/data/generated/discovery.json')
+const MAX_BYTES = 2_000_000
+const MAX_ITEMS_PER_SOURCE = 50
+const USER_AGENT = 'StCatharinesDigitalSourceCollector/1.0 (+https://stcatharinesdigital.ca/editorial-policy)'
+
+function parseArgs(argv) {
+  const args = { write: false, source: null }
+  for (let index = 0; index < argv.length; index += 1) {
+    const value = argv[index]
+    if (value === '--write') args.write = true
+    else if (value === '--dry-run') args.write = false
+    else if (value === '--source') args.source = argv[++index]
+    else if (value.startsWith('--source=')) args.source = value.slice('--source='.length)
+    else throw new Error('Unknown argument: ' + value)
+  }
+  return args
+}
+
+function decodeEntities(value) {
+  const named = { amp: '&', apos: "'", gt: '>', lt: '<', nbsp: ' ', quot: '"' }
+  return value
+    .replace(/&#(\d+);/g, (_, code) => String.fromCodePoint(Number(code)))
+    .replace(/&#x([\da-f]+);/gi, (_, code) => String.fromCodePoint(Number.parseInt(code, 16)))
+    .replace(/&([a-z]+);/gi, (match, name) => named[name.toLowerCase()] ?? match)
+}
+
+function cleanText(value) {
+  return decodeEntities(value.replace(/<[^>]*>/g, ' '))
+    .replace(/\s+/g, ' ')
+    .trim()
+    .slice(0, 240)
+}
+
+function canonicalizeLink(href, sourceUrl) {
+  try {
+    const candidate = new URL(href, sourceUrl)
+    const source = new URL(sourceUrl)
+    if (candidate.protocol !== 'https:' || candidate.hostname !== source.hostname) return null
+    candidate.hash = ''
+    for (const key of [...candidate.searchParams.keys()]) {
+      if (/^(utm_|fbclid$|gclid$)/i.test(key)) candidate.searchParams.delete(key)
+    }
+    candidate.pathname = candidate.pathname.replace(/\/{2,}/g, '/')
+    return candidate.href
+  } catch {
+    return null
+  }
+}
+
+function looksLikeNews(url, sourceUrl) {
+  if (url === sourceUrl) return false
+  const pathname = new URL(url).pathname
+  return /\/(news|posts?|media|media-releases|notices?|public-notices?)(\/|$)/i.test(pathname)
+}
+
+function extractCandidates(html, source) {
+  const found = new Map()
+  const anchorPattern = /<a\b[^>]*\bhref\s*=\s*(['"])(.*?)\1[^>]*>([\s\S]*?)<\/a>/gi
+  for (const match of html.matchAll(anchorPattern)) {
+    const title = cleanText(match[3])
+    const url = canonicalizeLink(match[2], source.url)
+    if (!url || !looksLikeNews(url, source.url) || title.length < 12) continue
+    if (/^(read more|learn more|view all|news|next|previous)$/i.test(title)) continue
+    found.set(url, {
+      id: createHash('sha256').update(url).digest('hex').slice(0, 16),
+      title,
+      url,
+      sourceId: source.id,
+      sourceName: source.name,
+      city: source.city,
+      kind: source.kind,
+      sourcePublishedAt: null,
+      firstObservedAt: null,
+      lastObservedAt: null,
+      status: 'candidate',
+      reviewRequired: true,
+    })
+    if (found.size >= MAX_ITEMS_PER_SOURCE) break
+  }
+  return [...found.values()]
+}
+
+async function fetchHtml(source) {
+  const controller = new AbortController()
+  const timeout = setTimeout(() => controller.abort(), 15_000)
+  try {
+    const response = await fetch(source.url, {
+      headers: { accept: 'text/html,application/xhtml+xml', 'user-agent': USER_AGENT },
+      redirect: 'follow',
+      signal: controller.signal,
+    })
+    if (!response.ok) throw new Error('HTTP ' + response.status)
+    const contentType = response.headers.get('content-type') || ''
+    if (!contentType.includes('text/html') && !contentType.includes('application/xhtml+xml')) {
+      throw new Error('Unsupported content type: ' + contentType)
+    }
+    const declaredLength = Number(response.headers.get('content-length') || 0)
+    if (declaredLength > MAX_BYTES) throw new Error('Response exceeds size limit')
+    const html = await response.text()
+    if (Buffer.byteLength(html, 'utf8') > MAX_BYTES) throw new Error('Response exceeds size limit')
+    return html
+  } finally {
+    clearTimeout(timeout)
+  }
+}
+
+async function readExisting() {
+  try {
+    return JSON.parse(await readFile(OUTPUT, 'utf8'))
+  } catch (error) {
+    if (error.code === 'ENOENT') return { items: [] }
+    throw error
+  }
+}
+
+function validateSource(source) {
+  const url = new URL(source.url)
+  if (!source.enabled || !source.reviewRequired || url.protocol !== 'https:') {
+    throw new Error('Unsafe source configuration: ' + source.id)
+  }
+}
+
+async function main() {
+  const args = parseArgs(process.argv.slice(2))
+  const enabled = sourceRegistry.filter(source => source.enabled)
+  const selected = args.source ? enabled.filter(source => source.id === args.source) : enabled
+  if (!selected.length) throw new Error('No enabled source matched the request')
+  selected.forEach(validateSource)
+
+  const existing = await readExisting()
+  const collectedAt = new Date().toISOString()
+  const previous = new Map((existing.items || []).map(item => [item.url, item]))
+  const collected = []
+  const statuses = []
+  let successfulSources = 0
+
+  for (const source of selected) {
+    try {
+      const html = await fetchHtml(source)
+      const candidates = extractCandidates(html, source).map(item => {
+        const old = previous.get(item.url)
+        return {
+          ...item,
+          firstObservedAt: old?.firstObservedAt || collectedAt,
+          lastObservedAt: collectedAt,
+        }
+      })
+      collected.push(...candidates)
+      statuses.push({ id: source.id, ok: true, itemCount: candidates.length, checkedAt: collectedAt })
+      successfulSources += 1
+    } catch (error) {
+      statuses.push({ id: source.id, ok: false, itemCount: 0, checkedAt: collectedAt, error: String(error.message || error).slice(0, 180) })
+    }
+  }
+
+  if (!successfulSources) throw new Error('Every requested source failed; the last-known-good snapshot was preserved')
+
+  const selectedIds = new Set(selected.map(source => source.id))
+  const merged = new Map()
+  for (const item of existing.items || []) merged.set(item.url, item)
+  for (const item of collected) merged.set(item.url, item)
+
+  const items = [...merged.values()]
+    .filter(item => !selectedIds.has(item.sourceId) || selected.some(source => source.id === item.sourceId))
+    .sort((a, b) => a.sourceId.localeCompare(b.sourceId) || a.title.localeCompare(b.title))
+    .slice(0, sourceRegistry.length * MAX_ITEMS_PER_SOURCE)
+
+  const snapshot = {
+    version: 1,
+    collectedAt,
+    publicationState: 'review-required',
+    notice: 'Discovery candidates from approved official sources. No item is automatically published as reporting.',
+    sources: statuses,
+    items,
+  }
+
+  const summary = statuses.map(status => status.id + ': ' + (status.ok ? status.itemCount + ' candidates' : 'FAILED')).join('\n')
+  console.log(summary)
+  console.log('Total review candidates: ' + items.length)
+
+  if (!args.write) {
+    console.log('Dry run complete; no files changed.')
+    return
+  }
+
+  await mkdir(path.dirname(OUTPUT), { recursive: true })
+  const temporary = OUTPUT + '.tmp'
+  await writeFile(temporary, JSON.stringify(snapshot, null, 2) + '\n', 'utf8')
+  await rename(temporary, OUTPUT)
+  console.log('Wrote ' + path.relative(ROOT, OUTPUT))
+}
+
+main().catch(error => {
+  console.error(error)
+  process.exitCode = 1
+})

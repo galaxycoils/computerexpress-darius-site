@@ -14,7 +14,8 @@
     "audit:schema": "node scripts/audit-schema.js",
     "audit:lighthouse": "node scripts/audit-lighthouse.js",
     "audit:visual": "node scripts/audit-visual.js",
-    "content:audit": "node scripts/content-audit.js"
+    "content:audit": "node scripts/content-audit.js",
+    "content:collect": "node scripts/collect-official-news.js"
   },
   "dependencies": {
     "@xmldom/xmldom": "^0.9.12",
