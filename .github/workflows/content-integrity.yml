@@ -1,0 +1,27 @@
+name: Content integrity
+
+on:
+  schedule:
+    - cron: '23 12 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: content-integrity
+  cancel-in-progress: false
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run content:audit
+      - run: npm test
+      - run: npm run build
