@@ -522,3 +522,23 @@
   border-color:#b2eee5;
   color:#08201e;
 }
+
+/* Header Subscribe button final colour — 2026-09-15 */
+.news-root .scd-subscribe-link,
+.news-root.is-light .scd-subscribe-link,
+.news-root.is-dark .scd-subscribe-link{
+  background:#126d66;
+  border-color:#268f85;
+  color:#fff;
+  box-shadow:0 3px 10px rgba(0,0,0,.14);
+}
+.news-root .scd-subscribe-link:hover,
+.news-root .scd-subscribe-link:focus-visible,
+.news-root.is-light .scd-subscribe-link:hover,
+.news-root.is-light .scd-subscribe-link:focus-visible,
+.news-root.is-dark .scd-subscribe-link:hover,
+.news-root.is-dark .scd-subscribe-link:focus-visible{
+  background:#0b554f;
+  border-color:#55b9ae;
+  color:#fff;
+}
