@@ -22,6 +22,8 @@ export const baseRoutes = [
   '/news/niagara-falls',
   '/planning-alerts',
   '/membership',
+  '/reader-services',
+  '/search',
 ]
 
 export const programmaticRoutes = []
