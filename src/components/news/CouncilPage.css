@@ -173,3 +173,54 @@
   font-size: 0.75rem;
   margin-left: 0.25rem;
 }
+
+
+/* Seeded council directory and civic-record layout */
+.scd-council-page { padding-top:clamp(2.5rem,6vw,4.5rem); }
+.scd-council-intro { max-width:760px; padding-bottom:2rem; border-bottom:2px solid var(--text-bright); }
+.scd-council-intro .scd-page-title { margin:.45rem 0 .75rem; font-size:clamp(2.7rem,7vw,5.6rem); line-height:.94; letter-spacing:-.06em; }
+.scd-council-intro .scd-page-desc { max-width:650px; margin:0; font-size:clamp(1.05rem,2vw,1.3rem); line-height:1.55; }
+.scd-council-section-heading { display:flex; justify-content:space-between; align-items:end; gap:2rem; margin:3rem 0 1.25rem; padding-bottom:1rem; border-bottom:1px solid var(--line); }
+.scd-council-section-heading h2 { margin:.25rem 0 0; font-size:clamp(1.7rem,3vw,2.6rem); line-height:1; }
+.scd-council-section-heading > p { max-width:330px; margin:0; color:var(--muted); font-size:.9rem; text-align:right; }
+.scd-section-kicker { margin:0; color:var(--primary); font:800 .7rem var(--font-ui); letter-spacing:.12em; text-transform:uppercase; }
+.scd-council-portals { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:1rem; }
+.scd-council-portal { display:flex; flex-direction:column; min-height:245px; padding:1.5rem; border:1px solid var(--line); background:color-mix(in srgb,var(--bg-soft) 72%,transparent); }
+.scd-council-portal h3 { margin:1rem 0 .65rem; font-size:1.55rem; }
+.scd-council-portal p { margin:0 0 1.4rem; color:var(--muted); font-size:.94rem; line-height:1.55; }
+.scd-council-portal a { margin-top:auto; color:var(--primary); font-weight:800; }
+.scd-source-state { align-self:flex-start; padding:.38rem .58rem; border:1px solid color-mix(in srgb,var(--primary) 45%,transparent); color:var(--primary); font:800 .66rem var(--font-ui); letter-spacing:.1em; text-transform:uppercase; }
+.scd-civic-records { margin-top:1rem; }
+.scd-city-records { margin-top:2.5rem; }
+.scd-city-records-title { display:flex; justify-content:space-between; align-items:baseline; gap:1rem; margin-bottom:1rem; }
+.scd-city-records-title h3 { font-size:1.55rem; }
+.scd-city-records-title a { color:var(--primary); font-size:.8rem; font-weight:800; }
+.scd-record-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:1rem; }
+.scd-record-card { display:flex; flex-direction:column; min-width:0; padding:1.4rem; border-top:3px solid var(--primary); background:var(--bg-soft); }
+.scd-record-meta { display:flex; justify-content:space-between; gap:1rem; color:var(--muted); font:700 .68rem var(--font-ui); letter-spacing:.04em; text-transform:uppercase; }
+.scd-record-meta time { flex:0 0 auto; }
+.scd-record-card h4 { margin:.8rem 0; font-size:1.35rem; line-height:1.18; letter-spacing:-.025em; }
+.scd-record-card h4 a { color:var(--text-bright); }
+.scd-record-card h4 a:hover { color:var(--primary); }
+.scd-record-card > p { color:var(--muted); font-size:.9rem; line-height:1.55; }
+.scd-record-card dl { display:grid; gap:.45rem; margin:1rem 0; padding-top:.85rem; border-top:1px solid var(--line); }
+.scd-record-card dl div { display:grid; grid-template-columns:70px 1fr; gap:.5rem; font-size:.78rem; }
+.scd-record-card dt { color:var(--muted); font-weight:700; }
+.scd-record-card dd { margin:0; color:var(--text-bright); overflow-wrap:anywhere; }
+.scd-record-source { margin-top:auto; padding-top:.8rem; color:var(--primary); font-size:.8rem; font-weight:800; }
+.scd-council-page .scd-how-we-report { max-width:780px; margin-top:3.5rem; }
+.scd-council-page .scd-how-we-report p { margin:.4rem 0 0; }
+@media (max-width:900px) {
+  .scd-council-portals,.scd-record-grid { grid-template-columns:1fr; }
+  .scd-council-portal { min-height:0; }
+}
+@media (max-width:720px) {
+  .scd-council-intro .scd-page-title { font-size:3rem; }
+  .scd-council-section-heading { display:block; margin-top:2.5rem; }
+  .scd-council-section-heading > p { margin-top:.6rem; text-align:left; }
+  .scd-council-portal,.scd-record-card { padding:1.2rem; }
+  .scd-city-records-title { display:block; }
+  .scd-city-records-title a { display:inline-block; margin-top:.35rem; }
+  .scd-record-meta { display:block; }
+  .scd-record-meta time { display:block; margin-top:.35rem; }
+}
