@@ -87,7 +87,7 @@ jobs:
           git config user.name "stcatharinesdigital-bot"
           git config user.email "actions@users.noreply.github.com"
           git fetch origin "$REVIEW_BRANCH" || true
-          remote_sha="$(git rev-parse "origin/$REVIEW_BRANCH" 2>/dev/null || true)"
+          remote_sha="$(git rev-parse --verify --quiet "refs/remotes/origin/$REVIEW_BRANCH" || true)"
           git checkout -B "$REVIEW_BRANCH"
           git add src/data/generated/discovery.json
           git commit -m "chore(content): refresh official source candidates"
