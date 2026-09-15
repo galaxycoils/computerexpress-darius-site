@@ -564,3 +564,31 @@
   border-color:#55b9ae;
   color:#fff;
 }
+
+/* Subscribe buttons use a distinct action colour — 2026-09-15 */
+.news-root .scd-subscribe-link,
+.news-root.is-light .scd-subscribe-link,
+.news-root.is-dark .scd-subscribe-link,
+.news-root .scd-newsletter button,
+.news-root .scd-newsletter .island-btn,
+.news-root .scd-home-newsletter button,
+.news-root .scd-home-newsletter .island-btn{
+  background:#d69a2d;
+  border-color:#e8b653;
+  color:#17252b;
+  box-shadow:0 3px 10px rgba(0,0,0,.16);
+}
+.news-root .scd-subscribe-link:hover,
+.news-root .scd-subscribe-link:focus-visible,
+.news-root .scd-newsletter button:hover,
+.news-root .scd-newsletter button:focus-visible,
+.news-root .scd-newsletter .island-btn:hover,
+.news-root .scd-newsletter .island-btn:focus-visible,
+.news-root .scd-home-newsletter button:hover,
+.news-root .scd-home-newsletter button:focus-visible,
+.news-root .scd-home-newsletter .island-btn:hover,
+.news-root .scd-home-newsletter .island-btn:focus-visible{
+  background:#b87916;
+  border-color:#f0c66e;
+  color:#101b20;
+}
