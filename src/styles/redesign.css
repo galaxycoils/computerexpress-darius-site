@@ -498,3 +498,27 @@
 
 /* Prevent subpixel card/grid rounding from creating a mobile horizontal scroll. */
 .news-root{overflow-x:clip}
+
+/* Subscribe button contrast fix — 2026-09-15 */
+.news-root.is-light .scd-subscribe-link{
+  background:#0e766e;
+  border-color:#0e766e;
+  color:#fff;
+}
+.news-root.is-light .scd-subscribe-link:hover,
+.news-root.is-light .scd-subscribe-link:focus-visible{
+  background:#075d57;
+  border-color:#075d57;
+  color:#fff;
+}
+.news-root.is-dark .scd-subscribe-link{
+  background:#8cddd0;
+  border-color:#8cddd0;
+  color:#08201e;
+}
+.news-root.is-dark .scd-subscribe-link:hover,
+.news-root.is-dark .scd-subscribe-link:focus-visible{
+  background:#b2eee5;
+  border-color:#b2eee5;
+  color:#08201e;
+}
