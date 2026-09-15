@@ -36,9 +36,14 @@ export async function onRequest(context) {
     return new Response('Database not configured', { status: 503 });
   }
 
-  // Validate cron secret
+  // Scheduled handlers must not have a fallback production secret.
+  const cronSecret = context.env.CRON_SECRET;
+  if (!cronSecret) {
+    console.error('CRON_SECRET not configured');
+    return new Response('Scheduler not configured', { status: 503 });
+  }
   const authHeader = context.request.headers.get('Authorization');
-  if (authHeader !== `Bearer ${context.env.CRON_SECRET || 'cron-secret'}`) {
+  if (authHeader !== `Bearer ${cronSecret}`) {
     return new Response('Unauthorized', { status: 401 });
   }
 
