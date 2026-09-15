@@ -542,3 +542,25 @@
   border-color:#55b9ae;
   color:#fff;
 }
+
+/* All Subscribe actions share one button colour — 2026-09-15 */
+.news-root .scd-newsletter button,
+.news-root .scd-newsletter .island-btn,
+.news-root .scd-home-newsletter button,
+.news-root .scd-home-newsletter .island-btn{
+  background:#126d66;
+  border-color:#268f85;
+  color:#fff;
+}
+.news-root .scd-newsletter button:hover,
+.news-root .scd-newsletter button:focus-visible,
+.news-root .scd-newsletter .island-btn:hover,
+.news-root .scd-newsletter .island-btn:focus-visible,
+.news-root .scd-home-newsletter button:hover,
+.news-root .scd-home-newsletter button:focus-visible,
+.news-root .scd-home-newsletter .island-btn:hover,
+.news-root .scd-home-newsletter .island-btn:focus-visible{
+  background:#0b554f;
+  border-color:#55b9ae;
+  color:#fff;
+}
