@@ -26,9 +26,10 @@ export async function onRequest(context) {
     const inbox = await getPrimaryInbox(apiKey);
 
     // Fetch all verified alerts
-    const alerts = await STC_D1.prepare(
+    const alertResult = await STC_D1.prepare(
       'SELECT id, email, frequency, wards, types, statuses, keywords FROM alerts WHERE verified = 1 AND frequency = ?'
     ).bind('daily').all();
+    const alerts = alertResult.results || [];
 
     console.log(`Found ${alerts.length} daily alerts to process`);
 
@@ -46,7 +47,7 @@ export async function onRequest(context) {
 
         const { text, html } = buildDigest(alert, matches);
 
-        await fetch(`${AGENTMAIL_BASE}/inboxes/${inbox.inbox_id}/messages/send`, {
+        const sendResponse = await fetch(`${AGENTMAIL_BASE}/inboxes/${inbox.inbox_id}/messages/send`, {
           method: 'POST',
           headers: {
             'Authorization': `Bearer ${apiKey}`,
@@ -60,6 +61,10 @@ export async function onRequest(context) {
             labels: ['planning-alerts', 'daily-digest', `alert:${alert.id}`],
           }),
         });
+
+        if (!sendResponse.ok) {
+          throw new Error(`Email provider rejected digest: ${sendResponse.status}`);
+        }
 
         // Update last_sent_at
         await STC_D1.prepare(
@@ -166,7 +171,16 @@ async function getPlanningNotices(d1) {
     const result = await d1.prepare(
       'SELECT id, municipality, type, title, description, file_number, status, meeting_date, meeting_location, submission_deadline, submission_email, published_date, source_url, category, tags FROM notices ORDER BY published_date DESC LIMIT 200'
     ).all();
-    return result.results || [];
+    return (result.results || []).map((notice) => ({
+      ...notice,
+      fileNumber: notice.file_number,
+      meetingDate: notice.meeting_date,
+      meetingLocation: notice.meeting_location,
+      submissionDeadline: notice.submission_deadline,
+      submissionEmail: notice.submission_email,
+      publishedDate: notice.published_date,
+      sourceUrl: notice.source_url,
+    }));
   } catch (err) {
     console.error('Failed to query notices from D1:', err.message);
     return [];
@@ -220,7 +234,7 @@ Unsubscribe: reply with "unsubscribe" or visit https://stcatharinesdigital.ca/ap
       ${notices.map((n, i) => `
       <div style="padding:0.75rem 0;border-bottom:1px solid #f1f5f9;">
         <p style="font-weight:600;color:#0d3b66;margin:0 0 0.25rem;">${i + 1}. ${n.title}</p>
-        <p style="color:#555;font-size:.9rem;margin:0 0 0.5rem;line-height:1.4;">${n.description.length > 200 ? n.description.slice(0, 200) + '…' : n.description}</p>
+        <p style="color:#555;font-size:.9rem;margin:0 0 0.5rem;line-height:1.4;">${(n.description || '').length > 200 ? (n.description || '').slice(0, 200) + '…' : (n.description || '')}</p>
         ${n.meetingDate ? `<p style="font-size:.85rem;color:#8899b8;margin:0;">📅 ${formatDate(n.meetingDate)}${n.meetingLocation ? ' — ' + n.meetingLocation : ''}</p>` : ''}
       </div>
       `).join('')}
