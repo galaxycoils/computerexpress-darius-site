@@ -1,7 +1,6 @@
 import { useParams, Link } from 'react-router-dom'
 import Seo from '../components/Seo'
 import { cityBySlug } from '../data/cities'
-import { localNews, getNewsByMunicipality } from '../data/localNews'
 import { planningNotices } from '../data/planningNotices'
 import { nrpsReleases } from '../data/nrpsReleases'
 import NoticeCard from '../components/news/NoticeCard'
@@ -75,15 +74,6 @@ export default function CityNewsPage() {
     .sort((a, b) => new Date(b.date || 0) - new Date(a.date || 0))
 
   const latest = [
-    ...localNews
-      .filter((n) => belongsToCity(n, city))
-      .map((n) =>
-        toNoticeShape({
-          ...n,
-          category: n.category || 'News',
-          city: city.name,
-        })
-      ),
     ...planning.map((n) =>
       toNoticeShape({
         ...n,
@@ -104,8 +94,6 @@ export default function CityNewsPage() {
     ),
   ].sort((a, b) => new Date(b.publishedDate || 0) - new Date(a.publishedDate || 0))
 
-  const lastUpdated = new Date().toISOString().slice(0, 10)
-
   return (
     <>
       <Seo
@@ -122,9 +110,7 @@ export default function CityNewsPage() {
             </p>
             <h1 className="scd-intro-title">{city.name}</h1>
             <p className="scd-intro-note">{city.description}</p>
-            <p className="scd-lead-byline">
-              Last updated: {lastUpdated}
-            </p>
+            <p className="scd-lead-byline">Source-linked civic and public-safety updates.</p>
 
             <div className="filter-row" role="navigation" aria-label="Other cities">
               <Link to="/news/st-catharines" className="badge badge-status" aria-current={city.slug === 'st-catharines' ? 'page' : undefined}>

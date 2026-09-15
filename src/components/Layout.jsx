@@ -19,7 +19,7 @@ const CITIES = [
 const MOBILE_DOCK = [
   { to: '/', label: 'Home', icon: '⌂', end: true },
   { to: '/news', label: 'Latest', icon: '≡' },
-  { to: '/reader-services#cities', label: 'Cities', icon: '⌖' },
+  { to: '/reader-services#cities', label: 'Cities', icon: '⌖', anchor: true },
   { to: '/search', label: 'Search', icon: '⌕' },
   { to: '/reader-services', label: 'Services', icon: '＋' },
 ]
@@ -30,11 +30,11 @@ function getInitialTheme() {
     const stored = localStorage.getItem('theme-v2')
     if (stored === 'light' || stored === 'dark') return stored
   } catch { /* Storage can be disabled by the browser. */ }
-  return 'light'
+  return window.matchMedia?.('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
 }
 
 function formatDateline() {
-  return new Date().toLocaleDateString('en-CA', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' })
+  return new Date().toLocaleDateString('en-CA', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric', timeZone: 'America/Toronto' })
 }
 
 function Navigation({ onNavigate, includeUtilities = false }) {
@@ -59,10 +59,18 @@ export default function Layout() {
   useEffect(()=>{
     document.body.classList.toggle('light',theme==='light')
     document.body.classList.add('news-mode')
+    document.documentElement.dataset.theme = theme
     try { localStorage.setItem('theme-v2',theme) } catch { /* Storage can be disabled. */ }
   },[theme])
 
-  useEffect(()=>{setMenuOpen(false);window.scrollTo({top:0,behavior:'auto'})},[location.pathname])
+  useEffect(()=>{
+    setMenuOpen(false)
+    if (location.hash) {
+      requestAnimationFrame(() => document.getElementById(location.hash.slice(1))?.scrollIntoView({ block: 'start' }))
+      return
+    }
+    window.scrollTo({top:0,behavior:'auto'})
+  },[location.pathname,location.hash])
 
   useEffect(()=>{
     if(!menuOpen)return
@@ -101,6 +109,6 @@ export default function Layout() {
       </div>
       <div className="scd-f-bottom"><span>© {new Date().getFullYear()} St. Catharines Digital</span><div className="scd-legal-links"><Link to="/contact">Contact</Link><Link to="/privacy">Privacy</Link><Link to="/terms">Terms</Link></div></div>
     </footer>
-    <nav className="scd-mobile-dock" aria-label="Quick navigation">{MOBILE_DOCK.map(item=><NavLink key={item.to} to={item.to} end={item.end}><span aria-hidden="true">{item.icon}</span><strong>{item.label}</strong></NavLink>)}</nav>
+    <nav className="scd-mobile-dock" aria-label="Quick navigation">{MOBILE_DOCK.map(item=>item.anchor?<Link key={item.to} to={item.to}><span aria-hidden="true">{item.icon}</span><strong>{item.label}</strong></Link>:<NavLink key={item.to} to={item.to} end={item.end}><span aria-hidden="true">{item.icon}</span><strong>{item.label}</strong></NavLink>)}</nav>
   </div>
 }

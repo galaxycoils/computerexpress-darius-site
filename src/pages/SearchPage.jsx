@@ -16,8 +16,12 @@ function formatDate(value) {
     const [year,month]=value.split('-').map(Number)
     return new Date(Date.UTC(year,month-1,1)).toLocaleDateString('en-CA',{month:'long',year:'numeric',timeZone:'UTC'})
   }
+  if (/^\\d{4}-\\d{2}-\\d{2}$/.test(value)) {
+    const [year, month, day] = value.split('-').map(Number)
+    return new Date(Date.UTC(year, month - 1, day)).toLocaleDateString('en-CA', { month:'short', day:'numeric', year:'numeric', timeZone:'UTC' })
+  }
   const date=new Date(value)
-  return Number.isNaN(date.getTime()) ? value : date.toLocaleDateString('en-CA',{month:'short',day:'numeric',year:'numeric'})
+  return Number.isNaN(date.getTime()) ? value : date.toLocaleDateString('en-CA',{month:'short',day:'numeric',year:'numeric',timeZone:'America/Toronto'})
 }
 
 export default function SearchPage() {

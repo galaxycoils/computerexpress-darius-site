@@ -14,9 +14,17 @@ const LOCAL_PHOTOS = {
 
 function formatDate(value) {
   if (!value) return ''
+  if (/^\\d{4}-\\d{2}$/.test(value)) {
+    const [year, month] = value.split('-').map(Number)
+    return new Date(Date.UTC(year, month - 1, 1)).toLocaleDateString('en-CA', { month: 'short', year: 'numeric', timeZone: 'UTC' })
+  }
+  if (/^\\d{4}-\\d{2}-\\d{2}$/.test(value)) {
+    const [year, month, day] = value.split('-').map(Number)
+    return new Date(Date.UTC(year, month - 1, day)).toLocaleDateString('en-CA', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' })
+  }
   const date = new Date(value)
   if (Number.isNaN(date.getTime())) return value
-  return date.toLocaleDateString('en-CA', { month: 'short', day: 'numeric', year: 'numeric' })
+  return date.toLocaleDateString('en-CA', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'America/Toronto' })
 }
 
 function categoryLabel(notice) {
