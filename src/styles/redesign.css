@@ -385,210 +385,110 @@
   .scd-lead-media img,.scd-latest-media img,.scd-reader-strip a,.scd-f a { transition:none; }
 }
 
-/* Section colour hierarchy — 2026-09-15 */
-/* Alternating editorial surfaces make each homepage module legible at a glance. */
-.news-root.is-light {
-  --section-blue:#edf3f6;
-  --section-green:#e7f1ed;
-  --section-gold:#f5efe2;
-  --section-plum:#f1edf4;
-  --section-dark:#10232e;
+
+/* Unified newsroom visual foundation — 2026-09-15.
+   Replaces rotating pastel cards and competing Subscribe overrides. */
+.news-root {
+  --editorial-action: #08766d;
+  --editorial-action-hover: #055d56;
+  --editorial-action-text: #ffffff;
+  --editorial-surface: #ffffff;
+  --editorial-surface-subtle: #f5f7f5;
+  --editorial-surface-tint: #edf5f2;
+  --editorial-border: #d5dfdc;
+  --editorial-shadow: 0 10px 28px rgba(16,36,42,.07);
 }
 .news-root.is-dark {
-  --section-blue:#122d40;
-  --section-green:#123834;
-  --section-gold:#3a3124;
-  --section-plum:#2d2940;
-  --section-dark:#06111c;
+  --editorial-action: #78d9cd;
+  --editorial-action-hover: #a1e7dd;
+  --editorial-action-text: #08221f;
+  --editorial-surface: #0d2027;
+  --editorial-surface-subtle: #10272f;
+  --editorial-surface-tint: #123139;
+  --editorial-border: #29454b;
+  --editorial-shadow: 0 14px 32px rgba(0,0,0,.2);
 }
-.news-root.is-light .scd-top-stories { background:var(--section-blue); }
-.news-root.is-dark .scd-top-stories { background:var(--section-blue); }
-.scd-top-stories { border-top-color:#34768a; }
-
-.scd-reader-strip a:nth-child(1) { background:var(--section-blue); }
-.scd-reader-strip a:nth-child(2) { background:var(--section-green); }
-.scd-reader-strip a:nth-child(3) { background:var(--section-plum); }
-.scd-reader-strip a:nth-child(1):hover { background:color-mix(in srgb,var(--section-blue) 82%,var(--signal)); }
-.scd-reader-strip a:nth-child(2):hover { background:color-mix(in srgb,var(--section-green) 82%,var(--signal)); }
-.scd-reader-strip a:nth-child(3):hover { background:color-mix(in srgb,var(--section-plum) 82%,var(--signal)); }
-
-.scd-update-card:nth-child(4n + 1) { background:var(--section-blue); border-top:3px solid #4c8da2; }
-.scd-update-card:nth-child(4n + 2) { background:var(--section-green); border-top:3px solid #398778; }
-.scd-update-card:nth-child(4n + 3) { background:var(--section-gold); border-top:3px solid #a98248; }
-.scd-update-card:nth-child(4n + 4) { background:var(--section-plum); border-top:3px solid #75638b; }
-
-.news-root.is-light .scd-week-ahead {
-  background:#f7edcf;
-  border-color:#dbc98f;
-  border-top-color:#a77a24;
+.news-root .scd-subscribe-link,
+.news-root .scd-newsletter button,
+.news-root .scd-newsletter .island-btn,
+.news-root .scd-home-newsletter button,
+.news-root .scd-home-newsletter .island-btn {
+  background:var(--editorial-action);
+  border-color:var(--editorial-action);
+  color:var(--editorial-action-text);
+  box-shadow:none;
+}
+.news-root .scd-subscribe-link:hover,
+.news-root .scd-subscribe-link:focus-visible,
+.news-root .scd-newsletter button:hover,
+.news-root .scd-newsletter button:focus-visible,
+.news-root .scd-newsletter .island-btn:hover,
+.news-root .scd-newsletter .island-btn:focus-visible,
+.news-root .scd-home-newsletter button:hover,
+.news-root .scd-home-newsletter button:focus-visible,
+.news-root .scd-home-newsletter .island-btn:hover,
+.news-root .scd-home-newsletter .island-btn:focus-visible {
+  background:var(--editorial-action-hover);
+  border-color:var(--editorial-action-hover);
+  color:var(--editorial-action-text);
+}
+.news-root .scd-top-stories,
+.news-root .scd-reader-strip,
+.news-root .scd-update-card,
+.news-root .scd-week-ahead,
+.news-root .scd-home-newsletter {
+  background:var(--editorial-surface);
+  border-color:var(--editorial-border);
+  border-top-color:var(--editorial-action);
+  box-shadow:var(--editorial-shadow);
+}
+.news-root .scd-reader-strip a,
+.news-root .scd-reader-strip a:nth-child(1),
+.news-root .scd-reader-strip a:nth-child(2),
+.news-root .scd-reader-strip a:nth-child(3),
+.news-root .scd-update-card:nth-child(4n + 1),
+.news-root .scd-update-card:nth-child(4n + 2),
+.news-root .scd-update-card:nth-child(4n + 3),
+.news-root .scd-update-card:nth-child(4n + 4) {
+  background:transparent;
+  border-top-color:transparent;
+}
+.news-root .scd-reader-strip a:hover,
+.news-root .scd-reader-strip a:nth-child(1):hover,
+.news-root .scd-reader-strip a:nth-child(2):hover,
+.news-root .scd-reader-strip a:nth-child(3):hover { background:var(--editorial-surface-tint); }
+.news-root .scd-update-card { border-top:1px solid var(--editorial-border); }
+.news-root .scd-update-card:first-child { border-top:3px solid var(--editorial-action); }
+.news-root.is-light .scd-week-ahead,
+.news-root.is-dark .scd-week-ahead {
+  background:var(--editorial-surface-tint);
+  border-color:var(--editorial-border);
+  border-top-color:var(--editorial-action);
 }
 .news-root.is-light .scd-week-ahead .scd-cat,
 .news-root.is-light .scd-week-ahead time,
-.news-root.is-light .scd-week-ahead .scd-text-link { color:#7b5510; }
-.news-root.is-dark .scd-week-ahead {
-  background:#f1ead8;
-  border-color:#d8c89d;
-  border-top-color:#bd8b31;
-}
+.news-root.is-light .scd-week-ahead .scd-text-link,
 .news-root.is-dark .scd-week-ahead .scd-cat,
 .news-root.is-dark .scd-week-ahead time,
-.news-root.is-dark .scd-week-ahead .scd-text-link { color:#77520f; }
-.news-root.is-dark .scd-week-ahead li { border-color:#d6c79e; }
-
-.news-root.is-light .scd-home-newsletter {
-  background:#dcefeb;
-  border-color:#acd1ca;
-  border-top-color:#16766e;
-}
-.news-root.is-dark .scd-home-newsletter {
-  background:#103941;
-  border-color:#28616a;
-  border-top-color:#8cddd0;
-}
-.news-root.is-dark .scd-home-newsletter input { background:#092632; }
-.news-root.is-dark .scd-home-newsletter button { background:#9be5d9; }
-
-.news-root.is-light .scd-f-dark { background:#10232e; }
-.news-root.is-dark .scd-f-dark { background:var(--section-dark); }
-
+.news-root.is-dark .scd-week-ahead .scd-text-link { color:var(--editorial-action); }
+.news-root.is-dark .scd-week-ahead li { border-color:var(--editorial-border); }
+.news-root .scd-home-newsletter { background:var(--editorial-surface-subtle); }
+.news-root.is-dark .scd-home-newsletter input { background:var(--editorial-surface); }
+.news-root .scd-home-newsletter .newsletter-panel,
+.news-root .scd-home-newsletter form { background:transparent; }
+.news-root .scd-reader-strip,
+.news-root .scd-top-stories,
+.news-root .scd-update-card,
+.news-root .scd-week-ahead,
+.news-root .scd-home-newsletter { border-radius:10px; }
+.news-root .scd-week-ahead,
+.news-root .scd-home-newsletter { padding:clamp(22px,3vw,32px); }
+.news-root .scd-f-dark { background:#0a1a20; }
+.news-root.is-dark .scd-f-dark { background:#061217; }
 @media (max-width:720px) {
-  .scd-top-stories,
-  .scd-reader-strip,
-  .scd-update-card,
-  .scd-week-ahead,
-  .scd-home-newsletter {
-    border-radius:4px;
-  }
-  .scd-top-stories { border-top-color:#4c8da2; }
-  .scd-reader-strip { border-top-color:#398778; overflow:hidden; }
-  .scd-reader-strip a { border-bottom-color:color-mix(in srgb,var(--line) 75%,transparent); }
-  .scd-update-list { gap:14px; }
-  .scd-update-card { box-shadow:0 8px 22px rgba(0,0,0,.09); }
-  .news-root.is-dark .scd-update-card { box-shadow:0 10px 24px rgba(0,0,0,.2); }
-  .scd-week-ahead { box-shadow:0 10px 26px rgba(63,48,18,.11); }
-  .scd-home-newsletter { box-shadow:0 10px 26px rgba(8,67,65,.12); }
-}
-
-/* Reader navigation system — 2026-09-15 */
-.scd-search-link{display:inline-flex;align-items:center;min-height:40px;padding:0 12px;color:var(--text-bright);font:800 .76rem var(--font-ui)}
-.scd-search-link:hover{color:var(--primary)}
-.scd-subscribe-link{border-color:var(--primary);background:var(--primary);color:#08201e}
-.scd-subscribe-link:hover{background:var(--signal-dark);color:#fff}
-.scd-mobile-dock{display:none}
-@media(max-width:720px){
-  .news-root{padding-bottom:74px}
-  .scd-search-link{display:none}
-  .scd-subscribe-link{display:inline-flex;min-height:42px;padding:0 13px}
-  .scd-drawer{max-height:calc(100vh - 78px);overflow:auto}
-  .scd-drawer .scd-nav-group:first-child{display:grid;grid-template-columns:1fr 1fr;gap:0 18px}
-  .scd-drawer .scd-nav-a{border-bottom:1px solid var(--line)}
-  .scd-drawer .scd-city-nav{display:grid;grid-template-columns:1fr 1fr;gap:0 18px}
-  .scd-drawer .scd-city-nav-label{grid-column:1/-1;padding:12px 0 4px}
-  .scd-mobile-dock{position:fixed;z-index:60;left:0;right:0;bottom:0;display:grid;grid-template-columns:repeat(5,1fr);min-height:66px;padding:5px 5px calc(5px + env(safe-area-inset-bottom));border-top:1px solid var(--line);background:color-mix(in srgb,var(--bg) 95%,transparent);backdrop-filter:blur(18px);box-shadow:0 -8px 28px rgba(0,0,0,.12)}
-  .scd-mobile-dock a{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-width:0;padding:4px 2px;color:var(--muted);font-family:var(--font-ui)}
-  .scd-mobile-dock a>span{font-size:1.25rem;line-height:1}
-  .scd-mobile-dock a>strong{font-size:.62rem;line-height:1.1;white-space:nowrap}
-  .scd-mobile-dock a.active{color:var(--primary)}
-  .scd-f{padding-bottom:24px}
-}
-@media(max-width:380px){
-  .scd-subscribe-link{padding:0 10px;font-size:.7rem}
-  .scd-mobile-dock a>strong{font-size:.58rem}
-}
-
-/* Prevent subpixel card/grid rounding from creating a mobile horizontal scroll. */
-.news-root{overflow-x:clip}
-
-/* Subscribe button contrast fix — 2026-09-15 */
-.news-root.is-light .scd-subscribe-link{
-  background:#0e766e;
-  border-color:#0e766e;
-  color:#fff;
-}
-.news-root.is-light .scd-subscribe-link:hover,
-.news-root.is-light .scd-subscribe-link:focus-visible{
-  background:#075d57;
-  border-color:#075d57;
-  color:#fff;
-}
-.news-root.is-dark .scd-subscribe-link{
-  background:#8cddd0;
-  border-color:#8cddd0;
-  color:#08201e;
-}
-.news-root.is-dark .scd-subscribe-link:hover,
-.news-root.is-dark .scd-subscribe-link:focus-visible{
-  background:#b2eee5;
-  border-color:#b2eee5;
-  color:#08201e;
-}
-
-/* Header Subscribe button final colour — 2026-09-15 */
-.news-root .scd-subscribe-link,
-.news-root.is-light .scd-subscribe-link,
-.news-root.is-dark .scd-subscribe-link{
-  background:#126d66;
-  border-color:#268f85;
-  color:#fff;
-  box-shadow:0 3px 10px rgba(0,0,0,.14);
-}
-.news-root .scd-subscribe-link:hover,
-.news-root .scd-subscribe-link:focus-visible,
-.news-root.is-light .scd-subscribe-link:hover,
-.news-root.is-light .scd-subscribe-link:focus-visible,
-.news-root.is-dark .scd-subscribe-link:hover,
-.news-root.is-dark .scd-subscribe-link:focus-visible{
-  background:#0b554f;
-  border-color:#55b9ae;
-  color:#fff;
-}
-
-/* All Subscribe actions share one button colour — 2026-09-15 */
-.news-root .scd-newsletter button,
-.news-root .scd-newsletter .island-btn,
-.news-root .scd-home-newsletter button,
-.news-root .scd-home-newsletter .island-btn{
-  background:#126d66;
-  border-color:#268f85;
-  color:#fff;
-}
-.news-root .scd-newsletter button:hover,
-.news-root .scd-newsletter button:focus-visible,
-.news-root .scd-newsletter .island-btn:hover,
-.news-root .scd-newsletter .island-btn:focus-visible,
-.news-root .scd-home-newsletter button:hover,
-.news-root .scd-home-newsletter button:focus-visible,
-.news-root .scd-home-newsletter .island-btn:hover,
-.news-root .scd-home-newsletter .island-btn:focus-visible{
-  background:#0b554f;
-  border-color:#55b9ae;
-  color:#fff;
-}
-
-/* Subscribe buttons use a distinct action colour — 2026-09-15 */
-.news-root .scd-subscribe-link,
-.news-root.is-light .scd-subscribe-link,
-.news-root.is-dark .scd-subscribe-link,
-.news-root .scd-newsletter button,
-.news-root .scd-newsletter .island-btn,
-.news-root .scd-home-newsletter button,
-.news-root .scd-home-newsletter .island-btn{
-  background:#d69a2d;
-  border-color:#e8b653;
-  color:#17252b;
-  box-shadow:0 3px 10px rgba(0,0,0,.16);
-}
-.news-root .scd-subscribe-link:hover,
-.news-root .scd-subscribe-link:focus-visible,
-.news-root .scd-newsletter button:hover,
-.news-root .scd-newsletter button:focus-visible,
-.news-root .scd-newsletter .island-btn:hover,
-.news-root .scd-newsletter .island-btn:focus-visible,
-.news-root .scd-home-newsletter button:hover,
-.news-root .scd-home-newsletter button:focus-visible,
-.news-root .scd-home-newsletter .island-btn:hover,
-.news-root .scd-home-newsletter .island-btn:focus-visible{
-  background:#b87916;
-  border-color:#f0c66e;
-  color:#101b20;
+  .news-root .scd-reader-strip a { padding:18px; }
+  .news-root .scd-reader-strip strong { font-size:1.18rem; }
+  .news-root .scd-update-list { gap:10px; }
+  .news-root .scd-update-card { padding:16px; }
+  .news-root .scd-home-newsletter { margin-top:18px; }
 }
