@@ -4,7 +4,7 @@ export async function onRequestPost(context) {
   const { STC_D1, ALERT_TOKEN_SECRET } = context.env
   if (!STC_D1 || !ALERT_TOKEN_SECRET) return jsonResponse({ error: 'Service not configured' }, 503)
   const token = context.request.headers.get('X-Alert-Token')
-  const auth = await verifyAlertToken(token, ALERT_TOKEN_SECRET)
+  const auth = await verifyAlertToken(token, ALERT_TOKEN_SECRET, { expectedScope: 'manage' })
   if (!auth) return jsonResponse({ error: 'Unauthorized' }, 401)
   const result = await STC_D1.prepare(
     'DELETE FROM alerts WHERE id = ? AND created_at = ?',
