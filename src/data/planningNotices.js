@@ -6,8 +6,8 @@
  * - thorold.ca
  * - niagararegion.ca
  *
- * Updated: 2026-09-15
- * Note: marked Sep 14 STC legislated public meetings complete; added Thorold McMillan Park PIC (Sep 28).
+ * Updated: 2026-09-16
+ * Note: added STC 60 Thomas St CoA; Welland Niagara/Forks/Clare/Clifford CoA (Sep 16) and First St CoA (Sep 28); corrected 12 Stepney to consent B-20/26SC.
  * Next review: Weekly
  */
 
@@ -47,16 +47,32 @@ export const planningNotices = [
   {
     id: 'stc-12-stepney-st',
     municipality: 'St. Catharines',
-    type: 'Committee of Adjustment Hearing',
-    title: '12 Stepney Street — Minor Variance',
-    description: 'Minor Variance application.',
+    type: 'Consent (Committee of Adjustment)',
+    title: '12 Stepney Street — Consent to Sever',
+    description: 'Consent B-20/26SC to sever 293.13 sq m (12A Stepney St) for a semi-detached dwelling under construction; 293.14 sq m remnant retained for the second unit.',
+    fileNumber: 'B-20/26SC',
     status: 'Hearing Scheduled',
     meetingDate: '2026-09-16T17:00:00',
     meetingLocation: 'Council Chambers, 50 Church St',
-    publishedDate: '2026-08',
+    publishedDate: '2026-08-25',
     sourceUrl: 'https://www.stcatharines.ca/news/posts/public-hearing-12-stepney-street/',
+    category: 'consent-application',
+    tags: ['Consent', 'Stepney Street', 'Semi-detached']
+  },
+  {
+    id: 'stc-60-thomas-st',
+    municipality: 'St. Catharines',
+    type: 'Minor Variance (Committee of Adjustment)',
+    title: '60 Thomas Street — Front Yard and Parking Width',
+    description: 'Variance A-51/26 to reduce front yard setback from 3 m to 2.3 m and increase maximum parking area width from 5.5 m to 6.0 m for a detached dwelling.',
+    fileNumber: 'A-51/26',
+    status: 'Hearing Scheduled',
+    meetingDate: '2026-09-16T17:00:00',
+    meetingLocation: 'Council Chambers, 50 Church St',
+    publishedDate: '2026-08-25',
+    sourceUrl: 'https://www.stcatharines.ca/news/posts/notice-of-hearing-60-thomas-street/',
     category: 'minor-variance',
-    tags: ['Minor Variance', 'Stepney Street']
+    tags: ['Minor Variance', 'Thomas Street', 'Setback', 'Parking']
   },
   {
     id: 'stc-cip-strategic-sites',
@@ -71,6 +87,40 @@ export const planningNotices = [
     sourceUrl: 'https://www.stcatharines.ca/news/posts/city-of-st-catharines-notice-of-public-meeting-community-improvement-plan-for-strategic-sites/',
     category: 'community-improvement-plan',
     tags: ['CIP', 'Strategic Sites', 'Community Improvement Plan', 'Ontario Street', 'Queenston Street']
+  },
+  {
+    id: 'welland-coa-niagara-forks-clare-clifford',
+    municipality: 'Welland',
+    type: 'Committee of Adjustment Hearing',
+    title: '373 Niagara St, 112-116 Forks Rd, 657-661 Clare Ave, 37-39 Clifford Ave — Consents and Variances',
+    description: 'Welland Committee of Adjustment hearing on multiple consent and minor variance applications: new lot at 373 Niagara St; lot creation and lot-area relief for existing semis at 112-116 Forks Rd; lot creation for semis under construction at 657-661 Clare Ave; lot-boundary adjustment and related variances at 37-39 Clifford Ave.',
+    fileNumber: 'PLCON202600172 / PLCON202600181 / PLCON202600201 / PLCON202600199',
+    status: 'Hearing Scheduled',
+    meetingDate: '2026-09-16T17:00:00',
+    meetingLocation: 'Civic Square Council Chambers, 60 East Main St, Welland',
+    submissionDeadline: '2026-09-10T00:00:00',
+    submissionEmail: 'cofa@welland.ca',
+    publishedDate: '2026-08-20',
+    sourceUrl: 'https://www.welland.ca/news/posts/notice-of-public-hearing-concerning-applications-for-consent-and-minor-variance/',
+    category: 'consent-application',
+    tags: ['Consent', 'Minor Variance', 'Welland', 'Niagara Street', 'Forks Road', 'Clare Avenue', 'Clifford Avenue']
+  },
+  {
+    id: 'welland-coa-first-st-37-40',
+    municipality: 'Welland',
+    type: 'Committee of Adjustment Hearing',
+    title: '37-40 First Street — Consents and Access Aisle Variances',
+    description: 'Consent applications to create new lots at 37-39 and 38-40 First Street for future multiple dwellings, with reciprocal access easements, plus variances to reduce required access aisle width from 6 m to 3 m on severed and retained lots.',
+    fileNumber: 'PLCON202600193 / PLCON202600195',
+    status: 'Hearing Scheduled',
+    meetingDate: '2026-09-28T17:00:00',
+    meetingLocation: 'Civic Square Council Chambers, 60 East Main St, Welland',
+    submissionDeadline: '2026-09-22T00:00:00',
+    submissionEmail: 'cofa@welland.ca',
+    publishedDate: '2026-09-02',
+    sourceUrl: 'https://www.welland.ca/news/posts/notice-of-public-hearing-concerning-applications-for-consent-and-minor-variance-37-to-39-and-38-to-40-first-street/',
+    category: 'consent-application',
+    tags: ['Consent', 'Minor Variance', 'Welland', 'First Street']
   },
   {
     id: 'thorold-mcmillan-park-pic',
