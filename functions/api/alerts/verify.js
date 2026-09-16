@@ -1,3 +1,5 @@
+import { createAlertToken, verifyAlertToken } from './_auth.js'
+
 // Cloudflare Pages Function: GET /api/alerts/verify?token=...
 // Verify email and activate alert
 
@@ -7,8 +9,9 @@ export async function onRequestGet(context) {
   const { env } = context;
   const { STC_D1 } = env;
   const apiKey = env.AGENTMAIL_API_KEY;
+  const tokenSecret = env.ALERT_TOKEN_SECRET;
 
-  if (!STC_D1) {
+  if (!STC_D1 || !tokenSecret) {
     return jsonResponse({ error: 'Service not configured' }, 503);
   }
 
@@ -20,30 +23,13 @@ export async function onRequestGet(context) {
   }
 
   try {
-    // Use atob for base64url decoding (Cloudflare Workers doesn't have Buffer)
-    let decoded;
-    try {
-      // Convert base64url to base64
-      const base64 = token.replace(/-/g, '+').replace(/_/g, '/');
-      // Add padding if needed
-      const padded = base64 + '='.repeat((4 - base64.length % 4) % 4);
-      decoded = atob(padded);
-    } catch (e) {
-      console.error('[verify] Failed to decode token:', e);
-      return jsonResponse({ error: 'Invalid token format' }, 400);
-    }
-    const [id, createdStr] = decoded.split(':');
-    const created = parseInt(createdStr, 10);
-    const now = Date.now();
-    const expiry = 24 * 60 * 60 * 1000;
-
-    if (now - created > expiry) {
-      return jsonResponse({ error: 'Verification link expired. Please sign up again.' }, 410);
-    }
+    const now = Date.now()
+    const auth = await verifyAlertToken(token, tokenSecret)
+    if (!auth) return jsonResponse({ error: 'Invalid or expired verification link' }, 410)
 
     const updateResult = await STC_D1.prepare(
       'UPDATE alerts SET verified = 1, updated_at = ? WHERE id = ? AND verified = 0 AND created_at = ?'
-    ).bind(now, id, created).run();
+    ).bind(now, auth.id, auth.createdAt).run();
 
     if (updateResult.changes === 0) {
       return jsonResponse({ error: 'Invalid or already verified link' }, 404);
@@ -52,7 +38,7 @@ export async function onRequestGet(context) {
     // Fetch the updated alert to get email for confirmation
     const selectResult = await STC_D1.prepare(
       'SELECT id, email FROM alerts WHERE id = ? AND created_at = ?'
-    ).bind(id, created).first();
+    ).bind(auth.id, auth.createdAt).first();
 
     if (!selectResult || !selectResult.email) {
       return jsonResponse({ error: 'Alert not found after update' }, 500);

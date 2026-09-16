@@ -1,3 +1,5 @@
+import { createAlertToken } from './_auth.js'
+
 // Cloudflare Pages Function: POST /api/alerts
 // Create a planning alert + send verification email
 
@@ -5,8 +7,9 @@ export async function onRequestPost(context) {
   const { env } = context;
   const { STC_D1 } = env;
   const apiKey = env.AGENTMAIL_API_KEY;
+  const tokenSecret = env.ALERT_TOKEN_SECRET;
 
-  if (!STC_D1) {
+  if (!STC_D1 || !tokenSecret) {
     return jsonResponse({ error: 'Service not configured' }, 503);
   }
 
@@ -49,10 +52,8 @@ export async function onRequestPost(context) {
     // Send verification email
     if (apiKey) {
       try {
-        // Use base64url encoding without Buffer (Cloudflare Workers)
-        const tokenStr = `${id}:${now}`;
-        const base64 = btoa(tokenStr).replace(/\+/g, '-').replace(/\//g, '_').replace(/=/g, '');
-        const verifyUrl = `https://stcatharinesdigital.ca/api/alerts/verify?token=${base64}`;
+        const token = await createAlertToken(id, now, tokenSecret);
+        const verifyUrl = 'https://stcatharinesdigital.ca/api/alerts/verify?token=' + encodeURIComponent(token);
         
         const inboxRes = await fetch('https://api.agentmail.to/v0/inboxes', {
           headers: { 'Authorization': `Bearer ${apiKey}` },
