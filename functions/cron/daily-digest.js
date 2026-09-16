@@ -1,3 +1,5 @@
+import { createAlertToken } from '../api/alerts/_auth.js'
+
 // Cloudflare Pages Cron: Daily planning alert digest (runs 6 AM ET daily)
 // POST /functions/cron/daily-digest
 
@@ -6,6 +8,7 @@ const AGENTMAIL_BASE = 'https://api.agentmail.to/v0';
 export async function onRequest(context) {
   const { STC_D1 } = context.env;
   const apiKey = context.env.AGENTMAIL_API_KEY;
+  const tokenSecret = context.env.ALERT_TOKEN_SECRET;
 
   if (!STC_D1) {
     console.error('STC_D1 not configured');
@@ -14,6 +17,10 @@ export async function onRequest(context) {
   if (!apiKey) {
     console.error('AGENTMAIL_API_KEY not configured');
     return new Response('Email not configured', { status: 503 });
+  }
+  if (!tokenSecret) {
+    console.error('ALERT_TOKEN_SECRET not configured');
+    return new Response('Alert token service not configured', { status: 503 });
   }
 
   // Scheduled handlers must not have a fallback production secret.
@@ -32,7 +39,7 @@ export async function onRequest(context) {
 
     // Fetch all verified alerts
     const alertResult = await STC_D1.prepare(
-      'SELECT id, email, frequency, wards, types, statuses, keywords FROM alerts WHERE verified = 1 AND frequency = ?'
+      'SELECT id, email, frequency, wards, types, statuses, keywords, created_at FROM alerts WHERE verified = 1 AND frequency = ?'
     ).bind('daily').all();
     const alerts = alertResult.results || [];
 
@@ -50,7 +57,9 @@ export async function onRequest(context) {
           continue;
         }
 
-        const { text, html } = buildDigest(alert, matches);
+        const manageToken = await createAlertToken(alert.id, alert.created_at, tokenSecret, 'manage');
+        const manageUrl = `https://stcatharinesdigital.ca/preferences?token=${encodeURIComponent(manageToken)}`;
+        const { text, html } = buildDigest(alert, matches, manageUrl);
 
         const sendResponse = await fetch(`${AGENTMAIL_BASE}/inboxes/${inbox.inbox_id}/messages/send`, {
           method: 'POST',
@@ -194,7 +203,7 @@ async function getPlanningNotices(d1) {
 
 // ── Digest Builder ──────────────────────────────────────────────────
 
-function buildDigest(alert, notices) {
+function buildDigest(alert, notices, manageUrl) {
   const title = notices.map(n => {
     const meeting = n.meetingDate ? ` · Meeting: ${formatDate(n.meetingDate)}` : '';
     return `${n.title}${meeting}`;
@@ -224,7 +233,7 @@ View all notices: https://stcatharinesdigital.ca/planning-tracker
 ---
 St. Catharines Digital
 https://stcatharinesdigital.ca
-Unsubscribe: reply with "unsubscribe" or visit https://stcatharinesdigital.ca/planning-alerts`;
+Manage preferences or unsubscribe: ${manageUrl}`;
 
   const html = `<!DOCTYPE html><html><head><meta charset="utf-8"></head>
 <body style="font-family:Inter,-apple-system,sans-serif;color:#1a1a2e;background:#f8fafb;padding:2rem;">
@@ -247,7 +256,7 @@ Unsubscribe: reply with "unsubscribe" or visit https://stcatharinesdigital.ca/pl
     <a href="https://stcatharinesdigital.ca/planning-tracker" style="display:inline-block;padding:.75rem 2rem;background:#0d3b66;color:#fff;text-decoration:none;border-radius:8px;font-weight:700;">View all notices →</a>
     <div style="margin-top:2rem;padding-top:1rem;border-top:1px solid #e2e8f0;font-size:.8rem;color:#999;text-align:center;">
       <p>St. Catharines Digital · https://stcatharinesdigital.ca</p>
-      <p>Unsubscribe: <a href="https://stcatharinesdigital.ca/planning-alerts" style="color:#12d6ff;">click here</a> or reply with "unsubscribe"</p>
+      <p><a href="${manageUrl}" style="color:#0d3b66;">Manage preferences or unsubscribe</a></p>
     </div>
   </div>
 </div></body></html>`;
