@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { prerenderRoutes, sitemapRoutes } from './routeManifest'
+import { prerenderRoutes, sitemapRoutes, createSitemapXml } from './routeManifest'
 
 describe('newsroom route manifest', () => {
   it('keeps the removed Guides section out of prerendering and sitemap', () => {
@@ -11,4 +11,9 @@ describe('newsroom route manifest', () => {
     expect(prerenderRoutes).toContain(route)
     expect(sitemapRoutes).toContain(route)
   })
+})
+
+it('does not invent sitemap modification dates from build time', () => {
+  expect(createSitemapXml()).not.toContain('<lastmod>')
+  expect(createSitemapXml()).toContain('<loc>https://stcatharinesdigital.ca/</loc>')
 })

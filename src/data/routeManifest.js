@@ -45,8 +45,8 @@ export function canonicalRouteUrl(route) {
   return `${base}${route.replace(/\/$/, '')}/`
 }
 
-export function createSitemapXml(routes = sitemapRoutes, date = new Date()) {
-  const today = date.toISOString().split('T')[0]
+export function createSitemapXml(routes = sitemapRoutes) {
+  // Omit lastmod until a verified per-route content modification date is available.
   const urls = routes
     .filter((route) => route !== '/404')
     .map((route) => {
@@ -54,7 +54,6 @@ export function createSitemapXml(routes = sitemapRoutes, date = new Date()) {
       const loc = canonicalRouteUrl(route)
       return `  <url>
     <loc>${loc}</loc>
-    <lastmod>${today}</lastmod>
     <changefreq>${changefreq}</changefreq>
     <priority>${priority}</priority>
   </url>`
