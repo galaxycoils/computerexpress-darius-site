@@ -1,6 +1,7 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
 import { canonicalizeLink, extractCandidates, fetchHtml, decodeEntities, parseArgs } from './collect-official-news.js'
+import { sourceRegistry, sourceById } from '../src/data/sourceRegistry.js'
 
 const source = { id: 'test', name: 'Official source', city: 'Test', kind: 'official-notice', url: 'https://city.example/news/' }
 
@@ -10,17 +11,17 @@ test('rejects off-origin URLs, credentials, ports and insecure schemes', () => {
   }
 })
 test('normalizes tracking links and HTML-encoded query parameters', () => {
-  assert.equal(canonicalizeLink('/news/a?id=1&amp;utm_source=x#top', source.url), 'https://city.example/news/a?id=1')
+  assert.equal(canonicalizeLink('/news/posts/a?id=1&utm_source=x#top', source.url), 'https://city.example/news/posts/a?id=1')
 })
 test('deduplicates candidates without inventing publication dates', () => {
-  const html = '<a href="/news/a">Council meeting notice</a><a href="/news/a?utm_source=x">Council meeting notice</a>'
+  const html = '<a href="/news/posts/a">Council meeting notice</a><a href="/news/posts/a?utm_source=x">Council meeting notice</a>'
   const items = extractCandidates(html, source)
   assert.equal(items.length, 1)
   assert.equal(items[0].sourcePublishedAt, null)
   assert.equal(items[0].reviewRequired, true)
 })
 test('ignores links embedded inside scripts', () => {
-  assert.equal(extractCandidates('<script><a href="/news/a">Not a visible news item</a></script>', source).length, 0)
+  assert.equal(extractCandidates('<script><a href="/news/posts/a">Not a visible news item</a></script>', source).length, 0)
 })
 test('malformed numeric entities do not crash collection', () => {
   assert.equal(decodeEntities('&#999999999; &#xD800;'), '\uFFFD \uFFFD')
@@ -66,4 +67,51 @@ test('ignores listing filters and navigation pages on a news index', () => {
   ].join('')
   const items = extractCandidates(html, indexSource)
   assert.deepEqual(items.map(item => item.title), ['Council approves 2027 capital budget'])
+})
+
+test('rejects author pages, category indexes, and nav-label titles', () => {
+  const html = [
+    '<a href="/news/authors/city-of-st-catharines/">City of St. Catharines</a>',
+    '<a href="/news?category=News">News releases</a>',
+    '<a href="/news/">All Categories</a>',
+    '<a href="/news/media-releases/">Media Releases</a>',
+    '<a href="/news/public-notices/">Public Notices</a>',
+    '<a href="/news/events.aspx">Upcoming Events</a>',
+    '<a href="/news/posts/notice-of-hearing-455-welland-avenue/">Notice of Hearing: 455 Welland Avenue</a>',
+  ].join('')
+  const items = extractCandidates(html, source)
+  assert.deepEqual(items.map(item => item.title), ['Notice of Hearing: 455 Welland Avenue'])
+  assert.match(items[0].url, /\/news\/posts\//)
+})
+
+test('accepts municipal post paths and region notice.aspx articles', () => {
+  const region = { ...source, url: 'https://www.niagararegion.ca/news/notices/default.aspx' }
+  const cityHtml = [
+    '<a href="/news/posts/hundreds-of-traffic-stops/">Hundreds of Traffic Stops Reported</a>',
+    '<a href="/news/news/notice-of-public-information-centre-mcmillan-park-project/">Notice of Public Information Centre</a>',
+    '<a href="/news/notices/default.aspx">Public Notices</a>',
+  ].join('')
+  const regionHtml = [
+    '<a href="notice.aspx?q=1024">Quaker Road sanitary trunk sewer upgrade in Welland and Pelham</a>',
+    '<a href="/news/notices/default.aspx">Public Notices</a>',
+    '<a href="https://createsend.com/t/t-abc">External campaign link is ignored</a>',
+  ].join('')
+  const fromCity = extractCandidates(cityHtml, source)
+  const fromRegion = extractCandidates(regionHtml, region)
+  assert.deepEqual(fromCity.map(i => i.title).sort(), [
+    'Hundreds of Traffic Stops Reported',
+    'Notice of Public Information Centre',
+  ].sort())
+  assert.equal(fromRegion.length, 1)
+  assert.equal(fromRegion[0].url.includes('notice.aspx?q=1024'), true)
+  assert.equal(fromRegion.some(i => /Public Notices/i.test(i.title)), false)
+})
+
+test('source registry points Niagara Region at same-origin public notices', () => {
+  const region = sourceById['niagara-region-news']
+  assert.ok(region)
+  assert.equal(region.enabled, true)
+  assert.equal(region.reviewRequired, true)
+  assert.match(region.url, /^https:\/\/www\.niagararegion\.ca\/news\/notices\//)
+  assert.equal(sourceRegistry.filter(s => s.enabled).length >= 5, true)
 })
