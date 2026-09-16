@@ -10,6 +10,8 @@ const MAX_BYTES = 2_000_000
 const MAX_ITEMS_PER_SOURCE = 50
 const USER_AGENT = 'StCatharinesDigitalSourceCollector/1.0 (+https://stcatharinesdigital.ca/editorial-policy)'
 
+const NAV_TITLE = /^(read more|learn more|view all|news|next|previous|all categories|media releases?|public notices?|news releases?|upcoming events?|subscribe|city of .+|niagara regional police service)$/i
+
 function parseArgs(argv) {
   const args = { write: false, source: null }
   for (let index = 0; index < argv.length; index += 1) {
@@ -66,8 +68,22 @@ function looksLikeNews(url, sourceUrl) {
   const source = new URL(sourceUrl)
   if (url === sourceUrl || candidate.pathname === source.pathname) return false
   const pathname = candidate.pathname
-  if (/\/(contacts?|categories|archive)(\.aspx)?$/i.test(pathname)) return false
-  return /\/(news|posts?|media|media-releases|notices?|public-notices?)(\/|$)/i.test(pathname)
+
+  // Reject indexes, authors, contacts, and category filters
+  if (/(^|\/)(contacts?|categories|archive|authors?)(\/|$|\.aspx)/i.test(pathname)) return false
+  if (/\/news\/?$/i.test(pathname)) return false
+  if (/\/news\/(media-releases|public-notices?|notices?)\/?$/i.test(pathname)) return false
+  if (/\/news\/default\.aspx$/i.test(pathname)) return false
+  if (/events\.aspx$/i.test(pathname)) return false
+
+  // Accept article-like same-origin paths used by municipal / region sites
+  if (/\/news\/posts?\//i.test(pathname)) return true
+  if (/\/news\/news\//i.test(pathname)) return true
+  if (/\/news\/[^/]+\/[^/]+/i.test(pathname)) return true
+  if (/article\.aspx$/i.test(pathname) && candidate.searchParams.has('id')) return true
+  if (/notice\.aspx$/i.test(pathname) && candidate.searchParams.has('q')) return true
+
+  return false
 }
 
 function extractCandidates(html, source) {
@@ -78,7 +94,7 @@ function extractCandidates(html, source) {
     const title = cleanText(match[3])
     const url = canonicalizeLink(match[2], source.url)
     if (!url || !looksLikeNews(url, source.url) || title.length < 12) continue
-    if (/^(read more|learn more|view all|news|next|previous)$/i.test(title)) continue
+    if (NAV_TITLE.test(title)) continue
     found.set(url, {
       id: createHash('sha256').update(url).digest('hex').slice(0, 16),
       title,
