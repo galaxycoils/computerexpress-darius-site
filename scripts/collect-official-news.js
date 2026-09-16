@@ -62,8 +62,11 @@ function canonicalizeLink(href, sourceUrl) {
 }
 
 function looksLikeNews(url, sourceUrl) {
-  if (url === sourceUrl) return false
-  const pathname = new URL(url).pathname
+  const candidate = new URL(url)
+  const source = new URL(sourceUrl)
+  if (url === sourceUrl || candidate.pathname === source.pathname) return false
+  const pathname = candidate.pathname
+  if (/\/(contacts?|categories|archive)(\.aspx)?$/i.test(pathname)) return false
   return /\/(news|posts?|media|media-releases|notices?|public-notices?)(\/|$)/i.test(pathname)
 }
 

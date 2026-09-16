@@ -103,7 +103,7 @@ jobs:
         run: |
           existing="$(gh pr list --base main --head "$REVIEW_BRANCH" --state open --json number --jq '.[0].number')"
           if [ -z "$existing" ]; then
-            gh pr create               --base main               --head "$REVIEW_BRANCH"               --title "Editorial review: official source candidates"               --body "Automated discovery from the approved source registry. Every item remains a review candidate; this pull request does not publish articles automatically. Verify titles, dates, context, relevance, and source links before merging."
+            gh pr create --base main --head "$REVIEW_BRANCH" --title "Editorial review: official source candidates" --body "Automated discovery from the approved source registry. Every item remains a review candidate; this pull request does not publish articles automatically. Verify titles, dates, context, relevance, and source links before merging." || echo "::warning::GitHub Actions could not create a pull request; review $REVIEW_BRANCH manually."
           else
             echo "Updated existing review pull request #$existing"
           fi
