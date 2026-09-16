@@ -12,9 +12,9 @@ const renderWithProviders = (ui) =>
   )
 
 describe('HomePage — Editorial Newsroom', () => {
-  it('renders hero with primary-document headline', () => {
+  it('renders the newsroom headline and attribution promise', () => {
     renderWithProviders(<HomePage />)
-    expect(screen.getByText(/primary documents/i)).toBeInTheDocument()
+    expect(screen.getByText(/public records and primary sources/i)).toBeInTheDocument()
   })
 
   it('uses local file photos with dates and credits', () => {
@@ -25,9 +25,9 @@ describe('HomePage — Editorial Newsroom', () => {
     expect(screen.getByRole('link', { name: /Hannah Clover/i })).toHaveAttribute('href', 'https://commons.wikimedia.org/wiki/File:St._Catharines_City_Hall_2023.jpg')
   })
 
-  it('renders city location labels', () => {
+  it('renders the local calendar', () => {
     renderWithProviders(<HomePage />)
-    expect(screen.getByText(/St. Catharines · Welland · Thorold/i)).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: 'This week locally' })).toBeInTheDocument()
   })
 
   it('has Planning Tracker CTA', () => {
@@ -37,11 +37,11 @@ describe('HomePage — Editorial Newsroom', () => {
     expect(cta.getAttribute('href')).toBe('/planning-tracker')
   })
 
-  it('has NRPS Releases external link', () => {
+  it('links reporting to an official municipal source', () => {
     renderWithProviders(<HomePage />)
-    const nrps = screen.getByRole('link', { name: /Niagara Regional Police/i })
+    const nrps = screen.getByRole('link', { name: 'Read official source' })
     expect(nrps).toBeInTheDocument()
-    expect(nrps.getAttribute('href')).toBe('https://www.niagarapolice.ca/')
+    expect(new URL(nrps.getAttribute('href')).hostname).toBe('www.stcatharines.ca')
   })
 
   it('renders active notices from planningNotices data', () => {
@@ -53,15 +53,15 @@ describe('HomePage — Editorial Newsroom', () => {
   it('keeps the newsletter forms accessible', () => {
     renderWithProviders(<HomePage />)
     const boxes = screen.getAllByRole('textbox', { name: /email address/i })
-    expect(boxes.length).toBeGreaterThanOrEqual(2)
+    expect(boxes.length).toBe(1)
     boxes.forEach((box) => expect(box).toHaveAttribute('type', 'email'))
   })
 
-  it('surfaces the Welland election band with voter guide link', () => {
+  it('links to the elections hub without hard-coded candidate counts', () => {
     renderWithProviders(<HomePage />)
-    expect(screen.getByText(/Eight candidates\. One mayor\./i)).toBeInTheDocument()
-    const guide = screen.getByRole('link', { name: /Open the voter guide/i })
-    expect(guide.getAttribute('href')).toBe('/welland-votes')
+    expect(screen.queryByText(/Eight candidates\. One mayor\./i)).not.toBeInTheDocument()
+    const guide = screen.getByRole('link', { name: /Election guides and civic information/i })
+    expect(guide.getAttribute('href')).toBe('/votes')
   })
 
   it('offers topic checkboxes in the home capture', () => {
@@ -83,6 +83,11 @@ describe('HomePage — Editorial Newsroom', () => {
     expect(link).not.toBeNull()
     expect(link.getAttribute('href')).toMatch(/^https?:\/\//)
     expect(link.getAttribute('target')).toBe('_blank')
+  })
+
+  it('preserves a date-only publication day', () => {
+    const { container } = renderWithProviders(<HomePage />)
+    expect(container.querySelector('time[datetime="2026-08-25"]')).toHaveTextContent('Aug 25, 2026')
   })
 
   it('marks story times machine-readable', () => {

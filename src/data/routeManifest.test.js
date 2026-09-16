@@ -1,18 +1,14 @@
 import { describe, expect, it } from 'vitest'
 import { prerenderRoutes, sitemapRoutes } from './routeManifest'
 
-const GUIDE = '/guides/st-catharines-ontario-street-corridor-plan'
-
-const BLOG_SLUGS = []
-
-describe('route manifest guides', () => {
-  it('includes guide routes in prerendering and the sitemap', () => {
-    expect(prerenderRoutes).toContain(GUIDE)
-    expect(sitemapRoutes).toContain(GUIDE)
+describe('newsroom route manifest', () => {
+  it('keeps the removed Guides section out of prerendering and sitemap', () => {
+    for (const routes of [prerenderRoutes, sitemapRoutes]) {
+      expect(routes.some(route => route === '/guides' || route.startsWith('/guides/'))).toBe(false)
+    }
   })
-
-  it.each(BLOG_SLUGS)('prerenders and sitemaps blog post %s', (slug) => {
-    expect(prerenderRoutes).toContain(`/blog/${slug}`)
-    expect(sitemapRoutes).toContain(`/blog/${slug}`)
+  it.each(['/', '/news', '/council', '/planning-tracker', '/votes', '/welland-votes'])('retains core newsroom route %s', route => {
+    expect(prerenderRoutes).toContain(route)
+    expect(sitemapRoutes).toContain(route)
   })
 })
