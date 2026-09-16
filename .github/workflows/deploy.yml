@@ -28,6 +28,15 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Collector regression tests
+        run: node --test scripts/collector.regression.mjs
+
+      - name: Content audit
+        run: npm run content:audit
+
+      - name: Application tests
+        run: npm test
+
       - name: Build
         run: npm run build
 
