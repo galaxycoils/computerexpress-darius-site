@@ -1,6 +1,7 @@
 import { useSearchParams, Link } from 'react-router-dom'
 import Seo from '../components/Seo'
 import { planningNotices } from '../data/planningNotices'
+import { getPublishableContent } from '../data/contentRegistry'
 import './reader-services.css'
 
 const CITIES = [
@@ -28,9 +29,11 @@ export default function SearchPage() {
   const [params] = useSearchParams()
   const query=(params.get('q')||'').trim()
   const normalized=query.toLowerCase()
-  const results=normalized ? planningNotices.filter(item=>[
+  const articleResults = normalized ? getPublishableContent().filter(item => [item.title, item.description, item.city, item.type, item.intent].filter(Boolean).join(' ').toLowerCase().includes(normalized)).map(item => ({ ...item, kind: 'article' })) : []
+  const noticeResults = normalized ? planningNotices.filter(item=>[
     item.title,item.description,item.municipality,item.type,item.status,item.fileNumber,...(item.tags||[])
-  ].filter(Boolean).join(' ').toLowerCase().includes(normalized)) : []
+  ].filter(Boolean).join(' ').toLowerCase().includes(normalized)).map(item => ({ ...item, kind: 'notice' })) : []
+  const results = [...articleResults, ...noticeResults].sort((a,b) => String(b.publishedDate || '').localeCompare(String(a.publishedDate || '')))
 
   return <>
     <Seo title={query ? `Search: ${query} | St. Catharines Digital` : 'Search | St. Catharines Digital'} description="Search local news, planning records and civic information across Niagara." path="/search" />
@@ -42,7 +45,7 @@ export default function SearchPage() {
       </form>
       {!query && <section className="scd-search-start"><h2>Browse by city</h2><div className="scd-city-pills">{CITIES.map(([label,to])=><Link key={to} to={to}>{label}<span aria-hidden="true">→</span></Link>)}</div><p>Popular topics: council, minor variance, road closure, zoning, public meeting and construction.</p></section>}
       {query && <section aria-live="polite" aria-labelledby="results-heading"><div className="scd-search-results-heading"><h2 id="results-heading">{results.length} {results.length===1?'result':'results'} for “{query}”</h2><Link to="/search">Clear search</Link></div>
-        {results.length ? <div className="scd-search-results">{results.map(item=><article key={item.id}><div className="scd-record-meta"><span>{item.municipality}</span><time dateTime={item.publishedDate}>{formatDate(item.publishedDate)}</time></div><h3><a href={item.sourceUrl} target="_blank" rel="noopener noreferrer">{item.title}</a></h3><p>{item.description}</p><div className="scd-search-result-footer"><span>{item.type}</span><span>{item.status}</span>{item.fileNumber&&<span>File {item.fileNumber}</span>}</div></article>)}</div> : <div className="scd-search-empty"><h3>No matching records</h3><p>Try a city, street name, file number or broader topic.</p><Link to="/planning-tracker">Browse the Planning Tracker →</Link></div>}
+        {results.length ? <div className="scd-search-results">{results.map(item=><article key={item.id || item.slug}><div className="scd-record-meta"><span>{item.municipality || item.city}</span><time dateTime={item.publishedDate}>{formatDate(item.publishedDate)}</time></div><h3>{item.kind === 'article' ? <Link to={`/articles/${item.slug}`}>{item.title}</Link> : <a href={item.sourceUrl} target="_blank" rel="noopener noreferrer">{item.title}</a>}</h3><p>{item.description}</p><div className="scd-search-result-footer"><span>{item.kind === 'article' ? 'Verified coverage' : item.type}</span>{item.status&&<span>{item.status}</span>}{item.fileNumber&&<span>File {item.fileNumber}</span>}</div></article>)}</div> : <div className="scd-search-empty"><h3>No matching records</h3><p>Try a city, street name, file number or broader topic.</p><Link to="/planning-tracker">Browse the Planning Tracker →</Link></div>}
       </section>}
     </div>
   </>
