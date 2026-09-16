@@ -64,6 +64,9 @@ jobs:
       - name: Run content integrity audit
         run: npm run content:audit
 
+      - name: Run collector regression tests
+        run: node --test scripts/*.regression.mjs
+
       - name: Run tests
         run: npm test
 
@@ -101,9 +104,31 @@ jobs:
         if: env.MODE == 'write' && steps.changes.outputs.changed == 'true'
         shell: bash
         run: |
-          existing="$(gh pr list --base main --head "$REVIEW_BRANCH" --state open --json number --jq '.[0].number')"
+          set -euo pipefail
+          existing="$(gh pr list --base main --head "$REVIEW_BRANCH" --state open --json number --jq '.[0].number // empty' 2>&1)" || {
+            echo "::error::gh pr list failed: $existing"
+            exit 1
+          }
           if [ -z "$existing" ]; then
-            gh pr create --base main --head "$REVIEW_BRANCH" --title "Editorial review: official source candidates" --body "Automated discovery from the approved source registry. Every item remains a review candidate; this pull request does not publish articles automatically. Verify titles, dates, context, relevance, and source links before merging." || echo "::warning::GitHub Actions could not create a pull request; review $REVIEW_BRANCH manually."
+            if ! out="$(gh pr create --base main --head "$REVIEW_BRANCH" \
+              --title "Editorial review: official source candidates" \
+              --body "$(cat <<'EOF'
+Automated discovery from the approved source registry.
+
+Every item remains a **review candidate**. This pull request does **not** publish articles automatically.
+
+Before merging:
+- Verify titles, dates, context, and relevance
+- Confirm source links resolve to official pages
+- Drop nav noise or off-topic items if any slipped through
+EOF
+)" 2>&1)"; then
+              echo "::error::gh pr create failed: $out"
+              echo "::error::Review branch $REVIEW_BRANCH was pushed; open the PR manually if needed."
+              exit 1
+            fi
+            echo "Created review pull request: $out"
           else
             echo "Updated existing review pull request #$existing"
+            gh pr comment "$existing" --body "Automation refreshed discovery candidates on \`$(date -u +%Y-%m-%dT%H:%MZ)\`." || true
           fi
