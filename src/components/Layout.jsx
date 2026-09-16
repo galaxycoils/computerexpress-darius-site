@@ -104,7 +104,7 @@ export default function Layout() {
       <div className="scd-f-grid">
         <div><div className="scd-f-name">St. Catharines Digital</div><p>Independent local coverage for St. Catharines, Welland, Thorold and Niagara Falls. Every civic record links to its primary source.</p></div>
         <div><div className="scd-f-label">Coverage</div><Link to="/news">Latest</Link><Link to="/council">Council</Link><Link to="/planning-tracker">Development</Link><Link to="/votes">Elections</Link><Link to="/police">Public Safety</Link></div>
-        <div><div className="scd-f-label">Reader services</div><Link to="/reader-services">All reader services</Link><Link to="/search">Search</Link><Link to="/planning-alerts">Newsletters & alerts</Link><Link to="/contact">Send a news tip</Link><Link to="/corrections">Report a correction</Link><Link to="/membership">Support the newsroom</Link></div>
+        <div><div className="scd-f-label">Reader services</div><Link to="/reader-services">All reader services</Link><Link to="/search">Search</Link><a href="/rss.xml">RSS feed</a><Link to="/planning-alerts">Newsletters & alerts</Link><Link to="/contact">Send a news tip</Link><Link to="/corrections">Report a correction</Link><Link to="/membership">Support the newsroom</Link></div>
         <div><div className="scd-f-label">Your city</div>{CITIES.map(item=><Link key={item.to} to={item.to}>{item.label}</Link>)}<Link to="/about">About</Link><Link to="/editorial-policy">Editorial policy</Link></div>
       </div>
       <div className="scd-f-bottom"><span>© {new Date().getFullYear()} St. Catharines Digital</span><div className="scd-legal-links"><Link to="/contact">Contact</Link><Link to="/privacy">Privacy</Link><Link to="/terms">Terms</Link></div></div>
