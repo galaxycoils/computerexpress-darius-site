@@ -17,7 +17,9 @@ describe('newsroom route manifest', () => {
   })
 })
 
-it('does not invent sitemap modification dates from build time', () => {
-  expect(createSitemapXml()).not.toContain('<lastmod>')
+it('uses a verified content date only for an article route', () => {
+  const xml = createSitemapXml()
+  expect(xml).toContain('<lastmod>2026-09-02</lastmod>')
+  expect(xml).not.toContain(`<lastmod>${new Date().toISOString().slice(0, 10)}</lastmod>`)
   expect(createSitemapXml()).toContain('<loc>https://stcatharinesdigital.ca/</loc>')
 })
