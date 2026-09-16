@@ -1,0 +1,8 @@
+{
+  "version": 1,
+  "collectedAt": null,
+  "publicationState": "review-required",
+  "notice": "Discovery candidates from approved official sources. No item is automatically published as reporting. Seed file on main so the first automation write produces a clear diff.",
+  "sources": [],
+  "items": []
+}
