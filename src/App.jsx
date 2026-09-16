@@ -24,6 +24,7 @@ import PlanningAlertsPage from './pages/PlanningAlertsPage'
 import MembershipPage from './pages/MembershipPage'
 import ReaderServicesPage from './pages/ReaderServicesPage'
 import SearchPage from './pages/SearchPage'
+import AlertPreferencesPage from './pages/AlertPreferencesPage'
 
 export function AppRoutes() {
   return (
@@ -43,6 +44,7 @@ export function AppRoutes() {
           <Route path="membership" element={<MembershipPage />} />
           <Route path="reader-services" element={<ReaderServicesPage />} />
           <Route path="search" element={<SearchPage />} />
+          <Route path="preferences" element={<AlertPreferencesPage />} />
           <Route path="news" element={<NewsPage />} />
           <Route path="news/police" element={<PoliceNewsPage />} />
           <Route path="news/:citySlug" element={<CityNewsPage />} />
