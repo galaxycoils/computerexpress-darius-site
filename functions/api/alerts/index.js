@@ -52,7 +52,7 @@ export async function onRequestPost(context) {
     // Send verification email
     if (apiKey) {
       try {
-        const token = await createAlertToken(id, now, tokenSecret);
+        const token = await createAlertToken(id, now, tokenSecret, 'verify');
         const verifyUrl = 'https://stcatharinesdigital.ca/api/alerts/verify?token=' + encodeURIComponent(token);
         
         const inboxRes = await fetch('https://api.agentmail.to/v0/inboxes', {
@@ -79,7 +79,7 @@ export async function onRequestPost(context) {
           body: JSON.stringify({
             to: email,
             subject: 'Verify your planning alerts — St. Catharines Digital',
-            text: `You're on the list. Click below to confirm your alert filters and start receiving planning notices.\n\nVERIFY: ${verifyUrl}\n\nThis link expires in 24 hours.\n\nManage your alerts: https://stcatharinesdigital.ca/alerts\n\n— St. Catharines Digital`,
+            text: `You're on the list. Click below to confirm your alert filters and start receiving planning notices.\n\nVERIFY: ${verifyUrl}\n\nThis link expires in 24 hours. After verification, your private preferences link will be displayed and emailed to you.\n\n— St. Catharines Digital`,
             html: `<!DOCTYPE html><html><head><meta charset="utf-8"></head><body style="font-family:Inter,sans-serif;color:#1a1a2e;background:#f8fafb;padding:2rem;"><div style="max-width:640px;margin:0 auto;"><div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:2rem;"><h1 style="color:#0d3b66;">Confirm Your Planning Alerts</h1><p>You're on the list for St. Catharines Digital Planning Alerts.</p><div style="margin:2rem 0;text-align:center;"><a href="${verifyUrl}" style="display:inline-block;padding:.75rem 2rem;background:#0d3b66;color:#fff;text-decoration:none;border-radius:8px;font-weight:700;">Verify Email</a></div></div></div></body></html>`,
             labels: ['planning-alerts', 'verify', 'welcome'],
           }),

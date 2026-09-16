@@ -1,4 +1,4 @@
-import { verifyAlertToken } from './_auth.js'
+import { createAlertToken, verifyAlertToken } from './_auth.js'
 
 // Cloudflare Pages Function: GET/POST/DELETE /api/alerts/manage
 // Manage user's alert (auth via X-Alert-Token header = alert_id:created_at base64url)
@@ -50,17 +50,26 @@ export async function onRequest(context) {
     } else if (request.method === 'POST') {
       const body = await request.json();
       const { frequency, wards, types, statuses, keywords } = body;
+      if (!['daily', 'immediate'].includes(frequency)) {
+        return jsonResponse({ error: 'Invalid delivery frequency' }, 400);
+      }
+      if (![wards, types, statuses].every(Array.isArray) || [wards, types, statuses].some(values => values.length > 20)) {
+        return jsonResponse({ error: 'Invalid alert filters' }, 400);
+      }
+      if (typeof keywords !== 'string' || keywords.length > 500) {
+        return jsonResponse({ error: 'Keywords must be 500 characters or fewer' }, 400);
+      }
       const now = Date.now();
 
       await STC_D1.prepare(
         `UPDATE alerts SET frequency = ?, wards = ?, types = ?, statuses = ?, keywords = ?, updated_at = ?, last_sent_at = NULL
          WHERE id = ? AND created_at = ?`
       ).bind(
-        frequency || 'daily',
-        JSON.stringify(wards || []),
-        JSON.stringify(types || []),
-        JSON.stringify(statuses || []),
-        keywords || '',
+        frequency,
+        JSON.stringify(wards),
+        JSON.stringify(types),
+        JSON.stringify(statuses),
+        keywords.trim(),
         now,
         auth.id,
         auth.created
@@ -75,11 +84,13 @@ export async function onRequest(context) {
           ).bind(auth.id).first();
 
           if (fetchResult) {
+            const manageToken = await createAlertToken(auth.id, auth.created, tokenSecret, 'manage')
+            const manageUrl = `https://stcatharinesdigital.ca/preferences?token=${encodeURIComponent(manageToken)}`
             await sendEmail(apiKey, inbox.inbox_id, {
               to: fetchResult.email,
               subject: 'Your planning alerts were updated — St. Catharines Digital',
-              text: `Your planning alert filters were updated.\n\nNext digest: ${frequency === 'daily' ? 'Every Thursday, 6 AM' : 'Each time a matching notice is published'}\n\nManage your alerts: https://stcatharinesdigital.ca/alerts\n\n— St. Catharines Digital`,
-              html: buildUpdateHtml(frequency),
+              text: `Your planning alert filters were updated.\n\nNext digest: ${frequency === 'daily' ? 'Every Thursday, 6 AM' : 'Each time a matching notice is published'}\n\nManage your alerts: ${manageUrl}\n\n— St. Catharines Digital`,
+              html: buildUpdateHtml(frequency, manageUrl),
               labels: ['planning-alerts', 'updated'],
             });
           }
@@ -125,7 +136,7 @@ export async function onRequestOptions() {
 
 async function authenticate(request, secret) {
   const header = request.headers.get('X-Alert-Token')
-  const auth = await verifyAlertToken(header, secret)
+  const auth = await verifyAlertToken(header, secret, { expectedScope: 'manage' })
   return auth ? { id: auth.id, created: auth.createdAt } : null
 }
 
@@ -169,7 +180,7 @@ async function sendEmail(apiKey, inboxId, { to, subject, text, html, labels = []
   }
 }
 
-function buildUpdateHtml(frequency) {
+function buildUpdateHtml(frequency, manageUrl) {
   return `<!DOCTYPE html><html><head><meta charset="utf-8"></head>
 <body style="font-family:Inter,-apple-system,sans-serif;color:#1a1a2e;background:#f8fafb;padding:2rem;">
 <div style="max-width:640px;margin:0 auto;">
@@ -180,7 +191,7 @@ function buildUpdateHtml(frequency) {
     </div>
     <p>Your planning alert filters were updated successfully.</p>
     <p style="margin:1rem 0;"><strong>Next digest:</strong> ${frequency === 'daily' ? 'Every Thursday, 6 AM' : 'Each matching notice triggers an immediate email'}</p>
-    <p style="font-size:.85rem;color:#666;">Manage your alerts: <a href="https://stcatharinesdigital.ca/alerts" style="color:#12d6ff;">stcatharinesdigital.ca/alerts</a></p>
+    <p style="font-size:.85rem;color:#666;"><a href="${manageUrl}" style="color:#0d3b66;">Manage your planning alerts</a></p>
   </div>
 </div></body></html>`;
 }

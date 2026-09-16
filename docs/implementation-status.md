@@ -1,6 +1,6 @@
 # Remaining newsroom release checklist
 
-Baseline: eb79acb84a3125b629558ee41e386bc61c3c7bc1.
+Baseline: c685fc8558cd079eef371cd4ff84886e71c146d2.
 This is an implementation status register, not a completion claim.
 
 ## This release
@@ -12,16 +12,18 @@ This is an implementation status register, not a completion claim.
 - [x] Preserve historical discovery records without a global truncation.
 - [x] Add eight offline collector regression tests (passed locally).
 - [x] Add pull-request and main-branch content integrity checks.
-- [ ] Observe remote full test suite and production build.
-- [ ] Verify deployment for this exact release.
-- [ ] Verify collector on real approved sources and inspect generated candidates.
+- [x] Observe remote full test suite and production build.
+- [x] Verify deployment through commit eff40ccecd6eb47e65e124519ec7ce1490b0ebc3.
+- [x] Run the collector against all five approved sources and inspect 78 candidates.
+- [x] Filter obvious navigation, contact and archive pages from future discovery snapshots.
 
 ## Outstanding release blockers
-- [ ] Replace unsigned alert credentials with scoped expiring credentials.
-- [ ] Require authenticated unsubscribe; preserve working unsubscribe links.
-- [ ] Persist newsletter consent/preferences and reconcile delivery contract.
-- [ ] Test D1 migrations and backup/restore outside production.
-- [ ] Validate email provider acceptance and authorized recipient delivery.
+- [x] Replace unsigned alert credentials with scoped expiring credentials.
+- [x] Require authenticated unsubscribe and provide private preference links.
+- [x] Persist newsletter consent, topics and provider-delivery state in D1.
+- [ ] Test D1 backup and restoration in a non-production database.
+- [x] Validate provider acceptance using the authorized newsletter recipient.
+- [ ] Confirm receipt in the authorized recipient's inbox.
 - [ ] Add delivery ledger and retry reconciliation.
 
 ## Remaining product work
@@ -30,10 +32,13 @@ This is an implementation status register, not a completion claim.
 - [ ] Verified seeded reporting, projects, meetings, and elections.
 - [ ] Community and events records before section promotion.
 - [ ] Authenticated editorial administration and moderated submissions.
-- [ ] Correct sitemap modification dates and structured data.
+- [x] Stop publishing invented build-time sitemap modification dates.
+- [ ] Add verified per-record sitemap dates and complete structured-data review.
 - [ ] Accessibility, performance, route restoration and error-state audit.
 - [ ] Sponsorship/membership promises matched to working services.
 
 Guides remain removed. No fabricated reporting, inferred candidate positions,
 invented dates, or unverified automated articles are approved by this release.
-No test email was sent as part of this collector-only change.
+A production newsletter subscription request was accepted by D1 and the email provider.
+Inbox receipt has not been independently confirmed. Planning alerts remain unavailable
+until `ALERT_TOKEN_SECRET` is configured in the deployment environment.
