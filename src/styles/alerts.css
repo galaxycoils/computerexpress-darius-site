@@ -377,3 +377,79 @@
     font-size: 11px;
   }
 }
+
+/* Private planning-alert preferences */
+.scd-preferences {
+  padding-bottom: 64px;
+}
+
+.scd-preferences-status,
+.scd-preferences-empty,
+.scd-preferences-form {
+  margin-top: 32px;
+}
+
+.scd-preferences-empty h2,
+.scd-preferences-danger h2 {
+  font-family: var(--font-display);
+  color: var(--text-bright);
+  margin-bottom: 8px;
+}
+
+.scd-preferences-empty p,
+.scd-preferences-danger p {
+  color: var(--muted);
+  margin-bottom: 20px;
+}
+
+.scd-preferences-account {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding-bottom: 20px;
+  margin-bottom: 24px;
+  border-bottom: 1px solid var(--panel-border);
+}
+
+.scd-preferences-account span {
+  color: var(--muted);
+  font-size: var(--t-xs);
+  text-transform: uppercase;
+  letter-spacing: .06em;
+}
+
+.scd-preferences-account strong {
+  overflow-wrap: anywhere;
+}
+
+.scd-preferences-form fieldset {
+  border: 0;
+  padding: 0;
+}
+
+.scd-preferences-form legend {
+  font-weight: 600;
+  color: var(--text-bright);
+  margin-bottom: 8px;
+  font-size: var(--t-sm);
+}
+
+.scd-preferences-message {
+  padding: 12px;
+  margin-bottom: 16px;
+  border: 1px solid var(--panel-border);
+  border-radius: 6px;
+  color: var(--text);
+}
+
+.scd-preferences-danger {
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 1px solid var(--panel-border);
+}
+
+.scd-preferences-confirm {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
