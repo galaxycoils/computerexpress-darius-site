@@ -16,18 +16,25 @@ function parseArgs(argv) {
     const value = argv[index]
     if (value === '--write') args.write = true
     else if (value === '--dry-run') args.write = false
-    else if (value === '--source') args.source = argv[++index]
+    else if (value === '--source') {
+      args.source = argv[++index]
+      if (!args.source || args.source.startsWith('--')) throw new Error('Missing source ID')
+    }
     else if (value.startsWith('--source=')) args.source = value.slice('--source='.length)
     else throw new Error('Unknown argument: ' + value)
   }
   return args
 }
 
+function codePoint(value) {
+  return Number.isInteger(value) && value >= 0 && value <= 0x10ffff && !(value >= 0xd800 && value <= 0xdfff) ? String.fromCodePoint(value) : '\uFFFD'
+}
+
 function decodeEntities(value) {
   const named = { amp: '&', apos: "'", gt: '>', lt: '<', nbsp: ' ', quot: '"' }
   return value
-    .replace(/&#(\d+);/g, (_, code) => String.fromCodePoint(Number(code)))
-    .replace(/&#x([\da-f]+);/gi, (_, code) => String.fromCodePoint(Number.parseInt(code, 16)))
+    .replace(/&#(\d+);/g, (_, code) => codePoint(Number(code)))
+    .replace(/&#x([\da-f]+);/gi, (_, code) => codePoint(Number.parseInt(code, 16)))
     .replace(/&([a-z]+);/gi, (match, name) => named[name.toLowerCase()] ?? match)
 }
 
@@ -40,9 +47,9 @@ function cleanText(value) {
 
 function canonicalizeLink(href, sourceUrl) {
   try {
-    const candidate = new URL(href, sourceUrl)
+    const candidate = new URL(decodeEntities(href), sourceUrl)
     const source = new URL(sourceUrl)
-    if (candidate.protocol !== 'https:' || candidate.hostname !== source.hostname) return null
+    if (candidate.protocol !== 'https:' || candidate.origin !== source.origin || candidate.username || candidate.password) return null
     candidate.hash = ''
     for (const key of [...candidate.searchParams.keys()]) {
       if (/^(utm_|fbclid$|gclid$)/i.test(key)) candidate.searchParams.delete(key)
@@ -61,6 +68,7 @@ function looksLikeNews(url, sourceUrl) {
 }
 
 function extractCandidates(html, source) {
+  html = html.replace(/<(script|style)\b[^>]*>[\s\S]*?<\/\1>/gi, '')
   const found = new Map()
   const anchorPattern = /<a\b[^>]*\bhref\s*=\s*(['"])(.*?)\1[^>]*>([\s\S]*?)<\/a>/gi
   for (const match of html.matchAll(anchorPattern)) {
@@ -93,7 +101,7 @@ async function fetchHtml(source) {
   try {
     const response = await fetch(source.url, {
       headers: { accept: 'text/html,application/xhtml+xml', 'user-agent': USER_AGENT },
-      redirect: 'follow',
+      redirect: 'error',
       signal: controller.signal,
     })
     if (!response.ok) throw new Error('HTTP ' + response.status)
@@ -103,9 +111,25 @@ async function fetchHtml(source) {
     }
     const declaredLength = Number(response.headers.get('content-length') || 0)
     if (declaredLength > MAX_BYTES) throw new Error('Response exceeds size limit')
-    const html = await response.text()
-    if (Buffer.byteLength(html, 'utf8') > MAX_BYTES) throw new Error('Response exceeds size limit')
-    return html
+    if (!response.body) throw new Error('Empty response')
+    const reader = response.body.getReader()
+    const chunks = []
+    let bytes = 0
+    try {
+      while (true) {
+        const { done, value } = await reader.read()
+        if (done) break
+        bytes += value.byteLength
+        if (bytes > MAX_BYTES) {
+          await reader.cancel()
+          throw new Error('Response exceeds size limit')
+        }
+        chunks.push(Buffer.from(value))
+      }
+    } finally {
+      reader.releaseLock()
+    }
+    return Buffer.concat(chunks).toString('utf8')
   } finally {
     clearTimeout(timeout)
   }
@@ -162,15 +186,12 @@ async function main() {
 
   if (!successfulSources) throw new Error('Every requested source failed; the last-known-good snapshot was preserved')
 
-  const selectedIds = new Set(selected.map(source => source.id))
   const merged = new Map()
   for (const item of existing.items || []) merged.set(item.url, item)
   for (const item of collected) merged.set(item.url, item)
 
   const items = [...merged.values()]
-    .filter(item => !selectedIds.has(item.sourceId) || selected.some(source => source.id === item.sourceId))
     .sort((a, b) => a.sourceId.localeCompare(b.sourceId) || a.title.localeCompare(b.title))
-    .slice(0, sourceRegistry.length * MAX_ITEMS_PER_SOURCE)
 
   const snapshot = {
     version: 1,
@@ -197,7 +218,9 @@ async function main() {
   console.log('Wrote ' + path.relative(ROOT, OUTPUT))
 }
 
-main().catch(error => {
+export { parseArgs, canonicalizeLink, extractCandidates, fetchHtml, decodeEntities }
+
+if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) main().catch(error => {
   console.error(error)
   process.exitCode = 1
 })
