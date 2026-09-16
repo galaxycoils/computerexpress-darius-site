@@ -224,7 +224,7 @@ View all notices: https://stcatharinesdigital.ca/planning-tracker
 ---
 St. Catharines Digital
 https://stcatharinesdigital.ca
-Unsubscribe: reply with "unsubscribe" or visit https://stcatharinesdigital.ca/api/alerts/unsubscribe?email=${encodeURIComponent(alert.email)}`;
+Unsubscribe: reply with "unsubscribe" or visit https://stcatharinesdigital.ca/planning-alerts`;
 
   const html = `<!DOCTYPE html><html><head><meta charset="utf-8"></head>
 <body style="font-family:Inter,-apple-system,sans-serif;color:#1a1a2e;background:#f8fafb;padding:2rem;">
@@ -247,7 +247,7 @@ Unsubscribe: reply with "unsubscribe" or visit https://stcatharinesdigital.ca/ap
     <a href="https://stcatharinesdigital.ca/planning-tracker" style="display:inline-block;padding:.75rem 2rem;background:#0d3b66;color:#fff;text-decoration:none;border-radius:8px;font-weight:700;">View all notices →</a>
     <div style="margin-top:2rem;padding-top:1rem;border-top:1px solid #e2e8f0;font-size:.8rem;color:#999;text-align:center;">
       <p>St. Catharines Digital · https://stcatharinesdigital.ca</p>
-      <p>Unsubscribe: <a href="https://stcatharinesdigital.ca/api/alerts/unsubscribe?email=${encodeURIComponent(alert.email)}" style="color:#12d6ff;">click here</a> or reply with "unsubscribe"</p>
+      <p>Unsubscribe: <a href="https://stcatharinesdigital.ca/planning-alerts" style="color:#12d6ff;">click here</a> or reply with "unsubscribe"</p>
     </div>
   </div>
 </div></body></html>`;

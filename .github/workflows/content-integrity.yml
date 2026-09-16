@@ -25,7 +25,7 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
-      - run: node --test scripts/collector.regression.mjs
+      - run: node --test scripts/*.regression.mjs
       - run: npm run content:audit
       - run: npm test
       - run: npm run build

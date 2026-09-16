@@ -1,3 +1,5 @@
+import { verifyAlertToken } from './_auth.js'
+
 // Cloudflare Pages Function: GET/POST/DELETE /api/alerts/manage
 // Manage user's alert (auth via X-Alert-Token header = alert_id:created_at base64url)
 
@@ -7,8 +9,9 @@ export async function onRequest(context) {
   const { env, request } = context;
   const { STC_D1 } = env;
   const apiKey = env.AGENTMAIL_API_KEY;
+  const tokenSecret = env.ALERT_TOKEN_SECRET;
 
-  if (!STC_D1) {
+  if (!STC_D1 || !tokenSecret) {
     return jsonResponse({ error: 'Service not configured' }, 503);
   }
 
@@ -16,7 +19,7 @@ export async function onRequest(context) {
     return new Response(null, { status: 204, headers: corsHeaders() });
   }
 
-  const auth = authenticate(request);
+  const auth = await authenticate(request, tokenSecret);
   if (!auth) {
     return jsonResponse({ error: 'Unauthorized' }, 401);
   }
@@ -24,8 +27,8 @@ export async function onRequest(context) {
   try {
     if (request.method === 'GET') {
       const row = await STC_D1.prepare(
-        'SELECT id, email, verified, frequency, wards, types, statuses, keywords, created_at, last_sent_at FROM alerts WHERE id = ?'
-      ).bind(auth.id).first();
+        'SELECT id, email, verified, frequency, wards, types, statuses, keywords, created_at, last_sent_at FROM alerts WHERE id = ? AND created_at = ?'
+      ).bind(auth.id, auth.created).first();
 
       if (!row) {
         return jsonResponse({ alert: null });
@@ -51,7 +54,7 @@ export async function onRequest(context) {
 
       await STC_D1.prepare(
         `UPDATE alerts SET frequency = ?, wards = ?, types = ?, statuses = ?, keywords = ?, updated_at = ?, last_sent_at = NULL
-         WHERE id = ?`
+         WHERE id = ? AND created_at = ?`
       ).bind(
         frequency || 'daily',
         JSON.stringify(wards || []),
@@ -59,7 +62,8 @@ export async function onRequest(context) {
         JSON.stringify(statuses || []),
         keywords || '',
         now,
-        auth.id
+        auth.id,
+        auth.created
       ).run();
 
       // Send update confirmation email
@@ -86,9 +90,9 @@ export async function onRequest(context) {
 
       return jsonResponse({ success: true, message: 'Alert filters updated.' });
     } else if (request.method === 'DELETE') {
-      const row = await STC_D1.prepare('SELECT email FROM alerts WHERE id = ?').bind(auth.id).first();
+      const row = await STC_D1.prepare('SELECT email FROM alerts WHERE id = ? AND created_at = ?').bind(auth.id, auth.created).first();
 
-      await STC_D1.prepare('DELETE FROM alerts WHERE id = ?').bind(auth.id).run();
+      await STC_D1.prepare('DELETE FROM alerts WHERE id = ? AND created_at = ?').bind(auth.id, auth.created).run();
 
       if (apiKey && row) {
         try {
@@ -119,20 +123,10 @@ export async function onRequestOptions() {
   return new Response(null, { status: 204, headers: corsHeaders() });
 }
 
-function authenticate(request) {
-  const header = request.headers.get('X-Alert-Token');
-  if (!header) return null;
-
-  try {
-    // Use atob for base64url decoding (Cloudflare Workers doesn't have Buffer)
-    const base64 = header.replace(/-/g, '+').replace(/_/g, '/');
-    const padded = base64 + '='.repeat((4 - base64.length % 4) % 4);
-    const decoded = atob(padded);
-    const [id, created] = decoded.split(':');
-    return { id, created: parseInt(created, 10) };
-  } catch {
-    return null;
-  }
+async function authenticate(request, secret) {
+  const header = request.headers.get('X-Alert-Token')
+  const auth = await verifyAlertToken(header, secret)
+  return auth ? { id: auth.id, created: auth.createdAt } : null
 }
 
 function jsonResponse(data, status = 200) {
