@@ -27,9 +27,10 @@ export const baseRoutes = [
 ]
 
 export const programmaticRoutes = []
+export const privateRoutes = ['/preferences']
 
 export const sitemapRoutes = baseRoutes.filter((r) => r !== '/404').concat(programmaticRoutes)
-export const prerenderRoutes = [...baseRoutes, ...programmaticRoutes, '/404']
+export const prerenderRoutes = [...baseRoutes, ...programmaticRoutes, ...privateRoutes, '/404']
 
 export function getRouteSitemapMeta(route) {
   if (route === '/') return { priority: '1.0', changefreq: 'weekly' }

@@ -11,6 +11,10 @@ describe('newsroom route manifest', () => {
     expect(prerenderRoutes).toContain(route)
     expect(sitemapRoutes).toContain(route)
   })
+  it('prerenders the private preferences route without adding it to the sitemap', () => {
+    expect(prerenderRoutes).toContain('/preferences')
+    expect(sitemapRoutes).not.toContain('/preferences')
+  })
 })
 
 it('does not invent sitemap modification dates from build time', () => {
