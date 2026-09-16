@@ -1,10 +1,12 @@
 import { Link } from 'react-router-dom'
 import Seo from '../components/Seo'
 import { cities } from '../data/cityConfig'
+import { getPublishableContent } from '../data/contentRegistry'
 import '../components/news/news.css'
 import '../components/news/news-hub.css'
 
 export default function NewsPage() {
+  const latest = getPublishableContent().sort((a, b) => b.publishedDate.localeCompare(a.publishedDate))
   return (
     <>
       <Seo
@@ -20,6 +22,13 @@ export default function NewsPage() {
             <p className="scd-intro-note">Independent coverage from official municipal and police sources across the Niagara Region.</p>
           </div>
         </header>
+
+        <section aria-labelledby="latest-coverage-h">
+          <div className="scd-section-heading-row"><h2 id="latest-coverage-h" className="scd-section-rule">Latest verified coverage</h2><a href="/rss.xml" className="scd-rss-link">RSS</a></div>
+          <div className="scd-verified-coverage">
+            {latest.map(item => <article key={item.slug} className="card"><p className="scd-cat">{item.type} · {item.city}</p><h3><Link to={`/articles/${item.slug}`}>{item.title}</Link></h3><p>{item.description}</p><div className="scd-coverage-card-footer"><time dateTime={item.publishedDate}>{item.publishedDate}</time><Link to={`/articles/${item.slug}`}>Read record →</Link></div></article>)}
+          </div>
+        </section>
 
         <section aria-labelledby="city-hubs-h">
           <h2 id="city-hubs-h" className="scd-section-rule">City Hubs</h2>

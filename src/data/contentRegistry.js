@@ -53,3 +53,7 @@ export function getPublishableContent() {
       /^\d{4}-\d{2}-\d{2}$/.test(item.publishedDate),
   )
 }
+
+export function getPublishableContentBySlug(slug) {
+  return getPublishableContent().find((item) => item.slug === slug) || null
+}

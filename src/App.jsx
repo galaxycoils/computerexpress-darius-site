@@ -25,6 +25,7 @@ import MembershipPage from './pages/MembershipPage'
 import ReaderServicesPage from './pages/ReaderServicesPage'
 import SearchPage from './pages/SearchPage'
 import AlertPreferencesPage from './pages/AlertPreferencesPage'
+import ArticlePage from './pages/ArticlePage'
 
 export function AppRoutes() {
   return (
@@ -44,6 +45,7 @@ export function AppRoutes() {
           <Route path="membership" element={<MembershipPage />} />
           <Route path="reader-services" element={<ReaderServicesPage />} />
           <Route path="search" element={<SearchPage />} />
+          <Route path="articles/:slug" element={<ArticlePage />} />
           <Route path="preferences" element={<AlertPreferencesPage />} />
           <Route path="news" element={<NewsPage />} />
           <Route path="news/police" element={<PoliceNewsPage />} />
