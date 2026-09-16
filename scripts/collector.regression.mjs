@@ -56,3 +56,14 @@ test('accepts bounded HTML responses', async () => {
     globalThis.fetch = original
   }
 })
+
+test('ignores listing filters and navigation pages on a news index', () => {
+  const indexSource = { ...source, url: 'https://city.example/news/default.aspx' }
+  const html = [
+    '<a href="/news/default.aspx?q=Council">Government and Council</a>',
+    '<a href="/news/contacts.aspx">Media Contacts</a>',
+    '<a href="/news/article.aspx?id=42">Council approves 2027 capital budget</a>',
+  ].join('')
+  const items = extractCandidates(html, indexSource)
+  assert.deepEqual(items.map(item => item.title), ['Council approves 2027 capital budget'])
+})
