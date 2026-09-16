@@ -1,4 +1,5 @@
 import { BASE_URL, serviceAreaCities } from './siteConfig.js'
+import { getPublishableContent } from './contentRegistry.js'
 
 export const baseRoutes = [
   '/',
@@ -26,7 +27,7 @@ export const baseRoutes = [
   '/search',
 ]
 
-export const programmaticRoutes = []
+export const programmaticRoutes = getPublishableContent().map((item) => `/articles/${item.slug}`)
 export const privateRoutes = ['/preferences']
 
 export const sitemapRoutes = baseRoutes.filter((r) => r !== '/404').concat(programmaticRoutes)
