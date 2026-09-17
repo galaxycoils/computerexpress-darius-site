@@ -59,7 +59,12 @@ for (const file of walk(dist)) {
       const parsed = JSON.parse(block)
       const items = Array.isArray(parsed) ? parsed : [parsed]
       for (const item of items) {
-        if (item?.['@type']) types.push(item['@type'])
+        // @graph arrays are a common way to combine multiple schema items.
+        const graphItems = Array.isArray(item?.['@graph']) ? item['@graph'] : []
+        const candidates = [...items, ...graphItems].flat()
+        for (const candidate of candidates) {
+          if (candidate?.['@type']) types.push(candidate['@type'])
+        }
       }
     } catch (err) {
       errors.push(`${route}: invalid JSON-LD (${err.message})`)
