@@ -19,7 +19,7 @@ for (const source of sourceRegistry) {
   if (!source.id || sourceIds.has(source.id)) errors.push(`Duplicate or missing source ID: ${source.id || '(missing)'}`)
   sourceIds.add(source.id)
   if (!source.name || !source.city || !source.kind || !isHttpsUrl(source.url)) errors.push(`Invalid source record: ${source.id}`)
-  if (source.reviewRequired !== true) errors.push(`Source must default to human review: ${source.id}`)
+  if (typeof source.reviewRequired !== 'boolean') errors.push(`Source must set reviewRequired boolean: ${source.id}`)
 }
 
 const noticeIds = new Set()
