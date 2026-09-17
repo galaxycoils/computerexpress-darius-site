@@ -1,6 +1,8 @@
 // Cloudflare Pages Function: Newsletter signup → AgentMail
 // POST /api/newsletter
 
+import { completeDelivery, createDelivery, failDelivery, recipientFingerprint } from '../lib/emailDelivery.js'
+
 const AGENTMAIL_BASE = 'https://api.agentmail.to/v0';
 
 export async function onRequestPost(context) {
@@ -53,12 +55,14 @@ export async function onRequestPost(context) {
 
     const now = Date.now()
     const normalizedEmail = email.toLowerCase().trim()
+    const recipientRef = await recipientFingerprint(normalizedEmail)
     await STC_D1.prepare(
       `INSERT INTO newsletter_subscribers (email, topics, placement, status, created_at, updated_at)
        VALUES (?, ?, ?, 'pending', ?, ?)
        ON CONFLICT(email) DO UPDATE SET topics = excluded.topics, placement = excluded.placement, updated_at = excluded.updated_at`
     ).bind(normalizedEmail, JSON.stringify(topics), placement, now, now).run()
 
+    const deliveryId = await createDelivery(STC_D1, { channel: 'newsletter', recipientRef, template: 'welcome' })
     const sendRes = await fetch(`${AGENTMAIL_BASE}/inboxes/${inbox.inbox_id}/messages/send`, {
       method: 'POST',
       headers: {
@@ -85,12 +89,14 @@ export async function onRequestPost(context) {
 
     if (!sendRes.ok) {
       await STC_D1.prepare('UPDATE newsletter_subscribers SET status = \'failed\', last_error = ?, updated_at = ? WHERE email = ?').bind('provider_rejected', Date.now(), normalizedEmail).run()
+      await failDelivery(STC_D1, deliveryId, sendRes.status, 'provider_rejected', Date.now() + 60 * 60 * 1000)
       const errText = await sendRes.text();
       console.error('Newsletter send failed:', sendRes.status, errText);
       return jsonResponse({ error: 'Failed. Try again later.' }, 502);
     }
 
     await STC_D1.prepare('UPDATE newsletter_subscribers SET status = \'active\', confirmed_at = ?, updated_at = ?, last_error = NULL WHERE email = ?').bind(Date.now(), Date.now(), normalizedEmail).run()
+    await completeDelivery(STC_D1, deliveryId, sendRes.status)
     console.log('Newsletter welcome sent to:', normalizedEmail);
     return jsonResponse({ success: true, message: "You're on the list. Check your inbox for a welcome email." });
   } catch (err) {
