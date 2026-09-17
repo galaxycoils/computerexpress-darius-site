@@ -6,8 +6,8 @@
  * - thorold.ca
  * - niagararegion.ca
  *
- * Updated: 2026-09-16
- * Note: added STC 60 Thomas St CoA; Welland Niagara/Forks/Clare/Clifford CoA (Sep 16) and First St CoA (Sep 28); corrected 12 Stepney to consent B-20/26SC.
+ * Updated: 2026-09-17
+ * Note: marked STC CoA (455 Welland, 12 Stepney, 60 Thomas) and Welland Niagara/Forks/Clare/Clifford CoA as Hearing Complete; added Thorold Crompton Blvd closure and Pamela Drive watermain commencement.
  * Next review: Weekly
  */
 
@@ -36,7 +36,7 @@ export const planningNotices = [
     title: '455 Welland Avenue — Parking Variance',
     description: 'Variance to reduce minimum parking from 1.25 to 0.85 spaces/unit for 248 residential + 12 commercial units.',
     fileNumber: 'A-20/26',
-    status: 'Hearing Scheduled',
+    status: 'Hearing Complete',
     meetingDate: '2026-09-16T17:00:00',
     meetingLocation: 'Council Chambers, 50 Church St',
     publishedDate: '2026-08-25',
@@ -51,7 +51,7 @@ export const planningNotices = [
     title: '12 Stepney Street — Consent to Sever',
     description: 'Consent B-20/26SC to sever 293.13 sq m (12A Stepney St) for a semi-detached dwelling under construction; 293.14 sq m remnant retained for the second unit.',
     fileNumber: 'B-20/26SC',
-    status: 'Hearing Scheduled',
+    status: 'Hearing Complete',
     meetingDate: '2026-09-16T17:00:00',
     meetingLocation: 'Council Chambers, 50 Church St',
     publishedDate: '2026-08-25',
@@ -66,7 +66,7 @@ export const planningNotices = [
     title: '60 Thomas Street — Front Yard and Parking Width',
     description: 'Variance A-51/26 to reduce front yard setback from 3 m to 2.3 m and increase maximum parking area width from 5.5 m to 6.0 m for a detached dwelling.',
     fileNumber: 'A-51/26',
-    status: 'Hearing Scheduled',
+    status: 'Hearing Complete',
     meetingDate: '2026-09-16T17:00:00',
     meetingLocation: 'Council Chambers, 50 Church St',
     publishedDate: '2026-08-25',
@@ -95,7 +95,7 @@ export const planningNotices = [
     title: '373 Niagara St, 112-116 Forks Rd, 657-661 Clare Ave, 37-39 Clifford Ave — Consents and Variances',
     description: 'Welland Committee of Adjustment hearing on multiple consent and minor variance applications: new lot at 373 Niagara St; lot creation and lot-area relief for existing semis at 112-116 Forks Rd; lot creation for semis under construction at 657-661 Clare Ave; lot-boundary adjustment and related variances at 37-39 Clifford Ave.',
     fileNumber: 'PLCON202600172 / PLCON202600181 / PLCON202600201 / PLCON202600199',
-    status: 'Hearing Scheduled',
+    status: 'Hearing Complete',
     meetingDate: '2026-09-16T17:00:00',
     meetingLocation: 'Civic Square Council Chambers, 60 East Main St, Welland',
     submissionDeadline: '2026-09-10T00:00:00',
@@ -136,6 +136,33 @@ export const planningNotices = [
     engageUrl: 'https://letstalk.thorold.ca/mcmillan-park-project',
     category: 'public-information-centre',
     tags: ['PIC', 'McMillan Park', 'Thorold', 'Parks']
+  },
+  {
+    id: 'thorold-crompton-blvd-closure',
+    municipality: 'Thorold',
+    type: 'Temporary Road Closure',
+    title: 'Crompton Boulevard — Temporary Closure from Richmond Street',
+    description: 'Crompton Boulevard closed to through traffic from Richmond Street to the south end of Crompton Boulevard starting September 9, 2026 for construction. Bolton Avenue remains open through the intersection; Richmond Street and Queen Street remain open. Local access maintained where possible.',
+    status: 'Active',
+    effectiveDate: '2026-09-09',
+    publishedDate: '2026-09-02',
+    sourceUrl: 'https://www.thorold.ca/news/news/temporary-road-closure-crompton-blvd-starting-september-9/',
+    engageUrl: 'https://letstalk.thorold.ca/crompton-boulevard-bolton-avenue-cunningham-street-mccormack-drive',
+    category: 'road-closure',
+    tags: ['Road Closure', 'Crompton Boulevard', 'Thorold', 'Construction']
+  },
+  {
+    id: 'thorold-pamela-dr-watermain',
+    municipality: 'Thorold',
+    type: 'Project Commencement',
+    title: 'Pamela Drive Watermain Replacement — Lawrence to Sullivan',
+    description: 'Demar Construction to start Pamela Drive watermain replacement between Lawrence Drive and Sullivan Avenue. Work includes new watermain, valves, hydrants, service reconnections, and surface restoration. Pre-construction property surveys by Pre-Con Inspection Services precede construction.',
+    status: 'Pre-construction',
+    publishedDate: '2026-09-03',
+    sourceUrl: 'https://www.thorold.ca/news/news/notice-of-project-commencement-pamela-drive-watermain-replacement/',
+    engageUrl: 'https://letstalk.thorold.ca/pamela-watermain-replacement',
+    category: 'sewage-infrastructure',
+    tags: ['Watermain', 'Pamela Drive', 'Thorold', 'Construction']
   }
 ]
 

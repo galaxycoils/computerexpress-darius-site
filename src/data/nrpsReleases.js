@@ -2,12 +2,23 @@
  * NRPS Police Media Releases for St. Catharines Digital
  * Sourced exclusively from https://www.niagarapolice.ca/news/posts/
  * Official Niagara Regional Police Service media releases & community notifications.
- * Updated: 2026-09-15
+ * Updated: 2026-09-17
  * Next review: Daily (cron) — refresh from niagarapolice.ca
- * Note: added Sep 14 Pelham road-rage assault charges; Sep 15 Project Safe Start traffic-stop results.
+ * Note: added Sep 17 St. Catharines warrants arrest.
  */
 
 export const nrpsReleases = [
+  {
+    id: 'nrps-2026-09-17-stc-warrants-arrest',
+    date: '2026-09-17',
+    headline: '41-year-old St Catharines Male Arrested on 19 Outstanding Warrants',
+    municipality: 'St. Catharines',
+    type: 'Media Release (Warrants / Street Crime Unit)',
+    url: 'https://www.niagarapolice.ca/news/posts/41-year-old-st-catharines-male-arrested-on-19-outstanding-warrants/',
+    source: 'Niagara Regional Police Service',
+    tags: ['Warrants', 'Arrest', 'St. Catharines', 'Street Crime Unit'],
+    category: 'arrest',
+  },
   {
     id: 'nrps-2026-09-15-project-safe-start-results',
     date: '2026-09-15',
