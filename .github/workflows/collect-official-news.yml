@@ -1,4 +1,4 @@
-name: Collect official source candidates
+name: Collect official sources (autonomous)
 
 on:
   schedule:
@@ -11,14 +11,13 @@ on:
         default: all
         type: string
       dry_run:
-        description: Fetch and validate without opening a review pull request
+        description: Fetch without committing to main
         required: true
-        default: true
+        default: false
         type: boolean
 
 permissions:
   contents: write
-  pull-requests: write
 
 concurrency:
   group: official-source-discovery
@@ -31,11 +30,10 @@ jobs:
     env:
       MODE: ${{ github.event_name == 'schedule' && 'write' || (inputs.dry_run && 'dry-run' || 'write') }}
       SOURCE: ${{ inputs.source || 'all' }}
-      REVIEW_BRANCH: automation/official-source-discovery
       GH_TOKEN: ${{ github.token }}
 
     steps:
-      - name: Check out the trusted default branch
+      - name: Check out main
         uses: actions/checkout@v6
         with:
           fetch-depth: 0
@@ -49,7 +47,7 @@ jobs:
       - name: Install locked dependencies
         run: npm ci
 
-      - name: Collect candidates from approved sources
+      - name: Collect from approved official sources
         shell: bash
         run: |
           args=(--dry-run)
@@ -73,7 +71,7 @@ jobs:
       - name: Build production site
         run: npm run build
 
-      - name: Detect snapshot changes
+      - name: Detect discovery changes
         id: changes
         shell: bash
         run: |
@@ -83,52 +81,13 @@ jobs:
             echo "changed=false" >> "$GITHUB_OUTPUT"
           fi
 
-      - name: Push the managed review branch
-        if: env.MODE == 'write' && steps.changes.outputs.changed == 'true'
-        shell: bash
-        run: |
-          git config user.name "stcatharinesdigital-bot"
-          git config user.email "actions@users.noreply.github.com"
-          git fetch origin "$REVIEW_BRANCH" || true
-          remote_sha="$(git rev-parse --verify --quiet "refs/remotes/origin/$REVIEW_BRANCH" || true)"
-          git checkout -B "$REVIEW_BRANCH"
-          git add src/data/generated/discovery.json
-          git commit -m "chore(content): refresh official source candidates"
-          if [ -n "$remote_sha" ]; then
-            git push --force-with-lease="refs/heads/$REVIEW_BRANCH:$remote_sha" origin "HEAD:$REVIEW_BRANCH"
-          else
-            git push -u origin "HEAD:$REVIEW_BRANCH"
-          fi
-
-      - name: Open or update the editorial review pull request
+      - name: Commit discovery to main
         if: env.MODE == 'write' && steps.changes.outputs.changed == 'true'
         shell: bash
         run: |
           set -euo pipefail
-          existing="$(gh pr list --base main --head "$REVIEW_BRANCH" --state open --json number --jq '.[0].number // empty' 2>&1)" || {
-            echo "::error::gh pr list failed: $existing"
-            exit 1
-          }
-          if [ -z "$existing" ]; then
-            if ! out="$(gh pr create --base main --head "$REVIEW_BRANCH" \
-              --title "Editorial review: official source candidates" \
-              --body "$(cat <<'EOF'
-Automated discovery from the approved source registry.
-
-Every item remains a **review candidate**. This pull request does **not** publish articles automatically.
-
-Before merging:
-- Verify titles, dates, context, and relevance
-- Confirm source links resolve to official pages
-- Drop nav noise or off-topic items if any slipped through
-EOF
-)" 2>&1)"; then
-              echo "::error::gh pr create failed: $out"
-              echo "::error::Review branch $REVIEW_BRANCH was pushed; open the PR manually if needed."
-              exit 1
-            fi
-            echo "Created review pull request: $out"
-          else
-            echo "Updated existing review pull request #$existing"
-            gh pr comment "$existing" --body "Automation refreshed discovery candidates on \`$(date -u +%Y-%m-%dT%H:%MZ)\`." || true
-          fi
+          git config user.name "stcatharinesdigital-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add src/data/generated/discovery.json
+          git commit -m "news: autonomous official-source refresh $(date -u +%Y-%m-%d)"
+          git push origin HEAD:main
