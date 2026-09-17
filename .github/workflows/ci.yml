@@ -1,0 +1,107 @@
+name: CI Matrix
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+    paths-ignore:
+      - '**/*.md'
+      - '.gitignore'
+      - 'LICENSE*'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-matrix-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # Parallel quality suites × supported Node versions
+  test:
+    name: ${{ matrix.suite }} (Node ${{ matrix.node-version }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        node-version: [20, 22]
+        suite: [unit, collector, content-audit]
+        include:
+          # Explicit labels for the Actions UI
+          - suite: unit
+            command: npm test
+          - suite: collector
+            command: node --test scripts/*.regression.mjs
+          - suite: content-audit
+            command: npm run content:audit
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup Node ${{ matrix.node-version }}
+        uses: actions/setup-node@v6
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run ${{ matrix.suite }}
+        run: ${{ matrix.command }}
+
+  # Production-shaped build on each Node version (Vite 6 requires Node 18+)
+  build:
+    name: build (Node ${{ matrix.node-version }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    needs: test
+    strategy:
+      fail-fast: false
+      matrix:
+        node-version: [20, 22]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup Node ${{ matrix.node-version }}
+        uses: actions/setup-node@v6
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Production build
+        run: npm run build
+
+      - name: Upload dist artifact (Node 22 only)
+        if: matrix.node-version == 22
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist-node22
+          path: dist/
+          if-no-files-found: error
+          retention-days: 3
+
+  # Single green check for branch protection rules
+  ci-success:
+    name: CI matrix passed
+    runs-on: ubuntu-latest
+    needs: [test, build]
+    if: always()
+    steps:
+      - name: Aggregate matrix results
+        run: |
+          echo "test=${{ needs.test.result }}"
+          echo "build=${{ needs.build.result }}"
+          if [ "${{ needs.test.result }}" != "success" ] || [ "${{ needs.build.result }}" != "success" ]; then
+            echo "::error::One or more matrix jobs failed"
+            exit 1
+          fi
+          echo "All matrix jobs passed"
