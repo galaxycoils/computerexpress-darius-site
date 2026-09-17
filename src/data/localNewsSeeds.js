@@ -91,32 +91,24 @@ export const localNewsSeeds = [
   },
 ];
 
-/**
- * Get news by source ID
- */
+/** Get news by source ID */
 export function getNewsBySource(sourceId) {
   return localNewsSeeds.filter(n => n.sourceId === sourceId);
 }
 
-/**
- * Get news by municipality
- */
+/** Get news by municipality */
 export function getNewsByMunicipality(municipality) {
-  return localNewsSeeds.filter(n => 
+  return localNewsSeeds.filter(n =>
     n.municipality.toLowerCase().includes(municipality.toLowerCase())
   );
 }
 
-/**
- * Get news by category
- */
+/** Get news by category */
 export function getNewsByCategory(category) {
   return localNewsSeeds.filter(n => n.category === category);
 }
 
-/**
- * Get recent news (last N days)
- */
+/** Get recent news (last N days) */
 export function getRecentNews(days = 7) {
   const cutoff = new Date();
   cutoff.setDate(cutoff.getDate() - days);
@@ -125,18 +117,14 @@ export function getRecentNews(days = 7) {
     .sort((a, b) => new Date(b.pubDate) - new Date(a.pubDate));
 }
 
-/**
- * Get latest news (most recent N items)
- */
+/** Get latest news (most recent N items) */
 export function getLatestNews(count = 10) {
   return localNewsSeeds
     .sort((a, b) => new Date(b.pubDate) - new Date(a.pubDate))
     .slice(0, count);
 }
 
-/**
- * Get news statistics
- */
+/** Get news statistics */
 export function getNewsStats() {
   const recent = getRecentNews(30);
   const bySource = {};
@@ -157,4 +145,9 @@ export function getNewsStats() {
     byCategory,
     latestDate: localNewsSeeds.length > 0 ? localNewsSeeds[0].pubDate : null,
   };
+}
+
+/** Get news fallback — slice of all seeds, starting at offset */
+export function getNewsFallback(limit = 20, offset = 0) {
+  return localNewsSeeds.slice(offset, offset + limit);
 }
