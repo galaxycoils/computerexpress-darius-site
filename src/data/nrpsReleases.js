@@ -4,11 +4,22 @@
  * Official Niagara Regional Police Service media releases & community notifications.
  * Updated: 2026-09-17
  * Next review: Daily (cron) — refresh from niagarapolice.ca
- * Note: added Sep 9 Welland break-and-enter arrests; Sep 11 NRPS officer impaired-operation investigation (1 District responded); Sep 12 Welland motorcycle collision fatalities; Sep 14 Pelham road-rage assault; Sep 15 Project Safe Start results; Sep 17 St. Catharines warrants arrest; Sep 17 Update 1 - third arrest in Thorold/Welland drug investigation (1 District St. Catharines/Thorold).
+ * Note: added Sep 9 Welland break-and-enter arrests; Sep 11 NRPS officer impaired-operation investigation (1 District responded); Sep 12 Welland motorcycle collision fatalities; Sep 14 Pelham road-rage assault; Sep 15 Project Safe Start results; Sep 17 St. Catharines warrants arrest; Sep 17 Update 1 - third arrest in Thorold/Welland drug investigation (1 District St. Catharines/Thorold); Sep 17 Police Service Board meeting advisory (region-wide).
  */
 
 export const nrpsReleases = [
   // SEP 17, 2026
+  {
+    id: 'nrps-2026-09-17-police-service-board-meeting-advisory',
+    date: '2026-09-17',
+    headline: 'ADVISORY: Niagara Police Service Board Meeting – September 24, 2026',
+    municipality: 'St. Catharines, Welland, Thorold',
+    type: 'Community Notification / Public Notice',
+    url: 'https://www.niagarapolice.ca/news/posts/advisory-niagara-police-service-board-meeting-september-24-2026/',
+    source: 'Niagara Regional Police Service',
+    tags: ['Police Service Board', 'Public Meeting', 'Region-wide', 'Advisory'],
+    category: 'community-notification',
+  },
   {
     id: 'nrps-2026-09-17-stc-warrants-arrest',
     date: '2026-09-17',
