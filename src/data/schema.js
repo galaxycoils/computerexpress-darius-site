@@ -28,6 +28,7 @@ export function getLocalBusinessSchema(overrides = {}) {
       addressRegion: siteConfig.region,
       addressCountry: siteConfig.country,
     },
+    telephone: siteConfig.telephone,
     geo: {
       '@type': 'GeoCoordinates',
       latitude: siteConfig.geo.latitude,

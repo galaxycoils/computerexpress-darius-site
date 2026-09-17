@@ -42,7 +42,7 @@ export default function ContactPage() {
         path="/contact"
         jsonLd={[contactPageJsonLd, localBusinessJsonLd, breadcrumbJsonLd]}
       />
-      <main className="contact-page">
+      <section className="contact-page">
         <section className="contact-hero">
           <h1>Editorial & Advertising Contact</h1>
           <p className="lead">St. Catharines Digital tracks official municipal notices across the Niagara Region. For editorial inquiries, sponsorship opportunities, or corrections, reach out below.</p>
@@ -63,7 +63,7 @@ export default function ContactPage() {
             </div>
           </div>
         </section>
-      </main>
+      </section>
     </>
   )
 }

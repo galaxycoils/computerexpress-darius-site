@@ -59,7 +59,6 @@ export function createSitemapXml(routes = sitemapRoutes) {
       return `  <url>
     <loc>${loc}</loc>
 ${lastmod ? `    <lastmod>${lastmod}</lastmod>\n` : ''}    <changefreq>${changefreq}</changefreq>
-    <changefreq>${changefreq}</changefreq>
     <priority>${priority}</priority>
   </url>`
     })

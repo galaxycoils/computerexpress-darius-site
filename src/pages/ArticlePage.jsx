@@ -1,5 +1,6 @@
 import { Link, useParams } from 'react-router-dom'
 import Seo from '../components/Seo'
+import { BASE_URL } from '../data/siteConfig'
 import { getPublishableContent, getPublishableContentBySlug } from '../data/contentRegistry'
 
 function formatDate(value) {
@@ -23,13 +24,25 @@ export default function ArticlePage() {
     '@context': 'https://schema.org', '@type': 'NewsArticle', headline: article.title,
     description: article.description, datePublished: article.publishedDate,
     dateModified: article.publishedDate, mainEntityOfPage: `https://stcatharinesdigital.ca/articles/${article.slug}/`,
-    author: { '@type': 'Organization', name: 'St. Catharines Digital' },
-    publisher: { '@type': 'Organization', name: 'St. Catharines Digital' },
+    image: [`${BASE_URL}/og-card.webp`],
+    author: { '@type': 'Organization', name: 'St. Catharines Digital', url: BASE_URL },
+    publisher: { '@type': 'Organization', name: 'St. Catharines Digital', url: BASE_URL, logo: { '@type': 'ImageObject', url: `${BASE_URL}/logo-mark.svg` } },
     isBasedOn: article.primarySource,
   }
 
+  const breadcrumbJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: BASE_URL },
+      { '@type': 'ListItem', position: 2, name: 'Local news', item: `${BASE_URL}/news` },
+      { '@type': 'ListItem', position: 3, name: article.city, item: `${BASE_URL}/news/${citySlug}` },
+      { '@type': 'ListItem', position: 4, name: article.title, item: `https://stcatharinesdigital.ca/articles/${article.slug}/` }
+    ]
+  }
+
   return <>
-    <Seo title={`${article.title} | St. Catharines Digital`} description={article.description} path={`/articles/${article.slug}`} type="article" jsonLd={articleSchema} />
+    <Seo title={`${article.title} | St. Catharines Digital`} description={article.description} path={`/articles/${article.slug}`} type="article" jsonLd={[articleSchema, breadcrumbJsonLd]} />
     <article className="scd-page scd-article">
       <nav className="scd-article-crumb" aria-label="Breadcrumb"><Link to="/news">Local news</Link><span aria-hidden="true">/</span><Link to={`/news/${citySlug}`}>{article.city}</Link></nav>
       <header className="scd-article-header">

@@ -1,4 +1,4 @@
-export const BASE_URL = import.meta.env?.VITE_BASE_URL || 'https://stcatharinesdigital.ca'
+export const BASE_URL = 'https://stcatharinesdigital.ca'
 
 export const siteConfig = {
   name: 'St. Catharines Digital',
@@ -8,6 +8,7 @@ export const siteConfig = {
   locale: 'en_CA',
   language: 'en-CA',
   email: 'cccemt@pm.me',
+  telephone: '(365) 359-5973',
   calendlyUrl: 'https://calendly.com/tahamtandariush/30min',
   city: 'St. Catharines',
   region: 'ON',

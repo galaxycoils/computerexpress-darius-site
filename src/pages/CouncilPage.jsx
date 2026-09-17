@@ -64,7 +64,6 @@ const councilJsonLd = {
       inLanguage: 'en-CA',
     },
     {
-      '@context': 'https://schema.org',
       '@type': 'CollectionPage',
       name: 'City Council — St. Catharines, Welland & Thorold',
       url: 'https://stcatharinesdigital.ca/council/',
@@ -84,7 +83,7 @@ export default function CouncilPage() {
         <meta property="og:description" content="Official council portals and sourced civic records for St. Catharines, Welland and Thorold." />
         <meta property="og:type" content="website" />
         <script type="application/ld+json">{JSON.stringify(councilJsonLd)}</script>
-        <link rel="canonical" href="/council/" />
+        <link rel="canonical" href="https://stcatharinesdigital.ca/council/" />
       </Helmet>
 
       <section className="scd-page scd-council-page">
