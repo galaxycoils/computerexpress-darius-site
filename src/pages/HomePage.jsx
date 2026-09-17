@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { planningNotices, getUpcomingMeetings } from '../data/planningNotices'
 import { siteConfig } from '../data/siteConfig'
 import { CITIES } from '../data/cities'
+import { getLocalBusinessSchema } from '../data/schema'
 import NewsletterPanel from '../components/news/NewsletterPanel'
 import '../components/news/news.css'
 
@@ -76,7 +77,7 @@ export default function HomePage() {
         'query-input': 'required name=search_term_string'
       }
     },
-    { '@context': 'https://schema.org', '@type': 'NewsMediaOrganization', name: siteConfig.name, url: BASE_URL, description: siteConfig.description, areaServed: CITIES.map((city) => ({ '@type': 'City', name: city.name })) }
+    getLocalBusinessSchema()
   ]
 
   return <><Seo title="St. Catharines Digital | Local news for Niagara" description="Local council, planning, election and public-safety coverage for Niagara, connected to official sources." path="/" jsonLd={jsonLd} />

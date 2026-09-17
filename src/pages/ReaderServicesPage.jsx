@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import Seo from '../components/Seo'
+import Seo, { BASE_URL } from '../components/Seo'
 import NewsletterPanel from '../components/news/NewsletterPanel'
 import './reader-services.css'
 
@@ -21,7 +21,12 @@ const CITIES = [
 
 export default function ReaderServicesPage() {
   return <>
-    <Seo title="Reader Services | St. Catharines Digital" description="Newsletters, planning alerts, corrections, local tips and reader support for St. Catharines Digital." path="/reader-services" />
+    <Seo
+      title="Reader Services | St. Catharines Digital"
+      description="Newsletters, planning alerts, corrections, local tips and reader support for St. Catharines Digital."
+      path="/reader-services"
+      jsonLd={{ '@context': 'https://schema.org', '@type': 'WebPage', name: 'Reader Services', url: BASE_URL }}
+    />
     <div className="scd-page scd-services-page">
       <header className="scd-services-hero">
         <p className="scd-eyebrow">For readers</p>

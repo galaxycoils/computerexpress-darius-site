@@ -1,9 +1,14 @@
-import Seo from '../components/Seo'
+import Seo, { BASE_URL } from '../components/Seo'
 
 export default function PrivacyPage() {
   return (
     <>
-      <Seo title="Privacy Policy - St. Catharines Digital" description="Privacy Policy for St. Catharines Digital. We value your privacy." />
+      <Seo
+        title="Privacy Policy | St. Catharines Digital"
+        description="How St. Catharines Digital collects, uses, and protects your information."
+        path="/privacy"
+        jsonLd={{ '@context': 'https://schema.org', '@type': 'WebPage', name: 'Privacy Policy', url: BASE_URL }}
+      />
       <section className="section section-first" aria-label="Privacy Policy">
         <div className="container" style={{ maxWidth: '800px' }}>
           <h1 className="gradient-text" style={{ marginBottom: '2rem' }}>Privacy Policy</h1>

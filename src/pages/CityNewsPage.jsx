@@ -103,6 +103,13 @@ export default function CityNewsPage() {
       />
 
       <div className="scd-page">
+        <nav className="scd-article-crumb" aria-label="Breadcrumb">
+          <Link to="/">Home</Link>
+          <span aria-hidden="true">/</span>
+          <Link to="/news">Local news</Link>
+          <span aria-hidden="true">/</span>
+          <span aria-current="page">{city.name}</span>
+        </nav>
         <header className="scd-intro">
           <div>
             <p className="scd-eyebrow">

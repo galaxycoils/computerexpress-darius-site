@@ -91,6 +91,11 @@ export default function WellandVotesPage() {
         jsonLd={[votingDayJsonLd, faqJsonLd, getLocalBusinessSchema()]}
       />
       <div className="scd-page">
+        <nav className="scd-article-crumb" aria-label="Breadcrumb">
+          <Link to="/">Home</Link>
+          <span aria-hidden="true">/</span>
+          <span aria-current="page">Welland Votes 2026</span>
+        </nav>
         <header className="scd-intro scd-votes-intro">
           <div>
             <p className="scd-eyebrow">Welland votes · October 26, 2026</p>

@@ -22,13 +22,20 @@ export default function ArticlePage() {
   const citySlug = article.city.toLowerCase().replace(/\s+/g, '-')
   const articleSchema = {
     '@context': 'https://schema.org', '@type': 'NewsArticle', headline: article.title,
-    description: article.description, datePublished: article.publishedDate,
+    description: article.summary || article.description, datePublished: article.publishedDate,
     dateModified: article.publishedDate, mainEntityOfPage: `https://stcatharinesdigital.ca/articles/${article.slug}/`,
     image: [`${BASE_URL}/og-card.webp`],
     author: { '@type': 'Organization', name: 'St. Catharines Digital', url: BASE_URL },
     publisher: { '@type': 'Organization', name: 'St. Catharines Digital', url: BASE_URL, logo: { '@type': 'ImageObject', url: `${BASE_URL}/logo-mark.svg` } },
     isBasedOn: article.primarySource,
   }
+
+  const bodyParagraphs = (article.summary || article.description).split('\n\n').filter(Boolean)
+  const relatedParagraphs = related.length > 0 ? related.slice(0, 3).map(item => ({
+    label: `${item.type} · ${item.city}`,
+    href: `/articles/${item.slug}`,
+    title: item.title,
+  })) : []
 
   const breadcrumbJsonLd = {
     '@context': 'https://schema.org',
@@ -54,7 +61,11 @@ export default function ArticlePage() {
 
       <section className="scd-article-body" aria-labelledby="record-summary">
         <h2 id="record-summary">What this record says</h2>
-        <p>{article.description}</p>
+        {bodyParagraphs.map((para, i) => <p key={i}>{para}</p>)}
+        <aside className="scd-article-callout" aria-label="Why this matters">
+          <strong>Why this matters</strong>
+          <span>This notice directly affects the municipality listed and nearby residents. Check the primary source for exact boundaries, deadlines, and how to participate.</span>
+        </aside>
         <aside className="scd-article-source">
           <h2>Primary source</h2>
           <p>This page summarizes a verified municipal record. Read the original notice or document for the complete public record.</p>
@@ -66,7 +77,7 @@ export default function ArticlePage() {
         <strong>Reporting note</strong><span>We link to the primary public source and do not add claims that are not supported by that record.</span>
       </section>
 
-      {related.length > 0 && <section className="scd-article-related" aria-labelledby="related-coverage"><h2 id="related-coverage">Related coverage</h2><div>{related.map((item) => <Link key={item.slug} to={`/articles/${item.slug}`}><span>{item.type} · {item.city}</span>{item.title}</Link>)}</div></section>}
+      {relatedParagraphs.length > 0 && <section className="scd-article-related" aria-labelledby="related-coverage"><h2 id="related-coverage">Related coverage</h2><div>{relatedParagraphs.map((item) => <Link key={item.href} to={item.href}><span>{item.label}</span>{item.title}</Link>)}</div></section>}
     </article>
   </>
 }

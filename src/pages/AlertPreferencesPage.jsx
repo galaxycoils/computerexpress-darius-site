@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import Seo from '../components/Seo'
+import Seo, { BASE_URL } from '../components/Seo'
 
 const NOTICE_TYPES = ['OPA', 'ZBA', 'Site Plan', 'CoA', 'Consent', 'Part Lot Control']
 const STATUSES = ['Received', 'Public Meeting Scheduled', 'Hearing Scheduled', 'Decision', 'Appeal', 'Active']
@@ -103,6 +103,7 @@ export default function AlertPreferencesPage() {
         description="Private planning-alert preference management."
         path="/preferences"
         noIndex
+        jsonLd={{ '@context': 'https://schema.org', '@type': 'WebPage', name: 'Planning Alert Preferences', url: BASE_URL }}
       />
       <main className="scd-page scd-alerts scd-preferences">
         <header className="scd-intro scd-alerts-intro">

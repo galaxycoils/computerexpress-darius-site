@@ -1,10 +1,15 @@
-import Seo from '../components/Seo'
+import Seo, { BASE_URL } from '../components/Seo'
 import '../components/news/news.css'
 
 export default function EditorialPolicyPage() {
   return (
     <>
-      <Seo title="Editorial Policy | St. Catharines Digital" description="How St. Catharines Digital sources, checks, labels and corrects local news." path="/editorial-policy" />
+      <Seo
+        title="Editorial Policy | St. Catharines Digital"
+        description="How St. Catharines Digital sources, checks, labels and corrects local news."
+        path="/editorial-policy"
+        jsonLd={{ '@context': 'https://schema.org', '@type': 'WebPage', name: 'Editorial Policy', url: BASE_URL }}
+      />
       <article className="scd-page">
         <header className="scd-intro"><div><p className="scd-eyebrow">Accountability</p><h1 className="scd-intro-title">Editorial Policy</h1><p className="scd-intro-note">A clear record of how we gather, check and label local information.</p></div></header>
         <section><h2 className="scd-section-rule">Sources and verification</h2><p className="scd-lead-dek">We begin with primary sources such as municipal notices, agendas, minutes, staff reports, police releases and election authorities. We identify the source for material claims and check dates, names, locations and status before publication.</p></section>

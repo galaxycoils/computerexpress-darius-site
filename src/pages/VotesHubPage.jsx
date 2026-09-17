@@ -1,12 +1,17 @@
 import { Link } from 'react-router-dom'
-import Seo from '../components/Seo'
+import Seo, { BASE_URL } from '../components/Seo'
 import '../components/news/news.css'
 
 export default function VotesHubPage() {
   return (
     <>
-      <Seo title="Elections & Voting | St. Catharines Digital" description="Verified local election guides, candidate information, key dates and voting details for Niagara residents." path="/votes" />
+      <Seo title="Elections & Voting | St. Catharines Digital" description="Verified local election guides, candidate information, key dates and voting details for Niagara residents." path="/votes" jsonLd={{ '@context': 'https://schema.org', '@type': 'WebPage', name: 'Elections & Voting', url: BASE_URL }} />
       <div className="scd-page">
+        <nav className="scd-article-crumb" aria-label="Breadcrumb">
+          <Link to="/">Home</Link>
+          <span aria-hidden="true">/</span>
+          <span aria-current="page">Elections & Voting</span>
+        </nav>
         <header className="scd-intro">
           <div>
             <p className="scd-eyebrow">Verified civic information</p>

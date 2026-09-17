@@ -39,6 +39,11 @@ const required = new Map([
   ['/', { org: true, web: 'WebSite' }],
   ['/contact', { org: true, web: 'ContactPage' }],
   ['/council', { web: 'WebPage' }],
+  ['/news', { org: true }],
+  ['/planning-tracker', { web: 'WebPage' }],
+  ['/votes', { web: 'WebPage' }],
+  ['/police', { web: 'WebPage' }],
+  ['/welland-votes', { faq: 'FAQPage' }],
 ])
 
 function hasOrgType(types) {
@@ -78,6 +83,9 @@ for (const file of walk(dist)) {
   }
   if (spec.web && !types.includes(spec.web)) {
     errors.push(`${route}: missing ${spec.web} JSON-LD`)
+  }
+  if (spec.faq && !types.includes(spec.faq)) {
+    errors.push(`${route}: missing ${spec.faq} JSON-LD`)
   }
 }
 

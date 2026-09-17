@@ -8,6 +8,10 @@
 .scd-article-byline { font: 500 var(--t-sm) var(--font-ui); color:var(--muted); margin:18px 0 0; }
 .scd-article-body { max-width:66ch; font-family:var(--font-body); font-size:1.12rem; line-height:1.7; color:var(--text); }
 .scd-article-body h2,.scd-article-related h2 { font-family:var(--font-display); font-size:1.5rem; color:var(--text-bright); margin:0 0 12px; }
+.scd-article-body p { margin:0 0 18px; }
+.scd-article-callout { margin:28px 0; padding:22px; border:1px solid var(--panel-border); border-left:4px solid var(--accent); background:var(--bg-card); border-radius:4px; display:flex; flex-direction:column; gap:10px; }
+.scd-article-callout strong { font-family:var(--font-display); font-size:1.1rem; color:var(--text-bright); }
+.scd-article-callout span { font-family:var(--font-body); font-size:1rem; line-height:1.6; color:var(--muted); }
 .scd-article-source { margin:28px 0; padding:22px; border:1px solid var(--panel-border); border-left:4px solid var(--primary); background:var(--bg-card); border-radius:4px; }
 .scd-article-source p { font-size:1rem; margin:0 0 16px; }
 .scd-article-standards { display:flex; flex-direction:column; gap:5px; padding:16px 0; border-top:1px solid var(--line); border-bottom:1px solid var(--line); color:var(--muted); font:var(--t-sm)/1.5 var(--font-ui); }

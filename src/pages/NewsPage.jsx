@@ -1,9 +1,10 @@
 import { useState, useMemo } from 'react'
 import { Link } from 'react-router-dom'
-import Seo from '../components/Seo'
+import Seo, { BASE_URL } from '../components/Seo'
 import { cities } from '../data/cityConfig'
 import { getPublishableContent } from '../data/contentRegistry'
 import { readLocalNews, getNewsFallback } from '../data/localNews'
+import { getLocalBusinessSchema } from '../data/schema'
 import '../components/news/news-hub.css'
 
 export default function NewsPage() {
@@ -37,8 +38,17 @@ export default function NewsPage() {
         title="Local News | St. Catharines Digital"
         description="Independent local news from official sources for St. Catharines, Welland, and Thorold."
         path="/news"
+        jsonLd={[
+          { '@context': 'https://schema.org', '@type': 'WebSite', name: 'St. Catharines Digital', url: BASE_URL },
+          getLocalBusinessSchema(),
+        ]}
       />
       <div className="scd-page">
+        <nav className="scd-article-crumb" aria-label="Breadcrumb">
+          <Link to="/">Home</Link>
+          <span aria-hidden="true">/</span>
+          <span aria-current="page">Local news</span>
+        </nav>
         <header className="scd-intro">
           <div>
             <p className="scd-eyebrow">Official sources only</p>

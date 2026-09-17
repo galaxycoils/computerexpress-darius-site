@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react'
 import { Link } from 'react-router-dom'
-import Seo from '../components/Seo'
+import Seo, { BASE_URL } from '../components/Seo'
 import { planningNotices, noticeCategories, municipalities, getNoticeStats, getUpcomingMeetings, getActiveNotices } from '../data/planningNotices'
 import { siteConfig } from '../data/siteConfig'
 
@@ -156,8 +156,14 @@ export default function PlanningTrackerPage() {
         title="Planning Tracker | St. Catharines Digital"
         description="Official planning notices, zoning changes, and public meetings for St. Catharines, Welland, Thorold, and Niagara Region. Sourced exclusively from municipal websites."
         path="/planning-tracker"
+        jsonLd={{ '@context': 'https://schema.org', '@type': 'WebPage', name: 'Planning & Development Tracker', url: BASE_URL }}
       />
     <div className="planning-tracker-page">
+      <nav className="scd-article-crumb" aria-label="Breadcrumb">
+        <Link to="/">Home</Link>
+        <span aria-hidden="true">/</span>
+        <span aria-current="page">Planning tracker</span>
+      </nav>
       <header className="page-header">
         <div className="container">
           <h1>Planning & Development Tracker</h1>

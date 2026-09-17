@@ -87,6 +87,11 @@ export default function CouncilPage() {
       </Helmet>
 
       <section className="scd-page scd-council-page">
+        <nav className="scd-article-crumb" aria-label="Breadcrumb">
+          <Link to="/">Home</Link>
+          <span aria-hidden="true">/</span>
+          <span aria-current="page">Council</span>
+        </nav>
         <header className="scd-council-intro">
           <div className="scd-eyebrow">On the public record</div>
           <h1 className="scd-page-title">City Council</h1>

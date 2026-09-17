@@ -1,6 +1,7 @@
 import { getLatestNrpsReleases } from '../data/nrpsReleases'
 import Seo from '../components/Seo'
 import { BASE_URL } from '../components/Seo'
+import { Link } from 'react-router-dom'
 
 export default function PolicePage() {
   const recent = getLatestNrpsReleases(8, 30)
@@ -9,15 +10,23 @@ export default function PolicePage() {
       <Seo
         title="Niagara Regional Police — Official Releases"
         description="Official media releases and community notifications from the Niagara Regional Police Service relevant to St. Catharines, Welland and Thorold."
-        jsonLd={{
-          '@context': 'https://schema.org',
-          '@type': 'NewsMediaOrganization',
-          name: 'St. Catharines Digital Police News',
-          url: BASE_URL,
-          description: 'Compiled Niagara Regional Police Service media releases — official sources only.',
-          founder: { '@type': 'Organization', name: 'St. Catharines Digital' },
-          knowsAbout: ['Police Media Releases', 'Crime', 'Public Safety', 'Niagara Region', 'St. Catharines', 'Welland', 'Thorold'],
-        }}
+        jsonLd={[
+          {
+            '@context': 'https://schema.org',
+            '@type': 'WebPage',
+            name: 'Niagara Regional Police',
+            url: BASE_URL,
+          },
+          {
+            '@context': 'https://schema.org',
+            '@type': 'NewsMediaOrganization',
+            name: 'St. Catharines Digital Police News',
+            url: BASE_URL,
+            description: 'Compiled Niagara Regional Police Service media releases — official sources only.',
+            founder: { '@type': 'Organization', name: 'St. Catharines Digital' },
+            knowsAbout: ['Police Media Releases', 'Crime', 'Public Safety', 'Niagara Region', 'St. Catharines', 'Welland', 'Thorold'],
+          },
+        ]}
       />
 
       <section className="section-first" style={{ paddingTop: '3rem', paddingBottom: '2rem' }}>
@@ -32,6 +41,11 @@ export default function PolicePage() {
           }}>
             Official Sources Only
           </p>
+          <nav className="scd-article-crumb" aria-label="Breadcrumb" style={{ marginBottom: '1.5rem' }}>
+            <Link to="/" style={{ color: 'inherit' }}>Home</Link>
+            <span aria-hidden="true">/</span>
+            <span aria-current="page">Niagara Regional Police</span>
+          </nav>
           <h1 style={{
             fontSize: 'clamp(1.6rem, 3.5vw, 2.1rem)',
             fontWeight: 650,

@@ -1,4 +1,4 @@
-import Seo from '../components/Seo'
+import Seo, { BASE_URL } from '../components/Seo'
 import { Link } from 'react-router-dom'
 
 export default function MembershipPage() {
@@ -8,6 +8,7 @@ export default function MembershipPage() {
         title="Founding Supporters — St. Catharines Digital"
         description="Support independent local news. Founding Supporter memberships keep municipal reporting accountable and free for everyone."
         path="/membership"
+        jsonLd={{ '@context': 'https://schema.org', '@type': 'WebPage', name: 'Founding Supporters', url: BASE_URL }}
       />
       <div className="scd-page scd-paper">
         <div className="scd-intro">

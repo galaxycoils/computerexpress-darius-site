@@ -1,7 +1,6 @@
 import { useState, useMemo } from 'react'
 import { Link } from 'react-router-dom'
-import Seo from '../components/Seo'
-import { BASE_URL } from '../components/Seo'
+import Seo, { BASE_URL } from '../components/Seo'
 import { nrpsReleases } from '../data/nrpsReleases'
 import { siteConfig } from '../data/siteConfig'
 import AnimatedSection from '../hooks/useInView'
@@ -85,6 +84,11 @@ export default function PoliceNewsPage() {
       <section className="section-first">
         <div className="container">
           <AnimatedSection>
+            <nav className="scd-article-crumb" aria-label="Breadcrumb" style={{ marginBottom: '1.25rem' }}>
+              <Link to="/">Home</Link>
+              <span aria-hidden="true">/</span>
+              <span aria-current="page">Police Media Releases</span>
+            </nav>
             <div style={{ maxWidth: '40rem' }}>
               <p className="eyebrow" style={{ marginBottom: '1.25rem' }}>
                 Official NRPS Media Releases

@@ -1,9 +1,14 @@
-import Seo from '../components/Seo'
+import Seo, { BASE_URL } from '../components/Seo'
 
 export default function TermsPage() {
   return (
     <>
-      <Seo title="Terms of Service - St. Catharines Digital" description="Terms of Service for St. Catharines Digital." />
+      <Seo
+        title="Terms of Service | St. Catharines Digital"
+        description="Terms of Service for St. Catharines Digital."
+        path="/terms"
+        jsonLd={{ '@context': 'https://schema.org', '@type': 'WebPage', name: 'Terms of Service', url: BASE_URL }}
+      />
       <section className="section section-first" aria-label="Terms of Service">
         <div className="container" style={{ maxWidth: '800px' }}>
           <h1 className="gradient-text" style={{ marginBottom: '2rem' }}>Terms of Service</h1>

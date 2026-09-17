@@ -1,5 +1,5 @@
 import { useSearchParams, Link } from 'react-router-dom'
-import Seo from '../components/Seo'
+import Seo, { BASE_URL } from '../components/Seo'
 import { planningNotices } from '../data/planningNotices'
 import { getPublishableContent } from '../data/contentRegistry'
 import './reader-services.css'
@@ -36,7 +36,12 @@ export default function SearchPage() {
   const results = [...articleResults, ...noticeResults].sort((a,b) => String(b.publishedDate || '').localeCompare(String(a.publishedDate || '')))
 
   return <>
-    <Seo title={query ? `Search: ${query} | St. Catharines Digital` : 'Search | St. Catharines Digital'} description="Search local news, planning records and civic information across Niagara." path="/search" />
+    <Seo
+      title={query ? `Search: ${query} | St. Catharines Digital` : 'Search | St. Catharines Digital'}
+      description="Search local news, planning records and civic information across Niagara."
+      path="/search"
+      jsonLd={{ '@context': 'https://schema.org', '@type': 'WebPage', name: 'Search', url: BASE_URL }}
+    />
     <div className="scd-page scd-search-page">
       <header className="scd-services-hero"><p className="scd-eyebrow">Find local coverage</p><h1>Search</h1><p>Search source-linked municipal records by address, subject, city, file number or status.</p></header>
       <form className="scd-search-form" action="/search" method="get" role="search">
