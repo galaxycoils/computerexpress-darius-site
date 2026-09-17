@@ -1,12 +1,36 @@
+import { useState, useMemo } from 'react'
 import { Link } from 'react-router-dom'
 import Seo from '../components/Seo'
 import { cities } from '../data/cityConfig'
 import { getPublishableContent } from '../data/contentRegistry'
-import '../components/news/news.css'
+import { readLocalNews, getNewsFallback } from '../data/localNews'
 import '../components/news/news-hub.css'
 
 export default function NewsPage() {
-  const latest = getPublishableContent().sort((a, b) => b.publishedDate.localeCompare(a.publishedDate))
+  const [localNewsLoading, setLocalNewsLoading] = useState(true);
+  const [localNewsData, setLocalNewsData] = useState([]);
+
+  // Curated verified coverage from contentRegistry (always available).
+  const curatedLatest = useMemo(
+    () => getPublishableContent().sort((a, b) => b.publishedDate.localeCompare(a.publishedDate)),
+    [],
+  );
+
+  // Auto-scraped local news from D1 (RSS feeds).
+  // Fetches client-side; falls back to seeds during SSR/prerender.
+  useMemo(() => {
+    if (typeof window === 'undefined') return; // SSR: seeds are already in the bundle.
+    readLocalNews({ limit: 20, offset: 0 })
+      .then(result => {
+        setLocalNewsData(result.articles);
+        setLocalNewsLoading(false);
+      })
+      .catch(err => {
+        console.warn('Failed to load local news from API:', err);
+        setLocalNewsData(getNewsFallback(20));
+        setLocalNewsLoading(false);
+      });
+  }, []);
   return (
     <>
       <Seo
@@ -26,9 +50,33 @@ export default function NewsPage() {
         <section aria-labelledby="latest-coverage-h">
           <div className="scd-section-heading-row"><h2 id="latest-coverage-h" className="scd-section-rule">Latest verified coverage</h2><a href="/rss.xml" className="scd-rss-link">RSS</a></div>
           <div className="scd-verified-coverage">
-            {latest.map(item => <article key={item.slug} className="card"><p className="scd-cat">{item.type} · {item.city}</p><h3><Link to={`/articles/${item.slug}`}>{item.title}</Link></h3><p>{item.description}</p><div className="scd-coverage-card-footer"><time dateTime={item.publishedDate}>{item.publishedDate}</time><Link to={`/articles/${item.slug}`}>Read record →</Link></div></article>)}
+            {curatedLatest.map(item => <article key={item.slug} className="card"><p className="scd-cat">{item.type} · {item.city}</p><h3><Link to={`/articles/${item.slug}`}>{item.title}</Link></h3><p>{item.description}</p><div className="scd-coverage-card-footer"><time dateTime={item.publishedDate}>{item.publishedDate}</time><Link to={`/articles/${item.slug}`}>Read record →</Link></div></article>)}
           </div>
         </section>
+
+        {localNewsData.length > 0 && (
+          <section aria-labelledby="auto-news-h" style={{ marginTop: '40px' }}>
+            <div className="scd-section-heading-row">
+              <h2 id="auto-news-h" className="scd-section-rule">From local news sources</h2>
+              <span style={{ fontSize: '12px', color: 'var(--muted)', fontFamily: 'var(--font-ui)', letterSpacing: '0.06em', textTransform: 'uppercase' }}>
+                {localNewsLoading ? 'Loading...' : `${localNewsData.length} articles`}
+              </span>
+            </div>
+            <div className="scd-verified-coverage">
+              {localNewsData.map(item => (
+                <article key={item.id} className="card">
+                  <p className="scd-cat">{item.category || 'news'} · {item.sourceName}</p>
+                  <h3><a href={item.url} target="_blank" rel="noopener noreferrer">{item.title}</a></h3>
+                  <p>{item.description}</p>
+                  <div className="scd-coverage-card-footer">
+                    <time dateTime={item.pubDate}>{new Date(item.pubDate).toLocaleDateString('en-CA', { year: 'numeric', month: 'short', day: 'numeric' })}</time>
+                    <a href={item.url} target="_blank" rel="noopener noreferrer">Read source →</a>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </section>
+        )}
 
         <section aria-labelledby="city-hubs-h">
           <h2 id="city-hubs-h" className="scd-section-rule">City Hubs</h2>

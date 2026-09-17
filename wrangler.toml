@@ -8,3 +8,10 @@ database_id = "58b9ee2e-c86a-4469-8729-f71ce89e6326"
 
 [ai]
 binding = "AI"
+
+# Cron triggers for scheduled Cloudflare Functions
+[triggers]
+crons = [
+  # Fetch local news RSS feeds every 6 hours
+  "0 0,6,12,18 * * *",
+]
