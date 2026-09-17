@@ -26,15 +26,26 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        node-version: [20, 22]
-        suite: [unit, collector, content-audit]
         include:
-          # Explicit labels for the Actions UI
-          - suite: unit
+          # Node 20 (LTS)
+          - node-version: 20
+            suite: unit
             command: npm test
-          - suite: collector
+          - node-version: 20
+            suite: collector
             command: node --test scripts/*.regression.mjs
-          - suite: content-audit
+          - node-version: 20
+            suite: content-audit
+            command: npm run content:audit
+          # Node 22 (production)
+          - node-version: 22
+            suite: unit
+            command: npm test
+          - node-version: 22
+            suite: collector
+            command: node --test scripts/*.regression.mjs
+          - node-version: 22
+            suite: content-audit
             command: npm run content:audit
 
     steps:
