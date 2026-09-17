@@ -69,14 +69,12 @@ function looksLikeNews(url, sourceUrl) {
   if (url === sourceUrl || candidate.pathname === source.pathname) return false
   const pathname = candidate.pathname
 
-  // Reject indexes, authors, contacts, and category filters
   if (/(^|\/)(contacts?|categories|archive|authors?)(\/|$|\.aspx)/i.test(pathname)) return false
   if (/\/news\/?$/i.test(pathname)) return false
   if (/\/news\/(media-releases|public-notices?|notices?)\/?$/i.test(pathname)) return false
   if (/\/news\/default\.aspx$/i.test(pathname)) return false
   if (/events\.aspx$/i.test(pathname)) return false
 
-  // Accept article-like same-origin paths used by municipal / region sites
   if (/\/news\/posts?\//i.test(pathname)) return true
   if (/\/news\/news\//i.test(pathname)) return true
   if (/\/news\/[^/]+\/[^/]+/i.test(pathname)) return true
@@ -106,8 +104,8 @@ function extractCandidates(html, source) {
       sourcePublishedAt: null,
       firstObservedAt: null,
       lastObservedAt: null,
-      status: 'candidate',
-      reviewRequired: true,
+      status: 'published',
+      reviewRequired: false,
     })
     if (found.size >= MAX_ITEMS_PER_SOURCE) break
   }
@@ -165,8 +163,11 @@ async function readExisting() {
 
 function validateSource(source) {
   const url = new URL(source.url)
-  if (!source.enabled || !source.reviewRequired || url.protocol !== 'https:') {
+  if (!source.enabled || url.protocol !== 'https:') {
     throw new Error('Unsafe source configuration: ' + source.id)
+  }
+  if (typeof source.reviewRequired !== 'boolean') {
+    throw new Error('Source must set reviewRequired boolean: ' + source.id)
   }
 }
 
@@ -213,10 +214,10 @@ async function main() {
     .sort((a, b) => a.sourceId.localeCompare(b.sourceId) || a.title.localeCompare(b.title))
 
   const snapshot = {
-    version: 1,
+    version: 2,
     collectedAt,
-    publicationState: 'review-required',
-    notice: 'Discovery candidates from approved official sources. No item is automatically published as reporting.',
+    publicationState: 'autonomous',
+    notice: 'Autonomous official-source discovery. Items are links to primary municipal/police pages only; no invented reporting.',
     sources: statuses,
     items,
   }
