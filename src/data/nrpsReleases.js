@@ -4,10 +4,11 @@
  * Official Niagara Regional Police Service media releases & community notifications.
  * Updated: 2026-09-17
  * Next review: Daily (cron) — refresh from niagarapolice.ca
- * Note: added Sep 17 St. Catharines warrants arrest.
+ * Note: added Sep 9 Welland break-and-enter arrests; Sep 11 NRPS officer impaired-operation investigation (1 District responded); Sep 12 Welland motorcycle collision fatalities; Sep 14 Pelham road-rage assault; Sep 15 Project Safe Start results; Sep 17 St. Catharines warrants arrest; Sep 17 Update 1 - third arrest in Thorold/Welland drug investigation (1 District St. Catharines/Thorold).
  */
 
 export const nrpsReleases = [
+  // SEP 17, 2026
   {
     id: 'nrps-2026-09-17-stc-warrants-arrest',
     date: '2026-09-17',
@@ -20,6 +21,18 @@ export const nrpsReleases = [
     category: 'arrest',
   },
   {
+    id: 'nrps-2026-09-17-update-mississauga-male-arrested-thorold-welland',
+    date: '2026-09-17',
+    headline: 'Update #1: Mississauga Male Arrested in Thorold and Welland Search Warrants',
+    municipality: 'St. Catharines, Thorold, Welland',
+    type: 'Media Release (Update)',
+    url: 'https://www.niagarapolice.ca/news/posts/update-1-mississauga-male-arrested-in-thorold-and-welland-search-warrants/',
+    source: 'Niagara Regional Police Service',
+    tags: ['Drug Investigation', 'St. Catharines', 'Thorold', 'Welland', 'Search Warrants', 'Arrest', 'Update', '1 District', 'Street Crime Unit'],
+    category: 'drug-investigation',
+  },
+  // SEP 15, 2026
+  {
     id: 'nrps-2026-09-15-project-safe-start-results',
     date: '2026-09-15',
     headline: 'Hundreds of Traffic Stops Reported During Project Safe Start – Niagara',
@@ -30,6 +43,7 @@ export const nrpsReleases = [
     tags: ['Project Safe Start', 'Traffic', 'Back to School', 'Region-wide', 'Public Safety'],
     category: 'community-notification',
   },
+  // SEP 14, 2026
   {
     id: 'nrps-2026-09-14-pelham-road-rage-assault',
     date: '2026-09-14',
@@ -41,6 +55,7 @@ export const nrpsReleases = [
     tags: ['Assault', 'Road Rage', 'Pelham', 'Welland', 'St. Catharines', 'Charges'],
     category: 'assault',
   },
+  // SEP 12, 2026
   {
     id: 'nrps-2026-09-12-welland-motorcycle-fatalities',
     date: '2026-09-12',
@@ -52,6 +67,7 @@ export const nrpsReleases = [
     tags: ['Collision', 'Motorcycle', 'Fatalities', 'Welland', 'Investigation'],
     category: 'collision',
   },
+  // SEP 11, 2026
   {
     id: 'nrps-2026-09-11-officer-impaired-operation',
     date: '2026-09-11',
@@ -63,6 +79,7 @@ export const nrpsReleases = [
     tags: ['Impaired Operation', 'St. Catharines', 'Thorold', '1 District', 'Investigation'],
     category: 'impaired-driving',
   },
+  // SEP 9, 2026
   {
     id: 'nrps-2026-09-09-welland-bne-arrests',
     date: '2026-09-09',
@@ -74,6 +91,7 @@ export const nrpsReleases = [
     tags: ['Break & Enter', 'Welland', 'Arrest', 'Investigation'],
     category: 'break-and-enter',
   },
+  // SEP 7, 2026
   {
     id: 'nrps-2026-09-07-fort-erie-collision',
     date: '2026-09-07',
@@ -107,6 +125,7 @@ export const nrpsReleases = [
     tags: ['E-Scooter', 'Collision', 'Serious Injuries', 'Welland', 'Investigation'],
     category: 'collision',
   },
+  // SEP 4, 2026
   {
     id: 'nrps-2026-09-04-wellandport-bne',
     date: '2026-09-04',
@@ -118,6 +137,7 @@ export const nrpsReleases = [
     tags: ['Break & Enter', 'Wellandport', 'Investigation'],
     category: 'break-and-enter',
   },
+  // SEP 3, 2026
   {
     id: 'nrps-2026-09-03-safe-start',
     date: '2026-09-03',
@@ -140,6 +160,7 @@ export const nrpsReleases = [
     tags: ['ICE Unit', 'Child Sexual Abuse', 'Child Exploitation Material', 'Welland', 'Arrest'],
     category: 'child-safety',
   },
+  // AUG 26, 2026
   {
     id: 'nrps-2026-08-26-st-catharines-collision-arrest',
     date: '2026-08-26',
@@ -151,6 +172,7 @@ export const nrpsReleases = [
     tags: ['Collision', 'Fail to Remain', 'Pedestrian', 'St. Catharines', 'Arrest', 'Collision Reconstruction'],
     category: 'collision',
   },
+  // SEP 2, 2026 (previously reported, still current)
   {
     id: 'nrps-2026-09-02-thorold-welland-drug',
     date: '2026-09-02',
@@ -162,6 +184,7 @@ export const nrpsReleases = [
     tags: ['Drug Investigation', 'Thorold', 'Welland', 'Search Warrants', 'Arrest'],
     category: 'drug-investigation',
   },
+  // SEP 1, 2026
   {
     id: 'nrps-2026-09-01-thorold-collision-witnesses',
     date: '2026-09-01',
@@ -173,6 +196,7 @@ export const nrpsReleases = [
     tags: ['Collision', 'Serious Injuries', 'Witnesses Sought', 'Thorold'],
     category: 'collision',
   },
+  // AUG 31, 2026
   {
     id: 'nrps-2026-08-31-welland-traffic-cannabis-22kg',
     date: '2026-08-31',
@@ -195,6 +219,7 @@ export const nrpsReleases = [
     tags: ['Drug Trafficking', 'Region-wide', 'Charges', 'Wanted', 'Update'],
     category: 'drug-investigation',
   },
+  // AUG 27, 2026
   {
     id: 'nrps-2026-08-27-welland-port-colborne-bne',
     date: '2026-08-27',
