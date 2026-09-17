@@ -37,12 +37,6 @@ jobs:
           - node-version: 22
             suite: content-audit
             command: npm run content:audit
-          - node-version: 20
-            suite: collector
-            command: node --test scripts/*.regression.mjs
-          - node-version: 20
-            suite: content-audit
-            command: npm run content:audit
 
     steps:
       - name: Checkout

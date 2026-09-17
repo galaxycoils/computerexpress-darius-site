@@ -11,12 +11,12 @@ jobs:
         uses: cloudflare/wrangler-action@v4
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
-          accountId: a55a43856c7029505b79300ec82f1629
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           command: pages project create stcatharinesdigital --production-branch=main
 
       - name: Deploy to new project
         uses: cloudflare/wrangler-action@v4
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
-          accountId: a55a43856c7029505b79300ec82f1629
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           command: pages deploy dist --project-name=stcatharinesdigital --branch=main

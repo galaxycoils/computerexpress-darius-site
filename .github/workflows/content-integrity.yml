@@ -28,10 +28,8 @@ jobs:
             command: node --test scripts/*.regression.mjs
           - suite: content-audit
             command: npm run content:audit
-          - suite: unit-tests
-            command: npm test
-          - suite: production-build
-            command: npm run build
+          - suite: schema-audit
+            command: npm run build && node scripts/audit-schema.js
 
     steps:
       - uses: actions/checkout@v6

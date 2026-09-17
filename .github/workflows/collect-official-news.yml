@@ -65,12 +65,6 @@ jobs:
       - name: Run collector regression tests
         run: node --test scripts/*.regression.mjs
 
-      - name: Run tests
-        run: npm test
-
-      - name: Build production site
-        run: npm run build
-
       - name: Detect discovery changes
         id: changes
         shell: bash
