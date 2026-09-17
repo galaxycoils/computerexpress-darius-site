@@ -1,4 +1,5 @@
 import { createAlertToken } from '../api/alerts/_auth.js'
+import { completeDelivery, createDelivery, failDelivery, recipientFingerprint } from '../lib/emailDelivery.js'
 
 // Cloudflare Pages Cron: Daily planning alert digest (runs 6 AM ET daily)
 // POST /functions/cron/daily-digest
@@ -60,6 +61,7 @@ export async function onRequest(context) {
         const manageToken = await createAlertToken(alert.id, alert.created_at, tokenSecret, 'manage');
         const manageUrl = `https://stcatharinesdigital.ca/preferences?token=${encodeURIComponent(manageToken)}`;
         const { text, html } = buildDigest(alert, matches, manageUrl);
+        const deliveryId = await createDelivery(STC_D1, { channel: 'planning-alert', recipientRef: await recipientFingerprint(alert.email), template: 'digest' });
 
         const sendResponse = await fetch(`${AGENTMAIL_BASE}/inboxes/${inbox.inbox_id}/messages/send`, {
           method: 'POST',
@@ -77,8 +79,10 @@ export async function onRequest(context) {
         });
 
         if (!sendResponse.ok) {
+          await failDelivery(STC_D1, deliveryId, sendResponse.status, 'provider_rejected', Date.now() + 60 * 60 * 1000);
           throw new Error(`Email provider rejected digest: ${sendResponse.status}`);
         }
+        await completeDelivery(STC_D1, deliveryId, sendResponse.status);
 
         // Update last_sent_at
         await STC_D1.prepare(
