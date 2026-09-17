@@ -18,7 +18,8 @@ test('deduplicates candidates without inventing publication dates', () => {
   const items = extractCandidates(html, source)
   assert.equal(items.length, 1)
   assert.equal(items[0].sourcePublishedAt, null)
-  assert.equal(items[0].reviewRequired, true)
+  assert.equal(items[0].reviewRequired, false)
+  assert.equal(items[0].status, 'published')
 })
 test('ignores links embedded inside scripts', () => {
   assert.equal(extractCandidates('<script><a href="/news/posts/a">Not a visible news item</a></script>', source).length, 0)
@@ -111,7 +112,7 @@ test('source registry points Niagara Region at same-origin public notices', () =
   const region = sourceById['niagara-region-news']
   assert.ok(region)
   assert.equal(region.enabled, true)
-  assert.equal(region.reviewRequired, true)
+  assert.equal(region.reviewRequired, false)
   assert.match(region.url, /^https:\/\/www\.niagararegion\.ca\/news\/notices\//)
-  assert.equal(sourceRegistry.filter(s => s.enabled).length >= 5, true)
+  assert.equal(sourceRegistry.filter(s => s.enabled).length >= 6, true)
 })
