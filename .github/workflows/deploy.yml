@@ -1,12 +1,14 @@
 name: Deploy to Cloudflare Pages
 
 on:
+  # Human and bot pushes to main (bot GITHUB_TOKEN pushes do not re-trigger workflows)
   push:
     branches: [main]
     paths-ignore:
       - '**/*.md'
       - '.gitignore'
       - 'LICENSE*'
+  # Manual production deploy
   workflow_dispatch:
     inputs:
       reason:
@@ -14,6 +16,8 @@ on:
         required: false
         default: manual
         type: string
+  # Autonomous news collect commits with GITHUB_TOKEN, which does not fire push workflows.
+  # Re-run deploy after a successful collect so discovery.json reaches production.
   workflow_run:
     workflows:
       - Collect official sources (autonomous)
@@ -27,6 +31,7 @@ concurrency:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    # Skip failed collect runs; always run on push / manual dispatch
     if: >-
       github.event_name != 'workflow_run' ||
       github.event.workflow_run.conclusion == 'success'
@@ -38,6 +43,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v6
         with:
+          # For workflow_run, check out the commit that finished collect (usually main tip)
           ref: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.head_sha || github.sha }}
 
       - name: Setup Node
@@ -130,3 +136,5 @@ jobs:
             -H "Authorization: Bearer ${CF_API_TOKEN}" \
             -H "Content-Type: application/json" \
             --data '{"purge_everything":true}'
+          echo
+          echo "Edge cache purge requested for zone ${CF_ZONE_ID}"
