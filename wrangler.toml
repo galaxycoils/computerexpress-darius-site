@@ -1,18 +1,7 @@
 name = "stcatharinesdigital"
 pages_build_output_dir = "dist"
 
-# Cloudflare Pages Cron Triggers (Wrangler 4.x Pages-compatible)
-# Functions in /functions/cron/* are invoked by Cloudflare when the schedule matches.
-# The [[trigger]] section maps a cron schedule to a function path.
-# Local news RSS fetcher — every 6 hours (0,6,12,18 UTC) = 7am/1pm/7pm/1am ET
-[[trigger]]
-function = "cron/fetch-local-news"
-schedule = "0 0,6,12,18 * * *"
-
-# PRE-PRODUCTION DIRECTIVE — set CRON_SECRET before enabling in dashboard.
-# The /functions/cron/* handlers require an Authorization: Bearer <CRON_SECRET>.
-# If CRON_SECRET is unset in Pages Environment Variables, the cron functions return 503.
-
+# D1 database binding for local news / planning notices
 [[d1_databases]]
 binding = "STC_D1"
 database_name = "stcatharinesdigital_d1"
@@ -20,3 +9,23 @@ database_id = "58b9ee2e-c86a-4469-8729-f71ce89e6326"
 
 [ai]
 binding = "AI"
+
+# Cron triggers for scheduled Cloudflare Functions
+# Pages Functions cron is configured via the Cloudflare Dashboard,
+# not via wrangler.toml [triggers] in Wrangler 4.x for Pages projects.
+# The functions in /functions/cron/ are mounted as route handlers and
+# invoked by Cloudflare when the schedule elapses.
+#
+# Schedule for fetch-local-news: every 6 hours (0,6,12,18 UTC)
+# = 7am / 1pm / 7pm / 1am Eastern Time
+#
+# To configure in dashboard:
+#   Pages → stcatharinesdigital → Settings → Cron Triggers
+#   Add: "0 0,6,12,18 * * *" → /functions/cron/fetch-local-news
+#
+# Or via wrangler CLI (if your Wrangler version supports Pages triggers):
+#   wrangler pages trigger add --function cron/fetch-local-news --schedule "0 0,6,12,18 * * *"
+#
+# PRE-PRODUCTION: set CRON_SECRET in Pages environment variables before enabling the cron trigger.
+# The /functions/cron/* handlers require Authorization: Bearer <CRON_SECRET>.
+# Without it, the handler returns 503.
