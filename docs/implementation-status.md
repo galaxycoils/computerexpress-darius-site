@@ -1,6 +1,6 @@
 # Remaining newsroom release checklist
 
-Baseline: c685fc8558cd079eef371cd4ff84886e71c146d2.
+Baseline: 5209d1ed8f40adcf9f0f1c079e4630171879d167.
 This is an implementation status register, not a completion claim.
 
 ## This release
@@ -16,6 +16,9 @@ This is an implementation status register, not a completion claim.
 - [x] Verify deployment through commit eff40ccecd6eb47e65e124519ec7ce1490b0ebc3.
 - [x] Run the collector against all five approved sources and inspect 78 candidates.
 - [x] Filter obvious navigation, contact and archive pages from future discovery snapshots.
+- [x] Add permanent, prerendered article pages for every currently verified record.
+- [x] Add internal article search, an RSS feed, article schema, and verified article sitemap dates.
+- [x] Add a hashed-recipient delivery ledger and bounded newsletter welcome retry endpoint.
 
 ## Outstanding release blockers
 - [x] Replace unsigned alert credentials with scoped expiring credentials.
@@ -24,16 +27,19 @@ This is an implementation status register, not a completion claim.
 - [ ] Test D1 backup and restoration in a non-production database.
 - [x] Validate provider acceptance using the authorized newsletter recipient.
 - [ ] Confirm receipt in the authorized recipient's inbox.
-- [ ] Add delivery ledger and retry reconciliation.
+- [x] Add delivery ledger and retry reconciliation endpoint.
+- [ ] Configure an authenticated scheduler for retry reconciliation.
 
 ## Remaining product work
 - [ ] Consolidated design system and mobile/light/dark verification.
-- [ ] Permanent article/project routes, broad search, and real RSS feeds.
+- [x] Permanent article routes, verified-content search, and a real RSS feed.
+- [ ] Project-detail routes for every planning record.
 - [ ] Verified seeded reporting, projects, meetings, and elections.
 - [ ] Community and events records before section promotion.
 - [ ] Authenticated editorial administration and moderated submissions.
 - [x] Stop publishing invented build-time sitemap modification dates.
-- [ ] Add verified per-record sitemap dates and complete structured-data review.
+- [x] Add verified article sitemap dates and `NewsArticle` structured data.
+- [ ] Complete structured-data review for all remaining route types.
 - [ ] Accessibility, performance, route restoration and error-state audit.
 - [ ] Sponsorship/membership promises matched to working services.
 
@@ -41,4 +47,5 @@ Guides remain removed. No fabricated reporting, inferred candidate positions,
 invented dates, or unverified automated articles are approved by this release.
 A production newsletter subscription request was accepted by D1 and the email provider.
 Inbox receipt has not been independently confirmed. Planning alerts remain unavailable
-until `ALERT_TOKEN_SECRET` is configured in the deployment environment.
+until `ALERT_TOKEN_SECRET` is configured in the deployment environment. The retry
+endpoint is deployed but inactive until an authenticated scheduler calls it.
