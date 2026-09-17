@@ -55,11 +55,23 @@ function recordsFor(municipality) {
 
 const councilJsonLd = {
   '@context': 'https://schema.org',
-  '@type': 'CollectionPage',
-  name: 'City Council — St. Catharines, Welland & Thorold',
-  url: 'https://stcatharinesdigital.ca/council/',
-  description: 'Official council portals and sourced civic records for St. Catharines, Welland and Thorold.',
-  inLanguage: 'en-CA',
+  '@graph': [
+    {
+      '@type': 'WebPage',
+      name: 'City Council — St. Catharines, Welland & Thorold',
+      description: 'Official council portals and sourced civic records for St. Catharines, Welland and Thorold.',
+      url: 'https://stcatharinesdigital.ca/council/',
+      inLanguage: 'en-CA',
+    },
+    {
+      '@context': 'https://schema.org',
+      '@type': 'CollectionPage',
+      name: 'City Council — St. Catharines, Welland & Thorold',
+      url: 'https://stcatharinesdigital.ca/council/',
+      description: 'Official council portals and sourced civic records for St. Catharines, Welland and Thorold.',
+      inLanguage: 'en-CA',
+    }
+  ]
 }
 
 export default function CouncilPage() {

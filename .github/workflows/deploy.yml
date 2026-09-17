@@ -89,7 +89,7 @@ jobs:
           if [ -z "$ALERT_TOKEN_SECRET" ]; then
             echo "::warning::ALERT_TOKEN_SECRET is not configured; planning-alert signup and management remain unavailable."
           else
-            printf '%s' "$ALERT_TOKEN_SECRET" | npx wrangler pages secret put ALERT_TOKEN_SECRET --project-name=stcatharinesdigital --account-id "$CLOUDFLARE_ACCOUNT_ID"
+            printf '%s' "$ALERT_TOKEN_SECRET" | npx wrangler pages secret put ALERT_TOKEN_SECRET --project-name=stcatharinesdigital
           fi
 
       - name: Configure AgentMail runtime secret
@@ -102,7 +102,7 @@ jobs:
             echo "AGENTMAIL_API_KEY is not configured; contact form will use fallback delivery."
             exit 0
           fi
-          printf '%s' "$AGENTMAIL_API_KEY" | npx wrangler pages secret put AGENTMAIL_API_KEY --project-name=stcatharinesdigital --account-id "$CLOUDFLARE_ACCOUNT_ID"
+          printf '%s' "$AGENTMAIL_API_KEY" | npx wrangler pages secret put AGENTMAIL_API_KEY --project-name=stcatharinesdigital
 
       - name: Apply newsletter and delivery schemas
         env:

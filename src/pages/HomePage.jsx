@@ -60,7 +60,24 @@ export default function HomePage() {
   const topStories = remaining.slice(0, 3)
   const updates = remaining.slice(3)
   const weekAhead = getUpcomingMeetings().slice(0, 3)
-  const jsonLd = [{ '@context': 'https://schema.org', '@type': 'NewsMediaOrganization', name: siteConfig.name, url: BASE_URL, description: siteConfig.description, areaServed: CITIES.map((city) => ({ '@type': 'City', name: city.name })) }]
+  const jsonLd = [
+    {
+      '@context': 'https://schema.org',
+      '@type': 'WebSite',
+      name: siteConfig.name,
+      url: BASE_URL,
+      description: siteConfig.description,
+      potentialAction: {
+        '@type': 'SearchAction',
+        target: {
+          '@type': 'EntryPoint',
+          urlTemplate: `${BASE_URL}/search?q={search_term_string}`
+        },
+        'query-input': 'required name=search_term_string'
+      }
+    },
+    { '@context': 'https://schema.org', '@type': 'NewsMediaOrganization', name: siteConfig.name, url: BASE_URL, description: siteConfig.description, areaServed: CITIES.map((city) => ({ '@type': 'City', name: city.name })) }
+  ]
 
   return <><Seo title="St. Catharines Digital | Local news for Niagara" description="Local council, planning, election and public-safety coverage for Niagara, connected to official sources." path="/" jsonLd={jsonLd} />
     <div className="scd-page scd-home">
