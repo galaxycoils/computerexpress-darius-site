@@ -18,7 +18,8 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  # Parallel quality suites × supported Node versions
+  # Parallel quality suites. Unit tests run on Node 22 only (production runtime);
+  # jsdom 30 / undici require Node 22+ (markAsUncloneable).
   test:
     name: ${{ matrix.suite }} (Node ${{ matrix.node-version }})
     runs-on: ubuntu-latest
@@ -27,24 +28,19 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          # Node 20 (LTS)
-          - node-version: 20
+          - node-version: 22
             suite: unit
             command: npm test
-          - node-version: 20
+          - node-version: 22
             suite: collector
             command: node --test scripts/*.regression.mjs
-          - node-version: 20
+          - node-version: 22
             suite: content-audit
             command: npm run content:audit
-          # Node 22 (production)
-          - node-version: 22
-            suite: unit
-            command: npm test
-          - node-version: 22
+          - node-version: 20
             suite: collector
             command: node --test scripts/*.regression.mjs
-          - node-version: 22
+          - node-version: 20
             suite: content-audit
             command: npm run content:audit
 
