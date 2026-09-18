@@ -70,12 +70,12 @@
 .scd-newsletter-error {
   font-family: var(--font-ui);
   font-size: 12px;
-  color: #b3261e;
+  color: var(--danger);
   margin: 8px 0 0;
 }
 
 .news-root.is-dark .scd-newsletter-error {
-  color: #f87171;
+  color: var(--danger);
 }
 
 .scd-newsletter-note {
