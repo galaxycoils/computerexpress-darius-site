@@ -2,9 +2,9 @@
  * NRPS Police Media Releases for St. Catharines Digital
  * Sourced exclusively from https://www.niagarapolice.ca/news/posts/
  * Official Niagara Regional Police Service media releases & community notifications.
- * Updated: 2026-09-17
+ * Updated: 2026-09-18
  * Next review: Daily (cron) — refresh from niagarapolice.ca
- * Note: added Sep 9 Welland break-and-enter arrests; Sep 11 NRPS officer impaired-operation investigation (1 District responded); Sep 12 Welland motorcycle collision fatalities; Sep 14 Pelham road-rage assault; Sep 15 Project Safe Start results; Sep 17 St. Catharines warrants arrest; Sep 17 Update 1 - third arrest in Thorold/Welland drug investigation (1 District St. Catharines/Thorold); Sep 17 Police Service Board meeting advisory (region-wide).
+ * Note: added Sep 17 missing-person Update 7 (NOTL / Darren Werner five-year appeal) and Sep 17 8 District West Lincoln motor-vehicle dismantling shutdown ($174,000 recovered).
  */
 
 export const nrpsReleases = [
@@ -41,6 +41,28 @@ export const nrpsReleases = [
     source: 'Niagara Regional Police Service',
     tags: ['Drug Investigation', 'St. Catharines', 'Thorold', 'Welland', 'Search Warrants', 'Arrest', 'Update', '1 District', 'Street Crime Unit'],
     category: 'drug-investigation',
+  },
+  {
+    id: 'nrps-2026-09-17-notl-missing-person-update-7',
+    date: '2026-09-17',
+    headline: 'MISSING PERSON - Male in Niagara-on-the-Lake - UPDATE 7',
+    municipality: 'Niagara-on-the-Lake',
+    type: 'Media Release (Missing Person Update)',
+    url: 'https://www.niagarapolice.ca/news/posts/missing-person-male-in-niagara-on-the-lake-update-7/',
+    source: 'Niagara Regional Police Service',
+    tags: ['Missing Person', 'Niagara-on-the-Lake', 'Homicide Unit', 'Update', 'Public Appeal'],
+    category: 'missing-person',
+  },
+  {
+    id: 'nrps-2026-09-17-west-lincoln-vehicle-dismantling',
+    date: '2026-09-17',
+    headline: 'Motor Vehicle Dismantling Operation Shutdown by 8 District Detectives - $174,000 in Stolen Goods Recovered',
+    municipality: 'West Lincoln',
+    type: 'Media Release (Auto Theft / Property Crime)',
+    url: 'https://www.niagarapolice.ca/news/posts/motor-vehicle-dismantling-operation-shutdown-by-8-district-detectives-174-000-in-stolen-goods-recovered/',
+    source: 'Niagara Regional Police Service',
+    tags: ['Auto Theft', 'West Lincoln', '8 District', 'Stolen Goods', 'Arrest'],
+    category: 'property-crime',
   },
   // SEP 15, 2026
   {
