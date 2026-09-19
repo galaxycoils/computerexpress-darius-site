@@ -6,8 +6,8 @@
  * - thorold.ca
  * - niagararegion.ca
  *
- * Updated: 2026-09-17
- * Note: marked STC CoA (455 Welland, 12 Stepney, 60 Thomas) and Welland Niagara/Forks/Clare/Clifford CoA as Hearing Complete; added Thorold Crompton Blvd closure and Pamela Drive watermain commencement.
+ * Updated: 2026-09-19
+ * Note: added Welland CoA 777-803 Niagara St (sign variances, Oct 14 hearing); added Thorold temporary closures at Sullivan/Towpath, Alexandria Dr, and Bridge 11 (Hwy 20).
  * Next review: Weekly
  */
 
@@ -106,6 +106,23 @@ export const planningNotices = [
     tags: ['Consent', 'Minor Variance', 'Welland', 'Niagara Street', 'Forks Road', 'Clare Avenue', 'Clifford Avenue']
   },
   {
+    id: 'welland-coa-777-803-niagara-st',
+    municipality: 'Welland',
+    type: 'Committee of Adjustment Hearing',
+    title: '777-803 Niagara Street — Ground Sign Height and Area Variances',
+    description: 'Minor variance PLMV202600222 for two ground signs on the commercial property at 777-803 Niagara Street, each proposed at 10.5 m height (7.5 m maximum) and 34.6 sq m area (10 sq m maximum) under Sign By-law 2005-21.',
+    fileNumber: 'PLMV202600222',
+    status: 'Hearing Scheduled',
+    meetingDate: '2026-10-14T17:00:00',
+    meetingLocation: 'Civic Square Council Chambers, 60 East Main St, Welland',
+    submissionDeadline: '2026-10-08T00:00:00',
+    submissionEmail: 'cofa@welland.ca',
+    publishedDate: '2026-09-24',
+    sourceUrl: 'https://www.welland.ca/news/posts/notice-of-public-hearing-application-for-minor-variance-777-803-niagara-street/',
+    category: 'minor-variance',
+    tags: ['Minor Variance', 'Welland', 'Niagara Street', 'Sign By-law']
+  },
+  {
     id: 'welland-coa-first-st-37-40',
     municipality: 'Welland',
     type: 'Committee of Adjustment Hearing',
@@ -121,6 +138,47 @@ export const planningNotices = [
     sourceUrl: 'https://www.welland.ca/news/posts/notice-of-public-hearing-concerning-applications-for-consent-and-minor-variance-37-to-39-and-38-to-40-first-street/',
     category: 'consent-application',
     tags: ['Consent', 'Minor Variance', 'Welland', 'First Street']
+  },
+  {
+    id: 'thorold-sullivan-towpath-closure',
+    municipality: 'Thorold',
+    type: 'Temporary Road Closure',
+    title: 'Sullivan Avenue and Towpath Street — Intersection Closure',
+    description: 'Sullivan Avenue and Towpath Street intersection scheduled to close Monday, September 21, 2026 at 6:00 a.m. for approximately two weeks while the contractor replaces aging underground infrastructure and reconstructs the roadway in downtown Thorold.',
+    status: 'Scheduled',
+    effectiveDate: '2026-09-21',
+    publishedDate: '2026-09-17',
+    sourceUrl: 'https://www.thorold.ca/news/news/temporary-road-closures-at-sullivan-ave-and-towpath-st-starting-september-21/',
+    category: 'road-closure',
+    tags: ['Road Closure', 'Sullivan Avenue', 'Towpath Street', 'Thorold', 'Construction']
+  },
+  {
+    id: 'thorold-alexandria-dr-closure-sep22',
+    municipality: 'Thorold',
+    type: 'Temporary Road Closure',
+    title: 'Alexandria Drive — Temporary Closure September 22',
+    description: 'Temporary road closure on Alexandria Drive on Tuesday, September 22, 2026 from 7:00 a.m. to 5:00 p.m. between Kottmeier Road and Legacy Lane.',
+    status: 'Scheduled',
+    effectiveDate: '2026-09-22',
+    endDate: '2026-09-22',
+    publishedDate: '2026-09-18',
+    sourceUrl: 'https://www.thorold.ca/news/news/temporary-road-closure-alexandria-drive-september-22/',
+    category: 'road-closure',
+    tags: ['Road Closure', 'Alexandria Drive', 'Thorold']
+  },
+  {
+    id: 'thorold-bridge-11-hwy20-closure',
+    municipality: 'Thorold',
+    type: 'Temporary Road Closure',
+    title: 'Bridge 11 (Highway 20) — Closure September 23–24',
+    description: 'Bridge 11 (Hwy 20) closed Wednesday, September 23 and Thursday, September 24, 2026 from 9 a.m. to 4 p.m. for bridge and road maintenance. All vehicle and pedestrian traffic prohibited during the work windows.',
+    status: 'Scheduled',
+    effectiveDate: '2026-09-23',
+    endDate: '2026-09-24',
+    publishedDate: '2026-09-18',
+    sourceUrl: 'https://www.thorold.ca/news/news/bridge-11-hwy-20-closure-september-23-to-24/',
+    category: 'bridge-repair',
+    tags: ['Road Closure', 'Bridge 11', 'Highway 20', 'Thorold', 'Maintenance']
   },
   {
     id: 'thorold-mcmillan-park-pic',
