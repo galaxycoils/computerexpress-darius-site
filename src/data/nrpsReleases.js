@@ -4,10 +4,22 @@
  * Official Niagara Regional Police Service media releases & community notifications.
  * Updated: 2026-09-18
  * Next review: Daily (cron) — refresh from niagarapolice.ca
- * Note: added Sep 17 missing-person Update 7 (NOTL / Darren Werner five-year appeal) and Sep 17 8 District West Lincoln motor-vehicle dismantling shutdown ($174,000 recovered).
+ * Note: added Sep 18 drug-trafficking arrest (Four Arrested in Drug Trafficking Investigation by 2 District Street Crime Unit — 1/2/3 District SCU assist, bail hearing St Catharines).
  */
 
 export const nrpsReleases = [
+  // SEP 18, 2026
+  {
+    id: 'nrps-2026-09-18-four-arrested-drug-trafficking-2-district',
+    date: '2026-09-18',
+    headline: 'Four Arrested in Drug Trafficking Investigation by 2 District Street Crime Unit',
+    municipality: 'St. Catharines, Thorold, Welland',
+    type: 'Media Release (Drug Investigation / Arrest)',
+    url: 'https://www.niagarapolice.ca/news/posts/four-arrested-in-drug-trafficking-investigation-by-2-district-street-crime-unit/',
+    source: 'Niagara Regional Police Service',
+    tags: ['Drug Trafficking', 'Arrest', 'Street Crime Unit', '2 District', '1 District', '3 District', 'St. Catharines', 'Thorold', 'Welland', 'Fentanyl', 'Methamphetamine'],
+    category: 'drug-investigation',
+  },
   // SEP 17, 2026
   {
     id: 'nrps-2026-09-17-police-service-board-meeting-advisory',
