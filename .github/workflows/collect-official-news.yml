@@ -17,6 +17,7 @@ on:
         type: boolean
 
 permissions:
+  actions: write
   contents: write
 
 concurrency:
@@ -85,3 +86,4 @@ jobs:
           git add src/data/generated/discovery.json
           git commit -m "news: autonomous official-source refresh $(date -u +%Y-%m-%d)"
           git push origin HEAD:main
+          gh workflow run deploy.yml --ref main -f reason=official-source-refresh
