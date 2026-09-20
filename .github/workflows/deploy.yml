@@ -1,14 +1,14 @@
 name: Deploy to Cloudflare Pages
 
 on:
-  # Human and bot pushes to main (bot GITHUB_TOKEN pushes do not re-trigger workflows)
+  # Human pushes to main
   push:
     branches: [main]
     paths-ignore:
       - '**/*.md'
       - '.gitignore'
       - 'LICENSE*'
-  # Manual production deploy
+  # Manual production deploy, including dispatch after a collector commit
   workflow_dispatch:
     inputs:
       reason:
@@ -16,13 +16,6 @@ on:
         required: false
         default: manual
         type: string
-  # Autonomous news collect commits with GITHUB_TOKEN do not fire push workflows.
-  # Re-run deploy after a successful collect so discovery.json reaches production.
-  workflow_run:
-    workflows:
-      - Collect official sources (autonomous)
-    types:
-      - completed
 
 concurrency:
   group: deploy-cloudflare-pages
@@ -32,10 +25,6 @@ concurrency:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    # Skip failed collect runs; always run on push / manual dispatch
-    if: >-
-      github.event_name != 'workflow_run' ||
-      github.event.workflow_run.conclusion == 'success'
     permissions:
       contents: read
       deployments: write
@@ -43,10 +32,6 @@ jobs:
     steps:
       - name: Checkout the release revision
         uses: actions/checkout@v6
-        with:
-          # workflow_run.head_sha is the revision that *started* collection. The
-          # collector can commit discovery.json afterwards, so deploy current main.
-          ref: ${{ github.event_name == 'workflow_run' && 'main' || github.sha }}
 
       - name: Record release revision
         id: release
