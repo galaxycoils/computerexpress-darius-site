@@ -239,19 +239,6 @@ export const nrpsReleases = [
     tags: ['Next Generation 9-1-1', 'NG9-1-1', 'Implementation', 'St. Catharines', 'Niagara Parks Police', 'St. Catharines Fire Services', 'Niagara Region'],
     category: 'community-notification',
   },
-
-  // SEP 18, 2026
-  {
-    id: 'nrps-2026-09-18-community-safety-survey-results',
-    date: '2026-09-18',
-    headline: 'NRPS Releases Results of 2026 Community Safety Survey',
-    municipality: 'Region-wide (St. Catharines, Welland, Thorold included)',
-    type: 'Media Release (Community Survey / Strategic Plan)',
-    url: 'https://www.niagarapolice.ca/news/posts/nrps-releases-results-of-2026-community-safety-survey/',
-    source: 'Niagara Regional Police Service',
-    tags: ['Community Safety Survey', 'Police Service Board', 'Strategic Plan', 'Region-wide'],
-    category: 'community-notification',
-  },
   {
     id: 'nrps-2026-09-18-four-arrested-drug-trafficking-2-district',
     date: '2026-09-18',
