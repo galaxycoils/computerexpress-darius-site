@@ -104,8 +104,8 @@ function extractCandidates(html, source) {
       sourcePublishedAt: null,
       firstObservedAt: null,
       lastObservedAt: null,
-      status: 'published',
-      reviewRequired: false,
+      status: source.reviewRequired ? 'pending-review' : 'published',
+      reviewRequired: Boolean(source.reviewRequired),
     })
     if (found.size >= MAX_ITEMS_PER_SOURCE) break
   }
@@ -171,6 +171,31 @@ function validateSource(source) {
   }
 }
 
+function publicationFields(item) {
+  return {
+    id: item.id,
+    title: item.title,
+    url: item.url,
+    sourceId: item.sourceId,
+    sourceName: item.sourceName,
+    city: item.city,
+    kind: item.kind,
+    sourcePublishedAt: item.sourcePublishedAt ?? null,
+    status: item.status,
+    reviewRequired: Boolean(item.reviewRequired),
+  }
+}
+
+function hasSemanticChanges(existingItems, nextItems) {
+  const existing = new Map((existingItems || []).map(item => [item.url, JSON.stringify(publicationFields(item))]))
+  const next = new Map((nextItems || []).map(item => [item.url, JSON.stringify(publicationFields(item))]))
+  if (existing.size !== next.size) return true
+  for (const [url, value] of next) {
+    if (existing.get(url) !== value) return true
+  }
+  return false
+}
+
 async function main() {
   const args = parseArgs(process.argv.slice(2))
   const enabled = sourceRegistry.filter(source => source.enabled)
@@ -231,6 +256,11 @@ async function main() {
     return
   }
 
+  if (!hasSemanticChanges(existing.items, items)) {
+    console.log('No publishable content changes; preserved the existing snapshot.')
+    return
+  }
+
   await mkdir(path.dirname(OUTPUT), { recursive: true })
   const temporary = OUTPUT + '.tmp'
   await writeFile(temporary, JSON.stringify(snapshot, null, 2) + '\n', 'utf8')
@@ -238,7 +268,7 @@ async function main() {
   console.log('Wrote ' + path.relative(ROOT, OUTPUT))
 }
 
-export { parseArgs, canonicalizeLink, extractCandidates, fetchHtml, decodeEntities }
+export { parseArgs, canonicalizeLink, extractCandidates, fetchHtml, decodeEntities, hasSemanticChanges }
 
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) main().catch(error => {
   console.error(error)

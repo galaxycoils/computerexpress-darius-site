@@ -36,13 +36,13 @@ function categoryLabel(notice) {
 }
 
 function getStories() {
-  const rank = (notice) => {
-    const status = (notice.status || '').toLowerCase()
-    if (status.includes('scheduled') || status === 'active') return 0
-    if (status.includes('construction')) return 1
-    return 2
-  }
-  return [...planningNotices].sort((a, b) => rank(a) - rank(b) || Number(Boolean(LOCAL_PHOTOS[b.id])) - Number(Boolean(LOCAL_PHOTOS[a.id])) || new Date(b.meetingDate || b.publishedDate || 0) - new Date(a.meetingDate || a.publishedDate || 0)).slice(0, 8)
+  const today = new Date()
+  today.setHours(23, 59, 59, 999)
+  const published = planningNotices.filter((notice) => new Date(notice.publishedDate) <= today)
+  const source = published.length ? published : planningNotices
+  return [...source]
+    .sort((a, b) => new Date(b.publishedDate || 0) - new Date(a.publishedDate || 0))
+    .slice(0, 8)
 }
 
 function StoryLink({ story, className = '' }) {
@@ -90,7 +90,7 @@ export default function HomePage() {
       <section className="scd-reader-strip" aria-label="Explore local coverage"><Link to="/council"><span>Council</span><strong>Decisions and meeting records</strong></Link><Link to="/planning-tracker"><span>Development</span><strong>Projects, hearings and notices</strong></Link><Link to="/votes"><span>Votes</span><strong>Election guides and civic information</strong></Link></section>
       <section className="scd-home-columns">
         <div className="scd-latest"><div className="scd-section-heading"><h2>More from Niagara</h2><Link to="/news">View all →</Link></div><div className="scd-update-list">{updates.map((story) => <article key={story.id} className="scd-update-card"><Photo story={story} /><div><p className="scd-cat">{categoryLabel(story)}</p><h3><StoryLink story={story} /></h3><p className="scd-story-meta">{formatDate(story.publishedDate)}</p></div></article>)}</div></div>
-        <section className="scd-week-ahead" aria-labelledby="week-ahead-heading"><p className="scd-cat">Public calendar</p><h2 id="week-ahead-heading">This week locally</h2><p>Upcoming meetings and hearings from municipal notices.</p><ol>{weekAhead.map((notice) => <li key={notice.id}><time dateTime={notice.meetingDate}>{formatDate(notice.meetingDate)}</time><a href={notice.sourceUrl} target="_blank" rel="noopener noreferrer">{notice.title}</a><span>{notice.municipality}</span></li>)}</ol><Link className="scd-text-link" to="/planning-tracker">Open planning tracker →</Link></section>
+        <section className="scd-week-ahead" aria-labelledby="week-ahead-heading"><p className="scd-cat">Public calendar</p><h2 id="week-ahead-heading">This week locally</h2><p>Upcoming meetings and hearings from municipal notices.</p>{weekAhead.length > 0 ? <ol>{weekAhead.map((notice) => <li key={notice.id}><time dateTime={notice.meetingDate}>{formatDate(notice.meetingDate)}</time><a href={notice.sourceUrl} target="_blank" rel="noopener noreferrer">{notice.title}</a><span>{notice.municipality}</span></li>)}</ol> : <p className="scd-story-meta">No municipal meetings are listed for the next seven days.</p>}<Link className="scd-text-link" to="/planning-tracker">Open planning tracker →</Link></section>
       </section>
       <section className="scd-home-newsletter" aria-label="Newsletter signup"><NewsletterPanel placement="home" topics={['Council', 'Planning', 'Police']} /></section>
     </div>

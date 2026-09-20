@@ -1,6 +1,5 @@
-// Cloudflare Pages Cron: Fetch local news RSS feeds → D1
-// Runs on schedule via wrangler.toml [triggers]
-// GET/POST /functions/cron/fetch-local-news
+// Authenticated RSS ingestion endpoint. A configured scheduler must call this
+// endpoint with CRON_SECRET; an HTTP route is not a Cron Trigger by itself.
 
 const RSS_SOURCES = [
   {
@@ -47,13 +46,17 @@ export async function onRequest(context) {
     return new Response('Database not configured', { status: 503 });
   }
 
-  // Auth guard — only the scheduled cron or an authorized admin can trigger this.
   const cronSecret = context.env.CRON_SECRET;
-  if (cronSecret) {
-    const authHeader = context.request.headers.get('Authorization');
-    if (authHeader !== `Bearer ${cronSecret}`) {
-      return new Response('Unauthorized', { status: 401 });
-    }
+  if (!cronSecret) {
+    console.error('CRON_SECRET not configured');
+    return new Response('Service not configured', { status: 503 });
+  }
+  if (context.request.method !== 'POST') {
+    return new Response('Method not allowed', { status: 405, headers: { Allow: 'POST' } });
+  }
+  const authHeader = context.request.headers.get('Authorization');
+  if (authHeader !== `Bearer ${cronSecret}`) {
+    return new Response('Unauthorized', { status: 401 });
   }
 
   const results = { added: 0, updated: 0, skipped: 0, errors: 0, sources: [] };
@@ -147,7 +150,7 @@ function parseItems(items, source) {
     const title = titleEl?.textContent?.trim() || '';
     const link = linkEl?.textContent?.trim() || '';
     const description = descEl?.textContent?.trim() || '';
-    const pubDate = pubDateEl?.textContent?.trim() || new Date().toISOString();
+    const pubDate = parseDate(pubDateEl?.textContent?.trim() || '');
     const guid = guidEl?.textContent?.trim() || link;
 
     if (!title || !link) continue;
@@ -157,7 +160,7 @@ function parseItems(items, source) {
     const cleanDesc = sanitizeHtml(description).slice(0, 400);
 
     articles.push({
-      id: generateId(source.id, title, pubDate),
+      id: generateId(source.id, guid),
       title,
       url: link,
       sourceId: source.id,
@@ -167,7 +170,7 @@ function parseItems(items, source) {
       region: source.region,
       category: categorize(title, cleanDesc),
       description: cleanDesc,
-      pubDate: parseDate(pubDate) || new Date().toISOString(),
+      pubDate,
       fetchedAt: Date.now(),
       lastSeenAt: Date.now(),
     });
@@ -192,7 +195,7 @@ function parseAtom(entries, source) {
     const title = titleEl?.textContent?.trim() || '';
     const link = linkEl?.getAttribute('href') || '';
     const summary = summaryEl?.textContent?.trim() || '';
-    const updated = updatedEl?.textContent?.trim() || new Date().toISOString();
+    const updated = parseDate(updatedEl?.textContent?.trim() || '');
     const guid = idEl?.textContent?.trim() || link;
 
     if (!title || !link) continue;
@@ -200,7 +203,7 @@ function parseAtom(entries, source) {
     seen.add(guid);
 
     articles.push({
-      id: generateId(source.id, title, updated),
+      id: generateId(source.id, guid),
       title,
       url: link,
       sourceId: source.id,
@@ -210,7 +213,7 @@ function parseAtom(entries, source) {
       region: source.region,
       category: categorize(title, summary),
       description: sanitizeHtml(summary).slice(0, 400),
-      pubDate: parseDate(updated) || new Date().toISOString(),
+      pubDate: updated,
       fetchedAt: Date.now(),
       lastSeenAt: Date.now(),
     });
@@ -258,8 +261,8 @@ async function upsertArticle(d1, article) {
   return 'added';
 }
 
-function generateId(sourceId, title, pubDate) {
-  const hash = simpleHash(sourceId + '|' + title + '|' + pubDate);
+function generateId(sourceId, guid) {
+  const hash = simpleHash(sourceId + '|' + guid);
   return `${sourceId}-${hash}`;
 }
 
@@ -314,3 +317,5 @@ function sanitizeHtml(html) {
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
+
+export { parseDate, generateId };

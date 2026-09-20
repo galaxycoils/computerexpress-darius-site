@@ -6,7 +6,7 @@ import { fileURLToPath } from 'node:url'
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
 const artifacts = path.join(root, 'artifacts/visual')
 const baseUrl = 'http://127.0.0.1:4173'
-const routes = ['/', '/free-audit', '/contact', '/services/gbp-optimization', '/service-areas/web-design/grimsby']
+const routes = ['/', '/news', '/planning-tracker', '/articles/st-catharines-ontario-street-corridor-plan', '/reader-services']
 const viewports = [
   { name: 'mobile', width: 390, height: 844 },
   { name: 'tablet', width: 768, height: 1024 },

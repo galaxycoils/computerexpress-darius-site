@@ -8,8 +8,7 @@
  *  - Retries once on 429/5xx after honoring Retry-After when present.
  *  - Waits between sources to avoid triggering rate limits.
  *  - Only overwrites localNews.js when at least one article is fetched.
- *  - If all sources fail, falls back to localNewsSeeds.js if present.
- *  - If still nothing, leaves existing file untouched (or reports failure).
+ *  - If all sources fail, leaves the existing data untouched and reports failure.
  *
  * Run: node scripts/fetch-local-news.js
  */
@@ -21,7 +20,6 @@ import { DOMParser } from '@xmldom/xmldom';
 const SCRIPT_DIR = path.dirname(fileURLToPath(import.meta.url));
 const PROJECT_ROOT = path.resolve(SCRIPT_DIR, '..');
 const DATA_FILE = path.join(PROJECT_ROOT, 'src/data/localNews.js');
-const SEEDS_FILE = path.join(PROJECT_ROOT, 'src/data/localNewsSeeds.js');
 
 // Sources defined here so the script does not depend on the file it may overwrite.
 const SOURCES = [
@@ -366,34 +364,8 @@ async function main() {
 
   if (recentArticles.length === 0) {
     console.log('\n⚠ No articles fetched from any source.');
-
-    // Fallback to seeds if present
-    try {
-      const seedsRaw = await fs.readFile(SEEDS_FILE, 'utf8');
-      const seedsMatch = seedsRaw.match(/export\s+const\s+localNewsSeeds\s*=\s*([\s\S]*?);\s*\/\//);
-      if (seedsMatch) {
-        const seedsJson = seedsMatch[1];
-        const seeds = JSON.parse(seedsJson);
-        if (Array.isArray(seeds) && seeds.length > 0) {
-          const seedArticles = seeds
-            .map(item => ({
-              ...item,
-              id: item.id || `${item.sourceId}-${slugify(item.title)}-${item.pubDate?.replace(/[^0-9]/g, '')}`,
-              pubDate: item.pubDate || new Date().toISOString(),
-            }))
-            .sort((a, b) => new Date(b.pubDate || new Date()) - new Date(a.pubDate || new Date()))
-            .slice(0, 50);
-          allArticles.push(...seedArticles);
-          recentArticles.push(...seedArticles);
-          console.log(`  ↳ Used ${seedArticles.length} articles from localNewsSeeds.js as fallback`);
-        }
-      }
-    } catch {}
-
-    if (recentArticles.length === 0) {
-      console.log('Leaving existing localNews.js untouched. Verify UA blocking / RSS URL changes.');
-      return;
-    }
+    console.log('Leaving existing localNews.js untouched. Verify UA blocking / RSS URL changes.');
+    return;
   }
 
   const now = new Date().toISOString().split('T')[0];

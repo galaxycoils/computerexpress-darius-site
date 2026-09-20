@@ -253,10 +253,10 @@ export function getNoticesByCategory(category) {
   return planningNotices.filter(n => n.category === category)
 }
 
-export function getUpcomingMeetings() {
-  const now = new Date()
+export function getUpcomingMeetings(days = 7, now = new Date()) {
+  const end = new Date(now.getTime() + days * 24 * 60 * 60 * 1000)
   return planningNotices
-    .filter(n => n.meetingDate && new Date(n.meetingDate) > now)
+    .filter(n => n.meetingDate && new Date(n.meetingDate) > now && new Date(n.meetingDate) <= end)
     .sort((a, b) => new Date(a.meetingDate) - new Date(b.meetingDate))
 }
 

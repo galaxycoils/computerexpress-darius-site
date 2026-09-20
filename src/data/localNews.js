@@ -3,12 +3,12 @@
  *
  * Replaced static RSS-generated file with a D1-backed API client.
  * Auto-scraped news is fetched from /api/local-news (Cloudflare Functions → D1).
- * Seeds from localNewsSeeds.js are used as fallback during SSR / API outages.
+ * Approved official-source discovery is used as a fallback during API outages.
  *
  * DO NOT EDIT MANUALLY — news is populated by functions/cron/fetch-local-news.js
  */
 
-import { localNewsSeeds, getNewsFallback } from './localNewsSeeds.js';
+import { getOfficialDiscovery } from './officialDiscovery.js';
 
 const API_BASE = '';
 
@@ -60,10 +60,25 @@ export async function readLocalNews(options = {}) {
   } catch (error) {
     // During prerender/SSR, fetch may not be available.
     console.warn('Local news API fetch failed, using seeds:', error);
-    const articles = getNewsFallback(limit + offset).slice(offset, offset + limit);
+    const articles = getOfficialDiscovery(limit + offset)
+      .map((item) => ({
+        id: item.id,
+        title: item.title,
+        url: item.url,
+        sourceId: item.sourceId,
+        sourceName: item.sourceName,
+        sourceUrl: item.url,
+        municipality: item.city,
+        category: item.kind,
+        description: '',
+        pubDate: item.sourcePublishedAt,
+        tags: [item.kind, item.city].filter(Boolean),
+      }))
+      .filter((item) => (!category || item.category === category) && (!municipality || item.municipality === municipality) && (!sourceId || item.sourceId === sourceId))
+      .slice(offset, offset + limit);
     return {
       articles,
-      pagination: { limit, offset, total: localNewsSeeds.length, hasMore: false },
+      pagination: { limit, offset, total: articles.length, hasMore: false },
     };
   }
 }
@@ -93,7 +108,18 @@ export async function readLatestNews(count = 10) {
     }));
   } catch (error) {
     console.warn('Local news latest API failed, using seeds:', error);
-    return getNewsFallback(count).map(applyShape);
+    return getOfficialDiscovery(count).map((item) => applyShape({
+      id: item.id,
+      title: item.title,
+      url: item.url,
+      sourceId: item.sourceId,
+      sourceName: item.sourceName,
+      sourceUrl: item.url,
+      municipality: item.city,
+      category: item.kind,
+      description: '',
+      pubDate: item.sourcePublishedAt,
+    }));
   }
 }
 
@@ -112,6 +138,3 @@ function applyShape(item) {
     tags: item.tags || [item.category, item.municipality].filter(Boolean),
   };
 }
-
-/** Re-export seeds for backward compatibility. */
-export { localNewsSeeds, getNewsFallback };
