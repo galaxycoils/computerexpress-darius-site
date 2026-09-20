@@ -1,9 +1,9 @@
-import { useState, useMemo } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import Seo, { BASE_URL } from '../components/Seo'
 import { cities } from '../data/cityConfig'
 import { getPublishableContent } from '../data/contentRegistry'
-import { readLocalNews, getNewsFallback } from '../data/localNews'
+import { readLocalNews } from '../data/localNews'
 import { getLocalBusinessSchema } from '../data/schema'
 import '../components/news/news-hub.css'
 
@@ -17,20 +17,23 @@ export default function NewsPage() {
     [],
   );
 
-  // Auto-scraped local news from D1 (RSS feeds).
-  // Fetches client-side; falls back to seeds during SSR/prerender.
-  useMemo(() => {
+  // Fetches client-side; verified official-source records are the fallback.
+  useEffect(() => {
     if (typeof window === 'undefined') return; // SSR: seeds are already in the bundle.
+    let active = true
     readLocalNews({ limit: 20, offset: 0 })
       .then(result => {
+        if (!active) return
         setLocalNewsData(result.articles);
         setLocalNewsLoading(false);
       })
       .catch(err => {
+        if (!active) return
         console.warn('Failed to load local news from API:', err);
-        setLocalNewsData(getNewsFallback(20));
+        setLocalNewsData([]);
         setLocalNewsLoading(false);
       });
+    return () => { active = false }
   }, []);
   return (
     <>
@@ -67,7 +70,7 @@ export default function NewsPage() {
         {localNewsData.length > 0 && (
           <section aria-labelledby="auto-news-h" style={{ marginTop: '40px' }}>
             <div className="scd-section-heading-row">
-              <h2 id="auto-news-h" className="scd-section-rule">From local news sources</h2>
+              <h2 id="auto-news-h" className="scd-section-rule">From approved sources</h2>
               <span style={{ fontSize: '12px', color: 'var(--muted)', fontFamily: 'var(--font-ui)', letterSpacing: '0.06em', textTransform: 'uppercase' }}>
                 {localNewsLoading ? 'Loading...' : `${localNewsData.length} articles`}
               </span>
@@ -79,7 +82,7 @@ export default function NewsPage() {
                   <h3><a href={item.url} target="_blank" rel="noopener noreferrer">{item.title}</a></h3>
                   <p>{item.description}</p>
                   <div className="scd-coverage-card-footer">
-                    <time dateTime={item.pubDate}>{new Date(item.pubDate).toLocaleDateString('en-CA', { year: 'numeric', month: 'short', day: 'numeric' })}</time>
+                    <time dateTime={item.pubDate || undefined}>{item.pubDate ? new Date(item.pubDate).toLocaleDateString('en-CA', { year: 'numeric', month: 'short', day: 'numeric' }) : 'Date not provided'}</time>
                     <a href={item.url} target="_blank" rel="noopener noreferrer">Read source →</a>
                   </div>
                 </article>
