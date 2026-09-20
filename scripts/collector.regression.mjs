@@ -1,6 +1,6 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
-import { canonicalizeLink, extractCandidates, fetchHtml, decodeEntities, parseArgs } from './collect-official-news.js'
+import { canonicalizeLink, extractCandidates, fetchHtml, decodeEntities, hasSemanticChanges, parseArgs } from './collect-official-news.js'
 import { sourceRegistry, sourceById } from '../src/data/sourceRegistry.js'
 
 const source = { id: 'test', name: 'Official source', city: 'Test', kind: 'official-notice', url: 'https://city.example/news/' }
@@ -20,6 +20,18 @@ test('deduplicates candidates without inventing publication dates', () => {
   assert.equal(items[0].sourcePublishedAt, null)
   assert.equal(items[0].reviewRequired, false)
   assert.equal(items[0].status, 'published')
+})
+test('retains the source review policy on collected candidates', () => {
+  const reviewed = { ...source, reviewRequired: true }
+  const [item] = extractCandidates('<a href="/news/posts/a">Council meeting notice</a>', reviewed)
+  assert.equal(item.reviewRequired, true)
+  assert.equal(item.status, 'pending-review')
+})
+test('does not publish a timestamp-only refresh', () => {
+  const base = [{ id: 'a', title: 'Notice', url: 'https://city.example/news/posts/a', sourceId: 'city', sourceName: 'City', city: 'Test', kind: 'official-notice', sourcePublishedAt: null, status: 'published', reviewRequired: false, firstObservedAt: '2026-09-01T00:00:00.000Z', lastObservedAt: '2026-09-01T00:00:00.000Z' }]
+  const refreshed = [{ ...base[0], lastObservedAt: '2026-09-20T00:00:00.000Z' }]
+  assert.equal(hasSemanticChanges(base, refreshed), false)
+  assert.equal(hasSemanticChanges(base, [{ ...refreshed[0], title: 'Updated notice' }]), true)
 })
 test('ignores links embedded inside scripts', () => {
   assert.equal(extractCandidates('<script><a href="/news/posts/a">Not a visible news item</a></script>', source).length, 0)

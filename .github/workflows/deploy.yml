@@ -16,7 +16,7 @@ on:
         required: false
         default: manual
         type: string
-  # Autonomous news collect commits with GITHUB_TOKEN, which does not fire push workflows.
+  # Autonomous news collect commits with GITHUB_TOKEN do not fire push workflows.
   # Re-run deploy after a successful collect so discovery.json reaches production.
   workflow_run:
     workflows:
@@ -26,6 +26,7 @@ on:
 
 concurrency:
   group: deploy-cloudflare-pages
+  # Keep an earlier release from completing after a newer publication has started.
   cancel-in-progress: true
 
 jobs:
@@ -40,11 +41,19 @@ jobs:
       deployments: write
       actions: read
     steps:
-      - name: Checkout
+      - name: Checkout the release revision
         uses: actions/checkout@v6
         with:
-          # For workflow_run, check out the commit that finished collect (usually main tip)
-          ref: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.head_sha || github.sha }}
+          # workflow_run.head_sha is the revision that *started* collection. The
+          # collector can commit discovery.json afterwards, so deploy current main.
+          ref: ${{ github.event_name == 'workflow_run' && 'main' || github.sha }}
+
+      - name: Record release revision
+        id: release
+        shell: bash
+        run: |
+          set -euo pipefail
+          echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
 
       - name: Setup Node
         uses: actions/setup-node@v6
@@ -83,6 +92,7 @@ jobs:
 
       - name: Configure signed alert-token runtime secret
         env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CF_API_TOKEN || secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           ALERT_TOKEN_SECRET: ${{ secrets.ALERT_TOKEN_SECRET }}
         run: |
@@ -143,12 +153,15 @@ jobs:
 
       - name: Deploy summary
         if: always()
+        env:
+          RELEASE_SHA: ${{ steps.release.outputs.sha || github.sha }}
         run: |
-          echo "### Deploy summary"
-          echo "| Field | Value |"
-          echo "|-------|-------|"
-          echo "| Commit | `${{ github.sha }}` |"
-          echo "| Ref | `${{ github.ref }}` |"
-          echo "| Trigger | ${{ github.event_name }} |"
-          echo "| Project | stcatharinesdigital |"
-          echo "| Cache purge | ${{ steps.purge.outputs.enabled || 'skipped' }} |"
+          {
+            echo "### Deploy summary"
+            echo "| Field | Value |"
+            echo "|-------|-------|"
+            printf '| Commit | `%s` |\n' "$RELEASE_SHA"
+            echo "| Trigger | ${{ github.event_name }} |"
+            echo "| Project | stcatharinesdigital |"
+            echo "| Cache purge | ${{ steps.purge.outputs.enabled || 'skipped' }} |"
+          } >> "$GITHUB_STEP_SUMMARY"
