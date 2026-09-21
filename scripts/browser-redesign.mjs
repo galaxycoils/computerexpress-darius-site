@@ -124,12 +124,8 @@ try {
   await page.goto(base + "/news/", { waitUntil: "networkidle" });
   await page.getByRole("searchbox").fill("unfindable-test-query");
   await page.getByRole("button", { name: "Search", exact: true }).click();
-  assert.equal(
-    await page
-      .getByRole("heading", { name: "No matching records" })
-      .isVisible(),
-    true,
-  );
+  await page.waitForURL(/q=unfindable-test-query/);
+  await page.getByRole("heading", { name: "No matching records" }).waitFor({ state: "visible" });
   assert.deepEqual(errors, []);
   await writeFile(
     "qa-results/report.json",
