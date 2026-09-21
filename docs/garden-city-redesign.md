@@ -20,8 +20,10 @@ Implemented September 21, 2026.
 ## Validation
 
 Baseline: 49 application tests, 19 regression tests, content audit without errors (three existing adapter-review warnings).
-Updated local verification: 55 application tests, 19 regression tests, 65 prerendered routes.
-Browser verification is defined in `.github/workflows/redesign-browser.yml`; record the run result before release.
+Updated verification: 55 application tests, 21 regression tests, 65 prerendered routes. Content and schema audits pass.
+Browser run [35651833662](https://github.com/galaxycoils/computerexpress-darius-site/actions/runs/35651833662) passed 44 responsive page checks at 320/390/768/1440px and six reader journeys. Desktop, mobile and dark-theme screenshots were inspected. CI Matrix and Content integrity also passed on `d01c773e82af41fbe2e823b244995a613eca7f31`.
+
+Production [run 35652009920](https://github.com/galaxycoils/computerexpress-darius-site/actions/runs/35652009920) succeeded. Live verification matched revision `41b6710f4f21b39c8cfc0603887a10abdae41bad`, snapshot `e158e3fb0dfad7b361803fa267392d1fb4a92decdf899a3697bb01336684c2bb`, 112 records, and home/news/events/explore page content. Migration 0007 applied successfully.
 
 ## External and ongoing prerequisites
 
@@ -34,6 +36,8 @@ These are not claimed complete by code changes:
 - Paid services, costs, quotas and backup restoration require account-level checks. No new paid provider or plan was purchased.
 
 ## Operations and rollback
+
+The previous successful production revision is `d0c0ad87c70a4ddf71116cc5824abc5c5a4e4bdf`, deployed by [run 35648330854](https://github.com/galaxycoils/computerexpress-darius-site/actions/runs/35648330854). This is the pre-redesign rollback reference.
 
 Before each production release, retain the last successful Cloudflare deployment and its SHA. Release metadata is at `/release.json`. Verify SHA, snapshot hash and representative live pages after deployment. A green collector run alone does not establish that content is public.
 
