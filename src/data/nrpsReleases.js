@@ -2,12 +2,34 @@
  * NRPS Police Media Releases for St. Catharines Digital
  * Sourced exclusively from https://www.niagarapolice.ca/news/posts/
  * Official Niagara Regional Police Service media releases & community notifications.
- * Updated: 2026-09-20
+ * Updated: 2026-09-21
  * Next review: Daily (cron) — refresh from niagarapolice.ca
- * Note: added Sep 18 community safety survey results (Region-wide); added 21 historical releases from Aug 2026 - Mar 2026 (stabbing, drug arrests, firearms seizures, collision updates, historic homicide, robbery public assistance, annual report, NG9-1-1 deployment).
+ * Note: added Sep 21 robbery public assistance (St. Catharines/Thorold); added Aug 17 Police Service Board meeting advisory (Region-wide); prior: Sep 18 community safety survey results (Region-wide); added 21 historical releases from Aug 2026 - Mar 2026 (stabbing, drug arrests, firearms seizures, collision updates, historic homicide, robbery public assistance, annual report, NG9-1-1 deployment).
  */
 
 export const nrpsReleases = [
+  {
+    id: 'nrps-2026-09-21-robbery-suspect-stc',
+    date: '2026-09-21',
+    headline: 'Detectives Requesting Public Assistance in Identifying Robbery Suspect',
+    municipality: 'St. Catharines, Thorold',
+    type: 'Media Release (Public Assistance / Robbery)',
+    url: 'https://www.niagarapolice.ca/news/posts/detectives-requesting-public-assistance-in-identifying-robbery-suspect/',
+    source: 'Niagara Regional Police Service',
+    tags: ['Robbery', 'Public Assistance', 'St. Catharines', 'Thorold', '1 District', 'Knife', 'Investigation'],
+    category: 'public-assistance',
+  },
+  {
+    id: 'nrps-2026-08-17-police-service-board-meeting-advisory',
+    date: '2026-08-17',
+    headline: 'NOTICE OF SPECIAL VIRTUAL MEETING – NIAGARA POLICE SERVICE BOARD',
+    municipality: 'Region-wide (St. Catharines, Welland, Thorold included)',
+    type: 'Community Notification / Public Notice',
+    url: 'https://www.niagarapolice.ca/news/posts/notice-of-special-virtual-meeting-niagara-police-service-board/',
+    source: 'Niagara Regional Police Service',
+    tags: ['Police Service Board', 'Public Meeting', 'Region-wide', 'Advisory', 'Virtual Meeting', 'CSPA'],
+    category: 'community-notification',
+  },
   {
     id: 'nrps-2026-09-18-community-safety-survey',
     date: '2026-09-18',
