@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
-import Seo from "../components/Seo";
+import Seo, { BASE_URL } from "../components/Seo";
+import { getNewsMediaSchema } from "../data/schema";
 import { getPublication, dateLabel } from "../data/publication";
 import { localPhotos } from "../data/localPhotos";
 import { getUpcomingMeetings } from "../data/planningNotices";
@@ -34,6 +35,7 @@ export default function HomePage() {
         title="St. Catharines Digital | Close to home"
         description="Local news, civic records and places to explore in St. Catharines and Niagara. Connected to public records and primary sources."
         path="/"
+        jsonLd={[getNewsMediaSchema(), { "@context": "https://schema.org", "@type": "WebSite", name: "St. Catharines Digital", url: BASE_URL }]}
       />
       <div className="scd-page journal-home">
         <div className="journal-frontline">

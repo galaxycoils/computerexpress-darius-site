@@ -1,4 +1,5 @@
 import Seo from "../components/Seo";
+import { getNewsMediaSchema } from "../data/schema";
 import NewsFeed from "../components/journal/NewsFeed";
 export default function NewsPage() {
   return (
@@ -7,6 +8,7 @@ export default function NewsPage() {
         title="Latest news | St. Catharines Digital"
         description="Explore source-linked local news, municipal notices and public records across Niagara."
         path="/news"
+        jsonLd={getNewsMediaSchema()}
       />
       <div className="scd-page journal-page">
         <header className="journal-page-heading">
