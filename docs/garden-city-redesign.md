@@ -30,8 +30,8 @@ Production [run 35652009920](https://github.com/galaxycoils/computerexpress-dari
 These are not claimed complete by code changes:
 
 - Subscriber confirmation/inbox delivery and contact delivery require configured services and an authorized test recipient. No real subscriber messages were sent in this task.
+- The protected `/editorial` desk provides administrator and reviewer access to a D1-backed moderation queue. It cannot publish content; source-backed publication remains repository-reviewed.
 - A broader community-event calendar, food guides and community-photo feature need actual submissions, rights-cleared material and a person maintaining them. The current events product is explicitly a civic calendar.
-- A role-based editorial CMS/admin dashboard requires an authentication and role model. The existing repository remains the editorial source of truth; no unprotected admin route is exposed.
 - Field performance and accessibility conformance require measured evidence; no score or conformance certification is asserted.
 - Paid services, costs, quotas and backup restoration require account-level checks. No new paid provider or plan was purchased.
 
@@ -42,6 +42,8 @@ The previous successful production revision is `d0c0ad87c70a4ddf71116cc5824abc5c
 Before each production release, retain the last successful Cloudflare deployment and its SHA. Release metadata is at `/release.json`. Verify SHA, snapshot hash and representative live pages after deployment. A green collector run alone does not establish that content is public.
 
 Rollback: use Cloudflare Pages deployment rollback to the recorded prior successful deployment, then verify its `/release.json` and routes. Do not reset or force-push main. Data restore is separate; migration 0007 adds a newsletter token table and indexes without removing existing data. Subscription changes occur only through reader actions.
+
+See `docs/editorial-operations.md` for editorial access setup, consent handling and encrypted D1 backup/restore rehearsal instructions.
 
 No-change collections retain the public snapshot and upload a source-health artifact. Review source failures and zero-item extraction in that artifact. Source adapters remain accountable to their registry policy; uncertain publication dates stay unknown.
 

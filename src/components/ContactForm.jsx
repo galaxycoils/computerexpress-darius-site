@@ -39,6 +39,7 @@ export default function ContactForm({ onSuccess }) {
   const [fields, setFields] = useState({
     name: "",
     email: "",
+    website: "",
     message:
       subject === "Event submission"
         ? "Event name: \nOrganizer: \nDate and time: \nLocation: \nOfficial event URL: \nCost and accessibility information: \n"
@@ -100,6 +101,8 @@ export default function ContactForm({ onSuccess }) {
         name: fields.name.trim(),
         email: fields.email.trim(),
         message: fields.message.trim(),
+        kind: subject === "Event submission" ? "event" : subject === "Accessibility feedback" ? "accessibility" : "contact",
+        website: fields.website,
       };
 
       try {
@@ -120,7 +123,7 @@ export default function ContactForm({ onSuccess }) {
             page_path: window.location.pathname,
           });
           setSubmitted(true);
-          setFields({ name: "", email: "", message: "" });
+          setFields({ name: "", email: "", website: "", message: "" });
           setTouched({});
           setFieldErrors({});
           if (onSuccess) onSuccess();
@@ -161,8 +164,7 @@ export default function ContactForm({ onSuccess }) {
         </div>
         <h3>Message sent</h3>
         <p>
-          Thanks for reaching out. We will get back to you within 1-2 business
-          days with a custom audit and recommendations.
+          Thanks for reaching out. Your submission is in the editorial review queue.
         </p>
       </div>
     );
@@ -177,6 +179,10 @@ export default function ContactForm({ onSuccess }) {
       onSubmit={handleSubmit}
       noValidate
     >
+      <div aria-hidden="true" style={{ position: "absolute", left: "-9999px" }}>
+        <label htmlFor="website">Website</label>
+        <input id="website" name="website" tabIndex="-1" autoComplete="off" value={fields.website} onChange={handleChange} />
+      </div>
       {error && (
         <div className="contact-form-error" role="alert">
           <svg

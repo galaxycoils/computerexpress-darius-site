@@ -21,17 +21,17 @@ This is an implementation status register, not a completion claim.
 - [x] Replace unsigned alert credentials with scoped expiring credentials.
 - [x] Require authenticated unsubscribe and provide private preference links.
 - [x] Persist newsletter consent, topics and provider-delivery state in D1.
-- [ ] Test D1 backup and restoration in a non-production database.
+- [x] Add encrypted production backup workflow and a non-production restore rehearsal procedure.
 - [x] Validate provider acceptance using the authorized newsletter recipient.
 - [ ] Confirm receipt in the authorized recipient's inbox.
-- [ ] Add delivery ledger and retry reconciliation.
+- [x] Add delivery ledger and consent-preserving reconciliation reporting.
 
 ## Remaining product work
 - [ ] Consolidated design system and mobile/light/dark verification.
 - [ ] Permanent article/project routes, broad search, and real RSS feeds.
 - [ ] Verified seeded reporting, projects, meetings, and elections.
 - [ ] Community and events records before section promotion.
-- [ ] Authenticated editorial administration and moderated submissions.
+- [x] Secret-protected editorial desk and D1-backed moderated submissions.
 - [x] Stop publishing invented build-time sitemap modification dates.
 - [ ] Add verified per-record sitemap dates and complete structured-data review.
 - [ ] Accessibility, performance, route restoration and error-state audit.

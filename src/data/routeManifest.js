@@ -39,6 +39,7 @@ export const programmaticRoutes = [
   ...exploreGuides.map((g) => `/explore/${g.slug}`),
 ];
 export const privateRoutes = ["/preferences", "/saved"];
+export const clientOnlyRoutes = ["/editorial"];
 const articleModifiedDates = new Map(
   getPublishableContent().map((item) => [
     `/articles/${item.slug}`,

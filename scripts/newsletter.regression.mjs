@@ -6,11 +6,14 @@ import { onRequestPost } from '../functions/api/newsletter.js'
 import { onRequest as confirm } from '../functions/api/newsletter/confirm.js'
 import { onRequest as manage } from '../functions/api/newsletter/manage.js'
 import { issueToken } from '../functions/lib/newsletterTokens.js'
+import { onRequestPost as submitContact } from '../functions/api/contact.js'
+import { onRequestGet as listSubmissions, onRequestPatch as updateSubmission } from '../functions/api/editorial/submissions.js'
+import { onRequest as reconcile } from '../functions/cron/reconcile-newsletter.js'
 
 function database() {
   const sqlite = new DatabaseSync(':memory:')
-  for (const file of ['0005_create_newsletter_subscribers.sql','0006_create_email_delivery_log.sql','0007_newsletter_tokens.sql']) sqlite.exec(readFileSync(new URL('../migrations/'+file,import.meta.url),'utf8'))
-  const db = {prepare(sql) {return {bind(...args) {const statement=sqlite.prepare(sql);return {async first(){return statement.get(...args)},async run(){return statement.run(...args)}}}}}, async batch(statements){return Promise.all(statements.map(s=>s.run()))}}
+  for (const file of ['0005_create_newsletter_subscribers.sql','0006_create_email_delivery_log.sql','0007_newsletter_tokens.sql','0008_editorial_submissions.sql']) sqlite.exec(readFileSync(new URL('../migrations/'+file,import.meta.url),'utf8'))
+  const db = {prepare(sql) {const statement=sqlite.prepare(sql);const execute=args=>({async first(){return statement.get(...args)},async all(){return {results:statement.all(...args)}},async run(){const result=statement.run(...args);return {meta:{changes:result.changes}}}});return {...execute([]),bind(...args){return execute(args)}}}, async batch(statements){return Promise.all(statements.map(s=>s.all()))}}
   return {sqlite,db}
 }
 const request = (path,options={}) => new Request('https://stcatharinesdigital.ca'+path,options)
@@ -53,4 +56,22 @@ test('expired tokens, missing services and provider rejection never activate a s
  assert.equal(result.status,502)
  assert.equal(sqlite.prepare('SELECT status FROM newsletter_subscribers').get().status,'failed')
  assert.equal(sqlite.prepare('SELECT status FROM email_delivery_log').get().status,'failed')
+})
+
+test('reader submissions enter a protected moderation queue and newsletter reconciliation does not send mail', async t => {
+ const {db,sqlite}=database();t.after(()=>sqlite.close())
+ t.mock.method(globalThis,'fetch',async ()=>Response.json({ ok: true }))
+ const contact=await submitContact({env:{STC_D1:db},request:request('/api/contact',{method:'POST',body:JSON.stringify({name:'Reader',email:'reader@example.com',message:'Please review this upcoming public meeting.',kind:'event'})})})
+ assert.equal(contact.status,200)
+ const reviewer={STC_D1:db,EDITORIAL_REVIEWER_TOKEN:'review',EDITORIAL_ADMIN_TOKEN:'admin'}
+ assert.equal((await listSubmissions({env:reviewer,request:request('/api/editorial/submissions')})).status,401)
+ const listed=await listSubmissions({env:reviewer,request:new Request('https://stcatharinesdigital.ca/api/editorial/submissions',{headers:{Authorization:'Bearer review'}})})
+ const submission=(await listed.json()).submissions[0]
+ assert.equal(submission.status,'pending')
+ assert.equal((await updateSubmission({env:reviewer,request:new Request('https://stcatharinesdigital.ca/api/editorial/submissions',{method:'PATCH',headers:{Authorization:'Bearer review'},body:JSON.stringify({id:submission.id,status:'accepted'})})})).status,401)
+ assert.equal((await updateSubmission({env:reviewer,request:new Request('https://stcatharinesdigital.ca/api/editorial/submissions',{method:'PATCH',headers:{Authorization:'Bearer admin'},body:JSON.stringify({id:submission.id,status:'accepted'})})})).status,200)
+ assert.equal(sqlite.prepare('SELECT status FROM editorial_submissions').get().status,'accepted')
+ await db.prepare("INSERT INTO newsletter_subscribers (email,topics,placement,status,created_at,updated_at) VALUES (?,?,?,'failed',?,?)").bind('failed@example.com','[]','site_rail',Date.now(),Date.now()).run()
+ const report=await reconcile({env:{STC_D1:db,CRON_SECRET:'cron'},request:new Request('https://stcatharinesdigital.ca/cron/reconcile-newsletter',{headers:{Authorization:'Bearer cron'}})})
+ assert.deepEqual(await report.json(),{failedConfirmations:1,pendingConfirmations:0,action:'Readers must submit the signup form again to receive a new confirmation link.'})
 })

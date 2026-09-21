@@ -31,6 +31,7 @@ import ReaderServicesPage from "./pages/ReaderServicesPage";
 import SearchPage from "./pages/SearchPage";
 import AlertPreferencesPage from "./pages/AlertPreferencesPage";
 import ArticlePage from "./pages/ArticlePage";
+import EditorialDeskPage from "./pages/EditorialDeskPage";
 
 export function AppRoutes() {
   return (
@@ -65,6 +66,7 @@ export function AppRoutes() {
         <Route path="votes" element={<VotesHubPage />} />
         <Route path="editorial-policy" element={<EditorialPolicyPage />} />
         <Route path="corrections" element={<CorrectionsPage />} />
+        <Route path="editorial" element={<EditorialDeskPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Route>
     </Routes>

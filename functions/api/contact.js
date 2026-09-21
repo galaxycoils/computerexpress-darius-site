@@ -7,16 +7,29 @@ const DEFAULT_CONTACT_EMAIL = 'hello@stcatharinesdigital.ca';
 
 export async function onRequestPost(context) {
   try {
-    const body = await context.request.json();
+    const raw = await context.request.text();
+    if (raw.length > 8192) return jsonResponse({ error: 'Request too large' }, 413);
+    const body = JSON.parse(raw);
     const { name, email, message } = body;
 
-    if (!name || !email || !message) {
+    if (typeof name !== 'string' || typeof email !== 'string' || typeof message !== 'string' || !name || !email || !message) {
       return jsonResponse({ error: 'Missing required fields' }, 400);
     }
 
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       return jsonResponse({ error: 'Invalid email format' }, 400);
     }
+
+    if (body.website) return jsonResponse({ success: true });
+
+    const kind = ['event', 'correction', 'accessibility'].includes(body.kind) ? body.kind : 'contact';
+    const sourceUrl = typeof body.sourceUrl === 'string' && /^https:\/\//.test(body.sourceUrl) ? body.sourceUrl.slice(0, 2048) : null;
+    if (!context.env.STC_D1) return jsonResponse({ error: 'Submission service is temporarily unavailable.' }, 503);
+    const now = Date.now();
+    const id = crypto.randomUUID();
+    await context.env.STC_D1.prepare(
+      'INSERT INTO editorial_submissions (id,kind,name,email,message,source_url,status,created_at,updated_at) VALUES (?,?,?,?,?,?,' + "'pending'" + ',?,?)'
+    ).bind(id, kind, name.trim().slice(0, 160), email.trim().toLowerCase(), message.trim().slice(0, 6000), sourceUrl, now, now).run();
 
     const textBody = `New message from St. Catharines Digital website.
 
@@ -35,16 +48,20 @@ ${new Date().toISOString()}`;
       try {
         await sendWithAgentMail(apiKey, { name, email, textBody });
         console.log('Contact form sent via AgentMail from:', name);
-        return jsonResponse({ success: true });
+        return jsonResponse({ success: true, received: true });
       } catch (err) {
         console.error('AgentMail failed, trying fallback provider:', err);
       }
     }
 
     const fallbackEmail = context.env.CONTACT_FORM_EMAIL || DEFAULT_CONTACT_EMAIL;
-    await sendWithFormSubmit(fallbackEmail, { name, email, message, textBody });
-    console.log('Contact form sent via fallback provider from:', name);
-    return jsonResponse({ success: true, fallback: true });
+    try {
+      await sendWithFormSubmit(fallbackEmail, { name, email, message, textBody });
+      console.log('Contact form sent via fallback provider from:', name);
+    } catch (fallbackError) {
+      console.error('Contact notification failed after moderation queue write:', fallbackError);
+    }
+    return jsonResponse({ success: true, received: true, fallback: true });
   } catch (err) {
     console.error('Contact form error:', err);
     return jsonResponse({
@@ -53,23 +70,15 @@ ${new Date().toISOString()}`;
   }
 }
 
-export async function onRequest() {
-  return new Response(null, { status: 204, headers: corsHeaders() });
+export async function onRequest({ request }) {
+  return new Response(null, { status: request.method === 'OPTIONS' ? 204 : 405, headers: { Allow: 'POST, OPTIONS' } });
 }
 
 function jsonResponse(data, status = 200) {
   return new Response(JSON.stringify(data), {
     status,
-    headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' },
+    headers: { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' },
   });
-}
-
-function corsHeaders() {
-  return {
-    'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Methods': 'POST, OPTIONS',
-    'Access-Control-Allow-Headers': 'Content-Type',
-  };
 }
 
 async function sendWithAgentMail(apiKey, { name, email, textBody }) {
