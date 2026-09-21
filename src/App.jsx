@@ -1,62 +1,74 @@
-import React from 'react'
-import { BrowserRouter, Routes, Route, useParams } from 'react-router-dom'
-import Layout from './components/Layout'
+import React from "react";
+import { BrowserRouter, Routes, Route, useParams } from "react-router-dom";
+import Layout from "./components/Layout";
 
 // Static imports keep renderToString prerendering complete.
-import HomePage from './pages/HomePage'
-import AboutPage from './pages/AboutPage'
-import ContactPage from './pages/ContactPage'
-import NotFoundPage from './pages/NotFoundPage'
-import PrivacyPage from './pages/PrivacyPage'
-import TermsPage from './pages/TermsPage'
-import PlanningTrackerPage from './pages/PlanningTrackerPage'
-import CouncilPage from './pages/CouncilPage'
-import PolicePage from './pages/PolicePage'
-import NewsPage from './pages/NewsPage'
-import CityNewsPage from './pages/CityNewsPage'
-import PoliceNewsPage from './pages/PoliceNewsPage'
-import VotesHubPage from './pages/VotesHubPage'
-import EditorialPolicyPage from './pages/EditorialPolicyPage'
-import CorrectionsPage from './pages/CorrectionsPage'
-import SponsorPage from './pages/SponsorPage'
-import WellandVotesPage from './pages/WellandVotesPage'
-import PlanningAlertsPage from './pages/PlanningAlertsPage'
-import MembershipPage from './pages/MembershipPage'
-import ReaderServicesPage from './pages/ReaderServicesPage'
-import SearchPage from './pages/SearchPage'
-import AlertPreferencesPage from './pages/AlertPreferencesPage'
-import ArticlePage from './pages/ArticlePage'
+import SavedPage from "./pages/SavedPage";
+import EventsPage, { EventPage } from "./pages/EventsPage";
+import ExplorePage, { ExploreGuidePage } from "./pages/ExplorePage";
+import ProjectPage from "./pages/ProjectPage";
+import AccessibilityPage from "./pages/AccessibilityPage";
+import HomePage from "./pages/HomePage";
+import AboutPage from "./pages/AboutPage";
+import ContactPage from "./pages/ContactPage";
+import NotFoundPage from "./pages/NotFoundPage";
+import PrivacyPage from "./pages/PrivacyPage";
+import TermsPage from "./pages/TermsPage";
+import PlanningTrackerPage from "./pages/PlanningTrackerPage";
+import CouncilPage from "./pages/CouncilPage";
+import PolicePage from "./pages/PolicePage";
+import NewsPage from "./pages/NewsPage";
+import CityNewsPage from "./pages/CityNewsPage";
+import PoliceNewsPage from "./pages/PoliceNewsPage";
+import VotesHubPage from "./pages/VotesHubPage";
+import EditorialPolicyPage from "./pages/EditorialPolicyPage";
+import CorrectionsPage from "./pages/CorrectionsPage";
+import SponsorPage from "./pages/SponsorPage";
+import WellandVotesPage from "./pages/WellandVotesPage";
+import PlanningAlertsPage from "./pages/PlanningAlertsPage";
+import MembershipPage from "./pages/MembershipPage";
+import ReaderServicesPage from "./pages/ReaderServicesPage";
+import SearchPage from "./pages/SearchPage";
+import AlertPreferencesPage from "./pages/AlertPreferencesPage";
+import ArticlePage from "./pages/ArticlePage";
 
 export function AppRoutes() {
   return (
-      <Routes>
-        <Route path="/" element={<Layout />}>
-          <Route index element={<HomePage />} />
-          <Route path="council" element={<CouncilPage />} />
-          <Route path="police" element={<PolicePage />} />
-          <Route path="planning-tracker" element={<PlanningTrackerPage />} />
-          <Route path="about" element={<AboutPage />} />
-          <Route path="contact" element={<ContactPage />} />
-          <Route path="privacy" element={<PrivacyPage />} />
-          <Route path="terms" element={<TermsPage />} />
-          <Route path="sponsor" element={<SponsorPage />} />
-          <Route path="welland-votes" element={<WellandVotesPage />} />
-          <Route path="planning-alerts" element={<PlanningAlertsPage />} />
-          <Route path="membership" element={<MembershipPage />} />
-          <Route path="reader-services" element={<ReaderServicesPage />} />
-          <Route path="search" element={<SearchPage />} />
-          <Route path="articles/:slug" element={<ArticlePage />} />
-          <Route path="preferences" element={<AlertPreferencesPage />} />
-          <Route path="news" element={<NewsPage />} />
-          <Route path="news/police" element={<PoliceNewsPage />} />
-          <Route path="news/:citySlug" element={<CityNewsPage />} />
-          <Route path="votes" element={<VotesHubPage />} />
-          <Route path="editorial-policy" element={<EditorialPolicyPage />} />
-          <Route path="corrections" element={<CorrectionsPage />} />
-          <Route path="*" element={<NotFoundPage />} />
-        </Route>
-      </Routes>
-  )
+    <Routes>
+      <Route path="/" element={<Layout />}>
+        <Route path="saved" element={<SavedPage />} />
+        <Route path="events" element={<EventsPage />} />
+        <Route path="events/:id" element={<EventPage />} />
+        <Route path="explore" element={<ExplorePage />} />
+        <Route path="explore/:slug" element={<ExploreGuidePage />} />
+        <Route path="development/:id" element={<ProjectPage />} />
+        <Route path="accessibility" element={<AccessibilityPage />} />
+        <Route index element={<HomePage />} />
+        <Route path="council" element={<CouncilPage />} />
+        <Route path="police" element={<PolicePage />} />
+        <Route path="planning-tracker" element={<PlanningTrackerPage />} />
+        <Route path="about" element={<AboutPage />} />
+        <Route path="contact" element={<ContactPage />} />
+        <Route path="privacy" element={<PrivacyPage />} />
+        <Route path="terms" element={<TermsPage />} />
+        <Route path="sponsor" element={<SponsorPage />} />
+        <Route path="welland-votes" element={<WellandVotesPage />} />
+        <Route path="planning-alerts" element={<PlanningAlertsPage />} />
+        <Route path="membership" element={<MembershipPage />} />
+        <Route path="reader-services" element={<ReaderServicesPage />} />
+        <Route path="search" element={<SearchPage />} />
+        <Route path="articles/:slug" element={<ArticlePage />} />
+        <Route path="preferences" element={<AlertPreferencesPage />} />
+        <Route path="news" element={<NewsPage />} />
+        <Route path="news/police" element={<PoliceNewsPage />} />
+        <Route path="news/:citySlug" element={<CityNewsPage />} />
+        <Route path="votes" element={<VotesHubPage />} />
+        <Route path="editorial-policy" element={<EditorialPolicyPage />} />
+        <Route path="corrections" element={<CorrectionsPage />} />
+        <Route path="*" element={<NotFoundPage />} />
+      </Route>
+    </Routes>
+  );
 }
 
 export default function App() {
@@ -64,5 +76,5 @@ export default function App() {
     <BrowserRouter>
       <AppRoutes />
     </BrowserRouter>
-  )
+  );
 }

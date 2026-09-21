@@ -1,98 +1,219 @@
-import Seo, { BASE_URL } from '../components/Seo'
-import { Link } from 'react-router-dom'
-import { planningNotices, getUpcomingMeetings } from '../data/planningNotices'
-import { siteConfig } from '../data/siteConfig'
-import { CITIES } from '../data/cities'
-import { getLocalBusinessSchema } from '../data/schema'
-import NewsletterPanel from '../components/news/NewsletterPanel'
-import '../components/news/news.css'
-
-const LOCAL_PHOTOS = {
-  'stc-455-welland-ave': { src: '/images/local/st-catharines-city-hall.webp', alt: 'Stone facade of St. Catharines City Hall', caption: 'St. Catharines City Hall · File photo, December 2023', credit: 'Hannah Clover', license: '4.0', source: 'https://commons.wikimedia.org/wiki/File:St._Catharines_City_Hall_2023.jpg' },
-  'welland-op-update': { src: '/images/local/welland-city-hall.webp', alt: 'Welland City Hall and Public Library', caption: 'Welland City Hall & Public Library · File photo, 2023', credit: 'JFVoll', license: '4.0', source: 'https://commons.wikimedia.org/wiki/File:Welland_City_Hall_%26_Public_Library_-_Welland,_ON.jpg' },
-  'thorold-pamela-drive-watermain': { src: '/images/local/thorold-canal.webp', alt: 'Historic-site sign for the Old Welland Canal in Thorold', caption: 'Old Welland Canal historic-site sign, Thorold · File photo, 2016', credit: 'Ken Lund', license: '2.0', source: 'https://commons.wikimedia.org/wiki/File:Old_Welland_Canal,_Thorold,_Ontario_(29951124456).jpg' },
-}
-
-function formatDate(value) {
-  if (!value) return ''
-  if (/^\d{4}-\d{2}$/.test(value)) {
-    const [year, month] = value.split('-').map(Number)
-    return new Date(Date.UTC(year, month - 1, 1)).toLocaleDateString('en-CA', { month: 'short', year: 'numeric', timeZone: 'UTC' })
-  }
-  if (/^\d{4}-\d{2}-\d{2}$/.test(value)) {
-    const [year, month, day] = value.split('-').map(Number)
-    return new Date(Date.UTC(year, month - 1, day)).toLocaleDateString('en-CA', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' })
-  }
-  const date = new Date(value)
-  if (Number.isNaN(date.getTime())) return value
-  return date.toLocaleDateString('en-CA', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'America/Toronto' })
-}
-
-function categoryLabel(notice) {
-  const type = (notice.type || '').toLowerCase()
-  if (type.includes('minor variance') || type.includes('committee') || type.includes('zoning')) return 'Planning'
-  if (type.includes('council') || type.includes('official plan')) return 'Council'
-  return notice.municipality || 'Municipal update'
-}
-
-function getStories() {
-  const today = new Date()
-  today.setHours(23, 59, 59, 999)
-  const published = planningNotices.filter((notice) => new Date(notice.publishedDate) <= today)
-  const source = published.length ? published : planningNotices
-  return [...source]
-    .sort((a, b) => new Date(b.publishedDate || 0) - new Date(a.publishedDate || 0))
-    .slice(0, 8)
-}
-
-function StoryLink({ story, className = '' }) {
-  return <a className={className} href={story.sourceUrl} target="_blank" rel="noopener noreferrer">{story.title}</a>
-}
-
-function Photo({ story, lead = false }) {
-  const photo = LOCAL_PHOTOS[story.id]
-  if (!photo) return null
-  return <figure className={lead ? 'scd-lead-figure' : 'scd-local-figure'}><a href={story.sourceUrl} target="_blank" rel="noopener noreferrer"><div className={lead ? 'scd-lead-media' : 'scd-latest-media'}><img src={photo.src} alt={photo.alt} loading={lead ? 'eager' : 'lazy'} /></div></a><figcaption>{photo.caption} · <a href={photo.source} target="_blank" rel="noopener noreferrer">{photo.credit}</a> · <a href={`https://creativecommons.org/licenses/by-sa/${photo.license}/`} target="_blank" rel="noopener noreferrer">CC BY-SA {photo.license}</a></figcaption></figure>
-}
-
+import { Link } from "react-router-dom";
+import Seo from "../components/Seo";
+import { getPublication, dateLabel } from "../data/publication";
+import { localPhotos } from "../data/localPhotos";
+import { getUpcomingMeetings } from "../data/planningNotices";
+import Story, {
+  StoryLink,
+  Photo,
+  SectionTitle,
+  SaveButton,
+} from "../components/journal/Story";
+import NewsletterPanel from "../components/news/NewsletterPanel";
+import "../components/news/news.css";
 export default function HomePage() {
-  const stories = getStories()
-  const [lead, ...remaining] = stories
-  const topStories = remaining.slice(0, 3)
-  const updates = remaining.slice(3)
-  const weekAhead = getUpcomingMeetings().slice(0, 3)
-  const jsonLd = [
-    {
-      '@context': 'https://schema.org',
-      '@type': 'WebSite',
-      name: siteConfig.name,
-      url: BASE_URL,
-      description: siteConfig.description,
-      potentialAction: {
-        '@type': 'SearchAction',
-        target: {
-          '@type': 'EntryPoint',
-          urlTemplate: `${BASE_URL}/search?q={search_term_string}`
-        },
-        'query-input': 'required name=search_term_string'
-      }
-    },
-    getLocalBusinessSchema()
-  ]
-
-  return <><Seo title="St. Catharines Digital | Local news for Niagara" description="Local council, planning, election and public-safety coverage for Niagara, connected to official sources." path="/" jsonLd={jsonLd} />
-    <div className="scd-page scd-home">
-      <header className="scd-front-heading"><p>Niagara local briefing</p><h1>What matters locally, today.</h1><span>Independent coverage grounded in public records and primary sources.</span></header>
-      {lead && <section className="scd-lead-grid" aria-labelledby="lead-story-heading">
-        <article className="scd-lead-story"><Photo story={lead} lead /><p className="scd-cat">{categoryLabel(lead)}</p><h2 id="lead-story-heading"><StoryLink story={lead} /></h2><p className="scd-lead-dek">{lead.description}</p><p className="scd-story-meta"><time dateTime={lead.publishedDate}>{formatDate(lead.publishedDate)}</time> · <a href={lead.sourceUrl} target="_blank" rel="noopener noreferrer">Read official source</a></p></article>
-        <aside className="scd-top-stories" aria-labelledby="top-stories-heading"><div className="scd-section-heading"><h2 id="top-stories-heading">Latest updates</h2><Link to="/news">All news →</Link></div>{topStories.map((story) => <article key={story.id} className="scd-top-item"><p className="scd-cat">{categoryLabel(story)}</p><h3><StoryLink story={story} /></h3><p className="scd-story-meta">{formatDate(story.publishedDate)}</p></article>)}</aside>
-      </section>}
-      <section className="scd-reader-strip" aria-label="Explore local coverage"><Link to="/council"><span>Council</span><strong>Decisions and meeting records</strong></Link><Link to="/planning-tracker"><span>Development</span><strong>Projects, hearings and notices</strong></Link><Link to="/votes"><span>Votes</span><strong>Election guides and civic information</strong></Link></section>
-      <section className="scd-home-columns">
-        <div className="scd-latest"><div className="scd-section-heading"><h2>More from Niagara</h2><Link to="/news">View all →</Link></div><div className="scd-update-list">{updates.map((story) => <article key={story.id} className="scd-update-card"><Photo story={story} /><div><p className="scd-cat">{categoryLabel(story)}</p><h3><StoryLink story={story} /></h3><p className="scd-story-meta">{formatDate(story.publishedDate)}</p></div></article>)}</div></div>
-        <section className="scd-week-ahead" aria-labelledby="week-ahead-heading"><p className="scd-cat">Public calendar</p><h2 id="week-ahead-heading">This week locally</h2><p>Upcoming meetings and hearings from municipal notices.</p>{weekAhead.length > 0 ? <ol>{weekAhead.map((notice) => <li key={notice.id}><time dateTime={notice.meetingDate}>{formatDate(notice.meetingDate)}</time><a href={notice.sourceUrl} target="_blank" rel="noopener noreferrer">{notice.title}</a><span>{notice.municipality}</span></li>)}</ol> : <p className="scd-story-meta">No municipal meetings are listed for the next seven days.</p>}<Link className="scd-text-link" to="/planning-tracker">Open planning tracker →</Link></section>
-      </section>
-      <section className="scd-home-newsletter" aria-label="Newsletter signup"><NewsletterPanel placement="home" topics={['Council', 'Planning', 'Police']} /></section>
-    </div>
-  </>
+  const stories = getPublication(),
+    local = stories.filter(
+      (s) => s.cities.includes("St. Catharines") && s.topic !== "Public safety",
+    ),
+    lead =
+      local.find(
+        (s) => s.slug === "st-catharines-ontario-street-corridor-plan",
+      ) ||
+      local.find((s) => s.slug) ||
+      local[0] ||
+      stories[0];
+  const latest = stories.filter((s) => s.date && s.id !== lead?.id).slice(0, 4),
+    used = new Set([lead?.id, ...latest.map((s) => s.id)]);
+  const more = stories.filter((s) => s.date && !used.has(s.id)).slice(0, 4),
+    meetings = getUpcomingMeetings(),
+    civic = local.filter((s) => s.id !== lead?.id).slice(0, 2);
+  return (
+    <>
+      <Seo
+        title="St. Catharines Digital | Close to home"
+        description="Local news, civic records and places to explore in St. Catharines and Niagara. Connected to public records and primary sources."
+        path="/"
+      />
+      <div className="scd-page journal-home">
+        <div className="journal-frontline">
+          <h1>Your city. Your stories.</h1>
+          <p>Public records and primary sources. A little closer to home.</p>
+        </div>
+        <section className="journal-lead-grid" aria-label="The local briefing">
+          <article className="journal-lead">
+            {lead && (
+              <>
+                <div className="journal-lead-photo">
+                  <Photo photo={localPhotos["St. Catharines"]} eager />
+                  <span className="journal-photo-tag">THE LOCAL PICTURE</span>
+                </div>
+                <p className="journal-kicker">In focus / {lead.topic}</p>
+                <h2 id="lead-story-heading">
+                  <StoryLink story={lead} />
+                </h2>
+                <p className="journal-deck">{lead.description}</p>
+                <div className="journal-meta">
+                  <time dateTime={lead.date}>{dateLabel(lead.date)}</time>
+                  <span>Source brief</span>
+                  <SaveButton story={lead} />
+                </div>
+                <a className="journal-source-link" href={lead.sourceUrl}>
+                  Read official source <span aria-hidden="true">↗</span>
+                </a>
+              </>
+            )}
+          </article>
+          <aside className="journal-latest">
+            <SectionTitle
+              kicker="THE LOCAL PULSE"
+              title="Latest updates"
+              to="/news"
+              action="All news"
+            />
+            {latest.map((s, i) => (
+              <Story key={s.id} story={s} compact index={i} />
+            ))}
+            <Link to="/news" className="journal-latest-bottom">
+              The full local picture <span aria-hidden="true">→</span>
+            </Link>
+          </aside>
+        </section>
+        <section className="journal-briefing" aria-label="Your local briefing">
+          <div>
+            <span className="journal-kicker">A good place to start</span>
+            <h2>Know your city.</h2>
+          </div>
+          <Link to="/council">
+            <span className="journal-small">01 / CITY HALL</span>
+            <strong>Decisions that shape daily life.</strong>
+            <span>Follow council →</span>
+          </Link>
+          <Link to="/planning-tracker">
+            <span className="journal-small">02 / DEVELOPMENT</span>
+            <strong>What’s changing around you?</strong>
+            <span>Open Planning Tracker →</span>
+          </Link>
+          <Link to="/votes">
+            <span className="journal-small">03 / YOUR VOICE</span>
+            <strong>Election guides and civic information</strong>
+            <span>Explore the election hub →</span>
+          </Link>
+        </section>
+        <section className="journal-section">
+          <SectionTitle
+            kicker="Beyond the headlines"
+            title="Around Niagara"
+            to="/news"
+            action="More coverage"
+          />
+          <div className="journal-story-grid">
+            {more.map((s) => (
+              <Story key={s.id} story={s} />
+            ))}
+          </div>
+        </section>
+        <section className="journal-week">
+          <div>
+            <p className="journal-kicker">Make room in your week</p>
+            <h2>This week locally</h2>
+            <p>
+              Meetings, hearings, and opportunities to take part. All times are
+              local to Niagara.
+            </p>
+            <Link className="journal-button journal-button-ink" to="/events">
+              Open the civic calendar ↗
+            </Link>
+          </div>
+          <div className="journal-week-events">
+            {meetings.length ? (
+              meetings.slice(0, 3).map((m) => (
+                <Link key={m.id} to={`/events/${m.id}`}>
+                  <time dateTime={m.meetingDate}>
+                    {dateLabel(m.meetingDate.slice(0, 10))}
+                  </time>
+                  <strong>{m.title}</strong>
+                  <span>{m.municipality} →</span>
+                </Link>
+              ))
+            ) : (
+              <>
+                <span className="journal-calendar-mark" aria-hidden="true">
+                  ↗
+                </span>
+                <h3>A little further ahead?</h3>
+                <p>
+                  No municipal meetings are listed in the next seven days.
+                  Browse the calendar for upcoming dates and past notices.
+                </p>
+              </>
+            )}
+          </div>
+        </section>
+        <section className="journal-section">
+          <SectionTitle
+            kicker="A sense of place"
+            title="Find your own local."
+            to="/explore"
+            action="Explore Niagara"
+          />
+          <div className="journal-place-grid">
+            {[
+              ["St. Catharines", "st-catharines", "The Garden City"],
+              ["Welland", "welland", "Along the water"],
+              ["Thorold", "thorold", "A canal-side community"],
+            ].map(([city, slug, tag]) => (
+              <article key={slug}>
+                <Photo photo={localPhotos[city]} />
+                <div>
+                  <p className="journal-kicker">{tag}</p>
+                  <h3>
+                    <Link to={`/news/${slug}`}>
+                      {city} <span aria-hidden="true">↗</span>
+                    </Link>
+                  </h3>
+                  <p>
+                    Local notices, public records and the latest from your city.
+                  </p>
+                </div>
+              </article>
+            ))}
+          </div>
+        </section>
+        <section className="journal-civic-band">
+          <div>
+            <p className="journal-kicker">The public record</p>
+            <h2>Your city is a work in progress.</h2>
+            <p>
+              Follow planning applications and council notices. Read the
+              documents, check the dates, and see how to take part.
+            </p>
+            <Link to="/planning-tracker" className="journal-link">
+              Explore development records →
+            </Link>
+          </div>
+          <div>
+            {civic.map((s) => (
+              <Story story={s} key={s.id} compact />
+            ))}
+          </div>
+        </section>
+        <section className="journal-newsletter" aria-label="Newsletter signup">
+          <div>
+            <p className="journal-kicker">Good neighbours stay informed</p>
+            <h2>
+              A little local.
+              <br />
+              <em>In your inbox.</em>
+            </h2>
+            <p>Choose the subjects that matter to you.</p>
+          </div>
+          <NewsletterPanel
+            placement="home"
+            topics={["Council", "Planning", "Police"]}
+          />
+        </section>
+      </div>
+    </>
+  );
 }
