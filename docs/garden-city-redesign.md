@@ -13,6 +13,8 @@ Implemented September 21, 2026.
 - Source-brief article layout with credited file photographs, save/copy/print controls and related records. Older unverified expanded summaries are not rendered.
 - Collector preserves editorial rejection/review/withdrawal state and prior source-health records. Zero extraction becomes a source failure; operational report is separate from publication changes.
 - Collector passes exact post-commit SHA to deploy. Deployment serializes releases, skips superseded builds, writes release metadata and verifies the live hash plus key pages.
+- Newsletter signup uses expiring, hashed confirmation tokens, explicit confirmation, preferences and unsubscribe pages. Provider failures return errors; confirmation GET requests do not activate subscriptions.
+- Fonts are self-hosted to avoid external font requests.
 - Prerender uses Vite-generated assets and excludes private utility routes from the sitemap.
 
 ## Validation
@@ -35,7 +37,7 @@ These are not claimed complete by code changes:
 
 Before each production release, retain the last successful Cloudflare deployment and its SHA. Release metadata is at `/release.json`. Verify SHA, snapshot hash and representative live pages after deployment. A green collector run alone does not establish that content is public.
 
-Rollback: use Cloudflare Pages deployment rollback to the recorded prior successful deployment, then verify its `/release.json` and routes. Do not reset or force-push main. Data restore is separate; this redesign does not change database schemas or subscriber records.
+Rollback: use Cloudflare Pages deployment rollback to the recorded prior successful deployment, then verify its `/release.json` and routes. Do not reset or force-push main. Data restore is separate; migration 0007 adds a newsletter token table and indexes without removing existing data. Subscription changes occur only through reader actions.
 
 No-change collections retain the public snapshot and upload a source-health artifact. Review source failures and zero-item extraction in that artifact. Source adapters remain accountable to their registry policy; uncertain publication dates stay unknown.
 

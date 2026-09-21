@@ -84,7 +84,7 @@ export default function EventsPage() {
           <label>
             City
             <select
-              value={options.city || ""}
+              aria-label="City" value={options.city || ""}
               onChange={(e) => update("city", e.target.value)}
             >
               <option value="">All cities</option>
@@ -96,7 +96,7 @@ export default function EventsPage() {
           <label>
             When
             <select
-              value={options.period || "upcoming"}
+              aria-label="When" value={options.period || "upcoming"}
               onChange={(e) => update("period", e.target.value)}
             >
               <option value="upcoming">Upcoming</option>
@@ -115,7 +115,7 @@ export default function EventsPage() {
           <label>
             View
             <select
-              value={view}
+              aria-label="View" value={view}
               onChange={(e) => update("view", e.target.value)}
             >
               <option value="list">List</option>

@@ -53,6 +53,7 @@ export default function NewsFeed({ city = "", search = false }) {
           <label>
             City
             <select
+              aria-label="City"
               value={query.city || ""}
               onChange={(e) => change("city", e.target.value)}
             >
@@ -67,6 +68,7 @@ export default function NewsFeed({ city = "", search = false }) {
         <label>
           Topic
           <select
+            aria-label="Topic"
             value={query.topic || ""}
             onChange={(e) => change("topic", e.target.value)}
           >
@@ -79,6 +81,7 @@ export default function NewsFeed({ city = "", search = false }) {
         <label>
           Content
           <select
+            aria-label="Content"
             value={query.kind || ""}
             onChange={(e) => change("kind", e.target.value)}
           >

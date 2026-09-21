@@ -1,0 +1,56 @@
+import test from 'node:test'
+import assert from 'node:assert/strict'
+import { DatabaseSync } from 'node:sqlite'
+import { readFileSync } from 'node:fs'
+import { onRequestPost } from '../functions/api/newsletter.js'
+import { onRequest as confirm } from '../functions/api/newsletter/confirm.js'
+import { onRequest as manage } from '../functions/api/newsletter/manage.js'
+import { issueToken } from '../functions/lib/newsletterTokens.js'
+
+function database() {
+  const sqlite = new DatabaseSync(':memory:')
+  for (const file of ['0005_create_newsletter_subscribers.sql','0006_create_email_delivery_log.sql','0007_newsletter_tokens.sql']) sqlite.exec(readFileSync(new URL('../migrations/'+file,import.meta.url),'utf8'))
+  const db = {prepare(sql) {return {bind(...args) {const statement=sqlite.prepare(sql);return {async first(){return statement.get(...args)},async run(){return statement.run(...args)}}}}}, async batch(statements){return Promise.all(statements.map(s=>s.run()))}}
+  return {sqlite,db}
+}
+const request = (path,options={}) => new Request('https://stcatharinesdigital.ca'+path,options)
+
+test('newsletter requires confirmation, supports preferences and unsubscribe, and stores only token hashes',async t=>{
+  const {db,sqlite}=database();t.after(()=>sqlite.close())
+  let message
+  t.mock.method(globalThis,'fetch',async (url,options)=>{
+    if(url.endsWith('/inboxes'))return Response.json({inboxes:[{inbox_id:'test-inbox'}]})
+    message=JSON.parse(options.body);return Response.json({id:'test-message'})
+  })
+  const env={STC_D1:db,AGENTMAIL_API_KEY:'mock-only'}
+  const response=await onRequestPost({env,request:request('/api/newsletter',{method:'POST',body:JSON.stringify({email:'reader@example.com',topics:['planning','invalid']})})})
+  assert.equal(response.status,200)
+  assert.equal(sqlite.prepare('SELECT status FROM newsletter_subscribers').get().status,'pending')
+  const confirmUrl=message.text.match(/Confirm: (\S+)/)[1],manageUrl=message.text.match(/unsubscribe: (\S+)/)[1]
+  const rawToken=new URL(confirmUrl).searchParams.get('token')
+  assert.equal(sqlite.prepare('SELECT * FROM newsletter_tokens WHERE token_hash=?').get(rawToken),undefined)
+  const get=await confirm({env,request:new Request(confirmUrl)})
+  assert.equal(get.status,200)
+  assert.equal(sqlite.prepare('SELECT status FROM newsletter_subscribers').get().status,'pending')
+  assert.equal((await confirm({env,request:new Request(confirmUrl,{method:'POST'})})).status,200)
+  assert.equal(sqlite.prepare('SELECT status FROM newsletter_subscribers').get().status,'active')
+  assert.equal((await confirm({env,request:new Request(confirmUrl,{method:'POST'})})).status,410)
+  await manage({env,request:new Request(manageUrl,{method:'POST',body:new URLSearchParams({action:'save',topics:'council'})})})
+  assert.equal(sqlite.prepare('SELECT topics FROM newsletter_subscribers').get().topics,'["council"]')
+  await manage({env,request:new Request(manageUrl,{method:'POST',body:new URLSearchParams({action:'unsubscribe'})})})
+  assert.equal(sqlite.prepare('SELECT status FROM newsletter_subscribers').get().status,'unsubscribed')
+  await manage({env,request:new Request(manageUrl,{method:'POST',body:new URLSearchParams({action:'save',topics:'police'})})})
+  assert.equal(sqlite.prepare('SELECT status FROM newsletter_subscribers').get().status,'unsubscribed')
+})
+
+test('expired tokens, missing services and provider rejection never activate a subscription',async t=>{
+ const {db,sqlite}=database();t.after(()=>sqlite.close())
+ const token=await issueToken(db,'reader@example.com','confirm',-1000)
+ assert.equal((await confirm({env:{STC_D1:db},request:request('/api/newsletter/confirm?token='+token)})).status,410)
+ assert.equal((await onRequestPost({env:{},request:request('/api/newsletter',{method:'POST'})})).status,503)
+ t.mock.method(globalThis,'fetch',async url=>url.endsWith('/inboxes')?Response.json({inboxes:[{inbox_id:'mock'}]}):new Response('',{status:503}))
+ const result=await onRequestPost({env:{STC_D1:db,AGENTMAIL_API_KEY:'mock-only'},request:request('/api/newsletter',{method:'POST',body:JSON.stringify({email:'reader@example.com'})})})
+ assert.equal(result.status,502)
+ assert.equal(sqlite.prepare('SELECT status FROM newsletter_subscribers').get().status,'failed')
+ assert.equal(sqlite.prepare('SELECT status FROM email_delivery_log').get().status,'failed')
+})

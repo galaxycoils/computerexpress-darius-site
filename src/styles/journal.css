@@ -1,3 +1,5 @@
+@font-face{font-family:'Fraunces Variable';font-style:normal;font-display:swap;font-weight:100 900;src:url('@fontsource-variable/fraunces/files/fraunces-latin-standard-normal.woff2') format('woff2')}
+@font-face{font-family:'Source Sans 3 Variable';font-style:normal;font-display:swap;font-weight:200 900;src:url('@fontsource-variable/source-sans-3/files/source-sans-3-latin-wght-normal.woff2') format('woff2')}
 /* Garden City Journal — one shared visual language across public routes. */
 :root,
 .news-root.is-light {
@@ -15,9 +17,9 @@
   --on-signal: #fff;
   --leaf: #355c4a;
   --apricot: #f1d7b8;
-  --font-display: "Fraunces", Georgia, serif;
-  --font-body: "Source Sans 3", system-ui, sans-serif;
-  --font-ui: "Source Sans 3", system-ui, sans-serif;
+  --font-display: "Fraunces Variable", Georgia, serif;
+  --font-body: "Source Sans 3 Variable", system-ui, sans-serif;
+  --font-ui: "Source Sans 3 Variable", system-ui, sans-serif;
   --font-mono: ui-monospace, monospace;
   --content: 1280px;
   --container: 1280px;
@@ -37,9 +39,9 @@
   --on-signal: #172128;
   --leaf: #b3d3bd;
   --apricot: #3e3026;
-  --font-display: "Fraunces", Georgia, serif;
-  --font-body: "Source Sans 3", system-ui, sans-serif;
-  --font-ui: "Source Sans 3", system-ui, sans-serif;
+  --font-display: "Fraunces Variable", Georgia, serif;
+  --font-body: "Source Sans 3 Variable", system-ui, sans-serif;
+  --font-ui: "Source Sans 3 Variable", system-ui, sans-serif;
 }
 html {
   scroll-behavior: auto;
@@ -116,6 +118,7 @@ body {
   cursor: not-allowed;
 }
 .journal-header {
+  width: 100%;
   max-width: 1360px;
   padding: 0 40px;
   margin: auto;
@@ -1556,3 +1559,11 @@ body {
     max-width: none;
   }
 }
+
+/* Maintain contrast inside the newsletter's fixed cobalt surface. */
+.journal-root .journal-newsletter p,
+.journal-root .journal-newsletter .scd-newsletter-topics label,
+.journal-root .journal-newsletter .scd-newsletter-topics legend { color: #fff; }
+.journal-root .journal-newsletter .scd-newsletter-form .island-btn { background: #f1d7b8; color: #172128; }
+.journal-root .journal-newsletter .scd-newsletter-form input[type="email"] { background: #fff; color: #172128; }
+.journal-root .journal-newsletter :focus-visible { outline-color: #fff; }
