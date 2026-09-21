@@ -33,3 +33,6 @@ results.tsv
 src/data/generated/*.bak
 src/data/generated/*.baseline.json
 chrome/
+
+collector-report.json
+.qa/

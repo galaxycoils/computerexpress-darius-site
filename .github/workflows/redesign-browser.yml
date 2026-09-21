@@ -1,0 +1,33 @@
+name: Redesign browser verification
+on:
+  push:
+    branches: ["redesign/**"]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  browser:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm test
+      - run: node --test scripts/*.regression.mjs
+      - run: npm run content:audit
+      - run: npm run build
+      - run: npx playwright install --with-deps chromium
+      - name: Verify responsive pages and reader journeys
+        run: |
+          npm run preview -- --host 127.0.0.1 > /tmp/scd-preview.log 2>&1 &
+          node scripts/browser-redesign.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: redesign-browser-results
+          path: qa-results/
+          retention-days: 14
