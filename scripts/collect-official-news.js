@@ -139,6 +139,49 @@ function extractCandidates(html, source) {
   return [...found.values()];
 }
 
+// Accept explicit publication metadata only. Event dates, modification dates,
+// crawl times and dates mentioned in an article are not publication dates.
+function extractPublicationDate(html) {
+  const values = [];
+  // Observed article dateline component used by the approved municipal/NRPS sites.
+  for (const match of html.matchAll(/<span\b[^>]*class\s*=\s*["'][^"']*\bgs-news-details-date\b[^"']*["'][^>]*>([^<]+)<\/span>/gi)) {
+    const text = cleanText(match[1]);
+    if (/^[A-Z][a-z]{2,8} \d{1,2}, \d{4}$/.test(text)) {
+      const date = new Date(text + ' 12:00:00 GMT');
+      if (!Number.isNaN(+date)) values.push(date.toISOString().slice(0, 10));
+    }
+  }
+  for (const match of html.matchAll(/<meta\b[^>]*>/gi)) {
+    const attrs = Object.fromEntries([...match[0].matchAll(/([\w:-]+)\s*=\s*(["'])(.*?)\2/gs)].map(m => [m[1].toLowerCase(), decodeEntities(m[3])]));
+    if (/^(article:published_time|datepublished|date\.issued|dc\.date\.issued)$/i.test(attrs.property || attrs.name || attrs.itemprop || '')) values.push(attrs.content);
+  }
+  for (const script of html.matchAll(/<script\b[^>]*type\s*=\s*["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi)) {
+    try {
+      const walk = value => {
+        if (!value || typeof value !== 'object') return;
+        const types = [].concat(value['@type'] || []);
+        if (types.some(type => ['NewsArticle', 'Article', 'BlogPosting', 'Report'].includes(type)) && typeof value.datePublished === 'string') values.push(value.datePublished);
+        if (Array.isArray(value)) value.forEach(walk);
+        else if (value['@graph']) walk(value['@graph']);
+      };
+      walk(JSON.parse(script[1]));
+    } catch { /* Malformed metadata must not break collection. */ }
+  }
+  return values.find(value => typeof value === 'string' && /^\d{4}-\d{2}-\d{2}(?:T.*)?$/.test(value) && !Number.isNaN(Date.parse(value)) && new Date(value).toISOString().slice(0, 10) === value.slice(0, 10)) || null;
+}
+
+function mergeCandidate(item, old, collectedAt) {
+  return {
+    ...item,
+    ...(old?.status && ['rejected', 'withdrawn', 'pending-review'].includes(old.status)
+      ? { status: old.status, reviewRequired: old.reviewRequired ?? true } : {}),
+    ...(old?.editorialOverride ? { ...old.editorialOverride, editorialOverride: old.editorialOverride } : {}),
+    sourcePublishedAt: old?.sourcePublishedAt || item.sourcePublishedAt,
+    firstObservedAt: old?.firstObservedAt || collectedAt,
+    lastObservedAt: collectedAt,
+  };
+}
+
 async function fetchHtml(source) {
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), 15_000);
@@ -262,25 +305,18 @@ async function main() {
   for (const source of selected) {
     try {
       const html = await fetchHtml(source);
-      const candidates = extractCandidates(html, source).map((item) => {
-        const old = previous.get(item.url);
-        return {
-          ...item,
-          ...(old?.status &&
-          ["rejected", "withdrawn", "pending-review"].includes(old.status)
-            ? { status: old.status, reviewRequired: old.reviewRequired ?? true }
-            : {}),
-          ...(old?.editorialOverride
-            ? {
-                ...old.editorialOverride,
-                editorialOverride: old.editorialOverride,
-              }
-            : {}),
-          sourcePublishedAt: old?.sourcePublishedAt || item.sourcePublishedAt,
-          firstObservedAt: old?.firstObservedAt || collectedAt,
-          lastObservedAt: collectedAt,
-        };
-      });
+      const candidates = extractCandidates(html, source);
+      let metadataFailures = 0;
+      // Keep requests bounded and use only URLs already restricted to the source origin.
+      for (let start = 0; start < candidates.length; start += 4) {
+        await Promise.all(candidates.slice(start, start + 4).map(async item => {
+          if (!previous.get(item.url)?.sourcePublishedAt) {
+            try { item.sourcePublishedAt = extractPublicationDate(await fetchHtml({url: item.url})); }
+            catch { metadataFailures += 1; }
+          }
+          Object.assign(item, mergeCandidate(item, previous.get(item.url), collectedAt));
+        }));
+      }
       if (!candidates.length)
         throw new Error("No candidates extracted; source requires review");
       collected.push(...candidates);
@@ -288,6 +324,8 @@ async function main() {
         id: source.id,
         ok: true,
         itemCount: candidates.length,
+        datedItems: candidates.filter(item => item.sourcePublishedAt).length,
+        metadataFailures,
         checkedAt: collectedAt,
       });
       successfulSources += 1;
@@ -302,10 +340,12 @@ async function main() {
     }
   }
 
-  if (!successfulSources)
+  if (!successfulSources) {
+    await writeFile(path.join(ROOT, 'collector-report.json'), JSON.stringify({collectedAt, sources: statuses, contentChanged: false, preservedSnapshot: true}, null, 2) + '\n');
     throw new Error(
       "Every requested source failed; the last-known-good snapshot was preserved",
     );
+  }
 
   const merged = new Map();
   for (const item of existing.items || []) merged.set(item.url, item);
@@ -349,14 +389,14 @@ async function main() {
       (status) =>
         status.id +
         ": " +
-        (status.ok ? status.itemCount + " candidates" : "FAILED"),
+        (status.ok ? status.itemCount + " candidates, " + status.datedItems + " dated" : "FAILED: " + status.error),
     )
     .join("\n");
   console.log(summary);
   console.log("Total review candidates: " + items.length);
 
   if (!args.write) {
-    console.log("Dry run complete; no files changed.");
+    console.log("Dry run complete; publication snapshot unchanged. Source-health report saved.");
     return;
   }
 
@@ -381,6 +421,8 @@ export {
   fetchHtml,
   decodeEntities,
   hasSemanticChanges,
+  extractPublicationDate,
+  mergeCandidate,
 };
 
 if (

@@ -1,9 +1,27 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
-import { canonicalizeLink, extractCandidates, fetchHtml, decodeEntities, hasSemanticChanges, parseArgs } from './collect-official-news.js'
+import { canonicalizeLink, extractCandidates, fetchHtml, decodeEntities, hasSemanticChanges, parseArgs, extractPublicationDate, mergeCandidate } from './collect-official-news.js'
 import { sourceRegistry, sourceById } from '../src/data/sourceRegistry.js'
 
 const source = { id: 'test', name: 'Official source', city: 'Test', kind: 'official-notice', url: 'https://city.example/news/' }
+
+test('extracts article datelines and explicit publication metadata without using event or modification dates', () => {
+  assert.equal(extractPublicationDate('<span class="gs-news-details-date">Sep 21, 2026</span><p>Meeting October 1</p>'), '2026-09-21')
+  assert.equal(extractPublicationDate('<meta content="2026-09-20" property="article:published_time">'), '2026-09-20')
+  assert.equal(extractPublicationDate('<script type="application/ld+json">{"@graph":[{"@type":"NewsArticle","datePublished":"2026-09-19"}]}</script>'), '2026-09-19')
+  assert.equal(extractPublicationDate('<meta property="article:modified_time" content="2026-09-21"><script type="application/ld+json">{"@type":"Event","datePublished":"2026-10-01"}</script><p>September 21, 2026</p>'), null)
+  assert.equal(extractPublicationDate('<meta property="article:published_time" content="2026-02-30">'), null)
+})
+
+test('recollection preserves rejected records, editorial overrides and first observation', () => {
+  const item = {title:'Fetched title', status:'published', reviewRequired:false, sourcePublishedAt:'2026-09-21'}
+  const old = {...item, status:'rejected', reviewRequired:true, firstObservedAt:'2026-09-01', editorialOverride:{title:'Reviewed title'}}
+  const merged = mergeCandidate(item, old, '2026-09-22')
+  assert.equal(merged.status, 'rejected')
+  assert.equal(merged.title, 'Reviewed title')
+  assert.equal(merged.firstObservedAt, '2026-09-01')
+  assert.equal(merged.lastObservedAt, '2026-09-22')
+})
 
 test('rejects off-origin URLs, credentials, ports and insecure schemes', () => {
   for (const url of ['https://other.example/news/a', 'http://city.example/news/a', 'https://city.example:444/news/a', 'https://user@city.example/news/a', 'javascript:alert(1)']) {

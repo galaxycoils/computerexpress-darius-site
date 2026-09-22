@@ -1,6 +1,12 @@
 name: Collect official sources (autonomous)
 
 on:
+  push:
+    branches: [main]
+    paths:
+      - scripts/collect-official-news.js
+      - src/data/sourceRegistry.js
+      - .github/workflows/collect-official-news.yml
   schedule:
     - cron: "17 */3 * * *"
   workflow_dispatch:
@@ -87,8 +93,42 @@ jobs:
           git config user.email "actions@users.noreply.github.com"
           git add src/data/generated/discovery.json
           git commit -m "news: autonomous official-source refresh $(date -u +%Y-%m-%d)"
-          git push origin HEAD:main
-          gh workflow run deploy.yml --ref main -f reason=official-source-refresh -f publication_sha="$(git rev-parse HEAD)"
+          # A human or another workflow may have advanced main during collection.
+          # Rebase only cleanly; a conflicting snapshot requires a fresh run.
+          for attempt in 1 2 3; do
+            git fetch origin main
+            git rebase origin/main
+            if git push origin HEAD:main; then break; fi
+            if [ "$attempt" = 3 ]; then exit 1; fi
+          done
+
+      - name: Ensure the latest snapshot is public
+        if: env.MODE == 'write'
+        shell: bash
+        run: |
+          set -euo pipefail
+          git fetch origin main
+          revision=$(git rev-parse origin/main)
+          # Also repair a prior failed deployment on a no-change collection.
+          live=$(curl --fail --silent --show-error --max-time 20 "https://stcatharinesdigital.ca/release.json?collector=$GITHUB_RUN_ID" | jq -r '.sha // empty') || live=''
+          if [ "$live" != "$revision" ]; then
+            gh workflow run deploy.yml --ref main -f reason=official-source-refresh -f publication_sha="$revision"
+            echo "Requested deployment of $revision" >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "Publication already live at $revision" >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - name: Summarize source health
+        if: always()
+        shell: bash
+        run: |
+          if [ -f collector-report.json ]; then
+            jq -r '.sources[] | "- \(.id): \(if .ok then "OK (\(.itemCount) links, \(.datedItems // 0) dated, \(.metadataFailures // 0) metadata fetch failures)" else "FAILED: \(.error)" end)"' collector-report.json >> "$GITHUB_STEP_SUMMARY"
+            failed=$(jq '[.sources[] | select(.ok == false)] | length' collector-report.json)
+            if [ "$failed" -gt 0 ]; then
+              echo "::warning::$failed source(s) failed; last-known-good records retained. See source-health artifact."
+            fi
+          fi
 
       - name: Save source-health report
         if: always()
