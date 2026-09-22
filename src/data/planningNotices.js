@@ -7,7 +7,7 @@
  * - niagararegion.ca
  *
  * Updated: 2026-09-22
- * Note: marked Sullivan/Towpath closure Active (started Sep 21); updated Alexandria Dr window to Sep 22–23 per Thorold notice; Bridge 11 remains scheduled Sep 23–24.
+ * Note: marked Sullivan/Towpath closure Active (started Sep 21); updated Alexandria Dr window to Sep 22-23 per Thorold notice; Bridge 11 remains scheduled Sep 23-24.
  * Next review: Weekly
  */
 
@@ -202,7 +202,7 @@ export const planningNotices = [
     id: "thorold-alexandria-dr-closure-sep22",
     municipality: "Thorold",
     type: "Temporary Road Closure",
-    title: "Alexandria Drive — Temporary Closure September 22–23",
+    title: "Alexandria Drive — Temporary Closure September 22-23",
     description:
       "Temporary road closure on Alexandria Drive Tuesday, September 22 and Wednesday, September 23, 2026 from 7:00 a.m. to 5:00 p.m. between Kottmeier Road and Legacy Lane.",
     status: "Active",
@@ -218,7 +218,7 @@ export const planningNotices = [
     id: "thorold-bridge-11-hwy20-closure",
     municipality: "Thorold",
     type: "Temporary Road Closure",
-    title: "Bridge 11 (Highway 20) — Closure September 23–24",
+    title: "Bridge 11 (Highway 20) — Closure September 23-24",
     description:
       "Bridge 11 (Hwy 20) closed Wednesday, September 23 and Thursday, September 24, 2026 from 9 a.m. to 4 p.m. for bridge and road maintenance. All vehicle and pedestrian traffic prohibited during the work windows.",
     status: "Scheduled",
@@ -280,3 +280,153 @@ export const planningNotices = [
     tags: ["Watermain", "Pamela Drive", "Thorold", "Construction"],
   },
 ];
+
+export const noticeCategories = [
+  {
+    key: "official-plan-amendment",
+    label: "Official Plan Amendment",
+    color: "var(--primary)",
+  },
+  { key: "minor-variance", label: "Minor Variance", color: "var(--accent)" },
+  {
+    key: "zoning-bylaw-amendment",
+    label: "Zoning By-law Amendment",
+    color: "var(--warning)",
+  },
+  {
+    key: "community-improvement-plan",
+    label: "Community Improvement Plan",
+    color: "var(--success)",
+  },
+  {
+    key: "draft-plan-subdivision",
+    label: "Draft Plan of Subdivision",
+    color: "var(--info)",
+  },
+  {
+    key: "official-plan-update",
+    label: "Official Plan Update",
+    color: "var(--primary)",
+  },
+  {
+    key: "consent-application",
+    label: "Consent Application",
+    color: "var(--accent)",
+  },
+  {
+    key: "road-closure",
+    label: "Road Closure / Lane Restriction",
+    color: "var(--danger)",
+  },
+  {
+    key: "public-information-centre",
+    label: "Public Information Centre",
+    color: "var(--info)",
+  },
+  {
+    key: "bridge-repair",
+    label: "Bridge Repair / Pre-construction",
+    color: "var(--warning)",
+  },
+  {
+    key: "sewage-infrastructure",
+    label: "Sewage Infrastructure",
+    color: "var(--success)",
+  },
+];
+
+export const municipalities = [
+  { key: "st-catharines", label: "St. Catharines", region: "Niagara" },
+  { key: "welland", label: "Welland", region: "Niagara" },
+  { key: "thorold", label: "Thorold", region: "Niagara" },
+  { key: "niagara-region", label: "Niagara Region", region: "Niagara" },
+];
+
+export function getNoticesByMunicipality(municipality) {
+  return planningNotices.filter((n) =>
+    n.municipality.toLowerCase().includes(municipality.toLowerCase()),
+  );
+}
+
+export function getNoticesByCategory(category) {
+  return planningNotices.filter((n) => n.category === category);
+}
+
+export function getUpcomingMeetings(days = 7, now = new Date()) {
+  const localDay = (value) =>
+    new Intl.DateTimeFormat("en-CA", {
+      timeZone: "America/Toronto",
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+    }).format(value);
+  const today = localDay(now);
+  const end = localDay(new Date(now.getTime() + days * 24 * 60 * 60 * 1000));
+  const localTime = new Intl.DateTimeFormat("en-GB", {
+    timeZone: "America/Toronto",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+    hourCycle: "h23",
+  }).format(now);
+  return planningNotices
+    .filter(
+      (n) =>
+        n.meetingDate &&
+        n.meetingDate > `${today}T${localTime}` &&
+        n.meetingDate.slice(0, 10) < end,
+    )
+    .sort((a, b) => a.meetingDate.localeCompare(b.meetingDate));
+}
+
+export function getActiveNotices() {
+  const now = new Date();
+  const thirtyDaysAgo = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
+  return planningNotices.filter((n) => {
+    const completedStatuses = [
+      "Approved",
+      "Complete",
+      "Meeting Complete",
+      "Hearing Complete",
+      "Open House Complete",
+      "Application Complete",
+      "Passed",
+      "By-law Passed",
+    ];
+    if (completedStatuses.includes(n.status)) return false;
+    if (n.meetingDate && new Date(n.meetingDate) < now) {
+      if (
+        !["Active", "Under Construction", "Pre-construction"].includes(n.status)
+      ) {
+        return false;
+      }
+    }
+    if (n.endDate && new Date(n.endDate) < now) return false;
+    if (
+      n.effectiveDate &&
+      !n.endDate &&
+      n.category === "road-closure" &&
+      new Date(n.effectiveDate) < thirtyDaysAgo
+    ) {
+      return false;
+    }
+    return true;
+  });
+}
+
+export function getNoticeStats() {
+  const active = getActiveNotices();
+  const byMunicipality = {};
+  const byCategory = {};
+  active.forEach((n) => {
+    byMunicipality[n.municipality] = (byMunicipality[n.municipality] || 0) + 1;
+    byCategory[n.category] = (byCategory[n.category] || 0) + 1;
+  });
+  return {
+    total: planningNotices.length,
+    active: active.length,
+    byMunicipality,
+    byCategory,
+    upcomingMeetings: getUpcomingMeetings().length,
+  };
+}
