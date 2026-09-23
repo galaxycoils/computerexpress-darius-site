@@ -15,7 +15,7 @@ If neither individual nor legacy tokens are configured, every desk request remai
 
 Reader contacts, event suggestions and accessibility feedback are written to `editorial_submissions` as `pending` before an email notification is attempted. Reviewers use `reviewing`, `accepted`, `rejected` or `closed`; no status publishes a record automatically. The dashboard is a review queue, not a CMS publishing control.
 
-The digest scheduler runs at 6 AM Toronto time on Thursday through GitHub Actions. Configure the same `CRON_SECRET` in GitHub Actions and Pages, plus `ALERT_TOKEN_SECRET` and `AGENTMAIL_API_KEY` for email delivery. A workflow failure indicates that email delivery requires attention; verify the send count and a recipient inbox before describing delivery as operational. A newsletter signup only confirms consent; it does not subscribe anyone to the planning digest.
+The digest scheduler runs at 6 AM Toronto time on Thursday through GitHub Actions. The build publishes `planning-alert-feed.json` from the same approved records used on the site; the sender reads this file, filters it against verified subscriber choices, and records delivered source IDs in D1 to prevent repeat sends. Configure the same `CRON_SECRET` in GitHub Actions and Pages, plus `ALERT_TOKEN_SECRET` and `AGENTMAIL_API_KEY` for email delivery. A workflow failure indicates that email delivery requires attention; verify the send count and a recipient inbox before describing delivery as operational. A newsletter signup only confirms consent; it does not subscribe anyone to the planning digest.
 
 ## Newsletter consent
 

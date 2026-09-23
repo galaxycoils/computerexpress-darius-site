@@ -153,6 +153,7 @@ jobs:
           npx wrangler d1 execute stcatharinesdigital_d1 --remote --file=./migrations/0007_newsletter_tokens.sql --yes
           npx wrangler d1 execute stcatharinesdigital_d1 --remote --file=./migrations/0008_editorial_submissions.sql --yes
           npx wrangler d1 execute stcatharinesdigital_d1 --remote --file=./migrations/0009_editorial_audit.sql --yes
+          npx wrangler d1 execute stcatharinesdigital_d1 --remote --file=./migrations/0010_alert_sent_items.sql --yes
 
       - name: Skip superseded release
         id: current
