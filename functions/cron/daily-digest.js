@@ -37,6 +37,7 @@ export async function onRequest(context) {
 
   try {
     const inbox = await getPrimaryInbox(apiKey);
+    const notices = await getPlanningNotices();
 
     // Fetch all verified alerts
     const alertResult = await STC_D1.prepare(
@@ -51,10 +52,10 @@ export async function onRequest(context) {
 
     for (const alert of alerts) {
       try {
-        const matches = await findMatchingNotices(STC_D1, alert);
+        const matches = await findMatchingNotices(STC_D1, notices, alert);
 
         if (matches.length === 0) {
-          console.log(`No matches for ${alert.email}`);
+          console.log(`No new matching notices for alert ${alert.id}`);
           continue;
         }
 
@@ -84,16 +85,17 @@ export async function onRequest(context) {
         }
         await completeDelivery(STC_D1, deliveryId, sendResponse.status);
 
-        // Update last_sent_at
-        await STC_D1.prepare(
-          'UPDATE alerts SET last_sent_at = ? WHERE id = ?'
-        ).bind(Date.now(), alert.id).run();
+        const sentAt = Date.now();
+        await STC_D1.batch([
+          ...matches.map(notice => STC_D1.prepare('INSERT OR IGNORE INTO alert_sent_items (alert_id,source_id,sent_at) VALUES (?,?,?)').bind(alert.id, notice.id, sentAt)),
+          STC_D1.prepare('UPDATE alerts SET last_sent_at = ? WHERE id = ?').bind(sentAt, alert.id),
+        ]);
 
         sent++;
-        console.log(`Sent digest to ${alert.email} (${matches.length} notices)`);
+        console.log(`Sent digest for alert ${alert.id} (${matches.length} notices)`);
       } catch (err) {
         failed++;
-        console.error(`Failed to send to ${alert.email}:`, err.message);
+        console.error(`Failed to send alert ${alert.id}:`, err.message);
       }
     }
 
@@ -109,23 +111,24 @@ export async function onRequest(context) {
 
 // ── Match Engine ────────────────────────────────────────────────────
 
-async function findMatchingNotices(d1, alert) {
+async function findMatchingNotices(d1, notices, alert) {
   const wards = JSON.parse(alert.wards || '[]');
   const types = JSON.parse(alert.types || '[]');
   const statuses = JSON.parse(alert.statuses || '[]');
   const keywords = (alert.keywords || '').toLowerCase().split(',').map(k => k.trim()).filter(Boolean);
 
-  // Load from D1
-  const notices = await getPlanningNotices(d1);
   if (notices.length === 0) return [];
 
-  let results = notices;
-  // Never resend the same source on a later weekly run. A new subscriber
-  // starts with the last seven days, rather than every historic D1 record.
+  const sent = await d1.prepare('SELECT source_id FROM alert_sent_items WHERE alert_id = ?').bind(alert.id).all();
+  const seen = new Set((sent.results || []).map(row => row.source_id));
+  let results = notices.filter(notice => !seen.has(notice.id));
+  // A new subscriber starts with the last seven days. Keep the date of a
+  // previous send inclusive so a new source published later that day can arrive.
   const since = alert.last_sent_at || Math.max(alert.created_at || 0, Date.now() - 7 * 86400000);
+  const firstDay = new Date(since).toISOString().slice(0, 10);
   results = results.filter(notice => {
-    const published = Date.parse(notice.publishedDate || '');
-    return Number.isFinite(published) && published > since && published <= Date.now();
+    const published = String(notice.publishedDate || '').slice(0, 10);
+    return /^\d{4}-\d{2}-\d{2}$/.test(published) && published >= firstDay && published <= new Date().toISOString().slice(0, 10);
   });
 
   // Filter by type (category match)
@@ -133,7 +136,7 @@ async function findMatchingNotices(d1, alert) {
     const typeMap = {
       'OPA': ['official-plan-amendment'],
       'ZBA': ['zoning-bylaw-amendment'],
-      'Site Plan': ['draft-plan-subdivision', 'public-meeting'],
+      'Site Plan': ['site-plan', 'draft-plan-subdivision', 'public-meeting'],
       'CoA': ['minor-variance', 'consent-application'],
       'Consent': ['consent-application'],
       'Part Lot Control': ['part-lot-control'],
@@ -191,35 +194,17 @@ async function findMatchingNotices(d1, alert) {
 
 // ── Load Planning Notices from D1 ───────────────────────────────────
 
-async function getPlanningNotices(d1) {
-  try {
-    const result = await d1.prepare(
-      'SELECT id, municipality, type, title, description, file_number, status, meeting_date, meeting_location, submission_deadline, submission_email, published_date, source_url, category, tags FROM notices ORDER BY published_date DESC LIMIT 200'
-    ).all();
-    return (result.results || []).map((notice) => ({
-      ...notice,
-      fileNumber: notice.file_number,
-      meetingDate: notice.meeting_date,
-      meetingLocation: notice.meeting_location,
-      submissionDeadline: notice.submission_deadline,
-      submissionEmail: notice.submission_email,
-      publishedDate: notice.published_date,
-      sourceUrl: notice.source_url,
-    }));
-  } catch (err) {
-    console.error('Failed to query notices from D1:', err.message);
-    return [];
-  }
+async function getPlanningNotices() {
+  const response = await fetch(`https://stcatharinesdigital.ca/planning-alert-feed.json?refresh=${Date.now()}`, { redirect: 'error' });
+  if (!response.ok) throw new Error(`Planning feed unavailable: ${response.status}`);
+  const feed = await response.json();
+  if (feed?.version !== 1 || !Array.isArray(feed.notices) || feed.notices.length > 1000) throw new Error('Planning feed invalid');
+  return feed.notices.filter(notice => typeof notice.id === 'string' && typeof notice.title === 'string' && typeof notice.sourceUrl === 'string' && /^https:\/\//.test(notice.sourceUrl));
 }
 
 // ── Digest Builder ──────────────────────────────────────────────────
 
 function buildDigest(alert, notices, manageUrl) {
-  const title = notices.map(n => {
-    const meeting = n.meetingDate ? ` · Meeting: ${formatDate(n.meetingDate)}` : '';
-    return `${n.title}${meeting}`;
-  }).join('\n\n');
-
   const items = notices.map((n, i) => {
     const desc = n.description.length > 180 ? n.description.slice(0, 180) + '…' : n.description;
     const meetingLine = n.meetingDate
@@ -258,9 +243,10 @@ Manage preferences or unsubscribe: ${manageUrl}`;
     <div style="border-top:1px solid #e2e8f0;border-bottom:1px solid #e2e8f0;padding:1rem 0;margin-bottom:1.5rem;">
       ${notices.map((n, i) => `
       <div style="padding:0.75rem 0;border-bottom:1px solid #f1f5f9;">
-        <p style="font-weight:600;color:#0d3b66;margin:0 0 0.25rem;">${i + 1}. ${n.title}</p>
-        <p style="color:#555;font-size:.9rem;margin:0 0 0.5rem;line-height:1.4;">${(n.description || '').length > 200 ? (n.description || '').slice(0, 200) + '…' : (n.description || '')}</p>
-        ${n.meetingDate ? `<p style="font-size:.85rem;color:#8899b8;margin:0;">📅 ${formatDate(n.meetingDate)}${n.meetingLocation ? ' — ' + n.meetingLocation : ''}</p>` : ''}
+        <p style="font-weight:600;color:#0d3b66;margin:0 0 0.25rem;">${i + 1}. ${escapeHtml(n.title)}</p>
+        <p style="color:#555;font-size:.9rem;margin:0 0 0.5rem;line-height:1.4;">${escapeHtml((n.description || '').length > 200 ? n.description.slice(0, 200) + '…' : n.description || '')}</p>
+        ${n.meetingDate ? `<p style="font-size:.85rem;color:#8899b8;margin:0;">📅 ${escapeHtml(formatDate(n.meetingDate))}${n.meetingLocation ? ' — ' + escapeHtml(n.meetingLocation) : ''}</p>` : ''}
+        <p><a href="${escapeHtml(n.sourceUrl)}">Read the official source</a></p>
       </div>
       `).join('')}
     </div>
@@ -288,6 +274,10 @@ function formatDate(dateStr) {
   } catch {
     return dateStr;
   }
+}
+
+function escapeHtml(value) {
+  return String(value ?? '').replace(/[&<>"']/g, char => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[char]);
 }
 
 async function getPrimaryInbox(apiKey) {
