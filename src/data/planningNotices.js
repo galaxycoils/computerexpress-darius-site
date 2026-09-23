@@ -6,8 +6,8 @@
  * - thorold.ca
  * - niagararegion.ca
  *
- * Updated: 2026-09-22
- * Note: marked Sullivan/Towpath closure Active (started Sep 21); updated Alexandria Dr window to Sep 22-23 per Thorold notice; Bridge 11 remains scheduled Sep 23-24.
+ * Updated: 2026-09-23
+ * Note: Bridge 11 (Hwy 20) marked Active for official Sep 23-24 work window; no new municipal planning notices since Sep 22 scan.
  * Next review: Weekly
  */
 
@@ -221,7 +221,7 @@ export const planningNotices = [
     title: "Bridge 11 (Highway 20) — Closure September 23-24",
     description:
       "Bridge 11 (Hwy 20) closed Wednesday, September 23 and Thursday, September 24, 2026 from 9 a.m. to 4 p.m. for bridge and road maintenance. All vehicle and pedestrian traffic prohibited during the work windows.",
-    status: "Scheduled",
+    status: "Active",
     effectiveDate: "2026-09-23",
     endDate: "2026-09-24",
     publishedDate: "2026-09-18",
