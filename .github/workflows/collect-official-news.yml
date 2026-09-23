@@ -25,7 +25,6 @@ on:
 permissions:
   actions: write
   contents: write
-  pull-requests: write
 
 concurrency:
   group: official-source-discovery
@@ -75,7 +74,7 @@ jobs:
       - name: Run collector regression tests
         run: node --test scripts/*.regression.mjs
 
-      - name: Validate application before proposing publication
+      - name: Validate application before publication
         if: env.MODE == 'write'
         run: |
           npm test
@@ -92,7 +91,7 @@ jobs:
             echo "changed=false" >> "$GITHUB_OUTPUT"
           fi
 
-      - name: Propose and verify discovery update
+      - name: Verify candidate before publishing discovery update
         if: env.MODE == 'write' && steps.changes.outputs.changed == 'true'
         shell: bash
         run: |
@@ -106,13 +105,9 @@ jobs:
           git fetch origin main
           git rebase origin/main
           git push origin "HEAD:refs/heads/$branch"
-          gh pr create --base main --head "$branch" \
-            --title "news: refresh official source links" \
-            --body "Automated update from the approved official sources. The collector, content audit, unit tests, production build, and schema audit passed before this proposal. Source health is attached to the collection run."
-
-          # Pull requests opened with GITHUB_TOKEN do not start pull_request
-          # workflows. workflow_dispatch does start them, so run both gates
-          # on the exact candidate commit before any merge.
+          # GitHub Actions cannot open pull requests in this repository.
+          # workflow_dispatch runs both independent quality gates on the
+          # candidate branch before a fast-forward publish to main.
           candidate=$(git rev-parse HEAD)
           for workflow in ci.yml content-integrity.yml; do
             gh workflow run "$workflow" --ref "$branch"
@@ -130,7 +125,13 @@ jobs:
             fi
             gh run watch "$run_id" --exit-status
           done
-          gh pr merge "$branch" --merge --delete-branch
+          git fetch origin main
+          if [ "$(git rev-parse origin/main)" != "$(git rev-parse HEAD^)" ]; then
+            echo '::error::Main advanced during validation. A fresh collection is required.'
+            exit 1
+          fi
+          git push origin "HEAD:refs/heads/main"
+          git push origin --delete "$branch" || echo "::warning::Could not remove candidate branch $branch"
 
       - name: Ensure the latest snapshot is public
         if: env.MODE == 'write'
