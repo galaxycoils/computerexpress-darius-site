@@ -121,20 +121,14 @@ export default function PlanningAlertsPage() {
     <>
       <Seo
         title="Planning Alerts for Professionals | St. Catharines Digital"
-        description="Get weekly digests of planning notices, zoning changes, and public meetings across St. Catharines, Welland, Thorold, and Niagara Region. Filtered to your interests. $49/mo beta."
+        description="Sign up for a filtered planning notice digest across St. Catharines, Welland, Thorold, and Niagara Region. Email verification required."
         path="/planning-alerts"
         jsonLd={[{
           '@context': 'https://schema.org',
-          '@type': 'Product',
+          '@type': 'Service',
           name: 'Planning Alerts — St. Catharines Digital',
           description: 'Weekly filtered planning notice digest for Niagara Region professionals.',
           url: 'https://stcatharinesdigital.ca/planning-alerts',
-          offers: {
-            '@type': 'Offer',
-            priceCurrency: 'CAD',
-            price: '49',
-            availability: 'https://schema.org/InStock',
-          },
         }]}
       />
       <div className="scd-page scd-alerts">
@@ -146,7 +140,7 @@ export default function PlanningAlertsPage() {
             <p className="scd-intro-note">
               Weekly digest of planning notices, zoning changes, and public meetings across
               St. Catharines, Welland, Thorold, and Niagara Region. Filtered to your
-              wards, types, and keywords. Beta: <strong>$49/month</strong>.
+              municipality, notice type, and keywords. Email verification is required.
             </p>
           </div>
         </header>
@@ -187,21 +181,8 @@ export default function PlanningAlertsPage() {
                       onChange={e => setFrequency(e.target.value)}
                     />
                     <span className="scd-alerts-radio-label">
-                      <strong>Daily digest</strong>
+                      <strong>Weekly digest</strong>
                       <em>Every Thursday, 6 AM. One email, all matches.</em>
-                    </span>
-                  </label>
-                  <label className="scd-alerts-radio-option">
-                    <input
-                      type="radio"
-                      name="frequency"
-                      value="immediate"
-                      checked={frequency === 'immediate'}
-                      onChange={e => setFrequency(e.target.value)}
-                    />
-                    <span className="scd-alerts-radio-label">
-                      <strong>Immediate</strong>
-                      <em>Each match triggers a separate email. Best for time-sensitive applications.</em>
                     </span>
                   </label>
                 </div>
@@ -286,10 +267,7 @@ export default function PlanningAlertsPage() {
               </button>
 
               <p className="scd-alerts-fineprint">
-                Beta: <strong>$49/month</strong> via Interac e-Transfer. Cancel anytime — reply to any alert email.
-              </p>
-              <p className="scd-alerts-fineprint">
-                Send your first $49 to <strong>cccemt@pm.me</strong> with your email as the memo. We'll confirm within 1 business day.
+                You will receive a verification email if the alert service is available. No payment is collected by this form.
               </p>
             </form>
           </div>
@@ -310,10 +288,6 @@ export default function PlanningAlertsPage() {
             <div className="card">
               <h3>Source links</h3>
               <p>Every notice links to the official municipal document. Read the actual filing, not our summary.</p>
-            </div>
-            <div className="card">
-              <h3 className="scd-alerts-beta-badge">Beta pricing: $49/mo</h3>
-              <p>Founding pricing locked for the first 100 users. Cancel anytime.</p>
             </div>
           </div>
         </section>

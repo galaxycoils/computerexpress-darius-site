@@ -1,9 +1,10 @@
 // Performance metric - measures critical path only
 import { execFile } from 'child_process';
-import { readFileSync, readdirSync, statSync } from 'fs';
+import { readFileSync, statSync } from 'fs';
 import { join } from 'path';
+import { fileURLToPath } from 'url';
 
-const ROOT = '/Users/cmd/workspace/stcatharinesdigital-site';
+const ROOT = fileURLToPath(new URL('..', import.meta.url));
 const DIST = join(ROOT, 'dist');
 
 // 1. Bundle size - only what the homepage actually downloads (0-25 pts)
@@ -51,7 +52,7 @@ function bundleScore() {
 function cwvScore() {
   return new Promise((resolve) => {
     try {
-      const chromePath = '/tmp/puppeteer-cache/chrome/mac_arm-153.0.8010.36/chrome-mac-arm64/Google Chrome for Testing.app/Contents/MacOS/Google Chrome for Testing';
+      const chromePath = process.env.CHROME_PATH || process.env.CHROMIUM_PATH;
       const args = [
         'https://stcatharinesdigital.ca/',
         '--chrome-flags=--headless --no-sandbox --window-size=1440,900',
@@ -59,7 +60,7 @@ function cwvScore() {
         '--output=json',
         '--quiet',
         '--no-upload',
-        `--chrome-path=${chromePath}`
+        ...(chromePath ? [`--chrome-path=${chromePath}`] : [])
       ];
       
       execFile(join(ROOT, 'node_modules/.bin/lighthouse'), args, {
@@ -69,6 +70,7 @@ function cwvScore() {
         maxBuffer: 100 * 1024 * 1024
       }, (error, stdout) => {
         try {
+          if (error) throw error;
           const json = JSON.parse(stdout);
           const a = json.audits;
           const lcp = a?.['largest-contentful-paint']?.numericValue || 0;

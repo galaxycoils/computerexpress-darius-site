@@ -1,0 +1,37 @@
+name: Send verified planning digest
+
+on:
+  schedule:
+    # 6 AM Toronto falls at 10 or 11 UTC depending on daylight saving.
+    - cron: '0 10,11 * * 4'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: planning-digest
+  cancel-in-progress: false
+
+jobs:
+  send:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      CRON_SECRET: ${{ secrets.CRON_SECRET }}
+    steps:
+      - name: Run at 6 AM Toronto time
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ "${{ github.event_name }}" = schedule ] && [ "$(TZ=America/Toronto date +%H)" != 06 ]; then
+            echo 'Outside the Toronto 6 AM window; skipping.'
+            exit 0
+          fi
+          if [ -z "$CRON_SECRET" ]; then
+            echo '::error::CRON_SECRET is missing. Configure it for both the scheduler and Pages deployment.'
+            exit 1
+          fi
+          curl --fail --silent --show-error --max-time 720 --retry 2 \
+            -H "Authorization: Bearer $CRON_SECRET" \
+            -X POST 'https://stcatharinesdigital.ca/cron/daily-digest'

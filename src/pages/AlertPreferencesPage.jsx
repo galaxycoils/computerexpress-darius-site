@@ -139,13 +139,10 @@ export default function AlertPreferencesPage() {
 
             <fieldset className="scd-alerts-field">
               <legend>Delivery</legend>
+              {alert.frequency === 'immediate' && <p role="status">Immediate delivery is currently unavailable. Select the weekly digest and save to receive scheduled emails.</p>}
               <label className="scd-alerts-radio-option">
                 <input type="radio" name="frequency" checked={alert.frequency === 'daily'} onChange={() => setAlert({ ...alert, frequency: 'daily' })} />
                 <span className="scd-alerts-radio-label"><strong>Weekly digest</strong><em>Thursday morning</em></span>
-              </label>
-              <label className="scd-alerts-radio-option">
-                <input type="radio" name="frequency" checked={alert.frequency === 'immediate'} onChange={() => setAlert({ ...alert, frequency: 'immediate' })} />
-                <span className="scd-alerts-radio-label"><strong>Immediate</strong><em>When a matching notice is published</em></span>
               </label>
             </fieldset>
 

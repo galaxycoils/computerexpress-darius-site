@@ -31,6 +31,7 @@ try {
     "/articles/st-catharines-ontario-street-corridor-plan/",
     "/development/stc-455-welland-ave/",
     "/reader-services/",
+    "/sponsor/",
     "/contact/",
   ];
   for (const width of [320, 390, 768, 1440]) {
@@ -56,6 +57,11 @@ try {
     });
   }
   await page.setViewportSize({ width: 1440, height: 1100 });
+  await page.goto(base + "/", { waitUntil: "networkidle" });
+  await page.keyboard.press("Tab");
+  assert.equal(await page.locator(":focus").textContent(), "Skip to main content");
+  await page.keyboard.press("Enter");
+  assert.equal(await page.locator(":focus").getAttribute("id"), "main-content");
   await page.goto(base + "/news/", { waitUntil: "networkidle" });
   await page
     .getByLabel("City", { exact: true })
@@ -139,6 +145,7 @@ try {
           "dark theme",
           "mobile menu/escape",
           "no-results",
+          "keyboard skip link",
         ],
         errors,
       },
@@ -147,7 +154,7 @@ try {
     ),
   );
   console.log(
-    `Browser QA passed: ${report.length} responsive page checks and 6 reader journeys.`,
+    `Browser QA passed: ${report.length} responsive page checks and 7 reader journeys.`,
   );
 } finally {
   await browser.close();

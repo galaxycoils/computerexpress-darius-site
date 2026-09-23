@@ -1,8 +1,8 @@
 import { createAlertToken } from '../api/alerts/_auth.js'
 import { completeDelivery, createDelivery, failDelivery, recipientFingerprint } from '../lib/emailDelivery.js'
 
-// Cloudflare Pages Cron: Daily planning alert digest (runs 6 AM ET daily)
-// POST /functions/cron/daily-digest
+// Weekly planning digest, invoked by the GitHub Thursday scheduler.
+// POST /cron/daily-digest
 
 const AGENTMAIL_BASE = 'https://api.agentmail.to/v0';
 
@@ -40,11 +40,11 @@ export async function onRequest(context) {
 
     // Fetch all verified alerts
     const alertResult = await STC_D1.prepare(
-      'SELECT id, email, frequency, wards, types, statuses, keywords, created_at FROM alerts WHERE verified = 1 AND frequency = ?'
+      'SELECT id, email, frequency, wards, types, statuses, keywords, created_at, last_sent_at FROM alerts WHERE verified = 1 AND frequency = ?'
     ).bind('daily').all();
     const alerts = alertResult.results || [];
 
-    console.log(`Found ${alerts.length} daily alerts to process`);
+    console.log(`Found ${alerts.length} weekly digest subscriptions to process`);
 
     let sent = 0;
     let failed = 0;
@@ -74,7 +74,7 @@ export async function onRequest(context) {
             subject: `Planning Alert: ${matches.length} new notice${matches.length !== 1 ? 's' : ''} in your area`,
             text,
             html,
-            labels: ['planning-alerts', 'daily-digest', `alert:${alert.id}`],
+            labels: ['planning-alerts', 'weekly-digest', `alert:${alert.id}`],
           }),
         });
 
@@ -120,6 +120,13 @@ async function findMatchingNotices(d1, alert) {
   if (notices.length === 0) return [];
 
   let results = notices;
+  // Never resend the same source on a later weekly run. A new subscriber
+  // starts with the last seven days, rather than every historic D1 record.
+  const since = alert.last_sent_at || Math.max(alert.created_at || 0, Date.now() - 7 * 86400000);
+  results = results.filter(notice => {
+    const published = Date.parse(notice.publishedDate || '');
+    return Number.isFinite(published) && published > since && published <= Date.now();
+  });
 
   // Filter by type (category match)
   if (types.length > 0) {

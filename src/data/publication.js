@@ -58,9 +58,11 @@ function topicOf(item) {
     )
   )
     return "Roads & services";
-  if (/council|official plan/i.test([item.type, item.title].join(" ")))
+  if (/council|official plan|mayor|municipal election|budget|committee/i.test([item.type, item.title].join(" ")))
     return "City Hall";
-  return "Development";
+  if (/planning|development|zoning|variance|building|housing|land use/i.test([item.type, item.category, item.title].join(" ")))
+    return "Development";
+  return "Local news";
 }
 export function getPublication(now = new Date()) {
   const today = todayToronto(now);
@@ -129,7 +131,7 @@ export function getPublication(now = new Date()) {
   }
   for (const d of discovery.items || []) {
     if (d.status !== "published" || d.reviewRequired) continue;
-    const cities = d.kind === "public-safety" ? namedCities(d.title) : [d.city];
+    const cities = d.city === "Niagara Region" ? namedCities(d.title) : [d.city];
     add({
       id: d.id,
       title: d.title,
@@ -183,4 +185,5 @@ export const TOPICS = [
   "Development",
   "Roads & services",
   "Public safety",
+  "Local news",
 ];

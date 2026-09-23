@@ -5,7 +5,7 @@ import { describe, expect, it } from 'vitest'
 import PlanningAlertsPage from './PlanningAlertsPage'
 
 describe('PlanningAlertsPage', () => {
-  it('describes the $49 beta without offering immediate checkout', () => {
+  it('describes the email signup without asking for payment', () => {
     render(
       <HelmetProvider>
         <BrowserRouter>
@@ -14,12 +14,12 @@ describe('PlanningAlertsPage', () => {
       </HelmetProvider>,
     )
     expect(screen.getByRole('heading', { name: /The notices that matter, in your inbox/i })).toBeInTheDocument()
-    expect(screen.getAllByText(/\$49\/month/i).length).toBeGreaterThanOrEqual(1)
+    expect(screen.getByText(/No payment is collected by this form/i)).toBeInTheDocument()
     expect(screen.getByRole('button', { name: /Create Alert/i })).toBeInTheDocument()
     expect(screen.queryByText(/checkout/i)).not.toBeInTheDocument()
     expect(screen.queryByText(/pay now/i)).not.toBeInTheDocument()
     expect(screen.queryByText(/subscribe now/i)).not.toBeInTheDocument()
-    expect(screen.getByText(/Interac e-Transfer/)).toBeInTheDocument()
+    expect(screen.queryByText(/Interac e-Transfer/)).not.toBeInTheDocument()
   })
 
   it('renders the filter chips and CTA links', () => {

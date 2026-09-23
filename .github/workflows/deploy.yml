@@ -125,14 +125,22 @@ jobs:
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           EDITORIAL_ADMIN_TOKEN: ${{ secrets.EDITORIAL_ADMIN_TOKEN }}
           EDITORIAL_REVIEWER_TOKEN: ${{ secrets.EDITORIAL_REVIEWER_TOKEN }}
+          EDITORIAL_USERS_JSON: ${{ secrets.EDITORIAL_USERS_JSON }}
+          CRON_SECRET: ${{ secrets.CRON_SECRET }}
         run: |
-          if [ -z "$EDITORIAL_ADMIN_TOKEN" ]; then
-            echo "::warning::EDITORIAL_ADMIN_TOKEN is not configured; the editorial desk remains locked."
+          if [ -z "$EDITORIAL_ADMIN_TOKEN" ] && [ -z "$EDITORIAL_USERS_JSON" ]; then
+            echo "::warning::Editorial credentials are not configured; the editorial desk remains locked."
           else
             printf '%s' "$EDITORIAL_ADMIN_TOKEN" | npx wrangler pages secret put EDITORIAL_ADMIN_TOKEN --project-name=stcatharinesdigital
           fi
           if [ -n "$EDITORIAL_REVIEWER_TOKEN" ]; then
             printf '%s' "$EDITORIAL_REVIEWER_TOKEN" | npx wrangler pages secret put EDITORIAL_REVIEWER_TOKEN --project-name=stcatharinesdigital
+          fi
+          if [ -n "$EDITORIAL_USERS_JSON" ]; then
+            printf '%s' "$EDITORIAL_USERS_JSON" | npx wrangler pages secret put EDITORIAL_USERS_JSON --project-name=stcatharinesdigital
+          fi
+          if [ -n "$CRON_SECRET" ]; then
+            printf '%s' "$CRON_SECRET" | npx wrangler pages secret put CRON_SECRET --project-name=stcatharinesdigital
           fi
 
       - name: Apply newsletter and delivery schemas
@@ -144,6 +152,7 @@ jobs:
           npx wrangler d1 execute stcatharinesdigital_d1 --remote --file=./migrations/0006_create_email_delivery_log.sql --yes
           npx wrangler d1 execute stcatharinesdigital_d1 --remote --file=./migrations/0007_newsletter_tokens.sql --yes
           npx wrangler d1 execute stcatharinesdigital_d1 --remote --file=./migrations/0008_editorial_submissions.sql --yes
+          npx wrangler d1 execute stcatharinesdigital_d1 --remote --file=./migrations/0009_editorial_audit.sql --yes
 
       - name: Skip superseded release
         id: current
