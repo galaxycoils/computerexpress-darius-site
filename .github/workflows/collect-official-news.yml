@@ -17,7 +17,7 @@ on:
         default: all
         type: string
       dry_run:
-        description: Fetch without committing to main
+        description: Fetch without proposing a publication
         required: true
         default: true
         type: boolean
@@ -25,6 +25,7 @@ on:
 permissions:
   actions: write
   contents: write
+  pull-requests: write
 
 concurrency:
   group: official-source-discovery
@@ -34,7 +35,7 @@ jobs:
   collect:
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 45
     env:
       MODE: ${{ github.event_name == 'schedule' && 'write' || (inputs.dry_run && 'dry-run' || 'write') }}
       SOURCE: ${{ inputs.source || 'all' }}
@@ -74,6 +75,13 @@ jobs:
       - name: Run collector regression tests
         run: node --test scripts/*.regression.mjs
 
+      - name: Validate application before proposing publication
+        if: env.MODE == 'write'
+        run: |
+          npm test
+          npm run build
+          npm run audit:schema
+
       - name: Detect discovery changes
         id: changes
         shell: bash
@@ -84,23 +92,45 @@ jobs:
             echo "changed=false" >> "$GITHUB_OUTPUT"
           fi
 
-      - name: Commit discovery to main
+      - name: Propose and verify discovery update
         if: env.MODE == 'write' && steps.changes.outputs.changed == 'true'
         shell: bash
         run: |
           set -euo pipefail
           git config user.name "stcatharinesdigital-bot"
           git config user.email "actions@users.noreply.github.com"
+          branch="news/official-source-${GITHUB_RUN_ID}"
+          git switch -c "$branch"
           git add src/data/generated/discovery.json
           git commit -m "news: autonomous official-source refresh $(date -u +%Y-%m-%d)"
-          # A human or another workflow may have advanced main during collection.
-          # Rebase only cleanly; a conflicting snapshot requires a fresh run.
-          for attempt in 1 2 3; do
-            git fetch origin main
-            git rebase origin/main
-            if git push origin HEAD:main; then break; fi
-            if [ "$attempt" = 3 ]; then exit 1; fi
+          git fetch origin main
+          git rebase origin/main
+          git push origin "HEAD:refs/heads/$branch"
+          gh pr create --base main --head "$branch" \
+            --title "news: refresh official source links" \
+            --body "Automated update from the approved official sources. The collector, content audit, unit tests, production build, and schema audit passed before this proposal. Source health is attached to the collection run."
+
+          # Pull requests opened with GITHUB_TOKEN do not start pull_request
+          # workflows. workflow_dispatch does start them, so run both gates
+          # on the exact candidate commit before any merge.
+          candidate=$(git rev-parse HEAD)
+          for workflow in ci.yml content-integrity.yml; do
+            gh workflow run "$workflow" --ref "$branch"
+            run_id=''
+            for attempt in {1..30}; do
+              run_id=$(gh run list --workflow "$workflow" --branch "$branch" \
+                --event workflow_dispatch --json databaseId,headSha \
+                --jq ".[] | select(.headSha == \"$candidate\") | .databaseId" | head -n 1)
+              if [ -n "$run_id" ]; then break; fi
+              sleep 2
+            done
+            if [ -z "$run_id" ]; then
+              echo "::error::No $workflow run started for $candidate"
+              exit 1
+            fi
+            gh run watch "$run_id" --exit-status
           done
+          gh pr merge "$branch" --merge --delete-branch
 
       - name: Ensure the latest snapshot is public
         if: env.MODE == 'write'

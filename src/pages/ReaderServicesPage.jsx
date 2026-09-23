@@ -4,7 +4,7 @@ import NewsletterPanel from '../components/news/NewsletterPanel'
 import './reader-services.css'
 
 const SERVICES = [
-  { title: 'Local newsletters', text: 'Choose council, planning or public-safety updates and receive the weekly local briefing.', to: '#subscribe', action: 'Choose updates', tone: 'green' },
+  { title: 'Local newsletter', text: 'Sign up for local updates. Confirm your email to join the mailing list.', to: '#subscribe', action: 'Sign up', tone: 'green' },
   { title: 'Planning alerts', text: 'Follow hearings, development applications and changes to tracked municipal records.', to: '/planning-alerts', action: 'Get planning alerts', tone: 'blue' },
   { title: 'Send a news tip', text: 'Tell the newsroom about a local decision, document, event or issue that deserves attention.', to: '/contact', action: 'Contact the newsroom', tone: 'gold' },
   { title: 'Report a correction', text: 'Identify the exact claim, share the page URL and include a supporting primary source.', to: '/corrections', action: 'Correction process', tone: 'plum' },
@@ -42,10 +42,10 @@ export default function ReaderServicesPage() {
         <div className="scd-service-grid">{SERVICES.map(service=><article key={service.title} className={`scd-service-card is-${service.tone}`}><h3>{service.title}</h3><p>{service.text}</p><Link to={service.to}>{service.action}<span aria-hidden="true">→</span></Link></article>)}</div>
       </section>
       <section id="subscribe" className="scd-services-subscribe" aria-labelledby="subscribe-heading">
-        <div><p className="scd-section-kicker">Stay informed</p><h2 id="subscribe-heading">Choose your local updates</h2><p>One dependable weekly digest, filtered by the subjects you select.</p></div>
+        <div><p className="scd-section-kicker">Stay informed</p><h2 id="subscribe-heading">Join the local mailing list</h2><p>Confirm your email to receive future newsroom updates. A regular newsletter schedule has not been announced.</p></div>
         <NewsletterPanel placement="reader_services" topics={['Council','Planning','Police']} />
       </section>
-      <aside className="scd-services-note"><strong>Privacy first.</strong><span>Reader contact details are used only for the service requested. Unsubscribe links are included in newsletter messages.</span></aside>
+      <aside className="scd-services-note"><strong>Privacy first.</strong><span>Reader contact details are used only for the service requested. Confirmation and unsubscribe options are provided by email.</span></aside>
     </div>
   </>
 }

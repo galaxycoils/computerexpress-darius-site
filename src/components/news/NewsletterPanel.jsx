@@ -40,7 +40,7 @@ export default function NewsletterPanel({ placement = 'site_rail', topics = null
 
   return (
     <div className="scd-rail-block scd-newsletter">
-      <h2 className="scd-rail-label">Planning alerts by email</h2>
+      <h2 className="scd-rail-label">Local email updates</h2>
       {status === 'success' ? (
         <p className="scd-rail-text" role="status">
           Check your inbox and confirm your email to finish subscribing.
@@ -48,7 +48,7 @@ export default function NewsletterPanel({ placement = 'site_rail', topics = null
       ) : (
         <>
           <p className="scd-rail-text">
-            New notices, upcoming hearings, and local updates. Confirm your email before receiving updates.
+            Join the newsroom mailing list. Confirm your email to receive future updates when they are sent.
           </p>
           <form className="scd-newsletter-form" onSubmit={onSubmit} noValidate={false}>
             <label className="scd-newsletter-sr" htmlFor={emailId}>
@@ -97,4 +97,3 @@ export default function NewsletterPanel({ placement = 'site_rail', topics = null
     </div>
   )
 }
-

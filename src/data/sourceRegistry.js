@@ -1,8 +1,8 @@
 /**
  * Approved official source registry.
  *
- * Collection runs autonomously against enabled entries and commits
- * discovery.json to main. Items are primary-source links only.
+ * Collection runs against enabled entries and proposes discovery.json
+ * changes through checked pull requests. Items are primary-source links only.
  */
 export const sourceRegistry = [
   { id: 'st-catharines-news', name: 'City of St. Catharines News', city: 'St. Catharines', kind: 'official-notice', url: 'https://www.stcatharines.ca/news/', enabled: true, reviewRequired: false },

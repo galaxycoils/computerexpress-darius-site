@@ -9,7 +9,7 @@ export async function onRequestPost(context) {
   const apiKey = env.AGENTMAIL_API_KEY;
   const tokenSecret = env.ALERT_TOKEN_SECRET;
 
-  if (!STC_D1 || !tokenSecret) {
+  if (!STC_D1 || !tokenSecret || !apiKey || !env.CRON_SECRET) {
     return jsonResponse({ error: 'Service not configured' }, 503);
   }
 
@@ -17,6 +17,7 @@ export async function onRequestPost(context) {
     const body = await context.request.json();
     const email = body.email;
     const frequency = body.frequency || 'daily';
+    if (frequency !== 'daily') return jsonResponse({ error: 'Only the weekly digest is currently available' }, 400);
     const wards = body.wards || [];
     const types = body.types || [];
     const statuses = body.statuses || [];
@@ -50,7 +51,6 @@ export async function onRequestPost(context) {
     }
 
     // Send verification email
-    if (apiKey) {
       try {
         const token = await createAlertToken(id, now, tokenSecret, 'verify');
         const verifyUrl = 'https://stcatharinesdigital.ca/api/alerts/verify?token=' + encodeURIComponent(token);
@@ -86,13 +86,12 @@ export async function onRequestPost(context) {
         });
         
         if (!sendRes.ok) {
-          const errText = await sendRes.text();
-          console.error('AgentMail send failed:', sendRes.status, errText);
+          throw new Error(`AgentMail send failed: ${sendRes.status}`);
         }
       } catch (mailErr) {
         console.error('Verification email error:', mailErr.message);
+        return jsonResponse({ error: 'Verification email could not be sent. Please try again later.' }, 502);
       }
-    }
 
     return jsonResponse({
       success: true,

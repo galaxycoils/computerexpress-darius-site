@@ -50,7 +50,7 @@ export async function onRequest(context) {
     } else if (request.method === 'POST') {
       const body = await request.json();
       const { frequency, wards, types, statuses, keywords } = body;
-      if (!['daily', 'immediate'].includes(frequency)) {
+      if (frequency !== 'daily') {
         return jsonResponse({ error: 'Invalid delivery frequency' }, 400);
       }
       if (![wards, types, statuses].every(Array.isArray) || [wards, types, statuses].some(values => values.length > 20)) {
