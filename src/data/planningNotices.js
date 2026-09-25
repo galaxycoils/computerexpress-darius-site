@@ -6,8 +6,8 @@
  * - thorold.ca
  * - niagararegion.ca
  *
- * Updated: 2026-09-24
- * Note: Added STC CoA hearings for 39-41 Thomas, 103-105 Maple, 2 Ellis (Oct 14) and Property Standards appeal at 5 Louis Ave (Oct 15); marked Thorold Alexandria Drive closure complete after Sep 23 window.
+ * Updated: 2026-09-25
+ * Note: Marked Thorold Bridge 11 (Hwy 20) Sep 23-24 closure complete after the published work window ended.
  * Next review: Weekly
  */
 
@@ -296,7 +296,7 @@ export const planningNotices = [
     title: "Bridge 11 (Highway 20) — Closure September 23-24",
     description:
       "Bridge 11 (Hwy 20) closed Wednesday, September 23 and Thursday, September 24, 2026 from 9 a.m. to 4 p.m. for bridge and road maintenance. All vehicle and pedestrian traffic prohibited during the work windows.",
-    status: "Active",
+    status: "Complete",
     effectiveDate: "2026-09-23",
     endDate: "2026-09-24",
     publishedDate: "2026-09-18",
