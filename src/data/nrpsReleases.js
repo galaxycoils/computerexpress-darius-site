@@ -2,12 +2,23 @@
  * NRPS Police Media Releases for St. Catharines Digital
  * Sourced exclusively from https://www.niagarapolice.ca/news/posts/
  * Official Niagara Regional Police Service media releases & community notifications.
- * Updated: 2026-09-24
+ * Updated: 2026-09-25
  * Next review: Daily (cron) — refresh from niagarapolice.ca
- * Note: added Sep 23 Niagara Falls robbery arrests update; added Sep 22 homicide update (one arrest, one outstanding) and Sep 21 original wanted notice.
+ * Note: added Sep 24 Port Colborne cable-theft arrests (6 District); retained Sep 23 Niagara Falls robbery update and Sep 21–22 homicide wanted/update items.
  */
 
 export const nrpsReleases = [
+  {
+    id: 'nrps-2026-09-24-port-colborne-cable-theft',
+    date: '2026-09-24',
+    headline: 'Two Males Arrested in Theft of Cable Incident in Port Colborne',
+    municipality: 'Region-wide (St. Catharines, Welland, Thorold included)',
+    type: 'Media Release (Theft / Arrest)',
+    url: 'https://www.niagarapolice.ca/news/posts/two-males-arrested-in-theft-of-cable-incident-in-port-colborne/',
+    source: 'Niagara Regional Police Service',
+    tags: ['Theft', 'Arrest', 'Port Colborne', '6 District', 'Public Assistance'],
+    category: 'arrest',
+  },
   {
     id: 'nrps-2026-09-23-nf-robbery-arrests-update',
     date: '2026-09-23',
