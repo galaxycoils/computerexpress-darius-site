@@ -1,24 +1,24 @@
 {
   "version": 2,
-  "collectedAt": "2026-09-23T21:30:48.697Z",
+  "collectedAt": "2026-09-26T04:59:12.352Z",
   "publicationState": "autonomous",
   "notice": "Autonomous official-source discovery. Items are links to primary municipal/police pages only; no invented reporting.",
   "sources": [
     {
       "id": "st-catharines-news",
       "ok": true,
-      "itemCount": 12,
-      "datedItems": 11,
+      "itemCount": 11,
+      "datedItems": 10,
       "metadataFailures": 1,
-      "checkedAt": "2026-09-23T21:30:48.697Z"
+      "checkedAt": "2026-09-26T04:59:12.352Z"
     },
     {
       "id": "st-catharines-public-notices",
       "ok": true,
-      "itemCount": 12,
-      "datedItems": 11,
+      "itemCount": 11,
+      "datedItems": 10,
       "metadataFailures": 1,
-      "checkedAt": "2026-09-23T21:30:48.697Z"
+      "checkedAt": "2026-09-26T04:59:12.352Z"
     },
     {
       "id": "welland-news",
@@ -26,7 +26,7 @@
       "itemCount": 9,
       "datedItems": 9,
       "metadataFailures": 0,
-      "checkedAt": "2026-09-23T21:30:48.697Z"
+      "checkedAt": "2026-09-26T04:59:12.352Z"
     },
     {
       "id": "thorold-news",
@@ -34,7 +34,7 @@
       "itemCount": 10,
       "datedItems": 10,
       "metadataFailures": 0,
-      "checkedAt": "2026-09-23T21:30:48.697Z"
+      "checkedAt": "2026-09-26T04:59:12.352Z"
     },
     {
       "id": "niagara-region-news",
@@ -42,7 +42,7 @@
       "itemCount": 11,
       "datedItems": 0,
       "metadataFailures": 0,
-      "checkedAt": "2026-09-23T21:30:48.697Z"
+      "checkedAt": "2026-09-26T04:59:12.352Z"
     },
     {
       "id": "nrps-media-releases",
@@ -50,7 +50,7 @@
       "itemCount": 10,
       "datedItems": 10,
       "metadataFailures": 0,
-      "checkedAt": "2026-09-23T21:30:48.697Z"
+      "checkedAt": "2026-09-26T04:59:12.352Z"
     }
   ],
   "items": [
@@ -64,7 +64,7 @@
       "kind": "official-notice",
       "sourcePublishedAt": null,
       "firstObservedAt": "2026-09-17T03:27:01.699Z",
-      "lastObservedAt": "2026-09-23T21:30:48.697Z",
+      "lastObservedAt": "2026-09-26T04:59:12.352Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -78,7 +78,7 @@
       "kind": "official-notice",
       "sourcePublishedAt": null,
       "firstObservedAt": "2026-09-17T03:27:01.699Z",
-      "lastObservedAt": "2026-09-23T21:30:48.697Z",
+      "lastObservedAt": "2026-09-26T04:59:12.352Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -92,7 +92,7 @@
       "kind": "official-notice",
       "sourcePublishedAt": null,
       "firstObservedAt": "2026-09-17T03:27:01.699Z",
-      "lastObservedAt": "2026-09-23T21:30:48.697Z",
+      "lastObservedAt": "2026-09-26T04:59:12.352Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -106,7 +106,7 @@
       "kind": "official-notice",
       "sourcePublishedAt": null,
       "firstObservedAt": "2026-09-17T03:27:01.699Z",
-      "lastObservedAt": "2026-09-23T21:30:48.697Z",
+      "lastObservedAt": "2026-09-26T04:59:12.352Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -120,7 +120,7 @@
       "kind": "official-notice",
       "sourcePublishedAt": null,
       "firstObservedAt": "2026-09-17T03:27:01.699Z",
-      "lastObservedAt": "2026-09-23T21:30:48.697Z",
+      "lastObservedAt": "2026-09-26T04:59:12.352Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -134,7 +134,7 @@
       "kind": "official-notice",
       "sourcePublishedAt": null,
       "firstObservedAt": "2026-09-17T03:27:01.699Z",
-      "lastObservedAt": "2026-09-23T21:30:48.697Z",
+      "lastObservedAt": "2026-09-26T04:59:12.352Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -148,7 +148,7 @@
       "kind": "official-notice",
       "sourcePublishedAt": null,
       "firstObservedAt": "2026-09-17T03:27:01.699Z",
-      "lastObservedAt": "2026-09-23T21:30:48.697Z",
+      "lastObservedAt": "2026-09-26T04:59:12.352Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -176,7 +176,7 @@
       "kind": "official-notice",
       "sourcePublishedAt": null,
       "firstObservedAt": "2026-09-16T23:59:08.181Z",
-      "lastObservedAt": "2026-09-23T21:30:48.697Z",
+      "lastObservedAt": "2026-09-26T04:59:12.352Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -190,7 +190,7 @@
       "kind": "official-notice",
       "sourcePublishedAt": null,
       "firstObservedAt": "2026-09-23T21:30:48.697Z",
-      "lastObservedAt": "2026-09-23T21:30:48.697Z",
+      "lastObservedAt": "2026-09-26T04:59:12.352Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -204,7 +204,7 @@
       "kind": "official-notice",
       "sourcePublishedAt": null,
       "firstObservedAt": "2026-09-18T20:55:15.185Z",
-      "lastObservedAt": "2026-09-23T21:30:48.697Z",
+      "lastObservedAt": "2026-09-26T04:59:12.352Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -218,7 +218,7 @@
       "kind": "official-notice",
       "sourcePublishedAt": null,
       "firstObservedAt": "2026-09-17T03:27:01.699Z",
-      "lastObservedAt": "2026-09-23T21:30:48.697Z",
+      "lastObservedAt": "2026-09-26T04:59:12.352Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -274,7 +274,7 @@
       "kind": "public-safety",
       "sourcePublishedAt": "2026-09-21",
       "firstObservedAt": "2026-09-21T12:50:16.251Z",
-      "lastObservedAt": "2026-09-23T21:30:48.697Z",
+      "lastObservedAt": "2026-09-26T04:59:12.352Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -288,7 +288,7 @@
       "kind": "public-safety",
       "sourcePublishedAt": "2026-09-18",
       "firstObservedAt": "2026-09-18T20:55:15.185Z",
-      "lastObservedAt": "2026-09-23T21:30:48.697Z",
+      "lastObservedAt": "2026-09-26T04:59:12.352Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -303,6 +303,20 @@
       "sourcePublishedAt": "2026-09-15",
       "firstObservedAt": "2026-09-16T23:59:08.181Z",
       "lastObservedAt": "2026-09-23T01:19:14.910Z",
+      "status": "published",
+      "reviewRequired": false
+    },
+    {
+      "id": "eb0dcdda16f3c34d",
+      "title": "Male Deceased in Motorcycle Collision in Niagara Falls",
+      "url": "https://www.niagarapolice.ca/news/posts/male-deceased-in-motorcycle-collision-in-niagara-falls/",
+      "sourceId": "nrps-media-releases",
+      "sourceName": "Niagara Regional Police Service media releases",
+      "city": "Niagara Region",
+      "kind": "public-safety",
+      "sourcePublishedAt": "2026-09-25",
+      "firstObservedAt": "2026-09-26T04:59:12.352Z",
+      "lastObservedAt": "2026-09-26T04:59:12.352Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -372,7 +386,7 @@
       "kind": "public-safety",
       "sourcePublishedAt": "2026-09-18",
       "firstObservedAt": "2026-09-18T16:25:03.390Z",
-      "lastObservedAt": "2026-09-23T21:30:48.697Z",
+      "lastObservedAt": "2026-09-26T04:59:12.352Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -447,6 +461,20 @@
       "reviewRequired": false
     },
     {
+      "id": "459831d83b83ddaa",
+      "title": "Two Males Arrested in Theft of Cable Incident in Port Colborne",
+      "url": "https://www.niagarapolice.ca/news/posts/two-males-arrested-in-theft-of-cable-incident-in-port-colborne/",
+      "sourceId": "nrps-media-releases",
+      "sourceName": "Niagara Regional Police Service media releases",
+      "city": "Niagara Region",
+      "kind": "public-safety",
+      "sourcePublishedAt": "2026-09-24",
+      "firstObservedAt": "2026-09-26T04:59:12.352Z",
+      "lastObservedAt": "2026-09-26T04:59:12.352Z",
+      "status": "published",
+      "reviewRequired": false
+    },
+    {
       "id": "aa186400e533ee44",
       "title": "Two Niagara Falls Men Wanted in Homicide Investigation",
       "url": "https://www.niagarapolice.ca/news/posts/two-niagara-falls-men-wanted-in-homicide-investigation/",
@@ -456,7 +484,7 @@
       "kind": "public-safety",
       "sourcePublishedAt": "2026-09-21",
       "firstObservedAt": "2026-09-22T00:08:10.500Z",
-      "lastObservedAt": "2026-09-23T21:30:48.697Z",
+      "lastObservedAt": "2026-09-26T04:59:12.352Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -470,7 +498,7 @@
       "kind": "public-safety",
       "sourcePublishedAt": "2026-09-22",
       "firstObservedAt": "2026-09-23T01:19:14.910Z",
-      "lastObservedAt": "2026-09-23T21:30:48.697Z",
+      "lastObservedAt": "2026-09-26T04:59:12.352Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -484,7 +512,21 @@
       "kind": "public-safety",
       "sourcePublishedAt": "2026-09-17",
       "firstObservedAt": "2026-09-17T21:23:46.670Z",
-      "lastObservedAt": "2026-09-23T21:30:48.697Z",
+      "lastObservedAt": "2026-09-26T04:59:12.352Z",
+      "status": "published",
+      "reviewRequired": false
+    },
+    {
+      "id": "9d56903f19118629",
+      "title": "Update #2: Second Suspected Arrested: Two Niagara Falls Men Wanted in Homicide Investigation",
+      "url": "https://www.niagarapolice.ca/news/posts/update-2-second-suspected-arrested-two-niagara-falls-men-wanted-in-homicide-investigation/",
+      "sourceId": "nrps-media-releases",
+      "sourceName": "Niagara Regional Police Service media releases",
+      "city": "Niagara Region",
+      "kind": "public-safety",
+      "sourcePublishedAt": "2026-09-25",
+      "firstObservedAt": "2026-09-26T04:59:12.352Z",
+      "lastObservedAt": "2026-09-26T04:59:12.352Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -498,7 +540,7 @@
       "kind": "public-safety",
       "sourcePublishedAt": "2026-09-23",
       "firstObservedAt": "2026-09-23T17:00:38.747Z",
-      "lastObservedAt": "2026-09-23T21:30:48.697Z",
+      "lastObservedAt": "2026-09-26T04:59:12.352Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -512,7 +554,7 @@
       "kind": "official-notice",
       "sourcePublishedAt": "2026-09-15",
       "firstObservedAt": "2026-09-16T23:59:08.181Z",
-      "lastObservedAt": "2026-09-23T21:30:48.697Z",
+      "lastObservedAt": "2026-09-26T04:59:12.352Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -526,7 +568,7 @@
       "kind": "official-notice",
       "sourcePublishedAt": null,
       "firstObservedAt": "2026-09-17T03:27:01.699Z",
-      "lastObservedAt": "2026-09-23T21:30:48.697Z",
+      "lastObservedAt": "2026-09-26T04:59:12.352Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -545,6 +587,34 @@
       "reviewRequired": false
     },
     {
+      "id": "3289ad968fb44bc7",
+      "title": "City invites flood impacted residents to participate in registry to support potential Provincial disaster assistance",
+      "url": "https://www.stcatharines.ca/news/posts/city-invites-flood-impacted-residents-to-participate-in-registry-to-support-potential-provincial-disaster-assistance/",
+      "sourceId": "st-catharines-news",
+      "sourceName": "City of St. Catharines News",
+      "city": "St. Catharines",
+      "kind": "official-notice",
+      "sourcePublishedAt": "2026-09-24",
+      "firstObservedAt": "2026-09-26T04:59:12.352Z",
+      "lastObservedAt": "2026-09-26T04:59:12.352Z",
+      "status": "published",
+      "reviewRequired": false
+    },
+    {
+      "id": "9512122f004580dd",
+      "title": "City officials join Friends of Malcolmson Eco-Park for Indigenous Healing Garden in Honour of Reconciliation blessing ceremony",
+      "url": "https://www.stcatharines.ca/news/posts/city-officials-join-friends-of-malcolmson-eco-park-for-indigenous-healing-garden-in-honour-of-reconciliation-blessing-ceremony/",
+      "sourceId": "st-catharines-news",
+      "sourceName": "City of St. Catharines News",
+      "city": "St. Catharines",
+      "kind": "official-notice",
+      "sourcePublishedAt": "2026-09-24",
+      "firstObservedAt": "2026-09-26T04:59:12.352Z",
+      "lastObservedAt": "2026-09-26T04:59:12.352Z",
+      "status": "published",
+      "reviewRequired": false
+    },
+    {
       "id": "d5a862d068254a1e",
       "title": "City unveils 17th Annual Juried Art Exhibition, ‘Current’",
       "url": "https://www.stcatharines.ca/news/posts/city-unveils-17th-annual-juried-art-exhibition-current/",
@@ -554,7 +624,7 @@
       "kind": "official-notice",
       "sourcePublishedAt": "2026-09-18",
       "firstObservedAt": "2026-09-18T16:25:03.390Z",
-      "lastObservedAt": "2026-09-23T21:30:48.697Z",
+      "lastObservedAt": "2026-09-26T04:59:12.352Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -582,7 +652,7 @@
       "kind": "official-notice",
       "sourcePublishedAt": "2026-09-16",
       "firstObservedAt": "2026-09-17T03:27:01.699Z",
-      "lastObservedAt": "2026-09-23T21:30:48.697Z",
+      "lastObservedAt": "2026-09-26T04:59:12.352Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -680,7 +750,7 @@
       "kind": "official-notice",
       "sourcePublishedAt": "2026-09-22",
       "firstObservedAt": "2026-09-22T21:20:21.516Z",
-      "lastObservedAt": "2026-09-23T21:30:48.697Z",
+      "lastObservedAt": "2026-09-26T04:59:12.352Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -722,7 +792,7 @@
       "kind": "official-notice",
       "sourcePublishedAt": null,
       "firstObservedAt": "2026-09-17T03:27:01.699Z",
-      "lastObservedAt": "2026-09-23T21:30:48.697Z",
+      "lastObservedAt": "2026-09-26T04:59:12.352Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -750,7 +820,7 @@
       "kind": "official-notice",
       "sourcePublishedAt": "2026-08-25",
       "firstObservedAt": "2026-09-16T23:59:08.181Z",
-      "lastObservedAt": "2026-09-23T21:30:48.697Z",
+      "lastObservedAt": "2026-09-26T04:59:12.352Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -778,7 +848,7 @@
       "kind": "official-notice",
       "sourcePublishedAt": "2026-07-28",
       "firstObservedAt": "2026-09-17T03:27:01.699Z",
-      "lastObservedAt": "2026-09-23T21:30:48.697Z",
+      "lastObservedAt": "2026-09-26T04:59:12.352Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -792,7 +862,7 @@
       "kind": "official-notice",
       "sourcePublishedAt": "2026-07-28",
       "firstObservedAt": "2026-09-17T03:27:01.699Z",
-      "lastObservedAt": "2026-09-23T21:30:48.697Z",
+      "lastObservedAt": "2026-09-26T04:59:12.352Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -820,7 +890,7 @@
       "kind": "official-notice",
       "sourcePublishedAt": "2026-07-06",
       "firstObservedAt": "2026-09-17T03:27:01.699Z",
-      "lastObservedAt": "2026-09-23T21:30:48.697Z",
+      "lastObservedAt": "2026-09-26T04:59:12.352Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -834,7 +904,7 @@
       "kind": "official-notice",
       "sourcePublishedAt": "2026-09-22",
       "firstObservedAt": "2026-09-23T17:00:38.747Z",
-      "lastObservedAt": "2026-09-23T21:30:48.697Z",
+      "lastObservedAt": "2026-09-26T04:59:12.352Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -876,7 +946,7 @@
       "kind": "official-notice",
       "sourcePublishedAt": "2026-09-22",
       "firstObservedAt": "2026-09-23T17:00:38.747Z",
-      "lastObservedAt": "2026-09-23T21:30:48.697Z",
+      "lastObservedAt": "2026-09-26T04:59:12.352Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -890,7 +960,7 @@
       "kind": "official-notice",
       "sourcePublishedAt": "2026-09-22",
       "firstObservedAt": "2026-09-23T17:00:38.747Z",
-      "lastObservedAt": "2026-09-23T21:30:48.697Z",
+      "lastObservedAt": "2026-09-26T04:59:12.352Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -904,7 +974,7 @@
       "kind": "official-notice",
       "sourcePublishedAt": "2026-09-22",
       "firstObservedAt": "2026-09-23T17:00:38.747Z",
-      "lastObservedAt": "2026-09-23T21:30:48.697Z",
+      "lastObservedAt": "2026-09-26T04:59:12.352Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -918,7 +988,7 @@
       "kind": "official-notice",
       "sourcePublishedAt": "2026-08-25",
       "firstObservedAt": "2026-09-17T03:27:01.699Z",
-      "lastObservedAt": "2026-09-23T21:30:48.697Z",
+      "lastObservedAt": "2026-09-26T04:59:12.352Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -946,7 +1016,7 @@
       "kind": "official-notice",
       "sourcePublishedAt": "2026-07-28",
       "firstObservedAt": "2026-09-17T03:27:01.699Z",
-      "lastObservedAt": "2026-09-23T21:30:48.697Z",
+      "lastObservedAt": "2026-09-26T04:59:12.352Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -960,7 +1030,7 @@
       "kind": "official-notice",
       "sourcePublishedAt": "2026-09-18",
       "firstObservedAt": "2026-09-18T16:25:03.390Z",
-      "lastObservedAt": "2026-09-23T21:30:48.697Z",
+      "lastObservedAt": "2026-09-26T04:59:12.352Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -974,7 +1044,7 @@
       "kind": "official-notice",
       "sourcePublishedAt": "2026-08-22",
       "firstObservedAt": "2026-09-17T03:27:01.699Z",
-      "lastObservedAt": "2026-09-23T21:30:48.697Z",
+      "lastObservedAt": "2026-09-26T04:59:12.352Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -988,7 +1058,7 @@
       "kind": "official-notice",
       "sourcePublishedAt": "2026-09-01",
       "firstObservedAt": "2026-09-17T03:27:01.699Z",
-      "lastObservedAt": "2026-09-23T21:30:48.697Z",
+      "lastObservedAt": "2026-09-26T04:59:12.352Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -1030,7 +1100,21 @@
       "kind": "official-notice",
       "sourcePublishedAt": "2026-09-03",
       "firstObservedAt": "2026-09-17T03:27:01.699Z",
-      "lastObservedAt": "2026-09-23T21:30:48.697Z",
+      "lastObservedAt": "2026-09-26T04:59:12.352Z",
+      "status": "published",
+      "reviewRequired": false
+    },
+    {
+      "id": "9bdaa50a3ad6358c",
+      "title": "Notice of Project Commencement: Winslow Crescent Watermain Replacement",
+      "url": "https://www.thorold.ca/news/news/notice-of-project-commencement-winslow-crescent-watermain-replacement/",
+      "sourceId": "thorold-news",
+      "sourceName": "City of Thorold News",
+      "city": "Thorold",
+      "kind": "official-notice",
+      "sourcePublishedAt": "2026-09-25",
+      "firstObservedAt": "2026-09-26T04:59:12.352Z",
+      "lastObservedAt": "2026-09-26T04:59:12.352Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -1044,7 +1128,7 @@
       "kind": "official-notice",
       "sourcePublishedAt": "2026-09-11",
       "firstObservedAt": "2026-09-16T23:59:08.181Z",
-      "lastObservedAt": "2026-09-23T21:30:48.697Z",
+      "lastObservedAt": "2026-09-26T04:59:12.352Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -1073,6 +1157,20 @@
       "sourcePublishedAt": null,
       "firstObservedAt": "2026-09-17T03:27:01.699Z",
       "lastObservedAt": "2026-09-18T11:16:43.202Z",
+      "status": "published",
+      "reviewRequired": false
+    },
+    {
+      "id": "421dda6fe703ccf0",
+      "title": "Temporary Intersection Construction: Pine St. and Sullivan Ave. Intersection : Sept 28 & 29",
+      "url": "https://www.thorold.ca/news/news/temporary-intersection-construction-pine-st-and-sullivan-ave-intersection-sept-28-29/",
+      "sourceId": "thorold-news",
+      "sourceName": "City of Thorold News",
+      "city": "Thorold",
+      "kind": "official-notice",
+      "sourcePublishedAt": "2026-09-25",
+      "firstObservedAt": "2026-09-26T04:59:12.352Z",
+      "lastObservedAt": "2026-09-26T04:59:12.352Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -1114,7 +1212,7 @@
       "kind": "official-notice",
       "sourcePublishedAt": "2026-09-18",
       "firstObservedAt": "2026-09-22T00:08:10.500Z",
-      "lastObservedAt": "2026-09-23T21:30:48.697Z",
+      "lastObservedAt": "2026-09-26T04:59:12.352Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -1142,7 +1240,7 @@
       "kind": "official-notice",
       "sourcePublishedAt": "2026-09-02",
       "firstObservedAt": "2026-09-17T03:27:01.699Z",
-      "lastObservedAt": "2026-09-23T21:30:48.697Z",
+      "lastObservedAt": "2026-09-26T04:59:12.352Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -1170,7 +1268,7 @@
       "kind": "official-notice",
       "sourcePublishedAt": "2026-09-17",
       "firstObservedAt": "2026-09-17T17:01:06.283Z",
-      "lastObservedAt": "2026-09-23T21:30:48.697Z",
+      "lastObservedAt": "2026-09-26T04:59:12.352Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -1184,7 +1282,7 @@
       "kind": "official-notice",
       "sourcePublishedAt": "2026-09-04",
       "firstObservedAt": "2026-09-17T03:27:01.699Z",
-      "lastObservedAt": "2026-09-23T21:30:48.697Z",
+      "lastObservedAt": "2026-09-26T04:59:12.352Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -1212,7 +1310,7 @@
       "kind": "official-notice",
       "sourcePublishedAt": "2026-09-22",
       "firstObservedAt": "2026-09-22T16:58:28.425Z",
-      "lastObservedAt": "2026-09-23T21:30:48.697Z",
+      "lastObservedAt": "2026-09-26T04:59:12.352Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -1226,7 +1324,21 @@
       "kind": "official-notice",
       "sourcePublishedAt": "2026-08-27",
       "firstObservedAt": "2026-09-17T03:27:01.699Z",
-      "lastObservedAt": "2026-09-23T21:30:48.697Z",
+      "lastObservedAt": "2026-09-26T04:59:12.352Z",
+      "status": "published",
+      "reviewRequired": false
+    },
+    {
+      "id": "7fec7b623992c336",
+      "title": "Lights, Frights, and Sights Tour returns to Welland this Halloween",
+      "url": "https://www.welland.ca/news/posts/lights-frights-and-sights-tour-returns-to-welland-this-halloween/",
+      "sourceId": "welland-news",
+      "sourceName": "City of Welland News",
+      "city": "Welland",
+      "kind": "official-notice",
+      "sourcePublishedAt": "2026-09-24",
+      "firstObservedAt": "2026-09-26T04:59:12.352Z",
+      "lastObservedAt": "2026-09-26T04:59:12.352Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -1254,7 +1366,7 @@
       "kind": "official-notice",
       "sourcePublishedAt": "2026-09-24",
       "firstObservedAt": "2026-09-17T21:23:46.670Z",
-      "lastObservedAt": "2026-09-23T21:30:48.697Z",
+      "lastObservedAt": "2026-09-26T04:59:12.352Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -1268,7 +1380,7 @@
       "kind": "official-notice",
       "sourcePublishedAt": "2026-08-20",
       "firstObservedAt": "2026-09-17T03:27:01.699Z",
-      "lastObservedAt": "2026-09-23T21:30:48.697Z",
+      "lastObservedAt": "2026-09-26T04:59:12.352Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -1282,7 +1394,7 @@
       "kind": "official-notice",
       "sourcePublishedAt": "2026-09-02",
       "firstObservedAt": "2026-09-16T23:59:08.181Z",
-      "lastObservedAt": "2026-09-23T21:30:48.697Z",
+      "lastObservedAt": "2026-09-26T04:59:12.352Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -1315,6 +1427,20 @@
       "reviewRequired": false
     },
     {
+      "id": "2cb2763a79c4f3e0",
+      "title": "Welland marks National Day for Truth and Reconciliation through reflection and learning",
+      "url": "https://www.welland.ca/news/posts/welland-marks-national-day-for-truth-and-reconciliation-through-reflection-and-learning/",
+      "sourceId": "welland-news",
+      "sourceName": "City of Welland News",
+      "city": "Welland",
+      "kind": "official-notice",
+      "sourcePublishedAt": "2026-09-25",
+      "firstObservedAt": "2026-09-26T04:59:12.352Z",
+      "lastObservedAt": "2026-09-26T04:59:12.352Z",
+      "status": "published",
+      "reviewRequired": false
+    },
+    {
       "id": "76f078efa2165318",
       "title": "Welland residents invited to share priorities for Budget 2027",
       "url": "https://www.welland.ca/news/posts/welland-residents-invited-to-share-priorities-for-budget-2027/",
@@ -1324,7 +1450,7 @@
       "kind": "official-notice",
       "sourcePublishedAt": "2026-09-09",
       "firstObservedAt": "2026-09-17T03:27:01.699Z",
-      "lastObservedAt": "2026-09-23T21:30:48.697Z",
+      "lastObservedAt": "2026-09-26T04:59:12.352Z",
       "status": "published",
       "reviewRequired": false
     },
