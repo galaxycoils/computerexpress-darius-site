@@ -2,11 +2,13 @@ import fs from 'node:fs'
 import path from 'node:path'
 import { spawn } from 'node:child_process'
 import { fileURLToPath } from 'node:url'
+import { prerenderRoutes } from '../src/data/routeManifest.js'
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
 const artifacts = path.join(root, 'artifacts/visual')
 const baseUrl = 'http://127.0.0.1:4173'
 const routes = ['/', '/news', '/planning-tracker', '/articles/st-catharines-ontario-street-corridor-plan', '/reader-services']
+const routeCoverage = prerenderRoutes
 const viewports = [
   { name: 'mobile', width: 390, height: 844 },
   { name: 'tablet', width: 768, height: 1024 },
@@ -52,6 +54,7 @@ fs.writeFileSync(testFile, `
 import { test, expect } from '@playwright/test'
 
 const routes = ${JSON.stringify(routes)}
+const routeCoverage = ${JSON.stringify(routeCoverage)}
 const viewports = ${JSON.stringify(viewports)}
 const baseUrl = ${JSON.stringify(baseUrl)}
 const artifacts = ${JSON.stringify(artifacts)}
@@ -61,7 +64,17 @@ for (const viewport of viewports) {
     test.use({ viewport: { width: viewport.width, height: viewport.height } })
     for (const route of routes) {
       test(route, async ({ page }) => {
+        const hydrationErrors = []
+        page.on('console', message => {
+          if (message.type() === 'error' && /hydration|server html|didn't match/i.test(message.text())) {
+            hydrationErrors.push(message.text())
+          }
+        })
+        page.on('pageerror', error => {
+          if (/hydration|server html|didn't match/i.test(error.message)) hydrationErrors.push(error.message)
+        })
         await page.goto(baseUrl + route, { waitUntil: 'networkidle' })
+        expect(hydrationErrors).toEqual([])
         const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth)
         expect(overflow).toBeLessThanOrEqual(1)
         const name = route === '/' ? 'home' : route.replace(/^\\//, '').replaceAll('/', '-')
@@ -70,6 +83,26 @@ for (const viewport of viewports) {
     }
   })
 }
+
+test.describe('all prerendered routes hydrate', () => {
+  test.use({ viewport: { width: 1440, height: 1000 } })
+  for (const route of routeCoverage) {
+    test(route, async ({ page }) => {
+      const hydrationErrors = []
+      page.on('console', message => {
+        if (message.type() === 'error' && /hydration|server html|didn't match/i.test(message.text())) {
+          hydrationErrors.push(message.text())
+        }
+      })
+      page.on('pageerror', error => {
+        if (/hydration|server html|didn't match/i.test(error.message)) hydrationErrors.push(error.message)
+      })
+      await page.goto(baseUrl + route, { waitUntil: 'networkidle' })
+      expect(hydrationErrors).toEqual([])
+      expect(await page.locator('#root').evaluate(el => el.textContent.trim().length)).toBeGreaterThan(0)
+    })
+  }
+})
 `, 'utf8')
 
 const server = spawn('npm', ['run', 'preview', '--', '--host', '127.0.0.1', '--port', '4173'], {

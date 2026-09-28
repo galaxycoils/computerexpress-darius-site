@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from "react";
 import { BrowserRouter, Routes, Route, useParams } from "react-router-dom";
 import Layout from "./components/Layout";
 
@@ -35,6 +35,7 @@ import EditorialDeskPage from "./pages/EditorialDeskPage";
 
 export function AppRoutes() {
   return (
+    <Suspense fallback={<div className="route-loading" role="status">Loading page…</div>}>
     <Routes>
       <Route path="/" element={<Layout />}>
         <Route path="saved" element={<SavedPage />} />
@@ -70,6 +71,7 @@ export function AppRoutes() {
         <Route path="*" element={<NotFoundPage />} />
       </Route>
     </Routes>
+    </Suspense>
   );
 }
 

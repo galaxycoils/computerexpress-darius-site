@@ -8,6 +8,7 @@ import {
 } from "react-router-dom";
 import { SavedStoriesProvider } from "./journal/SavedStories";
 import { CITIES } from "../data/cities";
+import { getRenderNow } from "../utils/renderClock.js";
 const SECTIONS = [
   ["/news", "News"],
   ["/council", "City Hall"],
@@ -132,7 +133,7 @@ export default function Layout() {
             <div className="journal-edition">
               <span>THE NIAGARA EDITION</span>
               <time suppressHydrationWarning>
-                {new Date().toLocaleDateString("en-CA", {
+                {getRenderNow().toLocaleDateString("en-CA", {
                   weekday: "long",
                   month: "long",
                   day: "numeric",
@@ -266,7 +267,7 @@ export default function Layout() {
             </div>
           </div>
           <div className="journal-footer-bottom">
-            <span>© {new Date().getFullYear()} St. Catharines Digital</span>
+            <span>© {getRenderNow().getFullYear()} St. Catharines Digital</span>
             <div>
               <Link to="/reader-services">Reader services</Link>
               <Link to="/privacy">Privacy</Link>

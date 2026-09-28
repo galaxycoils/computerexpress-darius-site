@@ -2,6 +2,7 @@
  * Date formatting utilities for news/police pages.
  * Shared formatters used by NewsPage.jsx and PoliceNewsPage.jsx.
  */
+import { getRenderNow, parseTorontoDate } from "./renderClock.js";
 
 /**
  * Format an ISO date string to a readable Canadian locale date.
@@ -10,12 +11,15 @@
 export function formatDate(isoString) {
   if (!isoString) return '—';
   try {
-    const date = new Date(isoString);
+    const date = parseTorontoDate(isoString);
     if (isNaN(date.getTime())) return isoString;
     return date.toLocaleDateString('en-CA', {
       year: 'numeric',
       month: 'long',
       day: 'numeric',
+      timeZone: /^\d{4}-\d{2}-\d{2}$/.test(isoString)
+        ? 'UTC'
+        : 'America/Toronto',
     });
   } catch {
     return isoString;
@@ -29,9 +33,9 @@ export function formatDate(isoString) {
 export function formatDateShort(isoString) {
   if (!isoString) return '—';
   try {
-    const date = new Date(isoString);
+    const date = parseTorontoDate(isoString);
     if (isNaN(date.getTime())) return isoString;
-    const now = new Date();
+    const now = getRenderNow();
     const diffMs = now - date;
     const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
 
@@ -39,7 +43,14 @@ export function formatDateShort(isoString) {
     if (diffDays === 1) return 'Yesterday';
     if (diffDays < 7) return `${diffDays} days ago`;
     if (diffDays < 30) return `${Math.floor(diffDays / 7)} week${Math.floor(diffDays / 7) > 1 ? 's' : ''} ago`;
-    return date.toLocaleDateString('en-CA', { month: 'short', day: 'numeric', year: 'numeric' });
+    return date.toLocaleDateString('en-CA', {
+      month: 'short',
+      day: 'numeric',
+      year: 'numeric',
+      timeZone: /^\d{4}-\d{2}-\d{2}$/.test(isoString)
+        ? 'UTC'
+        : 'America/Toronto',
+    });
   } catch {
     return isoString;
   }

@@ -9,11 +9,25 @@ const warnings = []
 const isHttpsUrl = value => { try { return new URL(value).protocol === 'https:' } catch { return false } }
 const load = relative => import(pathToFileURL(path.join(root, relative)).href)
 
-const [{ sourceRegistry }, { planningNotices }, nrps] = await Promise.all([
+const [
+  { sourceRegistry },
+  { planningNotices },
+  nrps,
+  { getPublication },
+  { selectHomepageLead },
+] = await Promise.all([
   load('src/data/sourceRegistry.js'),
   load('src/data/planningNotices.js'),
   load('src/data/nrpsReleases.js'),
+  load('src/data/publication.js'),
+  load('src/data/homepageLead.js'),
 ])
+
+const homepageLeadSlug = process.env.VITE_HOMEPAGE_LEAD_SLUG?.trim()
+if (homepageLeadSlug) {
+  const lead = selectHomepageLead(getPublication(), homepageLeadSlug)
+  if (lead?.slug !== homepageLeadSlug) errors.push(`Homepage lead override is not an eligible local story: ${homepageLeadSlug}`)
+}
 
 const sourceIds = new Set()
 for (const source of sourceRegistry) {

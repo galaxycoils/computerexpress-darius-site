@@ -10,6 +10,7 @@
  * Note: Added Flood Resilience Task Force call and Sixteen Mile Creek closure; marked Pine/Sullivan Active.
  * Next review: Daily
  */
+import { getRenderNow, parseTorontoDate } from "../utils/renderClock.js";
 
 export const planningNotices = [
   {
@@ -235,12 +236,12 @@ export const municipalities = [
   { key: "niagara-region", label: "Niagara Region", region: "Niagara" },
 ];
 
-export function getUpcomingMeetings(days = 7, now = new Date()) {
+export function getUpcomingMeetings(days = 7, now = getRenderNow()) {
   const start = now.getTime();
   const end = start + days * 24 * 60 * 60 * 1000;
   return planningNotices.filter((notice) => {
     if (!notice.meetingDate) return false;
-    const t = new Date(notice.meetingDate).getTime();
+    const t = parseTorontoDate(notice.meetingDate).getTime();
     return t >= start && t <= end;
   });
 }

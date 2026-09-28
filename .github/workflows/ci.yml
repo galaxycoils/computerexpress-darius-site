@@ -13,6 +13,9 @@ on:
 permissions:
   contents: read
 
+env:
+  VITE_HOMEPAGE_LEAD_SLUG: ${{ vars.VITE_HOMEPAGE_LEAD_SLUG }}
+
 concurrency:
   group: ci-matrix-${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
@@ -31,6 +34,9 @@ jobs:
           - node-version: 22
             suite: unit
             command: npm test
+          - node-version: 22
+            suite: critical-logic-coverage
+            command: npm run test:coverage
           - node-version: 22
             suite: collector
             command: node --test scripts/*.regression.mjs
@@ -80,6 +86,9 @@ jobs:
 
       - name: Production build
         run: npm run build
+
+      - name: Report homepage bundle budget
+        run: npm run budget:bundle
 
       - name: Upload dist artifact (Node 22 only)
         if: matrix.node-version == 22

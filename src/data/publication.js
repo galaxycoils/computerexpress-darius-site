@@ -2,6 +2,7 @@ import { getPublishableContent } from "./contentRegistry.js";
 import { planningNotices } from "./planningNotices.js";
 import { nrpsReleases } from "./nrpsReleases.js";
 import discovery from "./generated/discovery.json" with { type: "json" };
+import { getRenderNow } from "../utils/renderClock.js";
 
 export function canonicalSource(value) {
   try {
@@ -32,7 +33,7 @@ export function dateLabel(value, options = {}) {
         ...options,
       });
 }
-export function todayToronto(now = new Date()) {
+export function todayToronto(now = getRenderNow()) {
   return new Intl.DateTimeFormat("en-CA", {
     timeZone: "America/Toronto",
     year: "numeric",
@@ -64,7 +65,7 @@ function topicOf(item) {
     return "Development";
   return "Local news";
 }
-export function getPublication(now = new Date()) {
+export function getPublication(now = getRenderNow()) {
   const today = todayToronto(now);
   const output = new Map();
   const add = (item) => {

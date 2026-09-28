@@ -5,6 +5,7 @@
  * - Welland: welland.ca/city-hall/mayor-and-council/council-agendas-and-minutes
  * - Thorold: thorold.ca/council-administration/council/council-meetings
  */
+import { getRenderNow, parseTorontoDate } from '../utils/renderClock.js'
 
 export const councilData = [
   // ST. CATHARINES
@@ -775,25 +776,22 @@ export function getCouncilByType(type) {
   return councilData.filter(n => n.type === type)
 }
 
-export function getUpcomingCouncilMeetings() {
-  const now = new Date()
+export function getUpcomingCouncilMeetings(now = getRenderNow()) {
   return councilData
-    .filter(n => n.councilDate && !n.status?.toLowerCase().includes('complete') && new Date(n.councilDate) > now)
-    .sort((a, b) => new Date(a.councilDate) - new Date(b.councilDate))
+    .filter(n => n.councilDate && !n.status?.toLowerCase().includes('complete') && parseTorontoDate(n.councilDate) > now)
+    .sort((a, b) => parseTorontoDate(a.councilDate) - parseTorontoDate(b.councilDate))
 }
 
-export function getCompletedCouncilMeetings() {
-  const now = new Date()
+export function getCompletedCouncilMeetings(now = getRenderNow()) {
   return councilData
-    .filter(n => n.councilDate && n.status?.toLowerCase().includes('complete') && new Date(n.councilDate) < now)
-    .sort((a, b) => new Date(b.councilDate) - new Date(a.councilDate))
+    .filter(n => n.councilDate && n.status?.toLowerCase().includes('complete') && parseTorontoDate(n.councilDate) < now)
+    .sort((a, b) => parseTorontoDate(b.councilDate) - parseTorontoDate(a.councilDate))
 }
 
-export function getCouncilStats() {
-  const now = new Date()
+export function getCouncilStats(now = getRenderNow()) {
   const all = councilData.length
-  const upcoming = getUpcomingCouncilMeetings().length
-  const completed = getCompletedCouncilMeetings().length
+  const upcoming = getUpcomingCouncilMeetings(now).length
+  const completed = getCompletedCouncilMeetings(now).length
   const active = all - upcoming - completed
 
   const byMunicipality = {}

@@ -10,6 +10,7 @@ ruvector.db
 graphify-out/
 artifacts/
 test-results/
+coverage/
 
 # Local Netlify folder
 .netlify

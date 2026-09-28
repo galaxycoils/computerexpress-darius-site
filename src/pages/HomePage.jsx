@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import Seo, { BASE_URL } from "../components/Seo";
 import { getNewsMediaSchema } from "../data/schema";
 import { getPublication, dateLabel } from "../data/publication";
+import { selectHomepageLead } from "../data/homepageLead";
 import { localPhotos } from "../data/localPhotos";
 import { getUpcomingMeetings } from "../data/planningNotices";
 import Story, {
@@ -17,13 +18,10 @@ export default function HomePage() {
     local = stories.filter(
       (s) => s.cities.includes("St. Catharines") && s.topic !== "Public safety",
     ),
-    lead =
-      local.find(
-        (s) => s.slug === "st-catharines-ontario-street-corridor-plan",
-      ) ||
-      local.find((s) => s.slug) ||
-      local[0] ||
-      stories[0];
+    lead = selectHomepageLead(
+      stories,
+      import.meta.env.VITE_HOMEPAGE_LEAD_SLUG || "",
+    );
   const latest = stories.filter((s) => s.date && s.id !== lead?.id).slice(0, 4),
     used = new Set([lead?.id, ...latest.map((s) => s.id)]);
   const more = stories.filter((s) => s.date && !used.has(s.id)).slice(0, 4),

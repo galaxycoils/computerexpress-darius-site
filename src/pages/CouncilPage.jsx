@@ -2,6 +2,7 @@ import { Helmet } from 'react-helmet-async'
 import { Link } from 'react-router-dom'
 import { planningNotices } from '../data/planningNotices'
 import '../components/news/CouncilPage.css'
+import { parseTorontoDate } from '../utils/renderClock.js'
 
 const COUNCIL_SOURCES = [
   {
@@ -31,7 +32,7 @@ function formatRecordDate(value) {
       timeZone: 'UTC',
     })
   }
-  const date = new Date(value)
+  const date = parseTorontoDate(value)
   if (Number.isNaN(date.getTime())) return value
   return date.toLocaleDateString('en-CA', {
     month: 'short',

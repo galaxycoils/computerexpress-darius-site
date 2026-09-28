@@ -10,16 +10,20 @@ import {
   getActiveNotices,
 } from "../data/planningNotices";
 import { siteConfig } from "../data/siteConfig";
+import { getRenderNow, parseTorontoDate } from "../utils/renderClock.js";
 
 function formatDate(dateStr) {
   if (!dateStr) return "—";
   try {
-    const date = new Date(dateStr);
+    const date = parseTorontoDate(dateStr);
     if (isNaN(date.getTime())) return dateStr;
     return date.toLocaleDateString("en-CA", {
       year: "numeric",
       month: "short",
       day: "numeric",
+      timeZone: /^\d{4}-\d{2}-\d{2}$/.test(dateStr)
+        ? "UTC"
+        : "America/Toronto",
       ...(date.getHours() || date.getMinutes()
         ? { hour: "numeric", minute: "2-digit" }
         : {}),
@@ -32,9 +36,9 @@ function formatDate(dateStr) {
 function formatRelativeDate(dateStr) {
   if (!dateStr) return "";
   try {
-    const date = new Date(dateStr);
+    const date = parseTorontoDate(dateStr);
     if (isNaN(date.getTime())) return "";
-    const now = new Date();
+    const now = getRenderNow();
     const diffMs = date - now;
     const diffDays = Math.ceil(diffMs / (1000 * 60 * 60 * 24));
 

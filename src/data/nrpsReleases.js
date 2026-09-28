@@ -6,6 +6,7 @@
  * Next review: Daily (cron) — refresh from niagarapolice.ca
  * Note: added Sep 24 Port Colborne cable-theft arrests (6 District); retained Sep 23 Niagara Falls robbery update and Sep 21–22 homicide wanted/update items.
  */
+import { getRenderNow } from '../utils/renderClock.js'
 
 export const nrpsReleases = [
   {
@@ -586,8 +587,8 @@ export const nrpsReleases = [
   },
 ];
 
-export function getLatestNrpsReleases(count = 10, days = 7) {
-  const cutoff = new Date();
+export function getLatestNrpsReleases(count = 10, days = 7, now = getRenderNow()) {
+  const cutoff = new Date(now);
   cutoff.setDate(cutoff.getDate() - days);
   return nrpsReleases
     .filter(r => new Date(r.date) >= cutoff)
@@ -607,8 +608,8 @@ export function getNrpsReleasesByCategory(category) {
   return nrpsReleases.filter(r => r.category === category);
 }
 
-export function getNrpsStats() {
-  const recent = getLatestNrpsReleases(20, 30);
+export function getNrpsStats(now = getRenderNow()) {
+  const recent = getLatestNrpsReleases(20, 30, now);
   const byCategory = {};
   const byMunicipality = {};
   let latestDate = null;
@@ -622,7 +623,7 @@ export function getNrpsStats() {
 
   return {
     total: nrpsReleases.length,
-    recent7Days: getLatestNrpsReleases(20, 7).length,
+    recent7Days: getLatestNrpsReleases(20, 7, now).length,
     recent30Days: recent.length,
     byCategory,
     byMunicipality,

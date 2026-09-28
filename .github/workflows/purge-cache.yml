@@ -20,10 +20,14 @@ jobs:
             echo "::error::Missing CLOUDFLARE_ZONE_ID secret (zone for stcatharinesdigital.ca)"
             exit 1
           fi
-          curl -sS -X POST \
+          response=$(curl --fail --silent --show-error -X POST \
             "https://api.cloudflare.com/client/v4/zones/${CF_ZONE_ID}/purge_cache" \
             -H "Authorization: Bearer ${CF_API_TOKEN}" \
             -H "Content-Type: application/json" \
-            --data '{"purge_everything":true}'
-          echo
+            --data '{"purge_everything":true}')
+          if ! jq -e '.success == true' <<<"$response" >/dev/null; then
+            echo "::error::Cloudflare rejected the cache purge request"
+            jq -c '{errors, messages}' <<<"$response"
+            exit 1
+          fi
           echo "Purge requested for zone ${CF_ZONE_ID}"

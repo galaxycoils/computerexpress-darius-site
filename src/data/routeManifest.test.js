@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { prerenderRoutes, sitemapRoutes, createSitemapXml } from './routeManifest'
+import { prerenderRoutes, sitemapRoutes, createSitemapXml, getRoutePageModule } from './routeManifest'
 
 describe('newsroom route manifest', () => {
   it('keeps the removed Guides section out of prerendering and sitemap', () => {
@@ -14,6 +14,12 @@ describe('newsroom route manifest', () => {
   it('prerenders the private preferences route without adding it to the sitemap', () => {
     expect(prerenderRoutes).toContain('/preferences')
     expect(sitemapRoutes).not.toContain('/preferences')
+  })
+  it('maps every prerendered route to its page module', () => {
+    for (const route of prerenderRoutes) expect(getRoutePageModule(route)).toMatch(/^src\/pages\/.+\.jsx$/)
+    expect(getRoutePageModule('/news/police')).toBe('src/pages/PoliceNewsPage.jsx')
+    expect(getRoutePageModule('/news/st-catharines')).toBe('src/pages/CityNewsPage.jsx')
+    expect(getRoutePageModule('/articles/example')).toBe('src/pages/ArticlePage.jsx')
   })
 })
 

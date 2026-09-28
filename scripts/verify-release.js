@@ -1,31 +1,35 @@
 import { readFileSync } from "node:fs";
 import { getPublication } from '../src/data/publication.js';
 import { decodeEntities } from './collect-official-news.js';
+import { getReleaseRenderNow, isExpectedRelease } from './releaseVerification.js';
 const expected = JSON.parse(readFileSync("dist/release.json", "utf8"));
 const base = process.env.VERIFY_BASE_URL || "https://stcatharinesdigital.ca";
+const expectedSha = process.env.EXPECTED_RELEASE_SHA || expected.sha;
+const matchRenderTime = process.env.VERIFY_EXISTING_RELEASE !== "1";
+const matches = (release) => isExpectedRelease(
+  release,
+  expected,
+  expectedSha,
+  { matchRenderTime },
+);
 let actual;
 for (let attempt = 0; attempt < 6; attempt++) {
   try {
     const r = await fetch(
-      `${base}/release.json?revision=${expected.sha}&attempt=${attempt}`,
+      `${base}/release.json?revision=${expectedSha}&attempt=${attempt}`,
       { cache: "no-store", signal: AbortSignal.timeout(15000) },
     );
     if (r.ok) {
       actual = await r.json();
-      if (
-        actual.sha === expected.sha &&
-        actual.snapshotHash === expected.snapshotHash
-      )
-        break;
+      if (matches(actual)) break;
     }
   } catch {}
   if (attempt < 5) await new Promise((resolve) => setTimeout(resolve, 10000));
 }
-if (
-  actual?.sha !== expected.sha ||
-  actual?.snapshotHash !== expected.snapshotHash
-)
-  throw new Error("Live release does not match the built content revision");
+if (!matches(actual))
+  throw new Error("Live release does not match the expected commit and content snapshot");
+const publication = getPublication(getReleaseRenderNow(matchRenderTime ? expected : actual));
+const latestPublication = publication.slice(0, 3);
 for (const [path, text] of [
   ["/", "Your city. Your stories."],
   ["/events/", "Make a little room"],
@@ -38,14 +42,14 @@ for (const [path, text] of [
     throw new Error(`Live route verification failed: ${path}`);
   if (path === '/news/') {
     const readable = decodeEntities(html);
-    for (const item of getPublication().slice(0, 3)) {
+    for (const item of latestPublication) {
       if (!readable.includes(item.title)) throw new Error('Latest published title missing from live news: ' + item.id);
     }
   }
 }
-const rssResponse = await fetch(`${base}/rss.xml?revision=${expected.sha}`, {signal: AbortSignal.timeout(15000)});
+const rssResponse = await fetch(`${base}/rss.xml?revision=${expectedSha}`, {signal: AbortSignal.timeout(15000)});
 const rss = decodeEntities(await rssResponse.text());
-if (!rssResponse.ok || getPublication().slice(0, 3).some(item => !rss.includes(item.title))) throw new Error('Latest published titles missing from live RSS');
+if (!rssResponse.ok || latestPublication.some(item => !rss.includes(item.title))) throw new Error('Latest published titles missing from live RSS');
 console.log(
   `Verified ${actual.sha}, ${actual.records} records, four public routes, and latest titles in news/RSS.`,
 );

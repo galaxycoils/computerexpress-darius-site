@@ -1,5 +1,13 @@
 # Editorial operations
 
+## Automatic news collection and publishing
+
+The official-source collector runs every three hours on `main`. Approved, non-review sources are validated, tested, committed without a pull-request approval step, deployed to Cloudflare Pages, and checked against the live release SHA and content snapshot. The job waits for deployment and fails if the live site or latest news/RSS titles do not match. Sources marked `reviewRequired` remain pending and are never auto-published.
+
+Autonomous publishing uses the repository's built-in `GITHUB_TOKEN` with the workflow's scoped `contents: write` and `actions: write` permissions, plus the `CF_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID` repository secrets. `ALERT_TOKEN_SECRET` is separate: it enables signed planning-alert subscriptions and is not required to collect or publish news. `CLOUDFLARE_ZONE_ID` only enables optional edge-cache purging.
+
+To pin the homepage lead story, set the repository variable `VITE_HOMEPAGE_LEAD_SLUG` to an eligible St. Catharines story slug. Without it, the newest dated eligible local story is selected. Content audit rejects an ineligible override before build or publication.
+
 ## Editorial desk
 
 `/editorial` is a no-index client route. It displays no data until a code is entered and all data requests use a bearer token over HTTPS.

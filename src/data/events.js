@@ -1,5 +1,6 @@
 import { planningNotices } from "./planningNotices.js";
 import { todayToronto } from "./publication.js";
+import { getRenderNow } from "../utils/renderClock.js";
 export const civicEvents = planningNotices
   .filter((n) => n.meetingDate)
   .map((n) => ({ ...n, startsAt: n.meetingDate, timezone: "America/Toronto" }))
@@ -74,7 +75,7 @@ export function createCalendarEvent(event) {
 }
 export function filterEvents(
   { city = "", period = "upcoming", date = "" } = {},
-  now = new Date(),
+  now = getRenderNow(),
 ) {
   const today = todayToronto(now);
   return civicEvents.filter(

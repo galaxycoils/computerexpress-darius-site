@@ -19,7 +19,7 @@ on:
       dry_run:
         description: Fetch without proposing a publication
         required: true
-        default: true
+        default: false
         type: boolean
 
 permissions:
@@ -34,11 +34,12 @@ jobs:
   collect:
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
-    timeout-minutes: 45
+    timeout-minutes: 180
     env:
       MODE: ${{ github.event_name == 'schedule' && 'write' || (inputs.dry_run && 'dry-run' || 'write') }}
       SOURCE: ${{ inputs.source || 'all' }}
       GH_TOKEN: ${{ github.token }}
+      VITE_HOMEPAGE_LEAD_SLUG: ${{ vars.VITE_HOMEPAGE_LEAD_SLUG }}
 
     steps:
       - name: Check out main
@@ -98,55 +99,131 @@ jobs:
           set -euo pipefail
           git config user.name "stcatharinesdigital-bot"
           git config user.email "actions@users.noreply.github.com"
-          branch="news/official-source-${GITHUB_RUN_ID}"
-          git switch -c "$branch"
           git add src/data/generated/discovery.json
           git commit -m "news: autonomous official-source refresh $(date -u +%Y-%m-%d)"
-          git fetch origin main
-          git rebase origin/main
-          git push origin "HEAD:refs/heads/$branch"
-          # GitHub Actions cannot open pull requests in this repository.
-          # workflow_dispatch runs both independent quality gates on the
-          # candidate branch before a fast-forward publish to main.
-          candidate=$(git rev-parse HEAD)
-          for workflow in ci.yml content-integrity.yml; do
-            gh workflow run "$workflow" --ref "$branch"
-            run_id=''
-            for attempt in {1..30}; do
-              run_id=$(gh run list --workflow "$workflow" --branch "$branch" \
-                --event workflow_dispatch --json databaseId,headSha \
-                --jq ".[] | select(.headSha == \"$candidate\") | .databaseId" | head -n 1)
-              if [ -n "$run_id" ]; then break; fi
-              sleep 2
-            done
-            if [ -z "$run_id" ]; then
-              echo "::error::No $workflow run started for $candidate"
-              exit 1
+          built_base=$(git rev-parse HEAD^)
+          published=false
+          for attempt in 1 2 3; do
+            git fetch origin main
+            git rebase origin/main
+            current_base=$(git rev-parse HEAD^)
+            if [ "$current_base" != "$built_base" ]; then
+              npm ci
+              npm run content:audit
+              npm test
+              npm run build
+              npm run audit:schema
+              built_base="$current_base"
             fi
-            gh run watch "$run_id" --exit-status
+            branch="news/official-source-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}-${attempt}"
+            git push origin "HEAD:refs/heads/$branch"
+            # Dispatch quality gates on the candidate branch; bot pushes do not
+            # trigger push workflows, and pull requests require approval here.
+            candidate=$(git rev-parse HEAD)
+            for workflow in ci.yml content-integrity.yml; do
+              gh workflow run "$workflow" --ref "$branch"
+            done
+            for workflow in ci.yml content-integrity.yml; do
+              run_id=''
+              for lookup in {1..30}; do
+                run_id=$(gh run list --workflow "$workflow" --branch "$branch" \
+                  --event workflow_dispatch --json databaseId,headSha \
+                  --jq ".[] | select(.headSha == \"$candidate\") | .databaseId" | head -n 1)
+                if [ -n "$run_id" ]; then break; fi
+                sleep 2
+              done
+              if [ -z "$run_id" ]; then
+                echo "::error::No $workflow run started for $candidate"
+                exit 1
+              fi
+              gh run watch "$run_id" --exit-status
+            done
+            git fetch origin main
+            if [ "$(git rev-parse origin/main)" = "$current_base" ] && \
+              git push origin "HEAD:refs/heads/main"; then
+              git push origin --delete "$branch" || echo "::warning::Could not remove candidate branch $branch"
+              published=true
+              break
+            fi
+            git push origin --delete "$branch" || echo "::warning::Could not remove candidate branch $branch"
           done
-          git fetch origin main
-          if [ "$(git rev-parse origin/main)" != "$(git rev-parse HEAD^)" ]; then
-            echo '::error::Main advanced during validation. A fresh collection is required.'
+          if [ "$published" != true ]; then
+            echo '::error::Main kept advancing during candidate validation.'
             exit 1
           fi
-          git push origin "HEAD:refs/heads/main"
-          git push origin --delete "$branch" || echo "::warning::Could not remove candidate branch $branch"
 
       - name: Ensure the latest snapshot is public
         if: env.MODE == 'write'
         shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
           set -euo pipefail
-          git fetch origin main
-          revision=$(git rev-parse origin/main)
-          # Also repair a prior failed deployment on a no-change collection.
-          live=$(curl --fail --silent --show-error --max-time 20 "https://stcatharinesdigital.ca/release.json?collector=$GITHUB_RUN_ID" | jq -r '.sha // empty') || live=''
-          if [ "$live" != "$revision" ]; then
-            gh workflow run deploy.yml --ref main -f reason=official-source-refresh -f publication_sha="$revision"
-            echo "Requested deployment of $revision" >> "$GITHUB_STEP_SUMMARY"
-          else
-            echo "Publication already live at $revision" >> "$GITHUB_STEP_SUMMARY"
+          verified=false
+          for attempt in 1 2 3; do
+            git fetch origin main
+            revision=$(git rev-parse origin/main)
+            if [ "$(git rev-parse HEAD)" != "$revision" ]; then
+              git switch --detach "$revision"
+              npm ci
+              npm run content:audit
+              npm test
+              npm run build
+              npm run audit:schema
+            fi
+            # Repair a prior failed deployment, including a stale content snapshot.
+            expected_snapshot=$(jq -er '.snapshotHash' dist/release.json)
+            live_release=$(curl --fail --silent --show-error --max-time 20 "https://stcatharinesdigital.ca/release.json?collector=$GITHUB_RUN_ID&attempt=$attempt") || live_release='{}'
+            live_sha=$(jq -r '.sha // empty' <<< "$live_release") || live_sha=''
+            live_snapshot=$(jq -r '.snapshotHash // empty' <<< "$live_release") || live_snapshot=''
+            live_rendered_at=$(jq -r '.renderedAt // empty' <<< "$live_release") || live_rendered_at=''
+            if ! node -e 'if (Number.isNaN(Date.parse(process.argv[1]))) process.exit(1)' "$live_rendered_at"; then
+              live_rendered_at=''
+            fi
+            verify_existing=0
+            if [ "$live_sha" != "$revision" ] || [ "$live_snapshot" != "$expected_snapshot" ] || [ -z "$live_rendered_at" ]; then
+              reason="official-source-refresh-${GITHUB_RUN_ID}-${attempt}"
+              rendered_at=$(jq -er '.renderedAt' dist/render-context.json)
+              expected_title="Deploy $revision / $reason"
+              gh workflow run deploy.yml --ref main -f reason="$reason" \
+                -f publication_sha="$revision" -f rendered_at="$rendered_at"
+              run_id=''
+              for lookup in {1..60}; do
+                run_id=$(gh run list --workflow deploy.yml --branch main --event workflow_dispatch \
+                  --limit 50 --json databaseId,displayTitle \
+                  --jq ".[] | select(.displayTitle == \"$expected_title\") | .databaseId" | head -n 1)
+                if [ -n "$run_id" ]; then break; fi
+                sleep 5
+              done
+              if [ -z "$run_id" ]; then
+                echo "::error::Could not find deployment run for $revision"
+                exit 1
+              fi
+              gh run watch "$run_id" --exit-status --interval 10
+            else
+              echo "Publication already live at $revision" >> "$GITHUB_STEP_SUMMARY"
+              verify_existing=1
+            fi
+            git fetch origin main
+            if [ "$(git rev-parse origin/main)" != "$revision" ]; then
+              continue
+            fi
+            if VERIFY_EXISTING_RELEASE="$verify_existing" EXPECTED_RELEASE_SHA="$revision" node scripts/verify-release.js; then
+              git fetch origin main
+              if [ "$(git rev-parse origin/main)" = "$revision" ]; then
+                verified=true
+                break
+              fi
+            else
+              git fetch origin main
+              if [ "$(git rev-parse origin/main)" = "$revision" ]; then
+                exit 1
+              fi
+            fi
+          done
+          if [ "$verified" != true ]; then
+            echo '::error::Main kept advancing during deployment verification.'
+            exit 1
           fi
 
       - name: Summarize source health

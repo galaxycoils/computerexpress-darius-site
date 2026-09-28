@@ -1,4 +1,5 @@
 name: Deploy to Cloudflare Pages
+run-name: Deploy ${{ inputs.publication_sha || github.sha }} / ${{ inputs.reason || 'automatic' }}
 
 on:
   # Human pushes to main
@@ -21,6 +22,15 @@ on:
         description: Exact post-collection revision (blank deploys the dispatch revision)
         required: false
         type: string
+
+      rendered_at:
+        description: Frozen publication timestamp from the collector build
+        required: false
+        type: string
+
+env:
+  VITE_HOMEPAGE_LEAD_SLUG: ${{ vars.VITE_HOMEPAGE_LEAD_SLUG }}
+  SCD_RENDER_NOW: ${{ inputs.rendered_at }}
 
 concurrency:
   group: deploy-cloudflare-pages
@@ -78,8 +88,14 @@ jobs:
       - name: Application tests
         run: npm test
 
+      - name: Critical logic coverage
+        run: npm run test:coverage
+
       - name: Build
         run: npm run build
+
+      - name: Report homepage bundle budget
+        run: npm run budget:bundle
 
       - name: Verify Cloudflare credentials
         env:
@@ -195,7 +211,13 @@ jobs:
             "https://api.cloudflare.com/client/v4/zones/${CF_ZONE_ID}/purge_cache" \
             -H "Authorization: Bearer ${CF_API_TOKEN}" \
             -H "Content-Type: application/json" \
-            --data '{"purge_everything":true}'
+            --fail --show-error --silent \
+            --data '{"purge_everything":true}' > purge-response.json
+          if ! jq -e '.success == true' purge-response.json >/dev/null; then
+            echo "::error::Cloudflare rejected the cache purge request"
+            jq -c '{errors, messages}' purge-response.json
+            exit 1
+          fi
           echo "Edge cache purge requested for zone ${CF_ZONE_ID}"
           echo "enabled=true" >> "$GITHUB_OUTPUT"
 

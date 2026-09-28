@@ -40,6 +40,46 @@ export const programmaticRoutes = [
 ];
 export const privateRoutes = ["/preferences", "/saved"];
 export const clientOnlyRoutes = ["/editorial"];
+
+const exactPageModules = {
+  "/": "HomePage",
+  "/about": "AboutPage",
+  "/contact": "ContactPage",
+  "/sponsor": "SponsorPage",
+  "/votes": "VotesHubPage",
+  "/editorial-policy": "EditorialPolicyPage",
+  "/corrections": "CorrectionsPage",
+  "/welland-votes": "WellandVotesPage",
+  "/privacy": "PrivacyPage",
+  "/terms": "TermsPage",
+  "/planning-tracker": "PlanningTrackerPage",
+  "/council": "CouncilPage",
+  "/police": "PolicePage",
+  "/news": "NewsPage",
+  "/news/police": "PoliceNewsPage",
+  "/planning-alerts": "PlanningAlertsPage",
+  "/membership": "MembershipPage",
+  "/reader-services": "ReaderServicesPage",
+  "/search": "SearchPage",
+  "/events": "EventsPage",
+  "/explore": "ExplorePage",
+  "/accessibility": "AccessibilityPage",
+  "/preferences": "AlertPreferencesPage",
+  "/saved": "SavedPage",
+  "/editorial": "EditorialDeskPage",
+  "/404": "NotFoundPage",
+};
+
+export function getRoutePageModule(route) {
+  let page = exactPageModules[route];
+  if (!page && route.startsWith("/articles/")) page = "ArticlePage";
+  if (!page && route.startsWith("/development/")) page = "ProjectPage";
+  if (!page && route.startsWith("/events/")) page = "EventsPage";
+  if (!page && route.startsWith("/explore/")) page = "ExplorePage";
+  if (!page && route.startsWith("/news/")) page = "CityNewsPage";
+  return page ? `src/pages/${page}.jsx` : null;
+}
+
 const articleModifiedDates = new Map(
   getPublishableContent().map((item) => [
     `/articles/${item.slug}`,

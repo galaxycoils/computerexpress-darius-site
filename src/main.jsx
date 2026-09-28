@@ -1,7 +1,7 @@
 import React from "react";
-import ReactDOM from "react-dom/client";
+import { createRoot, hydrateRoot } from "react-dom/client";
 import { HelmetProvider } from "react-helmet-async";
-import App from "./App";
+import App from "./AppClient";
 import ErrorBoundary from "./components/ErrorBoundary";
 import "./styles/theme-civic.css";
 import "./styles.css";
@@ -31,14 +31,18 @@ if (baseUrl) {
   }
 }
 
-ReactDOM.createRoot(document.getElementById("root")).render(
+const rootElement = document.getElementById("root");
+const app = (
   <React.StrictMode>
     <HelmetProvider>
       <ErrorBoundary>
         <App />
       </ErrorBoundary>
     </HelmetProvider>
-  </React.StrictMode>,
+  </React.StrictMode>
 );
+
+if (rootElement.hasChildNodes()) hydrateRoot(rootElement, app);
+else createRoot(rootElement).render(app);
 
 import "./styles/journal.css";

@@ -11,6 +11,9 @@ on:
 permissions:
   contents: read
 
+env:
+  VITE_HOMEPAGE_LEAD_SLUG: ${{ vars.VITE_HOMEPAGE_LEAD_SLUG }}
+
 concurrency:
   group: content-integrity-${{ github.ref }}
   cancel-in-progress: false

@@ -1,0 +1,11 @@
+{
+  "enforcement": {
+    "command": "npx vitest run --coverage",
+    "threshold": 100,
+    "include": [
+      "src/data/homepageLead.js",
+      "src/utils/renderClock.js",
+      "scripts/releaseVerification.js"
+    ]
+  }
+}

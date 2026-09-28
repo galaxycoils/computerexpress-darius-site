@@ -1,9 +1,12 @@
 import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
-import { writeFileSync } from "node:fs";
+import { readFileSync, writeFileSync } from "node:fs";
 import { canonicalSource, getPublication } from "../src/data/publication.js";
 import { planningNotices } from "../src/data/planningNotices.js";
-const publication = getPublication();
+import { getReleaseRenderNow } from "./releaseVerification.js";
+const renderContext = JSON.parse(readFileSync("dist/render-context.json", "utf8"));
+const renderedAt = getReleaseRenderNow(renderContext).toISOString();
+const publication = getPublication(new Date(renderedAt));
 const planningBySource = new Map(planningNotices.map(notice => [canonicalSource(notice.sourceUrl), notice]));
 function categoryOf(item, manual) {
   if (manual?.category) return manual.category;
@@ -43,6 +46,7 @@ writeFileSync(
     {
       sha,
       snapshotHash,
+      renderedAt,
       builtAt: new Date().toISOString(),
       records: publication.length,
       design: "garden-city-journal",

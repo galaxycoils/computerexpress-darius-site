@@ -4,6 +4,7 @@ import Seo, { BASE_URL } from '../components/Seo'
 import { nrpsReleases } from '../data/nrpsReleases'
 import { siteConfig } from '../data/siteConfig'
 import AnimatedSection from '../hooks/useInView'
+import { parseTorontoDate } from '../utils/renderClock.js'
 
 export default function PoliceNewsPage() {
   const [search, setSearch] = useState('')
@@ -38,9 +39,16 @@ export default function PoliceNewsPage() {
   const formatDate = (dateStr) => {
     if (!dateStr) return '—'
     try {
-      const d = new Date(dateStr)
+      const d = parseTorontoDate(dateStr)
       if (isNaN(d.getTime())) return dateStr
-      return d.toLocaleDateString('en-CA', { year: 'numeric', month: 'long', day: 'numeric' })
+      return d.toLocaleDateString('en-CA', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        timeZone: /^\d{4}-\d{2}-\d{2}$/.test(dateStr)
+          ? 'UTC'
+          : 'America/Toronto',
+      })
     } catch { return dateStr }
   }
 
