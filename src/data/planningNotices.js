@@ -6,8 +6,8 @@
  * - thorold.ca
  * - niagararegion.ca
  *
- * Updated: 2026-09-27
- * Note: Added STC Maple/Ellis/Louis hearings, Welland First St + Niagara St CoA, Thorold McMillan PIC and Pine/Sullivan closure.
+ * Updated: 2026-09-28
+ * Note: Added Flood Resilience Task Force call and Sixteen Mile Creek closure; marked Pine/Sullivan Active.
  * Next review: Daily
  */
 
@@ -87,6 +87,21 @@ export const planningNotices = [
     tags: ["Property Standards", "Louis Avenue", "Appeal"],
   },
   {
+    id: "stc-flood-resilience-task-force",
+    municipality: "St. Catharines",
+    type: "Advisory Appointment",
+    title: "Flood Resilience Task Force — Applications Open",
+    description:
+      "The City is accepting applications for an independent Flood Resilience Task Force to review July and August 2026 rainfall flooding and recommend a Flood Resilience Action Plan. Applications are due by noon on October 16, 2026.",
+    status: "Open",
+    submissionDeadline: "2026-10-16T12:00:00",
+    publishedDate: "2026-09-24",
+    sourceUrl:
+      "https://www.stcatharines.ca/council-and-administration/committees-boards-and-task-forces/advisory-committees-and-task-forces/flood-resilience-task-force/",
+    category: "advisory",
+    tags: ["Flood", "Task Force", "Appointments", "St. Catharines"],
+  },
+  {
     id: "welland-coa-first-st-37-40",
     municipality: "Welland",
     type: "Consent and Minor Variance (Committee of Adjustment)",
@@ -144,8 +159,8 @@ export const planningNotices = [
     type: "Temporary Road Closure",
     title: "Pine Street and Sullivan Avenue Intersection Closure",
     description:
-      "The Pine Street and Sullivan Avenue intersection will close Monday, September 28 at 7:00 a.m. for contractor work and is expected to reopen Tuesday, September 29 at about 6:00 p.m., weather permitting.",
-    status: "Scheduled",
+      "The Pine Street and Sullivan Avenue intersection closed Monday, September 28 at 7:00 a.m. for contractor work and is expected to reopen Tuesday, September 29 at about 6:00 p.m., weather permitting.",
+    status: "Active",
     meetingDate: "2026-09-28T07:00:00",
     publishedDate: "2026-09-25",
     sourceUrl: "https://www.thorold.ca/news/city-of-thorold-emergency-alert-banner/",
@@ -180,6 +195,20 @@ export const planningNotices = [
     sourceUrl: "https://niagararegion.ca/projects/quaker-road-sanitary-sewer/default.aspx",
     category: "road-closure",
     tags: ["Road Closure", "Quaker Road", "Sanitary Sewer", "Niagara Region"],
+  },
+  {
+    id: "niagara-sixteen-mile-creek-bridge-closure",
+    municipality: "Niagara Region",
+    type: "Road Closure",
+    title: "Sixteen Mile Creek Bridge — North Service Road Closure",
+    description:
+      "Niagara Region is rehabilitating the Sixteen Mile Creek Bridge on North Service Road (Regional Road 39) in Lincoln. A posted road-closure notice covers Oct. 5 to Nov. 27, 2026.",
+    status: "Scheduled",
+    publishedDate: "2026-09-24",
+    sourceUrl:
+      "https://www.niagararegion.ca/projects/sixteen-mile-bridge-rehabilitation/default.aspx",
+    category: "road-closure",
+    tags: ["Road Closure", "Sixteen Mile Creek", "Lincoln", "Niagara Region"],
   },
 ];
 
