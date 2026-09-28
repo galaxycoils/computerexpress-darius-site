@@ -28,6 +28,9 @@ describe('Council portal and civic records', () => {
   })
   it('renders sourced records and their documented statuses', () => {
     const { container } = renderPage()
+    container.querySelectorAll('.scd-city-records').forEach(city => {
+      expect(city.querySelectorAll('.scd-record-card').length).toBeGreaterThan(0)
+    })
     const cards = container.querySelectorAll('.scd-record-card')
     expect(cards.length).toBeGreaterThan(0)
     cards.forEach(card => {

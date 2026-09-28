@@ -1,5 +1,13 @@
 import { describe, expect, it } from 'vitest'
-import { getUpcomingMeetings } from './planningNotices.js'
+import { getUpcomingMeetings, planningNotices, noticeCategories, municipalities, getNoticeStats } from './planningNotices.js'
+
+describe('planning tracker data', () => {
+  it('offers filters for every current category and municipality', () => {
+    expect(noticeCategories.map(({ key }) => key).sort()).toEqual([...new Set(planningNotices.map(({ category }) => category))].sort())
+    expect(municipalities.map(({ label }) => label)).toEqual(['St. Catharines', 'Welland', 'Thorold', 'Niagara Region'])
+    expect(getNoticeStats().total).toBe(planningNotices.length)
+  })
+})
 
 describe('getUpcomingMeetings', () => {
   it('keeps the front-page calendar within its declared seven-day window', () => {

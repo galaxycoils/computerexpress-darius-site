@@ -268,11 +268,10 @@ export default function PlanningTrackerPage() {
                 >
                   <option value="all">All Municipalities</option>
                   {municipalities.map((m) => (
-                    <option key={m.key} value={m.key.toLowerCase()}>
+                    <option key={m.key} value={m.label.toLowerCase()}>
                       {m.label}
                     </option>
                   ))}
-                  <option value="niagara-region">Niagara Region</option>
                 </select>
               </div>
               <div className="filter-group">

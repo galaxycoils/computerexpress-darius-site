@@ -21,12 +21,6 @@ const COUNCIL_SOURCES = [
   },
 ]
 
-const FEATURED_IDS = {
-  'St. Catharines': ['stc-ontario-st-corridor', 'stc-cip-strategic-sites', 'stc-455-welland-ave'],
-  Welland: ['welland-first-st-coa-2026-09-28', 'welland-coa-2026-09-16', 'welland-op-update'],
-  Thorold: ['thorold-1201-egerter-rd', 'thorold-blocks-232-239', 'thorold-436-quaker-rd'],
-}
-
 function formatRecordDate(value) {
   if (!value) return 'Date not stated'
   if (/^\d{4}-\d{2}$/.test(value)) {
@@ -48,9 +42,10 @@ function formatRecordDate(value) {
 }
 
 function recordsFor(municipality) {
-  return (FEATURED_IDS[municipality] || [])
-    .map((id) => planningNotices.find((record) => record.id === id))
-    .filter(Boolean)
+  return planningNotices
+    .filter((record) => record.municipality === municipality)
+    .sort((a, b) => b.publishedDate.localeCompare(a.publishedDate))
+    .slice(0, 3)
 }
 
 const councilJsonLd = {
@@ -127,9 +122,9 @@ export default function CouncilPage() {
           <div className="scd-council-section-heading">
             <div>
               <p className="scd-section-kicker">Recently tracked</p>
-              <h2 id="records-heading">Council and public-hearing records</h2>
+              <h2 id="records-heading">Recent municipal records</h2>
             </div>
-            <p>Nine sourced records already monitored by the newsroom.</p>
+            <p>Sourced records monitored by the newsroom.</p>
           </div>
 
           {COUNCIL_SOURCES.map((source) => (

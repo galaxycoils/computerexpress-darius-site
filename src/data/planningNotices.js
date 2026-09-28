@@ -212,6 +212,29 @@ export const planningNotices = [
   },
 ];
 
+const categoryColors = {
+  "minor-variance": "var(--accent)",
+  "consent-application": "var(--accent)",
+  "road-closure": "var(--danger)",
+  "construction": "var(--warning)",
+  "public-information-centre": "var(--info)",
+};
+
+export const noticeCategories = [...new Set(planningNotices.map(({ category }) => category))]
+  .sort()
+  .map((key) => ({
+    key,
+    label: key.split("-").map((part) => part[0].toUpperCase() + part.slice(1)).join(" "),
+    color: categoryColors[key] || "var(--primary)",
+  }));
+
+export const municipalities = [
+  { key: "st-catharines", label: "St. Catharines", region: "Niagara" },
+  { key: "welland", label: "Welland", region: "Niagara" },
+  { key: "thorold", label: "Thorold", region: "Niagara" },
+  { key: "niagara-region", label: "Niagara Region", region: "Niagara" },
+];
+
 export function getUpcomingMeetings(days = 7, now = new Date()) {
   const start = now.getTime();
   const end = start + days * 24 * 60 * 60 * 1000;
@@ -230,4 +253,21 @@ export function getActiveNotices() {
   return planningNotices.filter(
     (notice) => notice.status && notice.status !== "Meeting Complete",
   );
+}
+
+export function getNoticeStats() {
+  const active = getActiveNotices();
+  const byMunicipality = {};
+  const byCategory = {};
+  for (const notice of active) {
+    byMunicipality[notice.municipality] = (byMunicipality[notice.municipality] || 0) + 1;
+    byCategory[notice.category] = (byCategory[notice.category] || 0) + 1;
+  }
+  return {
+    total: planningNotices.length,
+    active: active.length,
+    byMunicipality,
+    byCategory,
+    upcomingMeetings: getUpcomingMeetings().length,
+  };
 }

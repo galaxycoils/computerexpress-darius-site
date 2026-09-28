@@ -136,7 +136,7 @@ export default function PoliceNewsPage() {
               <div className="filter-group">
                 <label htmlFor="police-municipality" className="visually-hidden">Filter by municipality</label>
                 <select id="police-municipality" className="filter-select" value={municipalityFilter} onChange={e => setMunicipalityFilter(e.target.value)}>
-                  {municipalities.map(m => <option key={m.key} value={m.key}>{m.label}</option>)}
+                  {municipalities.map(m => <option key={m.key} value={m.key === 'all' ? 'all' : m.label.toLowerCase()}>{m.label}</option>)}
                 </select>
               </div>
               <div className="filter-group">
