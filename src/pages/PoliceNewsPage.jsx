@@ -76,7 +76,7 @@ export default function PoliceNewsPage() {
     <>
       <Seo
         title="Police Media Releases | St. Catharines Digital"
-        description="Official Niagara Regional Police Service media releases and community notifications, compiled daily. Cover St. Catharines, Welland, Thorold, and Niagara Region."
+        description="A sourced selection of Niagara Regional Police Service media releases and community notifications. Check the official NRPS feed for the latest posts."
         jsonLd={{
           '@context': 'https://schema.org',
           '@type': 'NewsMediaOrganization',
@@ -103,8 +103,8 @@ export default function PoliceNewsPage() {
               </p>
               <h1 style={{ marginBottom: '1.25rem' }}>Police Media Releases</h1>
               <p style={{ fontSize: 'var(--fs-md)', color: 'var(--muted)', maxWidth: '34rem', lineHeight: 1.7, marginBottom: '2rem' }}>
-                Official Niagara Regional Police Service media releases and community
-                notifications — compiled daily from niagarapolice.ca.
+                A sourced selection of Niagara Regional Police Service media releases and community
+                notifications. <a href="https://www.niagarapolice.ca/news/">Check the official NRPS feed for the latest posts.</a>
               </p>
               <div className="stats-bar">
                 <div className="stat-item">

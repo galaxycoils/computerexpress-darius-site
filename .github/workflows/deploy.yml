@@ -2,6 +2,9 @@ name: Deploy to Cloudflare Pages
 run-name: Deploy ${{ inputs.publication_sha || github.sha }} / ${{ inputs.reason || 'automatic' }}
 
 on:
+  # Refresh prerendered dates for readers and crawlers even when no content changed.
+  schedule:
+    - cron: "15 5 * * *"
   # Human pushes to main
   push:
     branches: [main]

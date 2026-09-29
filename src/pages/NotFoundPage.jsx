@@ -12,7 +12,7 @@ export default function NotFoundPage() {
           <div>
             <p className="scd-eyebrow">404 · Off the record</p>
             <h1 className="scd-intro-title">This page is not on file.</h1>
-            <p className="scd-intro-note">It may have been removed, renamed, or never existed. The sections below are all current.</p>
+            <p className="scd-intro-note">It may have been removed, renamed, or never existed. Try one of these sections instead.</p>
           </div>
         </header>
 
@@ -28,14 +28,14 @@ export default function NotFoundPage() {
             </article>
             <article className="card">
               <h3>Planning Tracker</h3>
-              <p>Active planning notices, zoning files, and public meetings.</p>
+              <p>Planning notices, zoning files, and meeting records.</p>
               <Link to="/planning-tracker" className="scd-hub-more">
                 Open the tracker →
               </Link>
             </article>
             <article className="card">
               <h3>Welland Votes 2026</h3>
-              <p>Mayoral race, key dates, and how to vote on Oct 26.</p>
+              <p>Mayoral race, key dates, and voter information.</p>
               <Link to="/welland-votes" className="scd-hub-more">
                 Open the voter guide →
               </Link>

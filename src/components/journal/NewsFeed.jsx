@@ -6,10 +6,12 @@ import {
 } from "../../data/publication";
 import { CITIES } from "../../data/cities";
 import Story from "./Story";
+import { useLiveNow } from "../../hooks/useLiveNow.js";
 export default function NewsFeed({ city = "", search = false }) {
+  const now = useLiveNow();
   const [params, setParams] = useSearchParams();
   const query = Object.fromEntries(params);
-  const results = filterPublication(getPublication(), {
+  const results = filterPublication(getPublication(now), {
     ...query,
     city: city || query.city,
   });

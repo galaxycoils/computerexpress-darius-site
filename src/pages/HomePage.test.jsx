@@ -1,4 +1,4 @@
-import { describe, it, expect } from "vitest";
+import { afterEach, describe, it, expect, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
 import { BrowserRouter } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
@@ -14,6 +14,20 @@ const renderWithProviders = (ui) =>
   );
 
 describe("HomePage — Editorial Newsroom", () => {
+  afterEach(() => {
+    vi.useRealTimers();
+    delete globalThis.__SCD_RENDER_NOW__;
+  });
+
+  it("drops meetings that passed since the static page was built", () => {
+    vi.useFakeTimers();
+    vi.setSystemTime(new Date("2026-09-29T12:00:00Z"));
+    globalThis.__SCD_RENDER_NOW__ = "2026-09-28T12:00:00Z";
+
+    renderWithProviders(<HomePage />);
+    expect(screen.getByText(/No municipal meetings are listed in the next seven days/i)).toBeInTheDocument();
+  });
+
   it("renders the newsroom headline and attribution promise", () => {
     renderWithProviders(<HomePage />);
     expect(
