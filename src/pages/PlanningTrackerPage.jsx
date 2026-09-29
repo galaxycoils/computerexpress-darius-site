@@ -8,9 +8,11 @@ import {
   getNoticeStats,
   getUpcomingMeetings,
   getActiveNotices,
+  getNoticeStatus,
 } from "../data/planningNotices";
 import { siteConfig } from "../data/siteConfig";
 import { getRenderNow, parseTorontoDate } from "../utils/renderClock.js";
+import { useLiveNow } from "../hooks/useLiveNow.js";
 
 function formatDate(dateStr) {
   if (!dateStr) return "—";
@@ -33,17 +35,17 @@ function formatDate(dateStr) {
   }
 }
 
-function formatRelativeDate(dateStr) {
+export function formatRelativeDate(dateStr, now = getRenderNow()) {
   if (!dateStr) return "";
   try {
     const date = parseTorontoDate(dateStr);
     if (isNaN(date.getTime())) return "";
-    const now = getRenderNow();
-    const diffMs = date - now;
-    const diffDays = Math.ceil(diffMs / (1000 * 60 * 60 * 24));
+    const today = now.toLocaleDateString("en-CA", { timeZone: "America/Toronto", year: "numeric", month: "2-digit", day: "2-digit" });
+    const target = dateStr.slice(0, 10);
+    const diffDays = Math.round((Date.parse(`${target}T00:00:00Z`) - Date.parse(`${today}T00:00:00Z`)) / 86_400_000);
 
     if (diffDays < 0) return "Past";
-    if (diffDays === 0) return "Today";
+    if (diffDays === 0) return dateStr.length > 10 && date < now ? "Earlier today" : "Today";
     if (diffDays === 1) return "Tomorrow";
     if (diffDays <= 7) return `In ${diffDays} days`;
     if (diffDays <= 14) return `In 1 week`;
@@ -114,6 +116,7 @@ function StatusBadge({ status }) {
 }
 
 export default function PlanningTrackerPage() {
+  const now = useLiveNow();
   const [search, setSearch] = useState("");
   const [municipalityFilter, setMunicipalityFilter] = useState("all");
   const [categoryFilter, setCategoryFilter] = useState("all");
@@ -122,8 +125,8 @@ export default function PlanningTrackerPage() {
   const [sortDir, setSortDir] = useState("desc");
   const [viewMode, setViewMode] = useState("table");
 
-  const stats = useMemo(() => getNoticeStats(), []);
-  const upcomingMeetings = useMemo(() => getUpcomingMeetings(), []);
+  const stats = useMemo(() => getNoticeStats(now), [now]);
+  const upcomingMeetings = useMemo(() => getUpcomingMeetings(7, now), [now]);
 
   const filteredNotices = useMemo(() => {
     let result = planningNotices;
@@ -147,7 +150,7 @@ export default function PlanningTrackerPage() {
       result = result.filter((n) => n.category === categoryFilter);
     }
     if (statusFilter !== "all") {
-      result = result.filter((n) => n.status === statusFilter);
+      result = result.filter((n) => getNoticeStatus(n, now) === statusFilter);
     }
     result = [...result].sort((a, b) => {
       let aVal, bVal;
@@ -182,13 +185,14 @@ export default function PlanningTrackerPage() {
     municipalityFilter,
     categoryFilter,
     statusFilter,
+    now,
     sortBy,
     sortDir,
   ]);
 
   const uniqueStatuses = useMemo(
-    () => [...new Set(planningNotices.map((n) => n.status))].sort(),
-    [],
+    () => [...new Set(planningNotices.map((n) => getNoticeStatus(n, now)))].sort(),
+    [now],
   );
 
   return (
@@ -216,7 +220,7 @@ export default function PlanningTrackerPage() {
             <p className="page-subtitle">
               Official notices from St. Catharines, Welland, Thorold, and
               Niagara Region. Sourced exclusively from municipal websites.
-              Updated weekly.
+              Dates and statuses may change; check the linked municipal notice.
             </p>
             <div className="stats-bar">
               <div className="stat">
@@ -475,7 +479,7 @@ export default function PlanningTrackerPage() {
                           </svg>
                           <span>{formatDate(notice.meetingDate)}</span>
                           <span className="meeting-relative">
-                            ({formatRelativeDate(notice.meetingDate)})
+                            ({formatRelativeDate(notice.meetingDate, now)})
                           </span>
                         </span>
                       )}
@@ -632,7 +636,7 @@ export default function PlanningTrackerPage() {
                           <CategoryBadge category={notice.category} />
                         </td>
                         <td className="col-status">
-                          <StatusBadge status={notice.status} />
+                          <StatusBadge status={getNoticeStatus(notice, now)} />
                         </td>
                         <td className="col-meeting">
                           {notice.meetingDate ? (
@@ -641,7 +645,7 @@ export default function PlanningTrackerPage() {
                                 {formatDate(notice.meetingDate)}
                               </time>
                               <span className="relative">
-                                {formatRelativeDate(notice.meetingDate)}
+                                {formatRelativeDate(notice.meetingDate, now)}
                               </span>
                             </>
                           ) : (
@@ -689,7 +693,7 @@ export default function PlanningTrackerPage() {
                     </h3>
                     <p className="meeting-desc">{notice.description}</p>
                     <div className="meeting-actions">
-                      <StatusBadge status={notice.status} />
+                      <StatusBadge status={getNoticeStatus(notice, now)} />
                       <a
                         href={notice.sourceUrl}
                         target="_blank"

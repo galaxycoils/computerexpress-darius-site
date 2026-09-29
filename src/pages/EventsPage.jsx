@@ -8,6 +8,8 @@ import {
   createCalendarEvent,
 } from "../data/events";
 import { dateLabel, todayToronto } from "../data/publication";
+import { useLiveNow } from "../hooks/useLiveNow.js";
+import { parseTorontoDate } from "../utils/renderClock.js";
 function EventRow({ event }) {
   return (
     <article className="journal-event-row">
@@ -38,10 +40,12 @@ function EventRow({ event }) {
   );
 }
 export default function EventsPage() {
+  const now = useLiveNow();
   const [params, setParams] = useSearchParams(),
-    [month, setMonth] = useState(() => todayToronto().slice(0, 7));
+    [selectedMonth, setSelectedMonth] = useState(null);
+  const month = selectedMonth || todayToronto(now).slice(0, 7);
   const options = Object.fromEntries(params),
-    events = filterEvents(options),
+    events = filterEvents(options, now),
     view = params.get("view") || "list";
   const [year, m] = month.split("-").map(Number),
     offset = new Date(Date.UTC(year, m - 1, 1)).getUTCDay(),
@@ -53,7 +57,7 @@ export default function EventsPage() {
     setParams(next);
   }
   function step(value) {
-    setMonth(
+    setSelectedMonth(
       new Date(Date.UTC(year, m - 1 + value, 1)).toISOString().slice(0, 7),
     );
   }
@@ -204,6 +208,7 @@ export default function EventsPage() {
   );
 }
 export function EventPage() {
+  const now = useLiveNow();
   const { id } = useParams(),
     event = civicEvents.find((e) => e.id === id);
   if (!event)
@@ -213,7 +218,7 @@ export function EventPage() {
         <Link to="/events">Open the calendar</Link>
       </div>
     );
-  const past = event.startsAt.slice(0, 10) < todayToronto();
+  const past = parseTorontoDate(event.startsAt) <= now;
   function download() {
     const url = URL.createObjectURL(
       new Blob([createCalendarEvent(event)], {

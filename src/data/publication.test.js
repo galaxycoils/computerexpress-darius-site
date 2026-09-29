@@ -67,4 +67,10 @@ describe("publication boundaries", () => {
       true,
     );
   });
+  it("moves an elapsed hearing out of Upcoming on the same Niagara day", () => {
+    const now = new Date("2026-10-14T22:00:00Z");
+    const id = "welland-777-803-niagara-st-signs";
+    expect(filterEvents({}, now).map((event) => event.id)).not.toContain(id);
+    expect(filterEvents({ period: "past" }, now).map((event) => event.id)).toContain(id);
+  });
 });

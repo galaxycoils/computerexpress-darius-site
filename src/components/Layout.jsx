@@ -8,7 +8,7 @@ import {
 } from "react-router-dom";
 import { SavedStoriesProvider } from "./journal/SavedStories";
 import { CITIES } from "../data/cities";
-import { getRenderNow } from "../utils/renderClock.js";
+import { useLiveNow } from "../hooks/useLiveNow.js";
 const SECTIONS = [
   ["/news", "News"],
   ["/council", "City Hall"],
@@ -24,6 +24,7 @@ const editions = [...CITIES].sort((a, b) =>
       : a.name.localeCompare(b.name),
 );
 export default function Layout() {
+  const now = useLiveNow();
   const [menu, setMenu] = useState(false),
     [theme, setTheme] = useState("light"),
     [preference, setPreference] = useState("system"),
@@ -132,8 +133,8 @@ export default function Layout() {
           <div className="journal-masthead">
             <div className="journal-edition">
               <span>THE NIAGARA EDITION</span>
-              <time suppressHydrationWarning>
-                {getRenderNow().toLocaleDateString("en-CA", {
+              <time dateTime={now.toLocaleDateString("en-CA", { year: "numeric", month: "2-digit", day: "2-digit", timeZone: "America/Toronto" })}>
+                {now.toLocaleDateString("en-CA", {
                   weekday: "long",
                   month: "long",
                   day: "numeric",
@@ -267,7 +268,7 @@ export default function Layout() {
             </div>
           </div>
           <div className="journal-footer-bottom">
-            <span>© {getRenderNow().getFullYear()} St. Catharines Digital</span>
+            <span>© {now.toLocaleDateString("en-CA", { year: "numeric", timeZone: "America/Toronto" })} St. Catharines Digital</span>
             <div>
               <Link to="/reader-services">Reader services</Link>
               <Link to="/privacy">Privacy</Link>

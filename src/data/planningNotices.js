@@ -163,6 +163,7 @@ export const planningNotices = [
       "The Pine Street and Sullivan Avenue intersection closed Monday, September 28 at 7:00 a.m. for contractor work and is expected to reopen Tuesday, September 29 at about 6:00 p.m., weather permitting.",
     status: "Active",
     meetingDate: "2026-09-28T07:00:00",
+    endDate: "2026-09-29T18:00:00",
     publishedDate: "2026-09-25",
     sourceUrl: "https://www.thorold.ca/news/city-of-thorold-emergency-alert-banner/",
     category: "road-closure",
@@ -205,6 +206,8 @@ export const planningNotices = [
     description:
       "Niagara Region is rehabilitating the Sixteen Mile Creek Bridge on North Service Road (Regional Road 39) in Lincoln. A posted road-closure notice covers Oct. 5 to Nov. 27, 2026.",
     status: "Scheduled",
+    effectiveDate: "2026-10-05T00:00:00",
+    endDate: "2026-11-27T23:59:59",
     publishedDate: "2026-09-24",
     sourceUrl:
       "https://www.niagararegion.ca/projects/sixteen-mile-bridge-rehabilitation/default.aspx",
@@ -250,14 +253,32 @@ export function getNoticesByMunicipality(municipality) {
   return planningNotices.filter((notice) => notice.municipality === municipality);
 }
 
-export function getActiveNotices() {
-  return planningNotices.filter(
-    (notice) => notice.status && notice.status !== "Meeting Complete",
+export function getNoticeStatus(notice, now = getRenderNow()) {
+  if (!notice?.status) return "Status unavailable";
+  if (notice.endDate && parseTorontoDate(notice.endDate) < now)
+    return "Expected end passed — check source";
+  if (notice.status === "Open" && notice.submissionDeadline && parseTorontoDate(notice.submissionDeadline) < now)
+    return "Submission deadline passed — check source";
+  if (
+    notice.meetingDate &&
+    /scheduled|^open$/i.test(notice.status) &&
+    parseTorontoDate(notice.meetingDate) < now
+  ) return "Scheduled date passed — check source";
+  if (notice.status === "Scheduled" && notice.effectiveDate && parseTorontoDate(notice.effectiveDate) <= now)
+    return "Scheduled window underway — check source";
+  return notice.status;
+}
+
+export function getActiveNotices(now = getRenderNow()) {
+  return planningNotices.filter((notice) =>
+    notice.status &&
+    !/complete|approved|passed/i.test(notice.status) &&
+    getNoticeStatus(notice, now) === notice.status,
   );
 }
 
-export function getNoticeStats() {
-  const active = getActiveNotices();
+export function getNoticeStats(now = getRenderNow()) {
+  const active = getActiveNotices(now);
   const byMunicipality = {};
   const byCategory = {};
   for (const notice of active) {
@@ -269,6 +290,6 @@ export function getNoticeStats() {
     active: active.length,
     byMunicipality,
     byCategory,
-    upcomingMeetings: getUpcomingMeetings().length,
+    upcomingMeetings: getUpcomingMeetings(7, now).length,
   };
 }

@@ -1,6 +1,5 @@
 import { planningNotices } from "./planningNotices.js";
-import { todayToronto } from "./publication.js";
-import { getRenderNow } from "../utils/renderClock.js";
+import { getRenderNow, parseTorontoDate } from "../utils/renderClock.js";
 export const civicEvents = planningNotices
   .filter((n) => n.meetingDate)
   .map((n) => ({ ...n, startsAt: n.meetingDate, timezone: "America/Toronto" }))
@@ -77,14 +76,13 @@ export function filterEvents(
   { city = "", period = "upcoming", date = "" } = {},
   now = getRenderNow(),
 ) {
-  const today = todayToronto(now);
   return civicEvents.filter(
     (e) =>
       (!city || e.municipality === city) &&
       (!date || e.startsAt.startsWith(date)) &&
       (period === "all" ||
         (period === "past"
-          ? e.startsAt.slice(0, 10) < today
-          : e.startsAt.slice(0, 10) >= today)),
+          ? parseTorontoDate(e.startsAt) <= now
+          : parseTorontoDate(e.startsAt) > now)),
   );
 }

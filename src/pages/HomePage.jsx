@@ -12,20 +12,23 @@ import Story, {
   SaveButton,
 } from "../components/journal/Story";
 import NewsletterPanel from "../components/news/NewsletterPanel";
+import { useLiveNow } from "../hooks/useLiveNow.js";
 import "../components/news/news.css";
 export default function HomePage() {
-  const stories = getPublication(),
+  const now = useLiveNow();
+  const stories = getPublication(now),
     local = stories.filter(
       (s) => s.cities.includes("St. Catharines") && s.topic !== "Public safety",
     ),
     lead = selectHomepageLead(
       stories,
       import.meta.env.VITE_HOMEPAGE_LEAD_SLUG || "",
+      now,
     );
   const latest = stories.filter((s) => s.date && s.id !== lead?.id).slice(0, 4),
     used = new Set([lead?.id, ...latest.map((s) => s.id)]);
   const more = stories.filter((s) => s.date && !used.has(s.id)).slice(0, 4),
-    meetings = getUpcomingMeetings(),
+    meetings = getUpcomingMeetings(7, now),
     civic = local.filter((s) => s.id !== lead?.id).slice(0, 2);
   return (
     <>
