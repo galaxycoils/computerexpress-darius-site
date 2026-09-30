@@ -1,14 +1,24 @@
-import React, { lazy, Suspense } from "react";
+import React, { lazy } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Layout from "./components/Layout";
 import HomePage from "./pages/HomePage";
-import NewsPage from "./pages/NewsPage";
-import CityNewsPage from "./pages/CityNewsPage";
-import ArticlePage from "./pages/ArticlePage";
-import PlanningTrackerPage from "./pages/PlanningTrackerPage";
-import CouncilPage from "./pages/CouncilPage";
-import EventsPage, { EventPage } from "./pages/EventsPage";
-import ExplorePage, { ExploreGuidePage } from "./pages/ExplorePage";
+const NewsPage = lazy(() => import("./pages/NewsPage"));
+const CityNewsPage = lazy(() => import("./pages/CityNewsPage"));
+const ArticlePage = lazy(() => import("./pages/ArticlePage"));
+const PlanningTrackerPage = lazy(() => import("./pages/PlanningTrackerPage"));
+const CouncilPage = lazy(() => import("./pages/CouncilPage"));
+const EventsPage = lazy(() => import("./pages/EventsPage"));
+const EventPage = lazy(() =>
+  import("./pages/EventsPage").then((module) => ({
+    default: module.EventPage,
+  })),
+);
+const ExplorePage = lazy(() => import("./pages/ExplorePage"));
+const ExploreGuidePage = lazy(() =>
+  import("./pages/ExplorePage").then((module) => ({
+    default: module.ExploreGuidePage,
+  })),
+);
 
 const SavedPage = lazy(() => import("./pages/SavedPage"));
 const ProjectPage = lazy(() => import("./pages/ProjectPage"));
@@ -34,43 +44,41 @@ const EditorialDeskPage = lazy(() => import("./pages/EditorialDeskPage"));
 
 function AppRoutes() {
   return (
-    <Suspense fallback={<div className="route-loading" role="status">Loading page…</div>}>
-      <Routes>
-        <Route path="/" element={<Layout />}>
-          <Route path="saved" element={<SavedPage />} />
-          <Route path="events" element={<EventsPage />} />
-          <Route path="events/:id" element={<EventPage />} />
-          <Route path="explore" element={<ExplorePage />} />
-          <Route path="explore/:slug" element={<ExploreGuidePage />} />
-          <Route path="development/:id" element={<ProjectPage />} />
-          <Route path="accessibility" element={<AccessibilityPage />} />
-          <Route index element={<HomePage />} />
-          <Route path="council" element={<CouncilPage />} />
-          <Route path="police" element={<PolicePage />} />
-          <Route path="planning-tracker" element={<PlanningTrackerPage />} />
-          <Route path="about" element={<AboutPage />} />
-          <Route path="contact" element={<ContactPage />} />
-          <Route path="privacy" element={<PrivacyPage />} />
-          <Route path="terms" element={<TermsPage />} />
-          <Route path="sponsor" element={<SponsorPage />} />
-          <Route path="welland-votes" element={<WellandVotesPage />} />
-          <Route path="planning-alerts" element={<PlanningAlertsPage />} />
-          <Route path="membership" element={<MembershipPage />} />
-          <Route path="reader-services" element={<ReaderServicesPage />} />
-          <Route path="search" element={<SearchPage />} />
-          <Route path="articles/:slug" element={<ArticlePage />} />
-          <Route path="preferences" element={<AlertPreferencesPage />} />
-          <Route path="news" element={<NewsPage />} />
-          <Route path="news/police" element={<PoliceNewsPage />} />
-          <Route path="news/:citySlug" element={<CityNewsPage />} />
-          <Route path="votes" element={<VotesHubPage />} />
-          <Route path="editorial-policy" element={<EditorialPolicyPage />} />
-          <Route path="corrections" element={<CorrectionsPage />} />
-          <Route path="editorial" element={<EditorialDeskPage />} />
-          <Route path="*" element={<NotFoundPage />} />
-        </Route>
-      </Routes>
-    </Suspense>
+    <Routes>
+      <Route path="/" element={<Layout />}>
+        <Route path="saved" element={<SavedPage />} />
+        <Route path="events" element={<EventsPage />} />
+        <Route path="events/:id" element={<EventPage />} />
+        <Route path="explore" element={<ExplorePage />} />
+        <Route path="explore/:slug" element={<ExploreGuidePage />} />
+        <Route path="development/:id" element={<ProjectPage />} />
+        <Route path="accessibility" element={<AccessibilityPage />} />
+        <Route index element={<HomePage />} />
+        <Route path="council" element={<CouncilPage />} />
+        <Route path="police" element={<PolicePage />} />
+        <Route path="planning-tracker" element={<PlanningTrackerPage />} />
+        <Route path="about" element={<AboutPage />} />
+        <Route path="contact" element={<ContactPage />} />
+        <Route path="privacy" element={<PrivacyPage />} />
+        <Route path="terms" element={<TermsPage />} />
+        <Route path="sponsor" element={<SponsorPage />} />
+        <Route path="welland-votes" element={<WellandVotesPage />} />
+        <Route path="planning-alerts" element={<PlanningAlertsPage />} />
+        <Route path="membership" element={<MembershipPage />} />
+        <Route path="reader-services" element={<ReaderServicesPage />} />
+        <Route path="search" element={<SearchPage />} />
+        <Route path="articles/:slug" element={<ArticlePage />} />
+        <Route path="preferences" element={<AlertPreferencesPage />} />
+        <Route path="news" element={<NewsPage />} />
+        <Route path="news/police" element={<PoliceNewsPage />} />
+        <Route path="news/:citySlug" element={<CityNewsPage />} />
+        <Route path="votes" element={<VotesHubPage />} />
+        <Route path="editorial-policy" element={<EditorialPolicyPage />} />
+        <Route path="corrections" element={<CorrectionsPage />} />
+        <Route path="editorial" element={<EditorialDeskPage />} />
+        <Route path="*" element={<NotFoundPage />} />
+      </Route>
+    </Routes>
   );
 }
 

@@ -1,4 +1,6 @@
 import { useId, useState } from 'react'
+import { submitForm } from '../../utils/formRequest'
+import UiIcon from '../journal/UiIcon'
 import './NewsletterPanel.css'
 
 export default function NewsletterPanel({ placement = 'site_rail', topics = null }) {
@@ -24,13 +26,7 @@ export default function NewsletterPanel({ placement = 'site_rail', topics = null
     setError('')
     setStatus('sending')
     try {
-      const res = await fetch('/api/newsletter', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: email.trim(), placement, topics: [...selected] }),
-      })
-      const data = await res.json().catch(() => ({}))
-      if (!res.ok || data.success !== true) throw new Error(data.error || 'Subscription could not be confirmed. Please try again later.')
+      await submitForm('/api/newsletter', { email: email.trim(), placement, topics: [...selected] }, 'Subscription could not be confirmed. Please try again later.')
       setStatus('success')
     } catch (err) {
       setError(err.message || 'Something went wrong. Try again later.')
@@ -50,13 +46,13 @@ export default function NewsletterPanel({ placement = 'site_rail', topics = null
           <p className="scd-rail-text">
             Join the newsroom mailing list. Confirm your email to receive future updates when they are sent.
           </p>
-          <form className="scd-newsletter-form" onSubmit={onSubmit} noValidate={false}>
+          <form className="scd-newsletter-form" onSubmit={onSubmit} aria-busy={status === 'sending'}>
             <label className="scd-newsletter-sr" htmlFor={emailId}>
               Email address
             </label>
             {topics && topics.length > 0 && (
-              <fieldset className="scd-newsletter-topics">
-                <legend>Follow</legend>
+              <fieldset className="scd-newsletter-topics" disabled={status === 'sending'}>
+                <legend>Choose topics (optional)</legend>
                 {topics.map((topic) => {
                   const value = topic.toLowerCase()
                   return (
@@ -80,18 +76,20 @@ export default function NewsletterPanel({ placement = 'site_rail', topics = null
               onChange={(e) => setEmail(e.target.value)}
               placeholder="your@email.com"
               autoComplete="email"
+              maxLength={254}
+              aria-describedby={status === 'error' ? `${emailId}-error` : undefined}
               required
               disabled={status === 'sending'}
             />
             <button type="submit" className="island-btn" disabled={status === 'sending'}>
               <span>{status === 'sending' ? 'Subscribing…' : 'Subscribe free'}</span>
-              <span className="island-icon" aria-hidden="true">→</span>
+              <span className="island-icon"><UiIcon /></span>
             </button>
           </form>
           {status === 'error' && (
-            <p className="scd-newsletter-error" role="alert">{error}</p>
+            <p id={`${emailId}-error`} className="scd-newsletter-error" role="alert">{error}</p>
           )}
-          <p className="scd-newsletter-note">No spam. Unsubscribe anytime.</p>
+          <p className="scd-newsletter-note">Unsubscribe anytime. <a href="/privacy">How we use your email</a>.</p>
         </>
       )}
     </div>

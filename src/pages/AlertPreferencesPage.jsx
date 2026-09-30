@@ -15,10 +15,15 @@ export default function AlertPreferencesPage() {
   useEffect(() => {
     const params = new URLSearchParams(window.location.search)
     const linkToken = params.get('token')
-    const savedToken = linkToken || window.sessionStorage.getItem('scd-alert-token') || ''
+    let savedToken = linkToken || ''
+    try {
+      if (!savedToken) savedToken = window.sessionStorage.getItem('scd-alert-token') || ''
+      if (linkToken) window.sessionStorage.setItem('scd-alert-token', linkToken)
+    } catch {
+      // The private link still works when browser storage is unavailable.
+    }
     if (linkToken) {
-      window.sessionStorage.setItem('scd-alert-token', linkToken)
-      window.history.replaceState({}, '', '/preferences')
+      window.history.replaceState(window.history.state, '', '/preferences')
     }
     setToken(savedToken)
     if (!savedToken) {
@@ -86,7 +91,7 @@ export default function AlertPreferencesPage() {
       })
       const data = await response.json()
       if (!response.ok) throw new Error(data.error || 'Unable to stop your alerts.')
-      window.sessionStorage.removeItem('scd-alert-token')
+      try { window.sessionStorage.removeItem('scd-alert-token') } catch {}
       setAlert(null)
       setMessage('Your planning alerts have been stopped and the saved private link was removed from this browser.')
       setState('deleted')
@@ -105,7 +110,7 @@ export default function AlertPreferencesPage() {
         noIndex
         jsonLd={{ '@context': 'https://schema.org', '@type': 'WebPage', name: 'Planning Alert Preferences', url: BASE_URL }}
       />
-      <main className="scd-page scd-alerts scd-preferences">
+      <div className="scd-page scd-alerts scd-preferences">
         <header className="scd-intro scd-alerts-intro">
           <p className="scd-eyebrow">Reader services</p>
           <h1 className="scd-intro-title">Planning alert preferences</h1>
@@ -149,14 +154,14 @@ export default function AlertPreferencesPage() {
             <fieldset className="scd-alerts-field">
               <legend>Notice types</legend>
               <div className="scd-alerts-chips">
-                {NOTICE_TYPES.map(type => <button key={type} type="button" className={`scd-alerts-chip${alert.types.includes(type) ? ' is-active' : ''}`} onClick={() => toggle('types', type)}>{type}</button>)}
+                {NOTICE_TYPES.map(type => <button key={type} type="button" aria-pressed={alert.types.includes(type)} className={`scd-alerts-chip${alert.types.includes(type) ? ' is-active' : ''}`} onClick={() => toggle('types', type)}>{type}</button>)}
               </div>
             </fieldset>
 
             <fieldset className="scd-alerts-field">
               <legend>Statuses</legend>
               <div className="scd-alerts-chips">
-                {STATUSES.map(status => <button key={status} type="button" className={`scd-alerts-chip${alert.statuses.includes(status) ? ' is-active' : ''}`} onClick={() => toggle('statuses', status)}>{status}</button>)}
+                {STATUSES.map(status => <button key={status} type="button" aria-pressed={alert.statuses.includes(status)} className={`scd-alerts-chip${alert.statuses.includes(status) ? ' is-active' : ''}`} onClick={() => toggle('statuses', status)}>{status}</button>)}
               </div>
             </fieldset>
 
@@ -182,7 +187,7 @@ export default function AlertPreferencesPage() {
             </div>
           </form>
         )}
-      </main>
+      </div>
     </>
   )
 }

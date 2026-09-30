@@ -128,7 +128,7 @@ async function run() {
 
     let pageHtml = routeTemplate.replace(
       '<div id="root"></div>',
-      `<div id="root">${html}</div>`,
+      `<div id="root" data-prerender-route="${url.replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;")}">${html}</div>`,
     );
 
     if (headTags) {

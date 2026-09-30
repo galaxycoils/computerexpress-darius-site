@@ -5,14 +5,14 @@ export default function SearchPage() {
     <>
       <Seo
         title="Search | St. Catharines Digital"
-        description="Search Niagara news, civic records, addresses and official updates."
+        description="Search Niagara news, development records, civic meetings and local guides by street, city or subject."
         path="/search"
       />
       <div className="scd-page journal-page">
         <header className="journal-page-heading">
           <p className="journal-kicker">Find your local story</p>
-          <h1>A little local knowledge.</h1>
-          <p>Search by address, subject, city or municipal file number.</p>
+          <h1>Find your local.</h1>
+          <p>News, development records, civic meetings and local guides. Search a street, a subject or a municipal file number.</p>
         </header>
         <NewsFeed search />
       </div>

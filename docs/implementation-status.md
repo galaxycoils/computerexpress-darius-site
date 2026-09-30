@@ -2,6 +2,8 @@
 
 Baseline: c685fc8558cd079eef371cd4ff84886e71c146d2.
 This is an implementation status register, not a completion claim.
+The subsequent local reader-experience work and its validation are documented in
+[reader-experience-improvements.md](reader-experience-improvements.md).
 
 ## This release
 - [x] Reject cross-origin URLs, embedded credentials, and non-default ports.

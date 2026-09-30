@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import Seo, { BASE_URL } from '../components/Seo'
 import '../components/news/news.css'
 import '../components/news/sponsor.css'
+import { submitForm } from '../utils/formRequest'
 
 const OPTIONS = [
   { value: 'primary', label: 'Planning Alert sponsorship inquiry' },
@@ -23,16 +24,11 @@ export default function SponsorPage() {
 
   async function handleSubmit(event) {
     event.preventDefault()
+    if (loading) return
     setLoading(true)
     setError(null)
     try {
-      const response = await fetch('/api/sponsor', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
-      })
-      const result = await response.json()
-      if (!response.ok) throw new Error(result.error || 'Please try again or email cccemt@pm.me')
+      await submitForm('/api/sponsor', formData, 'We couldn’t confirm your inquiry. Please try again later or email cccemt@pm.me.')
       setSubmitted(true)
     } catch (failure) {
       setError(failure.message || 'Please email cccemt@pm.me')
@@ -69,7 +65,7 @@ export default function SponsorPage() {
           {submitted ? <div role="status"><h3>Inquiry received</h3><p>Thanks for getting in touch. To add details, email <a href="mailto:cccemt@pm.me">cccemt@pm.me</a>.</p></div> : <>
             <p className="scd-sponsor-form-intro">This form sends an inquiry. We will discuss availability, placement and terms with you by email.</p>
             {error && <p className="scd-sponsor-error" role="alert">{error}</p>}
-            <form onSubmit={handleSubmit} className="scd-sponsor-form">
+            <form onSubmit={handleSubmit} className="scd-sponsor-form" aria-busy={loading}>
               <div className="scd-sponsor-row">
                 <div className="scd-sponsor-field"><label htmlFor="businessName">Business name *</label><input id="businessName" name="businessName" required autoComplete="organization" value={formData.businessName} onChange={handleChange} /></div>
                 <div className="scd-sponsor-field"><label htmlFor="contactName">Contact name *</label><input id="contactName" name="contactName" required autoComplete="name" value={formData.contactName} onChange={handleChange} /></div>

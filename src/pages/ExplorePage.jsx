@@ -1,3 +1,4 @@
+import UiIcon from "../components/journal/UiIcon";
 import { Link, useParams } from "react-router-dom";
 import Seo from "../components/Seo";
 import { exploreGuides } from "../data/exploreGuides";
@@ -32,7 +33,7 @@ export default function ExplorePage() {
               </h2>
               <p>{g.description}</p>
               <Link className="journal-link" to={`/explore/${g.slug}`}>
-                Explore the guide ↗
+                Explore the guide <UiIcon name="external" size={16} />
               </Link>
             </article>
           ))}
@@ -57,7 +58,7 @@ export default function ExplorePage() {
                 className="journal-link"
                 href="https://events.stcatharines.ca/"
               >
-                City community events ↗
+                City community events <UiIcon name="external" size={16} />
               </a>
             </p>
             <p>
@@ -77,6 +78,7 @@ export function ExploreGuidePage() {
   if (!guide)
     return (
       <div className="scd-page journal-page">
+        <Seo title="Guide not found | St. Catharines Digital" path={`/explore/${slug}`} noIndex />
         <h1>Guide not found</h1>
         <Link to="/explore">Explore local guides</Link>
       </div>
@@ -105,7 +107,7 @@ export function ExploreGuidePage() {
           <ul>
             {guide.links.map(([label, url]) => (
               <li key={url}>
-                <a href={url}>{label} ↗</a>
+                <a href={url}>{label} <UiIcon name="external" size={16} /></a>
               </li>
             ))}
           </ul>

@@ -13,6 +13,7 @@ import Story, {
 } from "../components/journal/Story";
 import NewsletterPanel from "../components/news/NewsletterPanel";
 import { useLiveNow } from "../hooks/useLiveNow.js";
+import UiIcon from "../components/journal/UiIcon";
 import "../components/news/news.css";
 export default function HomePage() {
   const now = useLiveNow();
@@ -29,7 +30,7 @@ export default function HomePage() {
     used = new Set([lead?.id, ...latest.map((s) => s.id)]);
   const more = stories.filter((s) => s.date && !used.has(s.id)).slice(0, 4),
     meetings = getUpcomingMeetings(7, now),
-    civic = local.filter((s) => s.id !== lead?.id).slice(0, 2);
+    civic = local.filter((s) => s.id !== lead?.id && ["City Hall", "Development"].includes(s.topic)).slice(0, 2);
   return (
     <>
       <Seo
@@ -43,6 +44,10 @@ export default function HomePage() {
           <h1>Your city. Your stories.</h1>
           <p>Public records and primary sources. A little closer to home.</p>
         </div>
+        <nav className="journal-topic-links" aria-label="Browse coverage by topic">
+          <span>Follow the issues</span>
+          {["Development", "City Hall", "Roads & services", "Public safety"].map(topic => <Link key={topic} to={`/news?topic=${encodeURIComponent(topic)}`}>{topic}<UiIcon size={14} /></Link>)}
+        </nav>
         <section className="journal-lead-grid" aria-label="The local briefing">
           <article className="journal-lead">
             {lead && (
@@ -62,7 +67,7 @@ export default function HomePage() {
                   <SaveButton story={lead} />
                 </div>
                 <a className="journal-source-link" href={lead.sourceUrl}>
-                  Read official source <span aria-hidden="true">↗</span>
+                  Read official source <UiIcon name="external" size={16} />
                 </a>
               </>
             )}
@@ -78,7 +83,7 @@ export default function HomePage() {
               <Story key={s.id} story={s} compact index={i} />
             ))}
             <Link to="/news" className="journal-latest-bottom">
-              The full local picture <span aria-hidden="true">→</span>
+              The full local picture <UiIcon size={16} />
             </Link>
           </aside>
         </section>
@@ -125,7 +130,7 @@ export default function HomePage() {
               local to Niagara.
             </p>
             <Link className="journal-button journal-button-ink" to="/events">
-              Open the civic calendar ↗
+              Open the civic calendar <UiIcon name="external" size={17} />
             </Link>
           </div>
           <div className="journal-week-events">
@@ -142,7 +147,7 @@ export default function HomePage() {
             ) : (
               <>
                 <span className="journal-calendar-mark" aria-hidden="true">
-                  ↗
+                  <UiIcon name="calendar" size={46} />
                 </span>
                 <h3>A little further ahead?</h3>
                 <p>
@@ -167,12 +172,12 @@ export default function HomePage() {
               ["Thorold", "thorold", "A canal-side community"],
             ].map(([city, slug, tag]) => (
               <article key={slug}>
-                <Photo photo={localPhotos[city]} />
+                <Photo photo={localPhotos[city]} sizes="(max-width: 800px) calc(100vw - 48px), (max-width: 1100px) 45vw, 400px" />
                 <div>
                   <p className="journal-kicker">{tag}</p>
                   <h3>
                     <Link to={`/news/${slug}`}>
-                      {city} <span aria-hidden="true">↗</span>
+                      {city} <UiIcon name="external" size={22} />
                     </Link>
                   </h3>
                   <p>

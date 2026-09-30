@@ -157,29 +157,21 @@ export function filterPublication(
   items,
   { q = "", city = "", topic = "", kind = "", from = "", to = "" } = {},
 ) {
-  const terms = q.trim().toLowerCase().split(/\s+/).filter(Boolean);
-  return items.filter(
-    (item) =>
+  const terms = normalizeSearchText(q).split(/\s+/).filter(Boolean);
+  return items.filter((item) => {
+    const text = normalizeSearchText([item.title, item.description, item.city, item.topic, item.type, item.fileNumber, item.sourceName, item.searchText, item.tags?.join(" ")].filter(Boolean).join(" "));
+    return (
       (!city || item.cities.includes(city) || item.city === city) &&
       (!topic || item.topic === topic) &&
       (!kind || item.kind === kind) &&
       (!from || (item.date && item.date.slice(0, 10) >= from)) &&
       (!to || (item.date && item.date.slice(0, 10) <= to)) &&
-      terms.every((term) =>
-        [
-          item.title,
-          item.description,
-          item.city,
-          item.topic,
-          item.fileNumber,
-          item.sourceName,
-        ]
-          .filter(Boolean)
-          .join(" ")
-          .toLowerCase()
-          .includes(term),
-      ),
-  );
+      terms.every((term) => text.includes(term))
+    );
+  });
+}
+export function normalizeSearchText(value = "") {
+  return String(value).normalize("NFKD").replace(/[\u0300-\u036f]/g, "").replace(/[’']/g, "").trim().toLowerCase();
 }
 export const TOPICS = [
   "City Hall",

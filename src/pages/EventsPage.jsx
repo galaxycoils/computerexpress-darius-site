@@ -1,3 +1,4 @@
+import UiIcon from "../components/journal/UiIcon";
 import { useState } from "react";
 import { Link, useParams, useSearchParams } from "react-router-dom";
 import Seo from "../components/Seo";
@@ -35,7 +36,7 @@ function EventRow({ event }) {
             "Check the official notice for the location."}
         </p>
       </div>
-      <Link to={`/events/${event.id}`}>Details ↗</Link>
+      <Link to={`/events/${event.id}`}>Details <UiIcon name="external" size={16} /></Link>
     </article>
   );
 }
@@ -81,7 +82,7 @@ export default function EventsPage() {
             the organizer before attending.
           </p>
           <a className="journal-link" href="https://events.stcatharines.ca/">
-            Looking for community events? Visit the city calendar ↗
+            Looking for community events? Visit the city calendar <UiIcon name="external" size={16} />
           </a>
         </header>
         <div className="journal-filters">
@@ -214,6 +215,7 @@ export function EventPage() {
   if (!event)
     return (
       <div className="scd-page journal-page">
+        <Seo title="Event not found | St. Catharines Digital" path={`/events/${id}`} noIndex />
         <h1>Event not found</h1>
         <Link to="/events">Open the calendar</Link>
       </div>
@@ -274,7 +276,7 @@ export function EventPage() {
           <div className="journal-actions">
             {!past && <button onClick={download}>Add to calendar ↓</button>}
             <a className="journal-button" href={event.sourceUrl}>
-              Read official notice ↗
+              Read official notice <UiIcon name="external" size={16} />
             </a>
           </div>
           <Link to={`/development/${id}`}>

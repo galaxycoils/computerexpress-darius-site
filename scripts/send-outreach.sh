@@ -2,7 +2,7 @@
 # Send outreach emails via AgentMail API: POST /v0/inboxes/{id}/messages/send
 # Reads prospect list from inline here-doc, excludes bounced + secondary targets
 
-API_KEY="am_us_e2dff04ad1c5617970a33ce48a7f9f7f5a0f0b059f4720dae9a73e8ec4c4f99f"
+API_KEY="${AGENTMAIL_API_KEY:?Set AGENTMAIL_API_KEY securely before running this script}"
 INBOX="stcatharines-digital@agentmail.to"
 BASE="https://api.agentmail.to/v0/inboxes/${INBOX}/messages/send"
 

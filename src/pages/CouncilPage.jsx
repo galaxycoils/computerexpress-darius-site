@@ -1,3 +1,4 @@
+import UiIcon from "../components/journal/UiIcon";
 import { Helmet } from 'react-helmet-async'
 import { Link } from 'react-router-dom'
 import { planningNotices } from '../data/planningNotices'
@@ -112,7 +113,7 @@ export default function CouncilPage() {
                 <h3>{source.municipality}</h3>
                 <p>{source.description}</p>
                 <a href={source.url} target="_blank" rel="noopener noreferrer">
-                  Open council portal <span aria-hidden="true">↗</span>
+                  Open council portal <span aria-hidden="true"><UiIcon name="external" size={16} /></span>
                 </a>
               </article>
             ))}
@@ -149,7 +150,7 @@ export default function CouncilPage() {
                       {record.meetingDate && <div><dt>Meeting</dt><dd>{formatRecordDate(record.meetingDate)}</dd></div>}
                     </dl>
                     <a className="scd-record-source" href={record.sourceUrl} target="_blank" rel="noopener noreferrer">
-                      Read official record <span aria-hidden="true">↗</span>
+                      Read official record <span aria-hidden="true"><UiIcon name="external" size={16} /></span>
                     </a>
                   </article>
                 ))}

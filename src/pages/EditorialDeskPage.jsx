@@ -1,3 +1,4 @@
+import UiIcon from "../components/journal/UiIcon";
 import { useEffect, useState } from "react";
 import Seo from "../components/Seo";
 
@@ -51,7 +52,7 @@ export default function EditorialDeskPage() {
     </form> : <>
       <div className="journal-results-meta"><p>Signed in as {data.actor} ({data.role}).</p><button className="journal-link" onClick={() => { sessionStorage.removeItem(TOKEN_KEY); setToken(""); setDraft(""); setData(null); }}>Sign out</button></div>
       <section className="journal-prose"><h2>Operational counts</h2><p>Submissions: {data.health.submissions.map(item => `${item.status} ${item.count}`).join(" · ") || "none"}</p><p>Newsletter: {data.health.newsletter.map(item => `${item.status} ${item.count}`).join(" · ") || "none"}</p></section>
-      <section className="journal-feed" aria-label="Reader submissions">{data.submissions.length ? data.submissions.map(item => <article className="journal-story" key={item.id}><p className="journal-kicker">{item.kind} / {item.status}</p><h2>{item.name}</h2><p><a href={`mailto:${item.email}`}>{item.email}</a></p><p>{item.message}</p>{item.source_url && <p><a href={item.source_url}>Submitted source ↗</a></p>}{data.role === "admin" && <label>Review status<select value={item.status} onChange={event => update(item.id, event.target.value)}>{STATUSES.map(status => <option key={status}>{status}</option>)}</select></label>}</article>) : <div className="journal-empty"><h2>No submissions</h2><p>New contacts, event suggestions and accessibility feedback appear here.</p></div>}</section>
+      <section className="journal-feed" aria-label="Reader submissions">{data.submissions.length ? data.submissions.map(item => <article className="journal-story" key={item.id}><p className="journal-kicker">{item.kind} / {item.status}</p><h2>{item.name}</h2><p><a href={`mailto:${item.email}`}>{item.email}</a></p><p>{item.message}</p>{item.source_url && <p><a href={item.source_url}>Submitted source <UiIcon name="external" size={16} /></a></p>}{data.role === "admin" && <label>Review status<select value={item.status} onChange={event => update(item.id, event.target.value)}>{STATUSES.map(status => <option key={status}>{status}</option>)}</select></label>}</article>) : <div className="journal-empty"><h2>No submissions</h2><p>New contacts, event suggestions and accessibility feedback appear here.</p></div>}</section>
       {data.nextOffset != null && <button className="journal-button" disabled={loading} onClick={loadMore}>{loading ? "Loading…" : "Load older submissions"}</button>}
       {error && <p role="alert">{error}</p>}
     </>}

@@ -395,20 +395,20 @@ export default function PlanningTrackerPage() {
               <div className="active-filters">
                 <span>Active filters:</span>
                 {search && (
-                  <span className="filter-chip" onClick={() => setSearch("")}>
+                  <button type="button" className="filter-chip" aria-label="Remove search filter" onClick={() => setSearch("")}>
                     Search: "{search}" ×
-                  </span>
+                  </button>
                 )}
                 {municipalityFilter !== "all" && (
-                  <span
+                  <button type="button" aria-label="Remove municipality filter"
                     className="filter-chip"
                     onClick={() => setMunicipalityFilter("all")}
                   >
                     Municipality: {municipalityFilter} ×
-                  </span>
+                  </button>
                 )}
                 {categoryFilter !== "all" && (
-                  <span
+                  <button type="button" aria-label="Remove category filter"
                     className="filter-chip"
                     onClick={() => setCategoryFilter("all")}
                   >
@@ -416,15 +416,15 @@ export default function PlanningTrackerPage() {
                     {noticeCategories.find((c) => c.key === categoryFilter)
                       ?.label || categoryFilter}{" "}
                     ×
-                  </span>
+                  </button>
                 )}
                 {statusFilter !== "all" && (
-                  <span
+                  <button type="button" aria-label="Remove status filter"
                     className="filter-chip"
                     onClick={() => setStatusFilter("all")}
                   >
                     Status: {statusFilter} ×
-                  </span>
+                  </button>
                 )}
                 <button
                   className="filter-chip filter-clear"

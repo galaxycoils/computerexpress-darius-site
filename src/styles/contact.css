@@ -1,0 +1,222 @@
+/* The contact and support pages use the same paper, rules and type as the newsroom. */
+.journal-contact-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.3fr);
+  gap: clamp(30px, 5vw, 80px);
+  align-items: start;
+}
+.journal-contact-aside section {
+  padding: 0 0 26px;
+  margin: 0 0 28px;
+  border-bottom: 1px solid var(--rule);
+}
+.journal-contact-aside h2 {
+  margin: 0 0 14px;
+  font-size: 27px;
+}
+.journal-contact-aside p {
+  color: var(--ink-3);
+}
+.journal-contact-email {
+  overflow-wrap: anywhere;
+  font-size: 18px;
+}
+.journal-contact-links {
+  display: grid;
+  justify-items: start;
+  gap: 16px;
+}
+.contact-form {
+  background: var(--raised);
+  border: 1px solid var(--rule);
+  border-top: 3px solid var(--signal);
+  border-radius: 2px;
+  padding: clamp(24px, 3vw, 40px);
+  min-width: 0;
+  position: relative;
+}
+.contact-form-heading {
+  margin-bottom: 28px;
+}
+.contact-form-heading h2 {
+  font-size: 32px;
+  margin: 0 0 10px;
+}
+.contact-form-heading > p:last-child {
+  color: var(--ink-3);
+  font-size: 13px;
+  margin: 0;
+}
+.contact-form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+.contact-form .form-field {
+  display: grid;
+  gap: 8px;
+  margin-bottom: 22px;
+  min-width: 0;
+}
+.contact-form .form-field > label {
+  color: var(--ink);
+  font-size: 15px;
+  font-weight: 600;
+}
+.contact-form input,
+.contact-form select,
+.contact-form textarea {
+  width: 100%;
+  min-width: 0;
+  min-height: 48px;
+  border: 1px solid var(--rule-2);
+  border-radius: 2px;
+  color: var(--ink);
+  background: var(--paper);
+  padding: 11px 13px;
+  font-size: 16px;
+}
+.contact-form input::placeholder,
+.contact-form textarea::placeholder {
+  color: var(--ink-3);
+  opacity: 1;
+}
+.contact-form textarea {
+  min-height: 180px;
+  resize: vertical;
+  line-height: 1.6;
+}
+.contact-form .has-error input,
+.contact-form .has-error textarea {
+  border-color: var(--signal);
+  box-shadow: inset 3px 0 var(--signal);
+}
+.contact-form .field-error {
+  color: var(--ink);
+  font-size: 14px;
+  font-weight: 600;
+}
+.contact-form .form-hint,
+.contact-form .form-privacy,
+.contact-form .form-optional {
+  color: var(--ink-3);
+  font-size: 13px;
+  font-weight: 400;
+}
+.contact-form .form-footer {
+  border-top: 1px solid var(--rule);
+  padding-top: 22px;
+}
+.contact-form .form-footer .journal-button {
+  min-width: 180px;
+  justify-content: space-between;
+}
+.contact-form .form-privacy {
+  max-width: 55ch;
+  margin-bottom: 0;
+  line-height: 1.6;
+}
+.contact-form-error {
+  padding: 16px;
+  margin-bottom: 24px;
+  background: var(--signal-soft);
+  border-left: 3px solid var(--signal);
+  font-size: 15px;
+}
+.contact-form-error p {
+  margin: 0 0 8px;
+}
+.contact-honeypot {
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+.contact-form-success {
+  padding-top: 40px;
+  padding-bottom: 40px;
+}
+.contact-form-success h2 {
+  font-size: 36px;
+}
+.contact-form-success-icon {
+  color: var(--signal);
+  border: 1px solid var(--rule);
+  width: 58px;
+  height: 58px;
+  display: grid;
+  place-items: center;
+  margin-bottom: 24px;
+}
+.journal-support-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: start;
+  gap: 50px;
+}
+.journal-support-card {
+  padding: 36px;
+  border: 1px solid var(--rule);
+  border-top: 3px solid var(--signal);
+  background: var(--raised);
+}
+.journal-support-card > .journal-icon {
+  color: var(--signal);
+  margin-bottom: 18px;
+}
+.journal-support-card h2 {
+  font-size: 32px;
+  margin-top: 0;
+}
+.journal-support-card .journal-button {
+  margin: 16px 0 12px;
+  gap: 12px;
+}
+@media (max-width: 800px) {
+  .journal-contact-grid,
+  .journal-support-grid {
+    grid-template-columns: 1fr;
+    gap: 35px;
+  }
+  .journal-contact-grid .contact-form {
+    grid-row: 1;
+  }
+  .journal-contact-aside {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+  .journal-contact-aside section {
+    margin: 0;
+  }
+  .journal-contact-aside > p,
+  .journal-contact-aside > section:first-child {
+    grid-column: 1 / -1;
+  }
+}
+@media (max-width: 480px) {
+  .contact-form-row,
+  .journal-contact-aside {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+  .journal-contact-aside {
+    gap: 26px;
+  }
+  .contact-form {
+    padding: 22px;
+  }
+  .contact-form-heading h2 {
+    font-size: 28px;
+  }
+  .contact-form .form-footer .journal-button {
+    width: 100%;
+  }
+  .journal-support-card {
+    padding: 24px;
+  }
+  .journal-support-card .journal-button {
+    width: 100%;
+  }
+}

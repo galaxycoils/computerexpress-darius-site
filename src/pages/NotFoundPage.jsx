@@ -1,12 +1,13 @@
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import Seo from '../components/Seo'
 import '../components/news/news.css'
 import '../components/news/news-hub.css'
 
 export default function NotFoundPage() {
+  const { pathname } = useLocation()
   return (
     <>
-      <Seo title="Page Not Found | St. Catharines Digital" noIndex />
+      <Seo title="Page Not Found | St. Catharines Digital" path={pathname} noIndex />
       <div className="scd-page">
         <header className="scd-intro">
           <div>
@@ -15,6 +16,11 @@ export default function NotFoundPage() {
             <p className="scd-intro-note">It may have been removed, renamed, or never existed. Try one of these sections instead.</p>
           </div>
         </header>
+
+        <form className="journal-recovery-search" action="/search" role="search" aria-label="Find another page">
+          <label htmlFor="recovery-search">Find a story, street or local guide</label>
+          <div><input id="recovery-search" type="search" name="q" placeholder="What were you looking for?" maxLength={200} required /><button className="journal-button" type="submit">Search</button></div>
+        </form>
 
         <section aria-labelledby="lost-sections-h">
           <h2 id="lost-sections-h" className="scd-section-rule">Start here instead</h2>

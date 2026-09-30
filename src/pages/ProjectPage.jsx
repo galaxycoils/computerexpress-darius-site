@@ -1,3 +1,4 @@
+import UiIcon from "../components/journal/UiIcon";
 import { Link, useParams } from "react-router-dom";
 import Seo from "../components/Seo";
 import { planningNotices } from "../data/planningNotices";
@@ -9,6 +10,7 @@ export default function ProjectPage() {
   if (!record)
     return (
       <div className="scd-page journal-page">
+        <Seo title="Record not found | St. Catharines Digital" path={`/development/${id}`} noIndex />
         <h1>Record not found</h1>
         <Link to="/planning-tracker">Open the planning tracker</Link>
       </div>
@@ -72,10 +74,10 @@ export default function ProjectPage() {
           </p>
           <div className="journal-actions">
             <a className="journal-button" href={record.sourceUrl}>
-              Read the official record ↗
+              Read the official record <UiIcon name="external" size={16} />
             </a>
             {record.engageUrl && (
-              <a href={record.engageUrl}>Project engagement page ↗</a>
+              <a href={record.engageUrl}>Project engagement page <UiIcon name="external" size={16} /></a>
             )}
           </div>
           <Link to="/corrections">Report an update or correction →</Link>

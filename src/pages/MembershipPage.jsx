@@ -1,63 +1,79 @@
-import Seo, { BASE_URL } from '../components/Seo'
-import { Link } from 'react-router-dom'
+import "../styles/contact.css";
+import { Link } from "react-router-dom";
+import Seo, { BASE_URL } from "../components/Seo";
+import UiIcon from "../components/journal/UiIcon";
+import { siteConfig } from "../data/siteConfig";
 
 export default function MembershipPage() {
   return (
     <>
       <Seo
-        title="Founding Supporters — St. Catharines Digital"
-        description="Support independent local news. Founding Supporter memberships keep municipal reporting accountable and free for everyone."
+        title="Reader support | St. Catharines Digital"
+        description="Ask about supporting source-linked local information for Niagara. Reader support and sponsorship do not influence editorial decisions."
         path="/membership"
-        jsonLd={{ '@context': 'https://schema.org', '@type': 'WebPage', name: 'Founding Supporters', url: BASE_URL }}
+        jsonLd={{
+          "@context": "https://schema.org",
+          "@type": "WebPage",
+          name: "Reader support",
+          url: `${BASE_URL}/membership`,
+        }}
       />
-      <div className="scd-page scd-paper">
-        <div className="scd-intro">
-          <p className="scd-eyebrow">Support local journalism</p>
-          <h1 className="scd-intro-title">Become a Founding Supporter</h1>
+      <div className="scd-page journal-page">
+        <header className="journal-page-heading">
+          <p className="journal-kicker">A stronger local connection</p>
+          <h1>
+            Local information.
+            <br />A shared investment.
+          </h1>
+          <p>
+            If you value public records, clear sources and a place to follow
+            your community, we’d welcome a conversation about reader support.
+          </p>
+        </header>
+        <div className="journal-support-grid">
+          <section className="journal-support-card">
+            <UiIcon name="bookmark" size={28} />
+            <h2>Start with a conversation.</h2>
+            <p>
+              Tell us how you would like to support the site. We’ll discuss the
+              available arrangements directly before you make a commitment.
+            </p>
+            <Link
+              className="journal-button"
+              to="/contact?subject=Reader%20support"
+            >
+              Ask about reader support <UiIcon />
+            </Link>
+            <p className="journal-small">
+              This is an inquiry. No payment is taken on this website, and no
+              membership benefits are currently offered for purchase.
+            </p>
+          </section>
+          <section className="journal-prose">
+            <h2>Our commitment to readers.</h2>
+            <p>
+              Public information should be easy to find and easy to check. Our
+              news briefs connect you to original notices and official
+              documents.
+            </p>
+            <p>
+              Reader support and sponsorship do not give anyone control over
+              coverage or editorial decisions.
+            </p>
+            <div className="journal-contact-links">
+              <Link className="journal-link" to="/editorial-policy">
+                Read our editorial policy <UiIcon size={16} />
+              </Link>
+              <Link className="journal-link" to="/sponsor">
+                Explore sponsorship <UiIcon size={16} />
+              </Link>
+              <a className="journal-link" href={`mailto:${siteConfig.email}`}>
+                Email the newsroom <UiIcon name="external" size={16} />
+              </a>
+            </div>
+          </section>
         </div>
-        <div className="scd-membership-grid">
-          <div className="scd-membership-tier">
-            <h2>Monthly Supporter</h2>
-            <p className="scd-tier-price">$10/mo</p>
-            <ul>
-              <li>Independent local news, free for all</li>
-              <li>Weekly digest of planning notices</li>
-              <li>Quarterly impact report</li>
-            </ul>
-            <a href="mailto:cccemt@pm.me?subject=Monthly%20Supporter" className="scd-cta-primary">
-              Support Monthly
-            </a>
-          </div>
-          <div className="scd-membership-tier scd-tier-featured">
-            <h2>Annual Supporter</h2>
-            <p className="scd-tier-price">$100/yr</p>
-            <ul>
-              <li>Everything in Monthly</li>
-              <li>Save 2 months</li>
-              <li>Founding Supporter badge on comments</li>
-              <li>Early access to new features</li>
-            </ul>
-            <a href="mailto:cccemt@pm.me?subject=Annual%20Supporter" className="scd-cta-primary">
-              Support Annually
-            </a>
-          </div>
-          <div className="scd-membership-tier">
-            <h2>Newsroom Champion</h2>
-            <p className="scd-tier-price">One-time</p>
-            <ul>
-              <li>Any amount, any time</li>
-              <li>One-off gift to local journalism</li>
-            </ul>
-            <a href="mailto:cccemt@pm.me?subject=Newsroom%20Champion" className="scd-cta-primary">
-              Give Once
-            </a>
-          </div>
-        </div>
-        <p className="scd-membership-note">
-          St. Catharines Digital is independently owned and operated.
-          Reader support keeps our reporting free and accessible to everyone in Niagara.
-        </p>
       </div>
     </>
-  )
+  );
 }

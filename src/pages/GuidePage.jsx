@@ -1,3 +1,4 @@
+import UiIcon from "../components/journal/UiIcon";
 import { Link } from 'react-router-dom'
 import Seo from '../components/Seo'
 import NewsletterPanel from '../components/news/NewsletterPanel'
@@ -73,7 +74,7 @@ export default function GuidePage({ slug }) {
 
         <p className="scd-guide-source">
           <a href={guide.primarySource} target="_blank" rel="noopener noreferrer">
-            View the official notice ↗
+            View the official notice <UiIcon name="external" size={16} />
           </a>
         </p>
 

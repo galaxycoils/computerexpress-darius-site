@@ -6,6 +6,7 @@ export { BASE_URL }
 const SITE = siteConfig.name
 const BASE = BASE_URL.replace(/\/$/, '')
 const DEFAULT_IMG = siteConfig.defaultImage
+const serializeSchema = schema => JSON.stringify(schema).replace(/</g, '\\u003c')
 
 function canonicalUrl(path) {
   if (path === '/') return `${BASE}/`
@@ -76,12 +77,12 @@ export default function Seo({
         Array.isArray(jsonLd) ? (
           jsonLd.map((schema, index) => (
             <script key={index} type="application/ld+json">
-              {JSON.stringify(schema)}
+              {serializeSchema(schema)}
             </script>
           ))
         ) : (
           <script type="application/ld+json">
-            {JSON.stringify(jsonLd)}
+            {serializeSchema(jsonLd)}
           </script>
         )
       )}

@@ -1,3 +1,4 @@
+import UiIcon from "../components/journal/UiIcon";
 import { Link, useParams } from "react-router-dom";
 import Seo from "../components/Seo";
 import { cityBySlug } from "../data/cities";
@@ -34,7 +35,7 @@ export default function CityNewsPage() {
               <br />A closer look at your community.
             </p>
             <a className="journal-link" href={city.officialSite}>
-              Visit the official city website ↗
+              Visit the official city website <UiIcon name="external" size={16} />
             </a>
           </div>
           <Photo photo={localPhotos[city.name]} eager />

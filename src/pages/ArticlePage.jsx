@@ -1,3 +1,4 @@
+import UiIcon from "../components/journal/UiIcon";
 import { useState } from "react";
 import { Photo, SaveButton } from "../components/journal/Story";
 import { localPhotos } from "../data/localPhotos";
@@ -32,13 +33,14 @@ export default function ArticlePage() {
         <Seo
           title="Article not found | St. Catharines Digital"
           description="Article not found."
+          path={`/articles/${slug}`}
           noIndex
         />
-        <main className="scd-page scd-article-empty">
+        <div className="scd-page scd-article-empty">
           <h1>Article not found</h1>
           <p>This page may have moved or is no longer published.</p>
           <Link to="/news">Browse local news →</Link>
-        </main>
+        </div>
       </>
     );
   }
@@ -200,13 +202,13 @@ export default function ArticlePage() {
               target="_blank"
               rel="noopener noreferrer"
             >
-              Read the official source ↗
+              Read the official source <UiIcon name="external" size={16} />
             </a>
           </aside>
         </section>
 
         <p>
-          <Link to="/corrections">Report a correction or update →</Link>
+          <Link className="journal-link" to={`/contact?subject=Correction&source=${encodeURIComponent(`${BASE_URL}/articles/${article.slug}/`)}`}>Report a correction or update →</Link>
         </p>
         <section
           className="scd-article-standards"

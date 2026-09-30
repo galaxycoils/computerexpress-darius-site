@@ -1,3 +1,4 @@
+import UiIcon from "../components/journal/UiIcon";
 import { getLatestNrpsReleases } from '../data/nrpsReleases'
 import Seo from '../components/Seo'
 import { BASE_URL } from '../components/Seo'
@@ -141,7 +142,7 @@ export default function PolicePage() {
               href="/news/police"
               className="button button-primary"
             >
-              View all NRPS media releases ↗
+              View all NRPS media releases <UiIcon name="external" size={16} />
             </a>
           </article>
 

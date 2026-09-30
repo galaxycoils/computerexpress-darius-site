@@ -3,6 +3,7 @@ import { createRoot, hydrateRoot } from "react-dom/client";
 import { HelmetProvider } from "react-helmet-async";
 import App from "./AppClient";
 import ErrorBoundary from "./components/ErrorBoundary";
+import { canHydratePrerender } from "./utils/prerenderHydration";
 import "./styles/theme-civic.css";
 import "./styles.css";
 import "./styles/layout-news.css";
@@ -42,7 +43,7 @@ const app = (
   </React.StrictMode>
 );
 
-if (rootElement.hasChildNodes()) hydrateRoot(rootElement, app);
+if (canHydratePrerender(rootElement, window.location)) hydrateRoot(rootElement, app);
 else createRoot(rootElement).render(app);
 
 import "./styles/journal.css";

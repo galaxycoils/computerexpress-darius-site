@@ -1,3 +1,4 @@
+import UiIcon from "../components/journal/UiIcon";
 import { Link } from 'react-router-dom'
 import Seo, { BASE_URL } from '../components/Seo'
 import { getLocalBusinessSchema } from '../data/schema'
@@ -136,7 +137,7 @@ export default function WellandVotesPage() {
                 )}
                 {c.site ? (
                   <a className="scd-votes-link" href={c.site} target="_blank" rel="noopener noreferrer">
-                    {c.label} ↗
+                    {c.label} <UiIcon name="external" size={16} />
                   </a>
                 ) : (
                   <p className="scd-votes-nosite">No campaign site on the city registry.</p>

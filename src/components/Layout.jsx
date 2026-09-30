@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { Suspense, useState, useEffect, useRef } from "react";
 import {
   Outlet,
   useLocation,
@@ -6,7 +6,13 @@ import {
   NavLink,
   useNavigationType,
 } from "react-router-dom";
-import { SavedStoriesProvider } from "./journal/SavedStories";
+import {
+  SavedStoriesProvider,
+  SavedStoriesAnnouncement,
+} from "./journal/SavedStories";
+import UiIcon from "./journal/UiIcon";
+import RouteAccessibility from "./RouteAccessibility";
+import ErrorBoundary from "./ErrorBoundary";
 import { CITIES } from "../data/cities";
 import { useLiveNow } from "../hooks/useLiveNow.js";
 const SECTIONS = [
@@ -28,23 +34,30 @@ export default function Layout() {
   const [menu, setMenu] = useState(false),
     [theme, setTheme] = useState("light"),
     [preference, setPreference] = useState("system"),
+    [preferencesReady, setPreferencesReady] = useState(false),
     [edition, setEdition] = useState("st-catharines");
   const location = useLocation(),
     navigationType = useNavigationType(),
     menuButton = useRef(null),
+    menuPanel = useRef(null),
+    previousPath = useRef(location.pathname),
     positions = useRef(new Map());
   useEffect(() => {
     try {
-      setPreference(
+      const stored =
         localStorage.getItem("theme-v3") ||
-          localStorage.getItem("theme-v2") ||
-          "system",
+        localStorage.getItem("theme-v2") ||
+        "system";
+      setPreference(
+        ["system", "light", "dark"].includes(stored) ? stored : "system",
       );
       const value = localStorage.getItem("scd-edition");
       if (editions.some((x) => x.slug === value)) setEdition(value);
     } catch {}
+    setPreferencesReady(true);
   }, []);
   useEffect(() => {
+    if (!preferencesReady) return;
     const media = window.matchMedia("(prefers-color-scheme: dark)");
     const apply = () => {
       const next =
@@ -55,6 +68,7 @@ export default function Layout() {
           : preference;
       setTheme(next);
       document.documentElement.dataset.theme = next;
+      document.documentElement.style.colorScheme = next;
       document.body.classList.toggle("light", next === "light");
       document.body.classList.add("news-mode");
     };
@@ -64,13 +78,13 @@ export default function Layout() {
       localStorage.setItem("theme-v3", preference);
     } catch {}
     return () => media.removeEventListener?.("change", apply);
-  }, [preference]);
+  }, [preference, preferencesReady]);
   useEffect(() => {
     setMenu(false);
+    const changedPage = previousPath.current !== location.pathname;
+    previousPath.current = location.pathname;
     const frame = requestAnimationFrame(() => {
-      if (location.hash)
-        document.getElementById(location.hash.slice(1))?.scrollIntoView();
-      else
+      if (!location.hash && (changedPage || navigationType === "POP"))
         window.scrollTo(
           0,
           navigationType === "POP"
@@ -81,20 +95,49 @@ export default function Layout() {
     const save = () => positions.current.set(location.key, window.scrollY);
     window.addEventListener("scroll", save, { passive: true });
     return () => {
+      positions.current.set(location.key, window.scrollY);
       cancelAnimationFrame(frame);
       window.removeEventListener("scroll", save);
     };
-  }, [location.key, location.hash, navigationType]);
+  }, [location.key, location.pathname, location.hash, navigationType]);
+  useEffect(() => {
+    const city = editions.find(
+      (value) => location.pathname.replace(/\/$/, "") === `/news/${value.slug}`,
+    );
+    if (city) chooseEdition(city.slug);
+  }, [location.pathname]);
+  useEffect(() => {
+    const original = window.history.scrollRestoration;
+    window.history.scrollRestoration = "manual";
+    return () => {
+      window.history.scrollRestoration = original;
+    };
+  }, []);
   useEffect(() => {
     if (!menu) return;
+    const frame = requestAnimationFrame(() =>
+      menuPanel.current?.querySelector("a")?.focus(),
+    );
     const escape = (e) => {
       if (e.key === "Escape") {
         setMenu(false);
         menuButton.current?.focus();
       }
     };
+    const outside = (event) => {
+      if (
+        !menuPanel.current?.contains(event.target) &&
+        !menuButton.current?.contains(event.target)
+      )
+        setMenu(false);
+    };
     document.addEventListener("keydown", escape);
-    return () => document.removeEventListener("keydown", escape);
+    document.addEventListener("pointerdown", outside);
+    return () => {
+      cancelAnimationFrame(frame);
+      document.removeEventListener("keydown", escape);
+      document.removeEventListener("pointerdown", outside);
+    };
   }, [menu]);
   function chooseEdition(value) {
     setEdition(value);
@@ -114,7 +157,7 @@ export default function Layout() {
             <div>
               <Link to="/saved">Saved stories</Link>
               <Link to="/search">
-                Search <span aria-hidden="true">⌕</span>
+                Search <UiIcon name="search" size={14} />
               </Link>
               <label className="journal-theme">
                 <span className="visually-hidden">Colour theme</span>
@@ -133,7 +176,14 @@ export default function Layout() {
           <div className="journal-masthead">
             <div className="journal-edition">
               <span>THE NIAGARA EDITION</span>
-              <time dateTime={now.toLocaleDateString("en-CA", { year: "numeric", month: "2-digit", day: "2-digit", timeZone: "America/Toronto" })}>
+              <time
+                dateTime={now.toLocaleDateString("en-CA", {
+                  year: "numeric",
+                  month: "2-digit",
+                  day: "2-digit",
+                  timeZone: "America/Toronto",
+                })}
+              >
                 {now.toLocaleDateString("en-CA", {
                   weekday: "long",
                   month: "long",
@@ -143,11 +193,7 @@ export default function Layout() {
                 })}
               </time>
             </div>
-            <Link
-              className="journal-wordmark"
-              to="/"
-              aria-label="St. Catharines Digital home"
-            >
+            <Link className="journal-wordmark" to="/">
               St. Catharines
               <span>
                 Digital<span className="journal-brand-dot">.</span>
@@ -157,16 +203,18 @@ export default function Layout() {
               className="journal-button journal-subscribe"
               to="/planning-alerts"
             >
-              Stay in the know <span aria-hidden="true">↗</span>
+              Stay in the know <UiIcon name="external" size={17} />
             </Link>
             <button
               className="journal-menu-button"
+              type="button"
               ref={menuButton}
               aria-expanded={menu}
               aria-controls="journal-mobile-menu"
               onClick={() => setMenu(!menu)}
             >
-              {menu ? "Close ×" : "Menu ☰"}
+              {menu ? "Close" : "Menu"}{" "}
+              <UiIcon name={menu ? "close" : "menu"} size={17} />
             </button>
           </div>
           <div className="journal-nav-wrap">
@@ -192,15 +240,16 @@ export default function Layout() {
               </select>
               <Link
                 to={`/news/${edition}`}
-                aria-label="Open selected city edition"
+                aria-label={`Open ${editions.find((city) => city.slug === edition)?.name} edition`}
               >
-                →
+                <UiIcon />
               </Link>
             </div>
           </div>
           {menu && (
             <nav
               className="journal-mobile-menu"
+              ref={menuPanel}
               id="journal-mobile-menu"
               aria-label="Mobile navigation"
             >
@@ -213,14 +262,46 @@ export default function Layout() {
                 ["/police", "Public safety"],
               ].map(([path, label]) => (
                 <Link key={path} to={path}>
-                  {label} <span aria-hidden="true">↗</span>
+                  {label} <UiIcon name="external" size={16} />
                 </Link>
               ))}
+              <div className="journal-mobile-edition">
+                <label htmlFor="mobile-edition">Your city edition</label>
+                <div>
+                  <select
+                    id="mobile-edition"
+                    value={edition}
+                    onChange={(event) => chooseEdition(event.target.value)}
+                  >
+                    {editions.map((city) => (
+                      <option key={city.slug} value={city.slug}>
+                        {city.name}
+                      </option>
+                    ))}
+                  </select>
+                  <Link className="journal-button" to={`/news/${edition}`}>
+                    Open edition <UiIcon />
+                  </Link>
+                </div>
+              </div>
             </nav>
           )}
         </header>
+        <SavedStoriesAnnouncement />
         <main id="main-content" className="scd-main" tabIndex="-1">
-          <Outlet />
+          <ErrorBoundary inline resetKey={location.pathname}>
+            <Suspense
+              fallback={
+                <div className="scd-page journal-route-loading" role="status">
+                  <span className="journal-kicker">One moment</span>
+                  <p>Loading your next read…</p>
+                </div>
+              }
+            >
+              <Outlet />
+              <RouteAccessibility />
+            </Suspense>
+          </ErrorBoundary>
         </main>
         <footer className="journal-footer">
           <div className="journal-footer-top">
@@ -264,11 +345,20 @@ export default function Layout() {
               <Link to="/about">About & ownership</Link>
               <Link to="/editorial-policy">Editorial policy</Link>
               <Link to="/accessibility">Accessibility</Link>
-              <a href="/rss.xml">RSS feed ↗</a>
+              <a href="/rss.xml">
+                RSS feed <UiIcon name="external" size={16} />
+              </a>
             </div>
           </div>
           <div className="journal-footer-bottom">
-            <span>© {now.toLocaleDateString("en-CA", { year: "numeric", timeZone: "America/Toronto" })} St. Catharines Digital</span>
+            <span>
+              ©{" "}
+              {now.toLocaleDateString("en-CA", {
+                year: "numeric",
+                timeZone: "America/Toronto",
+              })}{" "}
+              St. Catharines Digital
+            </span>
             <div>
               <Link to="/reader-services">Reader services</Link>
               <Link to="/privacy">Privacy</Link>

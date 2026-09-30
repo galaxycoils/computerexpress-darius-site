@@ -1,69 +1,97 @@
-import Seo, { BASE_URL } from '../components/Seo'
-import { Link } from 'react-router-dom'
-import AnimatedSection from '../hooks/useInView'
-import ContactForm from '../components/ContactForm'
-import { getLocalBusinessSchema } from '../data/schema'
-import { siteConfig } from '../data/siteConfig'
-
-const contactPageJsonLd = {
-  '@context': 'https://schema.org',
-  '@type': 'ContactPage',
-  name: 'Contact St. Catharines Digital',
-  url: `${BASE_URL}/contact`,
-  description: 'Contact St. Catharines Digital about our Planning Alert newsletter, municipal news coverage, and local advertising opportunities.',
-  about: 'St. Catharines Digital is a municipal news platform tracking official council, police, and planning notices across the Niagara Region.',
-  knowsLanguage: ['English'],
-  knowsAbout: ['Municipal News', 'Planning Alerts', 'Local Government Coverage', 'Editorial Independence'],
-  areaServed: {
-    '@type': 'City',
-    name: 'St. Catharines',
-    containedInPlace: { '@type': 'AdministrativeArea', name: 'Ontario' },
-    addressCountry: { '@type': 'Country', name: 'Canada' }
-  }
-}
-
-const localBusinessJsonLd = getLocalBusinessSchema()
-
-const breadcrumbJsonLd = {
-  '@context': 'https://schema.org',
-  '@type': 'BreadcrumbList',
-  itemListElement: [
-    { '@type': 'ListItem', position: 1, name: 'Home', item: BASE_URL },
-    { '@type': 'ListItem', position: 2, name: 'Contact', item: `${BASE_URL}/contact` }
-  ]
-}
+import "../styles/contact.css";
+import { Link, useSearchParams } from "react-router-dom";
+import Seo, { BASE_URL } from "../components/Seo";
+import ContactForm from "../components/ContactForm";
+import { siteConfig } from "../data/siteConfig";
+import UiIcon from "../components/journal/UiIcon";
+import { getNewsMediaSchema } from "../data/schema";
 
 export default function ContactPage() {
+  const [params] = useSearchParams();
   return (
     <>
       <Seo
-        title="Contact | St. Catharines Digital — Editorial & Advertising Inquiries"
-        description="Contact the St. Catharines Digital editorial team about Planning Alert sponsorship, press inquiries, or corrections."
+        title="Contact the newsroom | St. Catharines Digital"
+        description="Send a news tip, suggest an event, report a correction or ask about local sponsorship. Get in touch with St. Catharines Digital."
         path="/contact"
-        jsonLd={[contactPageJsonLd, localBusinessJsonLd, breadcrumbJsonLd]}
+        jsonLd={[
+          getNewsMediaSchema(),
+          {
+            "@context": "https://schema.org",
+            "@type": "ContactPage",
+            name: "Contact the newsroom",
+            url: `${BASE_URL}/contact`,
+          },
+        ]}
       />
-      <section className="contact-page">
-        <section className="contact-hero">
-          <h1>Editorial & Advertising Contact</h1>
-          <p className="lead">St. Catharines Digital tracks official municipal notices across the Niagara Region. For editorial inquiries, sponsorship opportunities, or corrections, reach out below.</p>
-        </section>
-        <ContactForm />
-        <section className="contact-info">
-          <h2>Connect With Us</h2>
-          <div className="contact-grid">
-            <div className="contact-card">
-              <h3>Planning Alert Sponsorship</h3>
-              <p>Founding pilot at $300/mo. One placement per send, editorial firewall guaranteed.</p>
-              <Link to="/sponsor" className="button button-primary">View Sponsorship Details</Link>
-              <span style={{ display: 'block', marginTop: '0.75rem', fontSize: '0.85rem', color: 'var(--muted)' }}>or <Link to="/planning-tracker">view Planning Tracker</Link></span>
-            </div>
-            <div className="contact-card">
-              <h3>Press & Corrections</h3>
-              <p>All sources are official municipal domains. Report errors or request corrections.</p>
-            </div>
-          </div>
-        </section>
-      </section>
+      <div className="scd-page journal-page journal-contact-page">
+        <header className="journal-page-heading">
+          <p className="journal-kicker">A conversation starts here</p>
+          <h1>
+            Good neighbours.
+            <br />
+            Open lines.
+          </h1>
+          <p>
+            A news tip, a question, or something we should put right. Help us
+            keep Niagara informed and connected.
+          </p>
+        </header>
+        <div className="journal-contact-grid">
+          <aside className="journal-contact-aside" aria-label="Contact options">
+            <section>
+              <p className="journal-kicker">Close to the source</p>
+              <h2>What should we know?</h2>
+              <p>
+                Share a local story or a public record worth a closer look. A
+                link to the original source helps us review your tip.
+              </p>
+              <a
+                className="journal-link journal-contact-email"
+                href={`mailto:${siteConfig.email}`}
+              >
+                {siteConfig.email}
+                <UiIcon name="external" size={16} />
+              </a>
+            </section>
+            <section>
+              <h2>Something to correct?</h2>
+              <p>
+                Include the page address, the claim to review and a supporting
+                source.
+              </p>
+              <Link className="journal-link" to="/contact?subject=Correction">
+                Report a correction <UiIcon name="arrow" size={16} />
+              </Link>
+            </section>
+            <section>
+              <h2>A place in the community.</h2>
+              <p>
+                Suggest an event or discuss supporting local information.
+                Sponsorship terms and availability are agreed directly.
+              </p>
+              <div className="journal-contact-links">
+                <Link
+                  className="journal-link"
+                  to="/contact?subject=Event%20submission"
+                >
+                  Suggest an event <UiIcon size={16} />
+                </Link>
+                <Link className="journal-link" to="/sponsor">
+                  Sponsorship inquiries <UiIcon size={16} />
+                </Link>
+              </div>
+            </section>
+            <p className="journal-small">
+              For urgent assistance or an emergency, contact the appropriate
+              emergency service. This form is for newsroom inquiries.
+            </p>
+          </aside>
+          <ContactForm
+            key={`${params.get("subject") || ""}:${params.get("source") || ""}`}
+          />
+        </div>
+      </div>
     </>
-  )
+  );
 }

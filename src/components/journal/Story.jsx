@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { dateLabel } from "../../data/publication";
 import { useSavedStories } from "./SavedStories";
+import UiIcon from "./UiIcon";
 
 export function StoryLink({ story, children, ...props }) {
   return story.href.startsWith("/") ? (
@@ -13,17 +14,20 @@ export function StoryLink({ story, children, ...props }) {
     </a>
   );
 }
-export function Photo({ photo, eager = false }) {
+export function Photo({ photo, eager = false, sizes = "(max-width: 800px) calc(100vw - 48px), (max-width: 1100px) 50vw, 780px" }) {
   if (!photo) return null;
   return (
     <figure className="journal-photo">
       <img
         src={photo.src}
+        srcSet={photo.srcSet}
+        sizes={photo.srcSet ? sizes : undefined}
         alt={photo.alt}
-        width="1200"
-        height="800"
+        width={photo.width || 1200}
+        height={photo.height || 800}
         loading={eager ? "eager" : "lazy"}
-        fetchpriority={eager ? "high" : "auto"}
+        fetchPriority={eager ? "high" : "auto"}
+        decoding="async"
         style={{ objectPosition: photo.position || "center" }}
       />
       <figcaption>
@@ -49,7 +53,7 @@ export function SaveButton({ story }) {
         aria-pressed={saved}
         onClick={() => toggle(story.id)}
       >
-        <span aria-hidden="true">{saved ? "▣" : "＋"}</span>{" "}
+        <UiIcon name={saved ? "check" : "bookmark"} size={15} />{" "}
         {saved ? "Saved" : "Save"}
       </button>
       {error && <small role="alert">{error}</small>}
@@ -76,9 +80,9 @@ export default function Story({ story, compact = false, index }) {
         )}
         <div className="journal-meta">
           <span>{story.kind}</span>
-          <time dateTime={story.date || undefined}>
+          {story.startsAt ? <time dateTime={story.startsAt}>Meeting: {dateLabel(story.startsAt.slice(0, 10))}</time> : story.kind !== "Local guide" && <time dateTime={story.date || undefined}>
             {dateLabel(story.date)}
-          </time>
+          </time>}
           {!compact && <SaveButton story={story} />}
         </div>
       </div>
@@ -94,7 +98,7 @@ export function SectionTitle({ kicker, title, to, action = "Explore all" }) {
       </div>
       {to && (
         <Link to={to}>
-          {action} <span aria-hidden="true">↗</span>
+          {action} <UiIcon name="external" size={16} />
         </Link>
       )}
     </header>
