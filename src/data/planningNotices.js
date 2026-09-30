@@ -6,13 +6,29 @@
  * - thorold.ca
  * - niagararegion.ca
  *
- * Updated: 2026-09-28
- * Note: Added Flood Resilience Task Force call and Sixteen Mile Creek closure; marked Pine/Sullivan Active.
+ * Updated: 2026-09-30
+ * Note: Added Notice of Decision for 1262-1290 Fourth Avenue (OPA 56 / ZBA 2026-120); marked Welland First Street hearing, Thorold McMillan PIC, and Pine/Sullivan closure complete.
  * Next review: Daily
  */
 import { getRenderNow, parseTorontoDate } from "../utils/renderClock.js";
 
 export const planningNotices = [
+  {
+    id: "stc-1262-1290-fourth-ave-opa-zba-decision",
+    municipality: "St. Catharines",
+    type: "Notice of Decision (OPA / Zoning By-law Amendment)",
+    title: "1262 and 1290 Fourth Avenue — Official Plan and Zoning Decision",
+    description:
+      "On September 14, 2026, City Council adopted Official Plan Amendment No. 56 and passed Zoning By-law 2026-120 for 1262-1290 Fourth Avenue to permit 8-storey mixed-use blocks. Appeal deadline is October 19, 2026.",
+    fileNumber: "25 113482 OP / 25 113484 ZA",
+    status: "Decision Posted",
+    submissionDeadline: "2026-10-19T17:00:00",
+    publishedDate: "2026-09-30",
+    sourceUrl:
+      "https://www.stcatharines.ca/news/posts/notice-of-decision-1262-and-1290-fourth-avenue/",
+    category: "official-plan-amendment",
+    tags: ["Official Plan", "Zoning", "Fourth Avenue", "Notice of Decision"],
+  },
   {
     id: "stc-39-41-thomas-st-consent",
     municipality: "St. Catharines",
@@ -110,7 +126,7 @@ export const planningNotices = [
     description:
       "Concurrent consent and minor-variance applications for 37-39 and 38-40 First Street to create lots for future multiple dwellings with reciprocal access easements and reduced parking-aisle widths.",
     fileNumber: "PLCON202600193 / PLCON202600195",
-    status: "Hearing Scheduled",
+    status: "Meeting Complete",
     meetingDate: "2026-09-28T17:00:00",
     meetingLocation: "Civic Square Council Chambers, 60 East Main Street, Welland",
     submissionDeadline: "2026-09-22T17:00:00",
@@ -160,8 +176,8 @@ export const planningNotices = [
     type: "Temporary Road Closure",
     title: "Pine Street and Sullivan Avenue Intersection Closure",
     description:
-      "The Pine Street and Sullivan Avenue intersection closed Monday, September 28 at 7:00 a.m. for contractor work and is expected to reopen Tuesday, September 29 at about 6:00 p.m., weather permitting.",
-    status: "Active",
+      "The Pine Street and Sullivan Avenue intersection closed Monday, September 28 at 7:00 a.m. for contractor work and was expected to reopen Tuesday, September 29 at about 6:00 p.m., weather permitting.",
+    status: "Meeting Complete",
     meetingDate: "2026-09-28T07:00:00",
     endDate: "2026-09-29T18:00:00",
     publishedDate: "2026-09-25",
@@ -176,7 +192,7 @@ export const planningNotices = [
     title: "McMillan Park Project — Public Information Centre",
     description:
       "Drop-in PIC at Thorold City Hall for proposed McMillan Park improvements. Project materials and comment tools are also on Let's Talk Thorold.",
-    status: "Hearing Scheduled",
+    status: "Meeting Complete",
     meetingDate: "2026-09-28T17:00:00",
     meetingLocation: "City of Thorold City Hall, 3540 Schmon Parkway",
     publishedDate: "2026-09-11",
