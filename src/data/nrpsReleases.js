@@ -2,13 +2,24 @@
  * NRPS Police Media Releases for St. Catharines Digital
  * Sourced exclusively from https://www.niagarapolice.ca/news/posts/
  * Official Niagara Regional Police Service media releases & community notifications.
- * Updated: 2026-09-25
+ * Updated: 2026-09-30
  * Next review: Daily (cron) — refresh from niagarapolice.ca
- * Note: added Sep 24 Port Colborne cable-theft arrests (6 District); retained Sep 23 Niagara Falls robbery update and Sep 21–22 homicide wanted/update items.
+ * Note: added Sep 30 update to downtown St. Catharines assault arrest (1 District St. Catharines/Thorold); prior: Sep 24 Port Colborne cable-theft arrests (6 District); retained Sep 23 Niagara Falls robbery update and Sep 21–22 homicide wanted/update items.
  */
 import { getRenderNow } from '../utils/renderClock.js'
 
 export const nrpsReleases = [
+  {
+    id: 'nrps-2026-09-30-update-female-arrested-stc-assault',
+    date: '2026-09-30',
+    headline: 'Update #1: Female Arrested in Downtown St. Catharines Assault – Male Suspect Outstanding',
+    municipality: 'St. Catharines, Thorold',
+    type: 'Media Release (Update / Assault Investigation)',
+    url: 'https://www.niagarapolice.ca/news/posts/update-1-female-arrested-in-downtown-st-catharines-assault-male-suspect-outstanding/',
+    source: 'Niagara Regional Police Service',
+    tags: ['Assault', 'Arrest', 'St. Catharines', 'Thorold', '1 District', 'Public Assistance', 'Hate-Motivated Investigation', 'Update'],
+    category: 'assault',
+  },
   {
     id: 'nrps-2026-09-24-port-colborne-cable-theft',
     date: '2026-09-24',
