@@ -193,6 +193,7 @@ export const nrpsReleases = [
     source: 'Niagara Regional Police Service',
     tags: ['Drug Trafficking', 'CORE', '1 District', 'St. Catharines', 'Thorold', 'Street Crime Unit'],
     category: 'drug-investigation',
+    unverified: true
   },
   {
     id: 'nrps-2026-08-26-fentanyl-handgun-seized',
@@ -204,6 +205,7 @@ export const nrpsReleases = [
     source: 'Niagara Regional Police Service',
     tags: ['Fentanyl', 'Handgun', 'Seizure', 'Street Crime Unit', '2 District', 'Niagara Falls', 'Drug Trafficking', 'St. Catharines', 'Welland', 'Thorold'],
     category: 'drug-seizure',
+    unverified: true
   },
   {
     id: 'nrps-2026-08-25-2-district-traffic-stop',
@@ -215,6 +217,7 @@ export const nrpsReleases = [
     source: 'Niagara Regional Police Service',
     tags: ['Drug Trafficking', 'Traffic Stop', 'Arrest', '2 District', 'Niagara Falls', 'St. Catharines', 'Welland', 'Thorold'],
     category: 'drug-investigation',
+    unverified: true
   },
   {
     id: 'nrps-2026-08-25-indecent-act-fort-erie',
@@ -226,6 +229,7 @@ export const nrpsReleases = [
     source: 'Niagara Regional Police Service',
     tags: ['Indecent Act', 'Suspect Identification', 'Fort Erie', 'Public Assistance', 'Region-wide'],
     category: 'public-assistance',
+    unverified: true
   },
   {
     id: 'nrps-2026-08-24-1-district-cib-stabbing',
@@ -237,6 +241,7 @@ export const nrpsReleases = [
     source: 'Niagara Regional Police Service',
     tags: ['Stabbing', 'CIB', '1 District', 'St. Catharines', 'Thorold', 'Investigation'],
     category: 'assault',
+    unverified: true
   },
   {
     id: 'nrps-2026-08-24-proactive-traffic-welland',
@@ -248,6 +253,7 @@ export const nrpsReleases = [
     source: 'Niagara Regional Police Service',
     tags: ['Drug Trafficking', 'Traffic Stop', 'Arrest', '3 District', 'Welland', 'St. Catharines', 'Thorold'],
     category: 'drug-investigation',
+    unverified: true
   },
   {
     id: 'nrps-2026-08-24-horses-cruelty-update',
@@ -259,6 +265,7 @@ export const nrpsReleases = [
     source: 'Niagara Regional Police Service',
     tags: ['Animal Cruelty', 'Horses', 'Welland', 'Unsolved', 'Update', 'Investigation'],
     category: 'animal-cruelty',
+    unverified: true
   },
   {
     id: 'nrps-2026-08-21-male-pedestrian-struck',
@@ -270,6 +277,7 @@ export const nrpsReleases = [
     source: 'Niagara Regional Police Service',
     tags: ['Collision', 'Fail to Remain', 'Pedestrian', 'St. Catharines', 'Welland', 'Thorold', 'Investigation'],
     category: 'collision',
+    unverified: true
   },
   {
     id: 'nrps-2026-08-21-female-pedestrian-struck',
@@ -281,6 +289,7 @@ export const nrpsReleases = [
     source: 'Niagara Regional Police Service',
     tags: ['Collision', 'Fail to Remain', 'Pedestrian', 'St. Catharines', 'Thorold', 'Investigation'],
     category: 'collision',
+    unverified: true
   },
   {
     id: 'nrps-2026-08-21-female-pedestrian-update',
@@ -292,6 +301,7 @@ export const nrpsReleases = [
     source: 'Niagara Regional Police Service',
     tags: ['Collision', 'Fail to Remain', 'Pedestrian', 'St. Catharines', 'Thorold', 'Collision Reconstruction', 'Update', 'Arrest'],
     category: 'collision',
+    unverified: true
   },
   {
     id: 'nrps-2026-08-18-loaded-shotgun-stc',
@@ -599,6 +609,7 @@ export const nrpsReleases = [
     source: 'Niagara Regional Police Service',
     tags: ['Collision', 'Fail to Remain', 'Pedestrian', 'St. Catharines', 'Arrest', 'Collision Reconstruction'],
     category: 'collision',
+    unverified: true
   },
   // SEP 2, 2026 (previously reported, still current)
   {
@@ -623,6 +634,7 @@ export const nrpsReleases = [
     source: 'Niagara Regional Police Service',
     tags: ['Collision', 'Serious Injuries', 'Witnesses Sought', 'Thorold'],
     category: 'collision',
+    unverified: true
   },
   // AUG 31, 2026
   {
@@ -646,6 +658,7 @@ export const nrpsReleases = [
     source: 'Niagara Regional Police Service',
     tags: ['Drug Trafficking', 'Region-wide', 'Charges', 'Wanted', 'Update'],
     category: 'drug-investigation',
+    unverified: true
   },
   // AUG 27, 2026
   {
@@ -658,6 +671,7 @@ export const nrpsReleases = [
     source: 'Niagara Regional Police Service',
     tags: ['Break & Enter', 'Welland', 'Port Colborne', 'Suspect Vehicle'],
     category: 'break-and-enter',
+    unverified: true
   },
   {
     id: 'nrps-2026-08-27-welland-sexual-offences-children',
@@ -669,6 +683,7 @@ export const nrpsReleases = [
     source: 'Niagara Regional Police Service',
     tags: ['Sexual Offences', 'Children', 'Welland', 'Arrest'],
     category: 'child-safety',
+    unverified: true
   },
 ];
 

@@ -445,7 +445,25 @@ export default function PoliceNewsPage() {
                     </div>
                     {renderEnhancedRelease(filteredReleases[0])}
                     <div className="featured-actions">
-                      <a href={filteredReleases[0].url} target="_blank" rel="noopener noreferrer" className="button button-primary">Read official release</a>
+                      {filteredReleases[0].unverified ? (
+                        <span className="unverified-badge" style={{
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          gap: '0.35rem',
+                          padding: '0.35rem 0.75rem',
+                          background: 'rgba(239,68,68,0.1)',
+                          border: '1px solid rgba(239,68,68,0.3)',
+                          borderRadius: '999px',
+                          fontSize: 'var(--fs-xs)',
+                          color: 'var(--danger)',
+                          fontWeight: 500
+                        }}>
+                          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                          Source link not verified — no official NRPS page found
+                        </span>
+                      ) : (
+                        <a href={filteredReleases[0].url} target="_blank" rel="noopener noreferrer" className="button button-primary">Read official release</a>
+                      )}
                       <span className="source-credit">Source: <a href="https://www.niagarapolice.ca/news/posts/" target="_blank" rel="noopener noreferrer">niagarapolice.ca</a></span>
                     </div>
                   </article>
@@ -492,7 +510,25 @@ export default function PoliceNewsPage() {
                           </div>
                           {renderEnhancedRelease(release)}
                           <div className="release-actions">
-                            <a href={release.url} target="_blank" rel="noopener noreferrer" className="button button-ghost button-sm">Read official release →</a>
+                            {release.unverified ? (
+                              <span className="unverified-badge" style={{
+                                display: 'inline-flex',
+                                alignItems: 'center',
+                                gap: '0.35rem',
+                                padding: '0.35rem 0.75rem',
+                                background: 'rgba(239,68,68,0.1)',
+                                border: '1px solid rgba(239,68,68,0.3)',
+                                borderRadius: '999px',
+                                fontSize: 'var(--fs-xs)',
+                                color: 'var(--danger)',
+                                fontWeight: 500
+                              }}>
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                                Source link not verified — no official NRPS page found
+                              </span>
+                            ) : (
+                              <a href={release.url} target="_blank" rel="noopener noreferrer" className="button button-ghost button-sm">Read official release →</a>
+                            )}
                             <span className="source-credit">Via <a href="https://www.niagarapolice.ca/news/posts/" target="_blank" rel="noopener noreferrer">Niagara Regional Police Service</a></span>
                           </div>
                         </div>
