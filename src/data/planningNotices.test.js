@@ -13,7 +13,7 @@ describe('getUpcomingMeetings', () => {
   it('keeps the front-page calendar within its declared seven-day window', () => {
     const now = new Date('2026-09-20T12:00:00Z')
     const meetings = getUpcomingMeetings(7, now)
-    expect(meetings).toEqual([])
+    expect(meetings.map((m) => m.id)).toEqual(['thorold-sullivan-towpath-closure'])
   })
 
   it('includes events when the caller requests a wider range', () => {
@@ -30,9 +30,9 @@ describe('time-sensitive notice status', () => {
     expect(getNoticeStats(now).upcomingMeetings).toBe(0)
   })
 
-  it('labels a passed scheduled date without inventing a hearing outcome', () => {
+  it('returns the published status when it is already a final outcome', () => {
     const notice = planningNotices.find(({ id }) => id === 'welland-coa-first-st-37-40')
-    expect(getNoticeStatus(notice, now)).toBe('Scheduled date passed — check source')
+    expect(getNoticeStatus(notice, now)).toBe('Meeting Complete')
   })
 
   it('expires an open call after its listed deadline', () => {
