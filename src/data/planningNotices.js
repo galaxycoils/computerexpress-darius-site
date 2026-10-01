@@ -6,8 +6,8 @@
  * - thorold.ca
  * - niagararegion.ca
  *
- * Updated: 2026-09-30
- * Note: Added Notice of Decision for 1262-1290 Fourth Avenue (OPA 56 / ZBA 2026-120); marked Welland First Street hearing, Thorold McMillan PIC, and Pine/Sullivan closure complete.
+ * Updated: 2026-10-01
+ * Note: Added Welland 2026 pavement rejuvenation notice and Thorold Sullivan Avenue/Towpath Street closure (posted Sep 17, about two weeks from Sep 21). No new St. Catharines public notices since Sep 30.
  * Next review: Daily
  */
 import { getRenderNow, parseTorontoDate } from "../utils/renderClock.js";
@@ -138,6 +138,20 @@ export const planningNotices = [
     tags: ["Consent", "Minor Variance", "First Street", "Welland"],
   },
   {
+    id: "welland-2026-pavement-rejuvenation",
+    municipality: "Welland",
+    type: "Municipal Construction Notice",
+    title: "2026 Pavement Rejuvenation Program",
+    description:
+      "Welland is resurfacing and sealing listed local streets, including sections of Golden Boulevard, Scholfield Avenue, Crowland Avenue, Welland Street, McAlpine Avenue, White Avenue, Price Avenue, Ross Street, and Parkway. Walker Construction Limited is the contractor. Work was tentatively scheduled to start the week of September 28, 2026, with temporary road and intersection closures signed on site.",
+    status: "Active",
+    publishedDate: "2026-09-28",
+    sourceUrl:
+      "https://www.welland.ca/news/posts/2026-pavement-rejuvenation-program/",
+    category: "construction",
+    tags: ["Construction", "Pavement", "Road Closure", "Welland"],
+  },
+  {
     id: "welland-777-803-niagara-st-signs",
     municipality: "Welland",
     type: "Minor Variance (Committee of Adjustment)",
@@ -155,6 +169,21 @@ export const planningNotices = [
       "https://www.welland.ca/news/posts/notice-of-public-hearing-application-for-minor-variance-777-803-niagara-street/",
     category: "minor-variance",
     tags: ["Minor Variance", "Niagara Street", "Signs", "Welland"],
+  },
+  {
+    id: "thorold-sullivan-towpath-closure",
+    municipality: "Thorold",
+    type: "Temporary Road Closure",
+    title: "Sullivan Avenue and Towpath Street Intersection Closure",
+    description:
+      "The Sullivan Avenue and Towpath Street intersection was scheduled to close Monday, September 21 at 6:00 a.m. for about two weeks while a contractor replaces aging underground infrastructure and reconstructs the roadway in downtown Thorold.",
+    status: "Active",
+    meetingDate: "2026-09-21T06:00:00",
+    publishedDate: "2026-09-17",
+    sourceUrl:
+      "https://www.thorold.ca/news/news/temporary-road-closures-at-sullivan-ave-and-towpath-st-starting-september-21/",
+    category: "road-closure",
+    tags: ["Road Closure", "Sullivan Avenue", "Towpath Street", "Thorold"],
   },
   {
     id: "thorold-winslow-cres-watermain",

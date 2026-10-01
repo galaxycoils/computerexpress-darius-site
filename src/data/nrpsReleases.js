@@ -2,13 +2,46 @@
  * NRPS Police Media Releases for St. Catharines Digital
  * Sourced exclusively from https://www.niagarapolice.ca/news/posts/
  * Official Niagara Regional Police Service media releases & community notifications.
- * Updated: 2026-09-30
+ * Updated: 2026-10-01
  * Next review: Daily (cron) — refresh from niagarapolice.ca
- * Note: added Sep 30 update to downtown St. Catharines assault arrest (1 District St. Catharines/Thorold); prior: Sep 24 Port Colborne cable-theft arrests (6 District); retained Sep 23 Niagara Falls robbery update and Sep 21–22 homicide wanted/update items.
+ * Note: Added Sep 25 Niagara Falls homicide update #2 (second arrest) and motorcycle collision release, plus Sep 29 downtown St. Catharines assault release that preceded the Sep 30 update.
  */
 import { getRenderNow } from '../utils/renderClock.js'
 
 export const nrpsReleases = [
+  {
+    id: 'nrps-2026-09-25-nf-homicide-update-2-fitzgerald',
+    date: '2026-09-25',
+    headline: 'Update #2: Second Suspect Arrested in Niagara Falls Homicide Investigation',
+    municipality: 'Region-wide (St. Catharines, Welland, Thorold included)',
+    type: 'Media Release (Update / Homicide)',
+    url: 'https://www.niagarapolice.ca/news/posts/update-2-second-suspected-arrested-two-niagara-falls-men-wanted-in-homicide-investigation/',
+    source: 'Niagara Regional Police Service',
+    tags: ['Homicide', 'Arrest', 'Niagara Falls', 'Homicide Unit', 'Update', 'St. Catharines'],
+    category: 'homicide',
+  },
+  {
+    id: 'nrps-2026-09-25-nf-motorcycle-collision',
+    date: '2026-09-25',
+    headline: 'Male Deceased in Motorcycle Collision in Niagara Falls',
+    municipality: 'Region-wide (St. Catharines, Welland, Thorold included)',
+    type: 'Media Release (Collision Investigation)',
+    url: 'https://www.niagarapolice.ca/news/posts/male-deceased-in-motorcycle-collision-in-niagara-falls/',
+    source: 'Niagara Regional Police Service',
+    tags: ['Collision', 'Motorcycle', 'Niagara Falls', 'Collision Reconstruction', '2 District', 'Public Assistance'],
+    category: 'collision',
+  },
+  {
+    id: 'nrps-2026-09-29-stc-assault-female-arrested',
+    date: '2026-09-29',
+    headline: 'Female Arrested in Downtown St. Catharines Assault – Male Suspect Outstanding',
+    municipality: 'St. Catharines, Thorold',
+    type: 'Media Release (Assault Investigation)',
+    url: 'https://www.niagarapolice.ca/news/posts/female-arrested-in-downtown-st-catharines-assault-male-suspect-outstanding/',
+    source: 'Niagara Regional Police Service',
+    tags: ['Assault', 'Arrest', 'St. Catharines', 'Thorold', '1 District', 'Public Assistance', 'Hate-Motivated Investigation'],
+    category: 'assault',
+  },
   {
     id: 'nrps-2026-09-30-update-female-arrested-stc-assault',
     date: '2026-09-30',
