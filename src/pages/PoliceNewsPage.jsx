@@ -52,6 +52,267 @@ export default function PoliceNewsPage() {
     } catch { return dateStr }
   }
 
+  const formatDateTime = (dateStr) => {
+    if (!dateStr) return '—'
+    try {
+      const d = parseTorontoDate(dateStr)
+      if (isNaN(d.getTime())) return dateStr
+      return d.toLocaleDateString('en-CA', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        timeZone: /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}/.test(dateStr)
+          ? 'America/Toronto'
+          : 'UTC',
+      })
+    } catch { return dateStr }
+  }
+
+  const renderEnhancedRelease = (release) => {
+    const hasEnhanced = release.charges || release.victim || release.suspects_outstanding || release.court || release.contact || release.updates
+    if (!hasEnhanced) return null
+
+    return (
+      <div className="enhanced-release-detail" style={{
+        marginTop: '1.5rem',
+        padding: '1.5rem',
+        background: 'var(--bg-card)',
+        border: '1px solid var(--panel-border)',
+        borderRadius: 'var(--radius-lg)',
+        borderLeft: '4px solid var(--primary)'
+      }}>
+        {/* Incident details */}
+        {(release.incident_date || release.published || release.location) && (
+          <section className="enhanced-section" style={{ marginBottom: '1.25rem' }}>
+            <h4 style={{ fontSize: 'var(--fs-sm)', fontWeight: 600, marginBottom: '0.75rem', color: 'var(--primary)' }}>Incident Details</h4>
+            <dl style={{ display: 'grid', gridTemplateColumns: 'auto 1fr', gap: '0.5rem 1rem', fontSize: 'var(--fs-sm)' }}>
+              {release.incident_date && (
+                <>
+                  <dt style={{ color: 'var(--muted)', fontWeight: 500 }}>Incident date/time:</dt>
+                  <dd style={{ margin: 0 }}>{formatDateTime(release.incident_date)}</dd>
+                </>
+              )}
+              {release.published && (
+                <>
+                  <dt style={{ color: 'var(--muted)', fontWeight: 500 }}>Originally published:</dt>
+                  <dd style={{ margin: 0 }}>{formatDate(release.published)}</dd>
+                </>
+              )}
+              {release.location?.text && (
+                <>
+                  <dt style={{ color: 'var(--muted)', fontWeight: 500 }}>Location:</dt>
+                  <dd style={{ margin: 0 }}>{release.location.text}</dd>
+                </>
+              )}
+              {release.nrps_incident_number && (
+                <>
+                  <dt style={{ color: 'var(--muted)', fontWeight: 500 }}>NRPS incident #:</dt>
+                  <dd style={{ margin: 0, fontFamily: 'monospace' }}>{release.nrps_incident_number}</dd>
+                </>
+              )}
+            </dl>
+          </section>
+        )}
+
+        {/* Victim */}
+        {release.victim && (
+          <section className="enhanced-section" style={{ marginBottom: '1.25rem' }}>
+            <h4 style={{ fontSize: 'var(--fs-sm)', fontWeight: 600, marginBottom: '0.75rem', color: 'var(--primary)' }}>Victim</h4>
+            <dl style={{ display: 'grid', gridTemplateColumns: 'auto 1fr', gap: '0.5rem 1rem', fontSize: 'var(--fs-sm)' }}>
+              <dt style={{ color: 'var(--muted)', fontWeight: 500 }}>Age:</dt>
+              <dd style={{ margin: 0 }}>{release.victim.age}</dd>
+              <dt style={{ color: 'var(--muted)', fontWeight: 500 }}>City:</dt>
+              <dd style={{ margin: 0 }}>{release.victim.city}</dd>
+              <dt style={{ color: 'var(--muted)', fontWeight: 500 }}>Injuries:</dt>
+              <dd style={{ margin: 0 }}>{release.victim.injuries}</dd>
+              <dt style={{ color: 'var(--muted)', fontWeight: 500 }}>Transported to:</dt>
+              <dd style={{ margin: 0 }}>{release.victim.transported}</dd>
+            </dl>
+          </section>
+        )}
+
+        {/* Charges */}
+        {release.charges && release.charges.length > 0 && (
+          <section className="enhanced-section" style={{ marginBottom: '1.25rem' }}>
+            <h4 style={{ fontSize: 'var(--fs-sm)', fontWeight: 600, marginBottom: '0.75rem', color: 'var(--primary)' }}>Charges</h4>
+            <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
+              {release.charges.map((charge, idx) => (
+                <li key={idx} style={{ marginBottom: '0.75rem', padding: '0.75rem', background: 'var(--surface)', borderRadius: 'var(--radius-md)' }}>
+                  <div style={{ fontWeight: 600 }}>{charge.name}</div>
+                  <dl style={{ display: 'grid', gridTemplateColumns: 'auto 1fr', gap: '0.25rem 1rem', marginTop: '0.5rem', fontSize: 'var(--fs-sm)' }}>
+                    <dt style={{ color: 'var(--muted)', fontWeight: 500 }}>Accused:</dt>
+                    <dd style={{ margin: 0 }}>{charge.accused}</dd>
+                    <dt style={{ color: 'var(--muted)', fontWeight: 500 }}>Age:</dt>
+                    <dd style={{ margin: 0 }}>{charge.age}</dd>
+                    <dt style={{ color: 'var(--muted)', fontWeight: 500 }}>City:</dt>
+                    <dd style={{ margin: 0 }}>{charge.city}</dd>
+                    <dt style={{ color: 'var(--muted)', fontWeight: 500 }}>Status:</dt>
+                    <dd style={{ margin: 0 }}><span className="badge" style={{ background: 'var(--danger)', color: '#fff', fontSize: 'var(--fs-xs)' }}>{charge.status}</span></dd>
+                  </dl>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
+
+        {/* Suspects Outstanding */}
+        {release.suspects_outstanding && release.suspects_outstanding.length > 0 && (
+          <section className="enhanced-section" style={{ marginBottom: '1.25rem' }}>
+            <h4 style={{ fontSize: 'var(--fs-sm)', fontWeight: 600, marginBottom: '0.75rem', color: 'var(--danger)' }}>Suspect(s) Outstanding — Public Assistance Requested</h4>
+            <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
+              {release.suspects_outstanding.map((suspect, idx) => (
+                <li key={idx} style={{ marginBottom: '0.75rem', padding: '0.75rem', background: 'rgba(239,68,68,0.06)', border: '1px solid rgba(239,68,68,0.2)', borderRadius: 'var(--radius-md)' }}>
+                  <dl style={{ display: 'grid', gridTemplateColumns: 'auto 1fr', gap: '0.25rem 1rem', fontSize: 'var(--fs-sm)' }}>
+                    <dt style={{ color: 'var(--muted)', fontWeight: 500 }}>Sex:</dt>
+                    <dd style={{ margin: 0 }}>{suspect.sex}</dd>
+                    <dt style={{ color: 'var(--muted)', fontWeight: 500 }}>Race:</dt>
+                    <dd style={{ margin: 0 }}>{suspect.race}</dd>
+                    <dt style={{ color: 'var(--muted)', fontWeight: 500 }}>Age range:</dt>
+                    <dd style={{ margin: 0 }}>{suspect.age_range}</dd>
+                    <dt style={{ color: 'var(--muted)', fontWeight: 500 }}>Height:</dt>
+                    <dd style={{ margin: 0 }}>{suspect.height}</dd>
+                    <dt style={{ color: 'var(--muted)', fontWeight: 500 }}>Weight:</dt>
+                    <dd style={{ margin: 0 }}>{suspect.weight}</dd>
+                    <dt style={{ color: 'var(--muted)', fontWeight: 500 }}>Clothing:</dt>
+                    <dd style={{ margin: 0 }}>{suspect.clothing}</dd>
+                    {suspect.possible_name && (
+                      <>
+                        <dt style={{ color: 'var(--muted)', fontWeight: 500 }}>Possible name:</dt>
+                        <dd style={{ margin: 0, fontWeight: 500 }}>{suspect.possible_name}</dd>
+                      </>
+                    )}
+                  </dl>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
+
+        {/* Flags */}
+        {(release.hate_motivated_investigation || release.edi_engaged_with_victim) && (
+          <section className="enhanced-section" style={{ marginBottom: '1.25rem' }}>
+            <h4 style={{ fontSize: 'var(--fs-sm)', fontWeight: 600, marginBottom: '0.75rem', color: 'var(--primary)' }}>Investigation Notes</h4>
+            <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
+              {release.hate_motivated_investigation && (
+                <li style={{ padding: '0.35rem 0.75rem', background: 'rgba(239,68,68,0.1)', border: '1px solid rgba(239,68,68,0.3)', borderRadius: '999px', fontSize: 'var(--fs-xs)', color: 'var(--danger)' }}>
+                  Hate-motivated investigation underway
+                </li>
+              )}
+              {release.edi_engaged_with_victim && (
+                <li style={{ padding: '0.35rem 0.75rem', background: 'rgba(59,130,246,0.1)', border: '1px solid rgba(59,130,246,0.3)', borderRadius: '999px', fontSize: 'var(--fs-xs)', color: 'var(--primary)' }}>
+                  EDIU engaged with victim
+                </li>
+              )}
+            </ul>
+          </section>
+        )}
+
+        {/* Court */}
+        {release.court && release.court.length > 0 && (
+          <section className="enhanced-section" style={{ marginBottom: '1.25rem' }}>
+            <h4 style={{ fontSize: 'var(--fs-sm)', fontWeight: 600, marginBottom: '0.75rem', color: 'var(--primary)' }}>Court Proceedings</h4>
+            <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
+              {release.court.map((item, idx) => (
+                <li key={idx} style={{ marginBottom: '0.75rem', padding: '0.75rem', background: 'var(--surface)', borderRadius: 'var(--radius-md)' }}>
+                  <div style={{ fontWeight: 600 }}>{item.label}</div>
+                  <dl style={{ display: 'grid', gridTemplateColumns: 'auto 1fr', gap: '0.25rem 1rem', marginTop: '0.5rem', fontSize: 'var(--fs-sm)' }}>
+                    {item.date && (
+                      <>
+                        <dt style={{ color: 'var(--muted)', fontWeight: 500 }}>Date:</dt>
+                        <dd style={{ margin: 0 }}>{formatDate(item.date)}</dd>
+                      </>
+                    )}
+                    {item.venue && (
+                      <>
+                        <dt style={{ color: 'var(--muted)', fontWeight: 500 }}>Venue:</dt>
+                        <dd style={{ margin: 0 }}>{item.venue}</dd>
+                      </>
+                    )}
+                    {item.address && (
+                      <>
+                        <dt style={{ color: 'var(--muted)', fontWeight: 500 }}>Address:</dt>
+                        <dd style={{ margin: 0 }}>{item.address}</dd>
+                      </>
+                    )}
+                  </dl>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
+
+        {/* Contact */}
+        {release.contact && (
+          <section className="enhanced-section" style={{ marginBottom: '1.25rem' }}>
+            <h4 style={{ fontSize: 'var(--fs-sm)', fontWeight: 600, marginBottom: '0.75rem', color: 'var(--primary)' }}>Contact Information</h4>
+            <dl style={{ display: 'grid', gridTemplateColumns: 'auto 1fr', gap: '0.5rem 1rem', fontSize: 'var(--fs-sm)' }}>
+              {release.contact.unit && (
+                <>
+                  <dt style={{ color: 'var(--muted)', fontWeight: 500 }}>Unit:</dt>
+                  <dd style={{ margin: 0 }}>{release.contact.unit}</dd>
+                </>
+              )}
+              {release.contact.phone && (
+                <>
+                  <dt style={{ color: 'var(--muted)', fontWeight: 500 }}>Phone:</dt>
+                  <dd style={{ margin: 0 }}>{release.contact.phone}{release.contact.ext && ` x${release.contact.ext}`}</dd>
+                </>
+              )}
+              {release.contact.anonymous && (
+                <>
+                  <dt style={{ color: 'var(--muted)', fontWeight: 500 }}>Anonymous tips:</dt>
+                  <dd style={{ margin: 0 }}>{release.contact.anonymous}</dd>
+                </>
+              )}
+            </dl>
+          </section>
+        )}
+
+        {/* Updates */}
+        {release.updates && release.updates.length > 0 && (
+          <section className="enhanced-section" style={{ marginBottom: '1.25rem' }}>
+            <h4 style={{ fontSize: 'var(--fs-sm)', fontWeight: 600, marginBottom: '0.75rem', color: 'var(--primary)' }}>Updates</h4>
+            <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
+              {release.updates.map((update, idx) => (
+                <li key={idx} style={{ marginBottom: '0.75rem', padding: '0.75rem', background: 'var(--surface)', borderRadius: 'var(--radius-md)', borderLeft: '3px solid var(--primary)' }}>
+                  <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'baseline', marginBottom: '0.5rem', flexWrap: 'wrap' }}>
+                    <span className="badge badge-date" style={{ fontSize: 'var(--fs-xs)' }}>{update.label}</span>
+                    {update.date && <time dateTime={update.date} style={{ fontSize: 'var(--fs-sm)', color: 'var(--muted)' }}>{formatDate(update.date)}</time>}
+                  </div>
+                  <p style={{ margin: 0, fontSize: 'var(--fs-sm)', lineHeight: 1.6 }}>{update.text}</p>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
+
+        {/* Source links */}
+        {(release.source_url || release.update_url) && (
+          <section className="enhanced-section" style={{ marginBottom: 0 }}>
+            <h4 style={{ fontSize: 'var(--fs-sm)', fontWeight: 600, marginBottom: '0.75rem', color: 'var(--primary)' }}>Sources</h4>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
+              {release.source_url && (
+                <a href={release.source_url} target="_blank" rel="noopener noreferrer" className="button button-ghost button-sm">
+                  Original release
+                </a>
+              )}
+              {release.update_url && release.update_url !== release.source_url && (
+                <a href={release.update_url} target="_blank" rel="noopener noreferrer" className="button button-primary button-sm">
+                  Latest update
+                </a>
+              )}
+              <a href="https://www.niagarapolice.ca/news/posts/" target="_blank" rel="noopener noreferrer" className="button button-ghost button-sm">
+                All NRPS releases
+              </a>
+            </div>
+          </section>
+        )}
+      </div>
+    )
+  }
+
   const categories = [
     { key: 'all', label: 'All Categories' },
     { key: 'break-and-enter', label: 'Break & Enter' },
@@ -182,6 +443,7 @@ export default function PoliceNewsPage() {
                     <div className="featured-tags">
                       {filteredReleases[0].tags.map(tag => <span key={tag} className="tag">{tag}</span>)}
                     </div>
+                    {renderEnhancedRelease(filteredReleases[0])}
                     <div className="featured-actions">
                       <a href={filteredReleases[0].url} target="_blank" rel="noopener noreferrer" className="button button-primary">Read official release</a>
                       <span className="source-credit">Source: <a href="https://www.niagarapolice.ca/news/posts/" target="_blank" rel="noopener noreferrer">niagarapolice.ca</a></span>
@@ -228,6 +490,7 @@ export default function PoliceNewsPage() {
                             {release.tags.slice(0, 4).map(tag => <span key={tag} className="tag">{tag}</span>)}
                             {release.tags.length > 4 && <span className="tag more">+{release.tags.length - 4}</span>}
                           </div>
+                          {renderEnhancedRelease(release)}
                           <div className="release-actions">
                             <a href={release.url} target="_blank" rel="noopener noreferrer" className="button button-ghost button-sm">Read official release →</a>
                             <span className="source-credit">Via <a href="https://www.niagarapolice.ca/news/posts/" target="_blank" rel="noopener noreferrer">Niagara Regional Police Service</a></span>

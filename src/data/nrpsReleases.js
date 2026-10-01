@@ -32,26 +32,67 @@ export const nrpsReleases = [
     category: 'collision',
   },
   {
-    id: 'nrps-2026-09-29-stc-assault-female-arrested',
-    date: '2026-09-29',
-    headline: 'Female Arrested in Downtown St. Catharines Assault – Male Suspect Outstanding',
+    id: 'nrps-26-122451',
+    date: '2026-09-26',
+    headline: 'Female Arrested in Downtown St. Catharines Assault — Second Male Suspect Outstanding',
     municipality: 'St. Catharines, Thorold',
     type: 'Media Release (Assault Investigation)',
-    url: 'https://www.niagarapolice.ca/news/posts/female-arrested-in-downtown-st-catharines-assault-male-suspect-outstanding/',
-    source: 'Niagara Regional Police Service',
-    tags: ['Assault', 'Arrest', 'St. Catharines', 'Thorold', '1 District', 'Public Assistance', 'Hate-Motivated Investigation'],
-    category: 'assault',
-  },
-  {
-    id: 'nrps-2026-09-30-update-female-arrested-stc-assault',
-    date: '2026-09-30',
-    headline: 'Update #1: Female Arrested in Downtown St. Catharines Assault – Male Suspect Outstanding',
-    municipality: 'St. Catharines, Thorold',
-    type: 'Media Release (Update / Assault Investigation)',
     url: 'https://www.niagarapolice.ca/news/posts/update-1-female-arrested-in-downtown-st-catharines-assault-male-suspect-outstanding/',
     source: 'Niagara Regional Police Service',
-    tags: ['Assault', 'Arrest', 'St. Catharines', 'Thorold', '1 District', 'Public Assistance', 'Hate-Motivated Investigation', 'Update'],
+    tags: ['Assault', 'Arrest', 'St. Catharines', 'Thorold', '1 District', 'Public Assistance', 'Hate-Motivated Investigation', 'EDIU'],
     category: 'assault',
+    // Enhanced fields from official NRPS release
+    incident_date: '2026-09-26T20:50:00-04:00',
+    published: '2026-09-29T00:00:00-04:00',
+    location: { text: 'Area of St. Paul St & Bond St, St. Catharines', lat: null, lng: null },
+    charges: [
+      {
+        name: 'Assault Causing Bodily Harm',
+        accused: 'Samantha JACOBS',
+        age: 41,
+        city: 'St. Catharines',
+        status: 'in custody'
+      }
+    ],
+    victim: { age: 25, city: 'Welland', injuries: 'serious', transported: 'local hospital' },
+    suspects_outstanding: [
+      {
+        sex: 'Male',
+        race: 'White',
+        age_range: '30-45',
+        height: '5\'11"',
+        weight: '175-185 lbs',
+        clothing: 'black jeans, white and green flannel jacket',
+        possible_name: 'Will'
+      }
+    ],
+    hate_motivated_investigation: true,
+    edi_engaged_with_victim: true,
+    court: [
+      {
+        label: 'Bail hearing',
+        date: '2026-09-27',
+        venue: 'Robert S. K. Welch Courthouse',
+        address: '59 Church St, St. Catharines'
+      }
+    ],
+    contact: {
+      unit: '1 District',
+      phone: '905-688-4111',
+      ext: '1024233',
+      anonymous: 'Crime Stoppers of Niagara — online or 1-800-222-TIPS (8477)'
+    },
+    updates: [
+      {
+        label: 'Update #1',
+        date: '2026-09-30',
+        text: 'JACOBS remains in custody and is scheduled to attend a bail hearing on Wednesday, September 30, 2026, at the Robert S. K. Welch Courthouse, 59 Church Street, St. Catharines.'
+      }
+    ],
+    source_url: 'https://www.niagarapolice.ca/news/posts/female-arrested-in-downtown-st-catharines-assault-male-suspect-outstanding/',
+    update_url: 'https://www.niagarapolice.ca/news/posts/update-1-female-arrested-in-downtown-st-catharines-assault-male-suspect-outstanding/',
+    nrps_incident_number: '26-122451',
+    feed_published: '2026-09-30T09:00:00-04:00'
   },
   {
     id: 'nrps-2026-09-24-port-colborne-cable-theft',
