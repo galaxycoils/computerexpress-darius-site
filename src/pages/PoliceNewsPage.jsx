@@ -430,7 +430,7 @@ export default function PoliceNewsPage() {
                   <h2 id="featured-heading" className="section-heading" style={{ textAlign: 'left', marginBottom: '1.5rem' }}>Latest release</h2>
                   <article style={{ background: 'var(--bg-card)', border: '1px solid var(--panel-border)', borderRadius: 'var(--radius-lg)', padding: '2rem' }}>
                     <div className="featured-meta">
-                      <span className="badge badge-date">{formatDate(filteredReleases[0].date)}</span>
+                      <span className="badge badge-date">{formatDate(filteredReleases[0].published || filteredReleases[0].date)}</span>
                       <span className="news-source">{filteredReleases[0].source}</span>
                     </div>
                     <h3 className="featured-headline">
