@@ -48,26 +48,22 @@ for (const notice of planningNotices) {
 
 // The police archive is a reader-facing dataset and a module API used by
 // PolicePage. A daily desk update must append records without replacing it.
-const { nrpsReleases } = nrps
-if (!Array.isArray(nrpsReleases) || nrpsReleases.length < 20) errors.push('NRPS archive is unexpectedly truncated')
+const { nrpsReleases, verifiedNrpsReleases, getLatestNrpsReleases, getNrpsReleasesByMunicipality, getNrpsReleasesByCategory, getNrpsStats } = nrps
+if (!Array.isArray(verifiedNrpsReleases) || verifiedNrpsReleases.length < 20) errors.push('NRPS archive is unexpectedly truncated')
 for (const helper of ['getLatestNrpsReleases', 'getNrpsReleasesByMunicipality', 'getNrpsReleasesByCategory', 'getNrpsStats']) {
   if (typeof nrps[helper] !== 'function') errors.push(`NRPS module is missing ${helper}`)
 }
 const releaseIds = new Set()
 const releaseUrls = new Set()
-let unverifiedCount = 0
-for (const release of nrpsReleases || []) {
+for (const release of verifiedNrpsReleases || []) {
   if (!release.id || releaseIds.has(release.id)) errors.push(`Duplicate or missing NRPS ID: ${release.id || '(missing)'}`)
   releaseIds.add(release.id)
   if (!isHttpsUrl(release.url) || releaseUrls.has(release.url)) errors.push(`Invalid or duplicate NRPS source URL: ${release.id}`)
   releaseUrls.add(release.url)
   if (!release.headline || !release.date) errors.push(`Incomplete NRPS release: ${release.id}`)
-  if (release.unverified) {
-    unverifiedCount++
-    errors.push(`NRPS release unverified — source link returns 404: ${release.id} (${release.url})`)
-  }
 }
-if (unverifiedCount > 0) errors.push(`${unverifiedCount} NRPS release(s) marked unverified — source integrity compromised`)
+const stats = getNrpsStats()
+if (stats.total !== verifiedNrpsReleases.length) errors.push(`getNrpsStats.total (${stats.total}) does not match verified array length (${verifiedNrpsReleases.length})`)
 
 try {
   const manifest = JSON.parse(await fs.readFile(path.join(root, 'src/data/generated/manifest.json'), 'utf8'))

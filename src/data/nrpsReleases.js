@@ -687,10 +687,15 @@ export const nrpsReleases = [
   },
 ];
 
+// Filter out unverified records — source links return 404 on niagarapolice.ca
+const verifiedNrpsReleases = nrpsReleases.filter(r => !r.unverified)
+
+export { verifiedNrpsReleases }
+
 export function getLatestNrpsReleases(count = 10, days = 7, now = getRenderNow()) {
   const cutoff = new Date(now);
   cutoff.setDate(cutoff.getDate() - days);
-  return nrpsReleases
+  return verifiedNrpsReleases
     .filter(r => new Date(r.date) >= cutoff)
     .sort((a, b) => new Date(b.date) - new Date(a.date))
     .slice(0, count);
@@ -698,14 +703,14 @@ export function getLatestNrpsReleases(count = 10, days = 7, now = getRenderNow()
 
 export function getNrpsReleasesByMunicipality(municipality) {
   const key = municipality.toLowerCase();
-  return nrpsReleases.filter(r =>
+  return verifiedNrpsReleases.filter(r =>
     r.municipality.toLowerCase().includes(key) ||
     r.tags.some(t => t.toLowerCase().includes(key))
   );
 }
 
 export function getNrpsReleasesByCategory(category) {
-  return nrpsReleases.filter(r => r.category === category);
+  return verifiedNrpsReleases.filter(r => r.category === category);
 }
 
 export function getNrpsStats(now = getRenderNow()) {
@@ -722,7 +727,7 @@ export function getNrpsStats(now = getRenderNow()) {
   });
 
   return {
-    total: nrpsReleases.length,
+    total: verifiedNrpsReleases.length,
     recent7Days: getLatestNrpsReleases(20, 7, now).length,
     recent30Days: recent.length,
     byCategory,
