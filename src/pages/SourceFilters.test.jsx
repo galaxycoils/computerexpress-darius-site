@@ -3,7 +3,7 @@ import { fireEvent, render, screen } from '@testing-library/react'
 import { HelmetProvider } from 'react-helmet-async'
 import { BrowserRouter } from 'react-router-dom'
 import { planningNotices } from '../data/planningNotices'
-import { nrpsReleases } from '../data/nrpsReleases'
+import { verifiedNrpsReleases as nrpsReleases } from '../data/nrpsReleases'
 import PlanningTrackerPage from './PlanningTrackerPage'
 import PoliceNewsPage from './PoliceNewsPage'
 

@@ -1,7 +1,7 @@
 import { useState, useMemo } from 'react'
 import { Link } from 'react-router-dom'
 import Seo, { BASE_URL } from '../components/Seo'
-import { nrpsReleases } from '../data/nrpsReleases'
+import { verifiedNrpsReleases as nrpsReleases } from '../data/nrpsReleases'
 import { siteConfig } from '../data/siteConfig'
 import AnimatedSection from '../hooks/useInView'
 import { parseTorontoDate } from '../utils/renderClock.js'

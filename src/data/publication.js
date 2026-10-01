@@ -1,6 +1,6 @@
 import { getPublishableContent } from "./contentRegistry.js";
 import { planningNotices } from "./planningNotices.js";
-import { nrpsReleases } from "./nrpsReleases.js";
+import { verifiedNrpsReleases as nrpsReleases } from "./nrpsReleases.js";
 import discovery from "./generated/discovery.json" with { type: "json" };
 import { getRenderNow } from "../utils/renderClock.js";
 
