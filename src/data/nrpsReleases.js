@@ -4,11 +4,51 @@
  * Official Niagara Regional Police Service media releases & community notifications.
  * Updated: 2026-10-02
  * Next review: Daily (cron) — refresh from niagarapolice.ca
- * Note: Updated incident 26-122451 with the Sep 30 NRPS update naming William Rider and an aggravated-assault charge. No newer media releases on the NRPS news list.
+ * Note: Added Oct 2 Thorold drug trafficking arrest (1 District SCU, search warrants) and Oct 2 public assistance request for a missing St. Catharines male (1 District CIB). One Oct 2 item — fatal pedestrian collision, Niagara Falls — was out of coverage area and not added. Incident 26-122451 retains the Sep 30 update naming William Rider and an aggravated-assault charge.
  */
 import { getRenderNow } from '../utils/renderClock.js'
 
 export const nrpsReleases = [
+  {
+    id: 'nrps-2026-10-02-thorold-drug-trafficking-arrest',
+    date: '2026-10-02',
+    headline: 'Thorold Man Arrested in Drug Trafficking Investigation',
+    municipality: 'Thorold, St. Catharines',
+    type: 'Media Release (Drug Trafficking Investigation)',
+    url: 'https://www.niagarapolice.ca/news/posts/thorold-man-arrested-in-drug-trafficking-investigation/',
+    source: 'Niagara Regional Police Service',
+    tags: ['Drug Trafficking', 'Arrest', 'Thorold', 'St. Catharines', '1 District', 'Street Crime Unit', 'Search Warrants', 'Fentanyl', 'Cocaine'],
+    category: 'drug-investigation',
+    incident_date: '2026-10-01T00:00:00-04:00',
+    published: '2026-10-02T15:17:00-04:00',
+    location: { text: 'Investigation originated from an address on Queenston Street in St. Catharines; arrest in the area of Duke Street and Wellington Court', lat: null, lng: null },
+    charges: [
+      { name: 'Possession of a Schedule I Substance for the Purpose of Trafficking (3 counts)', accused: 'As named in the official release', age: null, city: 'Thorold', status: 'in custody' },
+      { name: 'Possession of Proceeds of Property Obtained by Crime Under $5000', accused: 'As named in the official release', age: null, city: 'Thorold', status: 'in custody' }
+    ],
+    court: [
+      { label: 'Bail hearing', date: '2026-10-02', venue: 'Robert S. K. Welch Courthouse', address: '59 Church Street, St. Catharines' }
+    ],
+    contact: { unit: '1 District Street Crime Unit', phone: '(905) 688-4111', ext: '1009558', anonymous: 'Crime Stoppers of Niagara 1-800-222-8477 (TIPS)' },
+    incident_number: '26-124563'
+  },
+  {
+    id: 'nrps-2026-10-02-missing-st-catharines-male',
+    date: '2026-10-02',
+    headline: 'Public Assistance Requested in Locating a Missing St. Catharines Male',
+    municipality: 'St. Catharines, Thorold',
+    type: 'Media Release (Missing Person / Public Assistance)',
+    url: 'https://www.niagarapolice.ca/news/posts/public-assistance-requested-in-locating-a-missing-st-catharines-male/',
+    source: 'Niagara Regional Police Service',
+    tags: ['Missing Person', 'Public Assistance', 'St. Catharines', 'Thorold', '1 District', 'Criminal Investigations Bureau'],
+    category: 'missing-person',
+    incident_date: '2026-08-06T00:00:00-04:00',
+    published: '2026-10-02T12:46:00-04:00',
+    location: { text: 'Last seen at some point during the last week of July 2026 in St. Catharines', lat: null, lng: null },
+    suspect_description_source: 'Police describe the missing male in the official release; description is published on the NRPS page only.',
+    contact: { unit: '1 District CIB', phone: '905-688-4111', ext: '1029865', anonymous: 'Crime Stoppers of Niagara 1-800-222-TIPS (8477)' },
+    incident_number: '26-98460'
+  },
   {
     id: 'nrps-2026-09-25-nf-homicide-update-2-fitzgerald',
     date: '2026-09-25',
