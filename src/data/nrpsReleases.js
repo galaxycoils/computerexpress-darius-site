@@ -2,9 +2,9 @@
  * NRPS Police Media Releases for St. Catharines Digital
  * Sourced exclusively from https://www.niagarapolice.ca/news/posts/
  * Official Niagara Regional Police Service media releases & community notifications.
- * Updated: 2026-10-01
+ * Updated: 2026-10-02
  * Next review: Daily (cron) — refresh from niagarapolice.ca
- * Note: Added Sep 25 Niagara Falls homicide update #2 (second arrest) and motorcycle collision release, plus Sep 29 downtown St. Catharines assault release that preceded the Sep 30 update.
+ * Note: Updated incident 26-122451 with the Sep 30 NRPS update naming William Rider and an aggravated-assault charge. No newer media releases on the NRPS news list.
  */
 import { getRenderNow } from '../utils/renderClock.js'
 
@@ -52,20 +52,17 @@ export const nrpsReleases = [
         age: 41,
         city: 'St. Catharines',
         status: 'in custody'
+      },
+      {
+        name: 'Aggravated Assault',
+        accused: 'William RIDER',
+        age: 36,
+        city: 'St. Catharines',
+        status: 'in custody'
       }
     ],
     victim: { age: 25, city: 'Welland', injuries: 'serious', transported: 'local hospital' },
-    suspects_outstanding: [
-      {
-        sex: 'Male',
-        race: 'White',
-        age_range: '30-45',
-        height: '5\'11"',
-        weight: '175-185 lbs',
-        clothing: 'black jeans, white and green flannel jacket',
-        possible_name: 'Will'
-      }
-    ],
+    suspects_outstanding: [],
     hate_motivated_investigation: true,
     edi_engaged_with_victim: true,
     court: [
@@ -86,7 +83,7 @@ export const nrpsReleases = [
       {
         label: 'Update #1',
         date: '2026-09-30',
-        text: 'JACOBS remains in custody and is scheduled to attend a bail hearing on Wednesday, September 30, 2026, at the Robert S. K. Welch Courthouse, 59 Church Street, St. Catharines.'
+        text: 'Detectives identified the second involved male as 36-year-old William Rider of St. Catharines and charged him with aggravated assault. Rider remained in custody for a bail hearing on September 30, 2026, at the Robert S. K. Welch Courthouse, 59 Church Street. The update page title still says a male suspect is outstanding.'
       }
     ],
     source_url: 'https://www.niagarapolice.ca/news/posts/female-arrested-in-downtown-st-catharines-assault-male-suspect-outstanding/',

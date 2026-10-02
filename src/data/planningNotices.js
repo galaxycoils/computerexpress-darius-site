@@ -6,8 +6,8 @@
  * - thorold.ca
  * - niagararegion.ca
  *
- * Updated: 2026-10-01
- * Note: Added Welland 2026 pavement rejuvenation notice and Thorold Sullivan Avenue/Towpath Street closure (posted Sep 17, about two weeks from Sep 21). No new St. Catharines public notices since Sep 30.
+ * Updated: 2026-10-02
+ * Note: Added completed Thorold closures for Alexandria Drive (Sep 22-23) and Bridge 11 / Highway 20 (Sep 23-24). No new St. Catharines, Welland, or Niagara Region planning or road notices since Oct 1.
  * Next review: Daily
  */
 import { getRenderNow, parseTorontoDate } from "../utils/renderClock.js";
@@ -186,6 +186,38 @@ export const planningNotices = [
     tags: ["Road Closure", "Sullivan Avenue", "Towpath Street", "Thorold"],
   },
   {
+    id: "thorold-alexandria-drive-closure-sep-22",
+    municipality: "Thorold",
+    type: "Temporary Road Closure",
+    title: "Alexandria Drive Closure — Kottmeier Road to Legacy Lane",
+    description:
+      "Thorold closed Alexandria Drive between Kottmeier Road and Legacy Lane from September 22 to September 23, 2026, 7:00 a.m. to 5:00 p.m. The notice title refers to September 23 and 24; the body gives September 22 and 23.",
+    status: "Meeting Complete",
+    meetingDate: "2026-09-22T07:00:00",
+    endDate: "2026-09-23T17:00:00",
+    publishedDate: "2026-09-18",
+    sourceUrl:
+      "https://www.thorold.ca/news/news/temporary-road-closure-alexandria-drive-september-23-24/",
+    category: "road-closure",
+    tags: ["Road Closure", "Alexandria Drive", "Thorold"],
+  },
+  {
+    id: "thorold-bridge-11-hwy20-sep-23",
+    municipality: "Thorold",
+    type: "Temporary Road Closure",
+    title: "Bridge 11 (Highway 20) Closure",
+    description:
+      "Bridge 11 on Highway 20 was closed September 23 and September 24, 2026, from 9:00 a.m. to 4:00 p.m. for bridge and road maintenance. Vehicle and pedestrian traffic were prohibited.",
+    status: "Meeting Complete",
+    meetingDate: "2026-09-23T09:00:00",
+    endDate: "2026-09-24T16:00:00",
+    publishedDate: "2026-09-18",
+    sourceUrl:
+      "https://www.thorold.ca/news/news/bridge-11-hwy-20-closure-september-23-to-24/",
+    category: "road-closure",
+    tags: ["Road Closure", "Highway 20", "Bridge 11", "Thorold"],
+  },
+  {
     id: "thorold-winslow-cres-watermain",
     municipality: "Thorold",
     type: "Municipal Construction Notice",
@@ -285,7 +317,7 @@ export const municipalities = [
 ];
 
 export function getUpcomingMeetings(days = 7, now = getRenderNow()) {
-  const start = now.getTime();
+  const start = now.getTime;
   const end = start + days * 24 * 60 * 60 * 1000;
   return planningNotices.filter((notice) => {
     if (!notice.meetingDate) return false;
