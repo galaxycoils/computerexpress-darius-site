@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "collectedAt": "2026-10-02T00:48:20.851Z",
+  "collectedAt": "2026-10-02T09:47:26.628Z",
   "publicationState": "autonomous",
   "notice": "Autonomous official-source discovery. Items are links to primary municipal/police pages only; no invented reporting.",
   "sources": [
@@ -10,7 +10,7 @@
       "itemCount": 10,
       "datedItems": 9,
       "metadataFailures": 1,
-      "checkedAt": "2026-10-02T00:48:20.851Z"
+      "checkedAt": "2026-10-02T09:47:26.628Z"
     },
     {
       "id": "st-catharines-public-notices",
@@ -18,7 +18,7 @@
       "itemCount": 11,
       "datedItems": 10,
       "metadataFailures": 1,
-      "checkedAt": "2026-10-02T00:48:20.851Z"
+      "checkedAt": "2026-10-02T09:47:26.628Z"
     },
     {
       "id": "welland-news",
@@ -26,7 +26,7 @@
       "itemCount": 9,
       "datedItems": 9,
       "metadataFailures": 0,
-      "checkedAt": "2026-10-02T00:48:20.851Z"
+      "checkedAt": "2026-10-02T09:47:26.628Z"
     },
     {
       "id": "thorold-news",
@@ -34,15 +34,15 @@
       "itemCount": 10,
       "datedItems": 10,
       "metadataFailures": 0,
-      "checkedAt": "2026-10-02T00:48:20.851Z"
+      "checkedAt": "2026-10-02T09:47:26.628Z"
     },
     {
       "id": "niagara-region-news",
       "ok": true,
-      "itemCount": 11,
+      "itemCount": 10,
       "datedItems": 0,
       "metadataFailures": 0,
-      "checkedAt": "2026-10-02T00:48:20.851Z"
+      "checkedAt": "2026-10-02T09:47:26.628Z"
     },
     {
       "id": "nrps-media-releases",
@@ -50,7 +50,7 @@
       "itemCount": 10,
       "datedItems": 10,
       "metadataFailures": 0,
-      "checkedAt": "2026-10-02T00:48:20.851Z"
+      "checkedAt": "2026-10-02T09:47:26.628Z"
     }
   ],
   "items": [
@@ -64,7 +64,7 @@
       "kind": "official-notice",
       "sourcePublishedAt": null,
       "firstObservedAt": "2026-09-17T03:27:01.699Z",
-      "lastObservedAt": "2026-10-02T00:48:20.851Z",
+      "lastObservedAt": "2026-10-02T09:47:26.628Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -78,7 +78,7 @@
       "kind": "official-notice",
       "sourcePublishedAt": null,
       "firstObservedAt": "2026-09-17T03:27:01.699Z",
-      "lastObservedAt": "2026-10-02T00:48:20.851Z",
+      "lastObservedAt": "2026-10-02T09:47:26.628Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -92,7 +92,7 @@
       "kind": "official-notice",
       "sourcePublishedAt": null,
       "firstObservedAt": "2026-09-17T03:27:01.699Z",
-      "lastObservedAt": "2026-10-02T00:48:20.851Z",
+      "lastObservedAt": "2026-10-02T09:47:26.628Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -106,7 +106,7 @@
       "kind": "official-notice",
       "sourcePublishedAt": null,
       "firstObservedAt": "2026-09-17T03:27:01.699Z",
-      "lastObservedAt": "2026-10-02T00:48:20.851Z",
+      "lastObservedAt": "2026-10-02T09:47:26.628Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -120,21 +120,7 @@
       "kind": "official-notice",
       "sourcePublishedAt": null,
       "firstObservedAt": "2026-09-17T03:27:01.699Z",
-      "lastObservedAt": "2026-10-02T00:48:20.851Z",
-      "status": "published",
-      "reviewRequired": false
-    },
-    {
-      "id": "c0d357c2460f943c",
-      "title": "Jun 1 Road closure for Martindale Road (Regional Road 38) in St. Catharines Road Closure / Lane Restriction",
-      "url": "https://www.niagararegion.ca/news/notices/notice.aspx?q=998",
-      "sourceId": "niagara-region-news",
-      "sourceName": "Niagara Region Public Notices",
-      "city": "Niagara Region",
-      "kind": "official-notice",
-      "sourcePublishedAt": null,
-      "firstObservedAt": "2026-09-17T03:27:01.699Z",
-      "lastObservedAt": "2026-10-02T00:48:20.851Z",
+      "lastObservedAt": "2026-10-02T09:47:26.628Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -148,7 +134,7 @@
       "kind": "official-notice",
       "sourcePublishedAt": null,
       "firstObservedAt": "2026-09-17T03:27:01.699Z",
-      "lastObservedAt": "2026-10-02T00:48:20.851Z",
+      "lastObservedAt": "2026-10-02T09:47:26.628Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -162,7 +148,7 @@
       "kind": "official-notice",
       "sourcePublishedAt": null,
       "firstObservedAt": "2026-09-29T18:05:55.090Z",
-      "lastObservedAt": "2026-10-02T00:48:20.851Z",
+      "lastObservedAt": "2026-10-02T09:47:26.628Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -190,7 +176,21 @@
       "kind": "official-notice",
       "sourcePublishedAt": null,
       "firstObservedAt": "2026-09-16T23:59:08.181Z",
-      "lastObservedAt": "2026-10-02T00:48:20.851Z",
+      "lastObservedAt": "2026-10-02T09:47:26.628Z",
+      "status": "published",
+      "reviewRequired": false
+    },
+    {
+      "id": "c0d357c2460f943c",
+      "title": "Road closure for Martindale Road (Regional Road 38) in St. Catharines",
+      "url": "https://www.niagararegion.ca/news/notices/notice.aspx?q=998",
+      "sourceId": "niagara-region-news",
+      "sourceName": "Niagara Region Public Notices",
+      "city": "Niagara Region",
+      "kind": "official-notice",
+      "sourcePublishedAt": null,
+      "firstObservedAt": "2026-09-17T03:27:01.699Z",
+      "lastObservedAt": "2026-10-02T09:47:26.628Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -204,7 +204,7 @@
       "kind": "official-notice",
       "sourcePublishedAt": null,
       "firstObservedAt": "2026-09-23T21:30:48.697Z",
-      "lastObservedAt": "2026-10-02T00:48:20.851Z",
+      "lastObservedAt": "2026-10-02T09:47:26.628Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -288,7 +288,7 @@
       "kind": "public-safety",
       "sourcePublishedAt": "2026-09-21",
       "firstObservedAt": "2026-09-21T12:50:16.251Z",
-      "lastObservedAt": "2026-10-02T00:48:20.851Z",
+      "lastObservedAt": "2026-10-02T09:47:26.628Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -302,7 +302,7 @@
       "kind": "public-safety",
       "sourcePublishedAt": "2026-09-29",
       "firstObservedAt": "2026-09-29T18:05:55.090Z",
-      "lastObservedAt": "2026-10-02T00:48:20.851Z",
+      "lastObservedAt": "2026-10-02T09:47:26.628Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -316,7 +316,7 @@
       "kind": "public-safety",
       "sourcePublishedAt": "2026-09-18",
       "firstObservedAt": "2026-09-18T20:55:15.185Z",
-      "lastObservedAt": "2026-10-02T00:48:20.851Z",
+      "lastObservedAt": "2026-10-02T09:47:26.628Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -344,7 +344,7 @@
       "kind": "public-safety",
       "sourcePublishedAt": "2026-09-25",
       "firstObservedAt": "2026-09-26T04:59:12.352Z",
-      "lastObservedAt": "2026-10-02T00:48:20.851Z",
+      "lastObservedAt": "2026-10-02T09:47:26.628Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -498,7 +498,7 @@
       "kind": "public-safety",
       "sourcePublishedAt": "2026-09-24",
       "firstObservedAt": "2026-09-26T04:59:12.352Z",
-      "lastObservedAt": "2026-10-02T00:48:20.851Z",
+      "lastObservedAt": "2026-10-02T09:47:26.628Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -512,7 +512,7 @@
       "kind": "public-safety",
       "sourcePublishedAt": "2026-09-21",
       "firstObservedAt": "2026-09-22T00:08:10.500Z",
-      "lastObservedAt": "2026-10-02T00:48:20.851Z",
+      "lastObservedAt": "2026-10-02T09:47:26.628Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -526,7 +526,7 @@
       "kind": "public-safety",
       "sourcePublishedAt": "2026-09-22",
       "firstObservedAt": "2026-09-23T01:19:14.910Z",
-      "lastObservedAt": "2026-10-02T00:48:20.851Z",
+      "lastObservedAt": "2026-10-02T09:47:26.628Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -540,7 +540,7 @@
       "kind": "public-safety",
       "sourcePublishedAt": "2026-09-30",
       "firstObservedAt": "2026-09-30T05:33:54.630Z",
-      "lastObservedAt": "2026-10-02T00:48:20.851Z",
+      "lastObservedAt": "2026-10-02T09:47:26.628Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -568,7 +568,7 @@
       "kind": "public-safety",
       "sourcePublishedAt": "2026-09-25",
       "firstObservedAt": "2026-09-26T04:59:12.352Z",
-      "lastObservedAt": "2026-10-02T00:48:20.851Z",
+      "lastObservedAt": "2026-10-02T09:47:26.628Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -582,7 +582,7 @@
       "kind": "public-safety",
       "sourcePublishedAt": "2026-09-23",
       "firstObservedAt": "2026-09-23T17:00:38.747Z",
-      "lastObservedAt": "2026-10-02T00:48:20.851Z",
+      "lastObservedAt": "2026-10-02T09:47:26.628Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -610,7 +610,7 @@
       "kind": "official-notice",
       "sourcePublishedAt": null,
       "firstObservedAt": "2026-09-17T03:27:01.699Z",
-      "lastObservedAt": "2026-10-02T00:48:20.851Z",
+      "lastObservedAt": "2026-10-02T09:47:26.628Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -638,7 +638,7 @@
       "kind": "official-notice",
       "sourcePublishedAt": "2026-09-24",
       "firstObservedAt": "2026-09-26T04:59:12.352Z",
-      "lastObservedAt": "2026-10-02T00:48:20.851Z",
+      "lastObservedAt": "2026-10-02T09:47:26.628Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -652,7 +652,7 @@
       "kind": "official-notice",
       "sourcePublishedAt": "2026-09-24",
       "firstObservedAt": "2026-09-26T04:59:12.352Z",
-      "lastObservedAt": "2026-10-02T00:48:20.851Z",
+      "lastObservedAt": "2026-10-02T09:47:26.628Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -736,7 +736,7 @@
       "kind": "official-notice",
       "sourcePublishedAt": "2026-10-01",
       "firstObservedAt": "2026-10-02T00:48:20.851Z",
-      "lastObservedAt": "2026-10-02T00:48:20.851Z",
+      "lastObservedAt": "2026-10-02T09:47:26.628Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -834,7 +834,7 @@
       "kind": "official-notice",
       "sourcePublishedAt": "2026-09-22",
       "firstObservedAt": "2026-09-22T21:20:21.516Z",
-      "lastObservedAt": "2026-10-02T00:48:20.851Z",
+      "lastObservedAt": "2026-10-02T09:47:26.628Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -876,7 +876,7 @@
       "kind": "official-notice",
       "sourcePublishedAt": null,
       "firstObservedAt": "2026-09-17T03:27:01.699Z",
-      "lastObservedAt": "2026-10-02T00:48:20.851Z",
+      "lastObservedAt": "2026-10-02T09:47:26.628Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -904,7 +904,7 @@
       "kind": "official-notice",
       "sourcePublishedAt": "2026-09-30",
       "firstObservedAt": "2026-09-30T05:33:54.630Z",
-      "lastObservedAt": "2026-10-02T00:48:20.851Z",
+      "lastObservedAt": "2026-10-02T09:47:26.628Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -918,7 +918,7 @@
       "kind": "official-notice",
       "sourcePublishedAt": "2026-08-25",
       "firstObservedAt": "2026-09-16T23:59:08.181Z",
-      "lastObservedAt": "2026-10-02T00:48:20.851Z",
+      "lastObservedAt": "2026-10-02T09:47:26.628Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -946,7 +946,7 @@
       "kind": "official-notice",
       "sourcePublishedAt": "2026-07-28",
       "firstObservedAt": "2026-09-17T03:27:01.699Z",
-      "lastObservedAt": "2026-10-02T00:48:20.851Z",
+      "lastObservedAt": "2026-10-02T09:47:26.628Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -960,7 +960,7 @@
       "kind": "official-notice",
       "sourcePublishedAt": "2026-07-28",
       "firstObservedAt": "2026-09-17T03:27:01.699Z",
-      "lastObservedAt": "2026-10-02T00:48:20.851Z",
+      "lastObservedAt": "2026-10-02T09:47:26.628Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -1002,7 +1002,7 @@
       "kind": "official-notice",
       "sourcePublishedAt": "2026-09-22",
       "firstObservedAt": "2026-09-23T17:00:38.747Z",
-      "lastObservedAt": "2026-10-02T00:48:20.851Z",
+      "lastObservedAt": "2026-10-02T09:47:26.628Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -1044,7 +1044,7 @@
       "kind": "official-notice",
       "sourcePublishedAt": "2026-09-22",
       "firstObservedAt": "2026-09-23T17:00:38.747Z",
-      "lastObservedAt": "2026-10-02T00:48:20.851Z",
+      "lastObservedAt": "2026-10-02T09:47:26.628Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -1058,7 +1058,7 @@
       "kind": "official-notice",
       "sourcePublishedAt": "2026-09-22",
       "firstObservedAt": "2026-09-23T17:00:38.747Z",
-      "lastObservedAt": "2026-10-02T00:48:20.851Z",
+      "lastObservedAt": "2026-10-02T09:47:26.628Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -1072,7 +1072,7 @@
       "kind": "official-notice",
       "sourcePublishedAt": "2026-09-22",
       "firstObservedAt": "2026-09-23T17:00:38.747Z",
-      "lastObservedAt": "2026-10-02T00:48:20.851Z",
+      "lastObservedAt": "2026-10-02T09:47:26.628Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -1086,7 +1086,7 @@
       "kind": "official-notice",
       "sourcePublishedAt": "2026-08-25",
       "firstObservedAt": "2026-09-17T03:27:01.699Z",
-      "lastObservedAt": "2026-10-02T00:48:20.851Z",
+      "lastObservedAt": "2026-10-02T09:47:26.628Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -1114,7 +1114,7 @@
       "kind": "official-notice",
       "sourcePublishedAt": "2026-07-28",
       "firstObservedAt": "2026-09-17T03:27:01.699Z",
-      "lastObservedAt": "2026-10-02T00:48:20.851Z",
+      "lastObservedAt": "2026-10-02T09:47:26.628Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -1128,7 +1128,7 @@
       "kind": "official-notice",
       "sourcePublishedAt": "2026-09-18",
       "firstObservedAt": "2026-09-18T16:25:03.390Z",
-      "lastObservedAt": "2026-10-02T00:48:20.851Z",
+      "lastObservedAt": "2026-10-02T09:47:26.628Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -1156,7 +1156,7 @@
       "kind": "official-notice",
       "sourcePublishedAt": "2026-09-01",
       "firstObservedAt": "2026-09-17T03:27:01.699Z",
-      "lastObservedAt": "2026-10-02T00:48:20.851Z",
+      "lastObservedAt": "2026-10-02T09:47:26.628Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -1198,7 +1198,7 @@
       "kind": "official-notice",
       "sourcePublishedAt": "2026-09-03",
       "firstObservedAt": "2026-09-17T03:27:01.699Z",
-      "lastObservedAt": "2026-10-02T00:48:20.851Z",
+      "lastObservedAt": "2026-10-02T09:47:26.628Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -1212,7 +1212,7 @@
       "kind": "official-notice",
       "sourcePublishedAt": "2026-09-25",
       "firstObservedAt": "2026-09-26T04:59:12.352Z",
-      "lastObservedAt": "2026-10-02T00:48:20.851Z",
+      "lastObservedAt": "2026-10-02T09:47:26.628Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -1226,7 +1226,7 @@
       "kind": "official-notice",
       "sourcePublishedAt": "2026-09-11",
       "firstObservedAt": "2026-09-16T23:59:08.181Z",
-      "lastObservedAt": "2026-10-02T00:48:20.851Z",
+      "lastObservedAt": "2026-10-02T09:47:26.628Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -1268,7 +1268,7 @@
       "kind": "official-notice",
       "sourcePublishedAt": "2026-10-01",
       "firstObservedAt": "2026-10-02T00:48:20.851Z",
-      "lastObservedAt": "2026-10-02T00:48:20.851Z",
+      "lastObservedAt": "2026-10-02T09:47:26.628Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -1282,7 +1282,7 @@
       "kind": "official-notice",
       "sourcePublishedAt": "2026-09-25",
       "firstObservedAt": "2026-09-26T04:59:12.352Z",
-      "lastObservedAt": "2026-10-02T00:48:20.851Z",
+      "lastObservedAt": "2026-10-02T09:47:26.628Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -1324,7 +1324,7 @@
       "kind": "official-notice",
       "sourcePublishedAt": "2026-09-18",
       "firstObservedAt": "2026-09-22T00:08:10.500Z",
-      "lastObservedAt": "2026-10-02T00:48:20.851Z",
+      "lastObservedAt": "2026-10-02T09:47:26.628Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -1352,7 +1352,7 @@
       "kind": "official-notice",
       "sourcePublishedAt": "2026-09-02",
       "firstObservedAt": "2026-09-17T03:27:01.699Z",
-      "lastObservedAt": "2026-10-02T00:48:20.851Z",
+      "lastObservedAt": "2026-10-02T09:47:26.628Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -1380,7 +1380,7 @@
       "kind": "official-notice",
       "sourcePublishedAt": "2026-09-17",
       "firstObservedAt": "2026-09-17T17:01:06.283Z",
-      "lastObservedAt": "2026-10-02T00:48:20.851Z",
+      "lastObservedAt": "2026-10-02T09:47:26.628Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -1394,7 +1394,7 @@
       "kind": "official-notice",
       "sourcePublishedAt": "2026-09-04",
       "firstObservedAt": "2026-09-17T03:27:01.699Z",
-      "lastObservedAt": "2026-10-02T00:48:20.851Z",
+      "lastObservedAt": "2026-10-02T09:47:26.628Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -1408,7 +1408,7 @@
       "kind": "official-notice",
       "sourcePublishedAt": "2026-09-28",
       "firstObservedAt": "2026-09-28T20:29:40.137Z",
-      "lastObservedAt": "2026-10-02T00:48:20.851Z",
+      "lastObservedAt": "2026-10-02T09:47:26.628Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -1436,7 +1436,7 @@
       "kind": "official-notice",
       "sourcePublishedAt": "2026-09-22",
       "firstObservedAt": "2026-09-22T16:58:28.425Z",
-      "lastObservedAt": "2026-10-02T00:48:20.851Z",
+      "lastObservedAt": "2026-10-02T09:47:26.628Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -1464,7 +1464,7 @@
       "kind": "official-notice",
       "sourcePublishedAt": "2026-09-24",
       "firstObservedAt": "2026-09-26T04:59:12.352Z",
-      "lastObservedAt": "2026-10-02T00:48:20.851Z",
+      "lastObservedAt": "2026-10-02T09:47:26.628Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -1492,7 +1492,7 @@
       "kind": "official-notice",
       "sourcePublishedAt": "2026-09-24",
       "firstObservedAt": "2026-09-17T21:23:46.670Z",
-      "lastObservedAt": "2026-10-02T00:48:20.851Z",
+      "lastObservedAt": "2026-10-02T09:47:26.628Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -1520,7 +1520,7 @@
       "kind": "official-notice",
       "sourcePublishedAt": "2026-09-02",
       "firstObservedAt": "2026-09-16T23:59:08.181Z",
-      "lastObservedAt": "2026-10-02T00:48:20.851Z",
+      "lastObservedAt": "2026-10-02T09:47:26.628Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -1562,7 +1562,7 @@
       "kind": "official-notice",
       "sourcePublishedAt": "2026-10-01",
       "firstObservedAt": "2026-10-02T00:48:20.851Z",
-      "lastObservedAt": "2026-10-02T00:48:20.851Z",
+      "lastObservedAt": "2026-10-02T09:47:26.628Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -1576,7 +1576,7 @@
       "kind": "official-notice",
       "sourcePublishedAt": "2026-09-25",
       "firstObservedAt": "2026-09-26T04:59:12.352Z",
-      "lastObservedAt": "2026-10-02T00:48:20.851Z",
+      "lastObservedAt": "2026-10-02T09:47:26.628Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -1590,7 +1590,7 @@
       "kind": "official-notice",
       "sourcePublishedAt": "2026-09-09",
       "firstObservedAt": "2026-09-17T03:27:01.699Z",
-      "lastObservedAt": "2026-10-02T00:48:20.851Z",
+      "lastObservedAt": "2026-10-02T09:47:26.628Z",
       "status": "published",
       "reviewRequired": false
     },
