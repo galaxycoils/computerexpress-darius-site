@@ -96,6 +96,42 @@ Full analysis: `docs/REVENUE_POSTMORTEM_2026-10-02.md`. Corrected target list: `
 
 **Round 2 bounce rate target: ≤5%. Round 1 was 55.6%.**
 
+### Round 3 status
+
+# Round 3 — first contact, MX-gated, 2026-10-02 ~20:05Z
+
+All 10 domains re-verified with `host -t mx` immediately before send. 10/10 passed.
+
+| # | Company | Segment | Contact | Email | Sent | Result |
+|---|---------|---------|---------|-------|------|--------|
+| 1 | Rankin Construction | Construction | — | info@rankin.ca | ✅ | pending |
+| 2 | Bermingham Construction | Construction | — | info@bermingham.ca | ✅ | pending |
+| 3 | Concreate USL | Utility contractor | — | info@concreate.ca | ✅ | pending |
+| 4 | Linsey Enterprises | Paving | — | info@linseyenterprises.com | ✅ | pending |
+| 5 | GM BluePlan | Civil engineering | — | info@gmblueplan.ca | ✅ | pending |
+| 6 | Thorold BIA | BIA | — | info@thoroldbia.com | ✅ | pending |
+| 7 | Niagara-on-the-Lake BIA | BIA | — | info@niagaraonthelake.com | ✅ | pending |
+| 8 | Port Colborne BIA | BIA | — | info@portcolborne.ca | ✅ | pending |
+| 9 | Fort Erie BIA | BIA | — | info@forterie.ca | ✅ | pending |
+| 10 | Niagara Construction Assoc | Industry assoc | — | office@niagaraconstruction.org | ✅ | pending |
+
+**Segmentation note:** the first B2B list was 5 tiers of professional firms. This batch opens a segment it never touched — **BIAs and industry associations**. Rationale: a BIA's recurring problem is literally "tell members what's being decided about their street," which is exactly what the tracker answers. Shortest sales cycle of anything on the list, and these are local businesses that spend on local visibility.
+
+## Address discovery
+
+`info@niagaraconstruction.org` was rejected — AgentMail suppression list, hard-bounced September. Found the real published address by scraping the org's own site: `office@niagaraconstruction.org`. **Lesson: read the contact off the firm's own website, don't construct it.** Every future send follows this.
+
+## Totals to date
+
+| Batch | Sent | Hard bounces | Rate | Replies |
+|---|---|---|---|---|
+| Round 1 (Sep 10–11, guessed addresses) | 27 | 15 | **55.6%** | 0 |
+| Round 2 (Oct 2, corrected pitch, 12 delivered) | 11 | 0 | **0%** | 0 |
+| Round 3 (Oct 2, MX-gated first contact) | 10 | 0 | **0%** | 0 |
+| **Total** | **48** | **15** | 31% | **0** |
+
+Cumulative still **$0**. Round 3 replies expected Oct 5–9. Round 2 follow-ups due Oct 9.
+
 ### Next send batch — NOT YET CONTACTED, MX-verified
 Priority Tier A/B from `MX_VERIFIED_TARGETS.md`: Rankin Construction (`rankin.ca`), Bermingham (`bermingham.ca`), Concreate USL (`concreate.ca`), Linsey (`linseyenterprises.com`), Miller Paving (`millerpaving.ca`), Thorold BIA, Niagara-on-the-Lake BIA, Port Colborne BIA, Fort Erie BIA, Niagara Construction Association, GM BluePlan (`gmblueplan.ca`), UCC (`ucc.ca`).
 
