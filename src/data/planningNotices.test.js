@@ -13,7 +13,16 @@ describe('getUpcomingMeetings', () => {
   it('keeps the front-page calendar within its declared seven-day window', () => {
     const now = new Date('2026-09-20T12:00:00Z')
     const meetings = getUpcomingMeetings(7, now)
-    expect(meetings.map((m) => m.id)).toEqual(['thorold-sullivan-towpath-closure'])
+    // Window containment is the contract, not a fixed fixture list: the notice
+    // dataset grows every desk update, so assert the boundary instead.
+    const windowStart = now.getTime()
+    const windowEnd = windowStart + 7 * 24 * 60 * 60 * 1000
+    meetings.forEach((m) => {
+      const t = new Date(m.meetingDate).getTime()
+      expect(t).toBeGreaterThanOrEqual(windowStart)
+      expect(t).toBeLessThanOrEqual(windowEnd)
+    })
+    expect(meetings.map((m) => m.id)).toContain('thorold-sullivan-towpath-closure')
   })
 
   it('includes events when the caller requests a wider range', () => {

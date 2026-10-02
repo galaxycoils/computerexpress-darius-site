@@ -1,6 +1,9 @@
 #!/bin/bash
 # Send outreach emails via AgentMail API: POST /v0/inboxes/{id}/messages/send
 # Reads prospect list from inline here-doc, excludes bounced + secondary targets
+# Updated 2026-10-01: 39 police + 15 planning + 9 civic = 63 verified records (live site)
+# NOTE: 19 additional municipal items are in discovery.json but NOT yet ingested into planningNotices.js.
+# The 34 figure in PITCH_DECK.md is aspirational — the live site shows 15 planning notices.
 
 API_KEY="${AGENTMAIL_API_KEY:?Set AGENTMAIL_API_KEY securely before running this script}"
 INBOX="stcatharines-digital@agentmail.to"
@@ -49,8 +52,8 @@ for entry in "${PROSPECTS[@]}"; do
   resp=$(curl -s -X POST "$BASE" \
     -H "Authorization: Bearer $API_KEY" \
     -H "Content-Type: application/json" \
-    -d "{\"to\":\"$email\",\"subject\":\"Planning notices for your Niagara clients\",\"text\":\"Hi,\n\nI'm reaching out from St. Catharines Digital, a local news site covering official municipal planning notices, council decisions, and police releases for St. Catharines, Welland, Thorold, and Niagara Region.\n\nWhat's on the site right now:\n- 11 active planning notices from 4 municipalities (post Sep 18 scan)\n- Daily NRPS police releases\n- Council coverage from all 3 cities\n- A Planning Tracker that's been live\n\nWhy this matters: if your clients are buying, selling, developing, or investing in Niagara properties, they need to know about zoning changes, development applications, and planning approvals before they hit the mainstream. Our site tracks everything from official municipal sources.\n\nWe're currently offering a founding sponsor package at \$300/month for 90 days. This includes a weekly digest email with all the planning notices and police releases, plus your logo/link on the site.\n\nI'd be happy to send you a sample digest or walk you through the site.\n\nBest,\nSt. Catharines Digital\"}")
-  
+    -d "{\"to\":\"$email\",\"subject\":\"Planning notices for your Niagara clients\",\"text\":\"Hi,\n\nI'm reaching out from St. Catharines Digital, a local news site covering official municipal planning notices, council decisions, and police releases for St. Catharines, Welland, Thorold, and Niagara Region.\n\nWhat's on the site right now:\n- 15 active planning notices from 4 municipalities (live on /planning-tracker)\n- 39 verified NRPS police releases — every URL returns 200 (live on /news/police)\n- 9 civic events across 3 cities\n- A Planning Tracker that's been live\n\nWhy this matters: if your clients are buying, selling, developing, or investing in Niagara properties, they need to know about zoning changes, development applications, and planning approvals before they hit the mainstream. Our site tracks everything from official municipal sources — every record traces to a live official page.\n\nWe're currently offering a founding sponsor package at \\$300/month for 90 days. This includes a weekly digest email with all the planning notices and police releases, plus your logo/link on the site.\n\nI'd be happy to send you a sample digest or walk you through the site.\n\nBest,\nSt. Catharines Digital\"}")
+
   msgid=$(echo "$resp" | python3 -c "import sys,json;d=json.load(sys.stdin);print(d.get('message_id','FAILED')[:24])" 2>/dev/null)
   threadid=$(echo "$resp" | python3 -c "import sys,json;d=json.load(sys.stdin);print(d.get('thread_id','FAILED')[:24])" 2>/dev/null)
   

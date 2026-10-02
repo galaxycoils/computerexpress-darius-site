@@ -6,8 +6,8 @@
  * - thorold.ca
  * - niagararegion.ca
  *
- * Updated: 2026-10-01
- * Note: Added Welland 2026 pavement rejuvenation notice and Thorold Sullivan Avenue/Towpath Street closure (posted Sep 17, about two weeks from Sep 21). No new St. Catharines public notices since Sep 30.
+ * Updated: 2026-10-02
+ * Note: Added completed Thorold closures for Alexandria Drive (Sep 22-23) and Bridge 11 / Highway 20 (Sep 23-24). No new St. Catharines, Welland, or Niagara Region planning or road notices since Oct 1.
  * Next review: Daily
  */
 import { getRenderNow, parseTorontoDate } from "../utils/renderClock.js";
@@ -186,6 +186,38 @@ export const planningNotices = [
     tags: ["Road Closure", "Sullivan Avenue", "Towpath Street", "Thorold"],
   },
   {
+    id: "thorold-alexandria-drive-closure-sep-22",
+    municipality: "Thorold",
+    type: "Temporary Road Closure",
+    title: "Alexandria Drive Closure — Kottmeier Road to Legacy Lane",
+    description:
+      "Thorold closed Alexandria Drive between Kottmeier Road and Legacy Lane from September 22 to September 23, 2026, 7:00 a.m. to 5:00 p.m. The notice title refers to September 23 and 24; the body gives September 22 and 23.",
+    status: "Meeting Complete",
+    meetingDate: "2026-09-22T07:00:00",
+    endDate: "2026-09-23T17:00:00",
+    publishedDate: "2026-09-18",
+    sourceUrl:
+      "https://www.thorold.ca/news/news/temporary-road-closure-alexandria-drive-september-23-24/",
+    category: "road-closure",
+    tags: ["Road Closure", "Alexandria Drive", "Thorold"],
+  },
+  {
+    id: "thorold-bridge-11-hwy20-sep-23",
+    municipality: "Thorold",
+    type: "Temporary Road Closure",
+    title: "Bridge 11 (Highway 20) Closure",
+    description:
+      "Bridge 11 on Highway 20 was closed September 23 and September 24, 2026, from 9:00 a.m. to 4:00 p.m. for bridge and road maintenance. Vehicle and pedestrian traffic were prohibited.",
+    status: "Meeting Complete",
+    meetingDate: "2026-09-23T09:00:00",
+    endDate: "2026-09-24T16:00:00",
+    publishedDate: "2026-09-18",
+    sourceUrl:
+      "https://www.thorold.ca/news/news/bridge-11-hwy-20-closure-september-23-to-24/",
+    category: "road-closure",
+    tags: ["Road Closure", "Highway 20", "Bridge 11", "Thorold"],
+  },
+  {
     id: "thorold-winslow-cres-watermain",
     municipality: "Thorold",
     type: "Municipal Construction Notice",
@@ -258,6 +290,300 @@ export const planningNotices = [
       "https://www.niagararegion.ca/projects/sixteen-mile-bridge-rehabilitation/default.aspx",
     category: "road-closure",
     tags: ["Road Closure", "Sixteen Mile Creek", "Lincoln", "Niagara Region"],
+  },
+  // --- New additions from 2026-10-01 sweep ---
+  {
+    id: "stc-8-graham-ave-b-17-26sc",
+    municipality: "St. Catharines",
+    type: "Consent and Minor Variance (Committee of Adjustment)",
+    title: "8 Graham Avenue — Consent and Minor Variance Applications",
+    description:
+      "Applications for Minor Variance and Consent (B-17/26SC) for 8 Graham Avenue. Hearing by Committee of Adjustment on August 19, 2026 at 5:00 p.m. Consent to convey land and minor variance relief.",
+    fileNumber: "B-17/26SC",
+    status: "Meeting Complete",
+    meetingDate: "2026-08-19T17:00:00",
+    meetingLocation: "Council Chambers, 50 Church St",
+    submissionDeadline: "2026-08-14T12:00:00",
+    submissionEmail: "cofa@stcatharines.ca",
+    publishedDate: "2026-07-28",
+    sourceUrl:
+      "https://www.stcatharines.ca/news/posts/notice-of-hearing-8-graham-avenue/",
+    category: "consent-application",
+    tags: ["Consent", "Minor Variance", "Graham Avenue", "Committee of Adjustment"],
+  },
+  {
+    id: "stc-90-92-st-paul-west-a-44-26",
+    municipality: "St. Catharines",
+    type: "Minor Variance (Committee of Adjustment)",
+    title: "90–92 St. Paul Street West — 6-Storey 34-Unit Apartment Variance",
+    description:
+      "Application A-44/26 seeks relief from Zoning By-law 2013-283 to permit a 6-storey, 34-unit apartment building: reduction in minimum lot area from 100 m² to 66.6 m² per dwelling unit. Hearing: August 19, 2026.",
+    fileNumber: "A-44/26",
+    status: "Meeting Complete",
+    meetingDate: "2026-08-19T17:00:00",
+    meetingLocation: "Council Chambers, 50 Church St",
+    submissionDeadline: "2026-08-14T12:00:00",
+    submissionEmail: "cofa@stcatharines.ca",
+    publishedDate: "2026-07-28",
+    sourceUrl:
+      "https://www.stcatharines.ca/news/posts/notice-of-hearing-90-92-st-paul-street-west/",
+    category: "minor-variance",
+    tags: ["Minor Variance", "St. Paul Street West", "Apartment", "Committee of Adjustment"],
+  },
+  {
+    id: "stc-merritt-chestnut-mountain-reconstruction",
+    municipality: "St. Catharines",
+    type: "Municipal Construction Notice",
+    title: "Merritt / Chestnut / Mountain Streets — Road Reconstruction and Underground Improvements",
+    description:
+      "Road improvements along Merritt Street (Walnut to Glendale), Chestnut Street extension (Hastings to Mountain), portion of Mountain Street (Glendale to Chestnut), and new pedestrian multi-use path. Construction anticipated mid-to-late July 2026 to December 2026, final restorations potentially spring 2027. Contractor: Peters Excavating Inc. Temporary lane restrictions; road closures avoided where possible.",
+    status: "Active",
+    publishedDate: "2026-06-22",
+    sourceUrl:
+      "https://www.engagestc.ca/merritt-chestnut-mountain",
+    category: "construction",
+    tags: ["Construction", "Road Reconstruction", "Merritt Street", "Chestnut Street", "Mountain Street", "St. Catharines"],
+  },
+  {
+    id: "welland-coa-first-st-aug20-hearing",
+    municipality: "Welland",
+    type: "Consent and Minor Variance (Committee of Adjustment)",
+    title: "Consent and Minor Variance Applications — Public Hearing (Aug 20 Notice)",
+    description:
+      "Public hearing for consent and minor variance applications. Hearing: September 16, 2026, 5:00 p.m., Civic Square Council Chambers, 60 East Main Street, Welland. Posted August 20, 2026.",
+    fileNumber: "PLCON202600193 / PLCON202600195",
+    status: "Meeting Complete",
+    meetingDate: "2026-09-16T17:00:00",
+    meetingLocation: "Civic Square Council Chambers, 60 East Main Street, Welland",
+    submissionDeadline: "2026-09-10T17:00:00",
+    submissionEmail: "cofa@welland.ca",
+    publishedDate: "2026-08-20",
+    sourceUrl:
+      "https://www.welland.ca/news/posts/notice-of-public-hearing-concerning-applications-for-consent-and-minor-variance/",
+    category: "consent-application",
+    tags: ["Consent", "Minor Variance", "Welland", "Committee of Adjustment"],
+  },
+  {
+    id: "welland-694-698-niagara-st-zba",
+    municipality: "Welland",
+    type: "Zoning By-law Amendment (Public Information Process)",
+    title: "694 & 698 Niagara Street — Proposed Zoning By-law Amendment (7-Storey, 217-Unit Apartment)",
+    description:
+      "File PLZBLA202500064: Rezone from Single-Detached Dwelling (R1) to Residential High Density (RH) to permit a 7-storey, 217-unit apartment building with at-grade parking. Public Information Meeting: January 28, 2026, 6:00–7:30 p.m., Civic Square Community Room. Statutory Public Hearing: February 24, 2026, 6:00 p.m., Civic Square Council Chambers.",
+    fileNumber: "PLZBLA202500064",
+    status: "Meeting Complete",
+    meetingDate: "2026-01-28T18:00:00",
+    meetingLocation: "Civic Square Community Room, 60 East Main Street, Welland",
+    submissionDeadline: "2026-02-13T12:00:00",
+    submissionEmail: "devserv@welland.ca",
+    publishedDate: "2026-01-08",
+    sourceUrl:
+      "https://www.welland.ca/news/posts/notice-of-public-information-process-concerning-proposed-zoning-by-law-amendment-694-niagara-street-and-698-niagara-street/",
+    category: "zoning-by-law-amendment",
+    tags: ["Zoning By-law Amendment", "Niagara Street", "Apartment", "Welland"],
+  },
+  {
+    id: "welland-water-wastewater-budget-2026",
+    municipality: "Welland",
+    type: "Budget Public Input Notice",
+    title: "2026 Water and Wastewater Budgets — Public Input Meeting",
+    description:
+      "Open meeting to obtain public input regarding the 2026 Water and Wastewater Budgets. Posted November 3, 2025.",
+    status: "Meeting Complete",
+    publishedDate: "2025-11-03",
+    sourceUrl:
+      "https://www.welland.ca/media/Notices.asp",
+    category: "budget",
+    tags: ["Budget", "Water", "Wastewater", "Welland", "Public Input"],
+  },
+  {
+    id: "thorold-clairmont-st-zba",
+    municipality: "Thorold",
+    type: "Zoning By-law Amendment (Public Meeting)",
+    title: "24–26 Clairmont Street — Zoning By-law Amendment (I2 to R1C)",
+    description:
+      "File D14-07-2026: Rezone from Minor Institutional (I2) to Residential One (R1C) to facilitate severance of manse building from church. Public Meeting: August 11, 2026, 6:30 p.m., Hybrid (City Hall Council Chamber or YouTube). Owner: Thorold Presbyterian Church.",
+    fileNumber: "D14-07-2026",
+    status: "Meeting Complete",
+    meetingDate: "2026-08-11T18:30:00",
+    meetingLocation: "Hybrid: City Hall Council Chamber / YouTube",
+    submissionDeadline: "2026-08-06T16:30:00",
+    publishedDate: "2026-07-16",
+    sourceUrl:
+      "https://www.thorold.ca/news/news/notice-of-public-meeting-for-a-zoning-by-law-amendment-24-26-clairmont-st/",
+    category: "zoning-by-law-amendment",
+    tags: ["Zoning By-law Amendment", "Clairmont Street", "Thorold"],
+  },
+  {
+    id: "thorold-confederation-heights-zba",
+    municipality: "Thorold",
+    type: "Zoning By-law Amendment (Public Meeting)",
+    title: "Confederation Heights Phase 10 (Blocks 232–234, 236 & 235, 237–239) — Zoning By-law Amendment",
+    description:
+      "File D12-02-2022: Zoning by-law amendment for lands owned by Mountainview Homes (Niagara) Ltd and LH (Thorold) Ltd within Confederation Heights Phase 10 (Plan 59M-537). Public Meeting posted August 17, 2026.",
+    fileNumber: "D12-02-2022",
+    status: "Hearing Scheduled",
+    meetingDate: "2026-09-08T18:30:00",
+    meetingLocation: "Hybrid: City Hall Council Chamber / YouTube",
+    submissionDeadline: "2026-09-01T16:30:00",
+    publishedDate: "2026-08-17",
+    sourceUrl:
+      "https://www.thorold.ca/news/notices-and-announcements/",
+    category: "zoning-by-law-amendment",
+    tags: ["Zoning By-law Amendment", "Confederation Heights", "Thorold"],
+  },
+  {
+    id: "thorold-1201-egerter-rd-zba",
+    municipality: "Thorold",
+    type: "Zoning By-law Amendment (Public Meeting)",
+    title: "1201 Egerter Road — Zoning By-law Amendment",
+    description:
+      "Proposed zoning by-law amendment for 1201 Egerter Road. Public Meeting posted August 17, 2026.",
+    fileNumber: "D14-08-2026",
+    status: "Hearing Scheduled",
+    meetingDate: "2026-09-08T18:30:00",
+    meetingLocation: "Hybrid: City Hall Council Chamber / YouTube",
+    submissionDeadline: "2026-09-01T16:30:00",
+    publishedDate: "2026-08-17",
+    sourceUrl:
+      "https://www.thorold.ca/news/notices-and-announcements/",
+    category: "zoning-by-law-amendment",
+    tags: ["Zoning By-law Amendment", "Egerter Road", "Thorold"],
+  },
+  {
+    id: "thorold-2026-final-tax-bill",
+    municipality: "Thorold",
+    type: "Tax Bill Notice",
+    title: "2026 Final Tax Bill — Mailing and Due Dates",
+    description:
+      "2026 Final Tax Bills mailed on or before June 9, 2026. Instalment 1 due: June 30, 2026 by 4:30 p.m. Instalment 2 due: August 31, 2026 by 4:30 p.m. Contact Tax Clerk at 905-227-6613 ext. 235 or Taxes@thorold.ca if not received by June 17, 2026.",
+    status: "Published",
+    publishedDate: "2026-05-27",
+    sourceUrl:
+      "https://www.thorold.ca/news/news/public-notice-the-2026-final-tax-bill-will-be-mailed-on-or-before-june-9-2026/",
+    category: "budget",
+    tags: ["Tax Bill", "2026", "Thorold", "Due Dates"],
+  },
+  {
+    id: "niagara-2026-budget-approved",
+    municipality: "Niagara Region",
+    type: "Budget Approval",
+    title: "2026 Budget Approved — $579M General Tax Levy, 6.30% Increase",
+    description:
+      "Council approved the 2026 General Tax Levy Budget: $579.0 million (increase of $42.3M, 6.30% property tax increase on Regional portion). For average property assessed at $298,000: Regional tax increase of $137, totaling $2,307 in 2026. Water/Wastewater budget increase: 7.42% ($12.9M). Capital Budget: $192.8M (131 projects). Approved February 2026.",
+    status: "Approved",
+    publishedDate: "2026-02-13",
+    sourceUrl:
+      "https://www.niagararegion.ca/government/budget/2026/default.aspx",
+    category: "budget",
+    tags: ["Budget", "2026", "Tax Levy", "Niagara Region", "Water", "Wastewater", "Capital"],
+  },
+  {
+    id: "niagara-casablanca-blvd-pic",
+    municipality: "Niagara Region",
+    type: "Public Information Centre (Pre-construction)",
+    title: "Casablanca Boulevard (Regional Road 10) Reconstruction — Pre-construction PIC (Grimsby)",
+    description:
+      "Contract 2026-T-70: Reconstruction of Casablanca Boulevard from North Service Road (Regional Road 39) to Livingston Avenue (Regional Road 512) in Grimsby. Public Information Centre: two-week period starting Monday, September 7, 2026 (online). Completed Schedule C Municipal Class EA in 2019.",
+    status: "Scheduled",
+    meetingDate: "2026-09-07T00:00:00",
+    meetingLocation: "Online (two-week period)",
+    publishedDate: "2026-09-17",
+    sourceUrl:
+      "https://www.niagararegion.ca/news/notices/notice.aspx?q=1018",
+    category: "public-information-centre",
+    tags: ["PIC", "Casablanca Boulevard", "Grimsby", "Road Reconstruction", "Niagara Region"],
+  },
+  {
+    id: "niagara-regional-road-20-west-lincoln",
+    municipality: "Niagara Region",
+    type: "Road Construction Notice",
+    title: "Regional Road 20 Reconstruction — West Lincoln",
+    description:
+      "Contract 2025-T-45: Reconstruction of Regional Road 20 from South Grimsby Road 5 to Wade Road with infrastructure improvements on Wade Road. Construction tentatively beginning soon, anticipated completion by July 3, 2026. Contractor: Baiocco Construction Corp. Single lane closures may be required.",
+    status: "Active",
+    publishedDate: "2026-07-15",
+    sourceUrl:
+      "https://niagararegion.ca/news/notices/notice.aspx?q=944",
+    category: "construction",
+    tags: ["Road Reconstruction", "Regional Road 20", "West Lincoln", "Niagara Region"],
+  },
+  {
+    id: "niagara-mcleod-rd-pic",
+    municipality: "Niagara Region",
+    type: "Public Information Centre (Pre-construction)",
+    title: "McLeod Road (Regional Road 49) Reconstruction — Pre-construction PIC (Niagara Falls)",
+    description:
+      "Contract 2025-T-189: Reconstruction of McLeod Road from Oakwood Drive to Wilson Crescent in Niagara Falls. Public Information Centre: Wednesday, July 22, 2026, 6:00–8:00 p.m., MacBain Community Centre, 7150 Montrose Rd. New sidewalks, multi-use paths, traffic signals, storm/sanitary sewers, watermain.",
+    status: "Meeting Complete",
+    meetingDate: "2026-07-22T18:00:00",
+    meetingLocation: "MacBain Community Centre, 7150 Montrose Rd, Niagara Falls",
+    publishedDate: "2026-07-08",
+    sourceUrl:
+      "https://www.niagararegion.ca/news/notices/notice.aspx?q=1009",
+    category: "public-information-centre",
+    tags: ["PIC", "McLeod Road", "Niagara Falls", "Road Reconstruction", "Niagara Region"],
+  },
+  {
+    id: "niagara-king-st-lincoln-closure",
+    municipality: "Niagara Region",
+    type: "Road Construction Notice",
+    title: "King Street (Regional Road 81) Reconstruction — Lincoln",
+    description:
+      "Contract 2024-T-100: Reconstruction of King Street (Regional Road 81) from Greenlane to Lincoln Avenue in Lincoln. Sanitary sewer and laterals also replaced. Construction spring 2026 to spring 2027. Contractor: Walker Construction Ltd. Single lane closures expected.",
+    status: "Active",
+    publishedDate: "2026-04-01",
+    sourceUrl:
+      "https://www.niagararegion.ca/news/notices/notice.aspx?q=966",
+    category: "construction",
+    tags: ["Road Reconstruction", "King Street", "Lincoln", "Niagara Region"],
+  },
+  {
+    id: "niagara-north-service-rd-ea-pic",
+    municipality: "Niagara Region",
+    type: "Environmental Assessment — Public Information Centre",
+    title: "North Service Road (Regional Road 39) Environmental Assessment — PIC #1 (Lincoln)",
+    description:
+      "Municipal Class Environmental Assessment for North Service Road (Regional Road 39) between QEW interchanges at Victoria Avenue North and Jordan Road (~2.8 km). Public Information Centre #1: July 7, 2026. Study assesses current/future transportation needs for Prudhommes Secondary Plan Area.",
+    status: "Meeting Complete",
+    meetingDate: "2026-07-07T00:00:00",
+    meetingLocation: "Lincoln (details at project page)",
+    publishedDate: "2026-06-01",
+    sourceUrl:
+      "https://www.niagararegion.ca/projects/regional-road-39/default.aspx",
+    category: "public-information-centre",
+    tags: ["Environmental Assessment", "North Service Road", "Lincoln", "Niagara Region", "PIC"],
+  },
+  {
+    id: "niagara-carlton-st-closure",
+    municipality: "Niagara Region",
+    type: "Road Closure",
+    title: "Carlton Street (Regional Road 83) Closure — St. Catharines",
+    description:
+      "Full closure of Carlton Street (Regional Road 83) between Welland Canals Parkway and Read Road in St. Catharines. January 26, 2026, 7:00 a.m. to February 24, 2026, 7:00 p.m. Purpose: Bridge maintenance by Seaway Authority. Emergency services no access during full closure.",
+    status: "Meeting Complete",
+    effectiveDate: "2026-01-26T07:00:00",
+    endDate: "2026-02-24T19:00:00",
+    publishedDate: "2026-01-15",
+    sourceUrl:
+      "https://www.niagararegion.ca/news/notices/notice.aspx?q=962",
+    category: "road-closure",
+    tags: ["Road Closure", "Carlton Street", "St. Catharines", "Niagara Region"],
+  },
+  {
+    id: "niagara-transit-budget-amendment-2026",
+    municipality: "Niagara Region",
+    type: "Budget Amendment (Transit)",
+    title: "Niagara Transit Commission 2026 Operating Budget Amendment — Fuel Pressure",
+    description:
+      "One-time transfer of $1,700,000 from Transit Stabilization Reserve to Fleet Maintenance Operating Budget for incremental fuel pressures. Regional Council meeting: July 30, 2026. Public notice provided per Policy C-RC-005. Diesel cost increase ~21% above budget ($1.43/L budgeted vs $1.73/L actual).",
+    status: "Approved",
+    meetingDate: "2026-07-30T00:00:00",
+    publishedDate: "2026-07-15",
+    sourceUrl:
+      "https://pub-niagararegion.escribemeetings.com/FileStream.ashx?DocumentId=49902",
+    category: "budget",
+    tags: ["Budget Amendment", "Transit", "Fuel", "Niagara Region", "Reserve Transfer"],
   },
 ];
 
