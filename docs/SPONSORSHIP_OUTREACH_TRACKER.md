@@ -61,20 +61,50 @@
 
 ---
 
-## Day-14 Gate Status
+## Day-14 Gate Status — **FAILED** (superseded by 2026-10-02 audit)
 
 | Metric | Target | Actual | Date Reached |
 |--------|--------|--------|--------------|
-| Outreach attempts | 30 | 7 | 2026-09-11 |
-| Substantive replies | ≥10 | 0 | — |
-| Proposal requests | ≥3 | 0 | — |
-| Paid commitments | ≥1 | 0 | — |
+| Outreach attempts | 30 | **27** | 2026-09-11 |
+| Hard bounces | ~1 assumed | **15 (55.6%)** | 2026-10-02 |
+| Delivered | 26 | **12** | — |
+| Substantive replies | ≥10 | **0** | — |
+| Proposal requests | ≥3 | **0** | — |
+| Paid commitments | ≥1 | **0** | — |
+
+Full analysis: `docs/REVENUE_POSTMORTEM_2026-10-02.md`. Corrected target list: `docs/MX_VERIFIED_TARGETS.md`.
+
+---
+
+## Round 2 — Corrected pitch, 2026-10-02
+
+**Change:** hook moved from a police release (irrelevant to land/construction/law buyers) to a **specific planning decision with a hard deadline** — 1262-1290 Fourth Avenue, OPA 56 + ZB 2026-120 adopted Sept 14, appeal window closes **Oct 19**. Offer downgraded to **free public tracker first → $250/mo monitored pilot**.
+
+| # | Company | Contact | Email | Sent | Bounced | Reply | Next step |
+|---|---------|---------|-------|------|---------|-------|-----------|
+| 1 | Suk Law | Nick | nick@suklawpc.com | ✅ | — | — | Follow-up Oct 9 |
+| 2 | Greater Niagara Chamber | — | info@gncc.ca | ✅ | — | — | Follow-up Oct 9 |
+| 3 | eXp Realty Ontario | Katherine Milian | katherine.milian@exprealty.net | ✅ | — | — | Follow-up Oct 9 |
+| 4 | Mattamy Homes (GT lowrise) | — | info_gtalowrise@mattamycorp.com | ✅ | — | — | Follow-up Oct 9 |
+| 5 | Minto Group | — | generalinquiries@minto.com | ✅ | — | — | Follow-up Oct 9 |
+| 6 | B&A Contracting | — | info@bacontracting.ca | ✅ | — | — | Follow-up Oct 9 |
+| 7 | DelConstruction | — | info@delconstruction.ca | ✅ | — | — | Follow-up Oct 9 |
+| 8 | Sullivan Mahoney LLP | — | info@sullivanmahoney.com | ✅ | — | — | Follow-up Oct 9 |
+| 9 | Deeth Williams Acton | — | info@dww.com | ✅ | — | — | Follow-up Oct 9 |
+| 10 | Impression Homes | — | info@impressionhomes.net | ✅ | — | — | Follow-up Oct 9 |
+| 11 | Bosley / McGarr Realty | — | contact@bosleyrealestate.ca | ✅ | ⚠️ expected — domain NXDOMAIN, email asks for correct address | — | Find real domain |
+
+**Round 2 bounce rate target: ≤5%. Round 1 was 55.6%.**
+
+### Next send batch — NOT YET CONTACTED, MX-verified
+Priority Tier A/B from `MX_VERIFIED_TARGETS.md`: Rankin Construction (`rankin.ca`), Bermingham (`bermingham.ca`), Concreate USL (`concreate.ca`), Linsey (`linseyenterprises.com`), Miller Paving (`millerpaving.ca`), Thorold BIA, Niagara-on-the-Lake BIA, Port Colborne BIA, Fort Erie BIA, Niagara Construction Association, GM BluePlan (`gmblueplan.ca`), UCC (`ucc.ca`).
 
 ---
 
 ## Notes
 
 - **Positioning:** Coverage breadth (3 municipalities + daily NRPS), not raw "active notices" count
-- **Pricing:** $300/mo digest / $250/mo website / $550/mo full suite (founding pilot, 90 days)
+- **Pricing:** **REVISED 2026-10-02** — free public tracker → $250/mo monitored pilot. Prior $300/$250/$550 tier ladder was never validated by a single paid conversation.
 - **Editorial firewall:** Non-negotiable. Sponsors labelled, coverage not influenced.
-- **Gate date:** If not hitting targets by 2026-09-30, analyze and adjust pitch or target list before scaling.
+- **Send gate:** no address goes out without an MX check. See checklist in `docs/MX_VERIFIED_TARGETS.md`.
+- **Pitch rule:** every email opens with a specific decision, closure, or deadline from our own data. Never a general news hook.

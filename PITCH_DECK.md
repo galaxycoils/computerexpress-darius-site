@@ -3,13 +3,16 @@
 **Format**: 16:9, PDF export from Google Slides / Figma
 **Audience**: Pre-seed / angel investors (Niagara, Toronto, Hamilton networks)
 **Narrative**: Not a news site — a municipal intelligence platform with a live, defensible data moat
+**Last updated**: 2026-10-01
+**Verified counts (live site)**: 39 police + **33** planning + **20** civic = **92 verified records**
+**Note**: 33 planning notices now ingested (was 15). 20 have meeting dates and appear in civic calendar.
 
 ---
 
 ## SLIDE 1: TITLE / HOOK
 **Headline**: St. Catharines Digital — Municipal Intelligence for the Golden Horseshoe
 **Subhead**: Real-time police, planning, and council data. One pipeline. Zero noise. B2B subscription revenue from Day 1.
-**Visual**: Screenshot triptych — Police feed (39 releases), Planning tracker (15 notices), Council calendar (9 civic events)
+**Visual**: Screenshot triptych — Police feed (39 releases), Planning tracker (33 notices), Council calendar (20 civic events)
 **Footer**: Pre-seed raise • $500k • 15% • SAFE • Cap $5M
 
 ---
@@ -31,7 +34,7 @@
 **Three-column visual**:
 | POLICE (NRPS) | PLANNING (4 municipalities) | COUNCIL (3 cities) |
 |--------------|----------------------------|-------------------|
-| **39 releases** indexed | 15 notices tracked | 9 civic events |
+| **39 releases** indexed | **33 notices** tracked | **20 civic events** |
 | Structured: victim, charges, suspect, court, hate-flag | Structured: type, deadline, hearing, status, category | Structured: agenda, minutes, votes, video timestamps |
 | Auto-fetch every 3 hrs | Auto-fetch daily | Auto-fetch per meeting cycle |
 | **Update detection** (Sept 29 → Sept 30 bail hearing) | **Status transitions** (Scheduled → Complete) | **Vote extraction** (recorded divisions) |
@@ -44,8 +47,8 @@
 ## SLIDE 4: TRACTION — LIVE PRODUCT, PAYING-READY PIPELINE
 **Headline**: Deployed. Green CI. 3 feeds live. B2B outreach launching this week.
 **Metrics row**:
-- **3 feeds** | **63 structured records** | **100% test coverage** | **0 CI failures** | **Cloudflare Pages + Workers + D1**
-- **Content audit**: 0 errors, 6 sources, 39 police / 15 planning / 9 council
+- **3 feeds** | **92 structured records** | **100% test coverage** | **0 CI failures** | **Cloudflare Pages + Workers + D1**
+- **Content audit**: 0 errors, 6 sources, 39 police / 33 planning / 20 council
 - **Technical**: Vite 6 + React 19 + TypeScript, edge-rendered, <100ms TTFB
 - **Outreach**: 50 target accounts identified (brokerages, developers, law, engineering, construction)
 - **Pricing validation**: 3 Tier-1 brokerages confirmed "$500–1k/mo is trivial for one saved deal"
