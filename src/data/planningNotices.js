@@ -6,8 +6,8 @@
  * - thorold.ca
  * - niagararegion.ca
  *
- * Updated: 2026-10-02
- * Note: Added completed Thorold closures for Alexandria Drive (Sep 22-23) and Bridge 11 / Highway 20 (Sep 23-24). No new St. Catharines, Welland, or Niagara Region planning or road notices since Oct 1.
+ * Updated: 2026-10-03
+ * Note: Added Thorold Sullivan Avenue closure (Towpath Street to Front Street, from Oct 2 for about three weeks) and St. Catharines contractor closures on Clement Place (Oct 2) and Henley Drive (Oct 1, complete). No new Welland, Niagara Region, or NRPS items since Oct 2.
  * Next review: Daily
  */
 import { getRenderNow, parseTorontoDate } from "../utils/renderClock.js";
@@ -28,6 +28,49 @@ export const planningNotices = [
       "https://www.stcatharines.ca/news/posts/notice-of-decision-1262-and-1290-fourth-avenue/",
     category: "official-plan-amendment",
     tags: ["Official Plan", "Zoning", "Fourth Avenue", "Notice of Decision"],
+  },
+  {
+    id: "thorold-sullivan-towpath-front-oct-2",
+    municipality: "Thorold",
+    type: "Temporary Road Closure",
+    title: "Sullivan Avenue Closure — Towpath Street to Front Street",
+    description:
+      "Thorold closed Sullivan Avenue from Towpath Street to Front Street on Friday, October 2, 2026, for about three weeks while the contractor continues downtown underground replacement and road reconstruction. The closure affects on-street parking and one entrance to Parking Lot 1 and the Thorold Community Credit Union lot; both lots stay open from alternate entrances, with detour signs in place.",
+    status: "Active",
+    meetingDate: "2026-10-02T00:00:00",
+    endDate: "2026-10-23T23:59:59",
+    publishedDate: "2026-10-02",
+    sourceUrl:
+      "https://www.thorold.ca/news/news/temporary-road-closure-sullivan-ave-towpath-st-to-front-st-oct-2/",
+    category: "road-closure",
+    tags: ["Road Closure", "Sullivan Avenue", "Towpath Street", "Front Street", "Thorold"],
+  },
+  {
+    id: "stc-clement-place-closure-oct-2",
+    municipality: "St. Catharines",
+    type: "Temporary Road Closure",
+    title: "Clement Place Closure — Crestcombe Road to Ridley Heights Drive",
+    description:
+      "The City’s October 2, 2026 traffic notice says Clement Place is closed from Crestcombe Road to Ridley Heights Drive for contractor work. The notice does not give a reopening time.",
+    status: "Active",
+    publishedDate: "2026-10-02",
+    sourceUrl: "https://www.stcatharines.ca/news/posts/road-closures-for-oct-2/",
+    category: "road-closure",
+    tags: ["Road Closure", "Clement Place", "St. Catharines", "Traffic Notice"],
+  },
+  {
+    id: "stc-henley-drive-closure-oct-1",
+    municipality: "St. Catharines",
+    type: "Temporary Road Closure",
+    title: "Henley Drive Closure — Linhaven Court to Gladman Avenue",
+    description:
+      "The City’s October 1, 2026 traffic notice listed Henley Drive closed from Linhaven Court to Gladman Avenue. The notice was for that date only.",
+    status: "Meeting Complete",
+    meetingDate: "2026-10-01T00:00:00",
+    publishedDate: "2026-10-01",
+    sourceUrl: "https://www.stcatharines.ca/news/posts/road-closures-for-oct-1/",
+    category: "road-closure",
+    tags: ["Road Closure", "Henley Drive", "St. Catharines", "Traffic Notice"],
   },
   {
     id: "stc-39-41-thomas-st-consent",
@@ -176,7 +219,7 @@ export const planningNotices = [
     type: "Temporary Road Closure",
     title: "Sullivan Avenue and Towpath Street Intersection Closure",
     description:
-      "The Sullivan Avenue and Towpath Street intersection was scheduled to close Monday, September 21 at 6:00 a.m. for about two weeks while a contractor replaces aging underground infrastructure and reconstructs the roadway in downtown Thorold.",
+      "The Sullivan Avenue and Towpath Street intersection was scheduled to close Monday, September 21 at 6:00 a.m. for about two weeks while a contractor replaces aging underground infrastructure and reconstructs the roadway in downtown Thorold. A separate October 2 notice continues the closure along Sullivan Avenue from Towpath Street to Front Street for about three weeks.",
     status: "Active",
     meetingDate: "2026-09-21T06:00:00",
     publishedDate: "2026-09-17",
