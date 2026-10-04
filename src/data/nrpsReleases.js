@@ -2,13 +2,29 @@
  * NRPS Police Media Releases for St. Catharines Digital
  * Sourced exclusively from https://www.niagarapolice.ca/news/posts/
  * Official Niagara Regional Police Service media releases & community notifications.
- * Updated: 2026-10-02
+ * Updated: 2026-10-04
  * Next review: Daily (cron) — refresh from niagarapolice.ca
- * Note: Added Oct 2 Thorold drug trafficking arrest (1 District SCU, search warrants) and Oct 2 public assistance request for a missing St. Catharines male (1 District CIB). One Oct 2 item — fatal pedestrian collision, Niagara Falls — was out of coverage area and not added. Incident 26-122451 retains the Sep 30 update naming William Rider and an aggravated-assault charge.
+ * Note: Added Oct 3 fatal single-vehicle collision in Thorold (1 District, Merrittville Highway and Seburn Road, incident 26-125359). No new St. Catharines, Welland, Thorold, or Niagara Region planning or road notices dated Oct 3–4. Oct 2 Niagara Falls pedestrian collision remains out of coverage area.
  */
 import { getRenderNow } from '../utils/renderClock.js'
 
 export const nrpsReleases = [
+  {
+    id: 'nrps-2026-10-03-thorold-fatal-single-vehicle',
+    date: '2026-10-03',
+    headline: 'Fatal Single Motor Vehicle Collision in Thorold',
+    municipality: 'Thorold, St. Catharines',
+    type: 'Media Release (Collision Investigation)',
+    url: 'https://www.niagarapolice.ca/news/posts/fatal-single-motor-vehicle-collision/',
+    source: 'Niagara Regional Police Service',
+    tags: ['Collision', 'Fatal', 'Thorold', 'St. Catharines', '1 District', 'Collision Reconstruction', 'Merrittville Highway'],
+    category: 'collision',
+    incident_date: '2026-10-03T02:48:00-04:00',
+    published: '2026-10-03T00:00:00-04:00',
+    location: { text: 'Area of Merrittville Highway and Seburn Road, Thorold', lat: null, lng: null },
+    contact: { unit: 'Collision Reconstruction Unit', phone: '905-688-4111', ext: '1009769', anonymous: 'Crime Stoppers of Niagara 1-800-222-8477 (TIPS)' },
+    incident_number: '26-125359'
+  },
   {
     id: 'nrps-2026-10-02-thorold-drug-trafficking-arrest',
     date: '2026-10-02',
