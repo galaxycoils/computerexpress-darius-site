@@ -6,13 +6,27 @@
  * - thorold.ca
  * - niagararegion.ca
  *
- * Updated: 2026-10-03
- * Note: Added Thorold Sullivan Avenue closure (Towpath Street to Front Street, from Oct 2 for about three weeks) and St. Catharines contractor closures on Clement Place (Oct 2) and Henley Drive (Oct 1, complete). No new Welland, Niagara Region, or NRPS items since Oct 2.
+ * Updated: 2026-10-06
+ * Note: Added St. Catharines Service Request Portal launch (Oct 5). Marked Niagara Region Sixteen Mile Creek / North Service Road closure Active because the posted window is Oct 5–Nov 27. No new Welland or Thorold planning notices Oct 3–6. NRPS Oct 4–5 releases are Niagara Falls only and left out of coverage.
  * Next review: Daily
  */
 import { getRenderNow, parseTorontoDate } from "../utils/renderClock.js";
 
 export const planningNotices = [
+  {
+    id: "stc-service-request-portal-oct-5",
+    municipality: "St. Catharines",
+    type: "Municipal Service Notice",
+    title: "Service Request Portal Replaces Report an Issue Form",
+    description:
+      "On October 5, 2026, the City launched a Service Request Portal at stcatharines.ca/reportanissue for non-urgent requests about roads, parks, trees, signs, property standards, and other City services. Residents can track submissions. Urgent road, water, or sewer issues should still be reported by phone to Citizens First at 905-688-5600.",
+    status: "Active",
+    publishedDate: "2026-10-05",
+    sourceUrl:
+      "https://www.stcatharines.ca/news/posts/city-launches-new-service-request-portal-to-help-residents-report-and-track-issues-online/",
+    category: "municipal-service",
+    tags: ["Service Request", "Report an Issue", "Cityworks", "St. Catharines"],
+  },
   {
     id: "stc-1262-1290-fourth-ave-opa-zba-decision",
     municipality: "St. Catharines",
@@ -324,8 +338,8 @@ export const planningNotices = [
     type: "Road Closure",
     title: "Sixteen Mile Creek Bridge — North Service Road Closure",
     description:
-      "Niagara Region is rehabilitating the Sixteen Mile Creek Bridge on North Service Road (Regional Road 39) in Lincoln. A posted road-closure notice covers Oct. 5 to Nov. 27, 2026.",
-    status: "Scheduled",
+      "Niagara Region is rehabilitating the Sixteen Mile Creek Bridge on North Service Road (Regional Road 39) in Lincoln. The posted road-closure notice covers Oct. 5 to Nov. 27, 2026, and that window is now in effect.",
+    status: "Active",
     effectiveDate: "2026-10-05T00:00:00",
     endDate: "2026-11-27T23:59:59",
     publishedDate: "2026-09-24",
