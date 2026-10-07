@@ -2,13 +2,29 @@
  * NRPS Police Media Releases for St. Catharines Digital
  * Sourced exclusively from https://www.niagarapolice.ca/news/posts/
  * Official Niagara Regional Police Service media releases & community notifications.
- * Updated: 2026-10-02
+ * Updated: 2026-10-07
  * Next review: Daily (cron) — refresh from niagarapolice.ca
- * Note: Added Oct 2 Thorold drug trafficking arrest (1 District SCU, search warrants) and Oct 2 public assistance request for a missing St. Catharines male (1 District CIB). One Oct 2 item — fatal pedestrian collision, Niagara Falls — was out of coverage area and not added. Incident 26-122451 retains the Sep 30 update naming William Rider and an aggravated-assault charge.
+ * Note: Added Oct 3 Thorold fatal single-vehicle collision (1 District / CRU, Merrittville Highway & Seburn Road). Three Oct 3–7 items — Niagara Falls arson (2 incidents), Niagara Falls aggravated assault, Niagara Falls firearms arrest — were out of coverage area and not added.
  */
 import { getRenderNow } from '../utils/renderClock.js'
 
 export const nrpsReleases = [
+  {
+    id: 'nrps-2026-10-03-thorold-fatal-collision',
+    date: '2026-10-03',
+    headline: 'Fatal Single Motor Vehicle Collision',
+    municipality: 'Thorold',
+    type: 'Media Release (Collision Investigation)',
+    url: 'https://www.niagarapolice.ca/news/posts/fatal-single-motor-vehicle-collision/',
+    source: 'Niagara Regional Police Service',
+    tags: ['Collision', 'Fatality', 'Thorold', '1 District', 'Collision Reconstruction Unit', 'Public Assistance'],
+    category: 'collision',
+    incident_date: '2026-10-03T02:48:00-04:00',
+    published: '2026-10-03T16:53:00-04:00',
+    location: { text: 'Merrittville Highway and Seburn Road, Thorold', lat: null, lng: null },
+    contact: { unit: '1 District / Collision Reconstruction Unit', phone: '(905) 688-4111', ext: '1009769', anonymous: 'Crime Stoppers of Niagara 1-800-222-8477 (TIPS)' },
+    incident_number: '26-125359'
+  },
   {
     id: 'nrps-2026-10-02-thorold-drug-trafficking-arrest',
     date: '2026-10-02',
