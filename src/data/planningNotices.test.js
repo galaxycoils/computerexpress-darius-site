@@ -1,6 +1,10 @@
 import { describe, expect, it } from 'vitest'
 import { getUpcomingMeetings, getActiveNotices, getNoticeStatus, planningNotices, noticeCategories, municipalities, getNoticeStats } from './planningNotices.js'
 
+// Algorithm tests use controlled records; newsroom updates must not change their expectations.
+const hearing = { id: 'hearing', status: 'Hearing Scheduled', meetingDate: '2026-09-28T18:00:00', municipality: 'Welland', category: 'Planning' }
+const closure = { id: 'closure', status: 'Active', endDate: '2026-09-29', municipality: 'Thorold', category: 'Roads' }
+
 describe('planning tracker data', () => {
   it('offers filters for every current category and municipality', () => {
     expect(noticeCategories.map(({ key }) => key).sort()).toEqual([...new Set(planningNotices.map(({ category }) => category))].sort())
@@ -10,54 +14,48 @@ describe('planning tracker data', () => {
 })
 
 describe('getUpcomingMeetings', () => {
-  it('keeps the front-page calendar within its declared seven-day window', () => {
-    const now = new Date('2026-09-20T12:00:00Z')
-    const meetings = getUpcomingMeetings(7, now)
-    // Window containment is the contract, not a fixed fixture list: the notice
-    // dataset grows every desk update, so assert the boundary instead.
-    const windowStart = now.getTime()
-    const windowEnd = windowStart + 7 * 24 * 60 * 60 * 1000
-    meetings.forEach((m) => {
-      const t = new Date(m.meetingDate).getTime()
-      expect(t).toBeGreaterThanOrEqual(windowStart)
-      expect(t).toBeLessThanOrEqual(windowEnd)
-    })
-    expect(meetings.map((m) => m.id)).toContain('thorold-sullivan-towpath-closure')
+  const now = new Date('2026-09-20T12:00:00Z')
+  const fixtures = [
+    { id: 'before', meetingDate: '2026-09-20T07:59:59' },
+    { id: 'start', meetingDate: '2026-09-20T08:00:00' },
+    { id: 'end', meetingDate: '2026-09-27T08:00:00' },
+    { id: 'after', meetingDate: '2026-09-27T08:00:01' },
+    { id: 'later', meetingDate: '2026-09-29T18:00:00' },
+    { id: 'undated' },
+    { id: 'invalid', meetingDate: 'invalid' },
+  ]
+  it('includes both seven-day boundaries using Toronto civil time', () => {
+    expect(getUpcomingMeetings(7, now, fixtures).map(n => n.id)).toEqual(['start', 'end'])
   })
-
-  it('includes events when the caller requests a wider range', () => {
-    const now = new Date('2026-09-20T12:00:00Z')
-    expect(getUpcomingMeetings(10, now).map((notice) => notice.id)).toContain('welland-coa-first-st-37-40')
+  it('includes later events when the caller requests a wider range', () => {
+    expect(getUpcomingMeetings(10, now, fixtures).map(n => n.id)).toEqual(['start', 'end', 'after', 'later'])
   })
 })
 
 describe('time-sensitive notice status', () => {
   const now = new Date('2026-09-29T12:00:00Z')
-
-  it('does not count past scheduled hearings as active', () => {
-    expect(getActiveNotices(now).map(({ id }) => id)).not.toContain('welland-coa-first-st-37-40')
-    expect(getNoticeStats(now).upcomingMeetings).toBe(0)
+  it('does not count past scheduled hearings as active or upcoming', () => {
+    expect(getActiveNotices(now, [hearing])).toEqual([])
+    expect(getNoticeStats(now, [hearing]).upcomingMeetings).toBe(0)
   })
-
+  it('continues counting genuinely future meetings', () => {
+    const future = { ...hearing, meetingDate: '2026-09-30T18:00:00' }
+    expect(getNoticeStats(now, [hearing, future])).toMatchObject({ total: 2, active: 1, upcomingMeetings: 1 })
+  })
   it('returns the published status when it is already a final outcome', () => {
-    const notice = planningNotices.find(({ id }) => id === 'welland-coa-first-st-37-40')
-    expect(getNoticeStatus(notice, now)).toBe('Meeting Complete')
+    expect(getNoticeStatus({ ...hearing, status: 'Meeting Complete' }, now)).toBe('Meeting Complete')
   })
-
   it('expires an open call after its listed deadline', () => {
-    const notice = planningNotices.find(({ id }) => id === 'stc-flood-resilience-task-force')
-    expect(getNoticeStatus(notice, new Date('2026-10-17T12:00:00Z'))).toBe('Submission deadline passed — check source')
+    expect(getNoticeStatus({ status: 'Open', submissionDeadline: '2026-10-16' }, new Date('2026-10-17T12:00:00Z'))).toBe('Submission deadline passed — check source')
   })
-
   it('stops calling a road closure active after its expected end', () => {
-    const notice = planningNotices.find(({ id }) => id === 'thorold-pine-sullivan-closure-sep-28')
-    const after = new Date('2026-09-30T12:00:00Z')
-    expect(getNoticeStatus(notice, after)).toBe('Expected end passed — check source')
-    expect(getActiveNotices(after)).not.toContain(notice)
+    expect(getNoticeStatus(closure, now)).toBe('Expected end passed — check source')
+    expect(getActiveNotices(now, [closure])).toEqual([])
   })
-
-  it('marks a dated closure window for source verification as it begins', () => {
-    const notice = planningNotices.find(({ id }) => id === 'niagara-sixteen-mile-creek-bridge-closure')
-    expect(getNoticeStatus(notice, new Date('2026-10-06T12:00:00Z'))).toBe('Scheduled window underway — check source')
+  it('marks a scheduled closure window for source verification as it begins', () => {
+    expect(getNoticeStatus({ status: 'Scheduled', effectiveDate: '2026-10-06' }, new Date('2026-10-06T12:00:00Z'))).toBe('Scheduled window underway — check source')
+  })
+  it('preserves a source-confirmed active status within its window', () => {
+    expect(getNoticeStatus({ status: 'Active', effectiveDate: '2026-10-06', endDate: '2026-10-30' }, new Date('2026-10-08T12:00:00Z'))).toBe('Active')
   })
 })

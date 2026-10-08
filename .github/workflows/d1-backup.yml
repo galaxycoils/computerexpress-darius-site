@@ -8,9 +8,13 @@ on:
 permissions:
   contents: read
 
+concurrency:
+  group: encrypted-d1-backup
+  cancel-in-progress: false
+
 jobs:
   backup:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v6
@@ -18,7 +22,7 @@ jobs:
         with:
           node-version: 22
           cache: npm
-      - run: npm ci
+      - run: npm ci --fetch-retries=3 --fetch-retry-mintimeout=1000 --fetch-retry-maxtimeout=10000
       - name: Export and encrypt D1 data
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CF_API_TOKEN || secrets.CLOUDFLARE_API_TOKEN }}
@@ -26,15 +30,20 @@ jobs:
           D1_BACKUP_PASSPHRASE: ${{ secrets.D1_BACKUP_PASSPHRASE }}
         run: |
           set -euo pipefail
-          test -n "$CLOUDFLARE_API_TOKEN"
-          test -n "$CLOUDFLARE_ACCOUNT_ID"
-          test -n "$D1_BACKUP_PASSPHRASE"
+          for secret in CLOUDFLARE_API_TOKEN CLOUDFLARE_ACCOUNT_ID D1_BACKUP_PASSPHRASE; do
+            if [ -z "${!secret}" ]; then
+              echo "::error::Missing required backup configuration: $secret"
+              exit 1
+            fi
+          done
           mkdir -p backup
-          npx wrangler d1 export stcatharinesdigital_d1 --remote --output backup/stcatharinesdigital.sql
+          trap 'rm -f backup/stcatharinesdigital.sql' EXIT
+          npx --no-install wrangler d1 export stcatharinesdigital_d1 --remote --output backup/stcatharinesdigital.sql
           openssl enc -aes-256-cbc -pbkdf2 -salt -in backup/stcatharinesdigital.sql -out backup/stcatharinesdigital.sql.enc -pass env:D1_BACKUP_PASSPHRASE
           rm backup/stcatharinesdigital.sql
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v6
         with:
           name: encrypted-d1-backup
           path: backup/stcatharinesdigital.sql.enc
           retention-days: 30
+          if-no-files-found: error

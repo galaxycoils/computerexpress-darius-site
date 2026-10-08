@@ -21,7 +21,7 @@ concurrency:
 jobs:
   integrity:
     name: ${{ matrix.suite }}
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 15
     strategy:
       fail-fast: false
@@ -43,14 +43,14 @@ jobs:
           cache: npm
 
       - name: Install dependencies
-        run: npm ci
+        run: npm ci --fetch-retries=3 --fetch-retry-mintimeout=1000 --fetch-retry-maxtimeout=10000
 
       - name: ${{ matrix.suite }}
         run: ${{ matrix.command }}
 
   integrity-passed:
     name: Content integrity passed
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     needs: integrity
     if: always()
     steps:

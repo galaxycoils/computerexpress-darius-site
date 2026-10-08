@@ -33,7 +33,7 @@ concurrency:
 jobs:
   collect:
     if: github.ref == 'refs/heads/main'
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 180
     env:
       MODE: ${{ github.event_name == 'schedule' && 'write' || (inputs.dry_run && 'dry-run' || 'write') }}
@@ -55,7 +55,7 @@ jobs:
           cache: npm
 
       - name: Install locked dependencies
-        run: npm ci
+        run: npm ci --fetch-retries=3 --fetch-retry-mintimeout=1000 --fetch-retry-maxtimeout=10000
 
       - name: Collect from approved official sources
         shell: bash
@@ -125,7 +125,7 @@ jobs:
             done
             for workflow in ci.yml content-integrity.yml; do
               run_id=''
-              for lookup in {1..30}; do
+              for ((lookup=1; lookup<=30; lookup++)); do
                 run_id=$(gh run list --workflow "$workflow" --branch "$branch" \
                   --event workflow_dispatch --json databaseId,headSha \
                   --jq ".[] | select(.headSha == \"$candidate\") | .databaseId" | head -n 1)
@@ -188,7 +188,7 @@ jobs:
               gh workflow run deploy.yml --ref main -f reason="$reason" \
                 -f publication_sha="$revision" -f rendered_at="$rendered_at"
               run_id=''
-              for lookup in {1..60}; do
+              for ((lookup=1; lookup<=60; lookup++)); do
                 run_id=$(gh run list --workflow deploy.yml --branch main --event workflow_dispatch \
                   --limit 50 --json databaseId,displayTitle \
                   --jq ".[] | select(.displayTitle == \"$expected_title\") | .databaseId" | head -n 1)
@@ -240,7 +240,7 @@ jobs:
 
       - name: Save source-health report
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: source-health-${{ github.run_id }}
           path: collector-report.json

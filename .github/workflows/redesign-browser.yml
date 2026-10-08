@@ -9,16 +9,21 @@ on:
       - 'scripts/prerender.js'
       - 'scripts/prepare-local-images.mjs'
       - 'package*.json'
+      - '.github/workflows/redesign-browser.yml'
+      - 'scripts/audit-visual.js'
   push:
     branches: ["redesign/**"]
   workflow_dispatch:
+concurrency:
+  group: browser-verification-${{ github.ref }}
+  cancel-in-progress: true
 permissions:
   contents: read
 env:
   VITE_HOMEPAGE_LEAD_SLUG: ${{ vars.VITE_HOMEPAGE_LEAD_SLUG }}
 jobs:
   browser:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v6
@@ -26,18 +31,18 @@ jobs:
         with:
           node-version: 22
           cache: npm
-      - run: npm ci
+      - run: npm ci --fetch-retries=3 --fetch-retry-mintimeout=1000 --fetch-retry-maxtimeout=10000
       - run: npm test
       - run: npm run test:coverage
       - run: node --test scripts/*.regression.mjs
       - run: npm run content:audit
       - run: npm run build
-      - run: npx playwright install --with-deps chromium
+      - run: npx --no-install playwright install --with-deps chromium
       - name: Verify responsive pages and hydration
         run: npm run audit:visual
       - name: Verify reader journeys
         run: npm run test:browser
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v6
         if: always()
         with:
           name: redesign-browser-results

@@ -682,10 +682,10 @@ export const municipalities = [
   { key: "niagara-region", label: "Niagara Region", region: "Niagara" },
 ];
 
-export function getUpcomingMeetings(days = 7, now = getRenderNow()) {
+export function getUpcomingMeetings(days = 7, now = getRenderNow(), notices = planningNotices) {
   const start = now.getTime();
   const end = start + days * 24 * 60 * 60 * 1000;
-  return planningNotices.filter((notice) => {
+  return notices.filter((notice) => {
     if (!notice.meetingDate) return false;
     const t = parseTorontoDate(notice.meetingDate).getTime();
     return t >= start && t <= end;
@@ -712,16 +712,16 @@ export function getNoticeStatus(notice, now = getRenderNow()) {
   return notice.status;
 }
 
-export function getActiveNotices(now = getRenderNow()) {
-  return planningNotices.filter((notice) =>
+export function getActiveNotices(now = getRenderNow(), notices = planningNotices) {
+  return notices.filter((notice) =>
     notice.status &&
     !/complete|approved|passed/i.test(notice.status) &&
     getNoticeStatus(notice, now) === notice.status,
   );
 }
 
-export function getNoticeStats(now = getRenderNow()) {
-  const active = getActiveNotices(now);
+export function getNoticeStats(now = getRenderNow(), notices = planningNotices) {
+  const active = getActiveNotices(now, notices);
   const byMunicipality = {};
   const byCategory = {};
   for (const notice of active) {
@@ -729,10 +729,10 @@ export function getNoticeStats(now = getRenderNow()) {
     byCategory[notice.category] = (byCategory[notice.category] || 0) + 1;
   }
   return {
-    total: planningNotices.length,
+    total: notices.length,
     active: active.length,
     byMunicipality,
     byCategory,
-    upcomingMeetings: getUpcomingMeetings(7, now).length,
+    upcomingMeetings: getUpcomingMeetings(7, now, notices).length,
   };
 }

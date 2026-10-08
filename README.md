@@ -60,3 +60,7 @@ Vite supplies a local chat mock. Contact, sponsorship, newsletters and planning 
 Live operation requires the appropriate deployed bindings, including `STC_D1`, `AI` and service-specific secrets. Keep local secrets in the ignored `.dev.vars` file or secure environment settings. Never put values in source code. The outreach script requires `AGENTMAIL_API_KEY` from its environment and sends real messages when explicitly run.
 
 Security headers in `public/_headers` apply to static Cloudflare Pages responses. Vite preview does not apply them, and Pages Functions supply their own response headers. Verify deployment headers and configured services when releasing.
+
+## GitHub Actions
+
+See [workflow-reliability.md](docs/workflow-reliability.md) for the failure fixes, runtime/tool versions and retry behavior. Workflow validation runs actionlint and shell checks on every push and pull request. Required credentials and genuine test failures remain visible.
