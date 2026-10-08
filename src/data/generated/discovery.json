@@ -1,24 +1,24 @@
 {
   "version": 2,
-  "collectedAt": "2026-10-02T22:15:15.789Z",
+  "collectedAt": "2026-10-08T13:49:20.934Z",
   "publicationState": "autonomous",
   "notice": "Autonomous official-source discovery. Items are links to primary municipal/police pages only; no invented reporting.",
   "sources": [
     {
       "id": "st-catharines-news",
       "ok": true,
-      "itemCount": 10,
+      "itemCount": 11,
       "datedItems": 9,
-      "metadataFailures": 1,
-      "checkedAt": "2026-10-02T22:15:15.789Z"
+      "metadataFailures": 2,
+      "checkedAt": "2026-10-08T13:49:20.934Z"
     },
     {
       "id": "st-catharines-public-notices",
       "ok": true,
-      "itemCount": 11,
+      "itemCount": 12,
       "datedItems": 10,
-      "metadataFailures": 1,
-      "checkedAt": "2026-10-02T22:15:15.789Z"
+      "metadataFailures": 2,
+      "checkedAt": "2026-10-08T13:49:20.934Z"
     },
     {
       "id": "welland-news",
@@ -26,7 +26,7 @@
       "itemCount": 9,
       "datedItems": 9,
       "metadataFailures": 0,
-      "checkedAt": "2026-10-02T22:15:15.789Z"
+      "checkedAt": "2026-10-08T13:49:20.934Z"
     },
     {
       "id": "thorold-news",
@@ -34,7 +34,7 @@
       "itemCount": 10,
       "datedItems": 10,
       "metadataFailures": 0,
-      "checkedAt": "2026-10-02T22:15:15.789Z"
+      "checkedAt": "2026-10-08T13:49:20.934Z"
     },
     {
       "id": "niagara-region-news",
@@ -42,7 +42,7 @@
       "itemCount": 10,
       "datedItems": 0,
       "metadataFailures": 0,
-      "checkedAt": "2026-10-02T22:15:15.789Z"
+      "checkedAt": "2026-10-08T13:49:20.934Z"
     },
     {
       "id": "nrps-media-releases",
@@ -50,7 +50,7 @@
       "itemCount": 10,
       "datedItems": 10,
       "metadataFailures": 0,
-      "checkedAt": "2026-10-02T22:15:15.789Z"
+      "checkedAt": "2026-10-08T13:49:20.934Z"
     }
   ],
   "items": [
@@ -64,7 +64,7 @@
       "kind": "official-notice",
       "sourcePublishedAt": null,
       "firstObservedAt": "2026-09-17T03:27:01.699Z",
-      "lastObservedAt": "2026-10-02T22:15:15.789Z",
+      "lastObservedAt": "2026-10-08T13:49:20.934Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -78,7 +78,7 @@
       "kind": "official-notice",
       "sourcePublishedAt": null,
       "firstObservedAt": "2026-09-17T03:27:01.699Z",
-      "lastObservedAt": "2026-10-02T22:15:15.789Z",
+      "lastObservedAt": "2026-10-08T13:49:20.934Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -92,7 +92,7 @@
       "kind": "official-notice",
       "sourcePublishedAt": null,
       "firstObservedAt": "2026-09-17T03:27:01.699Z",
-      "lastObservedAt": "2026-10-02T22:15:15.789Z",
+      "lastObservedAt": "2026-10-08T13:49:20.934Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -106,7 +106,7 @@
       "kind": "official-notice",
       "sourcePublishedAt": null,
       "firstObservedAt": "2026-09-17T03:27:01.699Z",
-      "lastObservedAt": "2026-10-02T22:15:15.789Z",
+      "lastObservedAt": "2026-10-08T13:49:20.934Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -120,7 +120,7 @@
       "kind": "official-notice",
       "sourcePublishedAt": null,
       "firstObservedAt": "2026-09-17T03:27:01.699Z",
-      "lastObservedAt": "2026-10-02T22:15:15.789Z",
+      "lastObservedAt": "2026-10-08T13:49:20.934Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -134,7 +134,7 @@
       "kind": "official-notice",
       "sourcePublishedAt": null,
       "firstObservedAt": "2026-09-17T03:27:01.699Z",
-      "lastObservedAt": "2026-10-02T22:15:15.789Z",
+      "lastObservedAt": "2026-10-08T13:49:20.934Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -148,7 +148,7 @@
       "kind": "official-notice",
       "sourcePublishedAt": null,
       "firstObservedAt": "2026-09-29T18:05:55.090Z",
-      "lastObservedAt": "2026-10-02T22:15:15.789Z",
+      "lastObservedAt": "2026-10-08T13:49:20.934Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -176,7 +176,7 @@
       "kind": "official-notice",
       "sourcePublishedAt": null,
       "firstObservedAt": "2026-09-16T23:59:08.181Z",
-      "lastObservedAt": "2026-10-02T22:15:15.789Z",
+      "lastObservedAt": "2026-10-08T13:49:20.934Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -190,7 +190,7 @@
       "kind": "official-notice",
       "sourcePublishedAt": null,
       "firstObservedAt": "2026-09-17T03:27:01.699Z",
-      "lastObservedAt": "2026-10-02T22:15:15.789Z",
+      "lastObservedAt": "2026-10-08T13:49:20.934Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -204,7 +204,7 @@
       "kind": "official-notice",
       "sourcePublishedAt": null,
       "firstObservedAt": "2026-09-23T21:30:48.697Z",
-      "lastObservedAt": "2026-10-02T22:15:15.789Z",
+      "lastObservedAt": "2026-10-08T13:49:20.934Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -251,6 +251,20 @@
       "reviewRequired": false
     },
     {
+      "id": "392395c1ab7d9e73",
+      "title": "18-Year-Old Male Charged with Drug Trafficking in Niagara Falls",
+      "url": "https://www.niagarapolice.ca/news/posts/18-year-old-male-charged-with-drug-trafficking-in-niagara-falls/",
+      "sourceId": "nrps-media-releases",
+      "sourceName": "Niagara Regional Police Service media releases",
+      "city": "Niagara Region",
+      "kind": "public-safety",
+      "sourcePublishedAt": "2026-10-07",
+      "firstObservedAt": "2026-10-08T13:49:20.934Z",
+      "lastObservedAt": "2026-10-08T13:49:20.934Z",
+      "status": "published",
+      "reviewRequired": false
+    },
+    {
       "id": "df9ced58b3ef255b",
       "title": "41-year-old St Catharines Male Arrested on 19 Outstanding Warrants",
       "url": "https://www.niagarapolice.ca/news/posts/41-year-old-st-catharines-male-arrested-on-19-outstanding-warrants/",
@@ -261,6 +275,20 @@
       "sourcePublishedAt": "2026-09-17",
       "firstObservedAt": "2026-09-17T11:42:55.380Z",
       "lastObservedAt": "2026-09-23T21:30:48.697Z",
+      "status": "published",
+      "reviewRequired": false
+    },
+    {
+      "id": "5bbd305d32ff089f",
+      "title": "Arrest Made in Online Child Luring Investigation – Niagara Falls",
+      "url": "https://www.niagarapolice.ca/news/posts/arrest-made-in-online-child-luring-investigation-niagara-falls/",
+      "sourceId": "nrps-media-releases",
+      "sourceName": "Niagara Regional Police Service media releases",
+      "city": "Niagara Region",
+      "kind": "public-safety",
+      "sourcePublishedAt": "2026-10-08",
+      "firstObservedAt": "2026-10-08T13:49:20.934Z",
+      "lastObservedAt": "2026-10-08T13:49:20.934Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -289,6 +317,34 @@
       "sourcePublishedAt": "2026-09-21",
       "firstObservedAt": "2026-09-21T12:50:16.251Z",
       "lastObservedAt": "2026-10-02T09:47:26.628Z",
+      "status": "published",
+      "reviewRequired": false
+    },
+    {
+      "id": "8be19cb848c42763",
+      "title": "Detectives Seek Public Assistance in Aggravated Assault Investigation – Niagara Falls",
+      "url": "https://www.niagarapolice.ca/news/posts/detectives-seek-public-assistance-in-aggravated-assault-investigation-niagara-falls/",
+      "sourceId": "nrps-media-releases",
+      "sourceName": "Niagara Regional Police Service media releases",
+      "city": "Niagara Region",
+      "kind": "public-safety",
+      "sourcePublishedAt": "2026-10-05",
+      "firstObservedAt": "2026-10-08T13:49:20.934Z",
+      "lastObservedAt": "2026-10-08T13:49:20.934Z",
+      "status": "published",
+      "reviewRequired": false
+    },
+    {
+      "id": "3b9938e824ed6da0",
+      "title": "Fatal Single Motor Vehicle Collision",
+      "url": "https://www.niagarapolice.ca/news/posts/fatal-single-motor-vehicle-collision/",
+      "sourceId": "nrps-media-releases",
+      "sourceName": "Niagara Regional Police Service media releases",
+      "city": "Niagara Region",
+      "kind": "public-safety",
+      "sourcePublishedAt": "2026-10-03",
+      "firstObservedAt": "2026-10-08T13:49:20.934Z",
+      "lastObservedAt": "2026-10-08T13:49:20.934Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -391,6 +447,34 @@
       "reviewRequired": false
     },
     {
+      "id": "c49ff28fe757e4eb",
+      "title": "Niagara Falls Man Arrested in Firearms Investigation",
+      "url": "https://www.niagarapolice.ca/news/posts/niagara-falls-man-arrested-in-firearms-investigation/",
+      "sourceId": "nrps-media-releases",
+      "sourceName": "Niagara Regional Police Service media releases",
+      "city": "Niagara Region",
+      "kind": "public-safety",
+      "sourcePublishedAt": "2026-10-04",
+      "firstObservedAt": "2026-10-08T13:49:20.934Z",
+      "lastObservedAt": "2026-10-08T13:49:20.934Z",
+      "status": "published",
+      "reviewRequired": false
+    },
+    {
+      "id": "7368c007472e006d",
+      "title": "Niagara Falls Man Charged with Animal Cruelty and Bestiality Charges",
+      "url": "https://www.niagarapolice.ca/news/posts/niagara-falls-man-charged-with-animal-cruelty-and-bestiality-charges/",
+      "sourceId": "nrps-media-releases",
+      "sourceName": "Niagara Regional Police Service media releases",
+      "city": "Niagara Region",
+      "kind": "public-safety",
+      "sourcePublishedAt": "2026-10-07",
+      "firstObservedAt": "2026-10-08T13:49:20.934Z",
+      "lastObservedAt": "2026-10-08T13:49:20.934Z",
+      "status": "published",
+      "reviewRequired": false
+    },
+    {
       "id": "86a7f76b394f47d1",
       "title": "NRPS Officer Charged in Impaired Operation Investigation",
       "url": "https://www.niagarapolice.ca/news/posts/nrps-officer-charged-in-impaired-operation-investigation/",
@@ -456,7 +540,7 @@
       "kind": "public-safety",
       "sourcePublishedAt": "2026-10-02",
       "firstObservedAt": "2026-10-02T22:15:15.789Z",
-      "lastObservedAt": "2026-10-02T22:15:15.789Z",
+      "lastObservedAt": "2026-10-08T13:49:20.934Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -498,7 +582,7 @@
       "kind": "public-safety",
       "sourcePublishedAt": "2026-10-02",
       "firstObservedAt": "2026-10-02T22:15:15.789Z",
-      "lastObservedAt": "2026-10-02T22:15:15.789Z",
+      "lastObservedAt": "2026-10-08T13:49:20.934Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -554,7 +638,21 @@
       "kind": "public-safety",
       "sourcePublishedAt": "2026-10-02",
       "firstObservedAt": "2026-10-02T22:15:15.789Z",
-      "lastObservedAt": "2026-10-02T22:15:15.789Z",
+      "lastObservedAt": "2026-10-08T13:49:20.934Z",
+      "status": "published",
+      "reviewRequired": false
+    },
+    {
+      "id": "fc2761efa0b8d9d8",
+      "title": "Two Separate Arson Incidents at a Niagara Falls Restaurant",
+      "url": "https://www.niagarapolice.ca/news/posts/two-separate-arson-incidents-at-a-niagara-falls-restaurant/",
+      "sourceId": "nrps-media-releases",
+      "sourceName": "Niagara Regional Police Service media releases",
+      "city": "Niagara Region",
+      "kind": "public-safety",
+      "sourcePublishedAt": "2026-10-07",
+      "firstObservedAt": "2026-10-08T13:49:20.934Z",
+      "lastObservedAt": "2026-10-08T13:49:20.934Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -652,7 +750,21 @@
       "kind": "official-notice",
       "sourcePublishedAt": null,
       "firstObservedAt": "2026-09-17T03:27:01.699Z",
-      "lastObservedAt": "2026-10-02T22:15:15.789Z",
+      "lastObservedAt": "2026-10-08T13:49:20.934Z",
+      "status": "published",
+      "reviewRequired": false
+    },
+    {
+      "id": "e8bcbec83e87398c",
+      "title": "City continues Pumpkinville tradition on Oct. 17",
+      "url": "https://www.stcatharines.ca/news/posts/city-continues-pumpkinville-tradition-on-oct-17/",
+      "sourceId": "st-catharines-news",
+      "sourceName": "City of St. Catharines News",
+      "city": "St. Catharines",
+      "kind": "official-notice",
+      "sourcePublishedAt": "2026-10-06",
+      "firstObservedAt": "2026-10-08T13:49:20.934Z",
+      "lastObservedAt": "2026-10-08T13:49:20.934Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -680,7 +792,21 @@
       "kind": "official-notice",
       "sourcePublishedAt": "2026-09-24",
       "firstObservedAt": "2026-09-26T04:59:12.352Z",
-      "lastObservedAt": "2026-10-02T22:15:15.789Z",
+      "lastObservedAt": "2026-10-08T13:49:20.934Z",
+      "status": "published",
+      "reviewRequired": false
+    },
+    {
+      "id": "943ae06a3195c471",
+      "title": "City launches new Service Request Portal to help residents report and track issues online",
+      "url": "https://www.stcatharines.ca/news/posts/city-launches-new-service-request-portal-to-help-residents-report-and-track-issues-online/",
+      "sourceId": "st-catharines-news",
+      "sourceName": "City of St. Catharines News",
+      "city": "St. Catharines",
+      "kind": "official-notice",
+      "sourcePublishedAt": "2026-10-05",
+      "firstObservedAt": "2026-10-08T13:49:20.934Z",
+      "lastObservedAt": "2026-10-08T13:49:20.934Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -694,7 +820,7 @@
       "kind": "official-notice",
       "sourcePublishedAt": "2026-09-24",
       "firstObservedAt": "2026-09-26T04:59:12.352Z",
-      "lastObservedAt": "2026-10-02T22:15:15.789Z",
+      "lastObservedAt": "2026-10-08T13:49:20.934Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -727,6 +853,20 @@
       "reviewRequired": false
     },
     {
+      "id": "442a6134d1b8c927",
+      "title": "Mayor Siscoe Accepting Submissions for the Mayor’s Holiday Card Contest",
+      "url": "https://www.stcatharines.ca/news/posts/mayor-siscoe-accepting-submissions-for-the-mayor-s-holiday-card-contest/",
+      "sourceId": "st-catharines-news",
+      "sourceName": "City of St. Catharines News",
+      "city": "St. Catharines",
+      "kind": "official-notice",
+      "sourcePublishedAt": "2026-10-06",
+      "firstObservedAt": "2026-10-08T13:49:20.934Z",
+      "lastObservedAt": "2026-10-08T13:49:20.934Z",
+      "status": "published",
+      "reviewRequired": false
+    },
+    {
       "id": "90078564fec90fb4",
       "title": "New pickleball courts, playground now open at Burgoyne Woods",
       "url": "https://www.stcatharines.ca/news/posts/new-pickleball-courts-playground-now-open-at-burgoyne-woods/",
@@ -737,6 +877,20 @@
       "sourcePublishedAt": "2026-09-16",
       "firstObservedAt": "2026-09-17T03:27:01.699Z",
       "lastObservedAt": "2026-09-29T18:05:55.090Z",
+      "status": "published",
+      "reviewRequired": false
+    },
+    {
+      "id": "20c649b96845d216",
+      "title": "Registration now open for 2026 fall tree giveaway",
+      "url": "https://www.stcatharines.ca/news/posts/registration-now-open-for-2026-fall-tree-giveaway/",
+      "sourceId": "st-catharines-news",
+      "sourceName": "City of St. Catharines News",
+      "city": "St. Catharines",
+      "kind": "official-notice",
+      "sourcePublishedAt": "2026-10-06",
+      "firstObservedAt": "2026-10-08T13:49:20.934Z",
+      "lastObservedAt": "2026-10-08T13:49:20.934Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -890,7 +1044,7 @@
       "kind": "official-notice",
       "sourcePublishedAt": "2026-09-22",
       "firstObservedAt": "2026-09-22T21:20:21.516Z",
-      "lastObservedAt": "2026-10-02T22:15:15.789Z",
+      "lastObservedAt": "2026-10-08T13:49:20.934Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -904,7 +1058,21 @@
       "kind": "official-notice",
       "sourcePublishedAt": "2026-10-02",
       "firstObservedAt": "2026-10-02T22:15:15.789Z",
-      "lastObservedAt": "2026-10-02T22:15:15.789Z",
+      "lastObservedAt": "2026-10-08T13:49:20.934Z",
+      "status": "published",
+      "reviewRequired": false
+    },
+    {
+      "id": "319ebc33bbda8514",
+      "title": "Service Request Portal",
+      "url": "https://www.stcatharines.ca/news/stcatharines.ca/reportanissue",
+      "sourceId": "st-catharines-news",
+      "sourceName": "City of St. Catharines News",
+      "city": "St. Catharines",
+      "kind": "official-notice",
+      "sourcePublishedAt": null,
+      "firstObservedAt": "2026-10-08T13:49:20.934Z",
+      "lastObservedAt": "2026-10-08T13:49:20.934Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -946,7 +1114,7 @@
       "kind": "official-notice",
       "sourcePublishedAt": null,
       "firstObservedAt": "2026-09-17T03:27:01.699Z",
-      "lastObservedAt": "2026-10-02T22:15:15.789Z",
+      "lastObservedAt": "2026-10-08T13:49:20.934Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -974,7 +1142,7 @@
       "kind": "official-notice",
       "sourcePublishedAt": "2026-09-30",
       "firstObservedAt": "2026-09-30T05:33:54.630Z",
-      "lastObservedAt": "2026-10-02T22:15:15.789Z",
+      "lastObservedAt": "2026-10-08T13:49:20.934Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -988,7 +1156,7 @@
       "kind": "official-notice",
       "sourcePublishedAt": "2026-08-25",
       "firstObservedAt": "2026-09-16T23:59:08.181Z",
-      "lastObservedAt": "2026-10-02T22:15:15.789Z",
+      "lastObservedAt": "2026-10-08T13:49:20.934Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -1016,7 +1184,7 @@
       "kind": "official-notice",
       "sourcePublishedAt": "2026-07-28",
       "firstObservedAt": "2026-09-17T03:27:01.699Z",
-      "lastObservedAt": "2026-10-02T22:15:15.789Z",
+      "lastObservedAt": "2026-10-08T13:49:20.934Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -1030,7 +1198,7 @@
       "kind": "official-notice",
       "sourcePublishedAt": "2026-07-28",
       "firstObservedAt": "2026-09-17T03:27:01.699Z",
-      "lastObservedAt": "2026-10-02T22:15:15.789Z",
+      "lastObservedAt": "2026-10-08T13:49:20.934Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -1072,7 +1240,7 @@
       "kind": "official-notice",
       "sourcePublishedAt": "2026-09-22",
       "firstObservedAt": "2026-09-23T17:00:38.747Z",
-      "lastObservedAt": "2026-10-02T22:15:15.789Z",
+      "lastObservedAt": "2026-10-08T13:49:20.934Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -1114,7 +1282,7 @@
       "kind": "official-notice",
       "sourcePublishedAt": "2026-09-22",
       "firstObservedAt": "2026-09-23T17:00:38.747Z",
-      "lastObservedAt": "2026-10-02T22:15:15.789Z",
+      "lastObservedAt": "2026-10-08T13:49:20.934Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -1128,7 +1296,7 @@
       "kind": "official-notice",
       "sourcePublishedAt": "2026-09-22",
       "firstObservedAt": "2026-09-23T17:00:38.747Z",
-      "lastObservedAt": "2026-10-02T22:15:15.789Z",
+      "lastObservedAt": "2026-10-08T13:49:20.934Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -1142,7 +1310,7 @@
       "kind": "official-notice",
       "sourcePublishedAt": "2026-09-22",
       "firstObservedAt": "2026-09-23T17:00:38.747Z",
-      "lastObservedAt": "2026-10-02T22:15:15.789Z",
+      "lastObservedAt": "2026-10-08T13:49:20.934Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -1156,7 +1324,7 @@
       "kind": "official-notice",
       "sourcePublishedAt": "2026-08-25",
       "firstObservedAt": "2026-09-17T03:27:01.699Z",
-      "lastObservedAt": "2026-10-02T22:15:15.789Z",
+      "lastObservedAt": "2026-10-08T13:49:20.934Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -1184,7 +1352,21 @@
       "kind": "official-notice",
       "sourcePublishedAt": "2026-07-28",
       "firstObservedAt": "2026-09-17T03:27:01.699Z",
-      "lastObservedAt": "2026-10-02T22:15:15.789Z",
+      "lastObservedAt": "2026-10-08T13:49:20.934Z",
+      "status": "published",
+      "reviewRequired": false
+    },
+    {
+      "id": "18afc55f304244a3",
+      "title": "Service Request Portal",
+      "url": "https://www.stcatharines.ca/news/public-notices/stcatharines.ca/reportanissue",
+      "sourceId": "st-catharines-public-notices",
+      "sourceName": "City of St. Catharines Public Notices",
+      "city": "St. Catharines",
+      "kind": "official-notice",
+      "sourcePublishedAt": null,
+      "firstObservedAt": "2026-10-08T13:49:20.934Z",
+      "lastObservedAt": "2026-10-08T13:49:20.934Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -1198,7 +1380,7 @@
       "kind": "official-notice",
       "sourcePublishedAt": "2026-09-18",
       "firstObservedAt": "2026-09-18T16:25:03.390Z",
-      "lastObservedAt": "2026-10-02T22:15:15.789Z",
+      "lastObservedAt": "2026-10-08T13:49:20.934Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -1282,7 +1464,7 @@
       "kind": "official-notice",
       "sourcePublishedAt": "2026-09-25",
       "firstObservedAt": "2026-09-26T04:59:12.352Z",
-      "lastObservedAt": "2026-10-02T22:15:15.789Z",
+      "lastObservedAt": "2026-10-08T13:49:20.934Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -1296,7 +1478,7 @@
       "kind": "official-notice",
       "sourcePublishedAt": "2026-09-11",
       "firstObservedAt": "2026-09-16T23:59:08.181Z",
-      "lastObservedAt": "2026-10-02T22:15:15.789Z",
+      "lastObservedAt": "2026-10-08T13:49:20.934Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -1329,6 +1511,20 @@
       "reviewRequired": false
     },
     {
+      "id": "675c015b9f92df13",
+      "title": "Short Hills Provincial Park will be closed to the public for a Deer Harvest",
+      "url": "https://www.thorold.ca/news/news/short-hills-provincial-park-will-be-closed-to-the-public-for-a-deer-harvest/",
+      "sourceId": "thorold-news",
+      "sourceName": "City of Thorold News",
+      "city": "Thorold",
+      "kind": "official-notice",
+      "sourcePublishedAt": "2026-10-06",
+      "firstObservedAt": "2026-10-08T13:49:20.934Z",
+      "lastObservedAt": "2026-10-08T13:49:20.934Z",
+      "status": "published",
+      "reviewRequired": false
+    },
+    {
       "id": "d64ba8d3837d106b",
       "title": "Skating programs starting at the Thorold Community Arena",
       "url": "https://www.thorold.ca/news/news/skating-programs-starting-at-the-thorold-community-arena/",
@@ -1338,7 +1534,7 @@
       "kind": "official-notice",
       "sourcePublishedAt": "2026-10-01",
       "firstObservedAt": "2026-10-02T00:48:20.851Z",
-      "lastObservedAt": "2026-10-02T22:15:15.789Z",
+      "lastObservedAt": "2026-10-08T13:49:20.934Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -1352,7 +1548,7 @@
       "kind": "official-notice",
       "sourcePublishedAt": "2026-09-25",
       "firstObservedAt": "2026-09-26T04:59:12.352Z",
-      "lastObservedAt": "2026-10-02T22:15:15.789Z",
+      "lastObservedAt": "2026-10-08T13:49:20.934Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -1394,7 +1590,7 @@
       "kind": "official-notice",
       "sourcePublishedAt": "2026-09-18",
       "firstObservedAt": "2026-09-22T00:08:10.500Z",
-      "lastObservedAt": "2026-10-02T22:15:15.789Z",
+      "lastObservedAt": "2026-10-08T13:49:20.934Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -1409,6 +1605,20 @@
       "sourcePublishedAt": null,
       "firstObservedAt": "2026-09-17T03:27:01.699Z",
       "lastObservedAt": "2026-09-18T16:25:03.390Z",
+      "status": "published",
+      "reviewRequired": false
+    },
+    {
+      "id": "ce62c6837ab30823",
+      "title": "Temporary Road Closure : Barron Rd : October 7",
+      "url": "https://www.thorold.ca/news/news/temporary-road-closure-barron-rd-october-7/",
+      "sourceId": "thorold-news",
+      "sourceName": "City of Thorold News",
+      "city": "Thorold",
+      "kind": "official-notice",
+      "sourcePublishedAt": "2026-10-07",
+      "firstObservedAt": "2026-10-08T13:49:20.934Z",
+      "lastObservedAt": "2026-10-08T13:49:20.934Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -1450,7 +1660,7 @@
       "kind": "official-notice",
       "sourcePublishedAt": "2026-10-02",
       "firstObservedAt": "2026-10-02T22:15:15.789Z",
-      "lastObservedAt": "2026-10-02T22:15:15.789Z",
+      "lastObservedAt": "2026-10-08T13:49:20.934Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -1464,7 +1674,7 @@
       "kind": "official-notice",
       "sourcePublishedAt": "2026-09-17",
       "firstObservedAt": "2026-09-17T17:01:06.283Z",
-      "lastObservedAt": "2026-10-02T22:15:15.789Z",
+      "lastObservedAt": "2026-10-08T13:49:20.934Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -1478,7 +1688,7 @@
       "kind": "official-notice",
       "sourcePublishedAt": "2026-09-04",
       "firstObservedAt": "2026-09-17T03:27:01.699Z",
-      "lastObservedAt": "2026-10-02T22:15:15.789Z",
+      "lastObservedAt": "2026-10-08T13:49:20.934Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -1492,7 +1702,7 @@
       "kind": "official-notice",
       "sourcePublishedAt": "2026-09-28",
       "firstObservedAt": "2026-09-28T20:29:40.137Z",
-      "lastObservedAt": "2026-10-02T22:15:15.789Z",
+      "lastObservedAt": "2026-10-08T13:49:20.934Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -1520,7 +1730,7 @@
       "kind": "official-notice",
       "sourcePublishedAt": "2026-09-22",
       "firstObservedAt": "2026-09-22T16:58:28.425Z",
-      "lastObservedAt": "2026-10-02T22:15:15.789Z",
+      "lastObservedAt": "2026-10-08T13:49:20.934Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -1548,7 +1758,7 @@
       "kind": "official-notice",
       "sourcePublishedAt": "2026-09-24",
       "firstObservedAt": "2026-09-26T04:59:12.352Z",
-      "lastObservedAt": "2026-10-02T22:15:15.789Z",
+      "lastObservedAt": "2026-10-08T13:49:20.934Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -1576,7 +1786,7 @@
       "kind": "official-notice",
       "sourcePublishedAt": "2026-09-24",
       "firstObservedAt": "2026-09-17T21:23:46.670Z",
-      "lastObservedAt": "2026-10-02T22:15:15.789Z",
+      "lastObservedAt": "2026-10-08T13:49:20.934Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -1646,7 +1856,21 @@
       "kind": "official-notice",
       "sourcePublishedAt": "2026-10-01",
       "firstObservedAt": "2026-10-02T00:48:20.851Z",
-      "lastObservedAt": "2026-10-02T22:15:15.789Z",
+      "lastObservedAt": "2026-10-08T13:49:20.934Z",
+      "status": "published",
+      "reviewRequired": false
+    },
+    {
+      "id": "dfcf98995e12fa95",
+      "title": "Thanksgiving day hours",
+      "url": "https://www.welland.ca/news/posts/thanksgiving-day-hours/",
+      "sourceId": "welland-news",
+      "sourceName": "City of Welland News",
+      "city": "Welland",
+      "kind": "official-notice",
+      "sourcePublishedAt": "2026-10-05",
+      "firstObservedAt": "2026-10-08T13:49:20.934Z",
+      "lastObservedAt": "2026-10-08T13:49:20.934Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -1660,7 +1884,7 @@
       "kind": "official-notice",
       "sourcePublishedAt": "2026-09-25",
       "firstObservedAt": "2026-09-26T04:59:12.352Z",
-      "lastObservedAt": "2026-10-02T22:15:15.789Z",
+      "lastObservedAt": "2026-10-08T13:49:20.934Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -1674,7 +1898,7 @@
       "kind": "official-notice",
       "sourcePublishedAt": "2026-09-09",
       "firstObservedAt": "2026-09-17T03:27:01.699Z",
-      "lastObservedAt": "2026-10-02T22:15:15.789Z",
+      "lastObservedAt": "2026-10-08T13:49:20.934Z",
       "status": "published",
       "reviewRequired": false
     },
