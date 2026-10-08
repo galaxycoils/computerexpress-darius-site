@@ -6,13 +6,28 @@
  * - thorold.ca
  * - niagararegion.ca
  *
- * Updated: 2026-10-06
- * Note: Added St. Catharines Service Request Portal launch (Oct 5). Marked Niagara Region Sixteen Mile Creek / North Service Road closure Active because the posted window is Oct 5–Nov 27. No new Welland or Thorold planning notices Oct 3–6. NRPS Oct 4–5 releases are Niagara Falls only and left out of coverage.
+ * Updated: 2026-10-08
+ * Note: Added Thorold Barron Road closure (Glover Road to Polloway Road) posted Oct 7 for Hydro One maintenance that day; marked Meeting Complete because the posted date has passed. No new St. Catharines, Welland, or Niagara Region planning or road notices dated Oct 7–8. Live St. Catharines traffic list did not include an Oct 7 closure page. NRPS Oct 5–7 releases are Niagara Falls only and left out of coverage.
  * Next review: Daily
  */
 import { getRenderNow, parseTorontoDate } from "../utils/renderClock.js";
 
 export const planningNotices = [
+  {
+    id: "thorold-barron-rd-closure-oct-7",
+    municipality: "Thorold",
+    type: "Temporary Road Closure",
+    title: "Barron Road Closure — Glover Road to Polloway Road",
+    description:
+      "Thorold posted that Hydro One temporarily closed Barron Road from Glover Road to Polloway Road on Wednesday, October 7, 2026, for Hydro maintenance. Local traffic was to keep access from Allanport Road to Glover Road and from Thorold Townline Road to Polloway Road. The notice is for that date only.",
+    status: "Meeting Complete",
+    meetingDate: "2026-10-07T00:00:00",
+    publishedDate: "2026-10-07",
+    sourceUrl:
+      "https://www.thorold.ca/news/news/temporary-road-closure-barron-rd-october-7/",
+    category: "road-closure",
+    tags: ["Road Closure", "Barron Road", "Hydro One", "Thorold"],
+  },
   {
     id: "stc-service-request-portal-oct-5",
     municipality: "St. Catharines",
