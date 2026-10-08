@@ -18,6 +18,10 @@ concurrency:
   group: content-integrity-${{ github.ref }}
   cancel-in-progress: false
 
+defaults:
+  run:
+    shell: bash
+
 jobs:
   integrity:
     name: ${{ matrix.suite }}
@@ -32,12 +36,12 @@ jobs:
           - suite: content-audit
             command: npm run content:audit
           - suite: schema-audit
-            command: npm run build && node scripts/audit-schema.js
+            command: npm run build && npm run audit:build && node scripts/audit-schema.js
 
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
 
-      - uses: actions/setup-node@v6
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
         with:
           node-version: 22
           cache: npm
@@ -50,6 +54,7 @@ jobs:
 
   integrity-passed:
     name: Content integrity passed
+    timeout-minutes: 5
     runs-on: ubuntu-24.04
     needs: integrity
     if: always()

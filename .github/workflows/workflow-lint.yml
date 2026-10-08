@@ -13,12 +13,16 @@ concurrency:
   group: workflow-validation-${{ github.ref }}
   cancel-in-progress: true
 
+defaults:
+  run:
+    shell: bash
+
 jobs:
   actionlint:
     runs-on: ubuntu-24.04
     timeout-minutes: 5
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
       - name: Install verified actionlint
         shell: bash
         run: |
@@ -30,3 +34,5 @@ jobs:
           tar -xzf "$RUNNER_TEMP/actionlint.tar.gz" -C "$RUNNER_TEMP" actionlint
       - name: Check workflow syntax, expressions and shell scripts
         run: '"$RUNNER_TEMP/actionlint" -color'
+      - name: Check reusable shell guards
+        run: shellcheck scripts/release-head.sh

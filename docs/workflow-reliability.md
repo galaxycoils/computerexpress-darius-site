@@ -17,10 +17,20 @@ Algorithm tests now use controlled notices, explicit clocks and Toronto-time bou
 - Retry read-only live-page/RSS verification on transient failures and stale content, with fresh request timeouts. Permanent authorization errors fail immediately; exhausted retries remain failures.
 - Require the digest response to report zero failed deliveries. Automatic retries of the email POST are removed because a lost response may follow an accepted send. Review delivery records before manually retrying a partial delivery.
 
+## Additional release safeguards
+
+- Pin all external Actions to reviewed commit SHAs. Run shell steps with Bash error and pipeline handling, and lint the shared release guard.
+- Reject stale releases before installation, before configuration or migrations, and immediately before deployment. Required Cloudflare account/project access is checked before the build.
+- Audit release revision, frozen render time, publication hash, every manifest chunk and asset, responsive photos, and every prerender route. CI artifacts include the hidden Vite manifest. RSS is a Pages Function and remains covered by the live RSS verification.
+- Observe dispatched runs by their exact candidate revision or unique deployment title and dispatch time. Once discovered, follow only that run ID. Recover from transient read failures with bounded backoff; failed, cancelled, skipped or timed-out runs remain failures.
+- Publish candidates with ordinary fast-forward pushes. Reconcile a lost acknowledgement against remote Git history; concurrent main updates require revalidation. Recollect conflicted generated content on the new main and remove owned temporary branches on success or failure.
+- Rebuild release metadata after committing a candidate, and rebuild when the local artifact revision differs from main. Deploy requests include the collector attempt so reruns cannot observe an older release request.
+- Decrypt and compare each new encrypted backup before upload. Include ciphertext checksums and timestamp/revision metadata while keeping plaintext out of artifacts. Existing decryption parameters remain compatible.
+
 ## Validation
 
 - 123 application tests pass, including elapsed-meeting, future-meeting and closure-status cases.
-- 30 offline regression checks pass, including simulated connection reset, HTTP 503, stale content, permanent authorization failure and retry exhaustion.
+- 57 offline regression checks pass, including simulated connection reset, HTTP 503, stale content, permanent authorization failure and retry exhaustion.
 - The existing three-file critical-logic coverage gate remains at 100%.
 - Workflow syntax and shell checks, clean lockfile installation, production build, structured-data audit and content-integrity audit pass. The content audit still reports the three existing source-adapter review warnings.
 

@@ -20,6 +20,10 @@ concurrency:
   group: ci-matrix-${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
+defaults:
+  run:
+    shell: bash
+
 jobs:
   # Parallel quality suites. Unit tests run on Node 22 only (production runtime);
   # jsdom 30 / undici require Node 22+ (markAsUncloneable).
@@ -46,10 +50,10 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
 
       - name: Setup Node ${{ matrix.node-version }}
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
         with:
           node-version: ${{ matrix.node-version }}
           cache: npm
@@ -73,10 +77,10 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
 
       - name: Setup Node ${{ matrix.node-version }}
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
         with:
           node-version: ${{ matrix.node-version }}
           cache: npm
@@ -87,21 +91,26 @@ jobs:
       - name: Production build
         run: npm run build
 
+      - name: Verify release files and prerendered pages
+        run: npm run audit:build
+
       - name: Report homepage bundle budget
         run: npm run budget:bundle
 
       - name: Upload dist artifact (Node 22 only)
         if: matrix.node-version == 22
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
         with:
           name: dist-node22
           path: dist/
+          include-hidden-files: true
           if-no-files-found: error
           retention-days: 3
 
   # Single green check for branch protection rules
   ci-success:
     name: CI matrix passed
+    timeout-minutes: 5
     runs-on: ubuntu-24.04
     needs: [test, build]
     if: always()

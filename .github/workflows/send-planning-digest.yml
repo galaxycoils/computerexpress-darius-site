@@ -13,6 +13,10 @@ concurrency:
   group: planning-digest
   cancel-in-progress: false
 
+defaults:
+  run:
+    shell: bash
+
 jobs:
   send:
     runs-on: ubuntu-24.04

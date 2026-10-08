@@ -29,6 +29,7 @@ node --test scripts/*.regression.mjs
 npm run content:audit
 npm run build
 npm run budget:bundle
+npm run audit:build
 npm run audit:schema
 ```
 

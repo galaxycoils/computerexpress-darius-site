@@ -53,6 +53,10 @@ concurrency:
   # Keep an earlier release from completing after a newer publication has started.
   cancel-in-progress: false
 
+defaults:
+  run:
+    shell: bash
+
 jobs:
   deploy:
     if: github.ref == 'refs/heads/main'
@@ -63,22 +67,24 @@ jobs:
       deployments: write
       actions: read
     steps:
+
+      - name: Validate requested release revision
+        env:
+          REQUESTED_SHA: ${{ inputs.publication_sha }}
+        run: |
+          if [ -n "$REQUESTED_SHA" ] && ! [[ "$REQUESTED_SHA" =~ ^[0-9a-f]{40}$ ]]; then
+            echo '::error::Invalid publication revision.'
+            exit 1
+          fi
+
       - name: Checkout the release revision
-        uses: actions/checkout@v6
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
         with:
           ref: ${{ inputs.publication_sha || github.sha }}
           fetch-depth: 0
 
       - name: Verify release belongs to main
-        env:
-          REQUESTED_SHA: ${{ inputs.publication_sha }}
-        run: |
-          set -euo pipefail
-          if [ -n "$REQUESTED_SHA" ] && ! [[ "$REQUESTED_SHA" =~ ^[0-9a-f]{40}$ ]]; then
-            echo "::error::Invalid publication revision"
-            exit 1
-          fi
-          git merge-base --is-ancestor HEAD origin/main
+        run: git merge-base --is-ancestor HEAD origin/main
 
       - name: Record release revision
         id: release
@@ -87,34 +93,21 @@ jobs:
           set -euo pipefail
           echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
 
-      - name: Setup Node
-        uses: actions/setup-node@v6
-        with:
-          node-version: 22
-          cache: npm
-
-      - name: Install dependencies
-        run: npm ci --fetch-retries=3 --fetch-retry-mintimeout=1000 --fetch-retry-maxtimeout=10000
-
-      - name: Collector regression tests
-        run: node --test scripts/*.regression.mjs
-
-      - name: Content audit
-        run: npm run content:audit
-
-      - name: Application tests
-        run: npm test
-
-      - name: Critical logic coverage
-        run: npm run test:coverage
-
-      - name: Build
-        run: npm run build
-
-      - name: Report homepage bundle budget
-        run: npm run budget:bundle
+      - name: Reject superseded release before setup
+        id: eligibility
+        env:
+          RELEASE_SHA: ${{ steps.release.outputs.sha }}
+        run: |
+          git fetch origin main
+          if [ "$(git rev-parse FETCH_HEAD)" = "$RELEASE_SHA" ]; then
+            echo 'publish=true' >> "$GITHUB_OUTPUT"
+          else
+            echo 'publish=false' >> "$GITHUB_OUTPUT"
+            echo 'Publication skipped: a newer main revision superseded this release.' >> "$GITHUB_STEP_SUMMARY"
+          fi
 
       - name: Verify Cloudflare credentials
+        if: steps.eligibility.outputs.publish == 'true'
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CF_API_TOKEN || secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
@@ -128,7 +121,62 @@ jobs:
             exit 1
           fi
 
+          curl --fail --silent --show-error --retry 3 --retry-all-errors --connect-timeout 10 --max-time 30 \
+            -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+            "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/pages/projects/stcatharinesdigital" \
+            --output "$RUNNER_TEMP/cloudflare-preflight.json"
+          jq -e '.success == true and .result.name == "stcatharinesdigital"' "$RUNNER_TEMP/cloudflare-preflight.json" >/dev/null
+
+      - name: Setup Node
+        if: steps.eligibility.outputs.publish == 'true'
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        if: steps.eligibility.outputs.publish == 'true'
+        run: npm ci --fetch-retries=3 --fetch-retry-mintimeout=1000 --fetch-retry-maxtimeout=10000
+
+      - name: Collector regression tests
+        if: steps.eligibility.outputs.publish == 'true'
+        run: node --test scripts/*.regression.mjs
+
+      - name: Content audit
+        if: steps.eligibility.outputs.publish == 'true'
+        run: npm run content:audit
+
+      - name: Application tests
+        if: steps.eligibility.outputs.publish == 'true'
+        run: npm test
+
+      - name: Critical logic coverage
+        if: steps.eligibility.outputs.publish == 'true'
+        run: npm run test:coverage
+
+      - name: Build
+        if: steps.eligibility.outputs.publish == 'true'
+        run: npm run build
+
+      - name: Report homepage bundle budget
+        if: steps.eligibility.outputs.publish == 'true'
+        run: npm run budget:bundle
+
+      - name: Validate complete release artifact and structured data
+        if: steps.eligibility.outputs.publish == 'true'
+        run: |
+          npm run audit:build
+          npm run audit:schema
+
+      - name: Gate configuration on current release
+        id: configuration
+        if: steps.eligibility.outputs.publish == 'true'
+        env:
+          RELEASE_SHA: ${{ steps.release.outputs.sha }}
+        run: bash scripts/release-head.sh
+
       - name: Configure signed alert-token runtime secret
+        if: steps.configuration.outputs.publish == 'true'
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CF_API_TOKEN || secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
@@ -141,6 +189,7 @@ jobs:
           fi
 
       - name: Configure AgentMail runtime secret
+        if: steps.configuration.outputs.publish == 'true'
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CF_API_TOKEN || secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
@@ -153,6 +202,7 @@ jobs:
           printf '%s' "$AGENTMAIL_API_KEY" | npx --no-install wrangler pages secret put AGENTMAIL_API_KEY --project-name=stcatharinesdigital
 
       - name: Configure editorial access secrets
+        if: steps.configuration.outputs.publish == 'true'
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CF_API_TOKEN || secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
@@ -178,6 +228,7 @@ jobs:
           fi
 
       - name: Apply newsletter and delivery schemas
+        if: steps.configuration.outputs.publish == 'true'
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CF_API_TOKEN || secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
@@ -189,25 +240,17 @@ jobs:
           npx --no-install wrangler d1 execute stcatharinesdigital_d1 --remote --file=./migrations/0009_editorial_audit.sql --yes
           npx --no-install wrangler d1 execute stcatharinesdigital_d1 --remote --file=./migrations/0010_alert_sent_items.sql --yes
 
-      - name: Skip superseded release
+      - name: Gate publication on current release
         id: current
+        if: steps.configuration.outputs.publish == 'true'
         env:
-          GH_TOKEN: ${{ github.token }}
           RELEASE_SHA: ${{ steps.release.outputs.sha }}
-        run: |
-          git fetch origin main
-          latest=$(git rev-parse FETCH_HEAD)
-          if [ "$latest" = "$RELEASE_SHA" ]; then
-            echo 'publish=true' >> "$GITHUB_OUTPUT"
-          else
-            echo 'publish=false' >> "$GITHUB_OUTPUT"
-            echo 'A newer main revision superseded this build.' >> "$GITHUB_STEP_SUMMARY"
-          fi
+        run: bash scripts/release-head.sh
 
       - name: Deploy to Cloudflare Pages
         if: steps.current.outputs.publish == 'true'
         id: deploy
-        uses: cloudflare/wrangler-action@v4
+        uses: cloudflare/wrangler-action@953926a2e2182532811c01a25e53647d93bf07c0 # v4
         with:
           wranglerVersion: "4.148.0"
           apiToken: ${{ secrets.CF_API_TOKEN || secrets.CLOUDFLARE_API_TOKEN }}
@@ -250,6 +293,7 @@ jobs:
         env:
           RELEASE_SHA: ${{ steps.release.outputs.sha || github.sha }}
           TRIGGER: ${{ github.event_name }}
+          PUBLICATION: ${{ steps.deploy.outcome || 'skipped' }}
           CACHE_PURGE: ${{ steps.purge.outputs.enabled || 'skipped' }}
         run: |
           {
@@ -258,6 +302,7 @@ jobs:
             echo "|-------|-------|"
             printf '| Commit | %s |\n' "$RELEASE_SHA"
             printf '| Trigger | %s |\n' "$TRIGGER"
+            printf '| Publication | %s |\n' "$PUBLICATION"
             echo "| Project | stcatharinesdigital |"
             printf '| Cache purge | %s |\n' "$CACHE_PURGE"
           } >> "$GITHUB_STEP_SUMMARY"

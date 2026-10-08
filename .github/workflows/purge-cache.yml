@@ -10,6 +10,10 @@ concurrency:
   group: production-cache-purge
   cancel-in-progress: false
 
+defaults:
+  run:
+    shell: bash
+
 jobs:
   purge:
     runs-on: ubuntu-24.04
