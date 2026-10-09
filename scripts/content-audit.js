@@ -2,6 +2,7 @@
 import fs from 'node:fs/promises'
 import path from 'node:path'
 import { fileURLToPath, pathToFileURL } from 'node:url'
+import { auditDiscovery } from './discoveryIntegrity.js'
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
 const errors = []
@@ -78,6 +79,7 @@ if (stats.total !== verifiedNrpsReleases.length) errors.push(`getNrpsStats.total
 const discoveryPath = path.join(root, 'src/data/generated/discovery.json')
 try {
   const discovery = JSON.parse(await fs.readFile(discoveryPath, 'utf8'))
+  errors.push(...auditDiscovery(discovery, sourceRegistry))
   const sources = discovery.sources
   if (!Array.isArray(sources) || sources.length === 0) {
     errors.push('Discovery snapshot lists no sources')

@@ -47,6 +47,28 @@ const browser = await chromium
 const errors = [],
   report = [];
 try {
+  // Slow route chunks expose startup updates that interrupt Suspense hydration.
+  const hydrationContext = await browser.newContext();
+  try {
+    const coldPage = await hydrationContext.newPage();
+    coldPage.on("pageerror", error => errors.push(error.message));
+    await coldPage.route("**/googletagmanager.com/**", route => route.abort());
+    await coldPage.route("**/assets/*.js", async route => {
+      await new Promise(resolve => setTimeout(resolve, 250));
+      await route.continue();
+    });
+    await coldPage.addInitScript(() => {
+      localStorage.setItem("theme-v3", "dark");
+      localStorage.setItem("scd-edition", "welland");
+      localStorage.setItem("scd-saved-stories-v1", '["test-saved-story"]');
+    });
+    await coldPage.goto(base + "/news/", { waitUntil: "networkidle" });
+    await expect(coldPage.locator(".journal-feed")).toBeVisible();
+    await expect(coldPage.locator(".journal-root")).toHaveClass(/is-dark/);
+    assert.deepEqual(errors, [], "Delayed route chunks hydrate with stored preferences");
+  } finally {
+    await hydrationContext.close();
+  }
   const context = await browser.newContext();
   const page = await context.newPage();
   page.on("pageerror", (error) => errors.push(error.message));
@@ -110,9 +132,11 @@ try {
   await page
     .getByLabel("City", { exact: true })
     .selectOption({ label: "Welland" });
+  await page.waitForURL(/city=Welland/);
   await page
     .getByLabel("Topic", { exact: true })
     .selectOption({ label: "Development" });
+  await page.waitForURL(/topic=Development/);
   assert.match(page.url(), /city=Welland/);
   const labels = await page
     .locator(".journal-feed .journal-kicker")
@@ -319,6 +343,7 @@ try {
       {
         checks: report,
         journeys: [
+          "delayed route hydration with stored preferences",
           "filters",
           "saved stories persistence/removal",
           "calendar download",
@@ -339,7 +364,7 @@ try {
     ),
   );
   console.log(
-    `Browser QA passed: ${report.length} responsive page checks and 12 reader journeys.`,
+    `Browser QA passed: ${report.length} responsive page checks and 13 reader journeys.`,
   );
 } finally {
   await browser.close();

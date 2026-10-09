@@ -24,8 +24,10 @@ function parseArgs(argv) {
       args.source = argv[++index];
       if (!args.source || args.source.startsWith("--"))
         throw new Error("Missing source ID");
-    } else if (value.startsWith("--source="))
+    } else if (value.startsWith("--source=")) {
       args.source = value.slice("--source=".length);
+      if (!args.source) throw new Error("Missing source ID");
+    }
     else throw new Error("Unknown argument: " + value);
   }
   return args;
@@ -148,7 +150,8 @@ function extractPublicationDate(html) {
     const text = cleanText(match[1]);
     if (/^[A-Z][a-z]{2,8} \d{1,2}, \d{4}$/.test(text)) {
       const date = new Date(text + ' 12:00:00 GMT');
-      if (!Number.isNaN(+date)) values.push(date.toISOString().slice(0, 10));
+      if (!Number.isNaN(+date) && date.getUTCDate() === Number(text.split(' ')[1].replace(',', '')))
+        values.push(date.toISOString().slice(0, 10));
     }
   }
   for (const match of html.matchAll(/<meta\b[^>]*>/gi)) {
@@ -167,7 +170,14 @@ function extractPublicationDate(html) {
       walk(JSON.parse(script[1]));
     } catch { /* Malformed metadata must not break collection. */ }
   }
-  return values.find(value => typeof value === 'string' && /^\d{4}-\d{2}-\d{2}(?:T.*)?$/.test(value) && !Number.isNaN(Date.parse(value)) && new Date(value).toISOString().slice(0, 10) === value.slice(0, 10)) || null;
+  return values.find(value => {
+    if (typeof value !== 'string' || !/^\d{4}-\d{2}-\d{2}(?:T.*)?$/.test(value)) return false;
+    const day = value.slice(0, 10);
+    const calendarDate = new Date(day + 'T12:00:00Z');
+    // Validate the calendar day separately: a valid offset timestamp can land
+    // on a different UTC day, and Date.parse normalizes impossible dates.
+    return !Number.isNaN(+calendarDate) && calendarDate.toISOString().slice(0, 10) === day && !Number.isNaN(Date.parse(value));
+  }) || null;
 }
 
 function mergeCandidate(item, old, collectedAt) {
@@ -182,9 +192,26 @@ function mergeCandidate(item, old, collectedAt) {
   };
 }
 
-async function fetchHtml(source) {
+async function fetchHtml(source, {
+  attempts = 3,
+  wait = ms => new Promise(resolve => setTimeout(resolve, ms)),
+} = {}) {
+  if (!Number.isInteger(attempts) || attempts < 1 || attempts > 3)
+    throw new Error("Collector attempts must be an integer from 1 to 3");
+  for (let attempt = 0; attempt < attempts; attempt += 1) {
+    try {
+      return await fetchHtmlOnce(source);
+    } catch (error) {
+      if (error.retryable === false || attempt === attempts - 1) throw error;
+      await wait(1000 * 2 ** attempt);
+    }
+  }
+}
+
+async function fetchHtmlOnce(source) {
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), 15_000);
+  const permanentError = message => Object.assign(new Error(message), { retryable: false });
   try {
     const response = await fetch(source.url, {
       headers: {
@@ -194,17 +221,25 @@ async function fetchHtml(source) {
       redirect: "error",
       signal: controller.signal,
     });
-    if (!response.ok) throw new Error("HTTP " + response.status);
+    if (!response.ok) {
+      await response.body?.cancel();
+      throw Object.assign(new Error("HTTP " + response.status), {
+        retryable: [408, 429].includes(response.status) || response.status >= 500,
+      });
+    }
     const contentType = response.headers.get("content-type") || "";
     if (
       !contentType.includes("text/html") &&
       !contentType.includes("application/xhtml+xml")
     ) {
-      throw new Error("Unsupported content type: " + contentType);
+      await response.body?.cancel();
+      throw permanentError("Unsupported content type: " + contentType);
     }
     const declaredLength = Number(response.headers.get("content-length") || 0);
-    if (declaredLength > MAX_BYTES)
-      throw new Error("Response exceeds size limit");
+    if (declaredLength > MAX_BYTES) {
+      await response.body?.cancel();
+      throw permanentError("Response exceeds size limit");
+    }
     if (!response.body) throw new Error("Empty response");
     const reader = response.body.getReader();
     const chunks = [];
@@ -216,7 +251,7 @@ async function fetchHtml(source) {
         bytes += value.byteLength;
         if (bytes > MAX_BYTES) {
           await reader.cancel();
-          throw new Error("Response exceeds size limit");
+          throw permanentError("Response exceeds size limit");
         }
         chunks.push(Buffer.from(value));
       }
@@ -227,6 +262,16 @@ async function fetchHtml(source) {
   } finally {
     clearTimeout(timeout);
   }
+}
+
+function createPublicationDateLoader(fetchPage = fetchHtml) {
+  const requests = new Map();
+  return url => {
+    if (!requests.has(url)) {
+      requests.set(url, Promise.resolve().then(() => fetchPage({ url })).then(extractPublicationDate));
+    }
+    return requests.get(url);
+  };
 }
 
 async function readExisting() {
@@ -301,6 +346,8 @@ async function main() {
   const collected = [];
   const statuses = [];
   let successfulSources = 0;
+  // Municipal news and public-notice indexes can link to the same article.
+  const loadPublicationDate = createPublicationDateLoader();
 
   for (const source of selected) {
     try {
@@ -311,7 +358,7 @@ async function main() {
       for (let start = 0; start < candidates.length; start += 4) {
         await Promise.all(candidates.slice(start, start + 4).map(async item => {
           if (!previous.get(item.url)?.sourcePublishedAt) {
-            try { item.sourcePublishedAt = extractPublicationDate(await fetchHtml({url: item.url})); }
+            try { item.sourcePublishedAt = await loadPublicationDate(item.url); }
             catch { metadataFailures += 1; }
           }
           Object.assign(item, mergeCandidate(item, previous.get(item.url), collectedAt));
@@ -423,6 +470,7 @@ export {
   hasSemanticChanges,
   extractPublicationDate,
   mergeCandidate,
+  createPublicationDateLoader,
 };
 
 if (

@@ -83,14 +83,6 @@ jobs:
       - name: Run collector regression tests
         run: node --test scripts/*.regression.mjs
 
-      - name: Validate application before publication
-        if: env.MODE == 'write'
-        run: |
-          npm test
-          npm run build
-          npm run audit:build
-          npm run audit:schema
-
       - name: Detect discovery changes
         id: changes
         shell: bash
@@ -110,7 +102,9 @@ jobs:
           git config user.email "actions@users.noreply.github.com"
           git add src/data/generated/discovery.json
           git commit -m "news: autonomous official-source refresh $(date -u +%Y-%m-%d)"
-          built_base=$(git rev-parse HEAD^)
+          # Validate once after committing so release metadata identifies the
+          # candidate. Unchanged collections skip this candidate build entirely.
+          built_base=''
           published=false
           branch=''
           cleanup_branch() {
@@ -203,7 +197,10 @@ jobs:
           for attempt in 1 2 3; do
             git fetch origin main
             revision=$(git rev-parse origin/main)
-            built_revision=$(jq -er '.sha' dist/release.json)
+            built_revision=''
+            if [ -f dist/release.json ]; then
+              built_revision=$(jq -er '.sha' dist/release.json)
+            fi
             if [ "$(git rev-parse HEAD)" != "$revision" ] || [ "$built_revision" != "$revision" ]; then
               git switch --detach "$revision"
               npm ci --fetch-retries=3 --fetch-retry-mintimeout=1000 --fetch-retry-maxtimeout=10000

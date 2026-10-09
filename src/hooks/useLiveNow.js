@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { startTransition, useEffect, useState } from "react";
 import { getRenderNow } from "../utils/renderClock.js";
 
 // Keep the first browser render identical to prerendered HTML, then use the
@@ -7,7 +7,8 @@ export function useLiveNow() {
   const [now, setNow] = useState(getRenderNow);
 
   useEffect(() => {
-    const refresh = () => setNow(new Date());
+    // Let lazy route boundaries finish hydrating before refreshing their clock.
+    const refresh = () => startTransition(() => setNow(new Date()));
     refresh();
     const timer = window.setInterval(refresh, 30_000);
     document.addEventListener("visibilitychange", refresh);

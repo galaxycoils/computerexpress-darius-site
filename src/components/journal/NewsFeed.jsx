@@ -1,4 +1,4 @@
-import { useEffect, useId, useRef, useState } from "react";
+import { useEffect, useId, useMemo, useRef, useState } from "react";
 import { useSearchParams, Link } from "react-router-dom";
 import {
   getPublication,
@@ -17,21 +17,25 @@ import UiIcon from "./UiIcon";
 export default function NewsFeed({ city = "", search = false }) {
   const now = useLiveNow();
   const [params, setParams] = useSearchParams();
-  const query = Object.fromEntries(params);
+  const query = useMemo(() => Object.fromEntries(params), [params]);
   const inputId = useId();
   const resultsRef = useRef(null);
   const [searchText, setSearchText] = useState(query.q || "");
   useEffect(() => setSearchText(query.q || ""), [query.q]);
   const invalidDates = Boolean(query.from && query.to && query.from > query.to);
-  const results = invalidDates
-    ? []
-    : (search ? searchSite : filterPublication)(
-        search ? getSearchIndex(now) : getPublication(now),
-        {
+  const items = useMemo(
+    () => (search ? getSearchIndex(now) : getPublication(now)),
+    [search, now],
+  );
+  const results = useMemo(
+    () => invalidDates
+      ? []
+      : (search ? searchSite : filterPublication)(items, {
           ...query,
           city: city || query.city,
-        },
-      );
+        }),
+    [invalidDates, search, items, query, city],
+  );
   const pages = Math.max(1, Math.ceil(results.length / 12));
   const page = Math.min(
     pages,

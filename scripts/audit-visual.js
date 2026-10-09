@@ -53,6 +53,8 @@ const testFile = path.join(root, 'scripts/.audit-visual.spec.mjs')
 fs.writeFileSync(testFile, `
 import { test, expect } from '@playwright/test'
 
+test.use({ launchOptions: { executablePath: process.env.CHROME_PATH || undefined } })
+
 const routes = ${JSON.stringify(routes)}
 const routeCoverage = ${JSON.stringify(routeCoverage)}
 const viewports = ${JSON.stringify(viewports)}
@@ -66,12 +68,12 @@ for (const viewport of viewports) {
       test(route, async ({ page }) => {
         const hydrationErrors = []
         page.on('console', message => {
-          if (message.type() === 'error' && /hydration|server html|didn't match/i.test(message.text())) {
+          if (message.type() === 'error' && /hydration|server html|didn't match|Minified React error/i.test(message.text())) {
             hydrationErrors.push(message.text())
           }
         })
         page.on('pageerror', error => {
-          if (/hydration|server html|didn't match/i.test(error.message)) hydrationErrors.push(error.message)
+          hydrationErrors.push(error.message)
         })
         await page.goto(baseUrl + route, { waitUntil: 'networkidle' })
         expect(hydrationErrors).toEqual([])
@@ -90,12 +92,12 @@ test.describe('all prerendered routes hydrate', () => {
     test(route, async ({ page }) => {
       const hydrationErrors = []
       page.on('console', message => {
-        if (message.type() === 'error' && /hydration|server html|didn't match/i.test(message.text())) {
+        if (message.type() === 'error' && /hydration|server html|didn't match|Minified React error/i.test(message.text())) {
           hydrationErrors.push(message.text())
         }
       })
       page.on('pageerror', error => {
-        if (/hydration|server html|didn't match/i.test(error.message)) hydrationErrors.push(error.message)
+        hydrationErrors.push(error.message)
       })
       await page.goto(baseUrl + route, { waitUntil: 'networkidle' })
       expect(hydrationErrors).toEqual([])

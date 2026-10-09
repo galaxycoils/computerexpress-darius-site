@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useRef, useState } from "react";
+import { startTransition, createContext, useContext, useEffect, useRef, useState } from "react";
 const KEY = "scd-saved-stories-v1";
 const Context = createContext({
   ids: [],
@@ -24,11 +24,13 @@ export function SavedStoriesProvider({ children }) {
           ? [...new Set(value.filter((x) => typeof x === "string"))].slice(-500)
           : [];
         current.current = next;
-        setIds(next);
-        setError("");
-        setPrevious(null);
+        startTransition(() => {
+          setIds(next);
+          setError("");
+          setPrevious(null);
+        });
       } catch {
-        setError("Saving is unavailable in this browser.");
+        startTransition(() => setError("Saving is unavailable in this browser."));
       }
     };
     read();

@@ -1,4 +1,4 @@
-import { Suspense, useState, useEffect, useRef } from "react";
+import { startTransition, Suspense, useState, useEffect, useRef } from "react";
 import {
   Outlet,
   useLocation,
@@ -43,18 +43,20 @@ export default function Layout() {
     previousPath = useRef(location.pathname),
     positions = useRef(new Map());
   useEffect(() => {
-    try {
-      const stored =
-        localStorage.getItem("theme-v3") ||
-        localStorage.getItem("theme-v2") ||
-        "system";
-      setPreference(
-        ["system", "light", "dark"].includes(stored) ? stored : "system",
-      );
-      const value = localStorage.getItem("scd-edition");
-      if (editions.some((x) => x.slug === value)) setEdition(value);
-    } catch {}
-    setPreferencesReady(true);
+    startTransition(() => {
+      try {
+        const stored =
+          localStorage.getItem("theme-v3") ||
+          localStorage.getItem("theme-v2") ||
+          "system";
+        setPreference(
+          ["system", "light", "dark"].includes(stored) ? stored : "system",
+        );
+        const value = localStorage.getItem("scd-edition");
+        if (editions.some((x) => x.slug === value)) setEdition(value);
+      } catch {}
+      setPreferencesReady(true);
+    });
   }, []);
   useEffect(() => {
     if (!preferencesReady) return;
@@ -66,7 +68,7 @@ export default function Layout() {
             ? "dark"
             : "light"
           : preference;
-      setTheme(next);
+      startTransition(() => setTheme(next));
       document.documentElement.dataset.theme = next;
       document.documentElement.style.colorScheme = next;
       document.body.classList.toggle("light", next === "light");
@@ -110,7 +112,7 @@ export default function Layout() {
     const city = editions.find(
       (value) => location.pathname.replace(/\/$/, "") === `/news/${value.slug}`,
     );
-    if (city) chooseEdition(city.slug);
+    if (city) startTransition(() => chooseEdition(city.slug));
   }, [location.pathname]);
   useEffect(() => {
     const original = window.history.scrollRestoration;

@@ -1,6 +1,6 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
-import { canonicalizeLink, extractCandidates, fetchHtml, decodeEntities, hasSemanticChanges, parseArgs, extractPublicationDate, mergeCandidate } from './collect-official-news.js'
+import { canonicalizeLink, extractCandidates, fetchHtml, decodeEntities, hasSemanticChanges, parseArgs, extractPublicationDate, mergeCandidate, createPublicationDateLoader } from './collect-official-news.js'
 import { sourceRegistry, sourceById } from '../src/data/sourceRegistry.js'
 
 const source = { id: 'test', name: 'Official source', city: 'Test', kind: 'official-notice', url: 'https://city.example/news/' }
@@ -11,6 +11,7 @@ test('extracts article datelines and explicit publication metadata without using
   assert.equal(extractPublicationDate('<script type="application/ld+json">{"@graph":[{"@type":"NewsArticle","datePublished":"2026-09-19"}]}</script>'), '2026-09-19')
   assert.equal(extractPublicationDate('<meta property="article:modified_time" content="2026-09-21"><script type="application/ld+json">{"@type":"Event","datePublished":"2026-10-01"}</script><p>September 21, 2026</p>'), null)
   assert.equal(extractPublicationDate('<meta property="article:published_time" content="2026-02-30">'), null)
+  assert.equal(extractPublicationDate('<span class="gs-news-details-date">February 30, 2026</span>'), null)
 })
 
 test('recollection preserves rejected records, editorial overrides and first observation', () => {
@@ -21,6 +22,61 @@ test('recollection preserves rejected records, editorial overrides and first obs
   assert.equal(merged.title, 'Reviewed title')
   assert.equal(merged.firstObservedAt, '2026-09-01')
   assert.equal(merged.lastObservedAt, '2026-09-22')
+})
+
+test('accepts offset publication timestamps while rejecting impossible calendar dates', () => {
+  for (const value of ['2026-09-21T23:30:00-04:00', '2026-09-21T00:30:00+10:00']) {
+    assert.equal(extractPublicationDate(`<meta property="article:published_time" content="${value}">`), value)
+  }
+  for (const value of ['2026-02-30T23:30:00-04:00', '2026-13-01', '2026-09-21T99:00:00Z']) {
+    assert.equal(extractPublicationDate(`<meta property="article:published_time" content="${value}">`), null)
+  }
+})
+
+test('overlapping indexes share metadata requests including undated pages and failures', async () => {
+  let calls = 0
+  const load = createPublicationDateLoader(async ({ url }) => {
+    calls += 1
+    if (url.endsWith('/failed')) throw new Error('HTTP 503')
+    return url.endsWith('/undated') ? '<html></html>' : '<meta property="article:published_time" content="2026-09-21">'
+  })
+  assert.deepEqual(await Promise.all([load('https://city.example/dated'), load('https://city.example/dated')]), ['2026-09-21', '2026-09-21'])
+  assert.equal(await load('https://city.example/undated'), null)
+  assert.equal(await load('https://city.example/undated'), null)
+  await assert.rejects(load('https://city.example/failed'), /503/)
+  await assert.rejects(load('https://city.example/failed'), /503/)
+  assert.equal(calls, 3)
+})
+
+test('collector retries network errors and temporary HTTP failures with bounded backoff', async () => {
+  const original = globalThis.fetch
+  let calls = 0
+  const delays = []
+  try {
+    globalThis.fetch = async () => {
+      calls += 1
+      if (calls === 1) throw new TypeError('connection reset')
+      if (calls === 2) return new Response('unavailable', { status: 503 })
+      return new Response('<html>ok</html>', { headers: { 'content-type': 'text/html' } })
+    }
+    assert.equal(await fetchHtml(source, { wait: async ms => delays.push(ms) }), '<html>ok</html>')
+    assert.equal(calls, 3)
+    assert.deepEqual(delays, [1000, 2000])
+  } finally { globalThis.fetch = original }
+})
+
+test('collector preserves failures after exhaustion and never retries permanent HTTP errors', async () => {
+  const original = globalThis.fetch
+  try {
+    for (const [status, expected] of [[429, 3], [503, 3], [401, 1], [403, 1], [404, 1]]) {
+      let calls = 0
+      globalThis.fetch = async () => { calls += 1; return new Response('error', { status }) }
+      await assert.rejects(fetchHtml(source, { wait: async () => {} }), new RegExp(`HTTP ${status}`))
+      assert.equal(calls, expected)
+    }
+    await assert.rejects(fetchHtml(source, { attempts: 0 }), /attempts/)
+    await assert.rejects(fetchHtml(source, { attempts: 4 }), /attempts/)
+  } finally { globalThis.fetch = original }
 })
 
 test('rejects off-origin URLs, credentials, ports and insecure schemes', () => {
@@ -60,6 +116,7 @@ test('malformed numeric entities do not crash collection', () => {
 test('requires an explicit source argument', () => {
   assert.throws(() => parseArgs(['--source']), /Missing source/)
   assert.throws(() => parseArgs(['--source', '--write']), /Missing source/)
+  assert.throws(() => parseArgs(['--source=']), /Missing source/)
   assert.equal(parseArgs([]).write, false)
 })
 test('fetch disables redirects and enforces streamed byte limit', async () => {
