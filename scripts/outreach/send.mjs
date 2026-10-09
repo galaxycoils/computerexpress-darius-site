@@ -1,8 +1,9 @@
 #!/usr/bin/env node
 /**
- * Guarded outreach sender. Replaces scripts/send-outreach.sh, which hardcoded
- * stale counts, pitched a withdrawn $300 offer, guessed addresses, and had no
- * MX gate.
+ * Guarded outreach sender. Supersedes scripts/send-outreach.sh.retired, which
+ * hardcoded stale counts, pitched a withdrawn $300 offer, guessed addresses, and
+ * had no MX gate. The retired script is kept for reference and is not wired to
+ * any npm script.
  *
  * Safeguards, in order:
  *   1. requires --confirm-send (this sends real mail)

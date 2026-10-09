@@ -138,6 +138,10 @@ npm run outreach:mx        # verify every queued domain has a mail exchanger
 npm run outreach:send      # guarded send; requires AGENTMAIL_API_KEY
 ```
 
+> **Do not run `scripts/send-outreach.sh.retired`.** It is kept for reference only.
+> It guesses `info@` addresses with no MX check and pitches the withdrawn $300 offer —
+> the combination that produced 15 hard bounces in 27 sends. Nothing is wired to it.
+
 **Subject**: `{municipality} planning notice — {firm}`
 
 **Body**:
