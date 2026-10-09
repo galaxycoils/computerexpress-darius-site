@@ -44,3 +44,13 @@ console.log(
   `Homepage transfer (gzip): JS ${measured.javascriptGzipKb.toFixed(1)} KB, CSS ${measured.cssGzipKb.toFixed(1)} KB`,
 );
 for (const warning of warnings) console.warn(`::warning::Bundle budget: ${warning}`);
+
+// Fail the run when a budget is exceeded. This previously only emitted
+// ::warning:: annotations and always exited 0, so the budget could be blown
+// without turning anything red — the gate existed on paper only.
+if (warnings.length) {
+  console.error(
+    `\nBundle budget exceeded (${warnings.length} metric(s)). Budgets: JS ${budgets.javascriptGzipKb} KB, CSS ${budgets.cssGzipKb} KB.`,
+  );
+  process.exit(1);
+}

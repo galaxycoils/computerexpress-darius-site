@@ -2,6 +2,7 @@ import { BASE_URL } from "./siteConfig.js";
 import { planningNotices } from "./planningNotices.js";
 import { exploreGuides } from "./exploreGuides.js";
 import { getPublishableContent } from "./contentRegistry.js";
+import { appRoutes } from "../routes/appRoutes.js";
 
 export const baseRoutes = [
   "/",
@@ -41,33 +42,21 @@ export const programmaticRoutes = [
 export const privateRoutes = ["/preferences", "/saved"];
 export const clientOnlyRoutes = ["/editorial"];
 
+/**
+ * Route-to-page map, derived from the shared route table so it cannot drift.
+ *
+ * This was a hand-written 26-entry object. Nothing tied it to the <Route>
+ * elements in App.jsx/AppClient.jsx, so a page could be renamed in the router
+ * and left stale here, which silently changed what the prerenderer imported.
+ */
 const exactPageModules = {
-  "/": "HomePage",
-  "/about": "AboutPage",
-  "/contact": "ContactPage",
-  "/sponsor": "SponsorPage",
-  "/votes": "VotesHubPage",
-  "/editorial-policy": "EditorialPolicyPage",
-  "/corrections": "CorrectionsPage",
-  "/welland-votes": "WellandVotesPage",
-  "/privacy": "PrivacyPage",
-  "/terms": "TermsPage",
-  "/planning-tracker": "PlanningTrackerPage",
-  "/council": "CouncilPage",
-  "/police": "PolicePage",
-  "/news": "NewsPage",
-  "/news/police": "PoliceNewsPage",
-  "/planning-alerts": "PlanningAlertsPage",
-  "/membership": "MembershipPage",
-  "/reader-services": "ReaderServicesPage",
-  "/search": "SearchPage",
-  "/events": "EventsPage",
-  "/explore": "ExplorePage",
-  "/accessibility": "AccessibilityPage",
-  "/preferences": "AlertPreferencesPage",
-  "/saved": "SavedPage",
-  "/editorial": "EditorialDeskPage",
-  "/404": "NotFoundPage",
+  ...Object.fromEntries(
+    appRoutes
+      .filter((route) => route.path !== '*' && !route.path.includes(':'))
+      .map((route) => [route.index ? '/' : `/${route.path}`, route.page]),
+  ),
+  // Prerendered 404 document; the catch-all route above renders the same page.
+  '/404': 'NotFoundPage',
 };
 
 export function getRoutePageModule(route) {
