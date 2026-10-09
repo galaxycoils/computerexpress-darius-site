@@ -45,11 +45,11 @@ export default function SponsorPage() {
         <div>
           <p className="scd-eyebrow">Sponsorship</p>
           <h1 className="scd-intro-title">Support local information for Niagara</h1>
-          <p className="scd-intro-note">Ask about opportunities alongside Planning Alerts or the Planning Tracker. Placement, timing, audience and pricing depend on availability and are confirmed directly before any agreement.</p>
+          <p className="scd-intro-note">Ask about opportunities alongside Planning Alerts or the Planning Tracker. Sponsorship starts at <strong>$250/month</strong>. Placement, timing, audience and final pricing depend on availability and are confirmed directly before any agreement.</p>
         </div>
         <aside className="scd-rail-block scd-sponsor-rail" aria-label="Sponsorship at a glance">
           <p className="scd-rail-label">Start a conversation</p>
-          <p>Tell us about your business and the community you want to reach.</p>
+          <p>Tell us about your business and the community you want to reach. Placements start at $250/month.</p>
           <a className="button button-primary" href="#sponsor-form">Send an inquiry</a>
           <p className="scd-sponsor-fineprint">Or email <a href="mailto:cccemt@pm.me">cccemt@pm.me</a>.</p>
         </aside>

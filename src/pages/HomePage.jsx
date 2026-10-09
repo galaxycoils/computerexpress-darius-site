@@ -206,6 +206,36 @@ export default function HomePage() {
             ))}
           </div>
         </section>
+        <section className="journal-services" aria-labelledby="reader-services">
+          <div>
+            <p className="journal-kicker">Reader services</p>
+            <h2 id="reader-services">Go deeper than the feed.</h2>
+            <p>
+              The feed is free. These are the paid and sponsored ways to work
+              with the same public record.
+            </p>
+          </div>
+          <div className="journal-services-list">
+            <article>
+              <h3>
+                <Link to="/planning-alerts">Planning Alerts</Link>
+              </h3>
+              <p>
+                A filtered weekly digest of notices, hearings and submission
+                deadlines. $49/month.
+              </p>
+            </article>
+            <article>
+              <h3>
+                <Link to="/sponsor">Sponsorship</Link>
+              </h3>
+              <p>
+                Reach readers who follow planning and council decisions. From
+                $250/month.
+              </p>
+            </article>
+          </div>
+        </section>
         <section className="journal-newsletter" aria-label="Newsletter signup">
           <div>
             <p className="journal-kicker">Good neighbours stay informed</p>

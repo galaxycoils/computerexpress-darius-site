@@ -74,6 +74,25 @@ describe("HomePage — Editorial Newsroom", () => {
     expect(cta.getAttribute("href")).toBe("/planning-tracker");
   });
 
+  // The homepage previously offered no route to either revenue path, so a
+  // reader could consume the whole feed without ever seeing how to pay or
+  // sponsor. scripts/measure-monetization.mjs asserts this too.
+  it("routes readers to the paid and sponsored services", () => {
+    renderWithProviders(<HomePage />);
+    expect(
+      screen.getByRole("link", { name: /Planning Alerts/i }).getAttribute("href"),
+    ).toBe("/planning-alerts");
+    expect(
+      screen.getByRole("link", { name: /Sponsorship/i }).getAttribute("href"),
+    ).toBe("/sponsor");
+  });
+
+  it("states the Planning Alerts price and the sponsorship floor", () => {
+    renderWithProviders(<HomePage />);
+    expect(screen.getByText(/Weekly digest/i).textContent).toMatch(/\$49/);
+    expect(screen.getByText(/\$250\/month/i)).toBeInTheDocument();
+  });
+
   it("links reporting to an official municipal source", () => {
     renderWithProviders(<HomePage />);
     const official = screen.getAllByRole("link", {
