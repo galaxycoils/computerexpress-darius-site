@@ -1,11 +1,20 @@
 {
   "enforcement": {
-    "command": "npx vitest run --coverage",
+    "command": "vitest run --coverage",
     "threshold": 100,
     "include": [
       "src/data/homepageLead.js",
       "src/utils/renderClock.js",
-      "scripts/releaseVerification.js"
+      "scripts/releaseVerification.js",
+      "src/data/metrics.js",
+      "src/routes/appRoutes.js",
+      "scripts/outreach/lib.mjs"
     ]
+  },
+  "notes": {
+    "threshold": "Per-file 100% on statements, branches, functions and lines (see vitest.config.js). These six files hold invariants that have silently broken in this repo before: the homepage lead, reader-facing render dates, release verification, published record counts, the route table, and the outreach send gate.",
+    "daily-digest.js": "Not listed here, but not untested. The entitlement gate and grace-window logic are exported pure functions covered by functions/cron/daily-digest.test.js. The request handler around them is covered by scripts/planning-digest.regression.mjs, which drives it against a real in-memory SQLite D1. That suite runs under `node --test` — a separate CI gate — so vitest's v8 coverage cannot see it. A low vitest figure for this file reflects where the tests run, not a coverage gap.",
+    "manage.js": "Same shape. resolveDeliveryState is unit-tested in functions/api/alerts/manage.test.js; the handler is exercised by the regression suite.",
+    "adding_files": "Before adding a file here, confirm it is genuinely uncovered rather than covered from the regression suite. Run: npx vitest run --coverage, then read the per-file row."
   }
 }

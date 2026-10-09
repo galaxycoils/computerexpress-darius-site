@@ -1,12 +1,22 @@
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
+import path from 'node:path'
+import { fileURLToPath } from 'node:url'
 import {
   MAX_BATCH_SIZE,
   buildHook,
+  domainHasMx,
   isSuppressed,
+  loadTargets,
   renderEmail,
   selectBatch,
   validateTargets,
 } from './lib.mjs'
+
+// The MX lookup is the send gate: a DNS failure must mean "do not send".
+// Mocking it keeps these tests offline while still exercising both branches.
+// node:dns/promises is a builtin, so the factory supplies a default export too.
+const resolveMx = vi.hoisted(() => vi.fn())
+vi.mock('node:dns/promises', () => ({ resolveMx, default: { resolveMx } }))
 
 // These guard the two failure modes that cost the September round: sending to
 // addresses nobody verified, and pitching a hook that expires in two days.
@@ -59,6 +69,42 @@ describe('validateTargets', () => {
     const errors = validateTargets({ targets: [{ ...base.targets[0], status: 'bounced' }] })
     expect(errors.join(' ')).toMatch(/unknown status/)
   })
+
+  it('rejects a target with a malformed email', () => {
+    const errors = validateTargets({
+      targets: [{ id: 'x', firm: 'X', email: 'not-an-email', domain: 'x.ca', status: 'queued' }],
+    })
+    expect(errors.join(' ')).toMatch(/invalid email/)
+  })
+
+  it('rejects a target with no email at all', () => {
+    const errors = validateTargets({
+      targets: [{ id: 'x', firm: 'X', domain: 'x.ca', status: 'queued' }],
+    })
+    expect(errors.join(' ')).toMatch(/invalid email/)
+  })
+
+  it('reports missing ids, including in the error message it builds', () => {
+    const errors = validateTargets({
+      targets: [{ firm: 'Anon', email: 'a@a.ca', domain: 'a.ca', status: 'queued' }],
+    })
+    expect(errors.join(' ')).toMatch(/target missing id/)
+  })
+
+  it('rejects a file that is not an object at all', () => {
+    expect(validateTargets(null)).toEqual(['targets file is not an object'])
+    expect(validateTargets(undefined)).toEqual(['targets file is not an object'])
+    expect(validateTargets('nope')).toEqual(['targets file is not an object'])
+    expect(validateTargets(42)).toEqual(['targets file is not an object'])
+  })
+
+  it('rejects an empty target list', () => {
+    expect(validateTargets({ targets: [] }).join(' ')).toMatch(/no targets listed/)
+  })
+
+  it('rejects a file with no targets key', () => {
+    expect(validateTargets({}).join(' ')).toMatch(/no targets listed/)
+  })
 })
 
 describe('isSuppressed', () => {
@@ -78,6 +124,21 @@ describe('isSuppressed', () => {
 
   it('allows a clean address', () => {
     expect(isSuppressed({ email: 'hi@ok.ca', domain: 'ok.ca' }, suppressed)).toBeNull()
+  })
+
+  // Defensive branches: this is a send gate, so partial data must resolve to
+  // "nothing is suppressed" rather than throwing mid-batch.
+  it('tolerates a missing suppression list entirely', () => {
+    expect(isSuppressed({ email: 'hi@ok.ca', domain: 'ok.ca' })).toBeNull()
+  })
+
+  it('tolerates a suppression list with no emails or domains keys', () => {
+    expect(isSuppressed({ email: 'hi@ok.ca', domain: 'ok.ca' }, {})).toBeNull()
+  })
+
+  it('tolerates a target with no email or domain', () => {
+    expect(isSuppressed({}, suppressed)).toBeNull()
+    expect(isSuppressed({ email: 'info@dead.ca' }, suppressed)).toMatch(/hard-bounced/)
   })
 })
 
@@ -114,6 +175,26 @@ describe('selectBatch', () => {
     const { batch, remaining } = selectBatch(many, { limit: 999 })
     expect(batch).toHaveLength(MAX_BATCH_SIZE)
     expect(remaining).toBe(40 - MAX_BATCH_SIZE)
+  })
+
+  it('returns an empty batch for a data file with no targets', () => {
+    expect(selectBatch({}).batch).toEqual([])
+    expect(selectBatch({}).remaining).toBe(0)
+  })
+
+  it('falls back to the default cap when no limit is given', () => {
+    const many = {
+      targets: Array.from({ length: 40 }, (_, i) => ({
+        id: `t${i}`, email: `t${i}@x.ca`, domain: 'x.ca', status: 'queued',
+      })),
+    }
+    expect(selectBatch(many).batch).toHaveLength(MAX_BATCH_SIZE)
+  })
+
+  it('tolerates a target with no status field', () => {
+    const { batch, skipped } = selectBatch({ targets: [{ id: 'nostatus', email: 'a@a.ca', domain: 'a.ca' }] })
+    expect(batch).toEqual([])
+    expect(skipped[0].reason).toBe('status is undefined')
   })
 })
 
@@ -162,6 +243,11 @@ describe('buildHook', () => {
     expect(buildHook([], now)).toBeNull()
   })
 
+  it('returns null when handed no notice list at all', () => {
+    expect(buildHook(undefined, now)).toBeNull()
+    expect(buildHook(null, now)).toBeNull()
+  })
+
   it('survives a malformed deadline', () => {
     expect(buildHook([notice({ submissionDeadline: 'not-a-date' })], now)).toBeNull()
   })
@@ -197,5 +283,64 @@ describe('renderEmail', () => {
 
   it('refuses to render without a live hook', () => {
     expect(() => renderEmail({ firm: 'A' }, null, offer)).toThrow(/no live deadline/)
+  })
+})
+
+describe('domainHasMx', () => {
+  it('reports ok with the exchanges when the domain publishes MX records', async () => {
+    resolveMx.mockResolvedValueOnce([{ exchange: 'mx1.example.com' }, { exchange: 'mx2.example.com' }])
+    const result = await domainHasMx('example.com')
+    expect(result.ok).toBe(true)
+    expect(result.records).toEqual(['mx1.example.com', 'mx2.example.com'])
+  })
+
+  it('fails closed when the domain has an empty MX set', async () => {
+    resolveMx.mockResolvedValueOnce([])
+    expect((await domainHasMx('nomail.example.com')).ok).toBe(false)
+  })
+
+  it('fails closed and surfaces the DNS error code when the lookup throws', async () => {
+    const error = new Error('queryMx ENOTFOUND')
+    error.code = 'ENOTFOUND'
+    resolveMx.mockRejectedValueOnce(error)
+    const result = await domainHasMx('nxdomain.example')
+    expect(result.ok).toBe(false)
+    expect(result.records).toEqual([])
+    expect(result.error).toBe('ENOTFOUND')
+  })
+
+  it('falls back to the message when the error carries no code', async () => {
+    resolveMx.mockRejectedValueOnce(new Error('dns blew up'))
+    expect((await domainHasMx('broken.example')).error).toBe('dns blew up')
+  })
+})
+
+describe('loadTargets', () => {
+  // Reads the real file, so a malformed docs/outreach-targets.json fails here
+  // rather than at send time.
+  const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..')
+
+  it('loads the committed target file and passes its own validation', () => {
+    const { data, file } = loadTargets(root)
+    expect(file).toBe(path.join(root, 'docs/outreach-targets.json'))
+    expect(Array.isArray(data.targets)).toBe(true)
+    expect(data.targets.length).toBeGreaterThan(0)
+    expect(validateTargets(data)).toEqual([])
+  })
+
+  it('comes with a suppression list and an offer that names the current price', () => {
+    const { data } = loadTargets(root)
+    expect(data.suppressed.emails.length).toBeGreaterThan(0)
+    expect(data.suppressed.domains.length).toBeGreaterThan(0)
+    expect(data.offer.pilot).toContain('$250')
+    // The withdrawn offers must not creep back into the live copy.
+    expect(data.offer.pilot).not.toContain('$300')
+  })
+
+  it('marks every queued target as MX-checkable', () => {
+    const { data } = loadTargets(root)
+    const queued = data.targets.filter((target) => target.status === 'queued')
+    expect(queued.length).toBeGreaterThan(0)
+    for (const target of queued) expect(target.domain, `${target.id} has no domain`).toBeTruthy()
   })
 })
