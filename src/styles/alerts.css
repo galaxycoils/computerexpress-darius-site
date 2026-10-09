@@ -66,6 +66,23 @@
   margin-bottom: 24px;
 }
 
+/* Price disclosure. Planning Alerts is the paid product, so the cost is stated
+   before the email field rather than after signup. */
+.scd-alerts-price {
+  max-width: 60ch;
+  margin-bottom: 24px;
+  padding: 12px 16px;
+  border-left: 3px solid var(--accent, #0d3b66);
+  background: var(--bg-card);
+  color: var(--muted);
+  font-size: var(--t-sm);
+  line-height: 1.6;
+}
+
+.scd-alerts-price strong {
+  color: var(--text-bright);
+}
+
 /* ── Alert builder card ───────────────────────────────────────── */
 
 .scd-alerts-card {

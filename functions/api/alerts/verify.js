@@ -5,6 +5,11 @@ import { createAlertToken, verifyAlertToken } from './_auth.js'
 
 const AGENTMAIL_BASE = 'https://api.agentmail.to/v0';
 
+// Planning Alerts are the paid product. Verification only confirms the address;
+// the weekly digest is gated on a confirmed payment (see functions/cron/daily-digest.js).
+const PLANNING_ALERTS_PRICE = '$49/month';
+const PLANNING_ALERTS_EMAIL = 'cccemt@pm.me';
+
 export async function onRequestGet(context) {
   const { env } = context;
   const { STC_D1 } = env;
@@ -51,10 +56,19 @@ export async function onRequestGet(context) {
         const inbox = await getPrimaryInbox(apiKey);
         await sendEmail(apiKey, inbox.inbox_id, {
           to: result.email,
-          subject: 'Your planning alerts are active — St. Catharines Digital',
-          text: `Your planning alerts are now active.\n\nYou'll receive a weekly digest of planning notices matching your filters.\n\nManage or stop your alerts:\n${manageUrl}\n\n— St. Catharines Digital`,
+          subject: 'Confirm your Planning Alerts — one step to activate',
+          text: `Your email is confirmed.
+
+Planning Alerts are ${PLANNING_ALERTS_PRICE}. Verification does not start the digest on its own.
+
+To activate it, send ${PLANNING_ALERTS_PRICE} by Interac e-Transfer to ${PLANNING_ALERTS_EMAIL}, then reply to this email with your transfer reference. We match the transfer to your alert and switch delivery on.
+
+Manage or stop your alerts:
+${manageUrl}
+
+— St. Catharines Digital`,
           html: buildConfirmedHtml(manageUrl),
-          labels: ['planning-alerts', 'verified', 'welcome'],
+          labels: ['planning-alerts', 'verified', 'payment-due'],
         });
       } catch (mailErr) {
         console.error('Confirmation email failed:', mailErr);
@@ -107,13 +121,14 @@ function buildConfirmedHtml(manageUrl) {
   <div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:2rem;">
     <div style="display:flex;align-items:center;gap:12px;margin-bottom:1rem;">
       <div style="width:40px;height:40px;border-radius:50%;background:#0d3b66;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;">✓</div>
-      <h1 style="color:#0d3b66;margin:0;">Alerts are active</h1>
+      <h1 style="color:#0d3b66;margin:0;">Email confirmed</h1>
     </div>
-    <p>Your planning alerts are now live. You'll receive a weekly digest of notices matching your filters.</p>
+    <p>Your address is confirmed. Planning Alerts are <strong>${PLANNING_ALERTS_PRICE}</strong> — verification does not start the digest on its own.</p>
     <div style="background:#0d1b30;border-radius:8px;padding:1rem;margin:1.5rem 0;text-align:center;">
-      <p style="color:#0d3b66;font-weight:700;margin:0;">Next digest: Every Thursday, 6 AM</p>
-      <p style="color:#8899b8;font-size:.85rem;margin:4px 0 0;">You can pause, edit, or delete your filters anytime.</p>
+      <p style="color:#fff;font-weight:700;margin:0;">Activate: send ${PLANNING_ALERTS_PRICE} to ${PLANNING_ALERTS_EMAIL}</p>
+      <p style="color:#c7d3e6;font-size:.85rem;margin:4px 0 0;">Interac e-Transfer, then reply with your transfer reference. Weekly digest every Thursday, 6 AM once payment is matched.</p>
     </div>
+    <p style="font-size:.85rem;color:#666;">Your filters are saved. You can pause, edit, or delete them anytime, with or without a subscription.</p>
     <p style="font-size:.85rem;color:#666;"><a href="${manageUrl}" style="color:#0d3b66;">Manage or stop your planning alerts</a></p>
   </div>
 </div></body></html>`;

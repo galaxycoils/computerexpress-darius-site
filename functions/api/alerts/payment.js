@@ -123,7 +123,7 @@ function buildPaymentConfirmedHtml() {
     <div style="margin:2rem 0;padding:1rem;background:#f0f7ff;border-radius:8px;text-align:center;">
       <a href="https://stcatharinesdigital.ca/alerts" style="display:inline-block;padding:.75rem 2rem;background:#0d3b66;color:#fff;text-decoration:none;border-radius:8px;font-weight:700;">Manage Alerts →</a>
     </div>
-    <p style="font-size:.85rem;color:#666;">Send each month's $49 to hello@stcatharinesdigital.ca via Interac e-Transfer. Reply to any alert email to pause or cancel.</p>
+    <p style="font-size:.85rem;color:#666;">Send each month's $49 to cccemt@pm.me via Interac e-Transfer. Reply to any alert email to pause or cancel.</p>
   </div>
 </div></body></html>`;
 }

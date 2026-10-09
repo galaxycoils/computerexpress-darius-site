@@ -31,6 +31,12 @@ const STATUSES = [
   { value: 'Active', label: 'Active / Under Construction' },
 ];
 
+// Planning Alerts is the paid product. The weekly digest is gated on a confirmed
+// payment (functions/cron/daily-digest.js), so the price is disclosed here rather
+// than after the reader has handed over an address.
+const PLANNING_ALERTS_PRICE = '$49/month';
+const PLANNING_ALERTS_EMAIL = 'cccemt@pm.me';
+
 export default function PlanningAlertsPage() {
   const [email, setEmail] = useState('');
   const [frequency, setFrequency] = useState('daily');
@@ -92,7 +98,7 @@ export default function PlanningAlertsPage() {
       <>
         <Seo
           title="Alerts Confirmed | St. Catharines Digital"
-          description="Your planning alerts are set up. Check your email to verify and start receiving notices."
+          description="Your planning alerts are saved. Confirm your email address, then activate the weekly digest."
           path="/planning-alerts"
         />
         <div className="scd-page scd-alerts">
@@ -103,9 +109,14 @@ export default function PlanningAlertsPage() {
                 <polyline points="22 4 12 14.01 9 11.01" />
               </svg>
             </div>
-            <p className="scd-cat">You're on the list</p>
+            <p className="scd-cat">Check your inbox</p>
             <h1>Almost there.</h1>
-            <p>We sent a verification email to <strong>{email}</strong>. Click the link inside to activate your alerts.</p>
+            <p>We sent a confirmation email to <strong>{email}</strong>. Click the link inside to confirm your address and save your filters.</p>
+            <p>
+              Planning Alerts are <strong>{PLANNING_ALERTS_PRICE}</strong>. After you confirm, we email activation
+              instructions — send {PLANNING_ALERTS_PRICE} by Interac e-Transfer to {PLANNING_ALERTS_EMAIL} and reply
+              with your transfer reference. Delivery starts once the payment is matched.
+            </p>
             <p>Didn't see it? Check your spam folder, or{' '}
               <button className="button button-ghost button-sm" type="button" onClick={() => setSuccess(false)}>
                 start over
@@ -121,7 +132,7 @@ export default function PlanningAlertsPage() {
     <>
       <Seo
         title="Planning Alerts for Professionals | St. Catharines Digital"
-        description="Sign up for a filtered planning notice digest across St. Catharines, Welland, Thorold, and Niagara Region. Email verification required."
+        description="A filtered weekly planning notice digest across St. Catharines, Welland, Thorold, and Niagara Region. $49/month after email confirmation."
         path="/planning-alerts"
         jsonLd={[{
           '@context': 'https://schema.org',
@@ -141,6 +152,11 @@ export default function PlanningAlertsPage() {
               Weekly digest of planning notices, zoning changes, and public meetings across
               St. Catharines, Welland, Thorold, and Niagara Region. Filtered to your
               municipality, notice type, and keywords. Email verification is required.
+            </p>
+            <p className="scd-alerts-price">
+              <strong>{PLANNING_ALERTS_PRICE}</strong>, paid by Interac e-Transfer to {PLANNING_ALERTS_EMAIL}.
+              Confirming your email saves your filters; we then send activation instructions.
+              Reading the <Link to="/planning-tracker">Planning Tracker</Link> stays free.
             </p>
           </div>
         </header>
@@ -267,7 +283,9 @@ export default function PlanningAlertsPage() {
               </button>
 
               <p className="scd-alerts-fineprint">
-                You will receive a verification email if the alert service is available. No payment is collected by this form.
+                You will receive a verification email if the alert service is available. This form does not
+                take payment — Planning Alerts are {PLANNING_ALERTS_PRICE}, activated by Interac e-Transfer to{' '}
+                {PLANNING_ALERTS_EMAIL} after you confirm your email.
               </p>
             </form>
           </div>
@@ -300,7 +318,10 @@ export default function PlanningAlertsPage() {
               <strong>Pick your filters.</strong> Choose wards, notice types, statuses, and keywords above.
             </li>
             <li>
-              <strong>Verify your email.</strong> We send a confirmation link. Click it to activate.
+              <strong>Verify your email.</strong> We send a confirmation link. Confirming saves your filters — it does not start the digest on its own.
+            </li>
+            <li>
+              <strong>Activate for {PLANNING_ALERTS_PRICE}.</strong> Send {PLANNING_ALERTS_PRICE} by Interac e-Transfer to {PLANNING_ALERTS_EMAIL} and reply with your transfer reference. We match it to your alert and switch delivery on.
             </li>
             <li>
               <strong>Get your digest.</strong> Every Thursday at 6 AM, matching notices land in your inbox.

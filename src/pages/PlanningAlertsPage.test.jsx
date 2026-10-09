@@ -5,7 +5,7 @@ import { describe, expect, it } from 'vitest'
 import PlanningAlertsPage from './PlanningAlertsPage'
 
 describe('PlanningAlertsPage', () => {
-  it('describes the email signup without asking for payment', () => {
+  it('discloses the price before collecting an email and takes no payment on the form', () => {
     render(
       <HelmetProvider>
         <BrowserRouter>
@@ -14,12 +14,16 @@ describe('PlanningAlertsPage', () => {
       </HelmetProvider>,
     )
     expect(screen.getByRole('heading', { name: /The notices that matter, in your inbox/i })).toBeInTheDocument()
-    expect(screen.getByText(/No payment is collected by this form/i)).toBeInTheDocument()
     expect(screen.getByRole('button', { name: /Create Alert/i })).toBeInTheDocument()
-    expect(screen.queryByText(/checkout/i)).not.toBeInTheDocument()
+    // Planning Alerts is the paid product, so the cost and payment route are stated
+    // up front. The digest is gated on a confirmed payment — see
+    // functions/cron/daily-digest.js.
+    expect(screen.getAllByText(/\$49\/month/).length).toBeGreaterThan(0)
+    expect(screen.getAllByText(/cccemt@pm\.me/).length).toBeGreaterThan(0)
+    expect(screen.getAllByText(/Interac e-Transfer/).length).toBeGreaterThan(0)
+    // The form itself still never collects payment details.
+    expect(screen.queryByText(/card number/i)).not.toBeInTheDocument()
     expect(screen.queryByText(/pay now/i)).not.toBeInTheDocument()
-    expect(screen.queryByText(/subscribe now/i)).not.toBeInTheDocument()
-    expect(screen.queryByText(/Interac e-Transfer/)).not.toBeInTheDocument()
   })
 
   it('renders the filter chips and CTA links', () => {

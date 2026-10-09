@@ -38,14 +38,18 @@ export async function onRequest(context) {
   try {
     const inbox = await getPrimaryInbox(apiKey);
     const notices = await getPlanningNotices();
+    const now = Date.now();
 
-    // Fetch all verified alerts
-    const alertResult = await STC_D1.prepare(
-      'SELECT id, email, frequency, wards, types, statuses, keywords, created_at, last_sent_at FROM alerts WHERE verified = 1 AND frequency = ?'
-    ).bind('daily').all();
+    // The digest is the paid product. Select only alerts that have paid, or that
+    // still have an unexpired grace window granted by migration 0011.
+    const recipientQuery = buildRecipientQuery(now);
+    const alertResult = await STC_D1.prepare(recipientQuery.sql).bind(...recipientQuery.bindings).all();
     const alerts = alertResult.results || [];
 
-    console.log(`Found ${alerts.length} weekly digest subscriptions to process`);
+    console.log(`Found ${alerts.length} entitled weekly digest subscriptions to process`);
+
+    // Warn readers whose grace window is closing, once, before it lapses.
+    const graceNotices = await sendGraceNotices({ STC_D1, apiKey, inbox, now });
 
     let sent = 0;
     let failed = 0;
@@ -99,14 +103,117 @@ export async function onRequest(context) {
       }
     }
 
-    console.log(`Digest complete: ${sent} sent, ${failed} failed`);
-    return new Response(JSON.stringify({ sent, failed, total: alerts.length }), {
+    console.log(`Digest complete: ${sent} sent, ${failed} failed, ${graceNotices} grace notices`);
+    return new Response(JSON.stringify({ sent, failed, graceNotices, total: alerts.length }), {
       headers: { 'Content-Type': 'application/json' },
     });
   } catch (err) {
     console.error('Digest cron error:', err);
     return new Response(`Error: ${err.message}`, { status: 500 });
   }
+}
+
+// ── Entitlement ─────────────────────────────────────────────────────
+
+export const GRACE_WARNING_LEAD_MS = 7 * 86400000;
+
+const PAID_PLANNING_ALERTS_EMAIL = 'cccemt@pm.me';
+const PLANNING_ALERTS_PRICE = '$49/month';
+
+/**
+ * Recipients entitled to the paid digest: paid, or inside a grace window.
+ * Exported so the gate is covered by unit tests rather than only by cron runs.
+ */
+export function buildRecipientQuery(nowMs = Date.now()) {
+  return {
+    sql: `SELECT id, email, frequency, wards, types, statuses, keywords, created_at, last_sent_at
+            FROM alerts
+           WHERE verified = 1
+             AND frequency = ?
+             AND (
+                   payment_status = 'confirmed'
+                OR (grace_until IS NOT NULL AND grace_until > ?)
+             )`,
+    bindings: ['daily', nowMs],
+  };
+}
+
+/** Readers whose grace window closes within the lead time and who were not yet warned. */
+export function buildGraceNoticeQuery(nowMs = Date.now(), leadMs = GRACE_WARNING_LEAD_MS) {
+  return {
+    sql: `SELECT id, email, created_at, grace_until
+            FROM alerts
+           WHERE verified = 1
+             AND (payment_status IS NULL OR payment_status != 'confirmed')
+             AND grace_until IS NOT NULL
+             AND grace_until > ?
+             AND grace_until <= ?
+             AND grace_notified_at IS NULL`,
+    bindings: [nowMs, nowMs + leadMs],
+  };
+}
+
+async function sendGraceNotices({ STC_D1, apiKey, inbox, now }) {
+  const query = buildGraceNoticeQuery(now);
+  const result = await STC_D1.prepare(query.sql).bind(...query.bindings).all();
+  const readers = result.results || [];
+  let notified = 0;
+
+  for (const reader of readers) {
+    try {
+      const { text, html } = buildGraceNotice(reader.grace_until);
+      const response = await fetch(`${AGENTMAIL_BASE}/inboxes/${inbox.inbox_id}/messages/send`, {
+        method: 'POST',
+        headers: { 'Authorization': `Bearer ${apiKey}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          to: reader.email,
+          subject: 'Your free Planning Alerts end soon — how to keep them',
+          text,
+          html,
+          labels: ['planning-alerts', 'grace-notice'],
+        }),
+      });
+      if (!response.ok) {
+        console.error(`Grace notice rejected for alert ${reader.id}: ${response.status}`);
+        continue;
+      }
+      // Mark after a successful send so a failure retries on the next run.
+      await STC_D1.prepare('UPDATE alerts SET grace_notified_at = ? WHERE id = ? AND grace_notified_at IS NULL')
+        .bind(Date.now(), reader.id).run();
+      notified++;
+    } catch (err) {
+      console.error(`Grace notice failed for alert ${reader.id}:`, err.message);
+    }
+  }
+
+  return notified;
+}
+
+export function buildGraceNotice(graceUntil) {
+  const endsOn = new Date(graceUntil).toLocaleDateString('en-CA', {
+    year: 'numeric', month: 'long', day: 'numeric',
+  });
+  const text = `Your Planning Alerts are complimentary until ${endsOn}.
+
+Planning Alerts are ${PLANNING_ALERTS_PRICE}. To keep receiving the weekly digest, send ${PLANNING_ALERTS_PRICE} by Interac e-Transfer to ${PAID_PLANNING_ALERTS_EMAIL}, then reply to this email with your transfer reference.
+
+After ${endsOn} delivery pauses until a payment is confirmed. Your filters are kept, and you can manage or stop them any time from the link below.
+
+— St. Catharines Digital`;
+
+  const html = `<!DOCTYPE html><html><head><meta charset="utf-8"></head>
+<body style="font-family:Inter,-apple-system,sans-serif;color:#1a1a2e;background:#f8fafb;padding:2rem;">
+<div style="max-width:640px;margin:0 auto;">
+  <div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:2rem;">
+    <h1 style="color:#0d3b66;margin:0 0 1rem;font-size:1.25rem;">Your free Planning Alerts end soon</h1>
+    <p>Your Planning Alerts are complimentary until <strong>${escapeHtml(endsOn)}</strong>.</p>
+    <p>Planning Alerts are <strong>${escapeHtml(PLANNING_ALERTS_PRICE)}</strong>. To keep receiving the weekly digest, send ${escapeHtml(PLANNING_ALERTS_PRICE)} by Interac e-Transfer to
+      <a href="mailto:${PAID_PLANNING_ALERTS_EMAIL}">${PAID_PLANNING_ALERTS_EMAIL}</a>, then reply to this email with your transfer reference.</p>
+    <p style="font-size:.85rem;color:#666;">After ${escapeHtml(endsOn)} delivery pauses until a payment is confirmed. Your filters are kept.</p>
+  </div>
+</div></body></html>`;
+
+  return { text, html };
 }
 
 // ── Match Engine ────────────────────────────────────────────────────
