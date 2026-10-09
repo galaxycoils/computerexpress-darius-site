@@ -439,6 +439,33 @@
   overflow-wrap: anywhere;
 }
 
+/* Subscription state. Without this a reader whose grace window lapsed saw an
+   unchanged page and simply stopped receiving the digest. */
+.scd-preferences-subscription {
+  padding: 12px 16px;
+  margin-bottom: 24px;
+  border-left: 3px solid var(--accent, #0d3b66);
+  background: var(--bg-card);
+  border-radius: 0 8px 8px 0;
+}
+.scd-preferences-subscription strong {
+  display: block;
+  color: var(--text-bright);
+  margin-bottom: 4px;
+}
+.scd-preferences-subscription p {
+  margin: 0;
+  color: var(--muted);
+  font-size: var(--t-sm);
+  line-height: 1.6;
+}
+.scd-preferences-subscription.is-paused {
+  border-left-color: #b42318;
+}
+.scd-preferences-subscription.is-grace {
+  border-left-color: #b54708;
+}
+
 .scd-preferences-form fieldset {
   border: 0;
   padding: 0;

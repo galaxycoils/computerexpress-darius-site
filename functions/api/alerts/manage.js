@@ -5,6 +5,22 @@ import { createAlertToken, verifyAlertToken } from './_auth.js'
 
 const AGENTMAIL_BASE = 'https://api.agentmail.to/v0';
 
+/**
+ * Why the digest is or is not delivering.
+ *
+ *   'active' — paid, the weekly digest is going out
+ *   'grace'  — not paid yet, still delivering until grace_until
+ *   'paused' — not paid and the grace window has closed
+ *
+ * Mirrors the entitlement gate in functions/cron/daily-digest.js. Extracted so
+ * the three states are covered by tests rather than only by production traffic.
+ */
+export function resolveDeliveryState(row, now = Date.now()) {
+  if (row?.payment_status === 'confirmed') return 'active';
+  if (row?.grace_until != null && row.grace_until > now) return 'grace';
+  return 'paused';
+}
+
 export async function onRequest(context) {
   const { env, request } = context;
   const { STC_D1 } = env;
@@ -26,8 +42,12 @@ export async function onRequest(context) {
 
   try {
     if (request.method === 'GET') {
+      // payment_status and grace_until are included so the preferences page can
+      // tell a reader why the digest stopped. Delivery is gated on a confirmed
+      // payment (see functions/cron/daily-digest.js), so without these a lapsed
+      // subscriber sees an unchanged page and silence.
       const row = await STC_D1.prepare(
-        'SELECT id, email, verified, frequency, wards, types, statuses, keywords, created_at, last_sent_at FROM alerts WHERE id = ? AND created_at = ?'
+        'SELECT id, email, verified, frequency, wards, types, statuses, keywords, created_at, last_sent_at, payment_status, grace_until FROM alerts WHERE id = ? AND created_at = ?'
       ).bind(auth.id, auth.created).first();
 
       if (!row) {
@@ -45,6 +65,9 @@ export async function onRequest(context) {
           keywords: row.keywords || '',
           created_at: row.created_at,
           last_sent_at: row.last_sent_at,
+          payment_status: row.payment_status || 'pending_interac',
+          grace_until: row.grace_until ?? null,
+          delivery_state: resolveDeliveryState(row),
         }
       });
     } else if (request.method === 'POST') {

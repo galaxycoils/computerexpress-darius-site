@@ -5,6 +5,17 @@ import Seo, { BASE_URL } from '../components/Seo'
 const NOTICE_TYPES = ['OPA', 'ZBA', 'Site Plan', 'CoA', 'Consent', 'Part Lot Control']
 const STATUSES = ['Received', 'Public Meeting Scheduled', 'Hearing Scheduled', 'Decision', 'Appeal', 'Active']
 
+// Delivery is gated on a confirmed payment (functions/cron/daily-digest.js), so
+// this page has to say why the digest stopped and how to restart it.
+const PLANNING_ALERTS_PRICE = '$49/month'
+const PLANNING_ALERTS_EMAIL = 'cccemt@pm.me'
+
+function formatDay(value) {
+  const date = new Date(value)
+  if (Number.isNaN(date.getTime())) return 'soon'
+  return date.toLocaleDateString('en-CA', { year: 'numeric', month: 'long', day: 'numeric' })
+}
+
 export default function AlertPreferencesPage() {
   const [token, setToken] = useState('')
   const [alert, setAlert] = useState(null)
@@ -141,6 +152,25 @@ export default function AlertPreferencesPage() {
               <span>Alert email</span>
               <strong>{alert.email}</strong>
             </div>
+
+            {alert.delivery_state === 'active' && (
+              <div className="scd-preferences-subscription is-active" role="status">
+                <strong>Subscription active</strong>
+                <p>Your weekly digest is delivering on the schedule below.</p>
+              </div>
+            )}
+            {(alert.delivery_state === 'grace' || alert.delivery_state === 'paused') && (
+              <div className={`scd-preferences-subscription is-${alert.delivery_state}`} role="status">
+                <strong>{alert.delivery_state === 'grace' ? 'Payment due' : 'Delivery paused'}</strong>
+                <p>
+                  {alert.delivery_state === 'grace'
+                    ? `Your weekly digest is complimentary until ${formatDay(alert.grace_until)}.`
+                    : 'Your filters are saved, but the weekly digest has stopped because no payment is on file.'}{' '}
+                  Planning Alerts are {PLANNING_ALERTS_PRICE} — send it by Interac e-Transfer to{' '}
+                  {PLANNING_ALERTS_EMAIL}, then reply to any alert email with your transfer reference.
+                </p>
+              </div>
+            )}
 
             <fieldset className="scd-alerts-field">
               <legend>Delivery</legend>
