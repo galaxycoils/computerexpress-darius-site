@@ -13,9 +13,13 @@ concurrency:
   group: planning-digest
   cancel-in-progress: false
 
+defaults:
+  run:
+    shell: bash
+
 jobs:
   send:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 15
     env:
       CRON_SECRET: ${{ secrets.CRON_SECRET }}
@@ -32,6 +36,12 @@ jobs:
             echo '::error::CRON_SECRET is missing. Configure it for both the scheduler and Pages deployment.'
             exit 1
           fi
-          curl --fail --silent --show-error --max-time 720 --retry 2 \
+          curl --fail --silent --show-error --connect-timeout 10 --max-time 720 \
             -H "Authorization: Bearer $CRON_SECRET" \
-            -X POST 'https://stcatharinesdigital.ca/cron/daily-digest'
+            -X POST 'https://stcatharinesdigital.ca/cron/daily-digest' \
+            --output "$RUNNER_TEMP/digest-result.json"
+          if ! jq -e '.failed == 0 and (.sent | type == "number") and (.total | type == "number")' "$RUNNER_TEMP/digest-result.json" >/dev/null; then
+            echo '::error::Digest did not complete successfully. Inspect delivery records before retrying to avoid duplicate messages.'
+            exit 1
+          fi
+          jq '{sent, failed, total}' "$RUNNER_TEMP/digest-result.json"

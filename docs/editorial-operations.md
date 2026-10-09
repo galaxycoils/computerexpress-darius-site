@@ -31,14 +31,17 @@ Only a successful `POST` to `/api/newsletter/confirm` changes a pending subscrip
 
 ## Backups and restore rehearsal
 
-`Encrypted D1 backup` exports the production database weekly and retains an AES-256-CBC encrypted artifact for 30 days. It requires `D1_BACKUP_PASSPHRASE`, Cloudflare API credentials, and access to the repository Actions artifacts. Store the passphrase outside GitHub and away from the artifact download location.
+`Encrypted D1 backup` exports the production database weekly and retains an AES-256-CBC encrypted artifact for 30 days. Each new artifact includes a ciphertext checksum and metadata, and must pass a decrypt-and-compare check before upload. Plaintext and the decrypted verification copy are removed on exit. It requires `D1_BACKUP_PASSPHRASE`, Cloudflare API credentials, and access to the repository Actions artifacts. Store the passphrase outside GitHub and away from the artifact download location.
 
 To rehearse restoration, download a backup, decrypt it on an isolated machine, and restore only into a newly created non-production D1 database:
 
 ```bash
+sha256sum --check SHA256SUMS
 openssl enc -d -aes-256-cbc -pbkdf2 -in stcatharinesdigital.sql.enc -out restore.sql
 npx wrangler d1 execute <non-production-database> --local --file=restore.sql
 ```
+
+Older artifacts contain only the encrypted SQL and have no checksum manifest. The checksum detects corruption; it is not a signature. Keep the existing PBKDF2 options when decrypting either format.
 
 Verify table counts, a sample confirmed subscriber, a token-expiry query, and an editorial submission. Do not restore into the production database during a rehearsal. Record the database name, backup timestamp, operator and results in the incident log.
 

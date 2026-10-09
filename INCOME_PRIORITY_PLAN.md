@@ -3,7 +3,7 @@
 **Status**: Active — user directive: "prioritize making income, very important"
 **Owner**: @growth-capital-strategist
 **Date**: 2026-10-01 · **Revised**: 2026-10-09
-**Verified counts (live site)**: 42 police + 35 planning + 52 civic = **129 verified records**
+**Verified counts (live site)**: 43 police + 41 planning + 52 civic = **136 verified records**
 **Revision note (2026-10-09)**: counts now derive from `src/data/metrics.js` and are enforced by `npm run audit:metrics`. Revenue sequencing was re-decided: truth fixes and outreach infrastructure come first, and billing is gated on demonstrated paid intent. The earlier "build Stripe in Week 2–4" instruction is superseded — see §3 Phase 2.
 
 ---
@@ -51,7 +51,7 @@ That path works today with zero code.
 
 **What's ready:**
 - `docs/MX_VERIFIED_TARGETS.md` + `docs/outreach-targets.json` — MX-verified accounts only. The original "50 accounts" claim was wrong: 16 of the 50 domains have no MX record, so the real list is at most 32.
-- `PITCH_DECK.md` — investor deck with verified numbers (42 police + 35 planning + 52 civic = 129 records)
+- `PITCH_DECK.md` — investor deck with verified numbers (43 police + 41 planning + 52 civic = 136 records)
 - Live site at `stcatharinesdigital.pages.dev` — proof of product
 - Interac e-Transfer payment confirmation already built (`payment.js`)
 
@@ -122,7 +122,7 @@ That path works today with zero code.
 
 ## 6. The Honest Bottom Line
 
-**The product is live and the data is verified.** 42 police + 35 planning + 52 civic = 129 records, all derived from source and enforced against drift by `npm run audit:metrics`.
+**The product is live and the data is verified.** 43 police + 41 planning + 52 civic = 136 records, all derived from source and enforced against drift by `npm run audit:metrics`.
 
 **What was wrong:** 48 cold emails had produced 15 hard bounces, 0 replies and $0 MRR; the deck claimed traction that had not happened; and the $49/mo digest was being delivered free to every verified signup because nothing checked payment.
 

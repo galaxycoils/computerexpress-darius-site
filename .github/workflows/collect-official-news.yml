@@ -5,6 +5,10 @@ on:
     branches: [main]
     paths:
       - scripts/collect-official-news.js
+      - scripts/watch-workflow.js
+      - scripts/workflowWatcher.js
+      - scripts/publish-candidate.js
+      - scripts/candidatePublication.js
       - src/data/sourceRegistry.js
       - .github/workflows/collect-official-news.yml
   schedule:
@@ -30,10 +34,14 @@ concurrency:
   group: official-source-discovery
   cancel-in-progress: false
 
+defaults:
+  run:
+    shell: bash
+
 jobs:
   collect:
     if: github.ref == 'refs/heads/main'
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 180
     env:
       MODE: ${{ github.event_name == 'schedule' && 'write' || (inputs.dry_run && 'dry-run' || 'write') }}
@@ -43,19 +51,19 @@ jobs:
 
     steps:
       - name: Check out main
-        uses: actions/checkout@v6
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
         with:
           fetch-depth: 0
           ref: main
 
       - name: Use Node.js
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
         with:
           node-version: 22
           cache: npm
 
       - name: Install locked dependencies
-        run: npm ci
+        run: npm ci --fetch-retries=3 --fetch-retry-mintimeout=1000 --fetch-retry-maxtimeout=10000
 
       - name: Collect from approved official sources
         shell: bash
@@ -80,6 +88,7 @@ jobs:
         run: |
           npm test
           npm run build
+          npm run audit:build
           npm run audit:schema
 
       - name: Detect discovery changes
@@ -103,49 +112,80 @@ jobs:
           git commit -m "news: autonomous official-source refresh $(date -u +%Y-%m-%d)"
           built_base=$(git rev-parse HEAD^)
           published=false
+          branch=''
+          cleanup_branch() {
+            if [ -n "$branch" ]; then
+              git push origin --delete "$branch" || echo "::warning::Could not remove owned candidate branch $branch"
+              branch=''
+            fi
+          }
+          cleanup() {
+            result=$?
+            trap - EXIT
+            cleanup_branch
+            exit "$result"
+          }
+          trap cleanup EXIT
+          trap 'exit 130' INT
+          trap 'exit 143' TERM
+          validate_candidate() {
+            npm ci --fetch-retries=3 --fetch-retry-mintimeout=1000 --fetch-retry-maxtimeout=10000
+            npm run content:audit
+            npm test
+            npm run build
+            npm run audit:build
+            npm run audit:schema
+          }
           for attempt in 1 2 3; do
             git fetch origin main
-            git rebase origin/main
+            if ! git rebase origin/main; then
+              git rebase --abort
+              # Generated data can conflict with a newer collection. Recollect on
+              # the new base rather than selecting an entire side of the conflict.
+              git switch --detach origin/main
+              args=(--write)
+              if [ "$SOURCE" != all ]; then args+=(--source "$SOURCE"); fi
+              npm ci --fetch-retries=3 --fetch-retry-mintimeout=1000 --fetch-retry-maxtimeout=10000
+              npm run content:collect -- "${args[@]}"
+              validate_candidate
+              git add src/data/generated/discovery.json
+              if git diff --cached --quiet; then
+                published=true
+                break
+              fi
+              git commit -m "news: recollect official sources after concurrent update $(date -u +%Y-%m-%d)"
+              built_base=''
+            fi
             current_base=$(git rev-parse HEAD^)
             if [ "$current_base" != "$built_base" ]; then
-              npm ci
-              npm run content:audit
-              npm test
-              npm run build
-              npm run audit:schema
+              validate_candidate
               built_base="$current_base"
+            else
+              # Release metadata must identify the committed candidate, not its parent.
+              npm run build
+              npm run audit:build
+              npm run audit:schema
             fi
             branch="news/official-source-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}-${attempt}"
-            git push origin "HEAD:refs/heads/$branch"
-            # Dispatch quality gates on the candidate branch; bot pushes do not
-            # trigger push workflows, and pull requests require approval here.
             candidate=$(git rev-parse HEAD)
+            git push origin "$candidate:refs/heads/$branch"
+            dispatched_at=$(date -u +%FT%TZ)
             for workflow in ci.yml content-integrity.yml; do
               gh workflow run "$workflow" --ref "$branch"
             done
             for workflow in ci.yml content-integrity.yml; do
-              run_id=''
-              for lookup in {1..30}; do
-                run_id=$(gh run list --workflow "$workflow" --branch "$branch" \
-                  --event workflow_dispatch --json databaseId,headSha \
-                  --jq ".[] | select(.headSha == \"$candidate\") | .databaseId" | head -n 1)
-                if [ -n "$run_id" ]; then break; fi
-                sleep 2
-              done
-              if [ -z "$run_id" ]; then
-                echo "::error::No $workflow run started for $candidate"
-                exit 1
-              fi
-              gh run watch "$run_id" --exit-status
+              node scripts/watch-workflow.js --workflow "$workflow" --branch "$branch" \
+                --sha "$candidate" --since "$dispatched_at"
             done
-            git fetch origin main
-            if [ "$(git rev-parse origin/main)" = "$current_base" ] && \
-              git push origin "HEAD:refs/heads/main"; then
-              git push origin --delete "$branch" || echo "::warning::Could not remove candidate branch $branch"
+            if node scripts/publish-candidate.js "$current_base" "$candidate"; then
               published=true
+              cleanup_branch
               break
+            else
+              result=$?
+              if [ "$result" != 2 ]; then exit "$result"; fi
             fi
-            git push origin --delete "$branch" || echo "::warning::Could not remove candidate branch $branch"
+            cleanup_branch
           done
           if [ "$published" != true ]; then
             echo '::error::Main kept advancing during candidate validation.'
@@ -163,12 +203,14 @@ jobs:
           for attempt in 1 2 3; do
             git fetch origin main
             revision=$(git rev-parse origin/main)
-            if [ "$(git rev-parse HEAD)" != "$revision" ]; then
+            built_revision=$(jq -er '.sha' dist/release.json)
+            if [ "$(git rev-parse HEAD)" != "$revision" ] || [ "$built_revision" != "$revision" ]; then
               git switch --detach "$revision"
-              npm ci
+              npm ci --fetch-retries=3 --fetch-retry-mintimeout=1000 --fetch-retry-maxtimeout=10000
               npm run content:audit
               npm test
               npm run build
+              npm run audit:build
               npm run audit:schema
             fi
             # Repair a prior failed deployment, including a stale content snapshot.
@@ -182,24 +224,14 @@ jobs:
             fi
             verify_existing=0
             if [ "$live_sha" != "$revision" ] || [ "$live_snapshot" != "$expected_snapshot" ] || [ -z "$live_rendered_at" ]; then
-              reason="official-source-refresh-${GITHUB_RUN_ID}-${attempt}"
+              reason="official-source-refresh-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}-${attempt}"
               rendered_at=$(jq -er '.renderedAt' dist/render-context.json)
               expected_title="Deploy $revision / $reason"
+              dispatched_at=$(date -u +%FT%TZ)
               gh workflow run deploy.yml --ref main -f reason="$reason" \
                 -f publication_sha="$revision" -f rendered_at="$rendered_at"
-              run_id=''
-              for lookup in {1..60}; do
-                run_id=$(gh run list --workflow deploy.yml --branch main --event workflow_dispatch \
-                  --limit 50 --json databaseId,displayTitle \
-                  --jq ".[] | select(.displayTitle == \"$expected_title\") | .databaseId" | head -n 1)
-                if [ -n "$run_id" ]; then break; fi
-                sleep 5
-              done
-              if [ -z "$run_id" ]; then
-                echo "::error::Could not find deployment run for $revision"
-                exit 1
-              fi
-              gh run watch "$run_id" --exit-status --interval 10
+              node scripts/watch-workflow.js --workflow deploy.yml --branch main \
+                --title "$expected_title" --since "$dispatched_at"
             else
               echo "Publication already live at $revision" >> "$GITHUB_STEP_SUMMARY"
               verify_existing=1
@@ -240,7 +272,7 @@ jobs:
 
       - name: Save source-health report
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
         with:
           name: source-health-${{ github.run_id }}
           path: collector-report.json

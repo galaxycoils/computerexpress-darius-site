@@ -2,27 +2,44 @@
  * NRPS Police Media Releases for St. Catharines Digital
  * Sourced exclusively from https://www.niagarapolice.ca/news/posts/
  * Official Niagara Regional Police Service media releases & community notifications.
- * Updated: 2026-10-07
+ * Updated: 2026-10-09
  * Next review: Daily (cron) — refresh from niagarapolice.ca
- * Note: Added Oct 3 Thorold fatal single-vehicle collision (1 District / CRU, Merrittville Highway & Seburn Road). Three Oct 3–7 items — Niagara Falls arson (2 incidents), Niagara Falls aggravated assault, Niagara Falls firearms arrest — were out of coverage area and not added.
+ * Note: Added Oct 8 public-assistance request for a missing St. Catharines woman (1 District CIB, incident 26-126896). Oct 5–9 Niagara Falls, Fonthill, and Port Colborne releases left out of coverage.
  */
 import { getRenderNow } from '../utils/renderClock.js'
 
 export const nrpsReleases = [
   {
-    id: 'nrps-2026-10-03-thorold-fatal-collision',
+    id: 'nrps-2026-10-08-missing-st-catharines-woman',
+    date: '2026-10-08',
+    headline: 'Public Assistance Requested in Locating Missing St. Catharines Woman',
+    municipality: 'St. Catharines, Thorold',
+    type: 'Media Release (Missing Person / Public Assistance)',
+    url: 'https://www.niagarapolice.ca/news/posts/public-assistance-requested-in-locating-missing-st-catharines-woman/',
+    source: 'Niagara Regional Police Service',
+    tags: ['Missing Person', 'Public Assistance', 'St. Catharines', 'Thorold', '1 District', 'Criminal Investigations Bureau'],
+    category: 'missing-person',
+    incident_date: '2026-10-06T00:00:00-04:00',
+    published: '2026-10-08T00:00:00-04:00',
+    location: { text: 'Last seen near the end of July 2026 in the downtown core of St. Catharines', lat: null, lng: null },
+    suspect_description_source: 'Police name and describe the missing woman in the official release; description is published on the NRPS page only.',
+    contact: { unit: '1 District CIB', phone: '905-688-4111', ext: '1009610', anonymous: 'Crime Stoppers of Niagara 1-800-222-TIPS (8477)' },
+    incident_number: '26-126896'
+  },
+  {
+    id: 'nrps-2026-10-03-thorold-fatal-single-vehicle',
     date: '2026-10-03',
-    headline: 'Fatal Single Motor Vehicle Collision',
-    municipality: 'Thorold',
+    headline: 'Fatal Single Motor Vehicle Collision in Thorold',
+    municipality: 'Thorold, St. Catharines',
     type: 'Media Release (Collision Investigation)',
     url: 'https://www.niagarapolice.ca/news/posts/fatal-single-motor-vehicle-collision/',
     source: 'Niagara Regional Police Service',
-    tags: ['Collision', 'Fatality', 'Thorold', '1 District', 'Collision Reconstruction Unit', 'Public Assistance'],
+    tags: ['Collision', 'Fatal', 'Thorold', 'St. Catharines', '1 District', 'Collision Reconstruction', 'Merrittville Highway'],
     category: 'collision',
     incident_date: '2026-10-03T02:48:00-04:00',
-    published: '2026-10-03T16:53:00-04:00',
-    location: { text: 'Merrittville Highway and Seburn Road, Thorold', lat: null, lng: null },
-    contact: { unit: '1 District / Collision Reconstruction Unit', phone: '(905) 688-4111', ext: '1009769', anonymous: 'Crime Stoppers of Niagara 1-800-222-8477 (TIPS)' },
+    published: '2026-10-03T00:00:00-04:00',
+    location: { text: 'Area of Merrittville Highway and Seburn Road, Thorold', lat: null, lng: null },
+    contact: { unit: 'Collision Reconstruction Unit', phone: '905-688-4111', ext: '1009769', anonymous: 'Crime Stoppers of Niagara 1-800-222-8477 (TIPS)' },
     incident_number: '26-125359'
   },
   {

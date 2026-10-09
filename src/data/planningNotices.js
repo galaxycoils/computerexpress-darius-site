@@ -6,13 +6,56 @@
  * - thorold.ca
  * - niagararegion.ca
  *
- * Updated: 2026-10-02
- * Note: Added completed Thorold closures for Alexandria Drive (Sep 22-23) and Bridge 11 / Highway 20 (Sep 23-24). No new St. Catharines, Welland, or Niagara Region planning or road notices since Oct 1.
+ * Updated: 2026-10-09
+ * Note: Added St. Catharines Oct. 8 traffic notice for Gibson Place (Niagara Street to Fitzgerald Street) sinkhole repair; marked Meeting Complete because the posted date has passed. No Oct. 9 traffic page. No new Welland, Thorold, or Niagara Region planning or road notices dated Oct 8–9.
  * Next review: Daily
  */
 import { getRenderNow, parseTorontoDate } from "../utils/renderClock.js";
 
 export const planningNotices = [
+  {
+    id: "stc-gibson-place-closure-oct-8",
+    municipality: "St. Catharines",
+    type: "Temporary Road Closure",
+    title: "Gibson Place Closure — Niagara Street to Fitzgerald Street",
+    description:
+      "The City’s October 8, 2026 traffic notice says Gibson Place is closed from Niagara Street to Fitzgerald Street for a sinkhole repair. The notice is for that date only.",
+    status: "Meeting Complete",
+    meetingDate: "2026-10-08T00:00:00",
+    publishedDate: "2026-10-08",
+    sourceUrl: "https://www.stcatharines.ca/news/posts/road-closures-for-oct-8/",
+    category: "road-closure",
+    tags: ["Road Closure", "Gibson Place", "St. Catharines", "Traffic Notice"],
+  },
+  {
+    id: "thorold-barron-rd-closure-oct-7",
+    municipality: "Thorold",
+    type: "Temporary Road Closure",
+    title: "Barron Road Closure — Glover Road to Polloway Road",
+    description:
+      "Thorold posted that Hydro One temporarily closed Barron Road from Glover Road to Polloway Road on Wednesday, October 7, 2026, for Hydro maintenance. Local traffic was to keep access from Allanport Road to Glover Road and from Thorold Townline Road to Polloway Road. The notice is for that date only.",
+    status: "Meeting Complete",
+    meetingDate: "2026-10-07T00:00:00",
+    publishedDate: "2026-10-07",
+    sourceUrl:
+      "https://www.thorold.ca/news/news/temporary-road-closure-barron-rd-october-7/",
+    category: "road-closure",
+    tags: ["Road Closure", "Barron Road", "Hydro One", "Thorold"],
+  },
+  {
+    id: "stc-service-request-portal-oct-5",
+    municipality: "St. Catharines",
+    type: "Municipal Service Notice",
+    title: "Service Request Portal Replaces Report an Issue Form",
+    description:
+      "On October 5, 2026, the City launched a Service Request Portal at stcatharines.ca/reportanissue for non-urgent requests about roads, parks, trees, signs, property standards, and other City services. Residents can track submissions. Urgent road, water, or sewer issues should still be reported by phone to Citizens First at 905-688-5600.",
+    status: "Active",
+    publishedDate: "2026-10-05",
+    sourceUrl:
+      "https://www.stcatharines.ca/news/posts/city-launches-new-service-request-portal-to-help-residents-report-and-track-issues-online/",
+    category: "municipal-service",
+    tags: ["Service Request", "Report an Issue", "Cityworks", "St. Catharines"],
+  },
   {
     id: "stc-1262-1290-fourth-ave-opa-zba-decision",
     municipality: "St. Catharines",
@@ -28,6 +71,49 @@ export const planningNotices = [
       "https://www.stcatharines.ca/news/posts/notice-of-decision-1262-and-1290-fourth-avenue/",
     category: "official-plan-amendment",
     tags: ["Official Plan", "Zoning", "Fourth Avenue", "Notice of Decision"],
+  },
+  {
+    id: "thorold-sullivan-towpath-front-oct-2",
+    municipality: "Thorold",
+    type: "Temporary Road Closure",
+    title: "Sullivan Avenue Closure — Towpath Street to Front Street",
+    description:
+      "Thorold closed Sullivan Avenue from Towpath Street to Front Street on Friday, October 2, 2026, for about three weeks while the contractor continues downtown underground replacement and road reconstruction. The closure affects on-street parking and one entrance to Parking Lot 1 and the Thorold Community Credit Union lot; both lots stay open from alternate entrances, with detour signs in place.",
+    status: "Active",
+    meetingDate: "2026-10-02T00:00:00",
+    endDate: "2026-10-23T23:59:59",
+    publishedDate: "2026-10-02",
+    sourceUrl:
+      "https://www.thorold.ca/news/news/temporary-road-closure-sullivan-ave-towpath-st-to-front-st-oct-2/",
+    category: "road-closure",
+    tags: ["Road Closure", "Sullivan Avenue", "Towpath Street", "Front Street", "Thorold"],
+  },
+  {
+    id: "stc-clement-place-closure-oct-2",
+    municipality: "St. Catharines",
+    type: "Temporary Road Closure",
+    title: "Clement Place Closure — Crestcombe Road to Ridley Heights Drive",
+    description:
+      "The City’s October 2, 2026 traffic notice says Clement Place is closed from Crestcombe Road to Ridley Heights Drive for contractor work. The notice does not give a reopening time.",
+    status: "Active",
+    publishedDate: "2026-10-02",
+    sourceUrl: "https://www.stcatharines.ca/news/posts/road-closures-for-oct-2/",
+    category: "road-closure",
+    tags: ["Road Closure", "Clement Place", "St. Catharines", "Traffic Notice"],
+  },
+  {
+    id: "stc-henley-drive-closure-oct-1",
+    municipality: "St. Catharines",
+    type: "Temporary Road Closure",
+    title: "Henley Drive Closure — Linhaven Court to Gladman Avenue",
+    description:
+      "The City’s October 1, 2026 traffic notice listed Henley Drive closed from Linhaven Court to Gladman Avenue. The notice was for that date only.",
+    status: "Meeting Complete",
+    meetingDate: "2026-10-01T00:00:00",
+    publishedDate: "2026-10-01",
+    sourceUrl: "https://www.stcatharines.ca/news/posts/road-closures-for-oct-1/",
+    category: "road-closure",
+    tags: ["Road Closure", "Henley Drive", "St. Catharines", "Traffic Notice"],
   },
   {
     id: "stc-39-41-thomas-st-consent",
@@ -176,7 +262,7 @@ export const planningNotices = [
     type: "Temporary Road Closure",
     title: "Sullivan Avenue and Towpath Street Intersection Closure",
     description:
-      "The Sullivan Avenue and Towpath Street intersection was scheduled to close Monday, September 21 at 6:00 a.m. for about two weeks while a contractor replaces aging underground infrastructure and reconstructs the roadway in downtown Thorold.",
+      "The Sullivan Avenue and Towpath Street intersection was scheduled to close Monday, September 21 at 6:00 a.m. for about two weeks while a contractor replaces aging underground infrastructure and reconstructs the roadway in downtown Thorold. A separate October 2 notice continues the closure along Sullivan Avenue from Towpath Street to Front Street for about three weeks.",
     status: "Active",
     meetingDate: "2026-09-21T06:00:00",
     publishedDate: "2026-09-17",
@@ -281,8 +367,8 @@ export const planningNotices = [
     type: "Road Closure",
     title: "Sixteen Mile Creek Bridge — North Service Road Closure",
     description:
-      "Niagara Region is rehabilitating the Sixteen Mile Creek Bridge on North Service Road (Regional Road 39) in Lincoln. A posted road-closure notice covers Oct. 5 to Nov. 27, 2026.",
-    status: "Scheduled",
+      "Niagara Region is rehabilitating the Sixteen Mile Creek Bridge on North Service Road (Regional Road 39) in Lincoln. The posted road-closure notice covers Oct. 5 to Nov. 27, 2026, and that window is now in effect.",
+    status: "Active",
     effectiveDate: "2026-10-05T00:00:00",
     endDate: "2026-11-27T23:59:59",
     publishedDate: "2026-09-24",
@@ -610,10 +696,10 @@ export const municipalities = [
   { key: "niagara-region", label: "Niagara Region", region: "Niagara" },
 ];
 
-export function getUpcomingMeetings(days = 7, now = getRenderNow()) {
+export function getUpcomingMeetings(days = 7, now = getRenderNow(), notices = planningNotices) {
   const start = now.getTime();
   const end = start + days * 24 * 60 * 60 * 1000;
-  return planningNotices.filter((notice) => {
+  return notices.filter((notice) => {
     if (!notice.meetingDate) return false;
     const t = parseTorontoDate(notice.meetingDate).getTime();
     return t >= start && t <= end;
@@ -640,16 +726,16 @@ export function getNoticeStatus(notice, now = getRenderNow()) {
   return notice.status;
 }
 
-export function getActiveNotices(now = getRenderNow()) {
-  return planningNotices.filter((notice) =>
+export function getActiveNotices(now = getRenderNow(), notices = planningNotices) {
+  return notices.filter((notice) =>
     notice.status &&
     !/complete|approved|passed/i.test(notice.status) &&
     getNoticeStatus(notice, now) === notice.status,
   );
 }
 
-export function getNoticeStats(now = getRenderNow()) {
-  const active = getActiveNotices(now);
+export function getNoticeStats(now = getRenderNow(), notices = planningNotices) {
+  const active = getActiveNotices(now, notices);
   const byMunicipality = {};
   const byCategory = {};
   for (const notice of active) {
@@ -657,10 +743,10 @@ export function getNoticeStats(now = getRenderNow()) {
     byCategory[notice.category] = (byCategory[notice.category] || 0) + 1;
   }
   return {
-    total: planningNotices.length,
+    total: notices.length,
     active: active.length,
     byMunicipality,
     byCategory,
-    upcomingMeetings: getUpcomingMeetings(7, now).length,
+    upcomingMeetings: getUpcomingMeetings(7, now, notices).length,
   };
 }

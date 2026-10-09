@@ -3,6 +3,8 @@ import { render, screen } from "@testing-library/react";
 import { BrowserRouter } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 import HomePage from "./HomePage";
+import * as planning from "../data/planningNotices";
+const selectMeetings = planning.getUpcomingMeetings;
 
 const OFFICIAL_HOST_RE = /\.(ca|com)$/i;
 
@@ -16,6 +18,7 @@ const renderWithProviders = (ui) =>
 describe("HomePage — Editorial Newsroom", () => {
   afterEach(() => {
     vi.useRealTimers();
+    vi.restoreAllMocks();
     delete globalThis.__SCD_RENDER_NOW__;
   });
 
@@ -23,8 +26,13 @@ describe("HomePage — Editorial Newsroom", () => {
     vi.useFakeTimers();
     vi.setSystemTime(new Date("2026-09-29T12:00:00Z"));
     globalThis.__SCD_RENDER_NOW__ = "2026-09-28T12:00:00Z";
+    const expired = { id: "test-hearing", title: "Fixture hearing", municipality: "Welland", meetingDate: "2026-09-28T18:00:00" };
+    const selector = vi.spyOn(planning, "getUpcomingMeetings")
+      .mockImplementation((days, now) => selectMeetings(days, now, [expired]));
 
     renderWithProviders(<HomePage />);
+    expect(selector.mock.results[0].value).toEqual([expired]);
+    expect(selector.mock.results.at(-1).value).toEqual([]);
     expect(screen.getByText(/No municipal meetings are listed in the next seven days/i)).toBeInTheDocument();
   });
 

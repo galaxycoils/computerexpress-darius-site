@@ -10,7 +10,7 @@
     "preview": "vite preview",
     "test": "vitest run",
     "test:browser": "node scripts/browser-redesign.mjs",
-    "test:coverage": "npx vitest run --coverage",
+    "test:coverage": "vitest run --coverage",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
     "verify:prerender": "node scripts/verify-prerender.mjs",
@@ -28,7 +28,8 @@
     "outreach:preview": "node scripts/outreach/send.mjs --dry-run",
     "outreach:send": "node scripts/outreach/send.mjs --confirm-send",
     "content:audit": "node scripts/content-audit.js",
-    "content:collect": "node scripts/collect-official-news.js"
+    "content:collect": "node scripts/collect-official-news.js",
+    "audit:build": "node scripts/audit-build.js"
   },
   "dependencies": {
     "@fontsource-variable/fraunces": "^5.3.0",
@@ -59,6 +60,10 @@
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.71.1",
     "vite": "^6.0.0",
-    "vitest": "^5.0.0"
+    "vitest": "^5.0.0",
+    "wrangler": "4.148.0"
+  },
+  "engines": {
+    "node": ">=22"
   }
 }
