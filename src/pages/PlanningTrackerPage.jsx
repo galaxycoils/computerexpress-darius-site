@@ -7,10 +7,8 @@ import {
   municipalities,
   getNoticeStats,
   getUpcomingMeetings,
-  getActiveNotices,
   getNoticeStatus,
 } from "../data/planningNotices";
-import { siteConfig } from "../data/siteConfig";
 import { getRenderNow, parseTorontoDate } from "../utils/renderClock.js";
 import { useLiveNow } from "../hooks/useLiveNow.js";
 

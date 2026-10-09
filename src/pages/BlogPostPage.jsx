@@ -628,7 +628,7 @@ function renderMarkdown(md) {
   let inList = null // null, 'ul', 'ol', 'checklist'
   
   for (let i = 0; i < lines.length; i++) {
-    let line = lines[i].trim()
+    const line = lines[i].trim()
     
     // Headers
     if (line.startsWith('### ')) {

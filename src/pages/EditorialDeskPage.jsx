@@ -25,6 +25,11 @@ export default function EditorialDeskPage() {
     } catch (err) { setError(err.message); setData(null); }
     finally { setLoading(false); }
   }
+  // Runs once on mount to restore a session that already holds an access code.
+  // Do NOT add `load` or `token` to the dependency array: `load` calls setToken,
+  // so depending on either would re-run this effect after every successful load
+  // and loop forever. The stored token is read in the useState initialiser above.
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => { if (token) load(token); }, []);
   async function update(id, status) {
     const response = await api("/api/editorial/submissions", token, { method: "PATCH", body: JSON.stringify({ id, status }) });

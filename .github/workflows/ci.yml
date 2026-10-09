@@ -51,6 +51,14 @@ jobs:
           - node-version: 22
             suite: identity-audit
             command: npm run audit:identity
+          # Salvaged from the computerexpress-darius-site WU-006 work unit, which
+          # this branch never received — the project had no linter or type check.
+          - node-version: 22
+            suite: lint
+            command: npm run lint
+          - node-version: 22
+            suite: type-check
+            command: npm run typecheck
 
     steps:
       - name: Checkout
@@ -97,6 +105,10 @@ jobs:
 
       - name: Report homepage bundle budget
         run: npm run budget:bundle
+
+      # A route that renders an empty shell still exits 0 from the build.
+      - name: Verify prerendered output
+        run: npm run verify:prerender
 
       - name: Upload dist artifact (Node 22 only)
         if: matrix.node-version == 22

@@ -185,13 +185,11 @@ function parseAtomEntries(entries, source) {
     const linkEl = entry.querySelector('link[href]');
     const pubDateEl = entry.querySelector('updated, published');
     const descriptionEl = entry.querySelector('summary, content');
-    const idEl = entry.querySelector('id');
 
     const title = titleEl?.textContent?.trim() || '';
     const link = linkEl?.getAttribute('href') || '';
     const pubDate = pubDateEl?.textContent?.trim() || new Date().toISOString();
     const description = descriptionEl?.textContent?.trim() || '';
-    const guid = idEl?.textContent?.trim() || link;
 
     if (!title || !link) continue;
 
@@ -256,7 +254,6 @@ async function fetchSource(source) {
         const descriptionEl = node.querySelector(
           'description, summary, content',
         );
-        const guidEl = node.querySelector('guid');
 
         const title = titleEl?.textContent?.trim() || '';
         const link =
@@ -265,7 +262,6 @@ async function fetchSource(source) {
           '';
         const pubDate = pubDateEl?.textContent?.trim() || new Date().toISOString();
         const description = descriptionEl?.textContent?.trim() || '';
-        const guid = guidEl?.textContent?.trim() || link;
 
         if (!title || !link) continue;
 
@@ -372,7 +368,7 @@ async function main() {
   const fileContent = `/**
  * Local News Articles for St. Catharines Digital
  * Auto-generated from RSS feeds on ${now}
- * Sources: ${SOURCES.filter(s => true).map(s => s.name).join(', ')}
+ * Sources: ${SOURCES.map(s => s.name).join(', ')}
  * DO NOT EDIT MANUALLY - Run scripts/fetch-local-news.js to update
  */
 

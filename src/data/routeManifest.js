@@ -1,4 +1,4 @@
-import { BASE_URL, serviceAreaCities } from "./siteConfig.js";
+import { BASE_URL } from "./siteConfig.js";
 import { planningNotices } from "./planningNotices.js";
 import { exploreGuides } from "./exploreGuides.js";
 import { getPublishableContent } from "./contentRegistry.js";

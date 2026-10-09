@@ -48,7 +48,9 @@ for (const notice of planningNotices) {
 
 // The police archive is a reader-facing dataset and a module API used by
 // PolicePage. A daily desk update must append records without replacing it.
-const { nrpsReleases, verifiedNrpsReleases, getLatestNrpsReleases, getNrpsReleasesByMunicipality, getNrpsReleasesByCategory, getNrpsStats } = nrps
+// The helper-presence guard below reads these off the `nrps` namespace object
+// (`nrps[helper]`), so only the values used directly are destructured here.
+const { nrpsReleases, verifiedNrpsReleases, getNrpsStats } = nrps
 if (!Array.isArray(verifiedNrpsReleases) || verifiedNrpsReleases.length < 20) errors.push('NRPS archive is unexpectedly truncated')
 for (const helper of ['getLatestNrpsReleases', 'getNrpsReleasesByMunicipality', 'getNrpsReleasesByCategory', 'getNrpsStats']) {
   if (typeof nrps[helper] !== 'function') errors.push(`NRPS module is missing ${helper}`)

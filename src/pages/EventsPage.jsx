@@ -54,7 +54,8 @@ export default function EventsPage() {
   const monthly = events.filter((e) => e.startsAt.startsWith(month));
   function update(key, value) {
     const next = new URLSearchParams(params);
-    value ? next.set(key, value) : next.delete(key);
+    if (value) next.set(key, value);
+    else next.delete(key);
     setParams(next);
   }
   function step(value) {

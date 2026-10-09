@@ -11,6 +11,8 @@ graphify-out/
 artifacts/
 test-results/
 coverage/
+# TypeScript incremental build cache (tsconfig "incremental": true)
+*.tsbuildinfo
 
 # Local Netlify folder
 .netlify

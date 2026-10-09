@@ -39,7 +39,8 @@ export default function NewsFeed({ city = "", search = false }) {
   );
   function change(key, value) {
     const next = new URLSearchParams(params);
-    value ? next.set(key, value) : next.delete(key);
+    if (value) next.set(key, value);
+    else next.delete(key);
     next.delete("page");
     if (key === "section") next.delete("kind");
     setParams(next);

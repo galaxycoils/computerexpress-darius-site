@@ -118,13 +118,11 @@ test('a subscriber inside the grace window still receives the digest', async t =
   })
   const date = new Date().toISOString().slice(0, 10)
   let sent = 0
-  let message
-  t.mock.method(globalThis, 'fetch', async (url, options) => {
+  t.mock.method(globalThis, 'fetch', async (url) => {
     if (url.includes('/planning-alert-feed.json')) return Response.json({ version: 1, notices: [
       { id: 'new-source', title: 'Zoning change', description: '', municipality: 'Welland', publishedDate: date, sourceUrl: 'https://www.welland.ca/news/zoning', category: 'zoning-bylaw-amendment', status: null, tags: '' },
     ] })
     if (url.endsWith('/inboxes')) return Response.json({ inboxes: [{ inbox_id: 'test-inbox' }] })
-    message = JSON.parse(options.body)
     sent++
     return Response.json({ id: 'sent' })
   })

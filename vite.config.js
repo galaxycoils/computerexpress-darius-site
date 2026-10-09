@@ -71,7 +71,7 @@ function devChatMock() {
             }
 
             sendNext()
-          } catch (e) {
+          } catch {
             res.writeHead(400, { 'Content-Type': 'application/json' })
             res.end(JSON.stringify({ error: 'Invalid request body' }))
           }

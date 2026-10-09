@@ -95,6 +95,12 @@ export default function Layout() {
     const save = () => positions.current.set(location.key, window.scrollY);
     window.addEventListener("scroll", save, { passive: true });
     return () => {
+      // Reading positions.current during cleanup is intentional. `positions` is a
+      // useRef(new Map()) that is never reassigned, so the Map identity is stable
+      // for the component's life; this saves the final scroll offset for the
+      // location being left. The rule assumes a ref pointing at a DOM node React
+      // may have swapped, which is not this case.
+      // eslint-disable-next-line react-hooks/exhaustive-deps
       positions.current.set(location.key, window.scrollY);
       cancelAnimationFrame(frame);
       window.removeEventListener("scroll", save);

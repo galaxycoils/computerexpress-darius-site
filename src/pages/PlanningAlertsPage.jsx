@@ -47,9 +47,8 @@ export default function PlanningAlertsPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(false);
-  const [token, setToken] = useState(null);
 
-  function toggleMulti(selectKey, value, current) {
+  function toggleMulti(selectKey, value) {
     setError(null);
     if (selectKey === 'wards') {
       setWards(prev => prev.includes(value) ? prev.filter(v => v !== value) : [...prev, value]);
@@ -81,12 +80,11 @@ export default function PlanningAlertsPage() {
       const result = await res.json();
 
       if (res.ok) {
-        setToken(result.token);
         setSuccess(true);
       } else {
         setError(result.error || 'Something went wrong. Please try again.');
       }
-    } catch (err) {
+    } catch {
       setError('Network error. Please try again.');
     } finally {
       setLoading(false);
@@ -214,7 +212,7 @@ export default function PlanningAlertsPage() {
                       key={w.value}
                       type="button"
                       className={`scd-alerts-chip${wards.includes(w.value) ? ' is-active' : ''}`}
-                      onClick={() => toggleMulti('wards', w.value, wards)}
+                      onClick={() => toggleMulti('wards', w.value)}
                     >
                       {w.label}
                     </button>
@@ -231,7 +229,7 @@ export default function PlanningAlertsPage() {
                       key={t.value}
                       type="button"
                       className={`scd-alerts-chip${types.includes(t.value) ? ' is-active' : ''}`}
-                      onClick={() => toggleMulti('types', t.value, types)}
+                      onClick={() => toggleMulti('types', t.value)}
                     >
                       {t.label}
                     </button>
@@ -248,7 +246,7 @@ export default function PlanningAlertsPage() {
                       key={s.value}
                       type="button"
                       className={`scd-alerts-chip${statuses.includes(s.value) ? ' is-active' : ''}`}
-                      onClick={() => toggleMulti('statuses', s.value, statuses)}
+                      onClick={() => toggleMulti('statuses', s.value)}
                     >
                       {s.label}
                     </button>

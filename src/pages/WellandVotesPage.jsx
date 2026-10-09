@@ -1,6 +1,6 @@
 import UiIcon from "../components/journal/UiIcon";
 import { Link } from 'react-router-dom'
-import Seo, { BASE_URL } from '../components/Seo'
+import Seo from '../components/Seo'
 import { getLocalBusinessSchema } from '../data/schema'
 import {
   CITY_ELECTIONS,

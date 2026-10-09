@@ -79,10 +79,10 @@ function cwvScore() {
           const si = a?.['speed-index']?.numericValue || 0;
           const perfScore = json.categories?.performance?.score || 0;
           
-          let lcpPts = lcp < 2500 ? 25 : lcp < 4000 ? 15 : lcp < 6000 ? 8 : 3;
-          let tbtPts = tbt < 200 ? 20 : tbt < 600 ? 12 : tbt < 1000 ? 6 : 2;
-          let clsPts = cls < 0.1 ? 15 : cls < 0.25 ? 10 : cls < 0.5 ? 5 : 2;
-          let siPts = si < 3400 ? 15 : si < 5800 ? 10 : si < 8000 ? 5 : 2;
+          const lcpPts = lcp < 2500 ? 25 : lcp < 4000 ? 15 : lcp < 6000 ? 8 : 3;
+          const tbtPts = tbt < 200 ? 20 : tbt < 600 ? 12 : tbt < 1000 ? 6 : 2;
+          const clsPts = cls < 0.1 ? 15 : cls < 0.25 ? 10 : cls < 0.5 ? 5 : 2;
+          const siPts = si < 3400 ? 15 : si < 5800 ? 10 : si < 8000 ? 5 : 2;
           
           resolve({
             score: lcpPts + tbtPts + clsPts + siPts,
