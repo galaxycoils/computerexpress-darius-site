@@ -6,13 +6,27 @@
  * - thorold.ca
  * - niagararegion.ca
  *
- * Updated: 2026-10-08
- * Note: Added Thorold Barron Road closure (Glover Road to Polloway Road) posted Oct 7 for Hydro One maintenance that day; marked Meeting Complete because the posted date has passed. No new St. Catharines, Welland, or Niagara Region planning or road notices dated Oct 7–8. Live St. Catharines traffic list did not include an Oct 7 closure page. NRPS Oct 5–7 releases are Niagara Falls only and left out of coverage.
+ * Updated: 2026-10-09
+ * Note: Added St. Catharines Oct. 8 traffic notice for Gibson Place (Niagara Street to Fitzgerald Street) sinkhole repair; marked Meeting Complete because the posted date has passed. No Oct. 9 traffic page. No new Welland, Thorold, or Niagara Region planning or road notices dated Oct 8–9.
  * Next review: Daily
  */
 import { getRenderNow, parseTorontoDate } from "../utils/renderClock.js";
 
 export const planningNotices = [
+  {
+    id: "stc-gibson-place-closure-oct-8",
+    municipality: "St. Catharines",
+    type: "Temporary Road Closure",
+    title: "Gibson Place Closure — Niagara Street to Fitzgerald Street",
+    description:
+      "The City’s October 8, 2026 traffic notice says Gibson Place is closed from Niagara Street to Fitzgerald Street for a sinkhole repair. The notice is for that date only.",
+    status: "Meeting Complete",
+    meetingDate: "2026-10-08T00:00:00",
+    publishedDate: "2026-10-08",
+    sourceUrl: "https://www.stcatharines.ca/news/posts/road-closures-for-oct-8/",
+    category: "road-closure",
+    tags: ["Road Closure", "Gibson Place", "St. Catharines", "Traffic Notice"],
+  },
   {
     id: "thorold-barron-rd-closure-oct-7",
     municipality: "Thorold",
