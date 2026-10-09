@@ -65,13 +65,34 @@ for (const release of verifiedNrpsReleases || []) {
 const stats = getNrpsStats()
 if (stats.total !== verifiedNrpsReleases.length) errors.push(`getNrpsStats.total (${stats.total}) does not match verified array length (${verifiedNrpsReleases.length})`)
 
+// Source health is read from discovery.json, the artifact the collector actually
+// writes (scripts/collect-official-news.js, plus a gitignored collector-report.json).
+//
+// This check previously read src/data/generated/manifest.json — a legacy artifact
+// that no script in this repo produces any more. It had been frozen at
+// 2026-09-13 and reported three "source adapter requires review" warnings forever,
+// while the live collector was reporting all six sources healthy. Warnings that
+// can never be cleared train people to ignore warnings.
+const discoveryPath = path.join(root, 'src/data/generated/discovery.json')
 try {
-  const manifest = JSON.parse(await fs.readFile(path.join(root, 'src/data/generated/manifest.json'), 'utf8'))
-  for (const [id, source] of Object.entries(manifest.sources || {})) {
-    if (source.status === 'failed') warnings.push(`Source adapter requires review: ${id}`)
+  const discovery = JSON.parse(await fs.readFile(discoveryPath, 'utf8'))
+  const sources = discovery.sources
+  if (!Array.isArray(sources) || sources.length === 0) {
+    errors.push('Discovery snapshot lists no sources')
+  } else {
+    for (const source of sources) {
+      if (source.ok === false) warnings.push(`Source adapter requires review: ${source.id}`)
+    }
+  }
+  const collectedAt = Date.parse(discovery.collectedAt)
+  if (Number.isNaN(collectedAt)) {
+    errors.push('Discovery snapshot has no valid collectedAt timestamp')
+  } else if (Date.now() - collectedAt > 30 * 86400000) {
+    const ageDays = Math.floor((Date.now() - collectedAt) / 86400000)
+    warnings.push(`Discovery snapshot is ${ageDays} days old — collection may have stopped`)
   }
 } catch (error) {
-  errors.push(`Generated source manifest could not be read: ${error.message}`)
+  errors.push(`Discovery snapshot could not be read: ${error.message}`)
 }
 
 console.log(JSON.stringify({ checkedAt: new Date().toISOString(), sources: sourceRegistry.length, planningRecords: planningNotices.length, policeReleases: nrpsReleases?.length || 0, warnings, errors }, null, 2))

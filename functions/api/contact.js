@@ -3,7 +3,7 @@
 
 const AGENTMAIL_BASE = 'https://api.agentmail.to/v0';
 const FORMSUBMIT_BASE = 'https://formsubmit.co/ajax';
-const DEFAULT_CONTACT_EMAIL = 'hello@stcatharinesdigital.ca';
+const DEFAULT_CONTACT_EMAIL = 'cccemt@pm.me';
 
 export async function onRequestPost(context) {
   try {

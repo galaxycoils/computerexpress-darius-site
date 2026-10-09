@@ -43,6 +43,14 @@ jobs:
           - node-version: 22
             suite: content-audit
             command: npm run content:audit
+          # Fails when a tracked document states a count the data does not support.
+          - node-version: 22
+            suite: metrics-audit
+            command: npm run audit:metrics
+          # Fails when a customer-facing address differs from siteConfig.email.
+          - node-version: 22
+            suite: identity-audit
+            command: npm run audit:identity
 
     steps:
       - name: Checkout
@@ -98,6 +106,30 @@ jobs:
           path: dist/
           if-no-files-found: error
           retention-days: 3
+
+  # Advisory only. The monetization score is a heuristic dashboard — it must be
+  # visible on every run but must never block a deploy.
+  monetization-report:
+    name: monetization report (advisory)
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    continue-on-error: true
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Report monetization readiness
+        run: npm run audit:monetization
 
   # Single green check for branch protection rules
   ci-success:

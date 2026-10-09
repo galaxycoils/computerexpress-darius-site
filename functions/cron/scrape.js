@@ -73,7 +73,7 @@ export async function onRequest(context) {
     try {
       const inbox = await getPrimaryInbox(apiKey);
       await sendEmail(apiKey, inbox.inbox_id, {
-        to: 'hello@stcatharinesdigital.ca',
+        to: 'cccemt@pm.me',
         subject: `Scrape complete: ${results.added} new notices`,
         text: `Planning Alert scrape results:\n\nAdded: ${results.added}\nUpdated: ${results.updated}\nUnchanged: ${results.unchanged}\nErrors: ${results.errors}\n\nNew items:\n${results.items.filter(i => i.action === 'added').map(i => `  - ${i.city}: ${i.title}`).join('\n') || '  (none)'}`,
         labels: ['planning-alerts', 'scrape-summary'],

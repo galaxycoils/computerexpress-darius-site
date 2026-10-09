@@ -163,7 +163,7 @@ NEXT STEPS
 CONTACT
 -------
 Dariush — St. Catharines Digital
-hello@stcatharinesdigital.ca | (365) 359-5973
+cccemt@pm.me | (365) 359-5973
 https://calendly.com/tahamtandariush/30min
 
 ---

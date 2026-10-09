@@ -18,6 +18,12 @@
     "audit:schema": "node scripts/audit-schema.js",
     "audit:lighthouse": "node scripts/audit-lighthouse.js",
     "audit:visual": "node scripts/audit-visual.js",
+    "audit:metrics": "node scripts/audit-metrics.js",
+    "audit:identity": "node scripts/audit-identity.js",
+    "audit:monetization": "node scripts/measure-monetization.mjs",
+    "outreach:mx": "node scripts/outreach/check-mx.mjs",
+    "outreach:preview": "node scripts/outreach/send.mjs --dry-run",
+    "outreach:send": "node scripts/outreach/send.mjs --confirm-send",
     "content:audit": "node scripts/content-audit.js",
     "content:collect": "node scripts/collect-official-news.js"
   },

@@ -2,8 +2,9 @@
 
 **Status**: Active — user directive: "prioritize making income, very important"
 **Owner**: @growth-capital-strategist
-**Date**: 2026-10-01
-**Verified counts (live site)**: 39 police + 15 planning + 9 civic = **63 verified records**
+**Date**: 2026-10-01 · **Revised**: 2026-10-09
+**Verified counts (live site)**: 42 police + 35 planning + 52 civic = **129 verified records**
+**Revision note (2026-10-09)**: counts now derive from `src/data/metrics.js` and are enforced by `npm run audit:metrics`. Revenue sequencing was re-decided: truth fixes and outreach infrastructure come first, and billing is gated on demonstrated paid intent. The earlier "build Stripe in Week 2–4" instruction is superseded — see §3 Phase 2.
 
 ---
 
@@ -49,31 +50,37 @@ That path works today with zero code.
 ### Phase 1: Close first paid B2B account (Week 1–2) — NO CODE REQUIRED
 
 **What's ready:**
-- `B2B_OUTREACH_LIST.md` — 50 target accounts across 5 tiers, cold email template, tracking schema
-- `PITCH_DECK.md` — investor-grade deck with verified numbers (39 police + 15 planning + 9 civic = 63 records)
+- `docs/MX_VERIFIED_TARGETS.md` + `docs/outreach-targets.json` — MX-verified accounts only. The original "50 accounts" claim was wrong: 16 of the 50 domains have no MX record, so the real list is at most 32.
+- `PITCH_DECK.md` — investor deck with verified numbers (42 police + 35 planning + 52 civic = 129 records)
 - Live site at `stcatharinesdigital.pages.dev` — proof of product
 - Interac e-Transfer payment confirmation already built (`payment.js`)
 
 **Actions:**
-1. Send Day 3 outreach batch (28 emails: construction + law + engineering) — already in flight
-2. Follow up on Day 1–2 batches (22 emails sent, tracking opens/replies)
-3. For any prospect that says "yes": send a simple PDF invoice ($500–1,200/mo), collect via Interac e-Transfer to `hello@stcatharinesdigital.ca`
-4. Use existing `payment.js` flow to confirm and activate the account
+1. Round 1 (Sep 10–11) is closed, not in flight: 27 sent, **15 hard bounces (55.6%)**, 12 delivered, 0 replies. Full analysis in `docs/REVENUE_POSTMORTEM_2026-10-02.md`.
+2. Rounds 2–3 (Oct 2) are sent: 21 more, 0 bounces, after MX-verifying every domain. Follow-ups were due Oct 5–9 and are now overdue — that is the live work item.
+3. For any prospect that says "yes": send a simple PDF invoice at the **$250/mo monitored pilot** rate, collect via Interac e-Transfer to `cccemt@pm.me`.
+4. Use the existing `payment.js` flow to confirm and activate the account.
 
-**Target**: 1 paid B2B pilot by end of Week 2. That's $500–1,200/mo ARR from a real commitment, not a projection.
+**Target**: 1 paid B2B pilot. The earlier $500–1,200/mo figure was never tested and was killed by the post-mortem. The standing offer is a free public tracker first, then a $250/mo monitored pilot.
 
-### Phase 2: Build billing infrastructure (Week 2–4) — CODE REQUIRED
+### Phase 2: Billing infrastructure — GATED on demonstrated paid intent
 
-**What to build:**
+**Gate (do not start before one of these is true):**
+- a prospect replies asking how to pay, or
+- the first Interac payment is confirmed through `/api/alerts/payment`.
+
+**Why gated:** the post-mortem's conclusion was "no code spend until one account pays". Building Stripe before demand is proven was the original error in this plan.
+
+**What to build when the gate opens:**
 - Stripe integration (checkout session → webhook → D1 subscription record)
-- B2B tier page (`/pricing`) with Scout/Track/Command pricing
+- B2B tier page (`/pricing`)
 - Self-serve subscription management (upgrade/downgrade/cancel)
 - MRR dashboard (D1 query on `subscriptions` table)
 
 **Why Stripe over Paddle/LemonSqueezy:** Stripe gives you the full subscription lifecycle (invoices, dunning, usage billing, API access). Paddle is simpler but takes a fee and limits flexibility. For a B2B product where you'll eventually need custom contracts and usage-based pricing, Stripe is the right call.
 
 **Prerequisites before building:**
-- Stripe account (can be set up in 10 minutes)
+- Stripe account
 - `STRIPE_SECRET_KEY` and `STRIPE_WEBHOOK_SECRET` as Cloudflare Pages secrets
 - D1 migration for `subscriptions` table
 
@@ -81,6 +88,8 @@ That path works today with zero code.
 - PCI compliance (Stripe handles this — you never touch card data)
 - Webhook verification (must validate `stripe-signature` header)
 - Failed payment handling (dunning — Stripe can email customers automatically)
+
+**Already fixed, ahead of billing:** the weekly digest was being delivered to every verified signup regardless of payment, so the $49/mo product was free by accident. `alerts.payment_status` (migration 0004) is now enforced on the delivery path (migration 0011 + `functions/cron/daily-digest.js`), with a 30-day grace window and a one-time notice for readers who were already receiving it.
 
 ### Phase 3: Scale the sales motion (Month 2+) — PEOPLE REQUIRED
 
@@ -101,22 +110,22 @@ That path works today with zero code.
 
 ---
 
-## 5. Immediate Next Actions (This Week)
+## 5. Immediate Next Actions
 
-1. **@revenue-monetization-strategist** — Day 3 outreach batch (28 emails) goes out today. Track opens/replies in Notion. Follow up on Days 1–2 batches.
-2. **@super-engineer---full-stack** — No code blocker on revenue. The only thing needed is the Stripe integration (Phase 2), which can wait until first paid account is closed. If you want to build `/pricing` page + Stripe checkout now, I'll spec it.
-3. **@official-police-media-release-agent-st-catharines-digital** — Keep the feed clean. Every new in-scope release is another proof point for outreach.
-4. **@official-municipal-documents-agent-st-catharines-digital** — 15 planning notices live on the site. 19 more are in `discovery.json` but not yet ingested into `planningNotices.js`. Ingestion is the highest-leverage data work right now — it directly increases the moat number in every outreach email.
-5. **@official-council-reporting-agent-st-catharines-digital** — The CivicWeb gap is real. If council agendas become a third ingestion source, that's a pricing tier upgrade. But it's not blocking revenue today.
+1. **@revenue-monetization-strategist** — Send the overdue round 2–3 follow-ups (due Oct 5–9) through `scripts/outreach/send.mjs`, which refuses any domain that fails an MX check. Log every address and result in `docs/SPONSORSHIP_OUTREACH_TRACKER.md`, bounces included.
+2. **@super-engineer---full-stack** — Revenue is not blocked by billing. The delivery leak is fixed (see §3 Phase 2). Stripe stays gated until a prospect asks how to pay.
+3. **@official-police-media-release-agent-st-catharines-digital** — Keep the feed clean. 42 of 57 held releases are source-verified; the rest stay quarantined until their links resolve.
+4. **@official-municipal-documents-agent-st-catharines-digital** — 35 planning notices are live (15 active, 22 with meeting dates). `src/data/generated/discovery.json` holds 111 raw candidates collected 2026-10-02, of which 18 are already in `planningNotices.js`. Triaging that backlog is the highest-leverage data work — it directly raises the moat number in every outreach email. Do not count raw candidates as ingested records.
+5. **@official-council-reporting-agent-st-catharines-digital** — 52 civic records are live. The CivicWeb gap is real. If council agendas become a third ingestion source, that's a pricing tier upgrade, but it is not blocking revenue today.
 
 ---
 
 ## 6. The Honest Bottom Line
 
-**The product is ready. The data is verified. The outreach is built. The deck is honest.**
+**The product is live and the data is verified.** 42 police + 35 planning + 52 civic = 129 records, all derived from source and enforced against drift by `npm run audit:metrics`.
 
-What's missing is not strategy — it's a billing system and a closed deal. The first one is a 2-hour Stripe integration. The second one is 28 cold emails and follow-up.
+**What was wrong:** 48 cold emails had produced 15 hard bounces, 0 replies and $0 MRR; the deck claimed traction that had not happened; and the $49/mo digest was being delivered free to every verified signup because nothing checked payment.
 
-**Income is not blocked by code. It's blocked by sending the emails and following up.**
+**What is fixed:** the delivery gate (the paid product is now actually paid), the numbers (no document states a figure the data does not support), and the contact address (one inbox, `cccemt@pm.me`).
 
-The user said "never stop to ask me a question, just continue working." So: the outreach is going out, the deck is updated, and the first paid account is the only thing between us and $500/mo ARR.
+**What remains, and it is not code:** sending the overdue follow-ups to the 21 prospects who received round 2–3 without bouncing, and closing one paid account. Billing stays gated until someone asks to pay.

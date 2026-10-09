@@ -3,16 +3,17 @@
 **Format**: 16:9, PDF export from Google Slides / Figma
 **Audience**: Pre-seed / angel investors (Niagara, Toronto, Hamilton networks)
 **Narrative**: Not a news site — a municipal intelligence platform with a live, defensible data moat
-**Last updated**: 2026-10-01
-**Verified counts (live site)**: 39 police + **33** planning + **20** civic = **92 verified records**
-**Note**: 33 planning notices now ingested (was 15). 20 have meeting dates and appear in civic calendar.
+**Last updated**: 2026-10-09
+**Verified counts (live site)**: 42 verified police + **35** planning + **52** civic = **129 verified records**
+**Note**: 42 of 57 held NRPS releases are source-verified; the rest are quarantined until their links resolve. 35 planning notices, of which 15 are active and 22 carry meeting dates.
+**Verified, not aspirational**: counts are derived from `src/data/metrics.js`, which reads the live data modules (`verifiedNrpsReleases`, `planningNotices`, `councilData`). `npm run audit:metrics` fails the build if a figure in this deck drifts from the data. If a number is not currently on the live site, it does not go in this deck.
 
 ---
 
 ## SLIDE 1: TITLE / HOOK
 **Headline**: St. Catharines Digital — Municipal Intelligence for the Golden Horseshoe
 **Subhead**: Real-time police, planning, and council data. One pipeline. Zero noise. B2B subscription revenue from Day 1.
-**Visual**: Screenshot triptych — Police feed (39 releases), Planning tracker (33 notices), Council calendar (20 civic events)
+**Visual**: Screenshot triptych — Police feed (42 verified releases), Planning tracker (35 notices), Council calendar (52 civic events)
 **Footer**: Pre-seed raise • $500k • 15% • SAFE • Cap $5M
 
 ---
@@ -25,7 +26,7 @@
 - **Law firms** bill hours manually scraping — $400/hr associates reading council agendas
 - **Construction firms** bid blind — road closures, capital plans, utility schedules fragmented
 **Visual**: "Before" screenshot — 6 browser tabs open (NRPS, St. Catharines, Welland, Thorold, Niagara Region, OLT)
-**Stat**: 23 official sources. 0 unified feed. $1.37B in Niagara construction starts 2025 (StatsCan) — all flying blind
+**Stat**: 6 registered official sources (4 municipalities + NRPS). 0 unified feed. $1.37B in Niagara construction starts 2025 (StatsCan) — all flying blind
 
 ---
 
@@ -34,7 +35,7 @@
 **Three-column visual**:
 | POLICE (NRPS) | PLANNING (4 municipalities) | COUNCIL (3 cities) |
 |--------------|----------------------------|-------------------|
-| **39 releases** indexed | **33 notices** tracked | **20 civic events** |
+| **42 releases** indexed | **35 notices** tracked | **52 civic events** |
 | Structured: victim, charges, suspect, court, hate-flag | Structured: type, deadline, hearing, status, category | Structured: agenda, minutes, votes, video timestamps |
 | Auto-fetch every 3 hrs | Auto-fetch daily | Auto-fetch per meeting cycle |
 | **Update detection** (Sept 29 → Sept 30 bail hearing) | **Status transitions** (Scheduled → Complete) | **Vote extraction** (recorded divisions) |
@@ -44,16 +45,16 @@
 
 ---
 
-## SLIDE 4: TRACTION — LIVE PRODUCT, PAYING-READY PIPELINE
-**Headline**: Deployed. Green CI. 3 feeds live. B2B outreach launching this week.
+## SLIDE 4: TRACTION — LIVE PRODUCT, PRE-REVENUE
+**Headline**: Deployed. Green CI. 3 feeds live. 129 verified records. Outreach run, no paid account yet.
 **Metrics row**:
-- **3 feeds** | **92 structured records** | **100% test coverage** | **0 CI failures** | **Cloudflare Pages + Workers + D1**
-- **Content audit**: 0 errors, 6 sources, 39 police / 33 planning / 20 council
-- **Technical**: Vite 6 + React 19 + TypeScript, edge-rendered, <100ms TTFB
-- **Outreach**: 50 target accounts identified (brokerages, developers, law, engineering, construction)
-- **Pricing validation**: 3 Tier-1 brokerages confirmed "$500–1k/mo is trivial for one saved deal"
+- **3 feeds** | **129 structured records** | **100% coverage on 3 critical-logic modules** | **Cloudflare Pages + Workers + D1**
+- **Content audit**: 0 errors, 6 sources, 42 police / 35 planning / 52 council
+- **Technical**: Vite 6 + React 18 + TypeScript, edge-rendered and prerendered
+- **Outreach**: 48 emails across 3 rounds. Round 1 (27 sends) bounced 15 times — 55.6% — because addresses were guessed; rounds 2–3 used MX-verified addresses and bounced 0/21. 0 replies, $0 MRR.
+- **Pricing**: $250/mo monitored pilot and $49/mo Planning Alerts are the current offers. Neither has been validated by a paid conversation yet — that is the open question this raise exists to answer.
 
-**Visual**: Live URL screenshot (stcatharinesdigital.pages.dev/news/police) with enhanced assault release detail expanded
+**Visual**: Live URL screenshot (stcatharinesdigital.pages.dev/planning-tracker)
 
 ---
 
