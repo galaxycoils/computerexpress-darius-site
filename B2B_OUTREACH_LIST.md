@@ -1,8 +1,18 @@
-# St. Catharines Digital — B2B Outreach Target List (50 Accounts)
+# St. Catharines Digital — B2B Outreach Target List
 
-**Product**: Municipal Intelligence Platform — real-time police, planning, and council data for Niagara/Hamilton/GTA
-**Pitch**: Early signal on zoning, safety, infrastructure, court outcomes — coverage breadth no generic news site replicates
-**Pricing anchor**: $500–2,000/mo per seat (tiered by firm size & data depth)
+> **Status (2026-10-09): superseded as a send list.** The machine-readable list is
+> `docs/outreach-targets.json`, gated by `npm run outreach:mx`. This document is kept
+> for the tier rationale and the per-firm buyer-need notes.
+>
+> **Correction:** the "50 accounts" claim in the original title was wrong. 16 of the 50
+> domains have no MX record, so at most 32 were ever reachable — see
+> `docs/MX_VERIFIED_TARGETS.md`. Rounds 1–3 sent 48 emails; round 1 bounced 15 of 27
+> (55.6%) because addresses were guessed.
+
+**Product**: Municipal Intelligence Platform — planning, council and infrastructure data for Niagara/Hamilton/GTA
+**Pitch**: Early signal on zoning decisions, closures and submission deadlines — coverage breadth no generic news site replicates
+**Pricing**: free public tracker → **$250/mo monitored pilot**. The $500–2,000/mo per-seat anchor below was never tested and was withdrawn on 2026-10-02.
+**Never**: guess an address. Every send passes `npm run outreach:mx` first.
 
 ---
 
@@ -104,42 +114,87 @@
 - **Day 4-5**: Follow-up calls to Tier 1 (brokerages) — highest ACV, shortest sales cycle
 
 ### Week 2: Momentum
-- **Day 6-7**: Follow-up emails (value-add: "Here's what the Sept 30 assault case means for St. Paul St retail")
-- **Day 8**: LinkedIn connection requests + content shares (police/planning/council screenshots)
-- **Day 9-10**: Booked demo calls → qualify → propose pilot ($500/mo, 30-day, cancel anytime)
+- **Day 6-7**: Follow-up emails — value-add: "the Oct 19 appeal deadline on 1262-1290 Fourth Ave, plus two new closures this week"
+- **Day 8**: LinkedIn connection requests + content shares (planning / council / closure records, never police incidents)
+- **Day 9-10**: Booked demo calls → qualify → propose pilot ($250/mo, 30-day, cancel anytime)
 
 ---
 
-## COLD EMAIL TEMPLATE (personalized per tier)
+## COLD EMAIL — GENERATED, NOT TYPED
 
-**Subject**: St. Catharines planning intel — [Firm Name] / [Recipient Name]
+The body below is illustrative. Do not hand-edit an opening line into a send script:
+the hook is generated from live data by `scripts/outreach/send.mjs`, which reads
+`src/data/planningNotices.js` and picks the nearest upcoming deadline in a category a
+buyer acts on (official plan amendment, zoning, variance, consent, closure, construction).
+
+That is deliberate. The previous hand-written hook named a Sept 30 bail hearing; by the
+time the batch went out the hook was stale and irrelevant to the buyer.
+
+Preview the current hook and rendered email without sending anything:
+
+```bash
+npm run outreach:preview   # MX gate + rendered email, sends nothing
+npm run outreach:mx        # verify every queued domain has a mail exchanger
+npm run outreach:send      # guarded send; requires AGENTMAIL_API_KEY
+```
+
+**Subject**: `{municipality} planning notice — {firm}`
 
 **Body**:
 > Hi [Name],
 >
-> Saw the Sept 30 NRPS assault update on St. Paul & Bond — bail hearing at Welch Courthouse, hate-motivation investigation active. That block has three active planning applications within 200m.
+> [Generated hook — a live decision or deadline from our own data.]
 >
-> We aggregate **live police releases + municipal planning notices + council decisions** for St. Catharines, Welland, Thorold, Niagara Region — one feed, zero noise. Brokerages (Cushman, CBRE), developers (Mattamy, Losani), and law firms (Aird, WeirFoulds) use it to spot zoning risk, infrastructure timing, and market signals weeks before public notices hit.
+> We publish every planning notice, council decision, road closure and public consultation for St. Catharines, Welland, Thorold and Niagara Region — one feed, each record linked to its official municipal source, each carrying its submission deadline and meeting date.
 >
-> 30-day pilot: $500/mo, full access, cancel anytime. Live demo takes 10 mins.
+> Free public tracker, no signup: https://stcatharinesdigital.pages.dev/planning-tracker
+>
+> Raw feed for your own pipeline is free. A monitored version with advance notice before each deadline is $250/mo monitored pilot, 30 days, cancel anytime.
 >
 > Worth a look?
->
-> [Your Name]
-> St. Catharines Digital
-> stcatharinesdigital.ca
 
 ---
 
-## TRACKING SHEET (Notion/Airtable columns)
-| Firm | Tier | Contact | Email | LinkedIn | Sent Date | Opened | Replied | Call Booked | Pilot Started | MRR |
-|------|------|---------|-------|----------|-----------|--------|---------|-------------|---------------|-----|
+## ⛔ RETIRED — do not reuse this template (2026-10-02)
+
+The previous version opened with *"Saw the Sept 30 NRPS assault update on St. Paul & Bond — bail hearing at Welch Courthouse, hate-motivation investigation active. That block has three active planning applications within 200m."*
+
+**Killed for three reasons:**
+
+1. **Wrong buyer.** A police incident is not intelligence to a land acquisition director, contractor, or municipal lawyer. It was our least relevant dataset doing the most prominent work in the pitch.
+2. **Structural flaw.** An arrest story expires when the bail hearing concludes — often day two. It cannot anchor a week-long sales motion.
+3. **Copy guard (@official-police-media-release-agent).** Every NRPS fact in buyer-facing copy must be verbatim from the release, and police-desk material must not imply we publish individual locations. A "within 200m" proximity claim about a specific block is exactly the kind of editorial inference the desk does not make.
+
+**Standing rule for buyer-facing copy:** lead with a **planning decision, a closure, or a deadline** from `planningNotices`. Those are the records that have a long shelf life, a hard date, and a named buyer who acts on them. Police releases build the news brand; they do not sell a subscription.
+
+If a police item is wanted as a hook, it must be quotable verbatim and must still expire slowly — the Oct 2 public assistance request (open tip line, live for weeks) qualifies where a resolved arrest does not.
 
 ---
 
-## SUCCESS METRICS (Week 2)
-- **Open rate**: >40% (cold B2B benchmark ~25%)
-- **Reply rate**: >10% (target 5+ conversations)
-- **Demos booked**: 8+
-- **Pilots started**: 3+ ($1,500 MRR pipeline)
-- **CAC target**: <$500 (time-only, no ad spend)
+## TRACKING SHEET
+
+Superseded by `docs/outreach-targets.json` (status per target) and
+`docs/outreach-log.jsonl` (every attempt, appended automatically by the sender).
+`docs/SPONSORSHIP_OUTREACH_TRACKER.md` holds the narrative log.
+
+---
+
+## SUCCESS METRICS
+
+Targets below were written before the first send and are kept for comparison.
+
+| Metric | Target | Actual after 3 rounds (2026-10-02) |
+|---|---|---|
+| Emails sent | 30 | 48 |
+| Hard bounces | ~1 assumed | **15 (31% cumulative; 55.6% in round 1)** |
+| Delivered | 26 | 33 |
+| Substantive replies | ≥10 | **0** |
+| Demos booked | 8 | **0** |
+| Pilots started | 3 | **0** |
+| MRR | — | **$0** |
+| CAC | <$500 | n/a — no acquisition yet |
+
+**What the gap means:** the failure was not volume, it was address hygiene and buyer
+relevance. Rounds 2–3 fixed both (0/21 bounced, planning-deadline hook) but the follow-ups
+due Oct 5–9 were never sent. Reply rate is the only metric that matters until it is
+non-zero.
