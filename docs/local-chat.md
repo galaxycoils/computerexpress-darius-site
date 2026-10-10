@@ -11,7 +11,9 @@ the requested model, or send chat messages to `/api/chat`.
 1. “Ask SC Digital” opens an accessible native dialog. No model host, inference
    runtime or WASM asset is requested when the page loads or the dialog opens.
 2. “Check browser & model files” checks secure context, native WebAssembly JSPI
-   and Memory64, and a hardware WebGPU adapter before requesting model metadata.
+   and Memory64, and a hardware WebGPU adapter with `shader-f16` before requesting
+   model metadata. The pinned WebGPU backend requires this float16 feature;
+   WebGPU availability alone is insufficient.
 3. The file picker lists complete GGUF variants with known total download sizes.
    Q4_K_M is preferred when available. Split GGUF sets must contain every shard.
    Download URLs are pinned to the immutable repository SHA returned by the API.
@@ -19,7 +21,9 @@ the requested model, or send chat messages to `/api/chat`.
    the selected model in the browser. The WASM is served from our own built
    assets. All GPU layers are requested; compatibility/CPU-only engines are not
    substituted. The pinned native backend's GPU offload status is checked; a
-   model that loads without GPU layers is rejected and freed. Native diagnostics
+   model that loads without GPU layers is rejected and freed. Wllama forwards
+   native INFO messages through its debug logger, including the GPU offload
+   confirmation. All logger channels observe only that confirmation. Native diagnostics
    and prompt/reply text are not logged. A missing chat template is an actionable
    error, not guessed.
 5. Replies stream as plain text, with a stop control. The assistant receives up

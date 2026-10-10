@@ -12,7 +12,7 @@ beforeEach(() => {
   vi.clearAllMocks();
   mocks.engine = {
     setCompat: vi.fn(), modelManager: { getModelOrDownload: vi.fn().mockResolvedValue({}), getModels: vi.fn().mockResolvedValue([]) },
-    loadModel: vi.fn().mockImplementation(async () => Wllama.mock.calls.at(-1)[1].logger.log("load_tensors: offloaded 40/40 layers to GPU")), getChatTemplate: vi.fn().mockReturnValue("chat template"),
+    loadModel: vi.fn().mockImplementation(async () => Wllama.mock.calls.at(-1)[1].logger.debug("load_tensors: offloaded 40/40 layers to GPU")), getChatTemplate: vi.fn().mockReturnValue("chat template"),
     createChatCompletion: vi.fn(), exit: vi.fn().mockResolvedValue(),
   };
 });

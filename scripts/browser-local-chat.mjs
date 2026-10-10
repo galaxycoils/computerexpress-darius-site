@@ -104,7 +104,11 @@ try {
     await expect(dialog).not.toBeVisible();
     await expect(page.getByRole("button", { name: "Ask SC Digital" })).toBeFocused();
     await page.getByRole("button", { name: "Ask SC Digital" }).click();
-    await page.evaluate(() => Object.defineProperty(navigator, "gpu", { configurable: true, value: { requestAdapter: async () => ({ info: { isFallbackAdapter: false } }) } }));
+    await page.evaluate(() => Object.defineProperty(navigator, "gpu", { configurable: true, value: { requestAdapter: async () => ({ info: { isFallbackAdapter: false }, features: new Set() }) } }));
+    await page.getByRole("button", { name: "Check browser & model files" }).click();
+    await expect(page.getByRole("alert")).toContainText("shader-f16");
+    assert.equal(requests.some((url) => url.includes("huggingface.co")), false, "A GPU without float16 support never contacts the model host");
+    await page.evaluate(() => Object.defineProperty(navigator, "gpu", { configurable: true, value: { requestAdapter: async () => ({ info: { isFallbackAdapter: false }, features: new Set(["shader-f16"]) }) } }));
     await page.getByRole("button", { name: "Check browser & model files" }).click();
     await expect(page.getByLabel("Model download")).toBeVisible();
     await expect(dialog.getByRole("option")).toHaveText("Q4_K_M · 5.00 GB · 10 files");

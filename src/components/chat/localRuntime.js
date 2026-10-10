@@ -1,8 +1,6 @@
 import { CacheManager, Wllama } from "@wllama/wllama/esm/index.js";
 import wasmUrl from "@wllama/wllama/esm/wasm/wllama.wasm?url";
 
-const quiet = () => {};
-
 export async function clearModelCache() {
   await new CacheManager().clear();
 }
@@ -11,6 +9,7 @@ export function createLocalSession() {
   let gpuOffloaded = false;
   // The pinned llama.cpp backend reports the actual GPU layer offload. Observe
   // this one status line without logging prompts, replies or native diagnostics.
+  // Wllama's worker maps native INFO messages to the logger's debug channel.
   const observe = (...args) => {
     const count = args.filter((value) => typeof value === "string").join(" ")
       .match(/offloaded\s+(\d+)\/\d+\s+layers to GPU/i);
@@ -19,7 +18,7 @@ export function createLocalSession() {
   const engine = new Wllama({ default: wasmUrl }, {
     suppressNativeLog: false,
     parallelDownloads: 2,
-    logger: { debug: quiet, log: observe, warn: observe, error: observe },
+    logger: { debug: observe, log: observe, warn: observe, error: observe },
   });
   // Native WebGPU/Memory64 only: don't silently download compatibility engines
   // or replace the requested model with a server or a CPU-only implementation.

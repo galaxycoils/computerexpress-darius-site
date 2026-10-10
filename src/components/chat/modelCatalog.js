@@ -81,5 +81,8 @@ export async function checkBrowserSupport(browser = globalThis) {
   if (!adapter || adapter.info?.isFallbackAdapter || adapter.isFallbackAdapter) {
     throw new Error("A hardware WebGPU adapter is unavailable. Enable hardware acceleration or try another device.");
   }
+  if (!adapter.features?.has("shader-f16")) {
+    throw new Error("This GPU does not support the shader-f16 feature required by the local model. Update your browser and graphics driver, or try another desktop GPU.");
+  }
   return adapter;
 }

@@ -73,7 +73,7 @@ describe("requested model catalog", () => {
 });
 
 describe("WebGPU preflight", () => {
-  function browser(adapter = {}) {
+  function browser(adapter = { features: new Set(["shader-f16"]) }) {
     return {
       isSecureContext: true,
       navigator: { gpu: { requestAdapter: vi.fn().mockResolvedValue(adapter) } },
@@ -98,9 +98,14 @@ describe("WebGPU preflight", () => {
     }
   });
   it("returns the real adapter without allocating a device or downloading anything", async () => {
-    const adapter = { limits: { maxBufferSize: 1_000_000_000 } };
+    const adapter = { features: new Set(["shader-f16"]), limits: { maxBufferSize: 1_000_000_000 } };
     const b = browser(adapter);
     expect(await checkBrowserSupport(b)).toBe(adapter);
     expect(b.navigator.gpu.requestAdapter).toHaveBeenCalledWith({ powerPreference: "high-performance" });
+  });
+  it("rejects GPUs without the backend's required float16 feature", async () => {
+    for (const adapter of [{}, { features: new Set(["subgroups"]) }]) {
+      await expect(checkBrowserSupport(browser(adapter))).rejects.toThrow("shader-f16");
+    }
   });
 });
