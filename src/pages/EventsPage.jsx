@@ -1,3 +1,4 @@
+import PageHeading from "../components/journal/PageHeading";
 import UiIcon from "../components/journal/UiIcon";
 import { useState } from "react";
 import { Link, useParams, useSearchParams } from "react-router-dom";
@@ -71,13 +72,10 @@ export default function EventsPage() {
         path="/events"
       />
       <div className="scd-page journal-page">
-        <header className="journal-page-heading">
-          <p className="journal-kicker">Show up. Have a say.</p>
-          <h1>
-            Make a little room
-            <br />
-            for local.
-          </h1>
+        <PageHeading
+          kicker="Show up. Have a say."
+          title={<>Make a little room<br />for local.</>}
+        >
           <p>
             Municipal meetings and hearings, in one place. Confirm details with
             the organizer before attending.
@@ -85,7 +83,7 @@ export default function EventsPage() {
           <a className="journal-link" href="https://events.stcatharines.ca/">
             Looking for community events? Visit the city calendar <UiIcon name="external" size={16} />
           </a>
-        </header>
+        </PageHeading>
         <div className="journal-filters">
           <label>
             City
@@ -245,13 +243,10 @@ export function EventPage() {
         <Link className="journal-link" to="/events">
           ← Civic calendar
         </Link>
-        <header className="journal-page-heading">
-          <p className="journal-kicker">
-            {event.municipality} /{" "}
-            {past ? "Past scheduled date" : "Upcoming scheduled date"}
-          </p>
-          <h1>{event.title}</h1>
-        </header>
+        <PageHeading
+          kicker={`${event.municipality} / ${past ? "Past scheduled date" : "Upcoming scheduled date"}`}
+          title={event.title}
+        />
         <div className="journal-prose">
           <dl>
             <dt>Date</dt>

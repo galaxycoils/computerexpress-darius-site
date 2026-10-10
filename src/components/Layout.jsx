@@ -213,18 +213,9 @@ export default function Layout() {
             >
               Stay in the know <UiIcon name="external" size={17} />
             </Link>
-            <button
-              className="journal-menu-button"
-              type="button"
-              ref={menuButton}
-              aria-expanded={menu}
-              aria-controls="journal-mobile-menu"
-              onClick={() => setMenu(!menu)}
-            >
-              {menu ? "Close" : "Menu"}{" "}
-              <UiIcon name={menu ? "close" : "menu"} size={17} />
-            </button>
           </div>
+        </header>
+        <div className="journal-navigation">
           <div className="journal-nav-wrap">
             <nav className="journal-nav" aria-label="Primary">
               {SECTIONS.map(([path, label]) => (
@@ -253,6 +244,17 @@ export default function Layout() {
                 <UiIcon />
               </Link>
             </div>
+            <button
+              className="journal-menu-button"
+              type="button"
+              ref={menuButton}
+              aria-expanded={menu}
+              aria-controls="journal-mobile-menu"
+              onClick={() => setMenu(!menu)}
+            >
+              {menu ? "Close" : "Menu"}{" "}
+              <UiIcon name={menu ? "close" : "menu"} size={17} />
+            </button>
           </div>
           {menu && (
             <nav
@@ -294,7 +296,7 @@ export default function Layout() {
               </div>
             </nav>
           )}
-        </header>
+        </div>
         <SavedStoriesAnnouncement />
         <main id="main-content" className="scd-main" tabIndex="-1">
           <ErrorBoundary inline resetKey={location.pathname}>

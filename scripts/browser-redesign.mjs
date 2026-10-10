@@ -111,6 +111,14 @@ try {
         () => document.documentElement.scrollWidth > window.innerWidth + 1,
       );
       assert.equal(overflow, false, `Horizontal overflow ${width}px ${route}`);
+      if (route === "/") {
+        const aligned = await page.evaluate(() => {
+          const navigation = document.querySelector(".journal-nav-wrap").getBoundingClientRect();
+          const content = document.querySelector(".journal-home").getBoundingClientRect();
+          return Math.abs(navigation.left - content.left) < 1 && Math.abs(navigation.right - content.right) < 1;
+        });
+        assert.equal(aligned, true, `Navigation shares the page gutters at ${width}px`);
+      }
       report.push({ width, route, pass: true });
     }
     await page.goto(base + "/", { waitUntil: "networkidle" });
@@ -188,6 +196,12 @@ try {
   );
   await page.screenshot({ path: `${artifacts}/home-dark.png`, fullPage: true });
   await page.setViewportSize({ width: 390, height: 844 });
+  await page.evaluate(() => window.scrollTo(0, 1000));
+  assert.equal(
+    await page.locator(".journal-navigation").evaluate(element => Math.round(element.getBoundingClientRect().top)),
+    0,
+    "Section navigation stays available while reading",
+  );
   await page.getByRole("button", { name: "Menu", exact: true }).click();
   await expect(
     page.getByRole("navigation", { name: "Mobile navigation" }),
@@ -216,6 +230,25 @@ try {
     await page.getByRole("navigation", { name: "Mobile navigation" }).count(),
     0,
   );
+  await page.getByLabel("Colour theme").selectOption("light");
+  await page.goto(base + "/planning-tracker/", { waitUntil: "networkidle" });
+  const tableRecords = await page.locator(".planning-table tbody tr").count();
+  assert.ok(tableRecords > 0);
+  await page.getByRole("button", { name: "Card view", exact: true }).click();
+  assert.equal(await page.locator(".notice-card").count(), tableRecords);
+  await page.getByRole("button", { name: "Table view", exact: true }).click();
+  await expect(page.getByRole("region", { name: "Planning notices table" })).toBeVisible();
+  await page.goto(base + "/reader-services/", { waitUntil: "networkidle" });
+  await expect(page.getByRole("link", { name: /Open RSS feed/ })).toHaveAttribute("href", "/rss.xml");
+  await page.getByLabel("Colour theme").selectOption("dark");
+  await page.emulateMedia({ media: "print" });
+  assert.equal(
+    await page.locator("main h1").evaluate(element => getComputedStyle(element).color),
+    "rgb(0, 0, 0)",
+    "Dark mode produces legible printed headings",
+  );
+  await expect(page.locator(".journal-navigation")).not.toBeVisible();
+  await page.emulateMedia({ media: "screen" });
   await page.getByLabel("Colour theme").selectOption("light");
   await page.goto(base + "/news/", { waitUntil: "networkidle" });
   await page.getByRole("searchbox").fill("unfindable-test-query");
@@ -349,6 +382,10 @@ try {
           "calendar download",
           "dark theme",
           "mobile menu/escape",
+          "sticky reading navigation",
+          "planning table/card views",
+          "reader RSS destination",
+          "dark-mode print legibility",
           "no-results",
           "keyboard skip link",
           "mobile city editions",
@@ -364,7 +401,7 @@ try {
     ),
   );
   console.log(
-    `Browser QA passed: ${report.length} responsive page checks and 13 reader journeys.`,
+    `Browser QA passed: ${report.length} responsive page checks and 17 reader journeys.`,
   );
 } finally {
   await browser.close();

@@ -1,5 +1,6 @@
 import { useState, useMemo } from "react";
 import { Link } from "react-router-dom";
+import PageHeading from "../components/journal/PageHeading";
 import Seo, { BASE_URL } from "../components/Seo";
 import {
   planningNotices,
@@ -212,36 +213,33 @@ export default function PlanningTrackerPage() {
           <span aria-hidden="true">/</span>
           <span aria-current="page">Planning tracker</span>
         </nav>
-        <header className="page-header">
-          <div className="container">
-            <h1>Planning & Development Tracker</h1>
-            <p className="page-subtitle">
-              Official notices from St. Catharines, Welland, Thorold, and
-              Niagara Region. Sourced exclusively from municipal websites.
-              Dates and statuses may change; check the linked municipal notice.
-            </p>
-            <div className="stats-bar">
-              <div className="stat">
-                <span className="stat-value">{stats.total}</span>
-                <span className="stat-label">Total Notices</span>
-              </div>
-              <div className="stat">
-                <span className="stat-value">{stats.active}</span>
-                <span className="stat-label">Active</span>
-              </div>
-              <div className="stat">
-                <span className="stat-value">{stats.upcomingMeetings}</span>
-                <span className="stat-label">Upcoming Meetings</span>
-              </div>
-              <div className="stat">
-                <span className="stat-value">
-                  {Object.keys(stats.byMunicipality).length}
-                </span>
-                <span className="stat-label">Municipalities</span>
-              </div>
-            </div>
+        <PageHeading kicker="The development desk" title="Planning & Development Tracker">
+          <p className="page-subtitle">
+            Official notices from St. Catharines, Welland, Thorold, and
+            Niagara Region. Sourced exclusively from municipal websites.
+            Dates and statuses may change; check the linked municipal notice.
+          </p>
+        </PageHeading>
+        <div className="stats-bar" role="group" aria-label="Planning notice overview">
+          <div className="stat">
+            <span className="stat-value">{stats.total}</span>
+            <span className="stat-label">Total Notices</span>
           </div>
-        </header>
+          <div className="stat">
+            <span className="stat-value">{stats.active}</span>
+            <span className="stat-label">Active</span>
+          </div>
+          <div className="stat">
+            <span className="stat-value">{stats.upcomingMeetings}</span>
+            <span className="stat-label">Upcoming Meetings</span>
+          </div>
+          <div className="stat">
+            <span className="stat-value">
+              {Object.keys(stats.byMunicipality).length}
+            </span>
+            <span className="stat-label">Municipalities</span>
+          </div>
+        </div>
 
         <div className="container">
           <section
@@ -250,7 +248,7 @@ export default function PlanningTrackerPage() {
           >
             <div className="filter-row">
               <div className="filter-group">
-                <label htmlFor="search" className="visually-hidden">
+                <label htmlFor="search" className="filter-label">
                   Search notices
                 </label>
                 <input
@@ -263,7 +261,7 @@ export default function PlanningTrackerPage() {
                 />
               </div>
               <div className="filter-group">
-                <label htmlFor="municipality" className="visually-hidden">
+                <label htmlFor="municipality" className="filter-label">
                   Filter by municipality
                 </label>
                 <select
@@ -281,7 +279,7 @@ export default function PlanningTrackerPage() {
                 </select>
               </div>
               <div className="filter-group">
-                <label htmlFor="category" className="visually-hidden">
+                <label htmlFor="category" className="filter-label">
                   Filter by category
                 </label>
                 <select
@@ -299,7 +297,7 @@ export default function PlanningTrackerPage() {
                 </select>
               </div>
               <div className="filter-group">
-                <label htmlFor="status" className="visually-hidden">
+                <label htmlFor="status" className="filter-label">
                   Filter by status
                 </label>
                 <select
@@ -317,7 +315,7 @@ export default function PlanningTrackerPage() {
                 </select>
               </div>
               <div className="filter-group filter-sort">
-                <label htmlFor="sort" className="visually-hidden">
+                <label htmlFor="sort" className="filter-label">
                   Sort by
                 </label>
                 <select
@@ -344,10 +342,13 @@ export default function PlanningTrackerPage() {
                 </button>
               </div>
               <div className="filter-group filter-view">
+                <span className="filter-label">Display notices</span>
+                <div className="filter-view-buttons" role="group" aria-label="Notice display">
                 <button
                   className={`view-btn ${viewMode === "table" ? "active" : ""}`}
                   onClick={() => setViewMode("table")}
                   aria-pressed={viewMode === "table"}
+                  aria-label="Table view"
                   title="Table view"
                 >
                   <svg
@@ -369,6 +370,7 @@ export default function PlanningTrackerPage() {
                   className={`view-btn ${viewMode === "cards" ? "active" : ""}`}
                   onClick={() => setViewMode("cards")}
                   aria-pressed={viewMode === "cards"}
+                  aria-label="Card view"
                   title="Card view"
                 >
                   <svg
@@ -384,6 +386,7 @@ export default function PlanningTrackerPage() {
                     <path d="M9 9h6M9 15h4" />
                   </svg>
                 </button>
+                </div>
               </div>
             </div>
             {(search ||

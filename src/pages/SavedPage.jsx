@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import Seo from "../components/Seo";
 import { useSavedStories } from "../components/journal/SavedStories";
 import Story from "../components/journal/Story";
+import PageHeading from "../components/journal/PageHeading";
 import { useState } from "react";
 import { getSearchIndex } from "../data/searchIndex";
 export default function SavedPage() {
@@ -22,14 +23,12 @@ export default function SavedPage() {
         noIndex
       />
       <div className="scd-page journal-page">
-        <header className="journal-page-heading">
-          <p className="journal-kicker">Your reading list</p>
-          <h1>Keep it for later.</h1>
+        <PageHeading kicker="Your reading list" title="Keep it for later.">
           <p>
             Saved in this browser, on this device. Clearing browser data removes
             this list.
           </p>
-        </header>
+        </PageHeading>
         {error && <p role="alert">{error}</p>}
         {canUndo && (
           <div className="journal-reading-notice">

@@ -1,3 +1,4 @@
+import PageHeading from "../components/journal/PageHeading";
 import UiIcon from "../components/journal/UiIcon";
 import { Link, useParams } from "react-router-dom";
 import Seo from "../components/Seo";
@@ -11,18 +12,15 @@ export default function ExplorePage() {
         path="/explore"
       />
       <div className="scd-page journal-page">
-        <header className="journal-page-heading">
-          <p className="journal-kicker">Take the local route</p>
-          <h1>
-            There’s more
-            <br />
-            around the corner.
-          </h1>
+        <PageHeading
+          kicker="Take the local route"
+          title={<>There’s more<br />around the corner.</>}
+        >
           <p>
             Small guides to familiar places and new discoveries. Start here,
             then check the official visitor information.
           </p>
-        </header>
+        </PageHeading>
         <div className="journal-explore-grid">
           {exploreGuides.map((g) => (
             <article className="journal-guide-card" key={g.slug}>
@@ -94,11 +92,9 @@ export function ExploreGuidePage() {
         <Link className="journal-link" to="/explore">
           ← Explore local
         </Link>
-        <header className="journal-page-heading">
-          <p className="journal-kicker">{guide.tag}</p>
-          <h1>{guide.title}</h1>
+        <PageHeading kicker={guide.tag} title={guide.title}>
           <p>{guide.description}</p>
-        </header>
+        </PageHeading>
         <article className="journal-prose">
           {guide.paragraphs.map((p) => (
             <p key={p}>{p}</p>

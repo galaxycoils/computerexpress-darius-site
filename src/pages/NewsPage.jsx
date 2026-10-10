@@ -1,6 +1,7 @@
 import Seo from "../components/Seo";
 import { getNewsMediaSchema } from "../data/schema";
 import NewsFeed from "../components/journal/NewsFeed";
+import PageHeading from "../components/journal/PageHeading";
 export default function NewsPage() {
   return (
     <>
@@ -11,14 +12,12 @@ export default function NewsPage() {
         jsonLd={getNewsMediaSchema()}
       />
       <div className="scd-page journal-page">
-        <header className="journal-page-heading">
-          <p className="journal-kicker">The local record</p>
-          <h1>News, close to home.</h1>
+        <PageHeading kicker="The local record" title="News, close to home.">
           <p>
             Follow your city. Understand the decisions. Go straight to the
             source.
           </p>
-        </header>
+        </PageHeading>
         <NewsFeed />
       </div>
     </>
