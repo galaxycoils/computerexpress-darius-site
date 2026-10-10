@@ -364,11 +364,17 @@ try {
     document.querySelector(".journal-masthead .journal-wordmark").click(),
   );
   await page.waitForURL(base + "/");
+  // SPA URLs update before route rendering and animation-frame scroll effects.
+  await expect(page.locator("main h1")).toHaveText("Your city. Your stories.");
+  await expect.poll(() => page.evaluate(() => window.scrollY)).toBe(0);
   await page.goBack({ waitUntil: "networkidle" });
-  assert.ok(
-    Math.abs((await page.evaluate(() => window.scrollY)) - 600) < 30,
-    "Back restores the reading position",
-  );
+  await expect(page.locator("main h1")).toHaveText("News, close to home.");
+  await expect
+    .poll(
+      async () => Math.abs((await page.evaluate(() => window.scrollY)) - 600),
+      { message: "Back restores the reading position" },
+    )
+    .toBeLessThan(30);
   assert.deepEqual(errors, []);
   await writeFile(
     `${artifacts}/report.json`,

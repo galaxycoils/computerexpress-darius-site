@@ -199,22 +199,22 @@ body {
   font-weight: 700;
 }
 .journal-wordmark {
-  font-family: var(--font-display);
-  font-weight: 600;
-  font-size: clamp(30px, 4vw, 51px);
-  letter-spacing: -0.065em;
-  line-height: 0.98;
-  text-align: center;
-  display: inline-block;
+  display: inline-flex;
+  width: clamp(290px, 34vw, 430px);
+  max-width: 100%;
+  align-items: center;
 }
-.journal-wordmark > span {
+.journal-brand-logo {
   display: block;
-  font-size: 0.64em;
-  letter-spacing: -0.045em;
-  margin-top: 6px;
+  width: 100%;
+  height: auto;
 }
-.journal-brand-dot {
-  color: var(--signal);
+.journal-brand-logo--paper,
+[data-theme="dark"] .journal-brand-logo--ink {
+  display: none;
+}
+[data-theme="dark"] .journal-brand-logo--paper {
+  display: block;
 }
 .journal-button {
   display: inline-flex;
@@ -763,16 +763,11 @@ body {
 }
 .journal-footer-top {
   display: grid;
-  grid-template-columns: 1.5fr 1fr 1fr 1fr;
+  grid-template-columns: minmax(0, 1.5fr) repeat(3, minmax(0, 1fr));
   gap: 40px;
 }
 .journal-footer .journal-wordmark {
-  text-align: left;
-  font-size: 37px;
-  color: #fff;
-}
-.journal-footer .journal-wordmark > span {
-  font-size: 0.7em;
+  width: 290px;
 }
 .journal-footer-top > div > p {
   font-size: 16px;
@@ -1232,9 +1227,6 @@ body {
   .journal-footer-top {
     gap: 25px;
   }
-  .journal-footer .journal-wordmark {
-    font-size: 28px;
-  }
 }
 @media (max-width: 800px) {
   :root, .news-root.journal-root { --page-gutter: 24px; }
@@ -1248,15 +1240,12 @@ body {
     display: none;
   }
   .journal-masthead {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
     padding: 24px 0;
   }
   .journal-wordmark {
-    text-align: center;
-    font-size: 40px;
-  }
-  .journal-wordmark > span {
-    font-size: 0.65em;
+    width: 400px;
+    justify-self: center;
   }
   .journal-subscribe {
     display: none;
@@ -1414,11 +1403,8 @@ body {
     padding: 40px 24px 24px;
   }
   .journal-footer-top {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 35px;
-  }
-  .journal-footer .journal-wordmark {
-    font-size: 34px;
   }
   .journal-footer-bottom {
     flex-direction: column;
@@ -1479,9 +1465,6 @@ body {
   .journal-theme select {
     font-size: 11px;
     max-width: 106px;
-  }
-  .journal-wordmark {
-    font-size: 33px;
   }
   .journal-nav {
     gap: 13px;
@@ -1601,8 +1584,8 @@ body {
   .journal-footer-top > div > a:not(.journal-wordmark) {
     font-size: 13px;
   }
-  .journal-footer .journal-wordmark {
-    font-size: 26px;
+  .journal-footer-top > div:first-child {
+    grid-column: 1 / -1;
   }
   .journal-footer-top > div > p {
     font-size: 14px;

@@ -11,6 +11,7 @@ import {
   SavedStoriesAnnouncement,
 } from "./journal/SavedStories";
 import UiIcon from "./journal/UiIcon";
+import BrandLogo from "./journal/BrandLogo";
 import RouteAccessibility from "./RouteAccessibility";
 import ErrorBoundary from "./ErrorBoundary";
 import { CITIES } from "../data/cities";
@@ -202,10 +203,7 @@ export default function Layout() {
               </time>
             </div>
             <Link className="journal-wordmark" to="/">
-              St. Catharines
-              <span>
-                Digital<span className="journal-brand-dot">.</span>
-              </span>
+              <BrandLogo />
             </Link>
             <Link
               className="journal-button journal-subscribe"
@@ -317,7 +315,7 @@ export default function Layout() {
           <div className="journal-footer-top">
             <div>
               <Link to="/" className="journal-wordmark">
-                St. Catharines<span>Digital.</span>
+                <BrandLogo reversed />
               </Link>
               <p>
                 Close to home.
