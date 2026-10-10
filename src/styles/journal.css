@@ -209,6 +209,25 @@ body {
   width: 100%;
   height: auto;
 }
+.journal-root .journal-chat-launcher {
+  position: fixed;
+  right: 20px;
+  bottom: max(20px, env(safe-area-inset-bottom));
+  z-index: 30;
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 11px 16px;
+  min-height: 46px;
+  background: var(--ink);
+  color: var(--paper);
+  border: 1px solid var(--paper);
+  box-shadow: 0 3px 18px #0002;
+  font-family: var(--font-ui);
+  font-size: 14px;
+  cursor: pointer;
+}
+@media print { .journal-chat-launcher { display: none !important; } }
 .journal-brand-logo--paper,
 [data-theme="dark"] .journal-brand-logo--ink {
   display: none;

@@ -13,7 +13,7 @@ export default function PrivacyPage() {
         <div className="container" style={{ maxWidth: '800px' }}>
           <h1 className="gradient-text" style={{ marginBottom: '2rem' }}>Privacy Policy</h1>
           <div style={{ color: 'var(--text)', lineHeight: '1.8', display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-            <p>Last updated: May 23, 2026</p>
+            <p>Last updated: October 10, 2026</p>
             <p>At St. Catharines Digital, accessible from stcatharinesdigital.ca, privacy matters. This policy explains what we collect and how we use it.</p>
             <h2>Information we collect</h2>
             <p>If you contact us directly, we may receive your name, email address, phone number, message content, website URL, and other details you choose to provide.</p>
@@ -29,6 +29,9 @@ export default function PrivacyPage() {
             <p>We use Google Analytics to understand page views and conversion actions such as form submissions, phone clicks, booking-link clicks, and chat opens. Analytics events do not include form message content, names, email addresses, phone numbers, or other personal details entered into forms.</p>
             <h2>Log Files</h2>
             <p>Hosting providers may collect standard log data such as IP address, browser type, ISP, date and time stamp, referring or exit pages, and click counts. This information is used for administration, security, and performance analysis.</p>
+            <h2>On-device AI chat</h2>
+            <p>The local chat assistant runs a downloaded model in your browser using WebGPU. Chat messages stay in the current tab, are not saved as conversation history and are not sent to our chat server or an AI provider. Closing the tab removes the conversation. The assistant can use public records already included in the site to help answer your question.</p>
+            <p>When you request the model list or download a model, your browser connects to Hugging Face and its file-delivery services. Those providers receive the request and standard network information, including your IP address. Model files are cached in your browser and may be removed using the chat's “Remove downloaded model files” control or your browser's site-storage settings.</p>
           </div>
         </div>
       </section>

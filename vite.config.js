@@ -99,6 +99,7 @@ export default defineConfig({
       output: {
         manualChunks(id) {
           if (id.includes('node_modules')) {
+            if (id.includes('@wllama/wllama')) return 'local-llm';
             if (id.includes('@mlc-ai') || id.includes('@mlc-ai/web-llm')) return 'webllm';
             return 'vendor';
           }

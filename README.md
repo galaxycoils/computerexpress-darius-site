@@ -56,7 +56,7 @@ Do not invent reporting, source dates, event outcomes or membership benefits. Ch
 
 ## Service configuration
 
-Vite supplies a local chat mock. Contact, sponsorship, newsletters and planning alerts use Cloudflare Pages Functions; Vite does not emulate those services. Their browser error states and mocked success journeys can be tested locally without sending real submissions.
+The local chat assistant uses Wllama and WebGPU in the reader's browser. See [local-chat.md](docs/local-chat.md) for model selection, privacy, browser requirements and the remaining real-model checks. Its messages are not sent to the legacy `/api/chat` endpoint or Vite's legacy endpoint mock. Contact, sponsorship, newsletters and planning alerts use Cloudflare Pages Functions; Vite does not emulate those services. Their browser error states and mocked success journeys can be tested locally without sending real submissions.
 
 Live operation requires the appropriate deployed bindings, including `STC_D1`, `AI` and service-specific secrets. Keep local secrets in the ignored `.dev.vars` file or secure environment settings. Never put values in source code. The outreach script requires `AGENTMAIL_API_KEY` from its environment and sends real messages when explicitly run.
 

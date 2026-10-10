@@ -12,6 +12,7 @@ import {
 } from "./journal/SavedStories";
 import UiIcon from "./journal/UiIcon";
 import BrandLogo from "./journal/BrandLogo";
+import LocalChatLauncher from "./chat/LocalChatLauncher";
 import RouteAccessibility from "./RouteAccessibility";
 import ErrorBoundary from "./ErrorBoundary";
 import { CITIES } from "../data/cities";
@@ -374,6 +375,7 @@ export default function Layout() {
             </div>
           </div>
         </footer>
+        <LocalChatLauncher />
       </div>
     </SavedStoriesProvider>
   );

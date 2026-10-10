@@ -14,6 +14,7 @@ export default function UiIcon({ name = "arrow", size = 18, ...props }) {
     ),
     bookmark: <path d="M6 4h12v17l-6-4-6 4V4Z" />,
     check: <path d="m5 12 4 4L19 6" />,
+    chat: <path d="M4 4h16v12H9l-5 4V4Z" />,
     menu: <path d="M4 6h16M4 12h16M4 18h16" />,
     close: <path d="m6 6 12 12M6 18 18 6" />,
     calendar: (
