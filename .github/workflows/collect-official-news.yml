@@ -9,6 +9,11 @@ on:
       - scripts/workflowWatcher.js
       - scripts/publish-candidate.js
       - scripts/candidatePublication.js
+      - scripts/ci-install.mjs
+      - scripts/ciInstall.js
+      - scripts/audit-archive-history.mjs
+      - scripts/archiveHistory.js
+      - .github/actions/**
       - src/data/sourceRegistry.js
       - .github/workflows/collect-official-news.yml
   schedule:
@@ -36,7 +41,7 @@ concurrency:
 
 defaults:
   run:
-    shell: bash
+    shell: bash --noprofile --norc -euo pipefail {0}
 
 jobs:
   collect:
@@ -57,16 +62,12 @@ jobs:
           ref: main
 
       - name: Use Node.js
-        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        uses: ./.github/actions/setup-project
         with:
           node-version: 22
-          cache: npm
-
-      - name: Install locked dependencies
-        run: npm ci --fetch-retries=3 --fetch-retry-mintimeout=1000 --fetch-retry-maxtimeout=10000
 
       - name: Collect from approved official sources
-        shell: bash
+        shell: bash --noprofile --norc -euo pipefail {0}
         run: |
           args=(--dry-run)
           if [ "$MODE" = "write" ]; then
@@ -85,7 +86,7 @@ jobs:
 
       - name: Detect discovery changes
         id: changes
-        shell: bash
+        shell: bash --noprofile --norc -euo pipefail {0}
         run: |
           if [ -n "$(git status --porcelain -- src/data/generated/discovery.json)" ]; then
             echo "changed=true" >> "$GITHUB_OUTPUT"
@@ -95,7 +96,7 @@ jobs:
 
       - name: Verify candidate before publishing discovery update
         if: env.MODE == 'write' && steps.changes.outputs.changed == 'true'
-        shell: bash
+        shell: bash --noprofile --norc -euo pipefail {0}
         run: |
           set -euo pipefail
           git config user.name "stcatharinesdigital-bot"
@@ -123,9 +124,10 @@ jobs:
           trap 'exit 130' INT
           trap 'exit 143' TERM
           validate_candidate() {
-            npm ci --fetch-retries=3 --fetch-retry-mintimeout=1000 --fetch-retry-maxtimeout=10000
+            node scripts/ci-install.mjs
             npm run content:audit
             npm run audit:metrics
+            npm run audit:archives
             npm test
             npm run build
             npm run audit:build
@@ -140,7 +142,7 @@ jobs:
               git switch --detach origin/main
               args=(--write)
               if [ "$SOURCE" != all ]; then args+=(--source "$SOURCE"); fi
-              npm ci --fetch-retries=3 --fetch-retry-mintimeout=1000 --fetch-retry-maxtimeout=10000
+              node scripts/ci-install.mjs
               npm run content:collect -- "${args[@]}"
               validate_candidate
               git add src/data/generated/discovery.json
@@ -189,7 +191,7 @@ jobs:
 
       - name: Ensure the latest snapshot is public
         if: env.MODE == 'write'
-        shell: bash
+        shell: bash --noprofile --norc -euo pipefail {0}
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
@@ -204,8 +206,9 @@ jobs:
             fi
             if [ "$(git rev-parse HEAD)" != "$revision" ] || [ "$built_revision" != "$revision" ]; then
               git switch --detach "$revision"
-              npm ci --fetch-retries=3 --fetch-retry-mintimeout=1000 --fetch-retry-maxtimeout=10000
+              node scripts/ci-install.mjs
               npm run content:audit
+              npm run audit:metrics
               npm test
               npm run build
               npm run audit:build
@@ -258,7 +261,7 @@ jobs:
 
       - name: Summarize source health
         if: always()
-        shell: bash
+        shell: bash --noprofile --norc -euo pipefail {0}
         run: |
           if [ -f collector-report.json ]; then
             jq -r '.sources[] | "- \(.id): \(if .ok then "OK (\(.itemCount) links, \(.datedItems // 0) dated, \(.metadataFailures // 0) metadata fetch failures)" else "FAILED: \(.error)" end)"' collector-report.json >> "$GITHUB_STEP_SUMMARY"

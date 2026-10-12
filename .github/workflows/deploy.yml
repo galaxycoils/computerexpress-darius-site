@@ -1,6 +1,9 @@
 name: Deploy to Cloudflare Pages
 run-name: Deploy ${{ inputs.publication_sha || github.sha }} / ${{ inputs.reason || 'automatic' }}
 
+permissions:
+  contents: read
+
 on:
   # Refresh prerendered dates for readers and crawlers even when no content changed.
   schedule:
@@ -8,10 +11,6 @@ on:
   # Human pushes to main
   push:
     branches: [main]
-    paths-ignore:
-      - "**/*.md"
-      - ".gitignore"
-      - "LICENSE*"
   # Manual production deploy, including dispatch after a collector commit
   workflow_dispatch:
     inputs:
@@ -55,7 +54,7 @@ concurrency:
 
 defaults:
   run:
-    shell: bash
+    shell: bash --noprofile --norc -euo pipefail {0}
 
 jobs:
   deploy:
@@ -82,13 +81,14 @@ jobs:
         with:
           ref: ${{ inputs.publication_sha || github.sha }}
           fetch-depth: 0
+          persist-credentials: false
 
       - name: Verify release belongs to main
         run: git merge-base --is-ancestor HEAD origin/main
 
       - name: Record release revision
         id: release
-        shell: bash
+        shell: bash --noprofile --norc -euo pipefail {0}
         run: |
           set -euo pipefail
           echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
@@ -129,18 +129,25 @@ jobs:
 
       - name: Setup Node
         if: steps.eligibility.outputs.publish == 'true'
-        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        uses: ./.github/actions/setup-project
         with:
           node-version: 22
-          cache: npm
-
-      - name: Install dependencies
-        if: steps.eligibility.outputs.publish == 'true'
-        run: npm ci --fetch-retries=3 --fetch-retry-mintimeout=1000 --fetch-retry-maxtimeout=10000
 
       - name: Content audit
         if: steps.eligibility.outputs.publish == 'true'
         run: npm run content:audit
+
+      - name: Validate workflow definitions
+        if: steps.eligibility.outputs.publish == 'true'
+        uses: ./.github/actions/check-workflows
+
+      - name: Lint, types, identity and archive retention
+        if: steps.eligibility.outputs.publish == 'true'
+        run: |
+          npm run lint
+          npm run typecheck
+          npm run audit:identity
+          npm run audit:archives
 
       - name: Verify published metric claims
         if: steps.eligibility.outputs.publish == 'true'
@@ -171,6 +178,19 @@ jobs:
         run: |
           npm run audit:build
           npm run audit:schema
+          npm run verify:prerender
+
+      - name: Install Chromium for the release gate
+        if: steps.eligibility.outputs.publish == 'true'
+        env:
+          PLAYWRIGHT_DOWNLOAD_CONNECTION_TIMEOUT: '120000'
+        run: npx --no-install playwright install --with-deps chromium
+
+      - name: Verify the release in a browser before publication
+        if: steps.eligibility.outputs.publish == 'true'
+        run: |
+          npm run audit:visual
+          npm run test:browser
 
       - name: Gate configuration on current release
         id: configuration
@@ -243,6 +263,13 @@ jobs:
           npx --no-install wrangler d1 execute stcatharinesdigital_d1 --remote --file=./migrations/0008_editorial_submissions.sql --yes
           npx --no-install wrangler d1 execute stcatharinesdigital_d1 --remote --file=./migrations/0009_editorial_audit.sql --yes
           npx --no-install wrangler d1 execute stcatharinesdigital_d1 --remote --file=./migrations/0010_alert_sent_items.sql --yes
+          # Migration 0011 contains ALTER TABLE statements. Inspect columns so
+          # fresh, existing and partially upgraded databases can all be handled
+          # without resetting an existing reader's grace deadline.
+          npx --no-install wrangler d1 execute stcatharinesdigital_d1 --remote --command='PRAGMA table_info(alerts)' --json --yes > "$RUNNER_TEMP/alert-columns.json"
+          node scripts/ensure-alert-entitlement.mjs "$RUNNER_TEMP/alert-columns.json" > "$RUNNER_TEMP/alert-entitlement.sql"
+          npx --no-install wrangler d1 execute stcatharinesdigital_d1 --remote --file="$RUNNER_TEMP/alert-entitlement.sql" --yes
+          npx --no-install wrangler d1 execute stcatharinesdigital_d1 --remote --command='SELECT payment_status, grace_until, grace_notified_at FROM alerts LIMIT 0' --yes
 
       - name: Gate publication on current release
         id: current
@@ -310,3 +337,18 @@ jobs:
             echo "| Project | stcatharinesdigital |"
             printf '| Cache purge | %s |\n' "$CACHE_PURGE"
           } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Retain release diagnostics
+        if: always()
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
+        with:
+          name: deployment-diagnostics
+          path: |
+            artifacts/visual/
+            artifacts/browser/
+            artifacts/local-chat/
+            test-results/
+            dist/release.json
+            dist/render-context.json
+          if-no-files-found: warn
+          retention-days: 14

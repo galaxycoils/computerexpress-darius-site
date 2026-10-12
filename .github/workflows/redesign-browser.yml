@@ -11,8 +11,10 @@ on:
       - 'package*.json'
       - '.github/workflows/redesign-browser.yml'
       - 'scripts/audit-visual.js'
+      - 'scripts/browser-local-chat.mjs'
+      - '.github/actions/**'
   push:
-    branches: ["redesign/**"]
+    branches: [main, "redesign/**"]
   workflow_dispatch:
 concurrency:
   group: browser-verification-${{ github.ref }}
@@ -23,7 +25,7 @@ env:
   VITE_HOMEPAGE_LEAD_SLUG: ${{ vars.VITE_HOMEPAGE_LEAD_SLUG }}
 defaults:
   run:
-    shell: bash
+    shell: bash --noprofile --norc -euo pipefail {0}
 
 jobs:
   browser:
@@ -31,11 +33,12 @@ jobs:
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
-      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: ./.github/actions/setup-project
         with:
           node-version: 22
-          cache: npm
-      - run: npm ci --fetch-retries=3 --fetch-retry-mintimeout=1000 --fetch-retry-maxtimeout=10000
       - run: npm test
       - run: npm run test:coverage
       - run: node --test scripts/*.regression.mjs
@@ -54,4 +57,6 @@ jobs:
           path: |
             artifacts/visual/
             artifacts/browser/
+            artifacts/local-chat/
+            test-results/
           retention-days: 14

@@ -1,0 +1,145 @@
+import test from 'node:test'
+import assert from 'node:assert/strict'
+import { readFileSync, mkdtempSync, mkdirSync, writeFileSync, rmSync, existsSync } from 'node:fs'
+import { tmpdir } from 'node:os'
+import path from 'node:path'
+import { spawnSync } from 'node:child_process'
+import { DatabaseSync } from 'node:sqlite'
+import { parse } from 'yaml'
+import { installLockedDependencies } from './ciInstall.js'
+import { auditWorkflow } from './workflowPolicy.js'
+import { archiveIds, removedArchiveIds } from './archiveHistory.js'
+import { entitlementMigration } from './alertEntitlementMigration.js'
+
+const workflow = name => parse(readFileSync(new URL(`../.github/workflows/${name}`, import.meta.url), 'utf8'))
+const ci = workflow('ci.yml')
+const deploy = workflow('deploy.yml')
+
+test('dependency installation recovers from network and cache corruption with fresh caches', async () => {
+  for (const output of ['npm error ECONNRESET', 'npm error EINTEGRITY', 'npm error TAR_BAD_ARCHIVE', 'npm error E429', 'npm error 503 Service Unavailable']) {
+    const calls = [], delays = []
+    await installLockedDependencies({
+      log: () => {}, wait: async ms => { delays.push(ms) },
+      install: async options => { calls.push(options); return calls.length === 1 ? { code: 1, output } : { code: 0 } },
+    })
+    assert.deepEqual(calls, [{ attempt: 1, freshCache: false }, { attempt: 2, freshCache: true }])
+    assert.deepEqual(delays, [1000])
+  }
+})
+
+test('dependency retries are bounded and do not conceal bad locks, scripts or credentials', async () => {
+  for (const output of ['npm error EUSAGE lock mismatch', 'npm error ERESOLVE', 'npm error EBADENGINE', 'npm error E401', 'npm error E403 ECONNRESET', 'npm error E404', 'lifecycle script exited 1']) {
+    let calls = 0
+    await assert.rejects(installLockedDependencies({
+      wait: async () => { throw new Error('must not retry') },
+      install: async () => { calls++; return { code: 1, output } },
+    }), /installation failed/)
+    assert.equal(calls, 1)
+  }
+  let calls = 0
+  await assert.rejects(installLockedDependencies({
+    log: () => {}, wait: async () => {},
+    install: async () => { calls++; return { code: 1, timedOut: true } },
+  }), /attempt 3/)
+  assert.equal(calls, 3)
+})
+
+test('archive retention catches deleted history even when replacement records preserve the count', () => {
+  const source = ids => `export const nrpsReleases = [${ids.map(id => `{ id: '${id}' }`).join(',')}];`
+  assert.deepEqual(removedArchiveIds(source(['old', 'quarantined']), source(['old', 'quarantined', 'new'])), [])
+  assert.deepEqual(removedArchiveIds(source(['old', 'quarantined']), source(['old', 'new'])), ['quarantined'])
+  assert.deepEqual(archiveIds("throw new Error('must never execute'); export const nrpsReleases = [{id: 'old'}];"), ['old'])
+  for (const invalid of ['export const nrpsReleases = [', 'export const nrpsReleases = getData()', 'export const nrpsReleases = [{headline: "no id"}]']) {
+    assert.throws(() => archiveIds(invalid), /archive/i)
+  }
+})
+
+test('workflow policy rejects drift that would skip, weaken or unpin required checks', () => {
+  assert.deepEqual(auditWorkflow('ci.yml', ci), [])
+  assert.deepEqual(auditWorkflow('deploy.yml', deploy), [])
+  for (const [mutate, expected] of [
+    [w => { w.on.push['paths-ignore'] = ['**/*.md'] }, /document/],
+    [w => { w.jobs.test['timeout-minutes'] = undefined }, /timeout/],
+    [w => { w.jobs.test.steps[0].uses = 'actions/checkout@main' }, /pinned/],
+    [w => { w.jobs.test['continue-on-error'] = true }, /continue on error/],
+    [w => { w.defaults.run.shell = 'bash' }, /strict Bash/],
+    [w => { delete w.jobs.browser }, /browser/],
+    [w => { w.jobs['ci-success'].needs = ['test', 'build'] }, /browser/],
+    [w => { w.jobs.browser.steps.find(step => step.uses?.startsWith('actions/download-artifact@')).with['run-id'] = 123 }, /this workflow run/],
+    [w => { w.on.pull_request_target = null }, /privileged/],
+  ]) {
+    const copy = structuredClone(ci)
+    mutate(copy)
+    assert.match(auditWorkflow('ci.yml', copy).join(), expected)
+  }
+})
+
+test('production cannot bypass browser, type, identity, archive or workflow gates', () => {
+  for (const command of ['npm run test:browser', 'npm run typecheck', 'npm run audit:identity', 'npm run audit:archives']) {
+    const copy = structuredClone(deploy)
+    copy.jobs.deploy.steps = copy.jobs.deploy.steps.filter(step => !step.run?.includes(command))
+    assert.match(auditWorkflow('deploy.yml', copy).join(), /production must pass/)
+  }
+  const copy = structuredClone(deploy)
+  copy.jobs.deploy.if = 'always()'
+  assert.match(auditWorkflow('deploy.yml', copy).join(), /restricted to main/)
+  const disabled = structuredClone(deploy)
+  disabled.jobs.deploy.steps.find(step => step.run?.includes('npm run test:browser')).if = 'false'
+  assert.match(auditWorkflow('deploy.yml', disabled).join(), /production must pass/)
+})
+
+test('digest submission is main-only and cannot silently gain unsafe POST retries', () => {
+  const digest = workflow('send-planning-digest.yml')
+  assert.deepEqual(auditWorkflow('send-planning-digest.yml', digest), [])
+  digest.jobs.send.steps[0].run += '\ncurl --retry 3 -X POST example.invalid'
+  assert.match(auditWorkflow('send-planning-digest.yml', digest).join(), /blindly retried/)
+})
+
+test('backup cannot publish a successful but empty export and cleans up plaintext on failure', t => {
+  const root = mkdtempSync(path.join(tmpdir(), 'backup-empty-'))
+  t.after(() => rmSync(root, { recursive: true, force: true }))
+  mkdirSync(path.join(root, 'bin'))
+  writeFileSync(path.join(root, 'bin/npx'), '#!/bin/sh\n: > backup/stcatharinesdigital.sql\n', { mode: 0o755 })
+  const backup = workflow('d1-backup.yml')
+  const command = backup.jobs.backup.steps.find(step => step.name === 'Export and encrypt D1 data').run
+  const result = spawnSync('bash', ['-euo', 'pipefail', '-c', command], {
+    cwd: root, encoding: 'utf8', env: { ...process.env, PATH: `${root}/bin:${process.env.PATH}`, RUNNER_TEMP: root,
+      CLOUDFLARE_API_TOKEN: 'fixture', CLOUDFLARE_ACCOUNT_ID: 'fixture', D1_BACKUP_PASSPHRASE: 'fixture', GITHUB_SHA: 'a'.repeat(40) },
+  })
+  assert.equal(result.status, 1)
+  assert.match(result.stdout, /refusing to publish a backup/)
+  assert.equal(existsSync(path.join(root, 'backup/stcatharinesdigital.sql')), false)
+  assert.equal(existsSync(path.join(root, 'backup/stcatharinesdigital.sql.enc')), false)
+  const upload = backup.jobs.backup.steps.find(step => step.uses?.startsWith('actions/upload-artifact@'))
+  upload.with.path += '\nbackup/stcatharinesdigital.sql'
+  assert.match(auditWorkflow('d1-backup.yml', backup).join(), /plaintext/)
+})
+
+function alertDatabase(t) {
+  const db = new DatabaseSync(':memory:')
+  t.after(() => db.close())
+  db.exec('CREATE TABLE alerts(id TEXT PRIMARY KEY, verified INTEGER, frequency TEXT, payment_status TEXT);')
+  db.exec("INSERT INTO alerts VALUES('unpaid',1,'daily','pending_interac'),('paid',1,'daily','confirmed'),('unverified',0,'daily','pending_interac');")
+  const columns = () => db.prepare('PRAGMA table_info(alerts)').all().map(column => column.name)
+  return { db, columns }
+}
+
+test('entitlement schema upgrades once without restarting existing grace windows', t => {
+  const { db, columns } = alertDatabase(t)
+  db.exec(entitlementMigration(columns()))
+  assert.ok(db.prepare("SELECT grace_until FROM alerts WHERE id='unpaid'").get().grace_until > Date.now())
+  assert.equal(db.prepare("SELECT grace_until FROM alerts WHERE id='paid'").get().grace_until, null)
+  assert.equal(db.prepare("SELECT grace_until FROM alerts WHERE id='unverified'").get().grace_until, null)
+  db.exec("UPDATE alerts SET grace_until=123,grace_notified_at=456 WHERE id='unpaid'")
+  db.exec(entitlementMigration(columns()))
+  assert.deepEqual({ ...db.prepare("SELECT grace_until,grace_notified_at FROM alerts WHERE id='unpaid'").get() }, { grace_until: 123, grace_notified_at: 456 })
+})
+
+test('partial entitlement upgrades preserve deadlines and incomplete initial schemas fail clearly', t => {
+  const { db, columns } = alertDatabase(t)
+  db.exec("ALTER TABLE alerts ADD COLUMN grace_until INTEGER; UPDATE alerts SET grace_until=123 WHERE id='unpaid';")
+  db.exec(entitlementMigration(columns()))
+  assert.equal(db.prepare("SELECT grace_until FROM alerts WHERE id='unpaid'").get().grace_until, 123)
+  assert.ok(columns().includes('grace_notified_at'))
+  assert.throws(() => entitlementMigration(['id', 'verified']), /payment_status/)
+})

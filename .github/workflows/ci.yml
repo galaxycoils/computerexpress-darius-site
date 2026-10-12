@@ -4,10 +4,6 @@ on:
   pull_request:
   push:
     branches: [main]
-    paths-ignore:
-      - '**/*.md'
-      - '.gitignore'
-      - 'LICENSE*'
   workflow_dispatch:
 
 permissions:
@@ -15,6 +11,7 @@ permissions:
 
 env:
   VITE_HOMEPAGE_LEAD_SLUG: ${{ vars.VITE_HOMEPAGE_LEAD_SLUG }}
+  ARCHIVE_BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.before }}
 
 concurrency:
   group: ci-matrix-${{ github.workflow }}-${{ github.ref }}
@@ -22,7 +19,7 @@ concurrency:
 
 defaults:
   run:
-    shell: bash
+    shell: bash --noprofile --norc -euo pipefail {0}
 
 jobs:
   # Parallel quality suites. Unit tests run on Node 22 only (production runtime);
@@ -63,19 +60,24 @@ jobs:
           - node-version: 22
             suite: type-check
             command: npm run typecheck
+          - node-version: 22
+            suite: workflow-policy
+            command: npm run audit:workflows
+          - node-version: 22
+            suite: archive-retention
+            command: npm run audit:archives
 
     steps:
       - name: Checkout
         uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          fetch-depth: 0
+          persist-credentials: false
 
       - name: Setup Node ${{ matrix.node-version }}
-        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        uses: ./.github/actions/setup-project
         with:
           node-version: ${{ matrix.node-version }}
-          cache: npm
-
-      - name: Install dependencies
-        run: npm ci --fetch-retries=3 --fetch-retry-mintimeout=1000 --fetch-retry-maxtimeout=10000
 
       - name: Run ${{ matrix.suite }}
         run: ${{ matrix.command }}
@@ -94,15 +96,14 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          fetch-depth: 0
+          persist-credentials: false
 
       - name: Setup Node ${{ matrix.node-version }}
-        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        uses: ./.github/actions/setup-project
         with:
           node-version: ${{ matrix.node-version }}
-          cache: npm
-
-      - name: Install dependencies
-        run: npm ci --fetch-retries=3 --fetch-retry-mintimeout=1000 --fetch-retry-maxtimeout=10000
 
       - name: Production build
         run: npm run build
@@ -127,26 +128,64 @@ jobs:
           if-no-files-found: error
           retention-days: 3
 
+  browser:
+    name: Browser journeys passed
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    needs: build
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: ./.github/actions/setup-project
+      - name: Download the exact tested build
+        uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53 # v6
+        with:
+          name: dist-node22
+          path: dist
+      - name: Revalidate the downloaded release
+        run: npm run audit:build
+      - name: Install Chromium
+        env:
+          PLAYWRIGHT_DOWNLOAD_CONNECTION_TIMEOUT: '120000'
+        run: npx --no-install playwright install --with-deps chromium
+      - name: Verify responsive reader journeys and local chat
+        run: |
+          npm run audit:visual
+          npm run test:browser
+      - name: Retain browser diagnostics
+        if: always()
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
+        with:
+          name: ci-browser-results
+          path: |
+            artifacts/visual/
+            artifacts/browser/
+            artifacts/local-chat/
+            test-results/
+          if-no-files-found: warn
+          retention-days: 14
+
   # Advisory only. The monetization score is a heuristic dashboard — it must be
   # visible on every run but must never block a deploy.
   monetization-report:
     name: monetization report (advisory)
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 10
     continue-on-error: true
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          fetch-depth: 0
+          persist-credentials: false
 
       - name: Setup Node
-        uses: actions/setup-node@v6
+        uses: ./.github/actions/setup-project
         with:
           node-version: 22
-          cache: npm
-
-      - name: Install dependencies
-        run: npm ci
 
       - name: Report monetization readiness
         run: npm run audit:monetization
@@ -156,14 +195,14 @@ jobs:
     name: CI matrix passed
     timeout-minutes: 5
     runs-on: ubuntu-24.04
-    needs: [test, build]
+    needs: [test, build, browser]
     if: always()
     steps:
       - name: Aggregate matrix results
         run: |
           echo "test=${{ needs.test.result }}"
           echo "build=${{ needs.build.result }}"
-          if [ "${{ needs.test.result }}" != "success" ] || [ "${{ needs.build.result }}" != "success" ]; then
+          if [ "${{ needs.test.result }}" != "success" ] || [ "${{ needs.build.result }}" != "success" ] || [ "${{ needs.browser.result }}" != "success" ]; then
             echo "::error::One or more matrix jobs failed"
             exit 1
           fi

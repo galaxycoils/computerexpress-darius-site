@@ -1,0 +1,65 @@
+# Workflow operations
+
+Every main push, including documentation changes, runs CI and release validation.
+CI's aggregate check requires the quality matrix, the production build and
+Chromium reader journeys. Browser verification downloads and validates the exact
+build artifact from that run. The responsive/hydration suite also runs on main.
+
+Production independently passes workflow validation, content and archive checks,
+metrics, identity, lint, types, regression tests, required coverage, build/schema
+checks, prerender checks and browser journeys before changing runtime secrets,
+database schemas or publishing. It checks the current main revision before both
+configuration and publication. A superseded release skips publication.
+
+All dependency installs use the shared setup action and `scripts/ci-install.mjs`.
+The download cache is optional. Up to three install attempts recover from
+transport failures, rate limits or cache corruption; retries use temporary
+isolated caches. Bad locks, engine incompatibilities, script failures and denied
+credentials fail immediately. Tests and mail submissions are never blindly
+retried.
+
+Run these checks before pushing workflow or news-data changes:
+
+```sh
+node scripts/ci-install.mjs
+npm run audit:workflows
+npm run content:audit
+npm run audit:archives
+npm run audit:metrics
+npm run audit:identity
+node --test scripts/*.regression.mjs
+npm run lint
+npm run typecheck
+npm run test:coverage
+npm run build
+npm run audit:build
+npm run audit:schema
+npm run verify:prerender
+npm run audit:visual
+npm run test:browser
+```
+
+`audit:archives` compares police IDs with the previous Git revision, or the
+explicit `ARCHIVE_BASE_SHA` set by CI for push/PR events. Daily additions must
+retain historical records and module exports. Quarantine an invalid source with
+`unverified: true` instead of deleting its record. Update tracked pitch-document
+counts from the canonical metrics when adding verified data.
+
+Operational jobs run only on main. Backup publication requires a nonempty export
+with schema, an encrypted payload and a verified decryption round trip. Plaintext
+exports are removed on success and failure and excluded from artifacts.
+Deployment inspects the alerts table before applying entitlement columns, so
+repeat deployments preserve existing grace deadlines and notification markers.
+
+On a failed run, inspect its first failed step and retained source/browser/release
+diagnostics. Retry read-only CI after a transient service outage. Fix deterministic
+data, lock, policy or credential errors before rerunning. For a failed mail
+submission, inspect delivery records before retrying; a lost response may follow
+a successful send. A failed deployment can already have published: use the live
+revision verification before deciding whether to redeploy.
+
+`npm run audit:workflows` rejects moving action references, missing timeouts,
+weakened required checks, unsafe operational branch guards and plaintext backup
+uploads. Its failure-scenario regression suite runs in CI, collector checks and
+workflow validation. Workflow validation also runs checksum-verified actionlint
+and shellcheck.

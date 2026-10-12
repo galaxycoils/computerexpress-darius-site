@@ -30,6 +30,7 @@ function run(command, args, options = {}) {
       child.stdout.on('data', chunk => { output += chunk.toString() })
       child.stderr.on('data', chunk => { output += chunk.toString() })
     }
+    child.on('error', reject)
     child.on('close', code => {
       if (code === 0) resolve(output)
       else reject(new Error(`${command} ${args.join(' ')} exited ${code}\n${output}`))
@@ -41,7 +42,7 @@ async function waitForPreview() {
   const deadline = Date.now() + 20000
   while (Date.now() < deadline) {
     try {
-      const res = await fetch(baseUrl)
+      const res = await fetch(baseUrl, { signal: AbortSignal.timeout(2000) })
       if (res.ok) return
     } catch {}
     await new Promise(resolve => setTimeout(resolve, 500))
@@ -75,6 +76,7 @@ for (const viewport of viewports) {
         page.on('pageerror', error => {
           hydrationErrors.push(error.message)
         })
+        await page.route('**/googletagmanager.com/**', route => route.abort())
         await page.goto(baseUrl + route, { waitUntil: 'networkidle' })
         expect(hydrationErrors).toEqual([])
         const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth)
@@ -99,6 +101,7 @@ test.describe('all prerendered routes hydrate', () => {
       page.on('pageerror', error => {
         hydrationErrors.push(error.message)
       })
+      await page.route('**/googletagmanager.com/**', route => route.abort())
       await page.goto(baseUrl + route, { waitUntil: 'networkidle' })
       expect(hydrationErrors).toEqual([])
       expect(await page.locator('#root').evaluate(el => el.textContent.trim().length)).toBeGreaterThan(0)
@@ -107,16 +110,20 @@ test.describe('all prerendered routes hydrate', () => {
 })
 `, 'utf8')
 
-const server = spawn('npm', ['run', 'preview', '--', '--host', '127.0.0.1', '--port', '4173'], {
+const server = spawn(process.execPath, ['node_modules/vite/bin/vite.js', 'preview', '--host', '127.0.0.1', '--port', '4173', '--strictPort'], {
   cwd: root,
   stdio: 'ignore',
 })
 
 try {
   await waitForPreview()
-  await run('npx', ['-y', 'playwright', 'test', testFile, '--browser=chromium'], { env: { CI: '1' } })
+  await run('npx', ['--no-install', 'playwright', 'test', testFile, '--browser=chromium'], { env: { CI: '1' } })
   console.log(`Visual audit passed. Screenshots: ${artifacts}`)
 } finally {
-  server.kill('SIGTERM')
+  if (server.exitCode === null) await new Promise(resolve => {
+    const timeout = setTimeout(() => { server.kill('SIGKILL'); resolve() }, 3000)
+    server.once('exit', () => { clearTimeout(timeout); resolve() })
+    server.kill('SIGTERM')
+  })
   fs.rmSync(testFile, { force: true })
 }

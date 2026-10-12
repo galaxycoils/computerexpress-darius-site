@@ -14,19 +14,21 @@ concurrency:
 
 defaults:
   run:
-    shell: bash
+    shell: bash --noprofile --norc -euo pipefail {0}
 
 jobs:
   backup:
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-24.04
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
-      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: ./.github/actions/setup-project
         with:
           node-version: 22
-          cache: npm
-      - run: npm ci --fetch-retries=3 --fetch-retry-mintimeout=1000 --fetch-retry-maxtimeout=10000
       - name: Export and encrypt D1 data
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CF_API_TOKEN || secrets.CLOUDFLARE_API_TOKEN }}
@@ -34,6 +36,7 @@ jobs:
           D1_BACKUP_PASSPHRASE: ${{ secrets.D1_BACKUP_PASSPHRASE }}
         run: |
           set -euo pipefail
+          umask 077
           for secret in CLOUDFLARE_API_TOKEN CLOUDFLARE_ACCOUNT_ID D1_BACKUP_PASSPHRASE; do
             if [ -z "${!secret}" ]; then
               echo "::error::Missing required backup configuration: $secret"
@@ -43,9 +46,14 @@ jobs:
           mkdir -p backup
           trap 'rm -f backup/stcatharinesdigital.sql "$RUNNER_TEMP/backup-verify.sql"' EXIT
           npx --no-install wrangler d1 export stcatharinesdigital_d1 --remote --output backup/stcatharinesdigital.sql
+          if [ ! -s backup/stcatharinesdigital.sql ] || ! grep -qi 'CREATE TABLE' backup/stcatharinesdigital.sql; then
+            echo '::error::Database export is empty or contains no schema; refusing to publish a backup.'
+            exit 1
+          fi
           openssl enc -aes-256-cbc -pbkdf2 -salt -in backup/stcatharinesdigital.sql -out backup/stcatharinesdigital.sql.enc -pass env:D1_BACKUP_PASSPHRASE
           openssl enc -d -aes-256-cbc -pbkdf2 -in backup/stcatharinesdigital.sql.enc -out "$RUNNER_TEMP/backup-verify.sql" -pass env:D1_BACKUP_PASSPHRASE
           cmp backup/stcatharinesdigital.sql "$RUNNER_TEMP/backup-verify.sql"
+          test -s backup/stcatharinesdigital.sql.enc
           (cd backup && sha256sum stcatharinesdigital.sql.enc > SHA256SUMS)
           jq -n --arg created_at "$(date -u +%FT%TZ)" --arg revision "$GITHUB_SHA" \
             '{version: 1, created_at: $created_at, revision: $revision, database: "stcatharinesdigital_d1", encryption: "openssl AES-256-CBC PBKDF2 salted", verified_roundtrip: true}' > backup/metadata.json

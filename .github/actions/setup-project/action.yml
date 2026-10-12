@@ -1,0 +1,26 @@
+name: Set up the locked project
+description: Use the supported Node runtime and recover from bounded npm transport/cache failures
+inputs:
+  node-version:
+    description: Supported Node version
+    default: '22'
+runs:
+  using: composite
+  steps:
+    - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+      with:
+        node-version: ${{ inputs.node-version }}
+        package-manager-cache: false
+    # Cache availability is optional; the locked install remains mandatory.
+    - name: Restore optional npm download cache
+      id: dependency-cache
+      continue-on-error: true
+      uses: actions/cache@caa296126883cff596d87d8935842f9db880ef25 # v5
+      env:
+        SEGMENT_DOWNLOAD_TIMEOUT_MINS: '2'
+      with:
+        path: ~/.npm
+        key: ${{ runner.os }}-npm-${{ inputs.node-version }}-${{ hashFiles('package-lock.json') }}
+    - name: Install locked dependencies
+      shell: bash --noprofile --norc -euo pipefail {0}
+      run: node scripts/ci-install.mjs

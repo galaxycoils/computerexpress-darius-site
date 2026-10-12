@@ -39,3 +39,4 @@ chrome/
 
 collector-report.json
 .qa/
+scripts/.audit-visual.spec.mjs

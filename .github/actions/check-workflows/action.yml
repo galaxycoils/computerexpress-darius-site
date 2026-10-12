@@ -1,0 +1,21 @@
+name: Validate workflow definitions
+description: Enforce workflow policy, verified actionlint, and reusable shell guards
+runs:
+  using: composite
+  steps:
+    - name: Audit workflow policy
+      shell: bash --noprofile --norc -euo pipefail {0}
+      run: npm run audit:workflows
+    - name: Install verified actionlint
+      shell: bash --noprofile --norc -euo pipefail {0}
+      run: |
+        curl --fail --silent --show-error --location --retry 3 --retry-all-errors --connect-timeout 10 --max-time 60 \
+          https://github.com/rhysd/actionlint/releases/download/v1.7.7/actionlint_1.7.7_linux_amd64.tar.gz \
+          --output "$RUNNER_TEMP/actionlint.tar.gz"
+        echo "023070a287cd8cccd71515fedc843f1985bf96c436b7effaecce67290e7e0757  $RUNNER_TEMP/actionlint.tar.gz" | sha256sum --check
+        tar -xzf "$RUNNER_TEMP/actionlint.tar.gz" -C "$RUNNER_TEMP" actionlint
+    - name: Check workflow expressions and shell scripts
+      shell: bash --noprofile --norc -euo pipefail {0}
+      run: |
+        "$RUNNER_TEMP/actionlint" -color
+        shellcheck scripts/*.sh

@@ -114,6 +114,16 @@ try {
     await expect(dialog.getByRole("option")).toHaveText("Q4_K_M · 5.00 GB · 10 files");
     assert.equal(requests.some((url) => /localRuntime|wllama/.test(url)), false, "The model list doesn't initialize the inference runtime");
     await audit("choose");
+    // Incognito/headless quotas vary by browser and runner disk space. Exercise
+    // the insufficient-storage boundary deliberately, then give the mocked
+    // download a deterministic capacity rather than relying on the host disk.
+    await page.evaluate(() => Object.defineProperty(navigator.storage, "estimate", { configurable: true, value: async () => ({ quota: 1024 ** 3, usage: 0 }) }));
+    await page.getByRole("button", { name: "Download & start local chat" }).click();
+    await expect(page.getByRole("alert")).toContainText("not enough browser storage");
+    assert.equal(await page.evaluate(() => window.__chatTest.loads), 0, "Insufficient capacity does not start a model download");
+    assert.equal(await page.evaluate(() => window.__chatTest.disposed), 1, "Insufficient capacity releases the created runtime");
+    await audit("insufficient-storage");
+    await page.evaluate(() => Object.defineProperty(navigator.storage, "estimate", { configurable: true, value: async () => ({ quota: 16 * 1024 ** 3, usage: 0 }) }));
     await page.getByRole("button", { name: "Download & start local chat" }).click();
     await expect(page.getByLabel("Your question")).toBeVisible();
     assert.equal(await page.evaluate(() => window.__chatTest.model.url), `https://huggingface.co/${MODEL_REPO}/resolve/${sha}/${files[0].rfilename}`);
