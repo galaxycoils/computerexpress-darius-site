@@ -3,6 +3,7 @@ import fs from 'node:fs/promises'
 import path from 'node:path'
 import { fileURLToPath, pathToFileURL } from 'node:url'
 import { auditDiscovery } from './discoveryIntegrity.js'
+import { auditNrpsModule } from './nrpsIntegrity.js'
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
 const errors = []
@@ -10,16 +11,27 @@ const warnings = []
 const isHttpsUrl = value => { try { return new URL(value).protocol === 'https:' } catch { return false } }
 const load = relative => import(pathToFileURL(path.join(root, relative)).href)
 
+// Check the archive API before loading consumers of its named exports.
+let nrps
+try {
+  nrps = await load('src/data/nrpsReleases.js')
+  errors.push(...auditNrpsModule(nrps))
+} catch (error) {
+  errors.push(`NRPS module could not be loaded: ${error.message}`)
+}
+if (errors.length) {
+  console.error(JSON.stringify({ errors }, null, 2))
+  process.exit(1)
+}
+
 const [
   { sourceRegistry },
   { planningNotices },
-  nrps,
   { getPublication },
   { selectHomepageLead },
 ] = await Promise.all([
   load('src/data/sourceRegistry.js'),
   load('src/data/planningNotices.js'),
-  load('src/data/nrpsReleases.js'),
   load('src/data/publication.js'),
   load('src/data/homepageLead.js'),
 ])
@@ -47,26 +59,7 @@ for (const notice of planningNotices) {
   if (!notice.publishedDate) warnings.push(`${notice.id} has no publication date`)
 }
 
-// The police archive is a reader-facing dataset and a module API used by
-// PolicePage. A daily desk update must append records without replacing it.
-// The helper-presence guard below reads these off the `nrps` namespace object
-// (`nrps[helper]`), so only the values used directly are destructured here.
-const { nrpsReleases, verifiedNrpsReleases, getNrpsStats } = nrps
-if (!Array.isArray(verifiedNrpsReleases) || verifiedNrpsReleases.length < 20) errors.push('NRPS archive is unexpectedly truncated')
-for (const helper of ['getLatestNrpsReleases', 'getNrpsReleasesByMunicipality', 'getNrpsReleasesByCategory', 'getNrpsStats']) {
-  if (typeof nrps[helper] !== 'function') errors.push(`NRPS module is missing ${helper}`)
-}
-const releaseIds = new Set()
-const releaseUrls = new Set()
-for (const release of verifiedNrpsReleases || []) {
-  if (!release.id || releaseIds.has(release.id)) errors.push(`Duplicate or missing NRPS ID: ${release.id || '(missing)'}`)
-  releaseIds.add(release.id)
-  if (!isHttpsUrl(release.url) || releaseUrls.has(release.url)) errors.push(`Invalid or duplicate NRPS source URL: ${release.id}`)
-  releaseUrls.add(release.url)
-  if (!release.headline || !release.date) errors.push(`Incomplete NRPS release: ${release.id}`)
-}
-const stats = getNrpsStats()
-if (stats.total !== verifiedNrpsReleases.length) errors.push(`getNrpsStats.total (${stats.total}) does not match verified array length (${verifiedNrpsReleases.length})`)
+const { nrpsReleases } = nrps
 
 // Source health is read from discovery.json, the artifact the collector actually
 // writes (scripts/collect-official-news.js, plus a gitignored collector-report.json).

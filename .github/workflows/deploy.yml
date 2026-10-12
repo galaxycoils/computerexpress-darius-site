@@ -138,13 +138,17 @@ jobs:
         if: steps.eligibility.outputs.publish == 'true'
         run: npm ci --fetch-retries=3 --fetch-retry-mintimeout=1000 --fetch-retry-maxtimeout=10000
 
-      - name: Collector regression tests
-        if: steps.eligibility.outputs.publish == 'true'
-        run: node --test scripts/*.regression.mjs
-
       - name: Content audit
         if: steps.eligibility.outputs.publish == 'true'
         run: npm run content:audit
+
+      - name: Verify published metric claims
+        if: steps.eligibility.outputs.publish == 'true'
+        run: npm run audit:metrics
+
+      - name: Collector regression tests
+        if: steps.eligibility.outputs.publish == 'true'
+        run: node --test scripts/*.regression.mjs
 
       - name: Application tests
         if: steps.eligibility.outputs.publish == 'true'

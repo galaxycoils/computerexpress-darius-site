@@ -2,8 +2,8 @@
 
 **Status**: Active — user directive: "prioritize making income, very important"
 **Owner**: @growth-capital-strategist
-**Date**: 2026-10-01 · **Revised**: 2026-10-09
-**Verified counts (live site)**: 43 police + 41 planning + 52 civic = **136 verified records**
+**Date**: 2026-10-01 · **Revised**: 2026-10-12
+**Verified counts (live site)**: 44 police + 41 planning + 52 civic = **137 verified records**
 **Revision note (2026-10-09)**: counts now derive from `src/data/metrics.js` and are enforced by `npm run audit:metrics`. Revenue sequencing was re-decided: truth fixes and outreach infrastructure come first, and billing is gated on demonstrated paid intent. The earlier "build Stripe in Week 2–4" instruction is superseded — see §3 Phase 2.
 
 ---
@@ -51,7 +51,7 @@ That path works today with zero code.
 
 **What's ready:**
 - `docs/MX_VERIFIED_TARGETS.md` + `docs/outreach-targets.json` — MX-verified accounts only. The original "50 accounts" claim was wrong: 16 of the 50 domains have no MX record, so the real list is at most 32.
-- `PITCH_DECK.md` — investor deck with verified numbers (43 police + 41 planning + 52 civic = 136 records)
+- `PITCH_DECK.md` — investor deck with verified numbers (44 police + 41 planning + 52 civic = 137 records)
 - Live site at `stcatharinesdigital.pages.dev` — proof of product
 - Interac e-Transfer payment confirmation already built (`payment.js`)
 
@@ -114,7 +114,7 @@ That path works today with zero code.
 
 1. **@revenue-monetization-strategist** — Send the overdue round 2–3 follow-ups (due Oct 5–9) through `scripts/outreach/send.mjs`, which refuses any domain that fails an MX check. Log every address and result in `docs/SPONSORSHIP_OUTREACH_TRACKER.md`, bounces included.
 2. **@super-engineer---full-stack** — Revenue is not blocked by billing. The delivery leak is fixed (see §3 Phase 2). Stripe stays gated until a prospect asks how to pay.
-3. **@official-police-media-release-agent-st-catharines-digital** — Keep the feed clean. 42 of 57 held releases are source-verified; the rest stay quarantined until their links resolve.
+3. **@official-police-media-release-agent-st-catharines-digital** — Keep the feed clean. 44 of 59 held releases are source-verified; the rest stay quarantined until their links resolve.
 4. **@official-municipal-documents-agent-st-catharines-digital** — 35 planning notices are live (15 active, 22 with meeting dates). `src/data/generated/discovery.json` holds 111 raw candidates collected 2026-10-02, of which 18 are already in `planningNotices.js`. Triaging that backlog is the highest-leverage data work — it directly raises the moat number in every outreach email. Do not count raw candidates as ingested records.
 5. **@official-council-reporting-agent-st-catharines-digital** — 52 civic records are live. The CivicWeb gap is real. If council agendas become a third ingestion source, that's a pricing tier upgrade, but it is not blocking revenue today.
 
@@ -122,7 +122,7 @@ That path works today with zero code.
 
 ## 6. The Honest Bottom Line
 
-**The product is live and the data is verified.** 43 police + 41 planning + 52 civic = 136 records, all derived from source and enforced against drift by `npm run audit:metrics`.
+**The product is live and the data is verified.** 44 police + 41 planning + 52 civic = 137 records, all derived from source and enforced against drift by `npm run audit:metrics`.
 
 **What was wrong:** 48 cold emails had produced 15 hard bounces, 0 replies and $0 MRR; the deck claimed traction that had not happened; and the $49/mo digest was being delivered free to every verified signup because nothing checked payment.
 

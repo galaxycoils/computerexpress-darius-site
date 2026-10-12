@@ -125,6 +125,7 @@ jobs:
           validate_candidate() {
             npm ci --fetch-retries=3 --fetch-retry-mintimeout=1000 --fetch-retry-maxtimeout=10000
             npm run content:audit
+            npm run audit:metrics
             npm test
             npm run build
             npm run audit:build

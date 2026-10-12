@@ -3,9 +3,9 @@
 **Format**: 16:9, PDF export from Google Slides / Figma
 **Audience**: Pre-seed / angel investors (Niagara, Toronto, Hamilton networks)
 **Narrative**: Not a news site — a municipal intelligence platform with a live, defensible data moat
-**Last updated**: 2026-10-09
-**Verified counts (live site)**: 43 verified police + **41** planning + **52** civic = **136 verified records**
-**Note**: 43 of 58 held NRPS releases are source-verified; the rest are quarantined until their links resolve. 41 planning notices, of which 19 are active and 26 carry meeting dates.
+**Last updated**: 2026-10-12
+**Verified counts (live site)**: 44 verified police + **41** planning + **52** civic = **137 verified records**
+**Note**: 44 of 59 held NRPS releases are source-verified; the rest are quarantined until their links resolve. 41 planning notices, of which 19 are active and 26 carry meeting dates.
 **Verified, not aspirational**: counts are derived from `src/data/metrics.js`, which reads the live data modules (`verifiedNrpsReleases`, `planningNotices`, `councilData`). `npm run audit:metrics` fails the build if a figure in this deck drifts from the data. If a number is not currently on the live site, it does not go in this deck.
 
 ---
@@ -46,10 +46,10 @@
 ---
 
 ## SLIDE 4: TRACTION — LIVE PRODUCT, PRE-REVENUE
-**Headline**: Deployed. Green CI. 3 feeds live. 136 verified records. Outreach run, no paid account yet.
+**Headline**: Deployed. Green CI. 3 feeds live. 137 verified records. Outreach run, no paid account yet.
 **Metrics row**:
-- **3 feeds** | **136 structured records** | **100% coverage on 3 critical-logic modules** | **Cloudflare Pages + Workers + D1**
-- **Content audit**: 0 errors, 6 sources, 43 police / 41 planning / 52 council
+- **3 feeds** | **137 structured records** | **100% coverage on 3 critical-logic modules** | **Cloudflare Pages + Workers + D1**
+- **Content audit**: 0 errors, 6 sources, 44 police / 41 planning / 52 council
 - **Technical**: Vite 6 + React 18 + TypeScript, edge-rendered and prerendered
 - **Outreach**: 48 emails across 3 rounds. Round 1 (27 sends) bounced 15 times — 55.6% — because addresses were guessed; rounds 2–3 used MX-verified addresses and bounced 0/21. 0 replies, $0 MRR.
 - **Pricing**: $250/mo monitored pilot and $49/mo Planning Alerts are the current offers. Neither has been validated by a paid conversation yet — that is the open question this raise exists to answer.
