@@ -1,6 +1,6 @@
 export function entitlementMigration(columns) {
   const names = new Set(columns)
-  for (const required of ['id', 'verified', 'payment_status']) {
+  for (const required of ['id', 'verified', 'frequency', 'payment_status']) {
     if (!names.has(required)) throw new Error(`Alerts schema is missing ${required}; apply the initial alerts/payment schema before deployment`)
   }
   const statements = []

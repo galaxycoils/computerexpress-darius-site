@@ -45,18 +45,19 @@ jobs:
           done
           mkdir -p backup
           trap 'rm -f backup/stcatharinesdigital.sql "$RUNNER_TEMP/backup-verify.sql"' EXIT
-          npx --no-install wrangler d1 export stcatharinesdigital_d1 --remote --output backup/stcatharinesdigital.sql
+          npx --no-install wrangler d1 export stcatharinesdigital_d1 --remote --skip-confirmation --output backup/stcatharinesdigital.sql
           if [ ! -s backup/stcatharinesdigital.sql ] || ! grep -qi 'CREATE TABLE' backup/stcatharinesdigital.sql; then
             echo '::error::Database export is empty or contains no schema; refusing to publish a backup.'
             exit 1
           fi
+          node scripts/verify-d1-backup.mjs backup/stcatharinesdigital.sql
           openssl enc -aes-256-cbc -pbkdf2 -salt -in backup/stcatharinesdigital.sql -out backup/stcatharinesdigital.sql.enc -pass env:D1_BACKUP_PASSPHRASE
           openssl enc -d -aes-256-cbc -pbkdf2 -in backup/stcatharinesdigital.sql.enc -out "$RUNNER_TEMP/backup-verify.sql" -pass env:D1_BACKUP_PASSPHRASE
           cmp backup/stcatharinesdigital.sql "$RUNNER_TEMP/backup-verify.sql"
           test -s backup/stcatharinesdigital.sql.enc
           (cd backup && sha256sum stcatharinesdigital.sql.enc > SHA256SUMS)
           jq -n --arg created_at "$(date -u +%FT%TZ)" --arg revision "$GITHUB_SHA" \
-            '{version: 1, created_at: $created_at, revision: $revision, database: "stcatharinesdigital_d1", encryption: "openssl AES-256-CBC PBKDF2 salted", verified_roundtrip: true}' > backup/metadata.json
+            '{version: 1, created_at: $created_at, revision: $revision, database: "stcatharinesdigital_d1", encryption: "openssl AES-256-CBC PBKDF2 salted", verified_restore: true, verified_roundtrip: true}' > backup/metadata.json
           rm backup/stcatharinesdigital.sql "$RUNNER_TEMP/backup-verify.sql"
       - uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
         with:

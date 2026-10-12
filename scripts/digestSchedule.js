@@ -36,12 +36,14 @@ export async function scheduledDigestDecision({ now, runId, runAttempt = 1, repo
     throw new Error('Scheduled digest missed its 24-hour delivery window. Inspect delivery records before a manual invocation.')
   }
   const runs = await read(['run', 'list', '--workflow', 'send-planning-digest.yml', '--event', 'schedule', '--limit', '20', '--json', 'databaseId,createdAt,status'])
+  if (!Array.isArray(runs) || runs.some(run => !Number.isInteger(run.databaseId) || !Number.isFinite(Date.parse(run.createdAt)) || !['queued', 'in_progress', 'completed', 'waiting', 'requested', 'pending'].includes(run.status))) throw new Error('Digest receipt lookup returned invalid workflow metadata; submission blocked.')
   for (const run of runs) {
     const ownRerun = String(run.databaseId) === runId && Number(runAttempt) > 1
     if ((!ownRerun && (String(run.databaseId) === runId || run.status !== 'completed')) || run.createdAt < window) continue
     const response = await read(['api', `repos/${repository}/actions/runs/${run.databaseId}/jobs?filter=all&per_page=100`])
-    if (uncertainSubmission(response.jobs || [], window)) throw new Error(`Digest ${window} was already attempted by run ${run.databaseId} without confirmed completion. Inspect delivery records before a manual retry.`)
-    if (alreadySubmitted(response.jobs || [], window)) return { send: false, reason: `Weekly digest ${window} was already submitted successfully by run ${run.databaseId}.` }
+    if (!response || !Array.isArray(response.jobs) || !Number.isInteger(response.total_count) || response.total_count !== response.jobs.length || response.jobs.some(job => !Array.isArray(job.steps))) throw new Error('Digest receipt lookup returned invalid or incomplete jobs; submission blocked.')
+    if (uncertainSubmission(response.jobs, window)) throw new Error(`Digest ${window} was already attempted by run ${run.databaseId} without confirmed completion. Inspect delivery records before a manual retry.`)
+    if (alreadySubmitted(response.jobs, window)) return { send: false, reason: `Weekly digest ${window} was already submitted successfully by run ${run.databaseId}.` }
   }
   return { send: true, reason: `Eligible weekly digest window: ${window}.` }
 }

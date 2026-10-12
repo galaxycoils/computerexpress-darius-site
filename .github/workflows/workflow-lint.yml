@@ -29,4 +29,4 @@ jobs:
       - uses: ./.github/actions/setup-project
       - uses: ./.github/actions/check-workflows
       - name: Test workflow failure scenarios
-        run: node --test scripts/workflow-hardening.regression.mjs
+        run: node --test scripts/workflow-hardening.regression.mjs scripts/d1-backup.regression.mjs
