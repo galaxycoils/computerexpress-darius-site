@@ -117,7 +117,11 @@ const server = spawn(process.execPath, ['node_modules/vite/bin/vite.js', 'previe
 
 try {
   await waitForPreview()
-  await run('npx', ['--no-install', 'playwright', 'test', testFile, '--browser=chromium'], { env: { CI: '1' } })
+  const args = ['--no-install', 'playwright', 'test', '--config', path.join(root, 'scripts/playwright-visual.config.mjs'), testFile]
+  const discovery = await run('npx', [...args, '--list'], { silent: true, env: { CI: '1' } })
+  const expectedTests = routes.length * viewports.length + routeCoverage.length
+  if (!discovery.includes(`Total: ${expectedTests} tests in 1 file`)) throw new Error(`Visual audit did not discover all ${expectedTests} required tests.\n${discovery}`)
+  await run('npx', [...args, '--browser=chromium'], { env: { CI: '1' } })
   console.log(`Visual audit passed. Screenshots: ${artifacts}`)
 } finally {
   if (server.exitCode === null) await new Promise(resolve => {

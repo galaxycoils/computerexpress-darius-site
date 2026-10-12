@@ -13,6 +13,9 @@ on:
       - scripts/ciInstall.js
       - scripts/audit-archive-history.mjs
       - scripts/archiveHistory.js
+      - scripts/audit-visual.js
+      - scripts/playwright-visual.config.mjs
+      - scripts/browser-local-chat.mjs
       - .github/actions/**
       - src/data/sourceRegistry.js
       - .github/workflows/collect-official-news.yml

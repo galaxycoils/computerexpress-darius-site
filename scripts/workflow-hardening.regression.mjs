@@ -95,6 +95,21 @@ test('digest submission is main-only and cannot silently gain unsafe POST retrie
   assert.match(auditWorkflow('send-planning-digest.yml', digest).join(), /blindly retried/)
 })
 
+test('visual audit discovers its generated gitignored suite and excludes unrelated test files', t => {
+  const fixtures = new URL('../.qa/', import.meta.url)
+  mkdirSync(fixtures, { recursive: true })
+  const directory = mkdtempSync(path.join(fixtures.pathname, 'visual-discovery-'))
+  t.after(() => rmSync(directory, { recursive: true, force: true }))
+  const config = path.join(directory, 'playwright.config.mjs')
+  writeFileSync(config, `import base from ${JSON.stringify(new URL('./playwright-visual.config.mjs', import.meta.url).href)}; export default { ...base, testDir: ${JSON.stringify(directory)} };`)
+  writeFileSync(path.join(directory, '.audit-visual.spec.mjs'), "import { test } from '@playwright/test'; test('generated visual audit', () => {});")
+  writeFileSync(path.join(directory, 'unrelated.test.mjs'), "throw new Error('Unrelated suite must not be discovered')")
+  const result = spawnSync(process.execPath, [new URL('../node_modules/@playwright/test/cli.js', import.meta.url).pathname, 'test', '--config', config, '--list'], { encoding: 'utf8', timeout: 30000 })
+  assert.equal(result.status, 0, result.stderr)
+  assert.match(result.stdout, /Total: 1 test in 1 file/)
+  assert.match(result.stdout, /generated visual audit/)
+})
+
 test('backup cannot publish a successful but empty export and cleans up plaintext on failure', t => {
   const root = mkdtempSync(path.join(tmpdir(), 'backup-empty-'))
   t.after(() => rmSync(root, { recursive: true, force: true }))

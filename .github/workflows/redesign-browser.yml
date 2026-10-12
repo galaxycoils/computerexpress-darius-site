@@ -11,6 +11,7 @@ on:
       - 'package*.json'
       - '.github/workflows/redesign-browser.yml'
       - 'scripts/audit-visual.js'
+      - 'scripts/playwright-visual.config.mjs'
       - 'scripts/browser-local-chat.mjs'
       - '.github/actions/**'
   push:
