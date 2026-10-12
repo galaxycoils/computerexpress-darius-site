@@ -1,4 +1,4 @@
-import { startTransition, Suspense, useState, useEffect, useRef } from "react";
+import { startTransition, Suspense, useState, useEffect, useLayoutEffect, useRef } from "react";
 import {
   Outlet,
   useLocation,
@@ -31,6 +31,7 @@ const editions = [...CITIES].sort((a, b) =>
       ? 1
       : a.name.localeCompare(b.name),
 );
+const usePositionEffect = typeof window === "undefined" ? useEffect : useLayoutEffect;
 export default function Layout() {
   const now = useLiveNow();
   const [menu, setMenu] = useState(false),
@@ -83,30 +84,30 @@ export default function Layout() {
     } catch {}
     return () => media.removeEventListener?.("change", apply);
   }, [preference, preferencesReady]);
-  useEffect(() => {
+  usePositionEffect(() => {
     setMenu(false);
     const changedPage = previousPath.current !== location.pathname;
     previousPath.current = location.pathname;
+    const restore = !location.hash && (changedPage || navigationType === "POP");
+    // Freeze the destination before a queued scroll event can overwrite it.
+    const target = navigationType === "POP" ? positions.current.get(location.key) || 0 : 0;
+    let restoring = restore;
     const frame = requestAnimationFrame(() => {
-      if (!location.hash && (changedPage || navigationType === "POP"))
-        window.scrollTo(
-          0,
-          navigationType === "POP"
-            ? positions.current.get(location.key) || 0
-            : 0,
-        );
+      if (restore) window.scrollTo(0, target);
+      restoring = false;
     });
-    const save = () => positions.current.set(location.key, window.scrollY);
+    const save = () => {
+      if (!restoring) positions.current.set(location.key, window.scrollY);
+    };
+    // Capture the departing page before navigation can shorten the document.
+    document.addEventListener("click", save, true);
+    window.addEventListener("popstate", save);
     window.addEventListener("scroll", save, { passive: true });
     return () => {
-      // Reading positions.current during cleanup is intentional. `positions` is a
-      // useRef(new Map()) that is never reassigned, so the Map identity is stable
-      // for the component's life; this saves the final scroll offset for the
-      // location being left. The rule assumes a ref pointing at a DOM node React
-      // may have swapped, which is not this case.
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-      positions.current.set(location.key, window.scrollY);
+      // The new DOM can already have clamped scrollY; retain the captured offset.
       cancelAnimationFrame(frame);
+      document.removeEventListener("click", save, true);
+      window.removeEventListener("popstate", save);
       window.removeEventListener("scroll", save);
     };
   }, [location.key, location.pathname, location.hash, navigationType]);

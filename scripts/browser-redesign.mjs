@@ -359,7 +359,7 @@ try {
 
   await page.goto(base + "/news/", { waitUntil: "networkidle" });
   await page.evaluate(() => window.scrollTo(0, 600));
-  await page.waitForTimeout(100);
+  await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
   await page.evaluate(() =>
     document.querySelector(".journal-masthead .journal-wordmark").click(),
   );
@@ -375,6 +375,40 @@ try {
       { message: "Back restores the reading position" },
     )
     .toBeLessThan(30);
+  // Deterministically deliver a stale scroll event before the restoration frame.
+  // A delayed event must never replace this history entry's saved 600px offset.
+  await page.evaluate(() => document.querySelector(".journal-masthead .journal-wordmark").click());
+  await page.waitForURL(base + "/");
+  await expect(page.locator("main h1")).toHaveText("Your city. Your stories.");
+  await expect.poll(() => page.evaluate(() => window.scrollY)).toBe(0);
+  await page.evaluate(() => {
+    const original = window.requestAnimationFrame.bind(window);
+    const callbacks = [];
+    let held = true;
+    window.__qaDeferredFrames = callbacks;
+    window.__qaReleaseFrames = () => {
+      held = false;
+      window.requestAnimationFrame = original;
+      for (const callback of callbacks) callback();
+    };
+    window.requestAnimationFrame = callback => original(time => {
+      if (held) callbacks.push(() => callback(time));
+      else callback(time);
+    });
+  });
+  await page.goBack({ waitUntil: "networkidle" });
+  await expect(page.locator("main h1")).toHaveText("News, close to home.");
+  await expect.poll(() => page.evaluate(() => window.__qaDeferredFrames.length)).toBeGreaterThan(0);
+  await page.evaluate(() => {
+    window.scrollTo(0, 0);
+    window.dispatchEvent(new Event("scroll"));
+    window.__qaReleaseFrames();
+    delete window.__qaReleaseFrames;
+    delete window.__qaDeferredFrames;
+  });
+  await expect.poll(() => page.evaluate(() => window.scrollY), {
+    message: "Back retains the saved offset despite delayed scroll events",
+  }).toBe(600);
   assert.deepEqual(errors, []);
   await writeFile(
     `${artifacts}/report.json`,
@@ -399,6 +433,7 @@ try {
           "reading list undo and clear confirmation",
           "correction context and form recovery",
           "history scroll restoration",
+          "history restoration with delayed scroll events",
         ],
         errors,
       },
@@ -407,8 +442,23 @@ try {
     ),
   );
   console.log(
-    `Browser QA passed: ${report.length} responsive page checks and 17 reader journeys.`,
+    `Browser QA passed: ${report.length} responsive page checks and 18 reader journeys.`,
   );
+} catch (error) {
+  // Retain the current route/viewport on failure, before closing the browser.
+  for (const [index, failedPage] of browser.contexts().flatMap(context => context.pages()).entries()) {
+    try {
+      const state = await failedPage.evaluate(() => ({
+        url: location.href, scrollY: window.scrollY,
+        documentHeight: document.documentElement.scrollHeight,
+        viewportHeight: window.innerHeight, historyKey: history.state?.key,
+        heading: document.querySelector("main h1")?.textContent,
+      }));
+      await writeFile(`${artifacts}/failure-${index}.json`, JSON.stringify(state, null, 2));
+      await failedPage.screenshot({ path: `${artifacts}/failure-${index}.png` });
+    } catch {}
+  }
+  throw error;
 } finally {
   await browser.close();
   preview?.kill();

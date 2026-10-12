@@ -16,6 +16,7 @@ on:
       - scripts/audit-visual.js
       - scripts/playwright-visual.config.mjs
       - scripts/browser-local-chat.mjs
+      - scripts/browser-redesign.mjs
       - .github/actions/**
       - src/data/sourceRegistry.js
       - .github/workflows/collect-official-news.yml

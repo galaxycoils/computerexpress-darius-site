@@ -84,3 +84,9 @@ triggering documentation](https://docs.github.com/en/actions/how-tos/write-workf
 [Wrangler's D1 export implementation](https://github.com/cloudflare/workers-sdk/blob/main/packages/wrangler/src/d1/export.ts)
 and [Playwright's test configuration](https://github.com/microsoft/playwright/blob/main/docs/src/test-api/class-testconfig.md).
 The export option was also checked against the installed Wrangler version.
+
+Reader navigation captures the outgoing offset before the destination changes
+document height and freezes the incoming offset before delayed scroll events can
+overwrite it. Unit tests reproduce both races; browser verification also forces
+a delayed scroll event during Back navigation. Failed journeys retain the current
+route, scroll/viewport measurements and a screenshot in browser diagnostics.
