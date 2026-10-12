@@ -234,8 +234,17 @@ jobs:
               dispatched_at=$(date -u +%FT%TZ)
               gh workflow run deploy.yml --ref main -f reason="$reason" \
                 -f publication_sha="$revision" -f rendered_at="$rendered_at"
-              node scripts/watch-workflow.js --workflow deploy.yml --branch main \
-                --title "$expected_title" --since "$dispatched_at"
+              if ! node scripts/watch-workflow.js --workflow deploy.yml --branch main \
+                --title "$expected_title" --since "$dispatched_at"; then
+                # GitHub keeps only one pending run per concurrency group. A
+                # newer main push may supersede/cancel this queued deployment.
+                git fetch origin main
+                if [ "$(git rev-parse origin/main)" != "$revision" ]; then
+                  continue
+                fi
+                echo '::error::Deployment of the current main revision did not succeed.'
+                exit 1
+              fi
             else
               echo "Publication already live at $revision" >> "$GITHUB_STEP_SUMMARY"
               verify_existing=1

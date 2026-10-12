@@ -50,6 +50,10 @@ with schema, an encrypted payload and a verified decryption round trip. Plaintex
 exports are removed on success and failure and excluded from artifacts.
 Deployment inspects the alerts table before applying entitlement columns, so
 repeat deployments preserve existing grace deadlines and notification markers.
+The weekly digest accepts delayed scheduled starts until Friday 6 AM Toronto.
+It inspects successful submission steps from that weekly window, so an early
+skipped DST slot cannot suppress delivery and a completed slot cannot send twice.
+An API/status lookup failure blocks submission; mail POSTs are never blindly retried.
 
 On a failed run, inspect its first failed step and retained source/browser/release
 diagnostics. Retry read-only CI after a transient service outage. Fix deterministic

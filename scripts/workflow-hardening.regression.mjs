@@ -10,6 +10,7 @@ import { installLockedDependencies } from './ciInstall.js'
 import { auditWorkflow } from './workflowPolicy.js'
 import { archiveIds, removedArchiveIds } from './archiveHistory.js'
 import { entitlementMigration } from './alertEntitlementMigration.js'
+import { digestWindow, alreadySubmitted, uncertainSubmission, scheduledDigestDecision } from './digestSchedule.js'
 
 const workflow = name => parse(readFileSync(new URL(`../.github/workflows/${name}`, import.meta.url), 'utf8'))
 const ci = workflow('ci.yml')
@@ -91,8 +92,43 @@ test('production cannot bypass browser, type, identity, archive or workflow gate
 test('digest submission is main-only and cannot silently gain unsafe POST retries', () => {
   const digest = workflow('send-planning-digest.yml')
   assert.deepEqual(auditWorkflow('send-planning-digest.yml', digest), [])
-  digest.jobs.send.steps[0].run += '\ncurl --retry 3 -X POST example.invalid'
+  digest.jobs.send.steps.find(step => step.name === 'Submit planning digest').run += '\ncurl --retry 3 -X POST example.invalid'
   assert.match(auditWorkflow('send-planning-digest.yml', digest).join(), /blindly retried/)
+})
+
+test('weekly digest tolerates delayed cron and daylight saving without double submission', () => {
+  assert.equal(digestWindow(new Date('2026-10-15T09:59:00Z')), null)
+  assert.equal(digestWindow(new Date('2026-10-15T10:00:00Z')), '2026-10-15')
+  assert.equal(digestWindow(new Date('2026-10-15T18:00:00Z')), '2026-10-15')
+  assert.equal(digestWindow(new Date('2026-10-16T09:59:00Z')), '2026-10-15')
+  assert.equal(digestWindow(new Date('2026-10-16T10:00:00Z')), null)
+  assert.equal(digestWindow(new Date('2027-01-14T10:00:00Z')), null)
+  assert.equal(digestWindow(new Date('2027-01-14T11:00:00Z')), '2027-01-14')
+  const successful = { name: 'Submit planning digest', conclusion: 'success', started_at: '2026-10-15T18:00:00Z' }
+  assert.equal(alreadySubmitted([{ steps: [successful] }], '2026-10-15'), true)
+  assert.equal(alreadySubmitted([{ steps: [{ ...successful, conclusion: 'skipped' }] }], '2026-10-15'), false)
+  assert.equal(alreadySubmitted([{ steps: [{ ...successful, conclusion: 'failure' }] }], '2026-10-15'), false)
+  assert.equal(alreadySubmitted([{ steps: [{ ...successful, name: 'Select the weekly delivery window' }] }], '2026-10-15'), false)
+  assert.equal(alreadySubmitted([{ steps: [successful] }], '2026-10-22'), false)
+  assert.equal(uncertainSubmission([{ steps: [{ ...successful, conclusion: 'failure' }] }], '2026-10-15'), true)
+  assert.equal(uncertainSubmission([{ steps: [{ ...successful, conclusion: 'cancelled' }] }], '2026-10-15'), true)
+  assert.equal(uncertainSubmission([{ steps: [{ ...successful, conclusion: 'skipped' }] }], '2026-10-15'), false)
+  assert.equal(uncertainSubmission([{ steps: [successful] }], '2026-10-15'), false)
+})
+
+test('digest receipt lookup permits skipped slots, prevents duplicate sends and blocks uncertain attempts', async () => {
+  const options = { now: new Date('2026-10-15T18:00:00Z'), runId: '2', repository: 'fixture/repo' }
+  const runs = [{ databaseId: 1, createdAt: '2026-10-15T10:00:00Z', status: 'completed' }]
+  for (const [conclusion, send] of [['success', false], ['skipped', true]]) {
+    const read = async args => args[0] === 'run' ? runs : { jobs: [{ steps: [{ name: 'Submit planning digest', conclusion, started_at: '2026-10-15T10:00:00Z' }] }] }
+    assert.equal((await scheduledDigestDecision({ ...options, read })).send, send)
+  }
+  await assert.rejects(scheduledDigestDecision({ ...options, read: async args => args[0] === 'run' ? runs : { jobs: [{ steps: [{ name: 'Submit planning digest', conclusion: 'failure', started_at: '2026-10-15T10:00:00Z' }] }] } }), /without confirmed completion/)
+  await assert.rejects(scheduledDigestDecision({ ...options, read: async () => { throw new Error('GitHub unavailable') } }), /GitHub unavailable/)
+  assert.equal((await scheduledDigestDecision({ ...options, now: new Date('2027-01-14T10:00:00Z'), read: async () => { throw new Error('must not read') } })).send, false)
+  await assert.rejects(scheduledDigestDecision({ ...options, now: new Date('2026-10-16T12:00:00Z'), read: async () => [] }), /missed its 24-hour/)
+  const previousAttempt = async args => args[0] === 'run' ? [{ databaseId: 2, createdAt: '2026-10-15T10:00:00Z', status: 'in_progress' }] : { jobs: [{ steps: [{ name: 'Submit planning digest', conclusion: 'success', started_at: '2026-10-15T10:00:00Z' }] }] }
+  assert.equal((await scheduledDigestDecision({ ...options, runAttempt: 2, read: previousAttempt })).send, false)
 })
 
 test('visual audit discovers its generated gitignored suite and excludes unrelated test files', t => {

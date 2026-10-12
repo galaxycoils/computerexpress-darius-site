@@ -8,6 +8,7 @@ on:
 
 permissions:
   contents: read
+  actions: read
 
 concurrency:
   group: planning-digest
@@ -21,18 +22,26 @@ jobs:
   send:
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-24.04
-    timeout-minutes: 15
-    env:
-      CRON_SECRET: ${{ secrets.CRON_SECRET }}
+    timeout-minutes: 30
     steps:
-      - name: Run at 6 AM Toronto time
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: ./.github/actions/setup-project
+      - name: Select the weekly delivery window
+        id: schedule
+        env:
+          TRIGGER: ${{ github.event_name }}
+          GH_TOKEN: ${{ github.token }}
+        run: node scripts/check-digest-schedule.mjs
+      - name: Submit planning digest
+        if: steps.schedule.outputs.send == 'true'
+        env:
+          CRON_SECRET: ${{ secrets.CRON_SECRET }}
         shell: bash --noprofile --norc -euo pipefail {0}
         run: |
           set -euo pipefail
-          if [ "${{ github.event_name }}" = schedule ] && [ "$(TZ=America/Toronto date +%H)" != 06 ]; then
-            echo 'Outside the Toronto 6 AM window; skipping.'
-            exit 0
-          fi
           if [ -z "$CRON_SECRET" ]; then
             echo '::error::CRON_SECRET is missing. Configure it for both the scheduler and Pages deployment.'
             exit 1
