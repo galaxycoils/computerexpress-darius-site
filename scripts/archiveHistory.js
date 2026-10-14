@@ -13,7 +13,7 @@ export function archiveIds(source) {
   if (!array || !ts.isArrayLiteralExpression(array)) throw new Error('Police archive must retain its literal nrpsReleases array')
   return array.elements.map(record => {
     if (!ts.isObjectLiteralExpression(record)) throw new Error('Police archive contains a nonliteral record')
-    const id = record.properties.find(property => ts.isPropertyAssignment(property) && property.name.getText(file).replace(/['"]/g, '') === 'id')
+    const id = record.properties.find(property => ts.isPropertyAssignment(property) && property.name.getText(file).replace(/['"`]/g, '') === 'id')
     if (!id || !ts.isStringLiteral(id.initializer)) throw new Error('Police archive record is missing a literal ID')
     return id.initializer.text
   })
