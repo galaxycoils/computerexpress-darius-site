@@ -1,4 +1,8 @@
 import UiIcon from "../journal/UiIcon";
+import { getLastRefreshedLabel } from "../data/officialDiscovery";
+
+const LAST_REFRESHED = getLastRefreshedLabel();
+
 export default function OfficialSourcesPanel() {
   return (
     <div className="scd-rail-block">
@@ -30,6 +34,16 @@ export default function OfficialSourcesPanel() {
           </a>
         </li>
       </ul>
+      {LAST_REFRESHED ? (
+        <p className="scd-rail-note" data-testid="official-sources-last-verified">
+          {LAST_REFRESHED} — every record is link-clean and attached to its
+          official source.
+        </p>
+      ) : (
+        <p className="scd-rail-note">
+          Source corpus verification date unavailable.
+        </p>
+      )}
     </div>
-  )
+  );
 }

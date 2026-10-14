@@ -3,8 +3,12 @@ import { Link } from 'react-router-dom'
 import Seo, { BASE_URL } from '../components/Seo'
 import '../components/news/news.css'
 import '../components/news/sponsor.css'
-import { submitForm } from '../utils/formRequest'
+import { siteMetrics } from '../data/metrics.js';
+import { getLastRefreshedLabel } from '../data/officialDiscovery.js';
 
+const FRESHNESS_LABEL = getLastRefreshedLabel();
+const VERIFIED_COUNTS = `${siteMetrics.police} police media releases and ${siteMetrics.planning} municipal planning notices`;
+const LAST_REFRESHED = FRESHNESS_LABEL ? `${FRESHNESS_LABEL} — every record is link-clean and attached to its official source.` : 'Source corpus verification date unavailable.';
 const OPTIONS = [
   { value: 'primary', label: 'Planning Alert sponsorship inquiry' },
   { value: 'category', label: 'Planning Tracker placement inquiry' },
@@ -54,6 +58,16 @@ export default function SponsorPage() {
           <p className="scd-sponsor-fineprint">Or email <a href="mailto:cccemt@pm.me">cccemt@pm.me</a>.</p>
         </aside>
       </header>
+<section className="scd-sponsor-section" aria-labelledby="verified-corpus">
+      <h2 id="verified-corpus" className="scd-section-rule">Verified public record</h2>
+      <p>
+        The corpus sponsors buy into is the audited public record: {VERIFIED_COUNTS}.
+        Council and committee decisions are cited separately, not folded into the
+        document total.
+      </p>
+      <p className="scd-sponsor-freshness" data-testid="source-corpus-last-verified">{LAST_REFRESHED}</p>
+    </section>
+
       <section className="scd-sponsor-section" aria-labelledby="sponsor-policy">
         <h2 id="sponsor-policy" className="scd-section-rule">How sponsorship works</h2>
         <p>We discuss placement and availability with each prospective sponsor. We disclose paid placements clearly. Sponsors do not choose stories, alter source documents, or influence editorial decisions.</p>
