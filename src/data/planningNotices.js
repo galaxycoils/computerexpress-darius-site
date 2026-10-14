@@ -698,8 +698,61 @@ export const planningNotices = [
     category: "budget",
     tags: ["Budget Amendment", "Transit", "Fuel", "Niagara Region", "Reserve Transfer"],
   },
+  {
+    id: "thorold-436-quaker-rd-opa",
+    municipality: "Thorold",
+    type: "Notice of Public Meeting — Official Plan Amendment",
+    title: "436 Quaker Road — Official Plan Amendment (Port Robinson West Secondary Plan)",
+    description:
+      "Notice of public meeting held July 14, 2026 at 6:30 p.m. (hybrid, Council Chamber / YouTube) for Official Plan Amendment File D09-01-2026. Purpose: amend the Port Robinson West Secondary Plan to allow development to proceed before completion of the Phase 2 Subwatershed Study. Application to rezone 436 Quaker Road.",
+    status: "Meeting Complete",
+    meetingDate: "2026-07-14T18:30:00",
+    publishedDate: "2026-10-09",
+    sourceUrl:
+      "https://www.thorold.ca/news/news/notice-of-public-meeting-for-official-plan-amendment-436-quaker-rd/",
+    category: "official-plan-amendment",
+    tags: ["Official Plan Amendment", "Quaker Road", "Port Robinson West", "Thorold", "D09-01-2026"],
+  },
+  {
+    id: "niagara-fourth-ave-lincoln-closure",
+    municipality: "Niagara Region",
+    type: "Temporary Road Closure",
+    title: "Fourth Avenue (Regional Road 77) Closure — Lincoln (Sixteen Mile Creek Bridge)",
+    description:
+      "Full road closure on Fourth Avenue at Sixteen Mile Creek in Lincoln, initially May 19 – September 19, 2026, extended to the end of October 2026. Detour required.",
+    status: "Active",
+    publishedDate: "2026-10-09",
+    sourceUrl: "https://www.niagararegion.ca/news/notices/notice.aspx?q=988",
+    category: "road-closure",
+    tags: ["Road Closure", "Fourth Avenue", "Regional Road 77", "Lincoln", "Niagara Region"],
+  },
+  {
+    id: "niagara-victoria-ave-sewage-pump-station",
+    municipality: "Niagara Region",
+    type: "Notice of Construction",
+    title: "Victoria Avenue Sewage Pumping Station & Forcemain Upgrades — Lincoln",
+    description:
+      "Heavy construction July 2026 – winter 2026: 3.8 km Victoria Avenue forcemain replacement (Maple Grove Road to Cherry Avenue to Bartlett Road) in Lincoln, with associated sewage pumping station upgrades. Moving lane closures expected.",
+    status: "Active",
+    publishedDate: "2026-10-09",
+    sourceUrl: "https://www.niagararegion.ca/news/notices/notice.aspx?q=1008",
+    category: "construction",
+    tags: ["Construction", "Sewage Pumping Station", "Forcemain", "Victoria Avenue", "Lincoln", "Niagara Region"],
+  },
+  {
+    id: "niagara-wilhelm-rd-bridge-pc-closure",
+    municipality: "Niagara Region",
+    type: "Temporary Road Closure",
+    title: "Wilhelm Road Bridge Repairs — Port Colborne",
+    description:
+      "Single-lane closures on the Wilhelm Road railway bridge (Regional Road 98, ~400 m south of Forks Road East, Port Colborne) August 4 – October 13, 2026 for bridge repairs.",
+    status: "Active",
+    publishedDate: "2026-10-09",
+    sourceUrl: "https://niagararegion.ca/news/notices/notice.aspx?q=1010",
+    category: "road-closure",
+    tags: ["Road Closure", "Wilhelm Road", "Bridge", "Port Colborne", "Niagara Region"],
+  },
 ];
-
 const categoryColors = {
   "minor-variance": "var(--accent)",
   "consent-application": "var(--accent)",

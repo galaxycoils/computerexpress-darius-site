@@ -56,10 +56,36 @@ for (const notice of planningNotices) {
   noticeIds.add(notice.id)
   for (const field of ['municipality', 'title', 'type', 'status', 'sourceUrl']) if (!notice[field]) errors.push(`${notice.id} is missing ${field}`)
   if (!isHttpsUrl(notice.sourceUrl)) errors.push(`${notice.id} has an invalid source URL`)
+  const _noticeHost = (() => { try { return new URL(notice.sourceUrl).hostname } catch { return null } })()
+  const _allowedNoticeHosts = ['stcatharines.ca','www.stcatharines.ca','thorold.ca','www.thorold.ca',
+      'welland.ca','www.welland.ca','niagararegion.ca','www.niagararegion.ca',
+      'pub-niagararegion.escribemeetings.com','www.engagestc.ca']
+  if (!_noticeHost || !_allowedNoticeHosts.includes(_noticeHost)) errors.push(`${notice.id} source host not whitelisted: ${_noticeHost||'(invalid)'}`)
   if (!notice.publishedDate) warnings.push(`${notice.id} has no publication date`)
 }
 
-const { nrpsReleases } = nrps
+const { nrpsReleases, verifiedNrpsReleases, getNrpsStats } = nrps
+const expectedVerifiedCount = nrpsReleases.filter((r) => !r.unverified).length
+if (expectedVerifiedCount !== verifiedNrpsReleases.length) {
+  errors.push(`NRPS quarantine drift: filter-derived count ${expectedVerifiedCount} !== verified array ${verifiedNrpsReleases.length}`)
+}
+if (verifiedNrpsReleases.some((r) => r.unverified)) errors.push('NRPS quarantine leak: a flagged record reached verifiedNrpsReleases')
+if (verifiedNrpsReleases.length < 20) errors.push('NRPS archive is unexpectedly truncated')
+for (const helper of ['getLatestNrpsReleases', 'getNrpsReleasesByMunicipality', 'getNrpsReleasesByCategory', 'getNrpsStats']) {
+  if (typeof nrps[helper] !== 'function') errors.push(`NRPS module is missing ${helper}`)
+}
+const releaseIds = new Set()
+const releaseUrls = new Set()
+for (const release of verifiedNrpsReleases || []) {
+  if (!release.id || releaseIds.has(release.id)) errors.push(`Duplicate or missing NRPS ID: ${release.id || '(missing)'}`)
+  releaseIds.add(release.id)
+  if (!isHttpsUrl(release.url) || releaseUrls.has(release.url)) errors.push(`Invalid or duplicate NRPS source URL: ${release.id}`)
+  releaseUrls.add(release.url)
+  if (!release.headline || !release.date) errors.push(`Incomplete NRPS release: ${release.id}`)
+}
+const stats = getNrpsStats()
+if (stats.total !== verifiedNrpsReleases.length) errors.push(`getNrpsStats.total (${stats.total}) does not match verified array length (${verifiedNrpsReleases.length})`)
+
 
 // Source health is read from discovery.json, the artifact the collector actually
 // writes (scripts/collect-official-news.js, plus a gitignored collector-report.json).

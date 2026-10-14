@@ -771,6 +771,7 @@ export const nrpsReleases = [
     source: 'Niagara Regional Police Service',
     tags: ['Traffic Stop', 'Drug Seizure', 'Cannabis', 'Welland'],
     category: 'drug-seizure',
+    unverified: true,
   },
   {
     id: 'nrps-2026-08-31-drug-trafficking-update1',
