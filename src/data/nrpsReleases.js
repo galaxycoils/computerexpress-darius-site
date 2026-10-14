@@ -4,7 +4,7 @@
  * Official Niagara Regional Police Service media releases & community notifications.
  * Updated: 2026-10-14
  * Next review: Daily (cron) — refresh from niagarapolice.ca
- * Note: Added Oct 13 arrest in St. Catharines stabbing (1 District CIB, incident 26-128132, Michael Wallace charged). Added Oct 12 update on dual convenience store robberies (arrest of Dwight Humber). No other new official planning notices.
+ * Note: Added Oct 13 arrest in St. Catharines stabbing (1 District CIB, incident 26-128132, Michael Wallace charged). Added Oct 12 update on dual convenience store robberies (arrest of Dwight Humber). Added 7 NRPS media releases (Oct 4–11) newly tagged St. Catharines/Welland from the official feed: robbery (Welland), two aggravated assault updates (Niagara Falls/Court in St. Catharines), Fonthill ICE, online child luring, 18-year-old drug trafficking, animal cruelty, and Niagara Falls firearms investigation. No other new official planning notices.
  */
 import { getRenderNow } from '../utils/renderClock.js'
 
@@ -45,6 +45,83 @@ export const nrpsReleases = [
     tags: ['Robbery', 'Arrest', 'Port Colborne', 'Welland', '3 District', 'Update', 'Public Assistance'],
     category: 'arrest',
     incident_number: '26-128840 / 26-128928'
+  },
+  {
+    id: 'nrps-2026-10-11-same-suspect-robs-port-colborne-welland',
+    date: '2026-10-11',
+    headline: 'Same Suspect Robs Two Separate Stores in Port Colborne and Welland',
+    municipality: 'Welland',
+    type: 'Media Release (Robbery / Public Assistance)',
+    url: 'https://www.niagarapolice.ca/news/posts/same-suspect-robs-two-separate-stores-in-port-colborne-and-welland/',
+    source: 'Niagara Regional Police Service',
+    tags: ['Robbery', 'Public Assistance', 'Welland', '6 District', 'Arrest'],
+    category: 'robbery'
+  },
+  {
+    id: 'nrps-2026-10-08-aggravated-assault-arrest-update-nf',
+    date: '2026-10-08',
+    headline: 'Update 1 – Arrest Made - Detectives Seek Public Assistance in Aggravated Assault Investigation – Niagara Falls',
+    municipality: 'St. Catharines',
+    type: 'Media Release (Update / Aggravated Assault)',
+    url: 'https://www.niagarapolice.ca/news/posts/update-1-arrest-made-detectives-seek-public-assistance-in-aggravated-assault-investigation-niagara-falls/',
+    source: 'Niagara Regional Police Service',
+    tags: ['Aggravated Assault', 'Arrest', 'Update', '2 District', 'St. Catharines'],
+    category: 'assault'
+  },
+  {
+    id: 'nrps-2026-10-08-fonthill-child-sexual-abuse-material',
+    date: '2026-10-08',
+    headline: 'Fonthill Man Arrested for Child Sexual Abuse and Exploitation Material',
+    municipality: 'St. Catharines',
+    type: 'Media Release (ICE Unit Investigation)',
+    url: 'https://www.niagarapolice.ca/news/posts/fonthill-man-arrested-for-child-sexual-abuse-and-exploitation-material/',
+    source: 'Niagara Regional Police Service',
+    tags: ['ICE Unit', 'Child Sexual Abuse Material', 'Fonthill', 'Arrest', 'St. Catharines'],
+    category: 'child-safety'
+  },
+  {
+    id: 'nrps-2026-10-08-online-child-luring-arrest-nf',
+    date: '2026-10-08',
+    headline: 'Arrest Made in Online Child Luring Investigation – Niagara Falls',
+    municipality: 'St. Catharines',
+    type: 'Media Release (Child Luring Investigation)',
+    url: 'https://www.niagarapolice.ca/news/posts/arrest-made-in-online-child-luring-investigation-niagara-falls/',
+    source: 'Niagara Regional Police Service',
+    tags: ['Child Luring', 'Arrest', '2 District', 'St. Catharines'],
+    category: 'child-safety'
+  },
+  {
+    id: 'nrps-2026-10-07-18yo-drug-trafficking-nf',
+    date: '2026-10-07',
+    headline: '18-Year-Old Male Charged with Drug Trafficking in Niagara Falls',
+    municipality: 'St. Catharines',
+    type: 'Media Release (Drug Trafficking Investigation)',
+    url: 'https://www.niagarapolice.ca/news/posts/18-year-old-male-charged-with-drug-trafficking-in-niagara-falls/',
+    source: 'Niagara Regional Police Service',
+    tags: ['Drug Trafficking', 'Arrest', '2 District', 'St. Catharines'],
+    category: 'drug-investigation'
+  },
+  {
+    id: 'nrps-2026-10-07-animal-cruelty-bestiality-nf',
+    date: '2026-10-07',
+    headline: 'Niagara Falls Man Charged with Animal Cruelty and Bestiality Charges',
+    municipality: 'St. Catharines',
+    type: 'Media Release (Animal Cruelty Investigation)',
+    url: 'https://www.niagarapolice.ca/news/posts/niagara-falls-man-charged-with-animal-cruelty-and-bestiality-charges/',
+    source: 'Niagara Regional Police Service',
+    tags: ['Animal Cruelty', 'Arrest', '2 District', 'St. Catharines'],
+    category: 'animal-cruelty'
+  },
+  {
+    id: 'nrps-2026-10-04-niagara-falls-firearms-investigation',
+    date: '2026-10-04',
+    headline: 'Niagara Falls Man Arrested in Firearms Investigation',
+    municipality: 'St. Catharines',
+    type: 'Media Release (Firearms Investigation)',
+    url: 'https://www.niagarapolice.ca/news/posts/niagara-falls-man-arrested-in-firearms-investigation/',
+    source: 'Niagara Regional Police Service',
+    tags: ['Firearms', 'Arrest', '2 District', 'St. Catharines'],
+    category: 'firearms'
   },
   {
     id: 'nrps-2026-10-11-thorold-welland-stabbing-suspect',
