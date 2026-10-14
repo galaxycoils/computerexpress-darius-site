@@ -88,7 +88,7 @@ export default function SponsorPage() {
         <ul className="scd-rail-list">
           {VERIFIED_COUNCIL_DECISIONS.map((decision) => (
             <li key={`${decision.city}-${decision.motion}`}>
-              {decision.city} — motion {decision.motion} ({decision.date}) —{' '}
+              {decision.city} {decision.motion} — ({decision.date}) —{' '}
               {decision.label}
             </li>
           ))}
