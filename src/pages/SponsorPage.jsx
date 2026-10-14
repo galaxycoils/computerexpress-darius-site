@@ -7,6 +7,18 @@ import { siteMetrics } from '../data/metrics.js';
 import { getLastRefreshedLabel } from '../data/officialDiscovery.js';
 
 const FRESHNESS_LABEL = getLastRefreshedLabel();
+const SPONSOR_ONE_PAGE_RATE = '$250/month';
+const VERIFIED_COUNCIL_DECISIONS = [
+  { city: 'St. Catharines', motion: '2026-07', date: 'Mar 16, 2026', label: 'Aquatic Centre/Multi-Use Facility preliminary cost estimates' },
+  { city: 'St. Catharines', motion: '2026-10', date: 'Apr 2, 2026', label: 'CIP for Sites of Strategic Importance and Municipal Significance' },
+  { city: 'St. Catharines', motion: '2026-12', date: 'Apr 24, 2026', label: 'Downtown Parking' },
+  { city: 'St. Catharines', motion: '2026-20', date: 'Aug 7, 2026', label: 'Flood Resilience Efforts' },
+  { city: 'Welland', motion: '2026-105', date: 'Jun 9, 2026', label: 'Welland Downtown BIA constitution amendments + Lisa Mooney appointment (CARRIED)' },
+  { city: 'Thorold', motion: '2026-10', date: 'Jun 2, 2026', label: 'Mayoral decision ratifying council by-laws' },
+  { city: 'Thorold', motion: '2026-12', date: 'Jun 23, 2026', label: 'Mayoral decision ratifying council by-laws' },
+  { city: 'Thorold', motion: '2026-13', date: 'Jul 14, 2026', label: 'Mayoral decision ratifying council by-laws' },
+  { city: 'Thorold', motion: '2026-16', date: 'Sep 8, 2026', label: 'Mayoral decision ratifying council by-laws' },
+];
 const VERIFIED_COUNTS = `${siteMetrics.police} police media releases and ${siteMetrics.planning} municipal planning notices`;
 const LAST_REFRESHED = FRESHNESS_LABEL ? `${FRESHNESS_LABEL} — every record is link-clean and attached to its official source.` : 'Source corpus verification date unavailable.';
 const OPTIONS = [
@@ -67,6 +79,24 @@ export default function SponsorPage() {
       </p>
       <p className="scd-sponsor-freshness" data-testid="source-corpus-last-verified">{LAST_REFRESHED}</p>
     </section>
+
+      <section className="scd-sponsor-section" aria-labelledby="verified-council-decisions">
+        <h2 id="verified-council-decisions" className="scd-section-rule">
+          Council and committee decisions cited separately
+        </h2>
+        <p>These are verified outcomes, not part of the 52/47 count above.</p>
+        <ul className="scd-rail-list">
+          {VERIFIED_COUNCIL_DECISIONS.map((decision) => (
+            <li key={`${decision.city}-${decision.motion}`}>
+              {decision.city} — motion {decision.motion} ({decision.date}) —{' '}
+              {decision.label}
+            </li>
+          ))}
+        </ul>
+        <p>
+          One page, one rate: {SPONSOR_ONE_PAGE_RATE}. No fine print.
+        </p>
+      </section>
 
       <section className="scd-sponsor-section" aria-labelledby="sponsor-policy">
         <h2 id="sponsor-policy" className="scd-section-rule">How sponsorship works</h2>
