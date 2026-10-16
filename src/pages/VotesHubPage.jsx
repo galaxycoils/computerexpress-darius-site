@@ -26,6 +26,7 @@ export default function VotesHubPage() {
             <h3>Welland Votes 2026</h3>
             <p>Mayoral candidates, key dates, advance voting, eligibility and the rest of the ballot.</p>
             <Link to="/welland-votes" className="scd-more">Open the Welland voter guide →</Link>
+            <p>Ward races: {[1, 2, 3, 4, 5, 6].map((n) => (<Link key={n} to={`/elections/welland/ward-${n}`} style={{ marginRight: '0.75rem' }}>Ward {n}</Link>))}</p>
           </article>
         </section>
         <section aria-labelledby="how-checked">

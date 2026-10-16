@@ -40,6 +40,7 @@ const EditorialPolicyPage = lazy(() => import('../pages/EditorialPolicyPage'))
 const CorrectionsPage = lazy(() => import('../pages/CorrectionsPage'))
 const SponsorPage = lazy(() => import('../pages/SponsorPage'))
 const WellandVotesPage = lazy(() => import('../pages/WellandVotesPage'))
+const WardRacePage = lazy(() => import('../pages/WardRacePage'))
 const PlanningAlertsPage = lazy(() => import('../pages/PlanningAlertsPage'))
 const MembershipPage = lazy(() => import('../pages/MembershipPage'))
 const ReaderServicesPage = lazy(() => import('../pages/ReaderServicesPage'))
@@ -65,6 +66,7 @@ export const lazyPages = {
   TermsPage,
   SponsorPage,
   WellandVotesPage,
+  WardRacePage,
   PlanningAlertsPage,
   MembershipPage,
   ReaderServicesPage,
