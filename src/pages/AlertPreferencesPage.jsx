@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import Seo, { BASE_URL } from '../components/Seo'
+import { paymentReferenceForAlertId } from '../data/paymentReference'
 
 const NOTICE_TYPES = ['OPA', 'ZBA', 'Site Plan', 'CoA', 'Consent', 'Part Lot Control']
 const STATUSES = ['Received', 'Public Meeting Scheduled', 'Hearing Scheduled', 'Decision', 'Appeal', 'Active']
@@ -167,7 +168,10 @@ export default function AlertPreferencesPage() {
                     ? `Your weekly digest is complimentary until ${formatDay(alert.grace_until)}.`
                     : 'Your filters are saved, but the weekly digest has stopped because no payment is on file.'}{' '}
                   Planning Alerts are {PLANNING_ALERTS_PRICE} — send it by Interac e-Transfer to{' '}
-                  {PLANNING_ALERTS_EMAIL}, then reply to any alert email with your transfer reference.
+                  {PLANNING_ALERTS_EMAIL}
+                  {paymentReferenceForAlertId(alert.id)
+                    ? <> with <strong data-testid="preferences-pay-reference">{paymentReferenceForAlertId(alert.id)}</strong> in the e-Transfer message. We match it by hand and email you when delivery is on.</>
+                    : ', then reply to any alert email with your transfer reference.'}
                 </p>
               </div>
             )}
