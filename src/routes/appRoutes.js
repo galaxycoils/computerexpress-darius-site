@@ -48,6 +48,7 @@ export const appRoutes = [
   { path: 'news/police', page: 'PoliceNewsPage' },
   { path: 'news/:citySlug', page: 'CityNewsPage' },
   { path: 'votes', page: 'VotesHubPage' },
+  { path: 'elections/welland/:ward', page: 'WardRacePage' },
   { path: 'editorial-policy', page: 'EditorialPolicyPage' },
   { path: 'corrections', page: 'CorrectionsPage' },
   { path: 'editorial', page: 'EditorialDeskPage', group: 'clientOnly' },

@@ -13,6 +13,12 @@ export const baseRoutes = [
   "/editorial-policy",
   "/corrections",
   "/welland-votes",
+  "/elections/welland/ward-1",
+  "/elections/welland/ward-2",
+  "/elections/welland/ward-3",
+  "/elections/welland/ward-4",
+  "/elections/welland/ward-5",
+  "/elections/welland/ward-6",
   "/privacy",
   "/terms",
   "/planning-tracker",
@@ -66,6 +72,7 @@ export function getRoutePageModule(route) {
   if (!page && route.startsWith("/events/")) page = "EventsPage";
   if (!page && route.startsWith("/explore/")) page = "ExplorePage";
   if (!page && route.startsWith("/news/")) page = "CityNewsPage";
+  if (!page && route.startsWith("/elections/welland/")) page = "WardRacePage";
   return page ? `src/pages/${page}.jsx` : null;
 }
 

@@ -27,6 +27,7 @@ import EditorialPolicyPage from '../pages/EditorialPolicyPage'
 import CorrectionsPage from '../pages/CorrectionsPage'
 import SponsorPage from '../pages/SponsorPage'
 import WellandVotesPage from '../pages/WellandVotesPage'
+import WardRacePage from '../pages/WardRacePage'
 import PlanningAlertsPage from '../pages/PlanningAlertsPage'
 import MembershipPage from '../pages/MembershipPage'
 import ReaderServicesPage from '../pages/ReaderServicesPage'
@@ -53,6 +54,7 @@ export const staticPages = {
   TermsPage,
   SponsorPage,
   WellandVotesPage,
+  WardRacePage,
   PlanningAlertsPage,
   MembershipPage,
   ReaderServicesPage,
