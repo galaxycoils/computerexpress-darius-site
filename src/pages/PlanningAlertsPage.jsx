@@ -36,6 +36,10 @@ const STATUSES = [
 // than after the reader has handed over an address.
 const PLANNING_ALERTS_PRICE = '$49/month';
 const PLANNING_ALERTS_EMAIL = 'cccemt@pm.me';
+// Optional card checkout. Set VITE_STRIPE_PLANNING_ALERTS_URL to a Stripe Payment Link
+// (https://buy.stripe.com/...) at build time. When unset, no button renders.
+const STRIPE_PAYMENT_LINK = (import.meta.env?.VITE_STRIPE_PLANNING_ALERTS_URL || '').trim();
+const HAS_STRIPE_LINK = /^https:\/\/(buy|checkout)\.stripe\.com\//.test(STRIPE_PAYMENT_LINK);
 
 export default function PlanningAlertsPage() {
   const [email, setEmail] = useState('');
@@ -320,6 +324,15 @@ export default function PlanningAlertsPage() {
             </li>
             <li>
               <strong>Activate for {PLANNING_ALERTS_PRICE}.</strong> Send {PLANNING_ALERTS_PRICE} by Interac e-Transfer to {PLANNING_ALERTS_EMAIL} and reply with your transfer reference. We match it to your alert and switch delivery on.
+              {HAS_STRIPE_LINK && (
+                <>
+                  {' '}Prefer card?{' '}
+                  <a className="scd-button" href={STRIPE_PAYMENT_LINK} target="_blank" rel="noopener noreferrer" data-testid="stripe-payment-link">
+                    Pay {PLANNING_ALERTS_PRICE} by card
+                  </a>{' '}
+                  Use the same email you verified.
+                </>
+              )}
             </li>
             <li>
               <strong>Get your digest.</strong> Every Thursday at 6 AM, matching notices land in your inbox.
