@@ -130,7 +130,7 @@ export default function HomePage() {
               local to Niagara.
             </p>
             <Link className="journal-button journal-button-ink" to="/events">
-              Open the civic calendar <UiIcon name="external" size={17} />
+              Open the civic calendar <UiIcon name="arrow" size={17} />
             </Link>
           </div>
           <div className="journal-week-events">
@@ -177,7 +177,7 @@ export default function HomePage() {
                   <p className="journal-kicker">{tag}</p>
                   <h3>
                     <Link to={`/news/${slug}`}>
-                      {city} <UiIcon name="external" size={22} />
+                      {city} <UiIcon name="arrow" size={22} />
                     </Link>
                   </h3>
                   <p>

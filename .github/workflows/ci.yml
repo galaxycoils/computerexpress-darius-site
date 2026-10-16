@@ -118,6 +118,9 @@ jobs:
       - name: Verify prerendered output
         run: npm run verify:prerender
 
+      - name: Audit structured data
+        run: npm run audit:schema
+
       - name: Upload dist artifact (Node 22 only)
         if: matrix.node-version == 22
         uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6

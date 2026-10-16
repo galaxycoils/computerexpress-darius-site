@@ -31,7 +31,7 @@ export default function ExplorePage() {
               </h2>
               <p>{g.description}</p>
               <Link className="journal-link" to={`/explore/${g.slug}`}>
-                Explore the guide <UiIcon name="external" size={16} />
+                Explore the guide <UiIcon name="arrow" size={16} />
               </Link>
             </article>
           ))}

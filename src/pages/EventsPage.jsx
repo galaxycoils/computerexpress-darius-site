@@ -37,7 +37,7 @@ function EventRow({ event }) {
             "Check the official notice for the location."}
         </p>
       </div>
-      <Link to={`/events/${event.id}`}>Details <UiIcon name="external" size={16} /></Link>
+      <Link to={`/events/${event.id}`}>Details <UiIcon name="arrow" size={16} /></Link>
     </article>
   );
 }

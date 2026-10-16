@@ -239,7 +239,7 @@ export default function NewsFeed({ city = "", search = false }) {
           </button>
         )}
         <a href="/rss.xml">
-          RSS feed <UiIcon name="external" size={16} />
+          RSS feed <UiIcon name="arrow" size={16} />
         </a>
       </div>
       <p className="journal-small">

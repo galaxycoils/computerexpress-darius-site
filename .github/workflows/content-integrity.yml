@@ -1,5 +1,9 @@
 name: Content integrity
 
+# Structured data is audited in CI's production build and again before
+# publication. This workflow keeps the source, archive and collector gates,
+# including the daily run when no code has changed.
+
 on:
   pull_request:
   push:
@@ -38,8 +42,6 @@ jobs:
             command: npm run content:audit
           - suite: archive-retention
             command: npm run audit:archives
-          - suite: schema-audit
-            command: npm run build && npm run audit:build && node scripts/audit-schema.js
 
     steps:
       - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6

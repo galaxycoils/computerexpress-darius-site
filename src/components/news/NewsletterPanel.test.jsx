@@ -1,6 +1,11 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react'
+import { MemoryRouter } from 'react-router-dom'
 import { describe, expect, it, vi } from 'vitest'
 import NewsletterPanel from './NewsletterPanel'
+
+function renderPanel(props) {
+  return render(<MemoryRouter><NewsletterPanel {...props} /></MemoryRouter>)
+}
 
 describe('NewsletterPanel', () => {
   it('sends its placement in the request body', async () => {
@@ -10,7 +15,7 @@ describe('NewsletterPanel', () => {
     })
     vi.stubGlobal('fetch', fetchMock)
 
-    render(<NewsletterPanel placement="guide_inline" />)
+    renderPanel({ placement: 'guide_inline' })
 
     const input = screen.getByRole('textbox', { name: /email address/i })
     fireEvent.change(input, { target: { value: 'reader@example.com' } })
@@ -34,7 +39,7 @@ describe('NewsletterPanel', () => {
     })
     vi.stubGlobal('fetch', fetchMock)
 
-    render(<NewsletterPanel placement="home" topics={['Council', 'Planning', 'Police']} />)
+    renderPanel({ placement: 'home', topics: ['Council', 'Planning', 'Police'] })
     fireEvent.click(screen.getByRole('checkbox', { name: /council/i }))
 
     const input = screen.getByRole('textbox', { name: /email address/i })
@@ -53,7 +58,7 @@ describe('NewsletterPanel', () => {
     })
     vi.stubGlobal('fetch', fetchMock)
 
-    render(<NewsletterPanel />)
+    renderPanel()
 
     const input = screen.getByRole('textbox', { name: /email address/i })
     fireEvent.change(input, { target: { value: 'reader@example.com' } })

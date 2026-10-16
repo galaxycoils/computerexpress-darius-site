@@ -66,7 +66,7 @@ export function auditWorkflow(name, workflow) {
     for (const id of ['build', 'browser']) {
       if (!jobs[id] || jobs[id].if) fail(`CI ${id} must not conditionally skip required checks`)
     }
-    for (const command of ['npm run build', 'npm run audit:build', 'npm run budget:bundle', 'npm run verify:prerender']) {
+    for (const command of ['npm run build', 'npm run audit:build', 'npm run budget:bundle', 'npm run verify:prerender', 'npm run audit:schema']) {
       if (!jobs.build?.steps?.some(step => !step.if && hasCommand(step, command))) fail(`CI build must pass ${command}`)
     }
     for (const command of ['npm run audit:build', 'npm run audit:visual', 'npm run test:browser']) {
