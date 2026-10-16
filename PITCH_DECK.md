@@ -4,8 +4,8 @@
 **Audience**: Pre-seed / angel investors (Niagara, Toronto, Hamilton networks)
 **Narrative**: Not a news site — a municipal intelligence platform with a live, defensible data moat
 **Last updated**: 2026-10-14
-**Verified counts (live site)**: 52 verified police + **47** planning + **52** civic = **154 verified records**
-**Note**: 52 of 68 held NRPS releases are source-verified; the rest are quarantined until their links resolve. 50 planning notices, of which 24 are active and 27 carry meeting dates.
+**Verified counts (live site)**: 52 verified police + **50** planning + **52** civic = **154 verified records**
+**Note**: 52 of 68 held NRPS releases are source-verified; the rest are quarantined until their links resolve. 50 planning notices. Active status is calculated from Toronto time when the site is rendered.
 
 **Verified, not aspirational**: counts are derived from `src/data/metrics.js`, which reads the live data modules (`verifiedNrpsReleases`, `planningNotices`, `councilData`). `npm run audit:metrics` fails the build if a figure in this deck drifts from the data. If a number is not currently on the live site, it does not go in this deck.
 

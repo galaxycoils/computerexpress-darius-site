@@ -7,7 +7,7 @@
  * - niagararegion.ca
  *
  * Updated: 2026-10-16
- * Note: Added St. Catharines Community Outdoor Ice Rinks applications (due Nov. 6); added Thorold Short Hills Provincial Park deer harvest closures (multiple dates Oct–Dec). No new Oct 10–14 road closure or planning notices for St. Catharines, Welland, or Niagara Region. CoA hearings for Oct 14 remain scheduled.
+ * Note: Preserved the complete archive and added Lakehurst Drive, Crompton/Bolton construction, and 1 Griffith Street notices. Status helpers derive past meeting and deadline states.
  * Next review: Daily
  */
 import { getRenderNow, parseTorontoDate } from "../utils/renderClock.js";

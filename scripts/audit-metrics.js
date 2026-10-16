@@ -30,9 +30,9 @@ const RULES = [
   // Compound summary lines carry the most drift risk, so they are matched first
   // and explicitly rather than relying on each number being phrased identically.
   {
-    metrics: ['police', 'planning', 'civic'],
+    metrics: ['police', 'planning', 'civic', 'total'],
     label: 'dataset summary',
-    pattern: /(\d+)\s+police\s*\+\s*(\d+)\s*planning\s*\+\s*(\d+)\s+civic/gi,
+    pattern: /(\d+)\s+(?:verified\s+)?police\s*\+\s*(\d+)\s*planning\s*\+\s*(\d+)\s+civic\s*=\s*(\d+)\s+(?:verified\s+)?records/gi,
   },
   {
     metrics: ['police', 'planning', 'civic'],
@@ -90,7 +90,8 @@ for (const relative of TRACKED_FILES) {
   const lines = fs.readFileSync(absolute, 'utf8').split('\n')
   let matched = 0
 
-  lines.forEach((line, index) => {
+  lines.forEach((rawLine, index) => {
+    const line = rawLine.replace(/\*\*/g, '')
     for (const rule of RULES) {
       // Rules are global; reset before each line so lastIndex cannot leak.
       rule.pattern.lastIndex = 0
