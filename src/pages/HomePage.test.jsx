@@ -75,6 +75,14 @@ describe("HomePage — Editorial Newsroom", () => {
     ).toBeInTheDocument();
   });
 
+  it("uses an arrow for links that stay on the site", () => {
+    renderWithProviders(<HomePage />);
+    for (const name of [/Open the civic calendar/i, /All news/i, /^St\. Catharines$/, /^Welland$/, /^Thorold$/]) {
+      const link = screen.getAllByRole("link", { name }).find((item) => item.querySelector("[data-icon]"));
+      expect(link?.querySelector("[data-icon]")).toHaveAttribute("data-icon", "arrow");
+    }
+  });
+
   it("has Planning Tracker CTA", () => {
     renderWithProviders(<HomePage />);
     const cta = screen.getByRole("link", { name: /Planning Tracker/i });
@@ -110,6 +118,7 @@ describe("HomePage — Editorial Newsroom", () => {
     const host = new URL(official[0].getAttribute("href")).hostname;
     expect(host).toMatch(OFFICIAL_HOST_RE);
     expect(host).not.toMatch(/facebook|twitter|reddit|instagram/i);
+    expect(official[0].querySelector("[data-icon]")).toHaveAttribute("data-icon", "external");
   });
 
   it("renders planning notices from official data", () => {

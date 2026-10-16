@@ -119,6 +119,15 @@ test('aggregate checks fail for each failed, cancelled or skipped prerequisite',
   }
 })
 
+test('browser verification is not repeated outside CI on main or pull requests', () => {
+  const browser = workflow('redesign-browser.yml')
+  assert.equal(browser.on.pull_request, undefined)
+  assert.deepEqual(browser.on.push.branches, ['redesign/**'])
+  assert.equal(Object.hasOwn(browser.on, 'workflow_dispatch'), true)
+  assert.deepEqual(auditWorkflow('redesign-browser.yml', browser), [])
+  assert.ok(ci.jobs.build.steps.some(step => step.run === 'npm run audit:schema'))
+})
+
 test('digest submission is main-only and cannot silently gain unsafe POST retries', () => {
   const digest = workflow('send-planning-digest.yml')
   assert.deepEqual(auditWorkflow('send-planning-digest.yml', digest), [])

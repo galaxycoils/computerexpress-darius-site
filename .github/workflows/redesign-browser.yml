@@ -1,21 +1,10 @@
 name: Redesign browser verification
+# Pull requests and main already run this suite in CI, against that run's
+# build artifact, and production repeats it before publication. This workflow
+# covers redesign-branch pushes and manual dispatch only.
 on:
-  pull_request:
-    paths:
-      - 'src/**'
-      - 'public/**'
-      - 'index.html'
-      - 'scripts/browser-redesign.mjs'
-      - 'scripts/prerender.js'
-      - 'scripts/prepare-local-images.mjs'
-      - 'package*.json'
-      - '.github/workflows/redesign-browser.yml'
-      - 'scripts/audit-visual.js'
-      - 'scripts/playwright-visual.config.mjs'
-      - 'scripts/browser-local-chat.mjs'
-      - '.github/actions/**'
   push:
-    branches: [main, "redesign/**"]
+    branches: ["redesign/**"]
   workflow_dispatch:
 concurrency:
   group: browser-verification-${{ github.ref }}

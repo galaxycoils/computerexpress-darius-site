@@ -27,6 +27,7 @@ export default function UiIcon({ name = "arrow", size = 18, ...props }) {
   return (
     <svg
       className="journal-icon"
+      data-icon={name}
       width={size}
       height={size}
       viewBox="0 0 24 24"

@@ -138,12 +138,12 @@ export default function PolicePage() {
             }}>
               Browse all public safety and crime-related reporting on this site, with search and filters by municipality and category.
             </p>
-            <a
-              href="/news/police"
+            <Link
+              to="/news/police"
               className="button button-primary"
             >
-              View all NRPS media releases <UiIcon name="external" size={16} />
-            </a>
+              View all NRPS media releases <UiIcon name="arrow" size={16} />
+            </Link>
           </article>
 
           <div style={{

@@ -1,4 +1,5 @@
 import { useId, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { submitForm } from '../../utils/formRequest'
 import UiIcon from '../journal/UiIcon'
 import './NewsletterPanel.css'
@@ -89,7 +90,7 @@ export default function NewsletterPanel({ placement = 'site_rail', topics = null
           {status === 'error' && (
             <p id={`${emailId}-error`} className="scd-newsletter-error" role="alert">{error}</p>
           )}
-          <p className="scd-newsletter-note">Unsubscribe anytime. <a href="/privacy">How we use your email</a>.</p>
+          <p className="scd-newsletter-note">Unsubscribe anytime. <Link to="/privacy">How we use your email</Link>.</p>
         </>
       )}
     </div>

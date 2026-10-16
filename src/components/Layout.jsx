@@ -211,7 +211,7 @@ export default function Layout() {
               className="journal-button journal-subscribe"
               to="/planning-alerts"
             >
-              Stay in the know <UiIcon name="external" size={17} />
+              Stay in the know <UiIcon name="arrow" size={17} />
             </Link>
           </div>
         </header>
@@ -272,7 +272,7 @@ export default function Layout() {
                 ["/police", "Public safety"],
               ].map(([path, label]) => (
                 <Link key={path} to={path}>
-                  {label} <UiIcon name="external" size={16} />
+                  {label} <UiIcon name="arrow" size={16} />
                 </Link>
               ))}
               <div className="journal-mobile-edition">
@@ -356,7 +356,7 @@ export default function Layout() {
               <Link to="/editorial-policy">Editorial policy</Link>
               <Link to="/accessibility">Accessibility</Link>
               <a href="/rss.xml">
-                RSS feed <UiIcon name="external" size={16} />
+                RSS feed <UiIcon name="arrow" size={16} />
               </a>
             </div>
           </div>

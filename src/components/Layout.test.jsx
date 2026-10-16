@@ -81,6 +81,23 @@ describe("reading position restoration", () => {
   });
 });
 
+describe("on-site navigation icons", () => {
+  it("uses an arrow for links that stay on the site", () => {
+    render(
+      <MemoryRouter>
+        <Routes><Route element={<Layout />}><Route index element={<p>Home</p>} /></Route></Routes>
+      </MemoryRouter>,
+    );
+    expect(screen.getByRole("link", { name: /Stay in the know/i }).querySelector("[data-icon]")).toHaveAttribute("data-icon", "arrow");
+    fireEvent.click(screen.getByRole("button", { name: /Menu/i }));
+    for (const link of screen.getAllByRole("link", { name: "News" })) {
+      const icon = link.querySelector("[data-icon]");
+      if (icon) expect(icon).toHaveAttribute("data-icon", "arrow");
+    }
+    expect(screen.getByRole("link", { name: /RSS feed/i }).querySelector("[data-icon]")).toHaveAttribute("data-icon", "arrow");
+  });
+});
+
 describe("site dateline", () => {
   it("shows today's Toronto date even when the page was built yesterday", () => {
     vi.useFakeTimers();
