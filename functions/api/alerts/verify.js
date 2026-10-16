@@ -1,3 +1,4 @@
+import { paymentReferenceForAlertId } from '../../../src/data/paymentReference.js'
 import { createAlertToken, verifyAlertToken } from './_auth.js'
 
 // Cloudflare Pages Function: GET /api/alerts/verify?token=...
@@ -61,7 +62,11 @@ export async function onRequestGet(context) {
 
 Planning Alerts are ${PLANNING_ALERTS_PRICE}. Verification does not start the digest on its own.
 
-To activate it, send ${PLANNING_ALERTS_PRICE} by Interac e-Transfer to ${PLANNING_ALERTS_EMAIL}, then reply to this email with your transfer reference. We match the transfer to your alert and switch delivery on.
+To activate it, send ${PLANNING_ALERTS_PRICE} by Interac e-Transfer to ${PLANNING_ALERTS_EMAIL} and put this reference in the e-Transfer message:
+
+    ${paymentReferenceForAlertId(result.id)}
+
+We match transfers by hand and email you as soon as delivery is switched on.
 
 Manage or stop your alerts:
 ${manageUrl}
