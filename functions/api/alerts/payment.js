@@ -1,5 +1,35 @@
-// Cloudflare Pages Function: POST /api/alerts/payment
-// Confirm Interac e-Transfer payment (admin-only via secret)
+// Cloudflare Pages Function: /api/alerts/payment (admin-only, Bearer ADMIN_SECRET)
+//   GET  ?reference=PA-XXXXXXXX  -> look up the signup an e-Transfer reference belongs to
+//   POST { alert_id } or { reference, note } -> confirm the Interac e-Transfer and activate
+import { alertIdPrefixForReference, normalizePaymentReference, paymentReferenceForAlertId } from '../../../src/data/paymentReference.js'
+
+function isAuthorized(context) {
+  const adminSecret = context.env.ADMIN_SECRET
+  const authHeader = context.request.headers.get('Authorization')
+  return Boolean(adminSecret) && authHeader === `Bearer ${adminSecret}`
+}
+
+// Resolve a reference code to exactly one alert. Returns { alert } or { error, status }.
+export async function findAlertByReference(db, reference) {
+  const prefix = alertIdPrefixForReference(reference)
+  if (!prefix) return { error: 'Reference must look like PA-XXXXXXXX', status: 400 }
+  const { results = [] } = await db.prepare(
+    `SELECT id, email, verified, payment_status, payment_confirmed_at, created_at FROM alerts WHERE lower(replace(id, '-', '')) LIKE ? LIMIT 2`
+  ).bind(`${prefix}%`).all()
+  if (results.length === 0) return { error: 'No signup matches that reference', status: 404 }
+  if (results.length > 1) return { error: 'Reference matches more than one signup; confirm by alert_id instead', status: 409 }
+  return { alert: results[0] }
+}
+
+export async function onRequestGet(context) {
+  const { STC_D1 } = context.env
+  if (!STC_D1) return jsonResponse({ error: 'Service not configured' }, 503)
+  if (!isAuthorized(context)) return jsonResponse({ error: 'Unauthorized' }, 401)
+  const reference = new URL(context.request.url).searchParams.get('reference')
+  const found = await findAlertByReference(STC_D1, reference)
+  if (found.error) return jsonResponse({ error: found.error }, found.status)
+  return jsonResponse({ reference: normalizePaymentReference(reference), alert: found.alert })
+}
 
 export async function onRequestPost(context) {
   const { env } = context;
@@ -10,19 +40,28 @@ export async function onRequestPost(context) {
     return jsonResponse({ error: 'Service not configured' }, 503);
   }
 
-  // Auth via admin secret
-  const authHeader = context.request.headers.get('Authorization');
-  const adminSecret = env.ADMIN_SECRET;
-  if (!adminSecret || authHeader !== `Bearer ${adminSecret}`) {
+  if (!isAuthorized(context)) {
     return jsonResponse({ error: 'Unauthorized' }, 401);
   }
 
   try {
     const body = await context.request.json();
-    const { alert_id, note } = body;
+    const { note, reference } = body;
+    let alert_id = body.alert_id;
+
+    if (!alert_id && reference) {
+      const found = await findAlertByReference(STC_D1, reference);
+      if (found.error) return jsonResponse({ error: found.error }, found.status);
+      alert_id = found.alert.id;
+    }
 
     if (!alert_id) {
-      return jsonResponse({ error: 'alert_id required' }, 400);
+      return jsonResponse({ error: 'alert_id or reference required' }, 400);
+    }
+
+    const existing = await STC_D1.prepare('SELECT id FROM alerts WHERE id = ?').bind(alert_id).first();
+    if (!existing) {
+      return jsonResponse({ error: 'Alert not found' }, 404);
     }
 
     const now = Date.now();
@@ -55,7 +94,7 @@ export async function onRequestPost(context) {
       }
     }
 
-    return jsonResponse({ success: true, alert_id, message: 'Payment confirmed' });
+    return jsonResponse({ success: true, alert_id, reference: paymentReferenceForAlertId(alert_id), message: 'Payment confirmed' });
   } catch (err) {
     console.error('Payment confirm error:', err);
     return jsonResponse({ error: 'Internal server error' }, 500);
@@ -76,7 +115,7 @@ function jsonResponse(data, status = 200) {
 function corsHeaders() {
   return {
     'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Methods': 'POST, OPTIONS',
+    'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
     'Access-Control-Allow-Headers': 'Content-Type, Authorization',
   };
 }

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
+import { paymentReferenceForAlertId } from '../data/paymentReference';
 import Seo from '../components/Seo';
 
 const WARDS = [
@@ -36,6 +37,29 @@ const STATUSES = [
 // than after the reader has handed over an address.
 const PLANNING_ALERTS_PRICE = '$49/month';
 const PLANNING_ALERTS_EMAIL = 'cccemt@pm.me';
+const PLANNING_ALERTS_AMOUNT = '$49.00 CAD';
+
+function CopyField({ label, value, testId }) {
+  const [copied, setCopied] = useState(false);
+  const copy = async () => {
+    try {
+      await navigator.clipboard.writeText(value);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch {
+      setCopied(false);
+    }
+  };
+  return (
+    <div className="scd-alerts-copy-row">
+      <span className="scd-cat">{label}</span>
+      <code data-testid={testId}>{value}</code>
+      <button type="button" className="button button-ghost button-sm" onClick={copy} aria-label={`Copy ${label.toLowerCase()}`}>
+        {copied ? 'Copied' : 'Copy'}
+      </button>
+    </div>
+  );
+}
 
 export default function PlanningAlertsPage() {
   const [email, setEmail] = useState('');
@@ -43,6 +67,7 @@ export default function PlanningAlertsPage() {
   const [wards, setWards] = useState([]);
   const [types, setTypes] = useState([]);
   const [statuses, setStatuses] = useState([]);
+  const [reference, setReference] = useState(null);
   const [keywords, setKeywords] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -80,6 +105,7 @@ export default function PlanningAlertsPage() {
       const result = await res.json();
 
       if (res.ok) {
+        setReference(paymentReferenceForAlertId(result.alert_id));
         setSuccess(true);
       } else {
         setError(result.error || 'Something went wrong. Please try again.');
@@ -110,11 +136,26 @@ export default function PlanningAlertsPage() {
             <p className="scd-cat">Check your inbox</p>
             <h1>Almost there.</h1>
             <p>We sent a confirmation email to <strong>{email}</strong>. Click the link inside to confirm your address and save your filters.</p>
-            <p>
-              Planning Alerts are <strong>{PLANNING_ALERTS_PRICE}</strong>. After you confirm, we email activation
-              instructions — send {PLANNING_ALERTS_PRICE} by Interac e-Transfer to {PLANNING_ALERTS_EMAIL} and reply
-              with your transfer reference. Delivery starts once the payment is matched.
-            </p>
+            <section className="scd-alerts-pay" aria-labelledby="alerts-pay">
+              <h2 id="alerts-pay">Activate: pay {PLANNING_ALERTS_PRICE} by Interac e-Transfer</h2>
+              <CopyField label="Amount" value={PLANNING_ALERTS_AMOUNT} testId="pay-amount" />
+              <CopyField label="Send to" value={PLANNING_ALERTS_EMAIL} testId="pay-email" />
+              {reference ? (
+                <>
+                  <CopyField label="Reference" value={reference} testId="pay-reference" />
+                  <p><strong>Put {reference} in the e-Transfer message.</strong> That is how we match your payment to this alert, so you don't need to reply with anything.</p>
+                </>
+              ) : (
+                <p>Put the email address you signed up with in the e-Transfer message so we can match it.</p>
+              )}
+              <h3>What happens next</h3>
+              <ol>
+                <li>Confirm your email using the link we just sent (it expires in 24 hours).</li>
+                <li>Send the e-Transfer. Payments are matched by hand, not instantly.</li>
+                <li>Once matched, you get a "Payment received" email and delivery switches on.</li>
+                <li>Your digest arrives on the next Thursday at 6 AM after activation.</li>
+              </ol>
+            </section>
             <p>Didn't see it? Check your spam folder, or{' '}
               <button className="button button-ghost button-sm" type="button" onClick={() => setSuccess(false)}>
                 start over
@@ -319,7 +360,7 @@ export default function PlanningAlertsPage() {
               <strong>Verify your email.</strong> We send a confirmation link. Confirming saves your filters — it does not start the digest on its own.
             </li>
             <li>
-              <strong>Activate for {PLANNING_ALERTS_PRICE}.</strong> Send {PLANNING_ALERTS_PRICE} by Interac e-Transfer to {PLANNING_ALERTS_EMAIL} and reply with your transfer reference. We match it to your alert and switch delivery on.
+              <strong>Activate for {PLANNING_ALERTS_PRICE}.</strong> Send {PLANNING_ALERTS_PRICE} by Interac e-Transfer to {PLANNING_ALERTS_EMAIL} with your personal reference code (shown after signup and in your confirmation email) in the message. We match it by hand and email you when delivery is on.
             </li>
             <li>
               <strong>Get your digest.</strong> Every Thursday at 6 AM, matching notices land in your inbox.

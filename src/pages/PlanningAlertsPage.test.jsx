@@ -65,4 +65,18 @@ describe('PlanningAlertsPage', () => {
     // This test just ensures the page renders without crashing.
     expect(container).toBeInTheDocument()
   })
+
+  it('shows amount, address and a per-signup reference with copy buttons after signup', async () => {
+    const { fireEvent, waitFor } = await import('@testing-library/react')
+    const { vi } = await import('vitest')
+    globalThis.fetch = vi.fn(async () => ({ ok: true, json: async () => ({ success: true, alert_id: '3f9a12bc-1111-4222-8333-444455556666' }) }))
+    render(<HelmetProvider><BrowserRouter><PlanningAlertsPage /></BrowserRouter></HelmetProvider>)
+    fireEvent.change(screen.getByLabelText(/Email address/i), { target: { value: 'test@example.com' } })
+    fireEvent.click(screen.getByRole('button', { name: /Create Alert/i }))
+    await waitFor(() => expect(screen.getByTestId('pay-reference')).toHaveTextContent('PA-3F9A12BC'))
+    expect(screen.getByTestId('pay-amount')).toHaveTextContent('$49.00 CAD')
+    expect(screen.getByTestId('pay-email')).toHaveTextContent('cccemt@pm.me')
+    expect(screen.getByRole('button', { name: /Copy reference/i })).toBeInTheDocument()
+    expect(screen.getByText(/What happens next/i)).toBeInTheDocument()
+  })
 })
