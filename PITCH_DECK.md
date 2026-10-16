@@ -36,7 +36,7 @@
 **Three-column visual**:
 | POLICE (NRPS) | PLANNING (4 municipalities) | COUNCIL (3 cities) |
 |--------------|----------------------------|-------------------|
-| **42 releases** indexed | **35 notices** tracked | **52 civic events** |
+| **52 releases** indexed | **50 notices** tracked | **52 civic events** |
 | Structured: victim, charges, suspect, court, hate-flag | Structured: type, deadline, hearing, status, category | Structured: agenda, minutes, votes, video timestamps |
 | Auto-fetch every 3 hrs | Auto-fetch daily | Auto-fetch per meeting cycle |
 | **Update detection** (Sept 29 → Sept 30 bail hearing) | **Status transitions** (Scheduled → Complete) | **Vote extraction** (recorded divisions) |
