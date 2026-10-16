@@ -254,3 +254,35 @@ test('partial entitlement upgrades preserve deadlines and incomplete initial sch
   assert.throws(() => entitlementMigration(['id', 'verified', 'frequency']), /payment_status/)
   assert.throws(() => entitlementMigration(['id', 'verified', 'payment_status']), /frequency/)
 })
+
+test('archive CLI rejects malformed current files and planning deletions, and validates repair history', () => {
+  const dir = mkdtempSync(path.join(tmpdir(), 'archive-gate-'))
+  const script = path.resolve('scripts/audit-archive-history.mjs')
+  const run = () => spawnSync(process.execPath, [script], { cwd: dir, encoding: 'utf8', env: { ...process.env, ARCHIVE_BASE_SHA: '' } })
+  const git = (...args) => {
+    const result = spawnSync('git', args, { cwd: dir, encoding: 'utf8' })
+    assert.equal(result.status, 0, result.stderr)
+  }
+  const source = (name, ids) => `export const ${name} = ${JSON.stringify(ids.map(id => ({ id })))};\n`
+  const write = (name, text) => writeFileSync(path.join(dir, 'src/data', `${name}.js`), text)
+  try {
+    mkdirSync(path.join(dir, 'src/data'), { recursive: true })
+    git('init', '-q'); git('config', 'user.email', 'test@example.invalid'); git('config', 'user.name', 'Test')
+    for (const name of ['nrpsReleases', 'planningNotices']) write(name, source(name, ['old']))
+    assert.notEqual(run().status, 0, 'missing history must fail')
+    git('add', '.'); git('commit', '-qm', 'baseline')
+    write('nrpsReleases', 'PLACEHOLDER')
+    write('planningNotices', 'PLACEHOLDER')
+    git('add', '.'); git('commit', '-qm', 'broken update')
+    git('commit', '--allow-empty', '-qm', 'second broken update')
+    assert.notEqual(run().status, 0, 'malformed current archive must fail')
+    for (const name of ['nrpsReleases', 'planningNotices']) write(name, source(name, ['old', 'new']))
+    const repaired = run()
+    assert.equal(repaired.status, 0, repaired.stderr)
+    assert.match(repaired.stdout, /all planningNotices records/)
+    write('planningNotices', source('planningNotices', ['replacement']))
+    assert.notEqual(run().status, 0, 'planning history cannot be replaced')
+  } finally {
+    rmSync(dir, { recursive: true, force: true })
+  }
+})

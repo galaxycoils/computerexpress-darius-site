@@ -46,10 +46,15 @@ jobs:
             echo '::error::CRON_SECRET is missing. Configure it for both the scheduler and Pages deployment.'
             exit 1
           fi
-          curl --fail --silent --show-error --connect-timeout 10 --max-time 720 \
+          if ! curl --fail-with-body --silent --show-error --connect-timeout 10 --max-time 720 \
             -H "Authorization: Bearer $CRON_SECRET" \
             -X POST 'https://stcatharinesdigital.ca/cron/daily-digest' \
-            --output "$RUNNER_TEMP/digest-result.json"
+            --output "$RUNNER_TEMP/digest-result.json"; then
+            # Print only a known stage, never provider responses or recipient data.
+            jq -r 'select(.error == "digest_failed") | .stage | select(. == "provider_inbox" or . == "planning_feed" or . == "recipient_query" or . == "grace_notices" or . == "deliveries") | "::error::Digest failed at stage: " + .' "$RUNNER_TEMP/digest-result.json" 2>/dev/null || true
+            echo '::error::Digest request failed. Inspect delivery records before retrying.'
+            exit 1
+          fi
           if ! jq -e '.failed == 0 and (.sent | type == "number") and (.total | type == "number")' "$RUNNER_TEMP/digest-result.json" >/dev/null; then
             echo '::error::Digest did not complete successfully. Inspect delivery records before retrying to avoid duplicate messages.'
             exit 1

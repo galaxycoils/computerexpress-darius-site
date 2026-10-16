@@ -90,3 +90,11 @@ document height and freezes the incoming offset before delayed scroll events can
 overwrite it. Unit tests reproduce both races; browser verification also forces
 a delayed scroll event during Back navigation. Failed journeys retain the current
 route, scroll/viewport measurements and a screenshot in browser diagnostics.
+
+### Truncated source modules (October 16 repair)
+
+The daily desk update replaced the police module with `PLACEHOLDER` and omitted most planning records and exports. Restore complete modules from the last valid revision, then merge new records by ID. The archives are not daily snapshots. See `src/data/AGENTS.md` for editing requirements.
+
+Archive retention now covers both police and planning. Malformed current files, missing Git history, and removed IDs fail the gate. When repairing an already malformed baseline, the audit searches up to 100 first-parent revisions for a valid literal archive and reports the revision it compares. It never treats an unreadable current file as success.
+
+Digest HTTP failures now expose only a safe stage (`provider_inbox`, `planning_feed`, `recipient_query`, `grace_notices`, or `deliveries`) to the scheduler. Inspect provider/Cloudflare logs and delivery records for that stage before retrying; an HTTP failure alone does not prove no mail was delivered. The October 15 failure predates these diagnostics, so its exact server-side cause cannot be inferred from the scheduler's HTTP 500 alone.

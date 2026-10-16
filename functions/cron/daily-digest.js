@@ -35,13 +35,16 @@ export async function onRequest(context) {
     return new Response('Unauthorized', { status: 401 });
   }
 
+  let stage = 'provider_inbox';
   try {
     const inbox = await getPrimaryInbox(apiKey);
+    stage = 'planning_feed';
     const notices = await getPlanningNotices();
     const now = Date.now();
 
     // The digest is the paid product. Select only alerts that have paid, or that
     // still have an unexpired grace window granted by migration 0011.
+    stage = 'recipient_query';
     const recipientQuery = buildRecipientQuery(now);
     const alertResult = await STC_D1.prepare(recipientQuery.sql).bind(...recipientQuery.bindings).all();
     const alerts = alertResult.results || [];
@@ -49,8 +52,10 @@ export async function onRequest(context) {
     console.log(`Found ${alerts.length} entitled weekly digest subscriptions to process`);
 
     // Warn readers whose grace window is closing, once, before it lapses.
+    stage = 'grace_notices';
     const graceNotices = await sendGraceNotices({ STC_D1, apiKey, inbox, now });
 
+    stage = 'deliveries';
     let sent = 0;
     let failed = 0;
 
@@ -109,7 +114,9 @@ export async function onRequest(context) {
     });
   } catch (err) {
     console.error('Digest cron error:', err);
-    return new Response(`Error: ${err.message}`, { status: 500 });
+    return new Response(JSON.stringify({ error: 'digest_failed', stage }), {
+      status: 500, headers: { 'Content-Type': 'application/json' },
+    });
   }
 }
 

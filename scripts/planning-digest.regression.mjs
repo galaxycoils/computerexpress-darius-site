@@ -133,3 +133,30 @@ test('a subscriber inside the grace window still receives the digest', async t =
   // either way the digest itself must go out.
   assert.equal(sent, 1)
 })
+
+for (const stage of ['provider_inbox', 'planning_feed', 'recipient_query', 'grace_notices']) {
+  test(`digest reports a safe ${stage} failure without exposing details or sending`, async t => {
+    const { sqlite, db } = database()
+    t.after(() => sqlite.close())
+    t.mock.method(console, 'error', () => {})
+    t.mock.method(globalThis, 'fetch', async url => {
+      if (url.endsWith('/inboxes')) {
+        if (stage === 'provider_inbox') throw new Error('private provider detail')
+        return Response.json({ inboxes: [{ inbox_id: 'test-inbox' }] })
+      }
+      if (url.includes('/planning-alert-feed.json')) {
+        if (stage === 'planning_feed') throw new Error('private feed detail')
+        return Response.json({ version: 1, notices: [] })
+      }
+      assert.fail('failure diagnostic must not send email')
+    })
+    if (stage === 'recipient_query') sqlite.exec('DROP TABLE alerts')
+    if (stage === 'grace_notices') sqlite.exec('ALTER TABLE alerts DROP COLUMN grace_notified_at')
+    const response = await onRequest({
+      env: { STC_D1: db, AGENTMAIL_API_KEY: 'mock', ALERT_TOKEN_SECRET: 'test-secret', CRON_SECRET: 'cron' },
+      request: new Request('https://example.invalid/cron/daily-digest', { method: 'POST', headers: { Authorization: 'Bearer cron' } }),
+    })
+    assert.equal(response.status, 500)
+    assert.deepEqual(await response.json(), { error: 'digest_failed', stage })
+  })
+}
