@@ -175,13 +175,6 @@ export function HateExtremismView({
         </Link>
       </PageHeading>
 
-      <aside className="journal-empty" aria-label="Legal review">
-        <h2>Pending legal review</h2>
-        <p>
-          Lawyer review of this section is still underway. These records are a preview of the approved dataset and can be corrected or removed when that review finishes.
-        </p>
-      </aside>
-
       <section aria-labelledby="standards-heading">
         <h2 id="standards-heading">Editorial standards</h2>
         <p>

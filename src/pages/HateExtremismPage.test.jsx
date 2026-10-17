@@ -14,9 +14,9 @@ function renderPage(ui) {
 }
 
 describe('Hate & Extremism pages', () => {
-  it('shows the legal-review banner, approved records and the support block', () => {
+  it('shows the approved records and the support block', () => {
     renderPage(<HateExtremismPage />)
-    expect(screen.getByRole('heading', { name: 'Pending legal review' })).toBeInTheDocument()
+    expect(screen.queryByRole('heading', { name: 'Pending legal review' })).not.toBeInTheDocument()
     expect(screen.getByRole('heading', { name: 'Second Sons (Second Sons Canada)' })).toBeInTheDocument()
     expect(screen.getAllByText(/Labour Day weekend 2025/).length).toBeGreaterThan(0)
     expect(screen.getByText(/NOT on Public Safety Canada's listed-entities list/)).toBeInTheDocument()
@@ -78,6 +78,7 @@ describe('Hate & Extremism pages', () => {
   it('explains the method, the statistic exception and the right of reply', () => {
     renderPage(<MethodologyPage />)
     expect(screen.getByRole('heading', { name: 'How entries are chosen' })).toBeInTheDocument()
+    expect(screen.queryByRole('heading', { name: 'Pending legal review' })).not.toBeInTheDocument()
     expect(screen.getByText(/Canadian Anti-Hate Network/)).toBeInTheDocument()
     expect(screen.getByText(/single official publisher/)).toBeInTheDocument()
     expect(screen.getByText(/support resource, shown only under Report hate/)).toBeInTheDocument()

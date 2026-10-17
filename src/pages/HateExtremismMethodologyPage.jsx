@@ -25,13 +25,6 @@ export default function HateExtremismMethodologyPage() {
           <Link className="journal-link" to="/hate-extremism">Back to the record</Link>
         </PageHeading>
 
-        <aside className="journal-empty" aria-label="Legal review">
-          <h2>Pending legal review</h2>
-          <p>
-            Lawyer review of this section is still underway. Publication of a record on this preview is not the end of that review.
-          </p>
-        </aside>
-
         <div className="journal-prose">
           <h2>What qualifies</h2>
           <p>A group record draws on at least one of these:</p>
