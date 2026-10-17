@@ -98,3 +98,13 @@ The daily desk update replaced the police module with `PLACEHOLDER` and omitted 
 Archive retention now covers both police and planning. Malformed current files, missing Git history, and removed IDs fail the gate. When repairing an already malformed baseline, the audit searches up to 100 first-parent revisions for a valid literal archive and reports the revision it compares. It never treats an unreadable current file as success.
 
 Digest HTTP failures now expose only a safe stage (`provider_inbox`, `planning_feed`, `recipient_query`, `grace_notices`, or `deliveries`) to the scheduler. Inspect provider/Cloudflare logs and delivery records for that stage before retrying; an HTTP failure alone does not prove no mail was delivered. The October 15 failure predates these diagnostics, so its exact server-side cause cannot be inferred from the scheduler's HTTP 500 alone.
+
+### Preventing repeated broken desk updates (October 17)
+
+Daily desk commits again replaced `nrpsReleases.js` with `PLACEHOLDER` and planning helpers with example stubs. Restore the full last-valid archives and merge the two new notices; do not suppress the failing checks.
+
+`npm install` / `npm ci` now installs `.githooks/pre-push` when no other hooks directory is configured. Each non-deletion push must publish the checked-out revision with no tracked working-tree differences, then pass content, archive-retention, metrics, and application tests. A custom existing hooks directory is preserved with a warning; run `npm run check:push < /dev/null` in that setup. The regression suite tests an actual local Git remote and proves malformed commits and uncommitted repairs cannot reach it.
+
+GitHub API writes bypass local Git hooks. Protect `main` with required `CI matrix passed` and `Content integrity passed` checks and require pull requests for desk updates. The connected GitHub integration cannot administer branch protection (403), so these server settings cannot be applied from this session. Local hooks and agent instructions reduce accidental pushes; they cannot enforce policy on a separate API-based writer.
+
+Browser pagination assertions compare stable record IDs and the displayed result range. News, development, and meeting entries can legitimately share a headline, so a changed first title is not a valid pagination requirement. A component regression exercises next/previous navigation with 24 identically titled records.
