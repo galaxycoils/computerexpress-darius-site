@@ -49,6 +49,8 @@ export const appRoutes = [
   { path: 'news/:citySlug', page: 'CityNewsPage' },
   { path: 'votes', page: 'VotesHubPage' },
   { path: 'elections/welland/:ward', page: 'WardRacePage' },
+  { path: 'hate-extremism', page: 'HateExtremismPage' },
+  { path: 'hate-extremism/methodology', page: 'HateExtremismMethodologyPage' },
   { path: 'editorial-policy', page: 'EditorialPolicyPage' },
   { path: 'corrections', page: 'CorrectionsPage' },
   { path: 'editorial', page: 'EditorialDeskPage', group: 'clientOnly' },

@@ -23,6 +23,8 @@ import NewsPage from '../pages/NewsPage'
 import CityNewsPage from '../pages/CityNewsPage'
 import PoliceNewsPage from '../pages/PoliceNewsPage'
 import VotesHubPage from '../pages/VotesHubPage'
+import HateExtremismPage from '../pages/HateExtremismPage'
+import HateExtremismMethodologyPage from '../pages/HateExtremismMethodologyPage'
 import EditorialPolicyPage from '../pages/EditorialPolicyPage'
 import CorrectionsPage from '../pages/CorrectionsPage'
 import SponsorPage from '../pages/SponsorPage'
@@ -65,6 +67,8 @@ export const staticPages = {
   PoliceNewsPage,
   CityNewsPage,
   VotesHubPage,
+  HateExtremismPage,
+  HateExtremismMethodologyPage,
   EditorialPolicyPage,
   CorrectionsPage,
   EditorialDeskPage,
