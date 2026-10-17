@@ -1,7 +1,7 @@
 /**
  * Approved public-record entries for Hate & Extremism in Niagara.
- * Wording and source lists follow the 17 Oct 2026 dataset.
- * Records that are still awaiting approval are not in this module.
+ * Dariush's first batch, 17 Oct 2026. Unreviewed case, response, and
+ * NRPS-statistic records are not in this module.
  */
 
 const REVIEWED = '2026-10-17'
@@ -31,76 +31,29 @@ const STANDARD_RALLY = {
   date: '2025-09-04',
 }
 
-const THIS_WEEK_RALLY = {
-  outlet: 'Niagara This Week',
-  title: "Lord mayor condemns white nationalist rally at Brock's Monument",
-  url: 'https://www.niagarathisweek.com/news/niagara-region/lord-mayor-condemns-white-nationalist-rally-at-brocks-monument/article_df4f1fc4-1461-5f66-b6ac-0c7e97d3e369.html',
-  date: '2025-09-11',
+const CAHN_DIAGOLON = {
+  outlet: 'Canadian Anti-Hate Network',
+  title: "Diagolon: Canada's Homegrown White Nationalist Network",
+  url: 'https://www.antihate.ca/diagolon_canada_homegrown_white_nationalist_network',
+  date: '2025 (verify exact day)',
 }
 
 const MACKENZIE_SOURCES = [CBC_RALLY.url, STANDARD_RALLY.url]
 
 export const hateExtremismEntries = [
   record({
-    id: 'case-nf-graffiti-2026',
-    type: 'court-case',
-    scope: 'niagara',
-    title: 'Niagara Falls graffiti investigation (2026)',
-    summary: 'Niagara Daily News: police charged a man "following an investigation into hate-related graffiti across the city" after "hate speech was spray painted on several buildings in Niagara Falls" (11 incidents from March 2026). 105.7 The River: "hate speech had been spray painted on buildings." Accused not named.',
-    location: 'Niagara Falls',
-    status: 'charged: mischief (not charged as a hate crime); before the courts',
-    sources: [
-      {
-        outlet: 'Niagara Daily News',
-        title: 'Niagara Falls man charged following hate graffiti investigation',
-        url: 'https://www.niagaradailynews.ca/news/local-news-niagara/niagara-falls-man-charged-following-hate-graffiti-investigation/',
-        date: '2026-05-08',
-      },
-      {
-        outlet: '105.7 The River',
-        title: 'Senior Charged with Hate Speech Crime',
-        url: 'https://www.105theriver.ca/news/local-news/senior-charged-with-hate-speech-crime/',
-        date: '2026-05-11',
-      },
-    ],
-  }),
-  record({
-    id: 'case-welland-graffiti-2024',
-    type: 'court-case',
-    scope: 'niagara',
-    title: 'Welland hateful graffiti spree (youth)',
-    summary: 'In May 2024, property in a Welland neighbourhood was spray-painted with what the Niagara Falls Review called "hateful and obscene graffiti." Two youths were arrested. One youth pleaded guilty to five charges, including mischief and theft, and was sentenced to two years\' probation (reported 2024-07-25). Protected by the Youth Criminal Justice Act; identifying details are omitted.',
-    location: 'Welland',
-    status: 'convicted (guilty plea; youth sentence)',
-    sources: [
-      {
-        outlet: 'Niagara Falls Review',
-        title: "Probation for teen who 'wreaked havoc' on Welland neighbourhood",
-        url: 'https://www.niagarafallsreview.ca/news/crime/probation-for-teen-who-wreaked-havoc-on-welland-neighbourhood/article_ef86e7a7-170f-50f4-95ac-8f7f5b7ff05f.html',
-        date: '2024-07-25',
-      },
-      {
-        outlet: 'St. Catharines Standard',
-        title: 'Hateful vandalism in Welland neighbourhood',
-        url: 'https://www.stcatharinesstandard.ca/news/crime/hateful-vandalism-in-welland-neighbourhood/article_6d8894a4-7dbc-513b-968f-ff074dc38e06.html',
-        date: '2024-05-19',
-        updated: '2024-07-25',
-      },
-    ],
-  }),
-  record({
     id: 'grp-second-sons',
     type: 'group',
     scope: 'niagara',
     title: 'Second Sons (Second Sons Canada)',
-    summary: 'Described by CBC as a "self-described \'Canadian men\'s nationalist\' group". Experts quoted by CBC call it "an active club in all but name." The St. Catharines Standard called it "one of Canada\'s emerging white nationalist clubs." CBC reported members training in the Hamilton and Niagara area. Held a masked rally at Brock\'s Monument, Niagara-on-the-Lake, Labour Day weekend 2025.',
+    summary: 'Described by CBC as a "self-described \'Canadian men\'s nationalist\' group". Experts quoted by CBC call it "an active club in all but name." The St. Catharines Standard called it "one of Canada\'s emerging white nationalist clubs." CBC reported members training in the Hamilton and Niagara area. Held a masked rally at Brock\'s Monument, Niagara-on-the-Lake, Labour Day weekend 2025. CAHN says Diagolon\'s leaders created it as "a new organization with membership requirements."',
     location: 'Niagara-on-the-Lake',
     status: 'reported active',
     eventDateLabel: 'Labour Day weekend 2025',
     namedIndividuals: [
       {
         name: 'Jeremy MacKenzie',
-        basis: 'public-figure',
+        basis: 'self-identified-leader',
         qualifies: true,
         quotedDescription: '"Second Sons leader Jeremy MacKenzie is also the founder of Diagolon" (CBC, 2025-09-09); "launched Second Sons Canada earlier this year and led the march at Queenston Heights" (St. Catharines Standard)',
         sources: MACKENZIE_SOURCES,
@@ -115,6 +68,7 @@ export const hateExtremismEntries = [
       },
       CBC_RALLY,
       STANDARD_RALLY,
+      CAHN_DIAGOLON,
     ],
   }),
   record({
@@ -122,13 +76,13 @@ export const hateExtremismEntries = [
     type: 'group',
     scope: 'niagara',
     title: 'Diagolon',
-    summary: 'The RCMP calls it an "extremist, militia-like organization" (via CBC). GPAHE calls it a "white supremacist Canadian movement". The Standard reports the Niagara Region Anti-Racism Association said people linked with Diagolon showed up to disrupt local events. NOT on Public Safety Canada\'s listed-entities list (checked 2026-10-17).',
+    summary: 'The RCMP calls it an "extremist, militia-like organization" (via CBC). CAHN: "one of the largest and most active white nationalist networks in Canada". GPAHE calls it a "white supremacist Canadian movement". The Standard reports the Niagara Region Anti-Racism Association said people linked with Diagolon showed up to disrupt local events. NOT on Public Safety Canada\'s listed-entities list (checked 2026-10-17).',
     location: 'Niagara Region',
     status: 'reported',
     namedIndividuals: [
       {
         name: 'Jeremy MacKenzie',
-        basis: 'public-figure',
+        basis: 'self-identified-leader',
         qualifies: true,
         quotedDescription: 'founder of Diagolon (CBC 2025-09-09; St. Catharines Standard)',
         sources: MACKENZIE_SOURCES,
@@ -137,41 +91,24 @@ export const hateExtremismEntries = [
     sources: [
       CBC_RALLY,
       STANDARD_RALLY,
+      CAHN_DIAGOLON,
       {
         outlet: 'GPAHE',
         title: 'Canadian White Supremacist Diagolon Movement Increasingly Targets the LGBTQ+ Community',
         url: 'https://globalextremism.org/post/diagolon-lgbtq/',
-        date: '2023-04-27',
+        date: '2023 (verify exact day)',
       },
       {
         outlet: 'GPAHE',
         title: 'White Supremacist Diagolon Movement Now Calling for Deportation of All Indians',
         url: 'https://globalextremism.org/post/white-supremacist-diagolon-movement-now-calling-for-deportation-of-all-indians/',
-        date: '2024-06-06',
+        date: '2024 (verify exact day)',
       },
       {
         outlet: 'Public Safety Canada',
         title: 'Currently listed entities',
         url: 'https://www.publicsafety.gc.ca/cnt/ntnl-scrt/cntr-trrrsm/lstd-ntts/crrnt-lstd-ntts-en.aspx',
         date: 'last amended 2026-06-04',
-      },
-    ],
-  }),
-  record({
-    id: 'ctx-ns13',
-    type: 'group',
-    scope: 'regional-context',
-    title: 'Nationalist-13 (NS13)',
-    summary: 'CBC: "A CBC visual investigation recently found Second Sons and active club Nationalist-13 to be training in martial arts studios, gyms and parks in the Hamilton and Niagara area."',
-    location: 'Niagara Region',
-    status: 'regional context',
-    sources: [
-      CBC_RALLY,
-      {
-        outlet: 'CBC News',
-        title: "Tracking Canada's fascist fight clubs",
-        url: 'https://www.cbc.ca/newsinteractives/features/fascist-fight-club',
-        date: '2025-07-18',
       },
     ],
   }),
@@ -184,24 +121,15 @@ export const hateExtremismEntries = [
     location: 'Niagara-on-the-Lake',
     status: 'documented',
     eventDateLabel: 'Labour Day weekend 2025',
-    sources: [CBC_RALLY, STANDARD_RALLY, THIS_WEEK_RALLY],
-  }),
-  record({
-    id: 'inc-notl-response-2025',
-    type: 'response',
-    scope: 'niagara',
-    title: 'Niagara-on-the-Lake Lord Mayor condemns rally (council response)',
-    summary: 'Lord Mayor Gary Zalepa read a statement at a Sept. 10 2025 meeting: "this group\'s message is not supported or condoned, and this type of hate has no place in our Town." A statement, NOT a formal council motion. No regional or municipal motion found yet.',
-    location: 'Niagara-on-the-Lake',
-    status: 'documented',
     sources: [
+      CBC_RALLY,
+      STANDARD_RALLY,
       {
-        outlet: 'Town of Niagara-on-the-Lake',
-        title: 'A Message from Lord Mayor Zalepa Following a Recent Hate Rally in the Community',
-        url: 'https://www.notl.com/recreation-community/community-news/message-lord-mayor-zalepa-following-recent-hate-rally-community',
-        date: '2025-09-09',
+        outlet: 'Niagara This Week',
+        title: "Lord mayor condemns white nationalist rally at Brock's Monument",
+        url: 'https://www.niagarathisweek.com/news/niagara-region/lord-mayor-condemns-white-nationalist-rally-at-brocks-monument/article_df4f1fc4-1461-5f66-b6ac-0c7e97d3e369.html',
+        date: '2025-09-11',
       },
-      THIS_WEEK_RALLY,
     ],
   }),
   record({
@@ -223,30 +151,30 @@ export const hateExtremismEntries = [
     ],
   }),
   record({
-    id: 'inc-stats-nrps-2023',
-    type: 'incident',
-    scope: 'niagara',
-    title: 'NRPS suspected hate incidents, 2022-2023',
-    summary: 'As reported by the St. Catharines Standard, citing an NRPS board report: 30 suspected hate incidents in 2023, which led to 3 charges, none of them hate crimes. 2022 had 41 incidents and 7 charges. About 67% were graffiti or mischief.',
-    location: 'Niagara Region',
-    status: 'reported statistic (attributed to the Standard)',
+    id: 'ctx-ns13',
+    type: 'group',
+    scope: 'regional-context',
+    title: 'Nationalist-13 (NS13), Hamilton-based active club',
+    summary: 'CBC: "A CBC visual investigation recently found Second Sons and active club Nationalist-13 to be training in martial arts studios, gyms and parks in the Hamilton and Niagara area." CBC also calls it "Hamilton-based".',
+    location: 'Hamilton',
+    status: 'regional context',
     sources: [
       {
-        outlet: 'St. Catharines Standard',
-        title: 'Apathy contributing to drop in hate crimes',
-        url: 'https://www.stcatharinesstandard.ca/news/crime/niagaras-police-chief-fears-hate-crimes-going-unreported/article_2e7e2b8b-e236-5a06-9685-1cd32ec68e01.html',
-        date: '2024 (verify exact day)',
+        outlet: 'CBC News',
+        title: "Tracking Canada's fascist fight clubs",
+        url: 'https://www.cbc.ca/newsinteractives/features/fascist-fight-club',
+        date: '2025-07-18',
       },
-      {
-        outlet: 'St. Catharines Standard',
-        title: 'More officers needed to investigate Niagara hate crimes, say police',
-        url: 'https://www.stcatharinesstandard.ca/news/niagara-region/more-officers-needed-to-investigate-niagara-hate-crimes-say-police/article_61e63818-405b-5755-9d04-531b66061baf.html',
-        date: '2024-03-28',
-      },
+      CBC_RALLY,
     ],
   }),
 ]
 
+/**
+ * Support resources. NRPS numbers were read from the Report Hate page on
+ * 17 Oct 2026. Each URL below returned HTTP 200 the same day. No unverified
+ * phone number is published.
+ */
 export const hateExtremismSupport = [
   {
     id: 'res-nrps',
@@ -328,7 +256,6 @@ export const hateExtremismSupport = [
   },
 ]
 
-/** Numbers copied from the approved NRPS support record and checked against niagarapolice.ca. */
 export const hateReportContacts = [
   { label: 'Emergency', value: '911', href: 'tel:911' },
   { label: 'St. Catharines, Thorold, Niagara Falls and Niagara-on-the-Lake', value: '(905) 688-4111', href: 'tel:9056884111' },

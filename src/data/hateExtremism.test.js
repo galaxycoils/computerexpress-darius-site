@@ -187,45 +187,20 @@ describe('approved production records', () => {
     expect(validateSupportResources(hateExtremismSupport).ok).toBe(true)
   })
 
-  it('loads the approved ids and leaves unapproved records out', () => {
+  it('loads only the five approved records and leaves unreviewed ones out', () => {
     expect(hateExtremismEntries.map((entry) => entry.id)).toEqual([
-      'case-nf-graffiti-2026',
-      'case-welland-graffiti-2024',
       'grp-second-sons',
       'grp-diagolon',
-      'ctx-ns13',
       'inc-brocks-monument-2025',
-      'inc-notl-response-2025',
       'inc-stats-statcan',
-      'inc-stats-nrps-2023',
+      'ctx-ns13',
     ])
+    expect(hateExtremismEntries.every((entry) => entry.lastReviewed === '2026-10-17')).toBe(true)
+    expect(hateExtremismEntries.every((entry) => entry.correctionRequest === `/corrections?entry=${entry.id}`)).toBe(true)
     const supportIds = hateExtremismSupport.map((entry) => entry.id)
     expect(supportIds).toEqual(['res-nrps', 'res-nrara', 'res-legal-clinic', 'res-pride-niagara'])
     const serialized = JSON.stringify({ hateExtremismEntries, hateExtremismSupport })
-    expect(serialized).not.toMatch(/antihate\.ca|14-year-old|goof busters|proud boys/i)
-  })
-
-  it('keeps the Niagara Falls charge in the sources’ words and names nobody', () => {
-    const entry = hateExtremismEntries.find((item) => item.id === 'case-nf-graffiti-2026')
-    expect(entry.status).toBe('charged: mischief (not charged as a hate crime); before the courts')
-    expect(entry.summary).toMatch(/hate-related graffiti/)
-    expect(entry.summary).toMatch(/hate speech was spray painted on several buildings/)
-    expect(entry.namedIndividuals).toEqual([])
-    expect(entry.summary).not.toMatch(/\d{1,2}-year-old/)
-  })
-
-  it('loads the Welland youth case without names, ages, a school or a street', () => {
-    const entry = hateExtremismEntries.find((item) => item.id === 'case-welland-graffiti-2024')
-    const standard = entry.sources.find((item) => item.outlet === 'St. Catharines Standard')
-    const review = entry.sources.find((item) => item.outlet === 'Niagara Falls Review')
-    expect(standard.title).toBe('Hateful vandalism in Welland neighbourhood')
-    expect(standard.date).toBe('2024-05-19')
-    expect(standard.updated).toBe('2024-07-25')
-    expect(review.date).toBe('2024-07-25')
-    expect(entry.namedIndividuals).toEqual([])
-    const text = JSON.stringify(entry)
-    expect(text).not.toMatch(/\b\d{1,2}-year-olds?\b|\bschool\b|\bstreet\b|\bavenue\b|bradley|sauer/i)
-    expect(text).not.toMatch(/niagarathisweek\.com/)
+    expect(serialized).not.toMatch(/case-nf-graffiti|case-welland-graffiti|inc-notl-response-2025|inc-stats-nrps-2023|14-year-old|goof busters|proud boys/i)
   })
 
   it('dates the rally to Labour Day weekend 2025 and does not call Diagolon a listed terrorist entity', () => {
@@ -238,10 +213,12 @@ describe('approved production records', () => {
     expect(rally.summary).not.toMatch(/Aug\. 30-31/)
     expect(diagolon.summary).toMatch(/NOT on Public Safety Canada's listed-entities list/)
     expect(diagolon.summary).not.toMatch(/listed terrorist entity/i)
-    expect(diagolon.sources.map((item) => item.url).join(' ')).not.toMatch(/antihate\.ca/)
-    expect(group.sources.map((item) => item.url).join(' ')).not.toMatch(/antihate\.ca/)
-    expect(diagolon.namedIndividuals[0].quotedDescription).toMatch(/founder of Diagolon/)
-    expect(diagolon.namedIndividuals[0].basis).toBe('public-figure')
+    expect(diagolon.sources.map((item) => item.url)).toContain('https://www.antihate.ca/diagolon_canada_homegrown_white_nationalist_network')
+    expect(diagolon.namedIndividuals).toHaveLength(1)
+    expect(diagolon.namedIndividuals[0].name).toBe('Jeremy MacKenzie')
+    expect(diagolon.namedIndividuals[0].quotedDescription).toBe('founder of Diagolon (CBC 2025-09-09; St. Catharines Standard)')
+    expect(diagolon.namedIndividuals[0].basis).toBe('self-identified-leader')
+    expect(group.sources.some((source) => source.date === '2025 (verify exact day)')).toBe(true)
   })
 
   it('lets the Statistics Canada figure through with one source and a methodology note', () => {
@@ -253,11 +230,12 @@ describe('approved production records', () => {
     expect(entry.methodologyNote).toBe('includes suspected incidents')
   })
 
-  it('marks the unfinished Standard day as TODO material and keeps regional context', () => {
-    const stats = hateExtremismEntries.find((item) => item.id === 'inc-stats-nrps-2023')
-    expect(stats.sources[0].date).toBe('2024 (verify exact day)')
+  it('marks unfinished source days as TODO material and keeps regional context', () => {
+    const diagolon = hateExtremismEntries.find((item) => item.id === 'grp-diagolon')
+    expect(diagolon.sources.some((source) => source.date === '2024 (verify exact day)')).toBe(true)
     const context = hateExtremismEntries.find((item) => item.id === 'ctx-ns13')
     expect(context.scope).toBe('regional-context')
+    expect(context.title).toMatch(/Hamilton-based/)
     expect(context.namedIndividuals).toEqual([])
   })
 

@@ -20,7 +20,7 @@ describe('Hate & Extremism pages', () => {
     expect(screen.getByRole('heading', { name: 'Second Sons (Second Sons Canada)' })).toBeInTheDocument()
     expect(screen.getAllByText(/Labour Day weekend 2025/).length).toBeGreaterThan(0)
     expect(screen.getByText(/NOT on Public Safety Canada's listed-entities list/)).toBeInTheDocument()
-    expect(screen.getByText(/hate-related graffiti/)).toBeInTheDocument()
+    expect(screen.queryByText(/hate-related graffiti/)).not.toBeInTheDocument()
     expect(screen.getByText(/Methodology note: includes suspected incidents/)).toBeInTheDocument()
     expect(screen.getAllByText('Regional context').length).toBeGreaterThan(0)
     expect(screen.getByText(/This group is based outside Niagara/)).toBeInTheDocument()
@@ -37,14 +37,14 @@ describe('Hate & Extremism pages', () => {
     expect(screen.queryByRole('heading', { name: 'Second Sons (Second Sons Canada)' })).not.toBeInTheDocument()
 
     fireEvent.click(screen.getByRole('button', { name: 'Show all records' }))
-    fireEvent.change(screen.getByLabelText('Municipality'), { target: { value: 'Welland' } })
-    expect(screen.getByRole('heading', { name: /Welland hateful graffiti/ })).toBeInTheDocument()
-    expect(screen.queryByRole('heading', { name: /Niagara Falls graffiti/ })).not.toBeInTheDocument()
+    fireEvent.change(screen.getByLabelText('Municipality'), { target: { value: 'Niagara-on-the-Lake' } })
+    expect(screen.getByRole('heading', { name: /Brock's Monument/ })).toBeInTheDocument()
+    expect(screen.queryByRole('heading', { name: /Police-reported hate crimes/ })).not.toBeInTheDocument()
 
     fireEvent.click(screen.getByRole('button', { name: 'Show all records' }))
     fireEvent.change(screen.getByLabelText('Scope'), { target: { value: 'regional-context' } })
     const records = screen.getByRole('region', { name: 'Records' })
-    expect(within(records).getByRole('heading', { name: 'Nationalist-13 (NS13)' })).toBeInTheDocument()
+    expect(within(records).getByRole('heading', { name: /Nationalist-13 \(NS13\)/ })).toBeInTheDocument()
     expect(within(records).queryByRole('heading', { name: 'Diagolon' })).not.toBeInTheDocument()
   })
 
