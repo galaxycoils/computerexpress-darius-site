@@ -55,7 +55,10 @@ export default function HateExtremismMethodologyPage() {
             Every court case, group, incident and response needs at least two sources. Each source shows the outlet, the link and the publication date. A date that is not finalized is marked TODO. It is not replaced with a guessed day.
           </p>
           <p>
-            An official statistic may cite a single official publisher, such as Statistics Canada, Niagara Regional Police or Public Safety Canada. That exception does not extend to other record types. A statistic can include a methodology note, for example that the figure includes suspected incidents.
+            An official statistic may cite a single official publisher, such as Statistics Canada, Niagara Regional Police or Public Safety Canada. That exception does not extend to court cases, groups, incidents or responses. A statistic can include a methodology note, for example that the figure includes suspected incidents.
+          </p>
+          <p>
+            A support resource, shown only under Report hate / get support, may cite one source. Each URL or phone number on that block is verified, or the contact is marked TODO.
           </p>
           <p>
             Social media, forums, rumour and inference from an undated “deep search” are not sources. When two credible reports disagree about a single day, the record uses the wider date they share. The Brock’s Monument rally is dated Labour Day weekend 2025 for that reason.

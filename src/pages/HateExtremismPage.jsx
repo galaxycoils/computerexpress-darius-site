@@ -149,13 +149,17 @@ export function HateExtremismView({
   const [type, setType] = useState('')
   const [municipality, setMunicipality] = useState('')
   const [scope, setScope] = useState('')
-  const municipalities = useMemo(
-    () => [...new Set(entries.map((entry) => entry.location))].sort((a, b) => a.localeCompare(b)),
+  const records = useMemo(
+    () => entries.filter((entry) => entry.type !== 'resource'),
     [entries],
   )
+  const municipalities = useMemo(
+    () => [...new Set(records.map((entry) => entry.location))].sort((a, b) => a.localeCompare(b)),
+    [records],
+  )
   const visible = useMemo(
-    () => filterEntries(entries, { type, municipality, scope }),
-    [entries, type, municipality, scope],
+    () => filterEntries(records, { type, municipality, scope }),
+    [records, type, municipality, scope],
   )
   const filtersActive = Boolean(type || municipality || scope)
 
@@ -181,7 +185,7 @@ export function HateExtremismView({
       <section aria-labelledby="standards-heading">
         <h2 id="standards-heading">Editorial standards</h2>
         <p>
-          A record needs at least two credible sources. Court records, police statements, the Canadian Anti-Hate Network, GPAHE, Public Safety Canada and established news outlets qualify. An official statistic may cite one official publisher, such as Statistics Canada, and can carry a methodology note. Social media, forums and rumour do not.
+          A court case, group, incident or response needs at least two credible sources. Court records, police statements, the Canadian Anti-Hate Network, GPAHE, Public Safety Canada and established news outlets qualify. An official statistic may cite one official publisher, such as Statistics Canada, and can carry a methodology note. A support resource may cite one verified page or phone number. An unverified contact is marked TODO. Social media, forums and rumour do not.
         </p>
         <p>
           Descriptions use the source’s wording, in quotation marks or attributed. A person is named only when charged or convicted, when they are a publicly self-identified leader of a documented group, or when they are a public figure already reported by credible press — and only with two sources. Home addresses, workplaces, family members, photos of private people and anything that identifies a minor stay out.
@@ -198,7 +202,7 @@ export function HateExtremismView({
             Type
             <select aria-label="Type" value={type} onChange={(event) => setType(event.target.value)}>
               <option value="">All types</option>
-              {Object.entries(TYPE_LABELS).map(([value, label]) => (
+              {Object.entries(TYPE_LABELS).filter(([value]) => value !== 'resource').map(([value, label]) => (
                 <option key={value} value={value}>{label}</option>
               ))}
             </select>
@@ -249,13 +253,13 @@ export function HateExtremismView({
             {error && <p>{error}</p>}
           </div>
         )}
-        {status === 'ready' && entries.length === 0 && (
+        {status === 'ready' && records.length === 0 && (
           <div className="journal-empty">
             <h2>No records published yet</h2>
             <p>Entries are being verified and will appear after editorial review.</p>
           </div>
         )}
-        {status === 'ready' && entries.length > 0 && visible.length === 0 && (
+        {status === 'ready' && records.length > 0 && visible.length === 0 && (
           <div className="journal-empty">
             <h2>No records match these filters</h2>
             <p>Choose another type, municipality or scope, or show all records.</p>
@@ -299,6 +303,11 @@ export function HateExtremismView({
               </span>
             </p>
             <SourceList sources={resource.sources} />
+            {resource.correctionRequest && (
+              <p>
+                <Link to={resource.correctionRequest}>Request a correction / right of reply</Link>
+              </p>
+            )}
           </article>
         ))}
       </section>

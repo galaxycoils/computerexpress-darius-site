@@ -1,7 +1,8 @@
 /**
  * Approved public-record entries for Hate & Extremism in Niagara.
- * Dariush's first batch, 17 Oct 2026. Unreviewed case, response, and
- * NRPS-statistic records are not in this module.
+ * Dariush's approved batches, 17 Oct 2026. The Niagara Falls graffiti case
+ * is omitted: its sources do not describe the act as hate-motivated.
+ * Goof Busters is not included.
  */
 
 const REVIEWED = '2026-10-17'
@@ -155,7 +156,7 @@ export const hateExtremismEntries = [
     type: 'group',
     scope: 'regional-context',
     title: 'Nationalist-13 (NS13), Hamilton-based active club',
-    summary: 'CBC: "A CBC visual investigation recently found Second Sons and active club Nationalist-13 to be training in martial arts studios, gyms and parks in the Hamilton and Niagara area." CBC also calls it "Hamilton-based".',
+    summary: 'CBC News: "A CBC visual investigation recently found Second Sons and active club Nationalist-13 to be training in martial arts studios, gyms and parks in the Hamilton and Niagara area."',
     location: 'Hamilton',
     status: 'regional context',
     sources: [
@@ -168,20 +169,100 @@ export const hateExtremismEntries = [
       CBC_RALLY,
     ],
   }),
+  record({
+    id: 'case-welland-graffiti-2024',
+    type: 'court-case',
+    scope: 'niagara',
+    title: 'Welland hateful graffiti spree (youth)',
+    summary: 'In May 2024, property in a Welland neighbourhood was spray-painted with what the St. Catharines Standard called "hateful and vulgar language." The Niagara Falls Review later reported "hateful and obscene graffiti." Two youths were arrested. One pleaded guilty to five charges, including mischief and theft, and received two years\' probation, reported 2024-07-25. The Youth Criminal Justice Act applies, so this record omits identifying details.',
+    location: 'Welland',
+    status: 'convicted (guilty plea; youth sentence)',
+    sources: [
+      {
+        outlet: 'St. Catharines Standard',
+        title: 'Hateful vandalism in Welland neighbourhood',
+        url: 'https://www.stcatharinesstandard.ca/news/crime/hateful-vandalism-in-welland-neighbourhood/article_6d8894a4-7dbc-513b-968f-ff074dc38e06.html',
+        date: '2024-05-19',
+        updated: '2024-07-25',
+      },
+      {
+        outlet: 'Niagara Falls Review',
+        title: "Probation for teen who 'wreaked havoc' on Welland neighbourhood",
+        url: 'https://www.niagarafallsreview.ca/news/crime/probation-for-teen-who-wreaked-havoc-on-welland-neighbourhood/article_ef86e7a7-170f-50f4-95ac-8f7f5b7ff05f.html',
+        date: '2024-07-25',
+      },
+    ],
+  }),
+  record({
+    id: 'inc-notl-response-2025',
+    type: 'incident',
+    scope: 'niagara',
+    title: 'Niagara-on-the-Lake Lord Mayor condemns rally (council response)',
+    summary: 'Lord Mayor Gary Zalepa read a statement at a Sept. 10 2025 meeting: "this group\'s message is not supported or condoned, and this type of hate has no place in our Town." A statement, NOT a formal council motion. No regional or municipal motion found yet.',
+    location: 'Niagara-on-the-Lake',
+    status: 'documented',
+    sources: [
+      {
+        outlet: 'Town of Niagara-on-the-Lake',
+        title: 'A Message from Lord Mayor Zalepa Following a Recent Hate Rally in the Community',
+        url: 'https://www.notl.com/recreation-community/community-news/message-lord-mayor-zalepa-following-recent-hate-rally-community',
+        date: '2025-09-09',
+      },
+      {
+        outlet: 'Niagara This Week',
+        title: "Lord mayor condemns white nationalist rally at Brock's Monument",
+        url: 'https://www.niagarathisweek.com/news/niagara-region/lord-mayor-condemns-white-nationalist-rally-at-brocks-monument/article_df4f1fc4-1461-5f66-b6ac-0c7e97d3e369.html',
+        date: '2025-09-11',
+      },
+    ],
+  }),
+  record({
+    id: 'inc-stats-nrps-2023',
+    type: 'incident',
+    scope: 'niagara',
+    title: 'NRPS suspected hate incidents, 2022-2023',
+    summary: 'Officers investigated 30 suspected hate incidents in 2023, which led to 3 charges, none of them hate crimes, as reported by the Standard. 2022 had 41 incidents and 7 charges. About 67% were graffiti or mischief.',
+    location: 'Niagara Region',
+    status: 'reported statistic (attributed to the Standard)',
+    sources: [
+      {
+        outlet: 'St. Catharines Standard',
+        title: 'Apathy contributing to drop in hate crimes',
+        url: 'https://www.stcatharinesstandard.ca/news/crime/niagaras-police-chief-fears-hate-crimes-going-unreported/article_2e7e2b8b-e236-5a06-9685-1cd32ec68e01.html',
+        date: '2024-02-27',
+        updated: '2025-02-04',
+      },
+      {
+        outlet: 'St. Catharines Standard',
+        title: 'More officers needed to investigate Niagara hate crimes, say police',
+        url: 'https://www.stcatharinesstandard.ca/news/niagara-region/more-officers-needed-to-investigate-niagara-hate-crimes-say-police/article_61e63818-405b-5755-9d04-531b66061baf.html',
+        date: '2024-03-28',
+        updated: '2025-09-29',
+      },
+    ],
+  }),
 ]
 
 /**
- * Support resources. NRPS numbers were read from the Report Hate page on
- * 17 Oct 2026. Each URL below returned HTTP 200 the same day. No unverified
- * phone number is published.
+ * Support resources, shown only in Report hate / get support. Each URL
+ * returned HTTP 200 on 17 Oct 2026, and the NRPS numbers were read from the
+ * Report Hate page that day. No unverified phone number is published.
  */
+function resource(entry) {
+  return record({
+    type: 'resource',
+    scope: 'niagara',
+    location: 'Niagara Region',
+    status: 'active',
+    ...entry,
+  })
+}
+
 export const hateExtremismSupport = [
-  {
+  resource({
     id: 'res-nrps',
     title: 'Niagara Regional Police: report hate',
     summary: 'Emergency: 911. Non-emergency hate crime or incident: (905) 688-4111 for St. Catharines, Thorold, Niagara Falls and NOTL; (905) 871-2300 for Fort Erie; (905) 945-2211 for Grimsby, Lincoln and West Lincoln; (905) 735-7811 for Welland, Wainfleet, Pelham and Port Colborne. EDI@niagarapolice.ca.',
-    status: 'active',
-    lastReviewed: REVIEWED,
     sources: [
       {
         outlet: 'Niagara Regional Police Service',
@@ -196,13 +277,11 @@ export const hateExtremismSupport = [
         date: 'undated page (accessed 2026-10-17)',
       },
     ],
-  },
-  {
+  }),
+  resource({
     id: 'res-nrara',
     title: 'Niagara Region Anti-Racism Association (NRARA)',
     summary: 'Accepts reports of racism or hate. Offers to report to police on a person\'s behalf. Contact info@nrara.org.',
-    status: 'active',
-    lastReviewed: REVIEWED,
     sources: [
       {
         outlet: 'NRARA',
@@ -217,13 +296,11 @@ export const hateExtremismSupport = [
         date: '2023-07-27',
       },
     ],
-  },
-  {
+  }),
+  resource({
     id: 'res-legal-clinic',
     title: 'Niagara Community Legal Clinic: human rights',
     summary: 'Free legal help for low-income people, including discrimination claims under the Ontario Human Rights Code.',
-    status: 'active',
-    lastReviewed: REVIEWED,
     sources: [
       {
         outlet: 'Niagara Community Legal Clinic',
@@ -238,13 +315,11 @@ export const hateExtremismSupport = [
         date: '2023-07-27',
       },
     ],
-  },
-  {
+  }),
+  resource({
     id: 'res-pride-niagara',
     title: 'Pride Niagara',
     summary: '2SLGBTQ+ community organization.',
-    status: 'active',
-    lastReviewed: REVIEWED,
     sources: [
       {
         outlet: 'Pride Niagara',
@@ -253,7 +328,7 @@ export const hateExtremismSupport = [
         date: 'undated (accessed 2026-10-17)',
       },
     ],
-  },
+  }),
 ]
 
 export const hateReportContacts = [

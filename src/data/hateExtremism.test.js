@@ -72,6 +72,35 @@ describe('hate and extremism validation', () => {
     expect(result.ok).toBe(true)
   })
 
+  it('accepts one source and a phone number on a resource', () => {
+    const result = validateEntry(validEntry({
+      id: 'example-resource',
+      type: 'resource',
+      correctionRequest: '/corrections?entry=example-resource',
+      summary: 'Example help line: (905) 555-0100.',
+      sources: [source()],
+    }))
+    expect(result.ok).toBe(true)
+    expect(result.errors).toEqual([])
+  })
+
+  it('rejects a resource with no source and a phone number on any other type', () => {
+    const empty = validateEntry(validEntry({
+      id: 'example-resource',
+      type: 'resource',
+      correctionRequest: '/corrections?entry=example-resource',
+      summary: 'Example help line.',
+      sources: [],
+    }))
+    expect(empty.ok).toBe(false)
+    expect(empty.errors.join(' ')).toMatch(/at least one source/)
+    const phone = validateEntry(validEntry({
+      summary: 'Described by the Example Gazette as "a fictional club". Call (905) 555-0199.',
+    }))
+    expect(phone.ok).toBe(false)
+    expect(phone.errors.join(' ')).toMatch(/phone number/)
+  })
+
   it('rejects a single unofficial source on a statistic', () => {
     const result = validateEntry(validEntry({
       id: 'example-stat',
@@ -187,20 +216,28 @@ describe('approved production records', () => {
     expect(validateSupportResources(hateExtremismSupport).ok).toBe(true)
   })
 
-  it('loads only the five approved records and leaves unreviewed ones out', () => {
+  it('loads the approved records and leaves the Niagara Falls case and held items out', () => {
     expect(hateExtremismEntries.map((entry) => entry.id)).toEqual([
       'grp-second-sons',
       'grp-diagolon',
       'inc-brocks-monument-2025',
       'inc-stats-statcan',
       'ctx-ns13',
+      'case-welland-graffiti-2024',
+      'inc-notl-response-2025',
+      'inc-stats-nrps-2023',
     ])
     expect(hateExtremismEntries.every((entry) => entry.lastReviewed === '2026-10-17')).toBe(true)
     expect(hateExtremismEntries.every((entry) => entry.correctionRequest === `/corrections?entry=${entry.id}`)).toBe(true)
     const supportIds = hateExtremismSupport.map((entry) => entry.id)
     expect(supportIds).toEqual(['res-nrps', 'res-nrara', 'res-legal-clinic', 'res-pride-niagara'])
+    expect(hateExtremismSupport.every((entry) => entry.type === 'resource')).toBe(true)
+    expect(hateExtremismSupport.find((entry) => entry.id === 'res-pride-niagara').sources).toHaveLength(1)
     const serialized = JSON.stringify({ hateExtremismEntries, hateExtremismSupport })
-    expect(serialized).not.toMatch(/case-nf-graffiti|case-welland-graffiti|inc-notl-response-2025|inc-stats-nrps-2023|14-year-old|goof busters|proud boys/i)
+    expect(serialized).not.toMatch(/case-nf-graffiti|14-year-old|15-year-old|goof busters|proud boys|bradley|sauer|hildred/i)
+    const welland = hateExtremismEntries.find((entry) => entry.id === 'case-welland-graffiti-2024')
+    expect(JSON.stringify(welland)).not.toMatch(/\bschool\b|\bage\b/i)
+    expect(welland.namedIndividuals).toEqual([])
   })
 
   it('dates the rally to Labour Day weekend 2025 and does not call Diagolon a listed terrorist entity', () => {
@@ -236,7 +273,14 @@ describe('approved production records', () => {
     const context = hateExtremismEntries.find((item) => item.id === 'ctx-ns13')
     expect(context.scope).toBe('regional-context')
     expect(context.title).toMatch(/Hamilton-based/)
+    expect(context.summary).toBe('CBC News: "A CBC visual investigation recently found Second Sons and active club Nationalist-13 to be training in martial arts studios, gyms and parks in the Hamilton and Niagara area."')
+    expect(context.summary).not.toMatch(/also calls it|active in Niagara/)
     expect(context.namedIndividuals).toEqual([])
+    const nrps = hateExtremismEntries.find((item) => item.id === 'inc-stats-nrps-2023')
+    expect(nrps.summary).toContain('as reported by the Standard')
+    expect(nrps.sources.map((source) => source.outlet)).toEqual(['St. Catharines Standard', 'St. Catharines Standard'])
+    const notl = hateExtremismEntries.find((item) => item.id === 'inc-notl-response-2025')
+    expect(notl.summary).toContain('this type of hate has no place in our Town')
   })
 
   it('keeps the police numbers inside the approved support summary', () => {

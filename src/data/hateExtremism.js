@@ -1,13 +1,15 @@
 /**
  * Validation for the Hate & Extremism in Niagara public record.
  *
- * Editorial rules (v1, 17 Oct 2026) plus the statistic and scope additions:
- * two credible sources, except an official statistic may cite one official
- * publisher; named people only with a qualifying basis; no address, phone,
- * workplace, family, private photo, or minor-identifying fields.
+ * Editorial rules (v1, 17 Oct 2026) plus the statistic, scope and resource
+ * additions: two credible sources, except an official statistic may cite one
+ * official publisher and a support resource may cite one verified source;
+ * named people only with a qualifying basis; no address, phone, workplace,
+ * family, private photo, or minor-identifying fields. Phones are allowed
+ * only on a resource.
  */
 
-export const ENTRY_TYPES = ['court-case', 'group', 'incident', 'response', 'statistic']
+export const ENTRY_TYPES = ['court-case', 'group', 'incident', 'response', 'statistic', 'resource']
 
 export const SCOPES = ['niagara', 'regional-context']
 
@@ -216,14 +218,14 @@ function validateNamedPerson(person, entry, path, errors) {
   if ((entry.sources || []).length < 2) errors.push(`${path} cannot be published with fewer than two entry sources`)
 }
 
-function validateCommonText(entry, errors) {
+function validateCommonText(entry, errors, { requireAttribution = true } = {}) {
   for (const field of ['title', 'summary']) {
     const described = unquoted(entry[field] || '')
     for (const label of OWN_VOICE_LABELS) {
       if (label.test(described)) errors.push(`${field} uses a label in our own voice; attribute it`)
     }
   }
-  if (!hasQuotedOrAttributedDescription(entry.summary)) {
+  if (requireAttribution && !hasQuotedOrAttributedDescription(entry.summary)) {
     errors.push('summary must quote or attribute source wording')
   }
 }
@@ -232,7 +234,7 @@ export function validateEntry(entry) {
   const errors = []
   if (!entry || typeof entry !== 'object') return { ok: false, errors: ['entry must be an object'] }
 
-  pushProhibited(entry, 'entry', errors)
+  pushProhibited(entry, 'entry', errors, { allowPhones: entry.type === 'resource' })
   if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(entry.id || '')) errors.push('id must be a lowercase slug')
   if (!ENTRY_TYPES.includes(entry.type)) errors.push('type is not a supported record type')
   if (!SCOPES.includes(entry.scope)) errors.push('scope must be niagara or regional-context')
@@ -262,11 +264,14 @@ export function validateEntry(entry) {
   const sources = Array.isArray(entry.sources) ? entry.sources : null
   if (!sources) errors.push('sources must be a list')
   else {
-    const minimum = entry.type === 'statistic' ? 1 : 2
+    const singleSourceType = entry.type === 'statistic' || entry.type === 'resource'
+    const minimum = singleSourceType ? 1 : 2
     if (sources.length < minimum) {
       errors.push(entry.type === 'statistic'
         ? 'statistic entries need at least one official source'
-        : 'entries need at least two sources')
+        : entry.type === 'resource'
+          ? 'resource entries need at least one source'
+          : 'entries need at least two sources')
     }
     sources.forEach((source, index) => validateSource(source, `sources[${index}]`, errors))
     if (entry.type === 'statistic' && sources.length < 2) {
@@ -294,7 +299,7 @@ export function validateEntry(entry) {
     })
   }
 
-  if (entry.summary) validateCommonText(entry, errors)
+  if (entry.summary) validateCommonText(entry, errors, { requireAttribution: entry.type !== 'resource' })
   return { ok: errors.length === 0, errors }
 }
 
@@ -312,17 +317,14 @@ export function validateEntries(entries) {
 }
 
 export function validateSupportResource(resource) {
-  const errors = []
   if (!resource || typeof resource !== 'object') return { ok: false, errors: ['resource must be an object'] }
-  pushProhibited(resource, 'resource', errors, { allowPhones: true })
-  if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(resource.id || '')) errors.push('id must be a lowercase slug')
-  if (!String(resource.title || '').trim()) errors.push('title is required')
-  if (!String(resource.summary || '').trim()) errors.push('summary is required')
-  if (resource.namedIndividuals?.length) errors.push('support resources do not name individuals')
-  if (!Array.isArray(resource.sources) || resource.sources.length < 1) errors.push('support resources need at least one source')
-  else resource.sources.forEach((source, index) => validateSource(source, `sources[${index}]`, errors))
-  if (!isIsoDate(resource.lastReviewed)) errors.push('lastReviewed must be an exact date')
-  return { ok: errors.length === 0, errors }
+  if (resource.type !== 'resource') return { ok: false, errors: ['support resources must use type resource'] }
+  const result = validateEntry(resource)
+  if (resource.namedIndividuals?.length) {
+    result.errors.push('support resources do not name individuals')
+    result.ok = false
+  }
+  return result
 }
 
 export function validateSupportResources(resources) {
@@ -350,6 +352,7 @@ export const TYPE_LABELS = {
   incident: 'Incident',
   response: 'Response',
   statistic: 'Statistic',
+  resource: 'Resource',
 }
 
 export const SCOPE_LABELS = {
