@@ -1,8 +1,7 @@
 /**
  * Approved public-record entries for Hate & Extremism in Niagara.
  * Dariush's approved batches, 17 Oct 2026. The Niagara Falls graffiti case
- * is omitted: its sources do not describe the act as hate-motivated.
- * Goof Busters is not included.
+ * quotes the sources only and names nobody. Goof Busters is not included.
  */
 
 const REVIEWED = '2026-10-17'
@@ -167,6 +166,29 @@ export const hateExtremismEntries = [
         date: '2025-07-18',
       },
       CBC_RALLY,
+    ],
+  }),
+  record({
+    id: 'case-nf-graffiti-2026',
+    type: 'court-case',
+    scope: 'niagara',
+    title: 'Niagara Falls hate graffiti: 11 incidents, one arrest',
+    summary: 'Niagara Daily News: "hate-related graffiti"; "hate speech was spray painted on several buildings." 105.7 The River: "hate speech had been spray painted on buildings."',
+    location: 'Niagara Falls',
+    status: 'charged: mischief (not charged as a hate crime); before the courts',
+    sources: [
+      {
+        outlet: 'Niagara Daily News',
+        title: 'Niagara Falls man charged following hate graffiti investigation',
+        url: 'https://www.niagaradailynews.ca/news/local-news-niagara/niagara-falls-man-charged-following-hate-graffiti-investigation/',
+        date: '2026-05-08',
+      },
+      {
+        outlet: '105.7 The River',
+        title: 'Senior Charged with Hate Speech Crime',
+        url: 'https://www.105theriver.ca/news/local-news/senior-charged-with-hate-speech-crime/',
+        date: '2026-05-11',
+      },
     ],
   }),
   record({

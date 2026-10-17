@@ -216,13 +216,14 @@ describe('approved production records', () => {
     expect(validateSupportResources(hateExtremismSupport).ok).toBe(true)
   })
 
-  it('loads the approved records and leaves the Niagara Falls case and held items out', () => {
+  it('loads the approved records and leaves held items out', () => {
     expect(hateExtremismEntries.map((entry) => entry.id)).toEqual([
       'grp-second-sons',
       'grp-diagolon',
       'inc-brocks-monument-2025',
       'inc-stats-statcan',
       'ctx-ns13',
+      'case-nf-graffiti-2026',
       'case-welland-graffiti-2024',
       'inc-notl-response-2025',
       'inc-stats-nrps-2023',
@@ -234,7 +235,11 @@ describe('approved production records', () => {
     expect(hateExtremismSupport.every((entry) => entry.type === 'resource')).toBe(true)
     expect(hateExtremismSupport.find((entry) => entry.id === 'res-pride-niagara').sources).toHaveLength(1)
     const serialized = JSON.stringify({ hateExtremismEntries, hateExtremismSupport })
-    expect(serialized).not.toMatch(/case-nf-graffiti|14-year-old|15-year-old|goof busters|proud boys|bradley|sauer|hildred/i)
+    expect(serialized).not.toMatch(/14-year-old|15-year-old|71-year-old|goof busters|proud boys|bradley|sauer|hildred|queen st|zimmerman/i)
+    const falls = hateExtremismEntries.find((entry) => entry.id === 'case-nf-graffiti-2026')
+    expect(falls.status).toBe('charged: mischief (not charged as a hate crime); before the courts')
+    expect(falls.summary).toBe('Niagara Daily News: "hate-related graffiti"; "hate speech was spray painted on several buildings." 105.7 The River: "hate speech had been spray painted on buildings."')
+    expect(falls.namedIndividuals).toEqual([])
     const welland = hateExtremismEntries.find((entry) => entry.id === 'case-welland-graffiti-2024')
     expect(JSON.stringify(welland)).not.toMatch(/\bschool\b|\bage\b/i)
     expect(welland.namedIndividuals).toEqual([])
