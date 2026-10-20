@@ -1,4 +1,4 @@
-import { planningNotices } from "./planningNotices.js";
+import { isFutureMeeting, planningNotices } from "./planningNotices.js";
 import { getRenderNow, parseTorontoDate } from "../utils/renderClock.js";
 export const civicEvents = planningNotices
   .filter((n) => n.meetingDate)
@@ -83,6 +83,6 @@ export function filterEvents(
       (period === "all" ||
         (period === "past"
           ? parseTorontoDate(e.startsAt) <= now
-          : parseTorontoDate(e.startsAt) > now)),
+          : isFutureMeeting(e.startsAt, now))),
   );
 }

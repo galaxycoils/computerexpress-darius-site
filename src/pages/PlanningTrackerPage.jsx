@@ -7,7 +7,7 @@ import {
   noticeCategories,
   municipalities,
   getNoticeStats,
-  getUpcomingMeetings,
+  getFutureMeetings,
   getNoticeStatus,
 } from "../data/planningNotices";
 import { getRenderNow, parseTorontoDate } from "../utils/renderClock.js";
@@ -125,7 +125,7 @@ export default function PlanningTrackerPage() {
   const [viewMode, setViewMode] = useState("table");
 
   const stats = useMemo(() => getNoticeStats(now), [now]);
-  const upcomingMeetings = useMemo(() => getUpcomingMeetings(7, now), [now]);
+  const upcomingMeetings = useMemo(() => getFutureMeetings(now), [now]);
 
   const filteredNotices = useMemo(() => {
     let result = planningNotices;
@@ -449,7 +449,7 @@ export default function PlanningTrackerPage() {
             >
               <h2 id="upcoming-heading">Upcoming Public Meetings & Hearings</h2>
               <div className="meetings-list">
-                {upcomingMeetings.slice(0, 5).map((notice) => (
+                {upcomingMeetings.map((notice) => (
                   <article key={notice.id} className="meeting-card">
                     <div className="meeting-meta">
                       <CategoryBadge category={notice.category} />
