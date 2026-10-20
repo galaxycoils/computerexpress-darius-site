@@ -102,6 +102,7 @@ function looksLikeNews(url, sourceUrl) {
   if (/events\.aspx$/i.test(pathname)) return false;
 
   if (/\/news\/posts?\//i.test(pathname)) return true;
+  if (/\/news-and-notices\/posts\//i.test(pathname)) return true;
   if (/\/news\/news\//i.test(pathname)) return true;
   if (/\/news\/[^/]+\/[^/]+/i.test(pathname)) return true;
   if (/article\.aspx$/i.test(pathname) && candidate.searchParams.has("id"))
@@ -112,7 +113,36 @@ function looksLikeNews(url, sourceUrl) {
   return false;
 }
 
+function extractRssItems(xml, source) {
+  const found = new Map();
+  for (const item of xml.matchAll(/<item\b[^>]*>([\s\S]*?)<\/item>/gi)) {
+    const block = item[1];
+    const title = cleanText((block.match(/<title>([\s\S]*?)<\/title>/i) || [])[1] || "");
+    const link = cleanText((block.match(/<link>([\s\S]*?)<\/link>/i) || [])[1] || "");
+    const url = canonicalizeLink(link, source.url);
+    if (!url || !looksLikeNews(url, source.url) || title.length < 12) continue;
+    if (NAV_TITLE.test(title)) continue;
+    found.set(url, {
+      id: createHash("sha256").update(url).digest("hex").slice(0, 16),
+      title,
+      url,
+      sourceId: source.id,
+      sourceName: source.name,
+      city: source.city,
+      kind: source.kind,
+      sourcePublishedAt: null,
+      firstObservedAt: null,
+      lastObservedAt: null,
+      status: source.reviewRequired ? "pending-review" : "published",
+      reviewRequired: Boolean(source.reviewRequired),
+    });
+    if (found.size >= MAX_ITEMS_PER_SOURCE) break;
+  }
+  return [...found.values()];
+}
+
 function extractCandidates(html, source) {
+  if (/<rss[\s>]|<feed[\s>]/i.test(html)) return extractRssItems(html, source);
   html = html.replace(/<(script|style)\b[^>]*>[\s\S]*?<\/\1>/gi, "");
   const found = new Map();
   const anchorPattern =
@@ -230,7 +260,9 @@ async function fetchHtmlOnce(source) {
     const contentType = response.headers.get("content-type") || "";
     if (
       !contentType.includes("text/html") &&
-      !contentType.includes("application/xhtml+xml")
+      !contentType.includes("application/xhtml+xml") &&
+      !contentType.includes("xml") &&
+      !contentType.includes("rss")
     ) {
       await response.body?.cancel();
       throw permanentError("Unsupported content type: " + contentType);
