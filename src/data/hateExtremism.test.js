@@ -260,7 +260,7 @@ describe('approved production records', () => {
     expect(diagolon.namedIndividuals[0].name).toBe('Jeremy MacKenzie')
     expect(diagolon.namedIndividuals[0].quotedDescription).toBe('founder of Diagolon (CBC 2025-09-09; St. Catharines Standard)')
     expect(diagolon.namedIndividuals[0].basis).toBe('self-identified-leader')
-    expect(group.sources.some((source) => source.date === '2025 (verify exact day)')).toBe(true)
+    expect(group.sources.some((source) => source.date === '2025-06-11')).toBe(true)
   })
 
   it('lets the Statistics Canada figure through with one source and a methodology note', () => {
