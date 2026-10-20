@@ -35,7 +35,7 @@ const CAHN_DIAGOLON = {
   outlet: 'Canadian Anti-Hate Network',
   title: "Diagolon: Canada's Homegrown White Nationalist Network",
   url: 'https://www.antihate.ca/diagolon_canada_homegrown_white_nationalist_network',
-  date: '2025 (verify exact day)',
+  date: '2025-06-11',
 }
 
 const MACKENZIE_SOURCES = [CBC_RALLY.url, STANDARD_RALLY.url]

@@ -41,6 +41,8 @@ describe('Hate & Extremism pages', () => {
     expect(screen.getByRole('link', { name: '(905) 688-4111' })).toBeInTheDocument()
     expect(screen.getAllByRole('link', { name: 'Request a correction / right of reply' }).length).toBeGreaterThan(0)
     expect(screen.getByText(/TODO: 2024 \(verify exact day\)/)).toBeInTheDocument()
+    expect(screen.getAllByText('June 11, 2025').length).toBeGreaterThan(0)
+    expect(screen.queryByText(/TODO: 2025 \(verify exact day\)/)).not.toBeInTheDocument()
   })
 
   it('filters by type, municipality and scope', () => {
