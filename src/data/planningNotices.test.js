@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest'
-import { getUpcomingMeetings, getActiveNotices, getNoticeStatus, planningNotices, noticeCategories, municipalities, getNoticeStats } from './planningNotices.js'
+import { filterEvents } from './events.js'
+import { getUpcomingMeetings, getFutureMeetings, getActiveNotices, getNoticeStatus, planningNotices, noticeCategories, municipalities, getNoticeStats } from './planningNotices.js'
 
 // Algorithm tests use controlled records; newsroom updates must not change their expectations.
 const hearing = { id: 'hearing', status: 'Hearing Scheduled', meetingDate: '2026-09-28T18:00:00', municipality: 'Welland', category: 'Planning' }
@@ -29,6 +30,32 @@ describe('getUpcomingMeetings', () => {
   })
   it('includes later events when the caller requests a wider range', () => {
     expect(getUpcomingMeetings(10, now, fixtures).map(n => n.id)).toEqual(['start', 'end', 'after', 'later'])
+  })
+})
+
+describe('future meetings match the civic calendar', () => {
+  const noonToronto = new Date('2026-10-20T16:00:00Z')
+  const later = { id: 'later', status: 'Hearing Scheduled', meetingDate: '2026-11-12T17:00:00', municipality: 'St. Catharines', category: 'minor-variance' }
+  const elapsed = { ...later, id: 'elapsed', meetingDate: '2026-10-14T17:00:00' }
+
+  it('counts hearings beyond seven days and drops them once the start time passes', () => {
+    expect(getUpcomingMeetings(7, noonToronto, [later, elapsed])).toEqual([])
+    expect(getFutureMeetings(noonToronto, [later, elapsed]).map((notice) => notice.id)).toEqual(['later'])
+    expect(getNoticeStats(noonToronto, [later, elapsed]).upcomingMeetings).toBe(1)
+    expect(getFutureMeetings(new Date('2026-11-12T22:00:00Z'), [later, elapsed])).toEqual([])
+    expect(getNoticeStats(new Date('2026-11-12T22:00:00Z'), [later, elapsed]).upcomingMeetings).toBe(0)
+  })
+
+  it('lists the same upcoming notices as /events, including hearings more than a week away', () => {
+    const calendar = filterEvents({ period: 'upcoming' }, noonToronto)
+    expect(calendar.map((event) => event.id)).toEqual(expect.arrayContaining([
+      'welland-1-griffith-st-public-info',
+      'stc-11-13-paxton-ave-a-59-26',
+      'stc-159-ontario-st-a-58-26',
+    ]))
+    expect(calendar.some((event) => event.startsAt.slice(0, 10) > '2026-10-27')).toBe(true)
+    expect(getFutureMeetings(noonToronto).map((notice) => notice.id)).toEqual(calendar.map((event) => event.id))
+    expect(getNoticeStats(noonToronto).upcomingMeetings).toBe(calendar.length)
   })
 })
 

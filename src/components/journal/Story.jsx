@@ -62,7 +62,7 @@ export function SaveButton({ story }) {
 }
 export default function Story({ story, compact = false, index }) {
   return (
-    <article className={`journal-story ${compact ? "is-compact" : ""}`}>
+    <article className={`journal-story ${compact ? "is-compact" : ""}`} data-story-id={story.id}>
       {index !== undefined && (
         <span className="journal-story-number" aria-hidden="true">
           {String(index + 1).padStart(2, "0")}

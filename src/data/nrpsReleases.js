@@ -2,13 +2,56 @@
  * NRPS Police Media Releases for St. Catharines Digital
  * Sourced exclusively from https://www.niagarapolice.ca/news/posts/
  * Official Niagara Regional Police Service media releases & community notifications.
- * Updated: 2026-10-14
+ * Updated: 2026-10-16
  * Next review: Daily (cron) — refresh from niagarapolice.ca
- * Note: Added Oct 13 arrest in St. Catharines stabbing (1 District CIB, incident 26-128132, Michael Wallace charged). Added Oct 12 update on dual convenience store robberies (arrest of Dwight Humber). Added 7 NRPS media releases (Oct 4–11) newly tagged St. Catharines/Welland from the official feed: robbery (Welland), two aggravated assault updates (Niagara Falls/Court in St. Catharines), Fonthill ICE, online child luring, 18-year-old drug trafficking, animal cruelty, and Niagara Falls firearms investigation. No other new official planning notices.
+ * Note: Added Oct 16 1 District CIB robbery investigation (St. Catharines/Thorold, incident 26-130944). Added Oct 15 Police Service Board meeting advisory (region-wide). Added Oct 15 fatal pedestrian collision (St. Catharines/Thorold, incident 26-130408). Added Oct 13 arrest in St. Catharines stabbing (1 District CIB, incident 26-128132, Michael Wallace charged). Added Oct 12 update on dual convenience store robberies (arrest of Dwight Humber). Added 7 NRPS media releases (Oct 4–11) newly tagged St. Catharines/Welland from the official feed: robbery (Welland), two aggravated assault updates (Niagara Falls/Court in St. Catharines), Fonthill ICE, online child luring, 18-year-old drug trafficking, animal cruelty, and Niagara Falls firearms investigation. No other new official planning notices.
  */
 import { getRenderNow } from '../utils/renderClock.js'
 
 export const nrpsReleases = [
+  {
+    id: 'nrps-2026-10-16-1-district-cib-st-catharines-robbery',
+    date: '2026-10-16',
+    headline: '1 District CIB Investigating St Catharines Robbery',
+    municipality: 'St. Catharines, Thorold',
+    type: 'Media Release (Robbery Investigation)',
+    url: 'https://www.niagarapolice.ca/news/posts/1-district-cib-investigating-st-catharines-robbery/',
+    source: 'Niagara Regional Police Service',
+    tags: ['Robbery', 'Investigation', 'St. Catharines', 'Thorold', '1 District', 'Criminal Investigations Bureau'],
+    category: 'robbery',
+    incident_date: '2026-10-16T04:11:00-04:00',
+    published: '2026-10-16T19:00:00-04:00',
+    location: { text: 'Area of St Paul Street West near Seventh Street Louth, St. Catharines', lat: null, lng: null },
+    contact: { unit: '1 District CIB', phone: '(905) 688-4111', ext: '1009865', anonymous: 'Crime Stoppers of Niagara 1-800-222-8477 (TIPS)' },
+    incident_number: '26-130944'
+  },
+  {
+    id: 'nrps-2026-10-15-police-service-board-meeting-advisory',
+    date: '2026-10-15',
+    headline: 'ADVISORY: Niagara Police Service Board Meeting – October 22, 2026',
+    municipality: 'Region-wide (St. Catharines, Welland, Thorold included)',
+    type: 'Community Notification / Public Notice',
+    url: 'https://www.niagarapolice.ca/news/posts/advisory-niagara-police-service-board-meeting-october-22-2026/',
+    source: 'Niagara Regional Police Service',
+    tags: ['Police Service Board', 'Public Meeting', 'Region-wide', 'Advisory', 'Virtual Meeting'],
+    category: 'community-notification'
+  },
+  {
+    id: 'nrps-2026-10-15-pedestrian-struck-fatal-collision-st-catharines',
+    date: '2026-10-15',
+    headline: 'Pedestrian Struck in Fatal Collision – St. Catharines',
+    municipality: 'St. Catharines, Thorold',
+    type: 'Media Release (Collision Investigation)',
+    url: 'https://www.niagarapolice.ca/news/posts/pedestrian-struck-in-fatal-collision-st-catharines/',
+    source: 'Niagara Regional Police Service',
+    tags: ['Collision', 'Fatal', 'Pedestrian', 'St. Catharines', 'Thorold', '1 District', 'Collision Reconstruction'],
+    category: 'collision',
+    incident_date: '2026-10-14T18:15:00-04:00',
+    published: '2026-10-15T11:46:00-04:00',
+    location: { text: 'Parking lot on Lake Street near Lakeshore Road, St. Catharines', lat: null, lng: null },
+    contact: { unit: 'Collision Reconstruction Unit', phone: '(905) 688-4111', ext: '1008882', anonymous: 'Crime Stoppers of Niagara 1-800-222-8477 (TIPS)' },
+    incident_number: '26-130408'
+  },
   {
     id: 'nrps-2026-10-13-st-catharines-stabbing-arrest',
     date: '2026-10-13',
@@ -937,3 +980,4 @@ export function getNrpsStats(now = getRenderNow()) {
     latestDate,
   };
 }
+

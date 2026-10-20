@@ -6,13 +6,85 @@
  * - thorold.ca
  * - niagararegion.ca
  *
- * Updated: 2026-10-16
- * Note: Preserved the complete archive and added Lakehurst Drive, Crompton/Bolton construction, and 1 Griffith Street notices. Status helpers derive past meeting and deadline states.
+ * Updated: 2026-10-20
+ * Note: Added Committee of Adjustment hearings for 2 and 4 Forestwood Drive (A-54/26 and A-55/26, Nov 12, 2026). Marked the 1262-1290 Fourth Avenue appeal deadline (Oct 19) as closed.
  * Next review: Daily
  */
 import { getRenderNow, parseTorontoDate } from "../utils/renderClock.js";
 
 export const planningNotices = [
+  {
+    id: "stc-4-forestwood-dr-a-55-26",
+    municipality: "St. Catharines",
+    type: "Minor Variance (Committee of Adjustment)",
+    title: "4 Forestwood Drive — Platform Setback Variance for Semi-Detached with ADU",
+    description:
+      "Application A-55/26 seeks a minor variance to reduce the minimum setback from the front lot line to a platform structure with a height above 1.2 metres from 3.0 metres to 1.5 metres, to facilitate construction of a semi-detached dwelling with one additional dwelling unit.",
+    fileNumber: "A-55/26",
+    status: "Hearing Scheduled",
+    meetingDate: "2026-11-12T17:00:00",
+    meetingLocation: "Council Chambers, 50 Church St",
+    submissionDeadline: "2026-11-06T12:00:00",
+    submissionEmail: "cofa@stcatharines.ca",
+    publishedDate: "2026-10-19",
+    sourceUrl: "https://www.stcatharines.ca/news/posts/notice-of-hearing-4-forestwood-drive/",
+    category: "minor-variance",
+    tags: ["Minor Variance", "Forestwood Drive", "Committee of Adjustment", "St. Catharines", "Semi-Detached", "ADU"],
+  },
+  {
+    id: "stc-2-forestwood-dr-a-54-26",
+    municipality: "St. Catharines",
+    type: "Minor Variance (Committee of Adjustment)",
+    title: "2 Forestwood Drive — Front and Exterior Side Yard Setback Variances",
+    description:
+      "Application A-54/26 from 17912170 Canada Corp seeks minor variances to reduce the minimum front yard setback to the dwelling from 3.0 m to 1.9 m, exterior side yard setback from 3.0 m to 2.4 m, and platform structure setbacks from the front and exterior lot lines from 3.0 m to 1.5 m.",
+    fileNumber: "A-54/26",
+    status: "Hearing Scheduled",
+    meetingDate: "2026-11-12T17:00:00",
+    meetingLocation: "Council Chambers, 50 Church St",
+    submissionDeadline: "2026-11-06T12:00:00",
+    submissionEmail: "cofa@stcatharines.ca",
+    publishedDate: "2026-10-19",
+    sourceUrl: "https://www.stcatharines.ca/news/posts/notice-of-hearing-2-forestwood-drive/",
+    category: "minor-variance",
+    tags: ["Minor Variance", "Forestwood Drive", "Committee of Adjustment", "St. Catharines", "Setback"],
+  },
+  {
+    id: "stc-11-13-paxton-ave-a-59-26",
+    municipality: "St. Catharines",
+    type: "Minor Variance (Committee of Adjustment)",
+    title: "11 & 13 Paxton Avenue — Lot Area Variance for Redevelopment",
+    description:
+      "Application A-59/26 from Scott Smith seeks a minor variance to increase maximum lot area from 465 m² to 568.1 m² to facilitate cancellation of Consent B-03/12SC and re-merging of the lands at 11 and 13 Paxton Avenue for redevelopment of the existing detached dwelling.",
+    fileNumber: "A-59/26",
+    status: "Hearing Scheduled",
+    meetingDate: "2026-11-12T17:00:00",
+    meetingLocation: "Council Chambers, 50 Church St",
+    submissionDeadline: "2026-11-06T12:00:00",
+    submissionEmail: "cofa@stcatharines.ca",
+    publishedDate: "2026-10-16",
+    sourceUrl: "https://www.stcatharines.ca/news/posts/notice-of-hearing-11-13-paxton-avenue/",
+    category: "minor-variance",
+    tags: ["Minor Variance", "Paxton Avenue", "Committee of Adjustment", "St. Catharines"],
+  },
+  {
+    id: "stc-159-ontario-st-a-58-26",
+    municipality: "St. Catharines",
+    type: "Minor Variance (Committee of Adjustment)",
+    title: "159 Ontario Street — Height and Drive Aisle Variances for 18-Storey Mixed-Use",
+    description:
+      "Application A-58/26 from The Collective Housing Co-Operative Incorporated seeks minor variances to facilitate an 18-storey mixed-use development with 492 residential dwelling units, including an increase in the height to which a special provision applies and a minor reduction in drive aisle bump-out.",
+    fileNumber: "A-58/26",
+    status: "Hearing Scheduled",
+    meetingDate: "2026-11-12T17:00:00",
+    meetingLocation: "Council Chambers, 50 Church St",
+    submissionDeadline: "2026-11-06T12:00:00",
+    submissionEmail: "cofa@stcatharines.ca",
+    publishedDate: "2026-10-16",
+    sourceUrl: "https://www.stcatharines.ca/news/posts/notice-of-hearing-159-ontario-street/",
+    category: "minor-variance",
+    tags: ["Minor Variance", "Ontario Street", "Mixed-Use", "Committee of Adjustment", "St. Catharines"],
+  },
   {
     id: "stc-lakehurst-dr-closure-oct-15",
     municipality: "St. Catharines",
@@ -132,9 +204,9 @@ export const planningNotices = [
     type: "Notice of Decision (OPA / Zoning By-law Amendment)",
     title: "1262 and 1290 Fourth Avenue — Official Plan and Zoning Decision",
     description:
-      "On September 14, 2026, City Council adopted Official Plan Amendment No. 56 and passed Zoning By-law 2026-120 for 1262-1290 Fourth Avenue to permit 8-storey mixed-use blocks. Appeal deadline is October 19, 2026.",
+      "On September 14, 2026, City Council adopted Official Plan Amendment No. 56 and passed Zoning By-law 2026-120 for 1262-1290 Fourth Avenue to permit 8-storey mixed-use blocks. The appeal deadline of October 19, 2026 has passed.",
     fileNumber: "25 113482 OP / 25 113484 ZA",
-    status: "Decision Posted",
+    status: "Appeal Period Closed",
     submissionDeadline: "2026-10-19T17:00:00",
     publishedDate: "2026-09-30",
     sourceUrl:
@@ -193,7 +265,7 @@ export const planningNotices = [
     description:
       "Consents B-21/26SC and B-22/26SC to establish reciprocal perpetual easements for vehicular and pedestrian access, creating a mutual driveway between 39 and 41 Thomas Street.",
     fileNumber: "B-21/26SC / B-22/26SC",
-    status: "Hearing Scheduled",
+    status: "Meeting Complete",
     meetingDate: "2026-10-14T17:00:00",
     meetingLocation: "Council Chambers, 50 Church St",
     submissionDeadline: "2026-10-09T12:00:00",
@@ -212,7 +284,7 @@ export const planningNotices = [
     description:
       "Application A-53/26 seeks zoning relief to convert an existing church into a 20-unit residential building while retaining the existing 2-unit dwelling, including reduced landscaped open space, parking, landscape buffer, and drive-aisle width.",
     fileNumber: "A-53/26",
-    status: "Hearing Scheduled",
+    status: "Meeting Complete",
     meetingDate: "2026-10-14T17:00:00",
     meetingLocation: "Council Chambers, 50 Church St",
     submissionDeadline: "2026-10-09T12:00:00",
@@ -231,7 +303,7 @@ export const planningNotices = [
     description:
       "Application A-52/26 from Phelps Homes Ltd. seeks zoning relief for two stacked townhouse blocks (48 units total) on the north side of Ellis Avenue east of Abbott Street.",
     fileNumber: "A-52/26",
-    status: "Hearing Scheduled",
+    status: "Meeting Complete",
     meetingDate: "2026-10-14T17:00:00",
     meetingLocation: "Council Chambers, 50 Church St",
     submissionDeadline: "2026-10-09T12:00:00",
@@ -249,7 +321,7 @@ export const planningNotices = [
     title: "5 Louis Avenue — Property Standards Appeal Hearing",
     description:
       "The Property Standards Committee will hear an appeal of an August 19, 2026 Property Standards Officer order for 5 Louis Avenue. The hearing is electronic and livestreamed.",
-    status: "Hearing Scheduled",
+    status: "Meeting Complete",
     meetingDate: "2026-10-15T17:00:00",
     meetingLocation: "Electronic hearing (City of St. Catharines YouTube livestream)",
     submissionDeadline: "2026-10-13T17:00:00",
@@ -266,7 +338,7 @@ export const planningNotices = [
     title: "Flood Resilience Task Force — Applications Open",
     description:
       "The City is accepting applications for an independent Flood Resilience Task Force to review July and August 2026 rainfall flooding and recommend a Flood Resilience Action Plan. Applications are due by noon on October 16, 2026.",
-    status: "Open",
+    status: "Applications Closed",
     submissionDeadline: "2026-10-16T12:00:00",
     publishedDate: "2026-09-24",
     sourceUrl:
@@ -315,7 +387,7 @@ export const planningNotices = [
     description:
       "File PLMV202600222 requests two ground signs, each 10.5 metres high and 34.6 square metres in area, instead of the Sign By-law maxima of 7.5 metres and 10 square metres.",
     fileNumber: "PLMV202600222",
-    status: "Hearing Scheduled",
+    status: "Meeting Complete",
     meetingDate: "2026-10-14T17:00:00",
     meetingLocation: "Civic Square Council Chambers, 60 East Main Street, Welland",
     submissionDeadline: "2026-10-08T17:00:00",
@@ -829,6 +901,18 @@ export function getUpcomingMeetings(days = 7, now = getRenderNow(), notices = pl
   });
 }
 
+// Same predicate as the civic calendar's Upcoming filter: a meeting is upcoming
+// until its Toronto start instant passes, with no rolling day cap.
+export function isFutureMeeting(meetingDate, now = getRenderNow()) {
+  return parseTorontoDate(meetingDate) > now;
+}
+
+export function getFutureMeetings(now = getRenderNow(), notices = planningNotices) {
+  return notices
+    .filter((notice) => notice.meetingDate && isFutureMeeting(notice.meetingDate, now))
+    .sort((a, b) => a.meetingDate.localeCompare(b.meetingDate));
+}
+
 export function getNoticesByMunicipality(municipality) {
   return planningNotices.filter((notice) => notice.municipality === municipality);
 }
@@ -870,6 +954,6 @@ export function getNoticeStats(now = getRenderNow(), notices = planningNotices) 
     active: active.length,
     byMunicipality,
     byCategory,
-    upcomingMeetings: getUpcomingMeetings(7, now, notices).length,
+    upcomingMeetings: getFutureMeetings(now, notices).length,
   };
 }

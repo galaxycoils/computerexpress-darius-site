@@ -288,15 +288,14 @@ try {
   await expect(page.locator(".journal-story")).toHaveCount(1);
 
   await page.goto(base + "/search/", { waitUntil: "networkidle" });
-  const firstTitle = await page
-    .locator(".journal-feed h3")
-    .first()
-    .textContent();
+  const storyRecords = page.locator(".journal-feed .journal-story");
+  const firstPageIds = await storyRecords.evaluateAll(records => records.map(record => record.dataset.storyId));
   await page.getByRole("button", { name: "Next →" }).click();
   await page.waitForURL(/page=2/);
-  await expect(page.locator(".journal-feed h3").first()).not.toHaveText(
-    firstTitle,
-  );
+  await expect(page.locator(".journal-results-meta")).toContainText("Showing 13–24");
+  const secondPageIds = await storyRecords.evaluateAll(records => records.map(record => record.dataset.storyId));
+  assert.notDeepEqual(secondPageIds, firstPageIds, "Next displays a different page of records");
+  assert.ok(secondPageIds.every(id => id && !firstPageIds.includes(id)), "Result identities do not repeat across pages");
   assert.equal(
     await page
       .locator(".journal-results-meta")
