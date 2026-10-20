@@ -98,7 +98,7 @@ export function SectionTitle({ kicker, title, to, action = "Explore all" }) {
       </div>
       {to && (
         <Link to={to}>
-          {action} <UiIcon name="external" size={16} />
+          {action} <UiIcon name="arrow" size={16} />
         </Link>
       )}
     </header>

@@ -2,8 +2,12 @@
 
 Every main push, including documentation changes, runs CI and release validation.
 CI's aggregate check requires the quality matrix, the production build and
-Chromium reader journeys. Browser verification downloads and validates the exact
-build artifact from that run. The responsive/hydration suite also runs on main.
+Chromium reader journeys. The production build also audits structured data, so
+content integrity does not rebuild the site for that check. Browser verification
+downloads and validates the exact build artifact from that run. The responsive
+and hydration suite runs on main inside CI. The redesign browser workflow is
+limited to `redesign/**` branch pushes and manual dispatch, so pull requests and
+main do not repeat that suite.
 
 Production independently passes workflow validation, content and archive checks,
 metrics, identity, lint, types, regression tests, required coverage, build/schema
