@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "collectedAt": "2026-10-20T19:18:01.951Z",
+  "collectedAt": "2026-10-20T21:25:19.381Z",
   "publicationState": "autonomous",
   "notice": "Autonomous official-source discovery. Items are links to primary municipal/police pages only; no invented reporting.",
   "sources": [
@@ -38,10 +38,11 @@
     },
     {
       "id": "niagara-region-news",
-      "ok": false,
-      "itemCount": 0,
-      "checkedAt": "2026-10-20T19:18:01.951Z",
-      "error": "HTTP 404"
+      "ok": true,
+      "itemCount": 6,
+      "datedItems": 6,
+      "metadataFailures": 0,
+      "checkedAt": "2026-10-20T21:25:19.381Z"
     },
     {
       "id": "nrps-media-releases",
@@ -53,6 +54,20 @@
     }
   ],
   "items": [
+    {
+      "id": "53695f3f6b2bcc6b",
+      "title": "Advance polling sites opening across Niagara",
+      "url": "https://www.niagararegion.ca/news-and-notices/posts/advance-polling-sites-opening-across-niagara/",
+      "sourceId": "niagara-region-news",
+      "sourceName": "Niagara Region News and Notices",
+      "city": "Niagara Region",
+      "kind": "official-notice",
+      "sourcePublishedAt": "2026-09-28",
+      "firstObservedAt": "2026-10-20T21:25:19.381Z",
+      "lastObservedAt": "2026-10-20T21:25:19.381Z",
+      "status": "published",
+      "reviewRequired": false
+    },
     {
       "id": "619da2f5812704c4",
       "title": "Aug 4 Statement from Niagara’s Acting Regional Chair on flooding across the region Public Notice",
@@ -78,6 +93,20 @@
       "sourcePublishedAt": null,
       "firstObservedAt": "2026-09-17T03:27:01.699Z",
       "lastObservedAt": "2026-10-14T00:19:10.788Z",
+      "status": "published",
+      "reviewRequired": false
+    },
+    {
+      "id": "d26fbbfdb4ac42d6",
+      "title": "Intersection closure at Quaker and Montgomery roads in Pelham and Welland",
+      "url": "https://www.niagararegion.ca/news-and-notices/posts/intersection-closure-at-quaker-and-montgomery-roads-in-pelham-and-welland/",
+      "sourceId": "niagara-region-news",
+      "sourceName": "Niagara Region News and Notices",
+      "city": "Niagara Region",
+      "kind": "official-notice",
+      "sourcePublishedAt": "2026-09-14",
+      "firstObservedAt": "2026-10-20T21:25:19.381Z",
+      "lastObservedAt": "2026-10-20T21:25:19.381Z",
       "status": "published",
       "reviewRequired": false
     },
@@ -138,6 +167,20 @@
       "reviewRequired": false
     },
     {
+      "id": "fa101255456ad9bb",
+      "title": "Niagara partnership connects more than 1,200 youth with careers in agriculture",
+      "url": "https://www.niagararegion.ca/news-and-notices/posts/niagara-partnership-connects-more-than-1-200-youth-with-careers-in-agriculture/",
+      "sourceId": "niagara-region-news",
+      "sourceName": "Niagara Region News and Notices",
+      "city": "Niagara Region",
+      "kind": "official-notice",
+      "sourcePublishedAt": "2026-10-01",
+      "firstObservedAt": "2026-10-20T21:25:19.381Z",
+      "lastObservedAt": "2026-10-20T21:25:19.381Z",
+      "status": "published",
+      "reviewRequired": false
+    },
+    {
       "id": "9ef2d45293ebcb0f",
       "title": "​Notice of commencement and Public Information Centre #1 for North Service Road (Regional Road 39) Environmental Assessment in Lincoln",
       "url": "https://www.niagararegion.ca/news/notices/notice.aspx?q=1002",
@@ -180,6 +223,20 @@
       "reviewRequired": false
     },
     {
+      "id": "d45e3731a0952cb4",
+      "title": "Plan for a healthy fall: Take steps to prevent respiratory illness",
+      "url": "https://www.niagararegion.ca/news-and-notices/posts/plan-for-a-healthy-fall-take-steps-to-prevent-respiratory-illness/",
+      "sourceId": "niagara-region-news",
+      "sourceName": "Niagara Region News and Notices",
+      "city": "Niagara Region",
+      "kind": "official-notice",
+      "sourcePublishedAt": "2026-10-05",
+      "firstObservedAt": "2026-10-20T21:25:19.381Z",
+      "lastObservedAt": "2026-10-20T21:25:19.381Z",
+      "status": "published",
+      "reviewRequired": false
+    },
+    {
       "id": "c0d357c2460f943c",
       "title": "Road closure for Martindale Road (Regional Road 38) in St. Catharines",
       "url": "https://www.niagararegion.ca/news/notices/notice.aspx?q=998",
@@ -194,6 +251,20 @@
       "reviewRequired": false
     },
     {
+      "id": "b54ec35d697bb212",
+      "title": "Road closure for Martindale Road (Regional Road 38) in St. Catharines",
+      "url": "https://www.niagararegion.ca/news-and-notices/posts/road-closure-for-martindale-road-regional-road-38-in-st-catharines/",
+      "sourceId": "niagara-region-news",
+      "sourceName": "Niagara Region News and Notices",
+      "city": "Niagara Region",
+      "kind": "official-notice",
+      "sourcePublishedAt": "2026-06-01",
+      "firstObservedAt": "2026-10-20T21:25:19.381Z",
+      "lastObservedAt": "2026-10-20T21:25:19.381Z",
+      "status": "published",
+      "reviewRequired": false
+    },
+    {
       "id": "5d2df800f738a7a2",
       "title": "Road closure for North Service Road (Regional Road 39) in Lincoln",
       "url": "https://www.niagararegion.ca/news/notices/notice.aspx?q=1026",
@@ -204,6 +275,20 @@
       "sourcePublishedAt": null,
       "firstObservedAt": "2026-09-23T21:30:48.697Z",
       "lastObservedAt": "2026-10-14T00:19:10.788Z",
+      "status": "published",
+      "reviewRequired": false
+    },
+    {
+      "id": "4bb8beffaac5219f",
+      "title": "Road closure for North Service Road (Regional Road 39) in Lincoln",
+      "url": "https://www.niagararegion.ca/news-and-notices/posts/road-closure-for-north-service-road-regional-road-39-in-lincoln/",
+      "sourceId": "niagara-region-news",
+      "sourceName": "Niagara Region News and Notices",
+      "city": "Niagara Region",
+      "kind": "official-notice",
+      "sourcePublishedAt": "2026-09-23",
+      "firstObservedAt": "2026-10-20T21:25:19.381Z",
+      "lastObservedAt": "2026-10-20T21:25:19.381Z",
       "status": "published",
       "reviewRequired": false
     },

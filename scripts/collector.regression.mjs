@@ -195,11 +195,32 @@ test('accepts municipal post paths and region notice.aspx articles', () => {
   assert.equal(fromRegion.some(i => /Public Notices/i.test(i.title)), false)
 })
 
-test('source registry points Niagara Region at same-origin public notices', () => {
+test('source registry points Niagara Region at its news and notices feed', () => {
   const region = sourceById['niagara-region-news']
   assert.ok(region)
   assert.equal(region.enabled, true)
   assert.equal(region.reviewRequired, false)
-  assert.match(region.url, /^https:\/\/www\.niagararegion\.ca\/news\/notices\//)
+  assert.equal(region.url, 'https://www.niagararegion.ca/news-and-notices/rss/')
   assert.equal(sourceRegistry.filter(s => s.enabled).length >= 6, true)
+})
+
+test('reads Niagara Region news-and-notices RSS items and ignores the index anchors', () => {
+  const region = sourceById['niagara-region-news']
+  const xml = [
+    '<?xml version="1.0" encoding="UTF-8" ?>',
+    '<rss version="2.0"><channel>',
+    '<item><title>Plan for a healthy fall: Take steps to prevent respiratory illness</title>',
+    '<description><![CDATA[ <a href="https://www.niagararegion.ca/news-and-notices/posts/plan-for-a-healthy-fall-take-steps-to-prevent-respiratory-illness/">Continue reading</a>]]></description>',
+    '<link>https://www.niagararegion.ca/news-and-notices/posts/plan-for-a-healthy-fall-take-steps-to-prevent-respiratory-illness/</link>',
+    '</item>',
+    '<item><title>News and notices</title><link>https://www.niagararegion.ca/news-and-notices/</link></item>',
+    '<item><title>Public Health and Emergency Services</title><link>https://www.niagararegion.ca/news-and-notices/authors/public-health-and-emergency-services/</link></item>',
+    '</channel></rss>',
+  ].join('')
+  const items = extractCandidates(xml, region)
+  assert.deepEqual(items.map(item => item.title), [
+    'Plan for a healthy fall: Take steps to prevent respiratory illness',
+  ])
+  assert.equal(items[0].url, 'https://www.niagararegion.ca/news-and-notices/posts/plan-for-a-healthy-fall-take-steps-to-prevent-respiratory-illness/')
+  assert.equal(items[0].sourceId, 'niagara-region-news')
 })
