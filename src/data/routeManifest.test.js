@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest'
+import { getPublishableContent } from './contentRegistry.js'
 import { prerenderRoutes, sitemapRoutes, createSitemapXml, getRoutePageModule } from './routeManifest'
 
 describe('newsroom route manifest', () => {
@@ -25,7 +26,10 @@ describe('newsroom route manifest', () => {
 
 it('uses a verified content date only for an article route', () => {
   const xml = createSitemapXml()
+  const publishedDates = new Set(getPublishableContent().map((item) => item.publishedDate))
   expect(xml).toContain('<lastmod>2026-09-02</lastmod>')
-  expect(xml).not.toContain(`<lastmod>${new Date().toISOString().slice(0, 10)}</lastmod>`)
+  for (const match of xml.matchAll(/<lastmod>([^<]+)<\/lastmod>/g)) {
+    expect(publishedDates.has(match[1])).toBe(true)
+  }
   expect(createSitemapXml()).toContain('<loc>https://stcatharinesdigital.ca/</loc>')
 })

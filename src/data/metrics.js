@@ -7,7 +7,8 @@
  * another), so `scripts/audit-metrics.js` fails the build when a tracked file
  * states a figure that differs from these values.
  *
- * Counts are derived, never typed by hand.
+ * Counts are derived, never typed by hand. `npm run metrics:sync` rewrites the
+ * marked lines in the pitch deck and income plan from these values.
  */
 import { planningNotices, getActiveNotices } from './planningNotices.js'
 import { nrpsReleases, verifiedNrpsReleases } from './nrpsReleases.js'

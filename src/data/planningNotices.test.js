@@ -1,10 +1,22 @@
-import { describe, expect, it } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { filterEvents } from './events.js'
 import { getUpcomingMeetings, getFutureMeetings, getActiveNotices, getNoticeStatus, planningNotices, noticeCategories, municipalities, getNoticeStats } from './planningNotices.js'
 
 // Algorithm tests use controlled records; newsroom updates must not change their expectations.
-const hearing = { id: 'hearing', status: 'Hearing Scheduled', meetingDate: '2026-09-28T18:00:00', municipality: 'Welland', category: 'Planning' }
-const closure = { id: 'closure', status: 'Active', endDate: '2026-09-29', municipality: 'Thorold', category: 'Roads' }
+const frozenNoon = new Date('2026-09-29T12:00:00Z')
+
+function torontoStamp(dayOffset, time = '18:00:00') {
+  const day = new Intl.DateTimeFormat('en-CA', {
+    timeZone: 'America/Toronto',
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+  }).format(new Date(frozenNoon.getTime() + dayOffset * 86400000))
+  return `${day}T${time}`
+}
+
+const hearing = { id: 'hearing', status: 'Hearing Scheduled', meetingDate: torontoStamp(-1), municipality: 'Welland', category: 'Planning' }
+const closure = { id: 'closure', status: 'Active', endDate: torontoStamp(0).slice(0, 10), municipality: 'Thorold', category: 'Roads' }
 
 describe('planning tracker data', () => {
   it('offers filters for every current category and municipality', () => {
@@ -35,6 +47,13 @@ describe('getUpcomingMeetings', () => {
 
 describe('future meetings match the civic calendar', () => {
   const noonToronto = new Date('2026-10-20T16:00:00Z')
+  beforeEach(() => {
+    vi.useFakeTimers()
+    vi.setSystemTime(noonToronto)
+  })
+  afterEach(() => {
+    vi.useRealTimers()
+  })
   const later = { id: 'later', status: 'Hearing Scheduled', meetingDate: '2026-11-12T17:00:00', municipality: 'St. Catharines', category: 'minor-variance' }
   const elapsed = { ...later, id: 'elapsed', meetingDate: '2026-10-14T17:00:00' }
 
@@ -60,13 +79,20 @@ describe('future meetings match the civic calendar', () => {
 })
 
 describe('time-sensitive notice status', () => {
-  const now = new Date('2026-09-29T12:00:00Z')
+  const now = frozenNoon
+  beforeEach(() => {
+    vi.useFakeTimers()
+    vi.setSystemTime(now)
+  })
+  afterEach(() => {
+    vi.useRealTimers()
+  })
   it('does not count past scheduled hearings as active or upcoming', () => {
     expect(getActiveNotices(now, [hearing])).toEqual([])
     expect(getNoticeStats(now, [hearing]).upcomingMeetings).toBe(0)
   })
   it('continues counting genuinely future meetings', () => {
-    const future = { ...hearing, meetingDate: '2026-09-30T18:00:00' }
+    const future = { ...hearing, meetingDate: torontoStamp(1) }
     expect(getNoticeStats(now, [hearing, future])).toMatchObject({ total: 2, active: 1, upcomingMeetings: 1 })
   })
   it('returns the published status when it is already a final outcome', () => {

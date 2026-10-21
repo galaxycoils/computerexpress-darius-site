@@ -23,10 +23,18 @@ describe("HomePage — Editorial Newsroom", () => {
   });
 
   it("drops meetings that passed since the static page was built", () => {
+    const renderedAt = new Date("2026-09-28T12:00:00Z");
+    const visitorNow = new Date(renderedAt.getTime() + 86400000);
     vi.useFakeTimers();
-    vi.setSystemTime(new Date("2026-09-29T12:00:00Z"));
-    globalThis.__SCD_RENDER_NOW__ = "2026-09-28T12:00:00Z";
-    const expired = { id: "test-hearing", title: "Fixture hearing", municipality: "Welland", meetingDate: "2026-09-28T18:00:00" };
+    vi.setSystemTime(visitorNow);
+    globalThis.__SCD_RENDER_NOW__ = renderedAt.toISOString();
+    const meetingDay = new Intl.DateTimeFormat("en-CA", {
+      timeZone: "America/Toronto",
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+    }).format(renderedAt);
+    const expired = { id: "test-hearing", title: "Fixture hearing", municipality: "Welland", meetingDate: `${meetingDay}T18:00:00` };
     const selector = vi.spyOn(planning, "getUpcomingMeetings")
       .mockImplementation((days, now) => selectMeetings(days, now, [expired]));
 

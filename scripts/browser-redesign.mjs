@@ -2,6 +2,8 @@ import { chromium, expect } from "@playwright/test";
 import assert from "node:assert/strict";
 import { mkdir, writeFile } from "node:fs/promises";
 import { spawn } from "node:child_process";
+import { filterEvents } from "../src/data/events.js";
+import { getSearchIndex, searchSite } from "../src/data/searchIndex.js";
 const base = process.env.QA_BASE_URL || "http://127.0.0.1:4173";
 const artifacts = "artifacts/browser";
 await mkdir(artifacts, { recursive: true });
@@ -165,13 +167,16 @@ try {
     .click();
   assert.equal(await page.locator(".journal-story").count(), 0);
   // Keep the seeded calendar journey stable as real dates advance.
-  await page.clock.setFixedTime(new Date("2026-09-30T12:00:00Z"));
+  const eventsClock = new Date("2026-09-30T12:00:00Z");
+  await page.clock.setFixedTime(eventsClock);
   await page.goto(base + "/events/", { waitUntil: "networkidle" });
   await page.getByLabel("When", { exact: true }).selectOption("all");
   await page.getByLabel("View", { exact: true }).selectOption("calendar");
   await expect(page.locator(".journal-calendar-grid")).toBeVisible();
   await page.getByLabel("When", { exact: true }).selectOption("upcoming");
   await page.getByLabel("View", { exact: true }).selectOption("list");
+  const upcomingEvents = filterEvents({ period: "upcoming" }, eventsClock);
+  await expect(page.locator(".journal-events h2").first()).toHaveText(upcomingEvents[0].title);
   await page
     .getByRole("link", { name: "Details", exact: true })
     .first()
@@ -287,15 +292,25 @@ try {
   await page.getByRole("button", { name: "Undo", exact: true }).click();
   await expect(page.locator(".journal-story")).toHaveCount(1);
 
+  // Search order follows the visitor clock. Freeze it and expect the pages
+  // derived from that instant, so a repeated title cannot look like a stuck page.
+  const searchClock = new Date("2026-10-20T16:00:00Z");
+  await page.clock.setFixedTime(searchClock);
   await page.goto(base + "/search/", { waitUntil: "networkidle" });
+  const searchResults = searchSite(getSearchIndex(searchClock), {});
+  const pageIds = (pageNumber) => searchResults.slice((pageNumber - 1) * 12, pageNumber * 12).map((item) => item.id);
   const storyRecords = page.locator(".journal-feed .journal-story");
-  const firstPageIds = await storyRecords.evaluateAll(records => records.map(record => record.dataset.storyId));
+  const readIds = () => storyRecords.evaluateAll((records) => records.map((record) => record.dataset.storyId));
+  await expect.poll(readIds).toEqual(pageIds(1));
   await page.getByRole("button", { name: "Next →" }).click();
   await page.waitForURL(/page=2/);
-  await expect(page.locator(".journal-results-meta")).toContainText("Showing 13–24");
-  const secondPageIds = await storyRecords.evaluateAll(records => records.map(record => record.dataset.storyId));
-  assert.notDeepEqual(secondPageIds, firstPageIds, "Next displays a different page of records");
-  assert.ok(secondPageIds.every(id => id && !firstPageIds.includes(id)), "Result identities do not repeat across pages");
+  const pageStart = 13;
+  const pageEnd = Math.min(searchResults.length, 24);
+  await expect(page.locator(".journal-results-meta")).toContainText(`Showing ${pageStart}–${pageEnd}`);
+  await expect.poll(readIds).toEqual(pageIds(2));
+  const secondPageIds = await readIds();
+  assert.notDeepEqual(secondPageIds, pageIds(1), "Next displays a different page of records");
+  assert.ok(secondPageIds.every((id) => id && !pageIds(1).includes(id)), "Result identities do not repeat across pages");
   assert.equal(
     await page
       .locator(".journal-results-meta")
