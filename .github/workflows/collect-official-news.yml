@@ -105,7 +105,8 @@ jobs:
           set -euo pipefail
           git config user.name "stcatharinesdigital-bot"
           git config user.email "actions@users.noreply.github.com"
-          git add src/data/generated/discovery.json
+          node scripts/sync-metrics-docs.js
+          git add src/data/generated/discovery.json PITCH_DECK.md INCOME_PRIORITY_PLAN.md
           git commit -m "news: autonomous official-source refresh $(date -u +%Y-%m-%d)"
           # Validate once after committing so release metadata identifies the
           # candidate. Unchanged collections skip this candidate build entirely.
@@ -148,8 +149,9 @@ jobs:
               if [ "$SOURCE" != all ]; then args+=(--source "$SOURCE"); fi
               node scripts/ci-install.mjs
               npm run content:collect -- "${args[@]}"
+              node scripts/sync-metrics-docs.js
               validate_candidate
-              git add src/data/generated/discovery.json
+              git add src/data/generated/discovery.json PITCH_DECK.md INCOME_PRIORITY_PLAN.md
               if git diff --cached --quiet; then
                 published=true
                 break

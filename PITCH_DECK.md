@@ -4,8 +4,8 @@
 **Audience**: Pre-seed / angel investors (Niagara, Toronto, Hamilton networks)
 **Narrative**: Not a news site — a municipal intelligence platform with a live, defensible data moat
 **Last updated**: 2026-10-17
-**Verified counts (live site)**: 55 verified police + **54** planning + **52** civic = **161 verified records**
-**Note**: 55 of 71 held NRPS releases are source-verified; the rest are quarantined until their links resolve. 54 planning notices. Active status is calculated from Toronto time when the site is rendered.
+<!-- metrics:pitch-verified-counts -->**Verified counts (live site)**: 56 verified police + **56** planning + **52** civic = **164 verified records**<!-- /metrics:pitch-verified-counts -->
+<!-- metrics:pitch-verification-note -->**Note**: 56 of 72 held NRPS releases are source-verified; the rest are quarantined until their links resolve. 56 planning notices. Active status is calculated from Toronto time when the site is rendered.<!-- /metrics:pitch-verification-note -->
 
 **Verified, not aspirational**: counts are derived from `src/data/metrics.js`, which reads the live data modules (`verifiedNrpsReleases`, `planningNotices`, `councilData`). `npm run audit:metrics` fails the build if a figure in this deck drifts from the data. If a number is not currently on the live site, it does not go in this deck.
 
@@ -14,7 +14,7 @@
 ## SLIDE 1: TITLE / HOOK
 **Headline**: St. Catharines Digital — Municipal Intelligence for the Golden Horseshoe
 **Subhead**: Real-time police, planning, and council data. One pipeline. Zero noise. B2B subscription revenue from Day 1.
-**Visual**: Screenshot triptych — Police feed (43 verified releases), Planning tracker (41 notices), Council calendar (52 civic events)
+<!-- metrics:pitch-triptych -->**Visual**: Screenshot triptych — Police feed (56 verified releases), Planning tracker (56 notices), Council calendar (52 civic events)<!-- /metrics:pitch-triptych -->
 **Footer**: Pre-seed raise • $500k • 15% • SAFE • Cap $5M
 
 ---
@@ -27,7 +27,7 @@
 - **Law firms** bill hours manually scraping — $400/hr associates reading council agendas
 - **Construction firms** bid blind — road closures, capital plans, utility schedules fragmented
 **Visual**: "Before" screenshot — 6 browser tabs open (NRPS, St. Catharines, Welland, Thorold, Niagara Region, OLT)
-**Stat**: 6 registered official sources (4 municipalities + NRPS). 0 unified feed. $1.37B in Niagara construction starts 2025 (StatsCan) — all flying blind
+<!-- metrics:pitch-sources -->**Stat**: 6 registered official sources (4 municipalities + NRPS). 0 unified feed. $1.37B in Niagara construction starts 2025 (StatsCan) — all flying blind<!-- /metrics:pitch-sources -->
 
 ---
 
@@ -36,7 +36,7 @@
 **Three-column visual**:
 | POLICE (NRPS) | PLANNING (4 municipalities) | COUNCIL (3 cities) |
 |--------------|----------------------------|-------------------|
-| **55 releases** indexed | **54 notices** tracked | **52 civic events** |
+<!-- metrics:pitch-indexed -->| **56 releases** indexed | **56 notices** tracked | **52 civic events** |<!-- /metrics:pitch-indexed -->
 | Structured: victim, charges, suspect, court, hate-flag | Structured: type, deadline, hearing, status, category | Structured: agenda, minutes, votes, video timestamps |
 | Auto-fetch every 3 hrs | Auto-fetch daily | Auto-fetch per meeting cycle |
 | **Update detection** (Sept 29 → Sept 30 bail hearing) | **Status transitions** (Scheduled → Complete) | **Vote extraction** (recorded divisions) |
@@ -47,10 +47,10 @@
 ---
 
 ## SLIDE 4: TRACTION — LIVE PRODUCT, PRE-REVENUE
-**Headline**: Deployed. Green CI. 3 feeds live. 161 verified records. Outreach run, no paid account yet.
+<!-- metrics:pitch-headline -->**Headline**: Deployed. Green CI. 3 feeds live. 164 verified records. Outreach run, no paid account yet.<!-- /metrics:pitch-headline -->
 **Metrics row**:
-**3 feeds** | **161 structured records** | **100% coverage on 3 critical-logic modules** | **Cloudflare Pages + Workers + D1**
-**Content audit**: 0 errors, 6 sources, 55 police / 54 planning / 52 council
+<!-- metrics:pitch-metrics-row -->**3 feeds** | **164 structured records** | **100% coverage on 3 critical-logic modules** | **Cloudflare Pages + Workers + D1**<!-- /metrics:pitch-metrics-row -->
+<!-- metrics:pitch-content-audit -->**Content audit**: 0 errors, 6 sources, 56 police / 56 planning / 52 council<!-- /metrics:pitch-content-audit -->
 
 - **Technical**: Vite 6 + React 18 + TypeScript, edge-rendered and prerendered
 - **Outreach**: 48 emails across 3 rounds. Round 1 (27 sends) bounced 15 times — 55.6% — because addresses were guessed; rounds 2–3 used MX-verified addresses and bounced 0/21. 0 replies, $0 MRR.
