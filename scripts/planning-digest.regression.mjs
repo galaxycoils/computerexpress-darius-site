@@ -157,6 +157,99 @@ for (const stage of ['provider_inbox', 'planning_feed', 'recipient_query', 'grac
       request: new Request('https://example.invalid/cron/daily-digest', { method: 'POST', headers: { Authorization: 'Bearer cron' } }),
     })
     assert.equal(response.status, 500)
-    assert.deepEqual(await response.json(), { error: 'digest_failed', stage })
+    const body = await response.json()
+    const text = JSON.stringify(body)
+    assert.equal(body.error, 'digest_failed')
+    assert.equal(body.stage, stage)
+    assert.equal(typeof body.reason, 'string')
+    assert.doesNotMatch(text, /private|secret|Bearer|inbox_id|reader@|example\.com/)
+    assert.ok([
+      'inbox_unreachable',
+      'feed_unreachable',
+      'feed_unavailable',
+      'feed_redirect',
+      'feed_unreadable',
+      'feed_invalid',
+      'query_failed',
+      'delivery_failed',
+    ].includes(body.reason))
   })
 }
+
+// The Pages function fetches its own hostname for the published feed. That
+// subrequest fails inside the worker (same-zone error) while the file itself
+// stays valid. Deployment assets must satisfy the read so a public self-fetch
+// failure does not abort the digest before any mail is sent.
+test('planning feed is read from deployment assets when the public self-fetch fails', async t => {
+  const { sqlite, db } = database()
+  t.after(() => sqlite.close())
+  const now = Date.now()
+  insertAlert(sqlite, {
+    id: 'a1',
+    email: 'reader@example.com',
+    paymentStatus: 'confirmed',
+    createdAt: now - 3 * 86400000,
+    updatedAt: now,
+  })
+  const date = new Date().toISOString().slice(0, 10)
+  let sent = 0
+  let publicFeedFetches = 0
+  t.mock.method(globalThis, 'fetch', async (url) => {
+    const href = String(url)
+    if (href.includes('/planning-alert-feed.json')) {
+      publicFeedFetches++
+      return new Response('error code: 1042', { status: 403, headers: { 'content-type': 'text/plain' } })
+    }
+    if (href.endsWith('/inboxes')) return Response.json({ inboxes: [{ inbox_id: 'test-inbox' }] })
+    sent++
+    return Response.json({ id: 'sent' })
+  })
+  const response = await onRequest({
+    env: {
+      STC_D1: db,
+      AGENTMAIL_API_KEY: 'mock',
+      ALERT_TOKEN_SECRET: 'test-secret',
+      CRON_SECRET: 'cron',
+      ASSETS: {
+        async fetch() {
+          return Response.json({ version: 1, notices: [
+            { id: 'asset-source', title: 'Zoning change', description: '', municipality: 'Welland', publishedDate: date, sourceUrl: 'https://www.welland.ca/news/zoning', category: 'zoning-bylaw-amendment', status: null, tags: '' },
+          ] })
+        },
+      },
+    },
+    request: new Request('https://stcatharinesdigital.ca/cron/daily-digest', { method: 'POST', headers: { Authorization: 'Bearer cron' } }),
+  })
+  assert.equal(response.status, 200)
+  assert.deepEqual(await response.json(), { sent: 1, failed: 0, graceNotices: 0, total: 1 })
+  assert.equal(sent, 1)
+  assert.equal(publicFeedFetches, 0)
+  assert.equal(sqlite.prepare('SELECT source_id FROM alert_sent_items').get().source_id, 'asset-source')
+})
+
+test('an unreadable planning feed reports a safe reason and does not send', async t => {
+  const { sqlite, db } = database()
+  t.after(() => sqlite.close())
+  let sent = 0
+  t.mock.method(globalThis, 'fetch', async (url) => {
+    if (String(url).endsWith('/inboxes')) return Response.json({ inboxes: [{ inbox_id: 'test-inbox' }] })
+    sent++
+    return Response.json({ id: 'sent' })
+  })
+  t.mock.method(console, 'error', () => {})
+  const response = await onRequest({
+    env: {
+      STC_D1: db,
+      AGENTMAIL_API_KEY: 'mock',
+      ALERT_TOKEN_SECRET: 'test-secret',
+      CRON_SECRET: 'cron',
+      ASSETS: { async fetch() { return new Response('error code: 1042', { status: 200, headers: { 'content-type': 'text/plain' } }) } },
+    },
+    request: new Request('https://stcatharinesdigital.ca/cron/daily-digest', { method: 'POST', headers: { Authorization: 'Bearer cron' } }),
+  })
+  assert.equal(response.status, 500)
+  const body = await response.json()
+  assert.deepEqual(body, { error: 'digest_failed', stage: 'planning_feed', reason: 'feed_unreadable' })
+  assert.equal(JSON.stringify(body).includes('1042'), false)
+  assert.equal(sent, 0)
+})
