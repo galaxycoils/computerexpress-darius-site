@@ -1,5 +1,6 @@
 // A successful push can lose its response. Reconcile against Git before retrying.
-export async function publishCandidate({ base, candidate }, git) {
+export async function publishCandidate({ base, candidate, pushRemote = 'origin' }, git) {
+  if (!pushRemote) throw new Error('Publication remote is required');
   if (await git(['rev-parse', 'HEAD']) !== candidate) throw new Error('Checkout changed after candidate validation');
   const remoteHead = async () => {
     await git(['fetch', 'origin', 'main']);
@@ -14,7 +15,7 @@ export async function publishCandidate({ base, candidate }, git) {
   if (remote !== base) return false;
   try {
     // Normal fast-forward push: never override a concurrent update.
-    await git(['push', 'origin', `${candidate}:refs/heads/main`]);
+    await git(['push', pushRemote, `${candidate}:refs/heads/main`]);
     return true;
   } catch (error) {
     remote = await remoteHead();

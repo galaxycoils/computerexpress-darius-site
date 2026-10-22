@@ -101,13 +101,29 @@ jobs:
       - name: Verify candidate before publishing discovery update
         if: env.MODE == 'write' && steps.changes.outputs.changed == 'true'
         shell: bash --noprofile --norc -euo pipefail {0}
+        env:
+          COLLECTOR_DEPLOY_KEY: ${{ secrets.COLLECTOR_DEPLOY_KEY }}
         run: |
           set -euo pipefail
+          if [ -z "${COLLECTOR_DEPLOY_KEY:-}" ]; then
+            echo '::error::COLLECTOR_DEPLOY_KEY is missing. Publishing the verified candidate to main requires the private half of the write-enabled ed25519 deploy key in that repository secret. Candidate branches still use GITHUB_TOKEN. Allow only that DeployKey actor to bypass the main ruleset.'
+            exit 1
+          fi
+          deploy_key="$COLLECTOR_DEPLOY_KEY"
+          unset COLLECTOR_DEPLOY_KEY
           git config user.name "stcatharinesdigital-bot"
           git config user.email "actions@users.noreply.github.com"
           node scripts/sync-metrics-docs.js
           git add src/data/generated/discovery.json PITCH_DECK.md INCOME_PRIORITY_PLAN.md
-          git commit -m "news: autonomous official-source refresh $(date -u +%Y-%m-%d)"
+          # Deploy-key pushes trigger on:push workflows. Token pushes do not.
+          # One shared commit helper keeps a main publication from starting
+          # another collector, CI, content-integrity, or deploy run. The
+          # required checks are still dispatched on this SHA below, and
+          # deploy.yml is still dispatched after the SHA is on main.
+          publish_commit() {
+            git commit -m "$1" -m "[skip ci]"
+          }
+          publish_commit "news: autonomous official-source refresh $(date -u +%Y-%m-%d)"
           # Validate once after committing so release metadata identifies the
           # candidate. Unchanged collections skip this candidate build entirely.
           built_base=''
@@ -156,7 +172,7 @@ jobs:
                 published=true
                 break
               fi
-              git commit -m "news: recollect official sources after concurrent update $(date -u +%Y-%m-%d)"
+              publish_commit "news: recollect official sources after concurrent update $(date -u +%Y-%m-%d)"
               built_base=''
             fi
             current_base=$(git rev-parse HEAD^)
@@ -180,7 +196,7 @@ jobs:
               node scripts/watch-workflow.js --workflow "$workflow" --branch "$branch" \
                 --sha "$candidate" --since "$dispatched_at"
             done
-            if node scripts/publish-candidate.js "$current_base" "$candidate"; then
+            if COLLECTOR_DEPLOY_KEY="$deploy_key" node scripts/publish-candidate.js "$current_base" "$candidate"; then
               published=true
               cleanup_branch
               break
