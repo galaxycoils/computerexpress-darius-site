@@ -50,8 +50,8 @@ jobs:
             -H "Authorization: Bearer $CRON_SECRET" \
             -X POST 'https://stcatharinesdigital.ca/cron/daily-digest' \
             --output "$RUNNER_TEMP/digest-result.json"; then
-            # Print only a known stage, never provider responses or recipient data.
-            jq -r 'select(.error == "digest_failed") | .stage | select(. == "provider_inbox" or . == "planning_feed" or . == "recipient_query" or . == "grace_notices" or . == "deliveries") | "::error::Digest failed at stage: " + .' "$RUNNER_TEMP/digest-result.json" 2>/dev/null || true
+            # Print only a known stage and an allowlisted reason, never provider responses or recipient data.
+            jq -r 'select(.error == "digest_failed") | .stage as $stage | .reason as $reason | select($stage == "provider_inbox" or $stage == "planning_feed" or $stage == "recipient_query" or $stage == "grace_notices" or $stage == "deliveries") | ["inbox_unreachable","feed_unreachable","feed_unavailable","feed_redirect","feed_unreadable","feed_invalid","query_failed","delivery_failed"] as $allowed | if ($allowed | index($reason)) then "::error::Digest failed at stage: " + $stage + " (" + $reason + ")" else "::error::Digest failed at stage: " + $stage end' "$RUNNER_TEMP/digest-result.json" 2>/dev/null || true
             echo '::error::Digest request failed. Inspect delivery records before retrying.'
             exit 1
           fi

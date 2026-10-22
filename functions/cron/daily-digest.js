@@ -39,7 +39,7 @@ export async function onRequest(context) {
   try {
     const inbox = await getPrimaryInbox(apiKey);
     stage = 'planning_feed';
-    const notices = await getPlanningNotices();
+    const notices = await getPlanningNotices(context.env);
     const now = Date.now();
 
     // The digest is the paid product. Select only alerts that have paid, or that
@@ -114,10 +114,38 @@ export async function onRequest(context) {
     });
   } catch (err) {
     console.error('Digest cron error:', err);
-    return new Response(JSON.stringify({ error: 'digest_failed', stage }), {
+    return new Response(JSON.stringify({ error: 'digest_failed', stage, reason: failureReason(stage, err) }), {
       status: 500, headers: { 'Content-Type': 'application/json' },
     });
   }
+}
+
+// Reasons returned to the scheduler. Keep this list free of response bodies,
+// recipient data, and credentials; the workflow prints only these tokens.
+const SAFE_REASONS = new Set([
+  'inbox_unreachable',
+  'feed_unreachable',
+  'feed_unavailable',
+  'feed_redirect',
+  'feed_unreadable',
+  'feed_invalid',
+  'query_failed',
+  'delivery_failed',
+]);
+
+function failureReason(stage, err) {
+  if (typeof err?.reason === 'string' && SAFE_REASONS.has(err.reason)) return err.reason;
+  if (stage === 'provider_inbox') return 'inbox_unreachable';
+  if (stage === 'planning_feed') return 'feed_unreachable';
+  if (stage === 'recipient_query' || stage === 'grace_notices') return 'query_failed';
+  if (stage === 'deliveries') return 'delivery_failed';
+  return 'unexpected';
+}
+
+function feedFailure(reason) {
+  const error = new Error('Planning feed failed');
+  error.reason = reason;
+  return error;
 }
 
 // ── Entitlement ─────────────────────────────────────────────────────
@@ -308,11 +336,29 @@ async function findMatchingNotices(d1, notices, alert) {
 
 // ── Load Planning Notices from D1 ───────────────────────────────────
 
-async function getPlanningNotices() {
-  const response = await fetch(`https://stcatharinesdigital.ca/planning-alert-feed.json?refresh=${Date.now()}`, { redirect: 'error' });
-  if (!response.ok) throw new Error(`Planning feed unavailable: ${response.status}`);
-  const feed = await response.json();
-  if (feed?.version !== 1 || !Array.isArray(feed.notices) || feed.notices.length > 1000) throw new Error('Planning feed invalid');
+async function getPlanningNotices(env) {
+  // A public fetch of this hostname from the Pages function is a same-zone
+  // subrequest and fails before the static file is read. The deployment asset
+  // is the file the build just published.
+  let response;
+  try {
+    if (typeof env?.ASSETS?.fetch === 'function') {
+      response = await env.ASSETS.fetch(new Request('https://stcatharinesdigital.ca/planning-alert-feed.json', { method: 'GET', redirect: 'manual' }));
+    } else {
+      response = await fetch(`https://stcatharinesdigital.ca/planning-alert-feed.json?refresh=${Date.now()}`, { redirect: 'error' });
+    }
+  } catch {
+    throw feedFailure('feed_unreachable');
+  }
+  if (response.status >= 300 && response.status < 400) throw feedFailure('feed_redirect');
+  if (!response.ok) throw feedFailure('feed_unavailable');
+  let feed;
+  try {
+    feed = await response.json();
+  } catch {
+    throw feedFailure('feed_unreadable');
+  }
+  if (feed?.version !== 1 || !Array.isArray(feed.notices) || feed.notices.length > 1000) throw feedFailure('feed_invalid');
   return feed.notices.filter(notice => typeof notice.id === 'string' && typeof notice.title === 'string' && typeof notice.sourceUrl === 'string' && /^https:\/\//.test(notice.sourceUrl));
 }
 
