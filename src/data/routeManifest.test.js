@@ -12,6 +12,12 @@ describe('newsroom route manifest', () => {
     expect(prerenderRoutes).toContain(route)
     expect(sitemapRoutes).toContain(route)
   })
+  it('includes the debt payoff reader tool in the sitemap', () => {
+    expect(prerenderRoutes).toContain('/tools/debt-payoff')
+    expect(sitemapRoutes).toContain('/tools/debt-payoff')
+    expect(getRoutePageModule('/tools/debt-payoff')).toBe('src/pages/DebtPayoffPage.jsx')
+    expect(createSitemapXml()).toContain('<loc>https://stcatharinesdigital.ca/tools/debt-payoff/</loc>')
+  })
   it('prerenders the private preferences route without adding it to the sitemap', () => {
     expect(prerenderRoutes).toContain('/preferences')
     expect(sitemapRoutes).not.toContain('/preferences')

@@ -1,0 +1,314 @@
+.debt-payoff-privacy,
+.debt-payoff-note,
+.debt-payoff-compare,
+.debt-payoff-credit,
+.debt-payoff-empty,
+.debt-payoff-unpaid p {
+  max-width: var(--reading-measure);
+  color: var(--ink-2);
+}
+
+.debt-payoff-privacy,
+.debt-payoff-note {
+  margin: 0 0 var(--space-2);
+}
+
+.debt-payoff-note a,
+.debt-payoff-credit {
+  text-underline-offset: 3px;
+}
+
+.debt-payoff-note a {
+  color: var(--signal);
+  text-decoration: underline;
+}
+
+.debt-payoff-form {
+  display: grid;
+  gap: var(--space-3);
+  margin-top: var(--space-4);
+}
+
+.debt-payoff-rows {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.debt-payoff-row {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr 0.8fr 1fr auto;
+  gap: 12px 16px;
+  align-items: end;
+  margin: 0;
+  padding: var(--space-3);
+  border: 1px solid var(--rule);
+  background: var(--raised);
+}
+
+.debt-payoff-row legend {
+  grid-column: 1 / -1;
+  padding: 0;
+  font-family: var(--font-display);
+  font-size: 22px;
+  color: var(--ink);
+}
+
+.debt-payoff-field {
+  display: grid;
+  gap: 6px;
+  min-width: 0;
+}
+
+.debt-payoff-field label,
+.debt-payoff-controls > label {
+  color: var(--ink-3);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.debt-payoff-controls > label {
+  display: grid;
+  gap: 6px;
+  max-width: 280px;
+}
+
+.debt-payoff input[type="text"],
+.debt-payoff input[type="number"] {
+  width: 100%;
+  min-height: var(--control-height);
+  padding: 8px 10px;
+  border: 1px solid var(--rule-2);
+  border-radius: var(--control-radius);
+  background: var(--paper);
+  color: var(--ink);
+  font: inherit;
+  font-weight: 500;
+}
+
+.debt-payoff input[aria-invalid="true"] {
+  border-color: #8a3b12;
+  background: var(--apricot);
+}
+
+.debt-payoff input:focus-visible,
+.debt-payoff button:focus-visible {
+  outline: 3px solid var(--signal);
+  outline-offset: 3px;
+}
+
+.debt-payoff-text-button {
+  min-height: 44px;
+  padding: 8px 2px;
+  border: 0;
+  background: transparent;
+  color: var(--signal);
+  font: inherit;
+  font-weight: 700;
+  text-align: left;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.debt-payoff-controls {
+  display: grid;
+  gap: var(--space-2);
+  max-width: 640px;
+}
+
+.debt-payoff-strategy {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.debt-payoff-strategy legend {
+  margin-bottom: 8px;
+  color: var(--ink);
+  font-weight: 700;
+}
+
+.debt-payoff-strategy label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  color: var(--ink);
+  font-weight: 500;
+  font-size: 17px;
+}
+
+.debt-payoff-strategy input {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--signal);
+}
+
+.debt-payoff-alert,
+.debt-payoff-empty,
+.debt-payoff-unpaid {
+  padding: var(--space-3);
+  border: 1px solid var(--rule);
+  background: var(--paper-2);
+}
+
+.debt-payoff-alert {
+  border-left: 4px solid #8a3b12;
+}
+
+.debt-payoff-alert p,
+.debt-payoff-unpaid h2,
+.debt-payoff-results h2,
+.debt-payoff-results h3 {
+  margin: 0 0 8px;
+}
+
+.debt-payoff-alert ul,
+.debt-payoff-results ol {
+  margin: 0;
+  padding-left: 1.2rem;
+}
+
+.debt-payoff-alert li,
+.debt-payoff-results li {
+  margin: 6px 0;
+}
+
+.debt-payoff-unpaid {
+  margin-top: var(--space-4);
+  border-left: 4px solid var(--signal);
+}
+
+.debt-payoff-results {
+  display: grid;
+  gap: var(--space-3);
+  margin-top: var(--space-5);
+}
+
+.debt-payoff-stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  margin: 0;
+}
+
+.debt-payoff-stats div {
+  padding: var(--space-2);
+  border-top: 2px solid var(--ink);
+  background: var(--raised);
+}
+
+.debt-payoff-stats dt {
+  color: var(--ink-3);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.debt-payoff-stats dd {
+  margin: 8px 0 0;
+  color: var(--ink);
+  font-family: var(--font-display);
+  font-size: clamp(28px, 4vw, 40px);
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+}
+
+.debt-payoff-figure {
+  margin: 0;
+}
+
+.debt-payoff-chart {
+  width: 100%;
+  height: auto;
+  color: var(--signal);
+  background: var(--raised);
+  border: 1px solid var(--rule);
+}
+
+.debt-payoff-chart line {
+  stroke: var(--rule-2);
+}
+
+.debt-payoff-chart polyline {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.5;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+
+.debt-payoff-chart text {
+  fill: var(--ink-3);
+  font-family: var(--font-ui);
+  font-size: 13px;
+}
+
+.debt-payoff-figure figcaption,
+.debt-payoff-table-wrap caption,
+.debt-payoff-credit {
+  color: var(--ink-3);
+  font-size: 14px;
+}
+
+.debt-payoff-table-wrap {
+  max-height: 320px;
+  overflow: auto;
+  border: 1px solid var(--rule);
+  background: var(--raised);
+}
+
+.debt-payoff-table-wrap table {
+  width: 100%;
+  border-collapse: collapse;
+  font-variant-numeric: tabular-nums;
+}
+
+.debt-payoff-table-wrap caption {
+  padding: 12px 14px;
+  text-align: left;
+}
+
+.debt-payoff-table-wrap th,
+.debt-payoff-table-wrap td {
+  padding: 8px 14px;
+  border-top: 1px solid var(--rule);
+  text-align: left;
+}
+
+.debt-payoff-table-wrap thead th {
+  position: sticky;
+  top: 0;
+  background: var(--paper-2);
+}
+
+.debt-payoff-credit {
+  margin-top: var(--space-3);
+}
+
+@media (max-width: 800px) {
+  .debt-payoff-row,
+  .debt-payoff-stats {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .debt-payoff-chart polyline,
+  .debt-payoff-table-wrap,
+  .debt-payoff-alert,
+  .debt-payoff-unpaid,
+  .debt-payoff-results {
+    transition: none;
+    scroll-behavior: auto;
+  }
+}
+
+.news-root.is-dark .debt-payoff input[aria-invalid="true"],
+html[data-theme="dark"] .debt-payoff input[aria-invalid="true"] {
+  border-color: #f0b429;
+  background: var(--apricot);
+}

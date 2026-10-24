@@ -269,6 +269,7 @@ export default function Layout() {
                 ["/search", "Search"],
                 ["/saved", "Saved stories"],
                 ["/reader-services", "Reader services"],
+                ["/tools/debt-payoff", "Tools"],
                 ["/votes", "Elections"],
                 ["/police", "Public safety"],
               ].map(([path, label]) => (
@@ -350,6 +351,7 @@ export default function Layout() {
             </div>
             <div>
               <h2>Reader services</h2>
+              <Link to="/tools/debt-payoff">Tools</Link>
               <Link to="/planning-alerts">Newsletters & alerts</Link>
               <Link to="/saved">Saved stories</Link>
               <Link to="/corrections">Report a correction</Link>

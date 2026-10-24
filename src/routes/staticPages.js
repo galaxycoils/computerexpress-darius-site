@@ -37,6 +37,7 @@ import SearchPage from '../pages/SearchPage'
 import AlertPreferencesPage from '../pages/AlertPreferencesPage'
 import ArticlePage from '../pages/ArticlePage'
 import EditorialDeskPage from '../pages/EditorialDeskPage'
+import DebtPayoffPage from '../pages/DebtPayoffPage'
 
 export const staticPages = {
   SavedPage,
@@ -72,5 +73,6 @@ export const staticPages = {
   EditorialPolicyPage,
   CorrectionsPage,
   EditorialDeskPage,
+  DebtPayoffPage,
   NotFoundPage,
 }
