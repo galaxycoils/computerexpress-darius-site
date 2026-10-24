@@ -5,11 +5,14 @@
  */
 
 const REVIEWED = '2026-10-17'
+// PR #27 merged 2026-10-17T02:13:20Z, which is 2026-10-16 in America/Toronto.
+const PUBLISHED = '2026-10-16'
 
 function record(entry) {
   return {
     dateAdded: REVIEWED,
     lastReviewed: REVIEWED,
+    published: PUBLISHED,
     corrections: [],
     namedIndividuals: [],
     correctionRequest: `/corrections?entry=${entry.id}`,
@@ -46,10 +49,10 @@ export const hateExtremismEntries = [
     type: 'group',
     scope: 'niagara',
     title: 'Second Sons (Second Sons Canada)',
-    summary: 'Described by CBC as a "self-described \'Canadian men\'s nationalist\' group". Experts quoted by CBC call it "an active club in all but name." The St. Catharines Standard called it "one of Canada\'s emerging white nationalist clubs." CBC reported members training in the Hamilton and Niagara area. Held a masked rally at Brock\'s Monument, Niagara-on-the-Lake, Labour Day weekend 2025. CAHN says Diagolon\'s leaders created it as "a new organization with membership requirements."',
+    summary: 'Described by CBC as a "self-described \'Canadian men\'s nationalist\' group". Experts quoted by CBC call it "an active club in all but name." The St. Catharines Standard called it "one of Canada\'s emerging white nationalist clubs." CBC reported members training in the Hamilton and Niagara area. Held a masked rally at Brock\'s Monument, Niagara-on-the-Lake, Aug. 30, 2025. CAHN says Diagolon\'s leaders created it as "a new organization with membership requirements."',
     location: 'Niagara-on-the-Lake',
     status: 'reported active',
-    eventDateLabel: 'Labour Day weekend 2025',
+    eventDateLabel: 'Aug. 30, 2025',
     namedIndividuals: [
       {
         name: 'Jeremy MacKenzie',
@@ -84,7 +87,7 @@ export const hateExtremismEntries = [
         name: 'Jeremy MacKenzie',
         basis: 'self-identified-leader',
         qualifies: true,
-        quotedDescription: 'founder of Diagolon (CBC 2025-09-09; St. Catharines Standard)',
+        quotedDescription: '"Second Sons leader Jeremy MacKenzie is also the founder of Diagolon" (CBC, 2025-09-09; St. Catharines Standard, 2025-09-04)',
         sources: MACKENZIE_SOURCES,
       },
     ],
@@ -117,10 +120,10 @@ export const hateExtremismEntries = [
     type: 'incident',
     scope: 'niagara',
     title: "Second Sons masked rally at Brock's Monument, Niagara-on-the-Lake",
-    summary: 'About 50 masked men marched to Queenston Heights on Labour Day weekend 2025. CBC reported Aug. 31 and Niagara Parks gave Aug. 30, so this record does not assign a single day. CBC said it prompted "concerns about rising anti-immigrant sentiment." Niagara Parks: "no incidents were reported."',
+    summary: 'About 50 masked men marched to Queenston Heights on Aug. 30, 2025. CBC said it prompted "concerns about rising anti-immigrant sentiment." Niagara Parks: "no incidents were reported."',
     location: 'Niagara-on-the-Lake',
     status: 'documented',
-    eventDateLabel: 'Labour Day weekend 2025',
+    eventDateLabel: 'Aug. 30, 2025',
     sources: [
       CBC_RALLY,
       STANDARD_RALLY,

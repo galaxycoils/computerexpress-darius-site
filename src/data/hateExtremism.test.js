@@ -33,6 +33,7 @@ function validEntry(partial = {}) {
     location: 'Example Harbour',
     status: 'documented',
     dateAdded: ISO,
+    published: '2026-01-20',
     lastReviewed: '2026-02-01',
     correctionRequest: '/corrections?entry=example-record',
     sources: [
@@ -197,6 +198,8 @@ describe('hate and extremism validation', () => {
     expect(social.errors.join(' ')).toMatch(/social-media/)
     const reviewed = validateEntry(validEntry({ lastReviewed: '' }))
     expect(reviewed.errors.join(' ')).toMatch(/lastReviewed/)
+    const published = validateEntry(validEntry({ published: '' }))
+    expect(published.errors.join(' ')).toMatch(/published/)
   })
 
   it('filters by type, municipality and scope', () => {
@@ -229,6 +232,8 @@ describe('approved production records', () => {
       'inc-stats-nrps-2023',
     ])
     expect(hateExtremismEntries.every((entry) => entry.lastReviewed === '2026-10-17')).toBe(true)
+    expect(hateExtremismEntries.every((entry) => entry.published === '2026-10-16')).toBe(true)
+    expect(hateExtremismSupport.every((entry) => entry.published === '2026-10-16')).toBe(true)
     expect(hateExtremismEntries.every((entry) => entry.correctionRequest === `/corrections?entry=${entry.id}`)).toBe(true)
     const supportIds = hateExtremismSupport.map((entry) => entry.id)
     expect(supportIds).toEqual(['res-nrps', 'res-nrara', 'res-legal-clinic', 'res-pride-niagara'])
@@ -245,20 +250,25 @@ describe('approved production records', () => {
     expect(welland.namedIndividuals).toEqual([])
   })
 
-  it('dates the rally to Labour Day weekend 2025 and does not call Diagolon a listed terrorist entity', () => {
+  it('dates the rally to Aug. 30, 2025 and does not call Diagolon a listed terrorist entity', () => {
     const rally = hateExtremismEntries.find((item) => item.id === 'inc-brocks-monument-2025')
     const group = hateExtremismEntries.find((item) => item.id === 'grp-second-sons')
     const diagolon = hateExtremismEntries.find((item) => item.id === 'grp-diagolon')
-    expect(rally.eventDateLabel).toBe('Labour Day weekend 2025')
-    expect(group.eventDateLabel).toBe('Labour Day weekend 2025')
-    expect(rally.summary).toMatch(/Labour Day weekend 2025/)
-    expect(rally.summary).not.toMatch(/Aug\. 30-31/)
+    expect(rally.eventDateLabel).toBe('Aug. 30, 2025')
+    expect(group.eventDateLabel).toBe('Aug. 30, 2025')
+    expect(group.summary).toMatch(/Aug\. 30, 2025/)
+    expect(rally.summary).toMatch(/Aug\. 30, 2025/)
+    expect(rally.summary).not.toMatch(/Labour Day weekend|Aug\. 31|does not assign a single day/)
     expect(diagolon.summary).toMatch(/NOT on Public Safety Canada's listed-entities list/)
     expect(diagolon.summary).not.toMatch(/listed terrorist entity/i)
     expect(diagolon.sources.map((item) => item.url)).toContain('https://www.antihate.ca/diagolon_canada_homegrown_white_nationalist_network')
     expect(diagolon.namedIndividuals).toHaveLength(1)
     expect(diagolon.namedIndividuals[0].name).toBe('Jeremy MacKenzie')
-    expect(diagolon.namedIndividuals[0].quotedDescription).toBe('founder of Diagolon (CBC 2025-09-09; St. Catharines Standard)')
+    expect(diagolon.namedIndividuals[0].quotedDescription).toBe('"Second Sons leader Jeremy MacKenzie is also the founder of Diagolon" (CBC, 2025-09-09; St. Catharines Standard, 2025-09-04)')
+    expect(diagolon.namedIndividuals[0].sources).toEqual([
+      'https://www.cbc.ca/news/canada/hamilton/second-sons-rally-in-niagara-1.7628162',
+      'https://www.stcatharinesstandard.ca/news/niagara-region/public-and-open-with-their-hate-masked-white-nationalist-group-marches-at-popular-niagara-monument/article_e197d7cf-445b-5e9e-9bb5-36dd4986ac0e.html',
+    ])
     expect(diagolon.namedIndividuals[0].basis).toBe('self-identified-leader')
     expect(group.sources.some((source) => source.date === '2025-06-11')).toBe(true)
   })

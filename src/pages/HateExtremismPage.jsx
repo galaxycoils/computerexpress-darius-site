@@ -113,10 +113,13 @@ function EntryCard({ entry }) {
       <SourceList sources={entry.sources} />
       <p className="journal-meta">
         <span>
-          Last reviewed <time dateTime={entry.lastReviewed}>{formatSourceDate(entry.lastReviewed)}</time>
+          Published <time dateTime={entry.published}>{formatSourceDate(entry.published)}</time>
         </span>
         <span>
           Added <time dateTime={entry.dateAdded}>{formatSourceDate(entry.dateAdded)}</time>
+        </span>
+        <span>
+          Last reviewed <time dateTime={entry.lastReviewed}>{formatSourceDate(entry.lastReviewed)}</time>
         </span>
       </p>
       <p className="journal-kicker">Corrections</p>

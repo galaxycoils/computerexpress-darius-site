@@ -246,6 +246,7 @@ export function validateEntry(entry) {
     errors.push('court-case status must start with charged, convicted, acquitted, stayed, or withdrawn')
   }
   if (!isIsoDate(entry.dateAdded)) errors.push('dateAdded must be an exact date')
+  if (!isIsoDate(entry.published)) errors.push('published must be an exact date')
   if (!isIsoDate(entry.lastReviewed)) errors.push('lastReviewed must be an exact date')
   if (isIsoDate(entry.dateAdded) && isIsoDate(entry.lastReviewed) && entry.lastReviewed < entry.dateAdded) {
     errors.push('lastReviewed cannot be earlier than dateAdded')
