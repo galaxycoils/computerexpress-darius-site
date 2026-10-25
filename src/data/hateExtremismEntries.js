@@ -178,7 +178,7 @@ export const hateExtremismEntries = [
     title: "Niagara Falls 'hate-related graffiti' case: one arrest, mischief charge",
     summary: 'Niagara Daily News: "hate-related graffiti"; "hate speech was spray painted on several buildings." 105.7 The River: "hate speech had been spray painted on buildings."',
     location: 'Niagara Falls',
-    status: 'charged with mischief under $5,000; released on an undertaking (NRPS, May 8, 2026)',
+    status: 'charged with mischief under $5,000; released with a future court date (Niagara Daily News, May 8, 2026)',
     sources: [
       {
         outlet: 'Niagara Daily News',
