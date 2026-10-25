@@ -42,6 +42,8 @@ describe('Hate & Extremism pages', () => {
     expect(screen.getAllByRole('link', { name: 'Request a correction / right of reply' }).length).toBeGreaterThan(0)
     expect(screen.getAllByText('June 11, 2025').length).toBeGreaterThan(0)
     expect(screen.getByRole('heading', { name: 'Editorial standards' })).toBeInTheDocument()
+    expect(screen.getByText(/A support resource may cite one verified page or phone number\. Social media, forums and rumour do not\./)).toBeInTheDocument()
+    expect(screen.queryByText(/An unverified contact is marked/)).not.toBeInTheDocument()
     expect(screen.getByText(/photos of private people and anything that identifies a minor stay out/)).toBeInTheDocument()
   })
 
@@ -74,8 +76,17 @@ describe('Hate & Extremism pages', () => {
     expect(notl.textContent).not.toMatch(/council meeting minutes/i)
 
     const brock = document.getElementById('inc-brocks-monument-2025')
-    expect(brock.textContent).toMatch(/"About 50" masked men marched to Queenston Heights on Labour Day weekend 2025 \(CBC and the St\. Catharines Standard\)/)
-    expect(brock.textContent).not.toMatch(/About 50 masked men/)
+    expect(brock.textContent).toContain('CBC (Sept. 9, 2025): Second Sons "shared photos and videos on social media showing about 50 people marching, chanting and carrying flags through Queenston Heights Park"')
+    expect(brock.textContent).toContain('"Most of the people in those images are wearing matching white masks and black T-shirts."')
+    expect(brock.textContent).toContain('CBC said the rally "is prompting concern about rising anti-immigrant sentiment and recruitment efforts of extremist groups."')
+    expect(brock.textContent).toContain('Niagara Parks (via CBC): "no incidents were reported."')
+    expect(brock.textContent).toContain('St. Catharines Standard (Sept. 4, 2025): "dozens of men wearing white face coverings" and "One video showed more than 50 men."')
+    expect(brock.textContent).toContain('Date: Aug. 30, 2025 (per Niagara Parks, via CBC).')
+    expect(brock.textContent).toContain('Aug. 30, 2025 (per Niagara Parks, via CBC)')
+    expect(container.textContent).not.toContain('About 50 masked men')
+    expect(container.textContent).not.toContain('"About 50" masked men')
+    expect(document.body.textContent).not.toContain('About 50 masked men')
+    expect(document.body.textContent).not.toContain('"About 50" masked men')
   })
 
   it('filters by type, municipality and scope', () => {

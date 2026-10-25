@@ -118,10 +118,10 @@ export const hateExtremismEntries = [
     type: 'incident',
     scope: 'niagara',
     title: "Second Sons masked rally at Brock's Monument, Niagara-on-the-Lake",
-    summary: '"About 50" masked men marched to Queenston Heights on Labour Day weekend 2025 (CBC and the St. Catharines Standard). CBC reported Aug. 31 and Niagara Parks gave Aug. 30, so this record does not assign a single day. CBC said it prompted "concerns about rising anti-immigrant sentiment." Niagara Parks: "no incidents were reported."',
+    summary: 'CBC (Sept. 9, 2025): Second Sons "shared photos and videos on social media showing about 50 people marching, chanting and carrying flags through Queenston Heights Park"; "Most of the people in those images are wearing matching white masks and black T-shirts." CBC said the rally "is prompting concern about rising anti-immigrant sentiment and recruitment efforts of extremist groups." Niagara Parks (via CBC): "no incidents were reported." St. Catharines Standard (Sept. 4, 2025): "dozens of men wearing white face coverings" and "One video showed more than 50 men." Date: Aug. 30, 2025 (per Niagara Parks, via CBC).',
     location: 'Niagara-on-the-Lake',
     status: 'documented',
-    eventDateLabel: 'Labour Day weekend 2025',
+    eventDateLabel: 'Aug. 30, 2025 (per Niagara Parks, via CBC)',
     sources: [
       CBC_RALLY,
       STANDARD_RALLY,
