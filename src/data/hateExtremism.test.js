@@ -235,7 +235,7 @@ describe('approved production records', () => {
       'inc-notl-response-2025',
       'inc-stats-nrps-2023',
     ])
-    expect(hateExtremismEntries.every((entry) => entry.lastReviewed === '2026-10-17')).toBe(true)
+    expect(hateExtremismEntries.filter((entry) => entry.id !== 'inc-stats-nrps-2023').every((entry) => entry.lastReviewed === '2026-10-17')).toBe(true)
     expect(hateExtremismEntries.every((entry) => entry.published === '2026-10-16')).toBe(true)
     expect(hateExtremismEntries.every((entry) => entry.dateAdded === '2026-10-16')).toBe(true)
     expect(hateExtremismSupport.every((entry) => entry.published === '2026-10-16')).toBe(true)
@@ -332,14 +332,51 @@ describe('approved production records', () => {
     expect(context.summary).toBe('CBC News: "A CBC visual investigation recently found Second Sons and active club Nationalist-13 to be training in martial arts studios, gyms and parks in the Hamilton and Niagara area."')
     expect(context.summary).not.toMatch(/also calls it|active in Niagara/)
     expect(context.namedIndividuals).toEqual([])
-    const nrps = hateExtremismEntries.find((item) => item.id === 'inc-stats-nrps-2023')
-    expect(nrps.summary).toContain('as reported by the Standard')
-    expect(nrps.sources.map((source) => source.outlet)).toEqual(['St. Catharines Standard', 'St. Catharines Standard'])
     const notl = hateExtremismEntries.find((item) => item.id === 'inc-notl-response-2025')
     expect(notl.summary).toContain('Sept. 9, 2025')
     expect(notl.summary).not.toContain('Sept. 10')
     expect(notl.summary).toContain('this type of hate has no place in our Town')
     expect(notl.summary).not.toMatch(/council meeting minutes/i)
+  })
+
+  it('records the NRPS 2023 annual report as an official statistic', () => {
+    const nrps = hateExtremismEntries.find((item) => item.id === 'inc-stats-nrps-2023')
+    const threshold = 'none met the criminal code threshold of a hate/bias crime." The St. Catharines Standard (Allan Benner, Feb. 27, 2024) described them as "30 suspected hate crimes in 2023, leading to three criminal charges — but none as hate crimes."'
+    expect(nrps.type).toBe('statistic')
+    expect(nrps.status).toBe('official statistic')
+    expect(nrps.dateAdded).toBe('2026-10-16')
+    expect(nrps.published).toBe('2026-10-16')
+    expect(nrps.lastReviewed).toBe('2026-10-25')
+    expect(nrps.correctionRequest).toBe('/corrections?entry=inc-stats-nrps-2023')
+    expect(nrps.namedIndividuals).toEqual([])
+    expect(nrps.summary).toContain(threshold)
+    expect(nrps.summary).toContain('report dated Feb. 2, 2024')
+    expect(nrps.summary).toContain('Feb. 22, 2024 board meeting, consent item 8.11')
+    expect(nrps.summary).toContain('Feb. 27, 2024')
+    expect(nrps.summary).toContain("The report's three-year comparison table lists 41 incidents and 7 charges in 2022 and 21 incidents in 2021.")
+    expect(nrps.summary).toContain('The report says "there was a decrease of 11 reported hate/bias occurrences from 2022."')
+    expect(nrps.summary).not.toContain('up from 21 in 2021')
+    expect(nrps.summary).not.toMatch(/remains higher than in previous years|Fordy|Kapisavanhu|2020|2019/)
+    expect(nrps.sources.map((source) => [source.outlet, source.url, source.date])).toEqual([
+      [
+        'Niagara Regional Police Service',
+        'https://pub-niagarapolice.escribemeetings.com/FileStream.ashx?DocumentId=2488',
+        '2024-02-02',
+      ],
+      [
+        'St. Catharines Standard',
+        'https://www.stcatharinesstandard.ca/news/crime/niagaras-police-chief-fears-hate-crimes-going-unreported/article_2e7e2b8b-e236-5a06-9685-1cd32ec68e01.html',
+        '2024-02-27',
+      ],
+    ])
+    const visible = [
+      nrps.title,
+      nrps.status,
+      nrps.summary,
+      ...nrps.sources.flatMap((source) => [source.title, source.outlet]),
+    ].join('\n')
+    expect(visible.replace(/“[^”]*”|"[^"]*"/g, ' ')).not.toMatch(/hate crimes/i)
+    expect(nrps.summary.match(/suspected hate crimes/g)).toEqual(['suspected hate crimes'])
   })
 
   it('keeps the police numbers inside the approved support summary', () => {
