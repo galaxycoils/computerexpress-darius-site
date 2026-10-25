@@ -17,6 +17,25 @@ import { sourceRegistry } from './sourceRegistry.js'
 import { getRenderNow } from '../utils/renderClock.js'
 
 /**
+ * Sponsor-page corpus counts.
+ *
+ * Police releases are the verified set the police desk publishes
+ * (`verifiedNrpsReleases`). Planning notices are the planning-tracker archive
+ * (`planningNotices`). Every mention on the sponsor page must use this
+ * selector so the figures cannot drift from the records themselves.
+ */
+export function getSponsorCorpusCounts() {
+  const policeReleases = verifiedNrpsReleases.length
+  const planningNoticeCount = planningNotices.length
+  return {
+    policeReleases,
+    planningNotices: planningNoticeCount,
+    summary: `${policeReleases} police media releases and ${planningNoticeCount} municipal planning notices`,
+    ratio: `${policeReleases}/${planningNoticeCount}`,
+  }
+}
+
+/**
  * @param {Date} [now]
  * @returns {{
  *   police: number, policeTotal: number, planning: number, planningActive: number,
@@ -25,13 +44,14 @@ import { getRenderNow } from '../utils/renderClock.js'
  * }}
  */
 export function getSiteMetrics(now = getRenderNow()) {
+  const corpus = getSponsorCorpusCounts()
   const active = getActiveNotices(now)
   const metrics = {
     // Published dataset: only releases whose source URL was verified.
-    police: verifiedNrpsReleases.length,
+    police: corpus.policeReleases,
     // Everything held in the archive, including unverified and quarantined items.
     policeTotal: nrpsReleases.length,
-    planning: planningNotices.length,
+    planning: corpus.planningNotices,
     planningActive: active.length,
     planningWithMeetings: planningNotices.filter(notice => notice.meetingDate).length,
     civic: councilData.length,
