@@ -5,11 +5,14 @@
  */
 
 const REVIEWED = '2026-10-17'
+// PR #27 merged 2026-10-17T02:13:20Z, which is 2026-10-16 in America/Toronto.
+const PUBLISHED = '2026-10-16'
 
 function record(entry) {
   return {
-    dateAdded: REVIEWED,
+    dateAdded: PUBLISHED,
     lastReviewed: REVIEWED,
+    published: PUBLISHED,
     corrections: [],
     namedIndividuals: [],
     correctionRequest: `/corrections?entry=${entry.id}`,
@@ -46,10 +49,10 @@ export const hateExtremismEntries = [
     type: 'group',
     scope: 'niagara',
     title: 'Second Sons (Second Sons Canada)',
-    summary: 'Described by CBC as a "self-described \'Canadian men\'s nationalist\' group". Experts quoted by CBC call it "an active club in all but name." The St. Catharines Standard called it "one of Canada\'s emerging white nationalist clubs." CBC reported members training in the Hamilton and Niagara area. Held a masked rally at Brock\'s Monument, Niagara-on-the-Lake, Labour Day weekend 2025. CAHN says Diagolon\'s leaders created it as "a new organization with membership requirements."',
+    summary: 'Described by CBC as a "self-described \'Canadian men\'s nationalist\' group". Experts quoted by CBC call it "an active club in all but name." The St. Catharines Standard called it "one of Canada\'s emerging white nationalist clubs." CBC reported members training in the Hamilton and Niagara area. Held a masked rally at Brock\'s Monument, Niagara-on-the-Lake, Aug. 30, 2025. CAHN says Diagolon\'s leaders created it as "a new organization with membership requirements."',
     location: 'Niagara-on-the-Lake',
     status: 'reported active',
-    eventDateLabel: 'Labour Day weekend 2025',
+    eventDateLabel: 'Aug. 30, 2025',
     namedIndividuals: [
       {
         name: 'Jeremy MacKenzie',
@@ -84,7 +87,7 @@ export const hateExtremismEntries = [
         name: 'Jeremy MacKenzie',
         basis: 'self-identified-leader',
         qualifies: true,
-        quotedDescription: 'founder of Diagolon (CBC 2025-09-09; St. Catharines Standard)',
+        quotedDescription: '"Second Sons leader Jeremy MacKenzie is also the founder of Diagolon" (CBC, 2025-09-09). St. Catharines Standard (2025-09-04): "Diagolon was founded during the COVID-19 pandemic as an anti-government and anti-institution movement by social media influencer Jeremy MacKenzie."',
         sources: MACKENZIE_SOURCES,
       },
     ],
@@ -117,10 +120,10 @@ export const hateExtremismEntries = [
     type: 'incident',
     scope: 'niagara',
     title: "Second Sons masked rally at Brock's Monument, Niagara-on-the-Lake",
-    summary: 'About 50 masked men marched to Queenston Heights on Labour Day weekend 2025. CBC reported Aug. 31 and Niagara Parks gave Aug. 30, so this record does not assign a single day. CBC said it prompted "concerns about rising anti-immigrant sentiment." Niagara Parks: "no incidents were reported."',
+    summary: 'About 50 masked men marched to Queenston Heights on Aug. 30, 2025. CBC said it prompted "concerns about rising anti-immigrant sentiment." Niagara Parks: "no incidents were reported."',
     location: 'Niagara-on-the-Lake',
     status: 'documented',
-    eventDateLabel: 'Labour Day weekend 2025',
+    eventDateLabel: 'Aug. 30, 2025',
     sources: [
       CBC_RALLY,
       STANDARD_RALLY,
@@ -175,7 +178,7 @@ export const hateExtremismEntries = [
     title: "Niagara Falls 'hate-related graffiti' case: one arrest, mischief charge",
     summary: 'Niagara Daily News: "hate-related graffiti"; "hate speech was spray painted on several buildings." 105.7 The River: "hate speech had been spray painted on buildings."',
     location: 'Niagara Falls',
-    status: 'charged: mischief (not charged as a hate crime); before the courts',
+    status: 'charged with mischief under $5,000; released with a future court date (Niagara Daily News, May 8, 2026)',
     sources: [
       {
         outlet: 'Niagara Daily News',
@@ -243,7 +246,7 @@ export const hateExtremismEntries = [
     type: 'statistic',
     scope: 'niagara',
     title: 'Niagara Regional Police hate incidents, 2023',
-    summary: 'Niagara Regional Police\'s annual report to the Police Services Board (report dated Feb. 2, 2024; received at the Feb. 22, 2024 board meeting, consent item 8.11) says: "In 2023, there were 30 reported occurrences that had a hate and/or bias related element. All 30 occurrences were designated as hate incidents, as they did not satisfy the Criminal Code criteria of a hate crime." The report says: "Of the 30 occurrences, the NRPS laid 3 criminal charges that are still before the courts; however, none met the criminal code threshold of a hate/bias crime." The St. Catharines Standard (Allan Benner, Feb. 27, 2024) described them as "30 suspected hate crimes in 2023, leading to three criminal charges — but none as hate crimes." Also from the report: "the motivation for the accused individual to commit the offence was not or could not be proven to be because of hatred or bias toward the identifiable group." The report says mischief/graffiti accounted for "nearly 67% of the total occurrences." The report\'s three-year comparison table lists 41 incidents and 7 charges in 2022 and 21 incidents in 2021. The report says there was "a decrease of 11". The 2023 count is up from 21 in 2021.',
+    summary: 'Niagara Regional Police\'s annual report to the Police Services Board (report dated Feb. 2, 2024; received at the Feb. 22, 2024 board meeting, consent item 8.11) says: "In 2023, there were 30 reported occurrences that had a hate and/or bias related element. All 30 occurrences were designated as hate incidents, as they did not satisfy the Criminal Code criteria of a hate crime." The report says: "Of the 30 occurrences, the NRPS laid 3 criminal charges that are still before the courts; however, none met the criminal code threshold of a hate/bias crime." The St. Catharines Standard (Allan Benner, Feb. 27, 2024) described them as "30 suspected hate crimes in 2023, leading to three criminal charges — but none as hate crimes." Also from the report: "the motivation for the accused individual to commit the offence was not or could not be proven to be because of hatred or bias toward the identifiable group." The report says mischief/graffiti accounted for "nearly 67% of the total occurrences." The report\'s three-year comparison table lists 41 incidents and 7 charges in 2022 and 21 incidents in 2021. The report says "there was a decrease of 11 reported hate/bias occurrences from 2022."',
     location: 'Niagara Region',
     status: 'official statistic',
     lastReviewed: '2026-10-25',

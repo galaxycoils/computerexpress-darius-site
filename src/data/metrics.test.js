@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { getSiteMetrics, siteMetrics } from './metrics.js'
+import { getSiteMetrics, getSponsorCorpusCounts, siteMetrics } from './metrics.js'
 import { planningNotices, getActiveNotices } from './planningNotices.js'
 import { nrpsReleases, verifiedNrpsReleases } from './nrpsReleases.js'
 import { councilData } from './councilData.js'
@@ -51,5 +51,17 @@ describe('getSiteMetrics', () => {
 
   it('exposes a module-level snapshot for non-React consumers', () => {
     expect(siteMetrics.total).toBe(getSiteMetrics().total)
+  })
+
+  it('derives sponsor corpus counts from the police desk and planning archive', () => {
+    const counts = getSponsorCorpusCounts()
+    expect(counts.policeReleases).toBe(verifiedNrpsReleases.length)
+    expect(counts.planningNotices).toBe(planningNotices.length)
+    expect(counts.summary).toBe(
+      `${verifiedNrpsReleases.length} police media releases and ${planningNotices.length} municipal planning notices`,
+    )
+    expect(counts.ratio).toBe(`${verifiedNrpsReleases.length}/${planningNotices.length}`)
+    expect(getSiteMetrics().police).toBe(counts.policeReleases)
+    expect(getSiteMetrics().planning).toBe(counts.planningNotices)
   })
 })

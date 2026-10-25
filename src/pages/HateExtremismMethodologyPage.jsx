@@ -54,7 +54,7 @@ export default function HateExtremismMethodologyPage() {
             A support resource, shown only under Report hate / get support, may cite one source. Each URL or phone number on that block is verified, or the contact is marked TODO.
           </p>
           <p>
-            Social media, forums, rumour and inference from an undated “deep search” are not sources. When two credible reports disagree about a single day, the record uses the wider date they share. The Brock’s Monument rally is dated Labour Day weekend 2025 for that reason.
+            Social media, forums, rumour and inference from an undated “deep search” are not sources. The Brock’s Monument rally is dated Aug. 30, 2025.
           </p>
 
           <h2>Naming a person</h2>

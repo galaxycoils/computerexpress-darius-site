@@ -3,11 +3,13 @@ import { Link } from 'react-router-dom'
 import Seo, { BASE_URL } from '../components/Seo'
 import '../components/news/news.css'
 import '../components/news/sponsor.css'
-import { siteMetrics } from '../data/metrics.js';
+import { getSponsorCorpusCounts } from '../data/metrics.js';
+import { SPONSOR_RATE_LINE } from '../data/sponsorOffer.js';
 import { getLastRefreshedLabel } from '../data/officialDiscovery.js';
+import { submitForm } from '../utils/formRequest.js';
 
 const FRESHNESS_LABEL = getLastRefreshedLabel();
-const SPONSOR_ONE_PAGE_RATE = '$250/month';
+const corpus = getSponsorCorpusCounts();
 const VERIFIED_COUNCIL_DECISIONS = [
   { city: 'St. Catharines', motion: '2026-07', date: 'Mar 16, 2026', label: 'Aquatic Centre/Multi-Use Facility preliminary cost estimates' },
   { city: 'St. Catharines', motion: '2026-10', date: 'Apr 2, 2026', label: 'CIP for Sites of Strategic Importance and Municipal Significance' },
@@ -19,7 +21,6 @@ const VERIFIED_COUNCIL_DECISIONS = [
   { city: 'Thorold', motion: '2026-13', date: 'Jul 14, 2026', label: 'Mayoral decision ratifying council by-laws' },
   { city: 'Thorold', motion: '2026-16', date: 'Sep 8, 2026', label: 'Mayoral decision ratifying council by-laws' },
 ];
-const VERIFIED_COUNTS = `${siteMetrics.police} police media releases and ${siteMetrics.planning} municipal planning notices`;
 const LAST_REFRESHED = FRESHNESS_LABEL ? `${FRESHNESS_LABEL} — every record is link-clean and attached to its official source.` : 'Source corpus verification date unavailable.';
 const OPTIONS = [
   { value: 'primary', label: 'Planning Alert sponsorship inquiry' },
@@ -54,18 +55,20 @@ export default function SponsorPage() {
   }
 
   return <>
-    <Seo title="Sponsorship | St. Catharines Digital" description="Ask about local sponsorship opportunities and our editorial independence policy." path="/sponsor"
-      jsonLd={{ '@context': 'https://schema.org', '@type': 'WebPage', name: 'Sponsorship', url: `${BASE_URL}/sponsor` }} />
+    <Seo title="Sponsorship | St. Catharines Digital" description={`${SPONSOR_RATE_LINE} Local sponsorship does not influence editorial decisions.`} path="/sponsor"
+      jsonLd={{ '@context': 'https://schema.org', '@type': 'WebPage', name: 'Sponsorship', description: SPONSOR_RATE_LINE, url: `${BASE_URL}/sponsor` }} />
     <div className="scd-page scd-sponsor">
       <header className="scd-intro scd-sponsor-intro">
         <div>
           <p className="scd-eyebrow">Sponsorship</p>
           <h1 className="scd-intro-title">Support local information for Niagara</h1>
-          <p className="scd-intro-note">Ask about opportunities alongside Planning Alerts or the Planning Tracker. Sponsorship starts at <strong>$250/month</strong>. Placement, timing, audience and final pricing depend on availability and are confirmed directly before any agreement.</p>
+          <p className="scd-intro-note">Ask about opportunities alongside Planning Alerts or the Planning Tracker.</p>
+          <p className="scd-intro-note" data-testid="sponsor-rate">{SPONSOR_RATE_LINE}</p>
         </div>
         <aside className="scd-rail-block scd-sponsor-rail" aria-label="Sponsorship at a glance">
           <p className="scd-rail-label">Start a conversation</p>
-          <p>Tell us about your business and the community you want to reach. Placements start at $250/month.</p>
+          <p>Tell us about your business and the community you want to reach.</p>
+          <p data-testid="sponsor-rate-aside">{SPONSOR_RATE_LINE}</p>
           <a className="button button-primary" href="#sponsor-form">Send an inquiry</a>
           <p className="scd-sponsor-fineprint">Or email <a href="mailto:cccemt@pm.me">cccemt@pm.me</a>.</p>
         </aside>
@@ -73,7 +76,7 @@ export default function SponsorPage() {
 <section className="scd-sponsor-section" aria-labelledby="verified-corpus">
       <h2 id="verified-corpus" className="scd-section-rule">Verified public record</h2>
       <p>
-        The corpus sponsors buy into is the audited public record: {VERIFIED_COUNTS}.
+        The corpus sponsors buy into is the audited public record: <span data-testid="sponsor-corpus-counts">{corpus.summary}</span>.
         Council and committee decisions are cited separately, not folded into the
         document total.
       </p>
@@ -84,7 +87,7 @@ export default function SponsorPage() {
         <h2 id="verified-council-decisions" className="scd-section-rule">
           Council and committee decisions cited separately
         </h2>
-        <p>These are verified outcomes, not part of the 52/47 count above.</p>
+        <p data-testid="sponsor-corpus-ratio">These are verified outcomes, not part of the {corpus.ratio} count above.</p>
         <ul className="scd-rail-list">
           {VERIFIED_COUNCIL_DECISIONS.map((decision) => (
             <li key={`${decision.city}-${decision.motion}`}>
@@ -94,7 +97,7 @@ export default function SponsorPage() {
           ))}
         </ul>
         <p>
-          One page, one rate: {SPONSOR_ONE_PAGE_RATE}. No fine print.
+          {SPONSOR_RATE_LINE}
         </p>
       </section>
 

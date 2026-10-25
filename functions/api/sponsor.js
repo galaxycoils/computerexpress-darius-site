@@ -1,6 +1,8 @@
 // Cloudflare Pages Function: Sponsorship inquiry → AgentMail
 // POST /api/sponsor
 
+import { SPONSOR_RATE_LINE } from '../../src/data/sponsorOffer.js'
+
 const AGENTMAIL_BASE = 'https://api.agentmail.to/v0'
 
 export async function onRequestPost(context) {
@@ -73,7 +75,7 @@ ${new Date().toISOString()}`
           body: JSON.stringify({
             to: email,
             subject: 'Your St. Catharines Digital sponsorship inquiry',
-            text: `Hello ${contactName},\n\nThank you for your interest in sponsoring St. Catharines Digital. We received your inquiry about ${typeLabel}. Placement, timing and pricing will be confirmed directly before an agreement. Reply to this email with any additional details.\n\n— St. Catharines Digital`,
+            text: `Hello ${contactName},\n\nThank you for your interest in sponsoring St. Catharines Digital. We received your inquiry about ${typeLabel}. ${SPONSOR_RATE_LINE} Reply to this email with any additional details.\n\n— St. Catharines Digital`,
             labels: ['sponsorship-auto'],
           }),
           })
