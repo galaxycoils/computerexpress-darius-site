@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import {
   filterEntries,
+  formatSourceDate,
   validateEntries,
   validateEntry,
   validateSupportResources,
@@ -253,22 +254,33 @@ describe('approved production records', () => {
     expect(falls.status).toBe('charged with mischief under $5,000; released with a future court date (Niagara Daily News, May 8, 2026)')
     expect(falls.status).not.toMatch(/not charged as a hate crime|before the courts|undertaking/)
     expect(serialized).not.toMatch(/undertaking/i)
-    expect(falls.summary).toBe('Niagara Daily News: "hate-related graffiti"; "hate speech was spray painted on several buildings." 105.7 The River: "hate speech had been spray painted on buildings."')
+    expect(falls.summary).toBe('Niagara Daily News: "hate-related graffiti"; "hate speech was spray painted on several buildings." 105-1 The River: "hate speech had been spray painted on buildings."')
+    expect(falls.sources.map((source) => source.outlet)).toContain('105-1 The River')
+    expect(JSON.stringify(falls)).not.toMatch(/105\.7/)
     expect(falls.namedIndividuals).toEqual([])
     const welland = hateExtremismEntries.find((entry) => entry.id === 'case-welland-graffiti-2024')
     expect(JSON.stringify(welland)).not.toMatch(/\bschool\b|\bage\b/i)
     expect(welland.namedIndividuals).toEqual([])
   })
 
-  it('dates the rally to Aug. 30, 2025 and does not call Diagolon a listed terrorist entity', () => {
+  it('dates the Brock rally to Aug. 30, 2025 and does not call Diagolon a listed terrorist entity', () => {
     const rally = hateExtremismEntries.find((item) => item.id === 'inc-brocks-monument-2025')
     const group = hateExtremismEntries.find((item) => item.id === 'grp-second-sons')
     const diagolon = hateExtremismEntries.find((item) => item.id === 'grp-diagolon')
-    expect(rally.eventDateLabel).toBe('Aug. 30, 2025')
+    expect(rally.eventDateLabel).toBe('Aug. 30, 2025 (per Niagara Parks, via CBC)')
     expect(group.eventDateLabel).toBe('Aug. 30, 2025')
     expect(group.summary).toMatch(/Aug\. 30, 2025/)
-    expect(rally.summary).toMatch(/Aug\. 30, 2025/)
+    expect(rally.summary).toContain('Date: Aug. 30, 2025 (per Niagara Parks, via CBC).')
+    expect(rally.summary).toContain('CBC (Sept. 9, 2025): Second Sons "shared photos and videos on social media showing about 50 people marching, chanting and carrying flags through Queenston Heights Park"')
+    expect(rally.summary).toContain('"Most of the people in those images are wearing matching white masks and black T-shirts."')
+    expect(rally.summary).toContain('CBC said the rally "is prompting concern about rising anti-immigrant sentiment and recruitment efforts of extremist groups."')
+    expect(rally.summary).toContain('Niagara Parks (via CBC): "no incidents were reported."')
+    expect(rally.summary).toContain('St. Catharines Standard (Sept. 4, 2025): "dozens of men wearing white face coverings" and "One video showed more than 50 men."')
     expect(rally.summary).not.toMatch(/Labour Day weekend|Aug\. 31|does not assign a single day/)
+    expect(rally.summary).not.toContain('About 50 masked men')
+    expect(rally.summary).not.toContain('"About 50" masked men')
+    expect(diagolon.summary).toContain('GPAHE\'s June 6, 2024 page calls it a "white supremacist Canadian movement"')
+    expect(diagolon.summary).not.toMatch(/April 27|Apr\. 27/)
     expect(diagolon.summary).toMatch(/NOT on Public Safety Canada's listed-entities list/)
     expect(diagolon.summary).not.toMatch(/listed terrorist entity/i)
     expect(diagolon.sources.map((item) => item.url)).toContain('https://www.antihate.ca/diagolon_canada_homegrown_white_nationalist_network')
@@ -292,9 +304,28 @@ describe('approved production records', () => {
     expect(entry.methodologyNote).toBe('includes suspected incidents')
   })
 
-  it('marks unfinished source days as TODO material and keeps regional context', () => {
+  it('dates the GPAHE Diagolon posts and keeps regional context', () => {
     const diagolon = hateExtremismEntries.find((item) => item.id === 'grp-diagolon')
-    expect(diagolon.sources.some((source) => source.date === '2024 (verify exact day)')).toBe(true)
+    const gpahe = diagolon.sources.filter((source) => source.outlet === 'GPAHE')
+    expect(gpahe.map((source) => ({ url: source.url, date: source.date, updated: source.updated }))).toEqual([
+      {
+        url: 'https://globalextremism.org/post/diagolon-lgbtq/',
+        date: '2023-04-27',
+        updated: undefined,
+      },
+      {
+        url: 'https://globalextremism.org/post/white-supremacist-diagolon-movement-now-calling-for-deportation-of-all-indians/',
+        date: '2024-06-06',
+        updated: '2024-08-19',
+      },
+    ])
+    expect(gpahe.some((source) => source.date === 'undated' || /TODO|verify exact day/i.test(source.date))).toBe(false)
+    expect(formatSourceDate('2023-04-27')).toBe('April 27, 2023')
+    expect(formatSourceDate('2024-06-06')).toBe('June 6, 2024')
+    expect(formatSourceDate('2024-08-19')).toBe('August 19, 2024')
+    expect(formatSourceDate('2023 (verify exact day)')).toBe('undated')
+    expect(formatSourceDate('TODO: 2024')).toBe('undated')
+    expect(formatSourceDate('TODO: 2024')).not.toMatch(/TODO/)
     const context = hateExtremismEntries.find((item) => item.id === 'ctx-ns13')
     expect(context.scope).toBe('regional-context')
     expect(context.title).toMatch(/Hamilton-based/)
@@ -305,7 +336,10 @@ describe('approved production records', () => {
     expect(nrps.summary).toContain('as reported by the Standard')
     expect(nrps.sources.map((source) => source.outlet)).toEqual(['St. Catharines Standard', 'St. Catharines Standard'])
     const notl = hateExtremismEntries.find((item) => item.id === 'inc-notl-response-2025')
+    expect(notl.summary).toContain('Sept. 9, 2025')
+    expect(notl.summary).not.toContain('Sept. 10')
     expect(notl.summary).toContain('this type of hate has no place in our Town')
+    expect(notl.summary).not.toMatch(/council meeting minutes/i)
   })
 
   it('keeps the police numbers inside the approved support summary', () => {

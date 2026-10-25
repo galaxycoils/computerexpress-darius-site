@@ -79,7 +79,7 @@ export const hateExtremismEntries = [
     type: 'group',
     scope: 'niagara',
     title: 'Diagolon',
-    summary: 'The RCMP calls it an "extremist, militia-like organization" (via CBC). CAHN: "one of the largest and most active white nationalist networks in Canada". GPAHE calls it a "white supremacist Canadian movement". The Standard reports the Niagara Region Anti-Racism Association said people linked with Diagolon showed up to disrupt local events. NOT on Public Safety Canada\'s listed-entities list (checked 2026-10-17).',
+    summary: 'The RCMP calls it an "extremist, militia-like organization" (via CBC). CAHN: "one of the largest and most active white nationalist networks in Canada". GPAHE\'s June 6, 2024 page calls it a "white supremacist Canadian movement". The Standard reports the Niagara Region Anti-Racism Association said people linked with Diagolon showed up to disrupt local events. NOT on Public Safety Canada\'s listed-entities list (checked 2026-10-17).',
     location: 'Niagara Region',
     status: 'reported',
     namedIndividuals: [
@@ -99,13 +99,14 @@ export const hateExtremismEntries = [
         outlet: 'GPAHE',
         title: 'Canadian White Supremacist Diagolon Movement Increasingly Targets the LGBTQ+ Community',
         url: 'https://globalextremism.org/post/diagolon-lgbtq/',
-        date: '2023 (verify exact day)',
+        date: '2023-04-27',
       },
       {
         outlet: 'GPAHE',
         title: 'White Supremacist Diagolon Movement Now Calling for Deportation of All Indians',
         url: 'https://globalextremism.org/post/white-supremacist-diagolon-movement-now-calling-for-deportation-of-all-indians/',
-        date: '2024 (verify exact day)',
+        date: '2024-06-06',
+        updated: '2024-08-19',
       },
       {
         outlet: 'Public Safety Canada',
@@ -120,10 +121,10 @@ export const hateExtremismEntries = [
     type: 'incident',
     scope: 'niagara',
     title: "Second Sons masked rally at Brock's Monument, Niagara-on-the-Lake",
-    summary: 'About 50 masked men marched to Queenston Heights on Aug. 30, 2025. CBC said it prompted "concerns about rising anti-immigrant sentiment." Niagara Parks: "no incidents were reported."',
+    summary: 'CBC (Sept. 9, 2025): Second Sons "shared photos and videos on social media showing about 50 people marching, chanting and carrying flags through Queenston Heights Park"; "Most of the people in those images are wearing matching white masks and black T-shirts." CBC said the rally "is prompting concern about rising anti-immigrant sentiment and recruitment efforts of extremist groups." Niagara Parks (via CBC): "no incidents were reported." St. Catharines Standard (Sept. 4, 2025): "dozens of men wearing white face coverings" and "One video showed more than 50 men." Date: Aug. 30, 2025 (per Niagara Parks, via CBC).',
     location: 'Niagara-on-the-Lake',
     status: 'documented',
-    eventDateLabel: 'Aug. 30, 2025',
+    eventDateLabel: 'Aug. 30, 2025 (per Niagara Parks, via CBC)',
     sources: [
       CBC_RALLY,
       STANDARD_RALLY,
@@ -176,7 +177,7 @@ export const hateExtremismEntries = [
     type: 'court-case',
     scope: 'niagara',
     title: "Niagara Falls 'hate-related graffiti' case: one arrest, mischief charge",
-    summary: 'Niagara Daily News: "hate-related graffiti"; "hate speech was spray painted on several buildings." 105.7 The River: "hate speech had been spray painted on buildings."',
+    summary: 'Niagara Daily News: "hate-related graffiti"; "hate speech was spray painted on several buildings." 105-1 The River: "hate speech had been spray painted on buildings."',
     location: 'Niagara Falls',
     status: 'charged with mischief under $5,000; released with a future court date (Niagara Daily News, May 8, 2026)',
     sources: [
@@ -187,7 +188,7 @@ export const hateExtremismEntries = [
         date: '2026-05-08',
       },
       {
-        outlet: '105.7 The River',
+        outlet: '105-1 The River',
         title: 'Senior Charged with Hate Speech Crime',
         url: 'https://www.105theriver.ca/news/local-news/senior-charged-with-hate-speech-crime/',
         date: '2026-05-11',
@@ -223,7 +224,7 @@ export const hateExtremismEntries = [
     type: 'incident',
     scope: 'niagara',
     title: 'Niagara-on-the-Lake Lord Mayor condemns rally (council response)',
-    summary: 'Lord Mayor Gary Zalepa read a statement at a Sept. 10 2025 meeting: "this group\'s message is not supported or condoned, and this type of hate has no place in our Town." A statement, NOT a formal council motion. No regional or municipal motion found yet.',
+    summary: 'Lord Mayor Gary Zalepa read a statement at a Sept. 9, 2025 meeting: "this group\'s message is not supported or condoned, and this type of hate has no place in our Town." A statement, NOT a formal council motion. No regional or municipal motion found yet.',
     location: 'Niagara-on-the-Lake',
     status: 'documented',
     sources: [

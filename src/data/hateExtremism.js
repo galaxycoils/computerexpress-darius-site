@@ -114,7 +114,7 @@ export function formatSourceDate(value) {
       timeZone: 'UTC',
     })
   }
-  if (/verify exact day|^TODO\b/i.test(value || '')) return `TODO: ${value}`
+  if (/verify exact day|^TODO\b/i.test(value || '')) return 'undated'
   return value
 }
 

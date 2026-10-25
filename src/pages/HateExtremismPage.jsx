@@ -181,7 +181,7 @@ export function HateExtremismView({
       <section aria-labelledby="standards-heading">
         <h2 id="standards-heading">Editorial standards</h2>
         <p>
-          A court case, group, incident or response needs at least two credible sources. Court records, police statements, the Canadian Anti-Hate Network, GPAHE, Public Safety Canada and established news outlets qualify. An official statistic may cite one official publisher, such as Statistics Canada, and can carry a methodology note. A support resource may cite one verified page or phone number. An unverified contact is marked TODO. Social media, forums and rumour do not.
+          A court case, group, incident or response needs at least two credible sources. Court records, police statements, the Canadian Anti-Hate Network, GPAHE, Public Safety Canada and established news outlets qualify. An official statistic may cite one official publisher, such as Statistics Canada, and can carry a methodology note. A support resource may cite one verified page or phone number. Social media, forums and rumour do not.
         </p>
         <p>
           Descriptions use the source’s wording, in quotation marks or attributed. A person is named only when charged or convicted, when they are a publicly self-identified leader of a documented group, or when they are a public figure already reported by credible press — and only with two sources. Home addresses, workplaces, family members, photos of private people and anything that identifies a minor stay out.
