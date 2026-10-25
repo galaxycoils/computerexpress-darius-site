@@ -10,7 +10,7 @@ const PUBLISHED = '2026-10-16'
 
 function record(entry) {
   return {
-    dateAdded: REVIEWED,
+    dateAdded: PUBLISHED,
     lastReviewed: REVIEWED,
     published: PUBLISHED,
     corrections: [],
@@ -87,7 +87,7 @@ export const hateExtremismEntries = [
         name: 'Jeremy MacKenzie',
         basis: 'self-identified-leader',
         qualifies: true,
-        quotedDescription: '"Second Sons leader Jeremy MacKenzie is also the founder of Diagolon" (CBC, 2025-09-09; St. Catharines Standard, 2025-09-04)',
+        quotedDescription: '"Second Sons leader Jeremy MacKenzie is also the founder of Diagolon" (CBC, 2025-09-09). St. Catharines Standard (2025-09-04): "Diagolon was founded during the COVID-19 pandemic as an anti-government and anti-institution movement by social media influencer Jeremy MacKenzie."',
         sources: MACKENZIE_SOURCES,
       },
     ],
@@ -178,7 +178,7 @@ export const hateExtremismEntries = [
     title: "Niagara Falls 'hate-related graffiti' case: one arrest, mischief charge",
     summary: 'Niagara Daily News: "hate-related graffiti"; "hate speech was spray painted on several buildings." 105.7 The River: "hate speech had been spray painted on buildings."',
     location: 'Niagara Falls',
-    status: 'charged: mischief (not charged as a hate crime); before the courts',
+    status: 'charged with mischief under $5,000; released on an undertaking (NRPS, May 8, 2026)',
     sources: [
       {
         outlet: 'Niagara Daily News',

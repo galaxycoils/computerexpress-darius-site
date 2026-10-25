@@ -251,6 +251,9 @@ export function validateEntry(entry) {
   if (isIsoDate(entry.dateAdded) && isIsoDate(entry.lastReviewed) && entry.lastReviewed < entry.dateAdded) {
     errors.push('lastReviewed cannot be earlier than dateAdded')
   }
+  if (isIsoDate(entry.dateAdded) && isIsoDate(entry.published) && entry.dateAdded > entry.published) {
+    errors.push('dateAdded cannot be later than published')
+  }
   if (!/^\/corrections\?entry=[a-z0-9-]+$/.test(entry.correctionRequest || '')) {
     errors.push('correctionRequest must link to the corrections page for this entry')
   }
