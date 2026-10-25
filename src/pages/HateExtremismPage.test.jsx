@@ -40,9 +40,42 @@ describe('Hate & Extremism pages', () => {
     expect(screen.getByRole('link', { name: '911' })).toHaveAttribute('href', 'tel:911')
     expect(screen.getByRole('link', { name: '(905) 688-4111' })).toBeInTheDocument()
     expect(screen.getAllByRole('link', { name: 'Request a correction / right of reply' }).length).toBeGreaterThan(0)
-    expect(screen.getByText(/TODO: 2024 \(verify exact day\)/)).toBeInTheDocument()
     expect(screen.getAllByText('June 11, 2025').length).toBeGreaterThan(0)
-    expect(screen.queryByText(/TODO: 2025 \(verify exact day\)/)).not.toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: 'Editorial standards' })).toBeInTheDocument()
+    expect(screen.getByText(/photos of private people and anything that identifies a minor stay out/)).toBeInTheDocument()
+  })
+
+  it('applies the cleared text fixes and does not render TODO', () => {
+    const { container } = renderPage(<HateExtremismPage />)
+    expect(container.textContent).not.toMatch(/TODO/)
+    expect(document.body.textContent).not.toMatch(/TODO/)
+
+    const falls = document.getElementById('case-nf-graffiti-2026')
+    expect(falls.textContent).toMatch(/105-1 The River/)
+    expect(falls.textContent).not.toMatch(/105\.7/)
+    expect(falls.textContent).toMatch(/105-1 The River: "hate speech had been spray painted on buildings\."/)
+
+    const diagolon = document.getElementById('grp-diagolon')
+    expect(diagolon.textContent).not.toMatch(/TODO/)
+    expect(diagolon.textContent).not.toMatch(/\bundated\b/i)
+    const lgbtq = within(diagolon).getByRole('link', { name: /Targets the LGBTQ/ })
+    const deportation = within(diagolon).getByRole('link', { name: /Deportation of All Indians/ })
+    expect(lgbtq.closest('li').textContent).toMatch(/GPAHE\s+April 27, 2023/)
+    expect(lgbtq.closest('li').textContent).not.toMatch(/TODO|undated|white supremacist Canadian movement|June 6, 2024|August 19, 2024/)
+    expect(deportation.closest('li').textContent).toMatch(/GPAHE\s+June 6, 2024\s+Updated August 19, 2024/)
+    expect(deportation.closest('li').textContent).not.toMatch(/TODO|undated|April 27, 2023|white supremacist Canadian movement/)
+    const summary = [...diagolon.querySelectorAll('p')].find((node) => node.textContent.includes('white supremacist Canadian movement'))
+    expect(summary.textContent).toContain('GPAHE\'s June 6, 2024 page calls it a "white supremacist Canadian movement"')
+    expect(summary.textContent).not.toMatch(/April 27|Apr\. 27/)
+
+    const notl = document.getElementById('inc-notl-response-2025')
+    expect(notl.textContent).toMatch(/Sept\. 9, 2025/)
+    expect(notl.textContent).not.toMatch(/Sept\. 10/)
+    expect(notl.textContent).not.toMatch(/council meeting minutes/i)
+
+    const brock = document.getElementById('inc-brocks-monument-2025')
+    expect(brock.textContent).toMatch(/"About 50" masked men marched to Queenston Heights on Labour Day weekend 2025 \(CBC and the St\. Catharines Standard\)/)
+    expect(brock.textContent).not.toMatch(/About 50 masked men/)
   })
 
   it('filters by type, municipality and scope', () => {
