@@ -34,6 +34,7 @@ function validEntry(partial = {}) {
     location: 'Example Harbour',
     status: 'documented',
     dateAdded: ISO,
+    published: '2026-01-20',
     lastReviewed: '2026-02-01',
     correctionRequest: '/corrections?entry=example-record',
     sources: [
@@ -198,6 +199,11 @@ describe('hate and extremism validation', () => {
     expect(social.errors.join(' ')).toMatch(/social-media/)
     const reviewed = validateEntry(validEntry({ lastReviewed: '' }))
     expect(reviewed.errors.join(' ')).toMatch(/lastReviewed/)
+    const published = validateEntry(validEntry({ published: '' }))
+    expect(published.errors.join(' ')).toMatch(/published/)
+    const addedAfterPublished = validateEntry(validEntry({ dateAdded: '2026-03-02', published: '2026-03-01' }))
+    expect(addedAfterPublished.ok).toBe(false)
+    expect(addedAfterPublished.errors.join(' ')).toMatch(/dateAdded cannot be later than published/)
   })
 
   it('filters by type, municipality and scope', () => {
@@ -230,6 +236,13 @@ describe('approved production records', () => {
       'inc-stats-nrps-2023',
     ])
     expect(hateExtremismEntries.every((entry) => entry.lastReviewed === '2026-10-17')).toBe(true)
+    expect(hateExtremismEntries.every((entry) => entry.published === '2026-10-16')).toBe(true)
+    expect(hateExtremismEntries.every((entry) => entry.dateAdded === '2026-10-16')).toBe(true)
+    expect(hateExtremismSupport.every((entry) => entry.published === '2026-10-16')).toBe(true)
+    expect(hateExtremismSupport.every((entry) => entry.dateAdded === '2026-10-16')).toBe(true)
+    for (const entry of [...hateExtremismEntries, ...hateExtremismSupport]) {
+      expect(entry.dateAdded <= entry.published, entry.id).toBe(true)
+    }
     expect(hateExtremismEntries.every((entry) => entry.correctionRequest === `/corrections?entry=${entry.id}`)).toBe(true)
     const supportIds = hateExtremismSupport.map((entry) => entry.id)
     expect(supportIds).toEqual(['res-nrps', 'res-nrara', 'res-legal-clinic', 'res-pride-niagara'])
@@ -238,7 +251,9 @@ describe('approved production records', () => {
     const serialized = JSON.stringify({ hateExtremismEntries, hateExtremismSupport })
     expect(serialized).not.toMatch(/14-year-old|15-year-old|71-year-old|goof busters|proud boys|bradley|sauer|hildred|queen st|zimmerman/i)
     const falls = hateExtremismEntries.find((entry) => entry.id === 'case-nf-graffiti-2026')
-    expect(falls.status).toBe('charged: mischief (not charged as a hate crime); before the courts')
+    expect(falls.status).toBe('charged with mischief under $5,000; released with a future court date (Niagara Daily News, May 8, 2026)')
+    expect(falls.status).not.toMatch(/not charged as a hate crime|before the courts|undertaking/)
+    expect(serialized).not.toMatch(/undertaking/i)
     expect(falls.summary).toBe('Niagara Daily News: "hate-related graffiti"; "hate speech was spray painted on several buildings." 105-1 The River: "hate speech had been spray painted on buildings."')
     expect(falls.sources.map((source) => source.outlet)).toContain('105-1 The River')
     expect(JSON.stringify(falls)).not.toMatch(/105\.7/)
@@ -253,15 +268,15 @@ describe('approved production records', () => {
     const group = hateExtremismEntries.find((item) => item.id === 'grp-second-sons')
     const diagolon = hateExtremismEntries.find((item) => item.id === 'grp-diagolon')
     expect(rally.eventDateLabel).toBe('Aug. 30, 2025 (per Niagara Parks, via CBC)')
-    expect(group.eventDateLabel).toBe('Labour Day weekend 2025')
-    expect(rally.summary).not.toMatch(/Labour Day weekend 2025/)
-    expect(rally.summary).not.toMatch(/Aug\. 30-31/)
+    expect(group.eventDateLabel).toBe('Aug. 30, 2025')
+    expect(group.summary).toMatch(/Aug\. 30, 2025/)
     expect(rally.summary).toContain('Date: Aug. 30, 2025 (per Niagara Parks, via CBC).')
     expect(rally.summary).toContain('CBC (Sept. 9, 2025): Second Sons "shared photos and videos on social media showing about 50 people marching, chanting and carrying flags through Queenston Heights Park"')
     expect(rally.summary).toContain('"Most of the people in those images are wearing matching white masks and black T-shirts."')
     expect(rally.summary).toContain('CBC said the rally "is prompting concern about rising anti-immigrant sentiment and recruitment efforts of extremist groups."')
     expect(rally.summary).toContain('Niagara Parks (via CBC): "no incidents were reported."')
     expect(rally.summary).toContain('St. Catharines Standard (Sept. 4, 2025): "dozens of men wearing white face coverings" and "One video showed more than 50 men."')
+    expect(rally.summary).not.toMatch(/Labour Day weekend|Aug\. 31|does not assign a single day/)
     expect(rally.summary).not.toContain('About 50 masked men')
     expect(rally.summary).not.toContain('"About 50" masked men')
     expect(diagolon.summary).toContain('GPAHE\'s June 6, 2024 page calls it a "white supremacist Canadian movement"')
@@ -271,7 +286,11 @@ describe('approved production records', () => {
     expect(diagolon.sources.map((item) => item.url)).toContain('https://www.antihate.ca/diagolon_canada_homegrown_white_nationalist_network')
     expect(diagolon.namedIndividuals).toHaveLength(1)
     expect(diagolon.namedIndividuals[0].name).toBe('Jeremy MacKenzie')
-    expect(diagolon.namedIndividuals[0].quotedDescription).toBe('founder of Diagolon (CBC 2025-09-09; St. Catharines Standard)')
+    expect(diagolon.namedIndividuals[0].quotedDescription).toBe('"Second Sons leader Jeremy MacKenzie is also the founder of Diagolon" (CBC, 2025-09-09). St. Catharines Standard (2025-09-04): "Diagolon was founded during the COVID-19 pandemic as an anti-government and anti-institution movement by social media influencer Jeremy MacKenzie."')
+    expect(diagolon.namedIndividuals[0].sources).toEqual([
+      'https://www.cbc.ca/news/canada/hamilton/second-sons-rally-in-niagara-1.7628162',
+      'https://www.stcatharinesstandard.ca/news/niagara-region/public-and-open-with-their-hate-masked-white-nationalist-group-marches-at-popular-niagara-monument/article_e197d7cf-445b-5e9e-9bb5-36dd4986ac0e.html',
+    ])
     expect(diagolon.namedIndividuals[0].basis).toBe('self-identified-leader')
     expect(group.sources.some((source) => source.date === '2025-06-11')).toBe(true)
   })

@@ -246,9 +246,13 @@ export function validateEntry(entry) {
     errors.push('court-case status must start with charged, convicted, acquitted, stayed, or withdrawn')
   }
   if (!isIsoDate(entry.dateAdded)) errors.push('dateAdded must be an exact date')
+  if (!isIsoDate(entry.published)) errors.push('published must be an exact date')
   if (!isIsoDate(entry.lastReviewed)) errors.push('lastReviewed must be an exact date')
   if (isIsoDate(entry.dateAdded) && isIsoDate(entry.lastReviewed) && entry.lastReviewed < entry.dateAdded) {
     errors.push('lastReviewed cannot be earlier than dateAdded')
+  }
+  if (isIsoDate(entry.dateAdded) && isIsoDate(entry.published) && entry.dateAdded > entry.published) {
+    errors.push('dateAdded cannot be later than published')
   }
   if (!/^\/corrections\?entry=[a-z0-9-]+$/.test(entry.correctionRequest || '')) {
     errors.push('correctionRequest must link to the corrections page for this entry')

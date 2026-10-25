@@ -5,6 +5,7 @@ import { getPublication, dateLabel } from "../data/publication";
 import { selectHomepageLead } from "../data/homepageLead";
 import { localPhotos } from "../data/localPhotos";
 import { getUpcomingMeetings } from "../data/planningNotices";
+import { SPONSOR_MONTHLY_RATE } from "../data/sponsorOffer.js";
 import Story, {
   StoryLink,
   Photo,
@@ -230,8 +231,8 @@ export default function HomePage() {
                 <Link to="/sponsor">Sponsorship</Link>
               </h3>
               <p>
-                Reach readers who follow planning and council decisions. From
-                $250/month.
+                Reach readers who follow planning and council decisions.{" "}
+                {SPONSOR_MONTHLY_RATE}.
               </p>
             </article>
           </div>

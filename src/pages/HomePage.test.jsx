@@ -111,10 +111,13 @@ describe("HomePage — Editorial Newsroom", () => {
     ).toBe("/sponsor");
   });
 
-  it("states the Planning Alerts price and the sponsorship floor", () => {
+  it("states the Planning Alerts price and the flat sponsorship rate", () => {
     renderWithProviders(<HomePage />);
-    expect(screen.getByText(/Weekly digest/i).textContent).toMatch(/\$49/);
-    expect(screen.getByText(/\$250\/month/i)).toBeInTheDocument();
+    expect(screen.getByText(/Weekly digest/i).textContent).toMatch(/\$49\/month/);
+    const sponsorship = screen.getByRole("link", { name: /Sponsorship/i }).closest("article");
+    expect(sponsorship.textContent).toContain("$250/month");
+    expect(sponsorship.textContent).not.toMatch(/from\s+\$250/i);
+    expect(document.body.textContent).not.toMatch(/starts at/i);
   });
 
   it("links reporting to an official municipal source", () => {

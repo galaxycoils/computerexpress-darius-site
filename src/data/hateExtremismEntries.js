@@ -5,11 +5,14 @@
  */
 
 const REVIEWED = '2026-10-17'
+// PR #27 merged 2026-10-17T02:13:20Z, which is 2026-10-16 in America/Toronto.
+const PUBLISHED = '2026-10-16'
 
 function record(entry) {
   return {
-    dateAdded: REVIEWED,
+    dateAdded: PUBLISHED,
     lastReviewed: REVIEWED,
+    published: PUBLISHED,
     corrections: [],
     namedIndividuals: [],
     correctionRequest: `/corrections?entry=${entry.id}`,
@@ -46,10 +49,10 @@ export const hateExtremismEntries = [
     type: 'group',
     scope: 'niagara',
     title: 'Second Sons (Second Sons Canada)',
-    summary: 'Described by CBC as a "self-described \'Canadian men\'s nationalist\' group". Experts quoted by CBC call it "an active club in all but name." The St. Catharines Standard called it "one of Canada\'s emerging white nationalist clubs." CBC reported members training in the Hamilton and Niagara area. Held a masked rally at Brock\'s Monument, Niagara-on-the-Lake, Labour Day weekend 2025. CAHN says Diagolon\'s leaders created it as "a new organization with membership requirements."',
+    summary: 'Described by CBC as a "self-described \'Canadian men\'s nationalist\' group". Experts quoted by CBC call it "an active club in all but name." The St. Catharines Standard called it "one of Canada\'s emerging white nationalist clubs." CBC reported members training in the Hamilton and Niagara area. Held a masked rally at Brock\'s Monument, Niagara-on-the-Lake, Aug. 30, 2025. CAHN says Diagolon\'s leaders created it as "a new organization with membership requirements."',
     location: 'Niagara-on-the-Lake',
     status: 'reported active',
-    eventDateLabel: 'Labour Day weekend 2025',
+    eventDateLabel: 'Aug. 30, 2025',
     namedIndividuals: [
       {
         name: 'Jeremy MacKenzie',
@@ -84,7 +87,7 @@ export const hateExtremismEntries = [
         name: 'Jeremy MacKenzie',
         basis: 'self-identified-leader',
         qualifies: true,
-        quotedDescription: 'founder of Diagolon (CBC 2025-09-09; St. Catharines Standard)',
+        quotedDescription: '"Second Sons leader Jeremy MacKenzie is also the founder of Diagolon" (CBC, 2025-09-09). St. Catharines Standard (2025-09-04): "Diagolon was founded during the COVID-19 pandemic as an anti-government and anti-institution movement by social media influencer Jeremy MacKenzie."',
         sources: MACKENZIE_SOURCES,
       },
     ],
@@ -176,7 +179,7 @@ export const hateExtremismEntries = [
     title: "Niagara Falls 'hate-related graffiti' case: one arrest, mischief charge",
     summary: 'Niagara Daily News: "hate-related graffiti"; "hate speech was spray painted on several buildings." 105-1 The River: "hate speech had been spray painted on buildings."',
     location: 'Niagara Falls',
-    status: 'charged: mischief (not charged as a hate crime); before the courts',
+    status: 'charged with mischief under $5,000; released with a future court date (Niagara Daily News, May 8, 2026)',
     sources: [
       {
         outlet: 'Niagara Daily News',
