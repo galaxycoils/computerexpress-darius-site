@@ -39,6 +39,7 @@ export const baseRoutes = [
   "/events",
   "/explore",
   "/accessibility",
+  "/tools/debt-payoff",
 ];
 
 export const programmaticRoutes = [

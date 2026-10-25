@@ -54,6 +54,7 @@ export const appRoutes = [
   { path: 'editorial-policy', page: 'EditorialPolicyPage' },
   { path: 'corrections', page: 'CorrectionsPage' },
   { path: 'editorial', page: 'EditorialDeskPage', group: 'clientOnly' },
+  { path: 'tools/debt-payoff', page: 'DebtPayoffPage' },
   { path: '*', page: 'NotFoundPage' },
 ]
 

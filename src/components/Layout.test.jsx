@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { useLayoutEffect } from "react";
-import { act, fireEvent, render, screen } from "@testing-library/react";
+import { act, fireEvent, render, screen, within } from "@testing-library/react";
 import { MemoryRouter, Route, Routes, useNavigate } from "react-router-dom";
 import Layout from "./Layout";
 
@@ -95,6 +95,18 @@ describe("on-site navigation icons", () => {
       if (icon) expect(icon).toHaveAttribute("data-icon", "arrow");
     }
     expect(screen.getByRole("link", { name: /RSS feed/i }).querySelector("[data-icon]")).toHaveAttribute("data-icon", "arrow");
+  });
+
+  it("puts Tools in the footer and keeps it out of the primary header nav", () => {
+    render(
+      <MemoryRouter>
+        <Routes><Route element={<Layout />}><Route index element={<p>Home</p>} /></Route></Routes>
+      </MemoryRouter>,
+    );
+    expect(screen.getByRole("link", { name: "Tools" })).toHaveAttribute("href", "/tools/debt-payoff");
+    expect(within(screen.getByRole("navigation", { name: "Primary" })).queryByRole("link", { name: "Tools" })).not.toBeInTheDocument();
+    fireEvent.click(screen.getByRole("button", { name: /Menu/i }));
+    expect(screen.getByRole("navigation", { name: "Mobile navigation" }).querySelector('a[href="/tools/debt-payoff"]')).toBeTruthy();
   });
 });
 

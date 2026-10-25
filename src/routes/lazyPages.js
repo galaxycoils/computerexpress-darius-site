@@ -49,6 +49,7 @@ const ReaderServicesPage = lazy(() => import('../pages/ReaderServicesPage'))
 const SearchPage = lazy(() => import('../pages/SearchPage'))
 const AlertPreferencesPage = lazy(() => import('../pages/AlertPreferencesPage'))
 const EditorialDeskPage = lazy(() => import('../pages/EditorialDeskPage'))
+const DebtPayoffPage = lazy(() => import('../pages/DebtPayoffPage'))
 
 export const lazyPages = {
   HomePage,
@@ -84,5 +85,6 @@ export const lazyPages = {
   EditorialPolicyPage,
   CorrectionsPage,
   EditorialDeskPage,
+  DebtPayoffPage,
   NotFoundPage,
 }
