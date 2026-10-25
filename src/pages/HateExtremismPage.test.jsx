@@ -31,7 +31,7 @@ describe('Hate & Extremism pages', () => {
     expect(screen.getByRole('heading', { name: "Niagara Falls 'hate-related graffiti' case: one arrest, mischief charge" })).toBeInTheDocument()
     expect(screen.getByRole('heading', { name: 'Welland hateful graffiti case (youth)' })).toBeInTheDocument()
     expect(screen.getByRole('heading', { name: /Lord Mayor condemns rally/ })).toBeInTheDocument()
-    expect(screen.getByText(/as reported by the Standard/)).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: 'Niagara Regional Police hate incidents, 2023' })).toBeInTheDocument()
     expect(screen.queryByText(/14-year-old/)).not.toBeInTheDocument()
     expect(screen.queryByText(/Bradley/)).not.toBeInTheDocument()
     const support = screen.getByRole('region', { name: 'Report hate / get support' })
@@ -43,6 +43,34 @@ describe('Hate & Extremism pages', () => {
     expect(screen.getByText(/TODO: 2024 \(verify exact day\)/)).toBeInTheDocument()
     expect(screen.getAllByText('June 11, 2025').length).toBeGreaterThan(0)
     expect(screen.queryByText(/TODO: 2025 \(verify exact day\)/)).not.toBeInTheDocument()
+  })
+
+  it('renders the NRPS 2023 report with both sources, dates and the correction link', () => {
+    renderPage(<HateExtremismPage />)
+    const card = screen.getByRole('article', { name: 'Niagara Regional Police hate incidents, 2023' })
+    const summary = within(card).getByText(/Niagara Regional Police's annual report to the Police Services Board/)
+    expect(summary.textContent).toMatch(/none met the criminal code threshold of a hate\/bias crime\." The St\. Catharines Standard \(Allan Benner, Feb\. 27, 2024\) described them as "30 suspected hate crimes in 2023, leading to three criminal charges — but none as hate crimes\."/)
+    expect(summary.textContent).toContain('Feb. 2, 2024')
+    expect(summary.textContent).toContain('Feb. 22, 2024')
+    expect(summary.textContent).toContain('Feb. 27, 2024')
+    expect(within(card).getByRole('link', { name: /Hate\/Bias Motivated Crimes and Hate Propaganda Offences/ })).toHaveAttribute(
+      'href',
+      'https://pub-niagarapolice.escribemeetings.com/FileStream.ashx?DocumentId=2488',
+    )
+    expect(within(card).getByRole('link', { name: '"Niagara\'s police chief fears hate crimes going unreported"' })).toHaveAttribute(
+      'href',
+      'https://www.stcatharinesstandard.ca/news/crime/niagaras-police-chief-fears-hate-crimes-going-unreported/article_2e7e2b8b-e236-5a06-9685-1cd32ec68e01.html',
+    )
+    expect(card.querySelector('time[datetime="2024-02-02"]').textContent).toBe('February 2, 2024')
+    expect(card.querySelector('time[datetime="2024-02-27"]').textContent).toBe('February 27, 2024')
+    expect(card.querySelector('time[datetime="2026-10-25"]').textContent).toBe('October 25, 2026')
+    expect(within(card).getByRole('link', { name: 'Request a correction / right of reply' })).toHaveAttribute(
+      'href',
+      '/corrections?entry=inc-stats-nrps-2023',
+    )
+    expect(summary.textContent.replace(/“[^”]*”|"[^"]*"/g, ' ')).not.toMatch(/hate crimes/i)
+    expect(card.textContent.replace(/“[^”]*”|"[^"]*"/g, ' ')).not.toMatch(/hate crimes/i)
+    expect(summary.textContent.match(/suspected hate crimes/g)).toEqual(['suspected hate crimes'])
   })
 
   it('filters by type, municipality and scope', () => {
