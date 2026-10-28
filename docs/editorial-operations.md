@@ -2,7 +2,11 @@
 
 ## Automatic news collection and publishing
 
-The official-source collector runs every three hours on `main`. Approved, non-review sources are validated, tested, committed without a pull-request approval step, deployed to Cloudflare Pages, and checked against the live release SHA and content snapshot. The job waits for deployment and fails if the live site or latest news/RSS titles do not match. Sources marked `reviewRequired` remain pending and are never auto-published.
+The official-source collector is scheduled four times per day on `main`: **00:17, 06:17, 12:17 and 18:17 UTC** (`17 0,6,12,18 * * *`). These are 02:17, 08:17, 14:17 and 20:17 in Niagara during daylight time, and 01:17, 07:17, 13:17 and 19:17 during standard time. GitHub Actions schedules are best-effort: events can be delayed or dropped, so these are collection windows rather than guaranteed start times. Approved, non-review sources are validated, tested, committed without a pull-request approval step, deployed to Cloudflare Pages, and checked against the live release SHA and content snapshot. The job waits for deployment and fails if the live site or latest news/RSS titles do not match. Sources marked `reviewRequired` remain pending and are never auto-published.
+
+A successful run does not necessarily add stories. When no publishable content changes are found, the collector retains the existing snapshot and its timestamp; the latest scan results are in the run’s source-health artifact. Check the collection log and source-health report before treating an unchanged news date as a failure. The collector also verifies that the current snapshot is live even when no new commit is needed.
+
+On October 28, 2026, the scheduled scans at 05:43 and 12:56 UTC succeeded without new publishable content. The preceding scheduled runs were separated by roughly six to nine hours despite the previous three-hour cron. Their durations (under 27 minutes) did not overlap the next three-hour window; the run history shows scheduling gaps rather than collector failures, but does not identify why GitHub delayed or omitted individual events.
 
 Autonomous publishing uses the repository's built-in `GITHUB_TOKEN` with the workflow's scoped `contents: write` and `actions: write` permissions, plus the `CF_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID` repository secrets. `ALERT_TOKEN_SECRET` is separate: it enables signed planning-alert subscriptions and is not required to collect or publish news. `CLOUDFLARE_ZONE_ID` only enables optional edge-cache purging.
 

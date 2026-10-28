@@ -21,7 +21,9 @@ on:
       - src/data/sourceRegistry.js
       - .github/workflows/collect-official-news.yml
   schedule:
-    - cron: "17 */3 * * *"
+    # Four collection windows per day (UTC); avoid the busy top of the hour.
+    # GitHub scheduled events are best-effort and can start late.
+    - cron: "17 0,6,12,18 * * *"
   workflow_dispatch:
     inputs:
       source:
