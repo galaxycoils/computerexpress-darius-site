@@ -38,7 +38,8 @@ for (const [path, text] of [
   ["/news/", "News, close to home."],
 ]) {
   await fetchVerifiedText(base + path, html => {
-    if (!html.includes(text)) return false;
+    const readableText = decodeEntities(html.replace(/<[^>]*>/g, " ")).replace(/\s+/g, " ");
+    if (!readableText.includes(text)) return false;
     if (path !== '/news/') return true;
     const readable = decodeEntities(html);
     return latestPublication.every(item => readable.includes(item.title));

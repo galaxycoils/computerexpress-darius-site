@@ -14,6 +14,7 @@ import Story, {
 } from "../components/journal/Story";
 import NewsletterPanel from "../components/news/NewsletterPanel";
 import { useLiveNow } from "../hooks/useLiveNow.js";
+import PersonalBriefing from "../components/journal/PersonalBriefing";
 import UiIcon from "../components/journal/UiIcon";
 import "../components/news/news.css";
 export default function HomePage() {
@@ -42,7 +43,7 @@ export default function HomePage() {
       />
       <div className="scd-page journal-home">
         <div className="journal-frontline">
-          <h1>Your city. Your stories.</h1>
+          <div><span className="journal-kicker">The Niagara edition</span><h1>Your city.{" "}<br /><em>Your stories.</em></h1></div>
           <p>Public records and primary sources. A little closer to home.</p>
         </div>
         <nav className="journal-topic-links" aria-label="Browse coverage by topic">
@@ -88,6 +89,7 @@ export default function HomePage() {
             </Link>
           </aside>
         </section>
+        <PersonalBriefing stories={stories} />
         <section className="journal-briefing" aria-label="Your local briefing">
           <div>
             <span className="journal-kicker">A good place to start</span>
