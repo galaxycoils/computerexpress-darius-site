@@ -12,6 +12,8 @@ export const baseRoutes = [
   "/votes",
   "/hate-extremism",
   "/hate-extremism/methodology",
+  "/council-record",
+  "/council-record/how-we-choose-entries",
   "/editorial-policy",
   "/corrections",
   "/welland-votes",

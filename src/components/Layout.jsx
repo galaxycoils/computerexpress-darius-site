@@ -24,6 +24,7 @@ const SECTIONS = [
   ["/events", "What’s On"],
   ["/explore", "Explore"],
   ["/hate-extremism", "Hate & Extremism"],
+  ["/council-record", "Council Record"],
 ];
 const editions = [...CITIES].sort((a, b) =>
   a.slug === "st-catharines"

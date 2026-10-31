@@ -51,6 +51,8 @@ export const appRoutes = [
   { path: 'elections/welland/:ward', page: 'WardRacePage' },
   { path: 'hate-extremism', page: 'HateExtremismPage' },
   { path: 'hate-extremism/methodology', page: 'HateExtremismMethodologyPage' },
+  { path: 'council-record', page: 'CouncilRecordPage' },
+  { path: 'council-record/how-we-choose-entries', page: 'CouncilRecordRulesPage' },
   { path: 'editorial-policy', page: 'EditorialPolicyPage' },
   { path: 'corrections', page: 'CorrectionsPage' },
   { path: 'editorial', page: 'EditorialDeskPage', group: 'clientOnly' },

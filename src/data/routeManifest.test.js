@@ -12,6 +12,15 @@ describe('newsroom route manifest', () => {
     expect(prerenderRoutes).toContain(route)
     expect(sitemapRoutes).toContain(route)
   })
+  it('includes Council Record in the sitemap', () => {
+    expect(prerenderRoutes).toContain('/council-record')
+    expect(prerenderRoutes).toContain('/council-record/how-we-choose-entries')
+    expect(sitemapRoutes).toContain('/council-record')
+    expect(sitemapRoutes).toContain('/council-record/how-we-choose-entries')
+    const xml = createSitemapXml()
+    expect(xml).toContain('<loc>https://stcatharinesdigital.ca/council-record/</loc>')
+    expect(xml).toContain('<loc>https://stcatharinesdigital.ca/council-record/how-we-choose-entries/</loc>')
+  })
   it('includes the debt payoff reader tool in the sitemap', () => {
     expect(prerenderRoutes).toContain('/tools/debt-payoff')
     expect(sitemapRoutes).toContain('/tools/debt-payoff')

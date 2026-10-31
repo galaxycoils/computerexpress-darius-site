@@ -27,6 +27,8 @@ St. Catharines Digital is an independent local-news service for Niagara Region. 
 - Niagara Falls desk: [/news/niagara-falls/](/news/niagara-falls/)
 - Police releases: [/news/police/](/news/police/)
 - Council coverage: [/council/](/council/)
+- Council Record: [/council-record/](/council-record/)
+- How Council Record entries are chosen: [/council-record/how-we-choose-entries/](/council-record/how-we-choose-entries/)
 - Planning tracker: [/planning-tracker/](/planning-tracker/)
 - Sponsorship: [/sponsor/](/sponsor/)
 - Editorial and advertising contact: [/contact/](/contact/)

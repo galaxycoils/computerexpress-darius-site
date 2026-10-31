@@ -68,4 +68,22 @@ describe('NewsletterPanel', () => {
     const body = JSON.parse(fetchMock.mock.calls[0][1].body)
     expect(body.placement).toBe('site_rail')
   })
+
+  it('sends a Council Record source when the signup asks for one', async () => {
+    const fetchMock = vi.fn().mockResolvedValue({
+      ok: true,
+      json: async () => ({ success: true, message: 'Check your inbox and confirm your email to finish subscribing.' }),
+    })
+    vi.stubGlobal('fetch', fetchMock)
+    renderPanel({ placement: 'council-record', source: 'council-record', buttonLabel: 'Notify me', heading: null })
+    fireEvent.change(screen.getByRole('textbox', { name: /email address/i }), { target: { value: 'reader@example.com' } })
+    fireEvent.click(screen.getByRole('button', { name: 'Notify me' }))
+    await waitFor(() => expect(fetchMock).toHaveBeenCalled())
+    expect(JSON.parse(fetchMock.mock.calls[0][1].body)).toEqual({
+      email: 'reader@example.com',
+      placement: 'council-record',
+      source: 'council-record',
+      topics: [],
+    })
+  })
 })
