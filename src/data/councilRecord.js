@@ -152,7 +152,7 @@ function requireText(value, path, errors) {
   if (typeof value !== 'string' || !value.trim()) errors.push(`${path} is required`)
 }
 
-function validateStatement(statement, path, errors) {
+function validateStatement(statement, path, errors, timing = {}) {
   if (!statement || typeof statement !== 'object' || Array.isArray(statement)) {
     errors.push(`${path} is required`)
     errors.push(`${path} needs two credible sources`)
@@ -196,6 +196,9 @@ function validateStatement(statement, path, errors) {
   if (credible.length < 2) {
     errors.push(`${path} needs two credible sources. Social media alone is not enough.`)
   }
+  if (timing.reply === null && isIsoDate(timing.published_date) && isIsoDate(timing.reply_deadline) && timing.published_date <= timing.reply_deadline) {
+    errors.push(`${path} cannot publish no reply until after reply_deadline`)
+  }
 }
 
 function validateVote(vote, path, errors) {
@@ -230,7 +233,11 @@ function validateEntry(entry, index, ids, errors) {
   requireText(entry.councillor_name, `${path}.councillor_name`, errors)
   requireText(entry.ward, `${path}.ward`, errors)
   if (!COUNCIL_RECORD_CITIES.includes(entry.city)) errors.push(`${path}.city must be Welland or St. Catharines`)
-  validateStatement(entry.statement, `${path}.statement`, errors)
+  validateStatement(entry.statement, `${path}.statement`, errors, {
+    reply: entry.reply,
+    published_date: entry.published_date,
+    reply_deadline: entry.reply_deadline,
+  })
   validateVote(entry.vote, `${path}.vote`, errors)
   if (!isIsoDate(entry.published_date)) errors.push(`${path}.published_date is required`)
   if (!isIsoDate(entry.last_verified_date)) errors.push(`${path}.last_verified_date is required`)

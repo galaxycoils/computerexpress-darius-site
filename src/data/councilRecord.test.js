@@ -160,4 +160,21 @@ describe('Council Record validation', () => {
     saturday.reply_deadline = '2026-11-17'
     expect(validateCouncilRecordEntries([saturday]).ok).toBe(true)
   })
+
+  it('rejects a no-reply entry published on or before the reply deadline', () => {
+    const onDeadline = validEntry({ id: 'published-on-deadline', published_date: '2026-11-20', reply: null })
+    const beforeDeadline = validEntry({ id: 'published-before-deadline', published_date: '2026-11-19', reply: null })
+    for (const entry of [onDeadline, beforeDeadline]) {
+      const result = validateCouncilRecordEntries([entry])
+      expect(result.ok, entry.id).toBe(false)
+      expect(result.errors.join(' ')).toMatch(/cannot publish no reply until after reply_deadline/)
+    }
+
+    expect(validateCouncilRecordEntries([validEntry({ id: 'published-after', published_date: '2026-11-21', reply: null })]).ok).toBe(true)
+    expect(validateCouncilRecordEntries([validEntry({
+      id: 'reply-received-early',
+      published_date: '2026-11-19',
+      reply: 'The minutes match what I said.',
+    })]).ok).toBe(true)
+  })
 })
