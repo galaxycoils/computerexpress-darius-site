@@ -2,13 +2,65 @@
  * NRPS Police Media Releases for St. Catharines Digital
  * Sourced exclusively from https://www.niagarapolice.ca/news/posts/
  * Official Niagara Regional Police Service media releases & community notifications.
- * Updated: 2026-10-22
+ * Updated: 2026-10-31
  * Next review: Daily (cron) — refresh from niagarapolice.ca
- * Note: Added the Oct 21 Thorold weapons release (five youths, incident 26-132903) and two Oct 22 Niagara Falls releases (drug trafficking seizure, incident 26-132779; ICE Unit arrest, incident 26-110157). The Oct 20 located-person update remains in the archive.
+ * Note: Added Crime Stoppers partnership suspension (Oct 24), St. Catharines cheerleading coach charges (Oct 27), and Welland attempt break-and-enter suspects-to-identify (Oct 27, incident 26-135395).
  */
 import { getRenderNow } from '../utils/renderClock.js'
 
 export const nrpsReleases = [
+
+  {
+    id: 'nrps-2026-10-27-st-catharines-cheerleading-coach-charges',
+    date: '2026-10-27',
+    headline: 'St. Catharines Cheerleading Coach Charged with Reported Sexual Assault Offences',
+    municipality: 'St. Catharines',
+    type: 'Media Release (Sexual Assault Investigation / Arrest)',
+    url: 'https://www.niagarapolice.ca/news/posts/st-catharines-cheerleading-coach-charged-with-reported-sexual-assault-offences/',
+    source: 'Niagara Regional Police Service',
+    tags: ['Sexual Assault', 'Arrest', 'St. Catharines', 'Sexual Assault Unit', 'Historical'],
+    category: 'assault',
+    published: '2026-10-27T00:00:00-04:00',
+    charges: [
+      { name: 'Sexual Assault', accused: 'Derek OVENDEN', age: 42, city: 'St. Catharines', status: 'in custody / bail hearing' },
+      { name: 'Sexual Interference', accused: 'Derek OVENDEN', age: 42, city: 'St. Catharines', status: 'in custody / bail hearing' },
+      { name: 'Sexual Exploitation (4 counts)', accused: 'Derek OVENDEN', age: 42, city: 'St. Catharines', status: 'in custody / bail hearing' }
+    ],
+    court: [
+      { label: 'Bail hearing', date: '2026-10-27', venue: 'Robert S.K. Welch Courthouse', address: '59 Church Street, St. Catharines' }
+    ],
+    contact: { unit: 'Sexual Assault Unit', phone: '(905) 688-4111', ext: '1009336', anonymous: '(289) 248-1058' },
+    incident_number: '26-34851 / 26-70081'
+  },
+  {
+    id: 'nrps-2026-10-27-welland-attempt-break-and-enter',
+    date: '2026-10-27',
+    headline: 'Two Suspects to Identify in Attempt Break and Enter in Welland',
+    municipality: 'Welland',
+    type: 'Media Release (Attempt Break and Enter / Public Assistance)',
+    url: 'https://www.niagarapolice.ca/news/posts/two-suspects-to-identify-in-attempt-break-and-enter-in-welland/',
+    source: 'Niagara Regional Police Service',
+    tags: ['Break and Enter', 'Attempt', 'Welland', 'Public Assistance', '3 District', 'Jewelry Store'],
+    category: 'break-and-enter',
+    incident_date: '2026-10-26T16:50:00-04:00',
+    published: '2026-10-27T00:00:00-04:00',
+    location: { text: 'Jewelry store in the Thorold Road and Prince Charles Drive area of Welland; suspect vehicle last seen south on Lloyd Avenue', lat: null, lng: null },
+    contact: { unit: '3 District', phone: '905-688-4111', ext: '1009106', anonymous: '(289) 248-1058' },
+    incident_number: '26-135395'
+  },
+  {
+    id: 'nrps-2026-10-24-crime-stoppers-partnership-suspended',
+    date: '2026-10-24',
+    headline: 'Niagara Regional Police Service Suspends Partnership with Crime Stoppers',
+    municipality: 'Region-wide',
+    type: 'Media Release (Community Notification)',
+    url: 'https://www.niagarapolice.ca/news/posts/niagara-regional-police-service-suspends-partnership-with-crime-stoppers/',
+    source: 'Niagara Regional Police Service',
+    tags: ['Crime Stoppers', 'Cybersecurity', 'Community Notification', 'Region-wide', 'Anonymous Tips'],
+    category: 'community-notification',
+    published: '2026-10-24T00:00:00-04:00',
+    contact: { unit: 'Niagara Regional Police Service', phone: '(289) 248-1058', anonymous: '(289) 248-1058', emergency: '9-1-1' }
+  },
   {
     id: 'nrps-2026-10-22-niagara-falls-drug-trafficking-seizure-200k',
     date: '2026-10-22',
@@ -1068,5 +1120,6 @@ export function getNrpsStats(now = getRenderNow()) {
     latestDate,
   };
 }
+
 
 

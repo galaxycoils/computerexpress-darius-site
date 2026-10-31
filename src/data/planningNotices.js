@@ -6,13 +6,61 @@
  * - thorold.ca
  * - niagararegion.ca
  *
- * Updated: 2026-10-21
- * Note: Added Committee of Adjustment hearings for 74 and 78 Oliver Lane (A-56/26 and A-57/26, Nov 12, 2026). Road closures for Oct. 20 page returned 404.
+ * Updated: 2026-10-31
+ * Note: Added Welland CoA public hearing for Biggar Rd / Scholfield Ave / Tanguay Ave–Promenade Richelieu (Nov 12). Added Thorold Sullivan Ave water shut-off (Oct 27) and Centre St road closure (Oct 26-27); both now complete.
  * Next review: Daily
  */
 import { getRenderNow, parseTorontoDate } from "../utils/renderClock.js";
 
 export const planningNotices = [
+
+  {
+    id: "welland-coa-biggar-scholfield-tanguay-nov12",
+    municipality: "Welland",
+    type: "Consent and Minor Variance (Committee of Adjustment)",
+    title: "Biggar Rd, Scholfield Ave, and 655 Tanguay Ave / 51 Promenade Richelieu — Consents and Minor Variances",
+    description:
+      "Public hearing for concurrent applications: consent to lease land with an existing telecommunications tower and convey access/utility easements at 485 Biggar Rd (PLCON202600233); minor variance to recognize an existing front deck encroachment at 52 Scholfield Ave (PLMV202600245); consent to convey institutional lands and related minor variances for setbacks, parking, and planting strips at 655 Tanguay Ave and 51 Promenade Richelieu (PLCON202600240 / PLMV202600249 / PLMV202600241). No new development is proposed for the tower site; institutional uses continue.",
+    fileNumber: "PLCON202600233 / PLMV202600245 / PLCON202600240 / PLMV202600249 / PLMV202600241",
+    status: "Hearing Scheduled",
+    meetingDate: "2026-11-12T17:00:00",
+    meetingLocation: "Civic Square Council Chambers, 60 East Main Street, Welland",
+    submissionDeadline: "2026-11-06T17:00:00",
+    submissionEmail: "cofa@welland.ca",
+    publishedDate: "2026-10-22",
+    sourceUrl: "https://www.welland.ca/news/posts/notice-of-public-hearing-concerning-applications-for-consent-and-minor-variance-biggar-rd-scholfield-ave-and-655-tanguay-ave-and-51-promenade-richelieu/",
+    category: "consent-application",
+    tags: ["Consent", "Minor Variance", "Biggar Road", "Scholfield Avenue", "Tanguay Avenue", "Promenade Richelieu", "Welland", "Committee of Adjustment"],
+  },
+  {
+    id: "thorold-sullivan-ave-water-shutoff-oct-27",
+    municipality: "Thorold",
+    type: "Temporary Water Shut-Off",
+    title: "Sullivan Avenue Temporary Water Shut-Off — October 27",
+    description:
+      "City contractor Beam Excavating Ltd. scheduled a temporary water shut-off affecting businesses and residences on Sullivan Avenue on October 27, 2026, from 9 p.m. to 12 a.m., to complete a new watermain connection at Towpath Street. Residents were advised to store an adequate water supply in advance. Discolored water may occur after restoration; flush until clear.",
+    status: "Meeting Complete",
+    meetingDate: "2026-10-27T21:00:00",
+    publishedDate: "2026-10-26",
+    sourceUrl: "https://www.thorold.ca/news/news/temporary-water-shut-off-sullivan-avenue-october-27/",
+    category: "municipal-service",
+    tags: ["Water Shut-Off", "Sullivan Avenue", "Thorold", "Watermain"],
+  },
+  {
+    id: "thorold-centre-st-closure-oct-26-27",
+    municipality: "Thorold",
+    type: "Temporary Road Closure",
+    title: "Centre Street Temporary Closure — October 26 & 27",
+    description:
+      "A private developer temporarily closed a portion of Centre Street in Thorold on October 26 and 27, 2026 (7 a.m. to 5 p.m. each day) to install water services for a new development at 2248 Centre Street. Contact for questions: Cotton Inc. at 905-262-2000 ext. 234.",
+    status: "Meeting Complete",
+    meetingDate: "2026-10-26T07:00:00",
+    endDate: "2026-10-27T17:00:00",
+    publishedDate: "2026-10-23",
+    sourceUrl: "https://www.thorold.ca/news/news/temporary-road-closure-centre-street-october-26-27/",
+    category: "road-closure",
+    tags: ["Road Closure", "Centre Street", "Thorold", "Water Services"],
+  },
   {
     id: "stc-78-oliver-lane-a-57-26",
     municipality: "St. Catharines",
@@ -993,4 +1041,5 @@ export function getNoticeStats(now = getRenderNow(), notices = planningNotices) 
     upcomingMeetings: getFutureMeetings(now, notices).length,
   };
 }
+
 
