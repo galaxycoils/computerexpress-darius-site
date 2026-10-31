@@ -36,6 +36,7 @@ const entry = {
   last_verified_date: '2026-11-22',
   status: 'Reply received',
   comment_requested_date: '2026-11-18',
+  reply_deadline: '2026-11-20',
   reply: null,
   commentary: { text: 'The two records are shown here without a conclusion.', signed_by: 'Darius T' },
 }
@@ -45,7 +46,7 @@ describe('Council Record pages', () => {
     renderPage(<CouncilRecordPage />)
     expect(screen.getByRole('heading', { level: 1, name: 'Council Record' })).toBeInTheDocument()
     expect(screen.getByRole('link', { name: 'How we choose entries' })).toHaveAttribute('href', '/council-record/how-we-choose-entries')
-    expect(screen.getByText('Entries will be added after the new councils take office (Nov. 15, 2026) once each one has been checked and legally reviewed.')).toBeInTheDocument()
+    expect(screen.getByText('Entries will be added after the new councils take office (Nov. 15, 2026) once each one has been checked and approved, with legal review of the format and first batch.')).toBeInTheDocument()
     expect(screen.queryByRole('article')).not.toBeInTheDocument()
     expect(screen.getByText('Darius T')).toBeInTheDocument()
     expect(screen.queryByText(/sponsor/i)).not.toBeInTheDocument()
@@ -63,7 +64,7 @@ describe('Council Record pages', () => {
     expect(screen.getByRole('region', { name: 'Statement' })).toHaveTextContent('The budget should be published before the vote.')
     expect(screen.getByRole('region', { name: 'Vote' })).toHaveTextContent('Voted against')
     expect(screen.getByRole('link', { name: 'City minutes' })).toHaveAttribute('href', entry.vote.minutes_url)
-    expect(screen.getByText('no reply')).toBeInTheDocument()
+    expect(screen.getByText('No reply by November 20, 2026')).toBeInTheDocument()
     expect(screen.getByRole('complementary', { name: 'Commentary' })).toHaveTextContent('Signed by Darius T')
     expect(screen.getByRole('link', { name: 'Request a correction / right of reply' })).toHaveAttribute('href', '/corrections?entry=sample-ward-1')
     expect(screen.getByText('Reply received')).toBeInTheDocument()
@@ -101,8 +102,12 @@ describe('Council Record pages', () => {
     expect(screen.getByRole('heading', { level: 1, name: 'How we choose entries' })).toBeInTheDocument()
     expect(screen.getByRole('link', { name: 'Back to Council Record' })).toHaveAttribute('href', '/council-record')
     expect(text).toMatch(/quoted exactly/)
-    expect(text).toMatch(/two credible sources, or one credible source plus an archived copy/)
-    expect(text).toMatch(/Social media is never the only source/)
+    expect(text).toMatch(/Each quote needs two credible sources\./)
+    expect(text).not.toMatch(/one credible source plus an archived copy/)
+    expect(text).toMatch(/When either source is the councillor's own page or post, the entry also needs an archived copy/)
+    expect(text).toMatch(/on-record statements \(council meetings, campaign material, credible press\)/)
+    expect(text).toMatch(/The same standard applies to every councillor in both cities/)
+    expect(text).toMatch(/Each entry is approved by the editor before publication/)
     expect(text).toMatch(/primary city record/)
     expect(text).toMatch(/side by side/)
     expect(text).toMatch(/separate commentary field/)
@@ -111,10 +116,13 @@ describe('Council Record pages', () => {
     expect(text).toMatch(/date it was last verified/)
     expect(text).toMatch(/neutral label/)
     expect(text).toMatch(/\/corrections\?entry=/)
+    expect(text).toMatch(/Correction requests are reviewed within 72 hours/)
+    expect(text).toMatch(/updated within 48 hours and marked Updated/)
     expect(text).toMatch(/asks the councillor for comment before an entry is published/)
-    expect(text).toMatch(/no reply/)
+    expect(text).toMatch(/at least two business days/)
+    expect(text).toMatch(/No reply by/)
     expect(text).toMatch(/nothing about family, home or private business/)
-    expect(text).toMatch(/conflict-of-interest filing or an integrity commissioner report/)
+    expect(text).not.toMatch(/conflict-of-interest filing|integrity commissioner/)
     expect(text).toMatch(/A lawyer reviews the format and the first batch before entries go live/)
     expect(screen.getByText('Darius T')).toBeInTheDocument()
     expect(text).not.toMatch(/\bWatch\b/)

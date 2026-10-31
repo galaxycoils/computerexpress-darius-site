@@ -6,8 +6,7 @@
  * @typedef {'Welland' | 'St. Catharines'} CouncilRecordCity
  * @typedef {'Voted for' | 'Voted against' | 'Abstained' | 'Absent' | 'No vote yet'} CouncilRecordPosition
  * @typedef {'Published' | 'Updated' | 'Comment requested' | 'Reply received'} CouncilRecordStatus
- * @typedef {'conflict-of-interest-filing' | 'integrity-commissioner-report'} CouncilRecordDisclosureBasis
- * @typedef {{ url: string, publisher: string, date: string }} CouncilRecordSource
+ * @typedef {{ url: string, publisher: string, date: string, councillor_own: boolean }} CouncilRecordSource
  * @typedef {{ exact_quote: string, sources: CouncilRecordSource[], archived_copy_url?: string }} CouncilRecordStatement
  * @typedef {{ item: string, position: CouncilRecordPosition, minutes_url: string, date: string }} CouncilRecordVote
  * @typedef {{ text: string, signed_by: string }} CouncilRecordCommentary
@@ -22,10 +21,9 @@
  *   last_verified_date: string,
  *   status: CouncilRecordStatus,
  *   comment_requested_date: string,
+ *   reply_deadline: string,
  *   reply: string | null,
- *   commentary?: CouncilRecordCommentary,
- *   disclosure_basis?: CouncilRecordDisclosureBasis,
- *   public_disclosure?: Record<string, unknown>
+ *   commentary?: CouncilRecordCommentary
  * }} CouncilRecordEntry
  */
 
@@ -44,11 +42,6 @@ export const COUNCIL_RECORD_STATUSES = [
   'Updated',
   'Comment requested',
   'Reply received',
-]
-
-export const COUNCIL_RECORD_DISCLOSURE_BASES = [
-  'conflict-of-interest-filing',
-  'integrity-commissioner-report',
 ]
 
 const PROHIBITED_KEYS = new Set([
@@ -108,6 +101,21 @@ export function formatRecordDate(value) {
   })
 }
 
+/** Monday–Friday. The count starts the day after `isoDate`. */
+export function addBusinessDays(isoDate, days) {
+  const [year, month, day] = isoDate.split('-').map(Number)
+  const date = new Date(Date.UTC(year, month - 1, day))
+  let added = 0
+  while (added < days) {
+    date.setUTCDate(date.getUTCDate() + 1)
+    const weekday = date.getUTCDay()
+    if (weekday !== 0 && weekday !== 6) added += 1
+  }
+  const monthText = String(date.getUTCMonth() + 1).padStart(2, '0')
+  const dayText = String(date.getUTCDate()).padStart(2, '0')
+  return `${date.getUTCFullYear()}-${monthText}-${dayText}`
+}
+
 function normalizeKey(key) {
   return String(key).toLowerCase().replace(/[^a-z0-9]/g, '')
 }
@@ -127,19 +135,16 @@ function isSocialUrl(url) {
   return SOCIAL_HOSTS.some((blocked) => host === blocked || host.endsWith(`.${blocked}`))
 }
 
-function pushProhibited(value, path, errors, allowPrivate) {
+function pushProhibited(value, path, errors) {
   if (Array.isArray(value)) {
-    value.forEach((item, index) => pushProhibited(item, `${path}[${index}]`, errors, allowPrivate))
+    value.forEach((item, index) => pushProhibited(item, `${path}[${index}]`, errors))
     return
   }
   if (!value || typeof value !== 'object') return
   for (const [key, nested] of Object.entries(value)) {
     const next = `${path}.${key}`
-    const disclosed = allowPrivate && path.includes('.public_disclosure')
-    if (PROHIBITED_KEYS.has(normalizeKey(key)) && !disclosed) {
-      errors.push(`${next} is private and is not published`)
-    }
-    pushProhibited(nested, next, errors, allowPrivate)
+    if (PROHIBITED_KEYS.has(normalizeKey(key))) errors.push(`${next} is private and is not published`)
+    pushProhibited(nested, next, errors)
   }
 }
 
@@ -150,7 +155,7 @@ function requireText(value, path, errors) {
 function validateStatement(statement, path, errors) {
   if (!statement || typeof statement !== 'object' || Array.isArray(statement)) {
     errors.push(`${path} is required`)
-    errors.push(`${path} needs two credible sources, or one credible source plus an archived copy`)
+    errors.push(`${path} needs two credible sources`)
     return
   }
   requireText(statement.exact_quote, `${path}.exact_quote`, errors)
@@ -158,12 +163,15 @@ function validateStatement(statement, path, errors) {
   if (!Array.isArray(statement.sources)) errors.push(`${path}.sources must be a list`)
   const credible = []
   const seen = new Set()
+  let needsArchive = false
   sources.forEach((source, index) => {
     const sourcePath = `${path}.sources[${index}]`
     if (!source || typeof source !== 'object') {
       errors.push(`${sourcePath} must be an object`)
       return
     }
+    if (typeof source.councillor_own !== 'boolean') errors.push(`${sourcePath}.councillor_own must be true or false`)
+    else if (source.councillor_own) needsArchive = true
     requireText(source.publisher, `${sourcePath}.publisher`, errors)
     if (!isIsoDate(source.date)) errors.push(`${sourcePath}.date must be an exact date`)
     const url = httpsUrl(source.url)
@@ -182,8 +190,12 @@ function validateStatement(statement, path, errors) {
     else if (isSocialUrl(archive)) errors.push(`${path}.archived_copy_url cannot be a social media page`)
     else archiveOk = true
   }
-  if (credible.length >= 2 || (credible.length === 1 && archiveOk)) return
-  errors.push(`${path} needs two credible sources, or one credible source plus an archived copy. Social media alone is not enough.`)
+  if (needsArchive && !archiveOk) {
+    errors.push(`${path} needs an archived copy when a source is the councillor's own page or post`)
+  }
+  if (credible.length < 2) {
+    errors.push(`${path} needs two credible sources. Social media alone is not enough.`)
+  }
 }
 
 function validateVote(vote, path, errors) {
@@ -205,7 +217,7 @@ function validateEntry(entry, index, ids, errors) {
     errors.push(`${path}.vote.minutes_url is required`)
     errors.push(`${path}.comment_requested_date is required`)
     errors.push(`${path}.last_verified_date is required`)
-    errors.push(`${path}.statement needs two credible sources, or one credible source plus an archived copy`)
+    errors.push(`${path}.statement needs two credible sources`)
     return
   }
   if (typeof entry.id !== 'string' || !/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(entry.id)) {
@@ -223,6 +235,10 @@ function validateEntry(entry, index, ids, errors) {
   if (!isIsoDate(entry.published_date)) errors.push(`${path}.published_date is required`)
   if (!isIsoDate(entry.last_verified_date)) errors.push(`${path}.last_verified_date is required`)
   if (!isIsoDate(entry.comment_requested_date)) errors.push(`${path}.comment_requested_date is required`)
+  if (!isIsoDate(entry.reply_deadline)) errors.push(`${path}.reply_deadline is required`)
+  else if (isIsoDate(entry.comment_requested_date) && entry.reply_deadline < addBusinessDays(entry.comment_requested_date, 2)) {
+    errors.push(`${path}.reply_deadline must be at least two business days after comment_requested_date`)
+  }
   if (typeof entry.status !== 'string' || JUDGMENT_STATUS.test(entry.status) || !COUNCIL_RECORD_STATUSES.includes(entry.status)) {
     errors.push(`${path}.status must be a neutral record label`)
   }
@@ -235,10 +251,7 @@ function validateEntry(entry, index, ids, errors) {
       errors.push(`${path}.commentary must include text and signed_by`)
     }
   }
-  if (entry.disclosure_basis !== undefined && !COUNCIL_RECORD_DISCLOSURE_BASES.includes(entry.disclosure_basis)) {
-    errors.push(`${path}.disclosure_basis is not a public filing`)
-  }
-  pushProhibited(entry, path, errors, COUNCIL_RECORD_DISCLOSURE_BASES.includes(entry.disclosure_basis))
+  pushProhibited(entry, path, errors)
 }
 
 export function validateCouncilRecordEntries(entries) {

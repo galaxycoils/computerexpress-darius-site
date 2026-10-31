@@ -27,12 +27,17 @@ export default function CouncilRecordRulesPage() {
         </PageHeading>
 
         <div className="journal-prose">
+          <h2>How entries are chosen</h2>
+          <p>
+            Entries cover on-record statements (council meetings, campaign material, credible press) that relate to a recorded council vote. The same standard applies to every councillor in both cities. Each entry is approved by the editor before publication.
+          </p>
+
           <h2>Exact quotes</h2>
           <p>A statement is the councillor&apos;s words, quoted exactly. The entry does not paraphrase the quote.</p>
 
           <h2>Sources</h2>
           <p>
-            Each quote needs two credible sources, or one credible source plus an archived copy. Every source shows the publisher, the link and the date. Social media is never the only source. A social post, a forum or a rumour does not qualify on its own, and an archive of a social post does not replace a credible source.
+            Each quote needs two credible sources. Every source shows the publisher, the link and the date. Social media is never a credible source. A social post, a forum or a rumour does not qualify on its own. When either source is the councillor&apos;s own page or post, the entry also needs an archived copy.
           </p>
 
           <h2>The vote</h2>
@@ -47,7 +52,7 @@ export default function CouncilRecordRulesPage() {
 
           <h2>Dates, status and corrections</h2>
           <p>
-            Every entry shows the date it was published, the date it was last verified, and a status. The status is a neutral label for the record. Each entry links to a correction and right-of-reply form.
+            Every entry shows the date it was published, the date it was last verified, and a status. The status is a neutral label for the record. Each entry links to a correction and right-of-reply form. Correction requests are reviewed within 72 hours. If a vote is reconsidered or the minutes are corrected, the entry is updated within 48 hours and marked Updated.
           </p>
           <p>
             <Link to="/corrections">Request a correction / right of reply</Link>
@@ -57,12 +62,12 @@ export default function CouncilRecordRulesPage() {
 
           <h2>Comment before publication</h2>
           <p>
-            The newsroom asks the councillor for comment before an entry is published. The entry shows the date the comment was requested, and the reply, or &quot;no reply&quot;.
+            The newsroom asks the councillor for comment before an entry is published. The reply deadline is at least two business days after the date the comment was requested. The entry shows that request date and the reply, or &quot;No reply by&quot; the deadline.
           </p>
 
           <h2>Public conduct only</h2>
           <p>
-            Entries cover public conduct. They include nothing about family, home or private business, unless that information comes from a conflict-of-interest filing or an integrity commissioner report.
+            Entries cover public conduct. They include nothing about family, home or private business.
           </p>
 
           <h2>Legal review</h2>

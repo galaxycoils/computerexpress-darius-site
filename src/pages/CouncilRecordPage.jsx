@@ -11,7 +11,7 @@ import { councilRecordEntries } from '../data/councilRecordEntries'
 import './council-record.css'
 
 const PAGE_PATH = '/council-record'
-const EMPTY_STATE = 'Entries will be added after the new councils take office (Nov. 15, 2026) once each one has been checked and legally reviewed.'
+const EMPTY_STATE = 'Entries will be added after the new councils take office (Nov. 15, 2026) once each one has been checked and approved, with legal review of the format and first batch.'
 
 function checkedProduction() {
   const result = validateCouncilRecordEntries(councilRecordEntries)
@@ -28,7 +28,7 @@ function isExactDate(value) {
 }
 
 function EntryCard({ entry }) {
-  const reply = entry.reply && entry.reply.trim() ? entry.reply : 'no reply'
+  const reply = entry.reply && entry.reply.trim() ? entry.reply : `No reply by ${formatRecordDate(entry.reply_deadline)}`
   return (
     <article className="journal-story" id={entry.id} aria-labelledby={`${entry.id}-title`}>
       <p className="journal-kicker">

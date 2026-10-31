@@ -2,8 +2,8 @@ import { describe, expect, it } from 'vitest'
 import { councilRecordEntries } from './councilRecordEntries'
 import { validateCouncilRecordEntries } from './councilRecord'
 
-function source(url, publisher = 'St. Catharines Standard') {
-  return { url, publisher, date: '2026-10-01' }
+function source(url, publisher = 'St. Catharines Standard', councillorOwn = false) {
+  return { url, publisher, date: '2026-10-01', councillor_own: councillorOwn }
 }
 
 function validEntry(overrides = {}) {
@@ -29,6 +29,7 @@ function validEntry(overrides = {}) {
     last_verified_date: '2026-11-22',
     status: 'Comment requested',
     comment_requested_date: '2026-11-18',
+    reply_deadline: '2026-11-20',
     reply: null,
     ...overrides,
   }
@@ -40,15 +41,37 @@ describe('Council Record validation', () => {
     expect(validateCouncilRecordEntries(councilRecordEntries)).toEqual({ ok: true, errors: [] })
   })
 
-  it('accepts two credible sources, or one source plus an archived copy', () => {
+  it('requires two credible sources, and an archived copy when a source is the councillor\'s own page', () => {
     expect(validateCouncilRecordEntries([validEntry()]).ok).toBe(true)
-    const archived = validEntry()
-    archived.statement = {
-      exact_quote: archived.statement.exact_quote,
-      sources: [archived.statement.sources[0]],
+
+    const onePlusArchive = validEntry({ id: 'one-plus-archive' })
+    onePlusArchive.statement = {
+      exact_quote: onePlusArchive.statement.exact_quote,
+      sources: [onePlusArchive.statement.sources[0]],
       archived_copy_url: 'https://web.archive.org/web/20261101000000/https://www.stcatharinesstandard.ca/example-a',
     }
-    expect(validateCouncilRecordEntries([archived]).ok).toBe(true)
+    const oneResult = validateCouncilRecordEntries([onePlusArchive])
+    expect(oneResult.ok).toBe(false)
+    expect(oneResult.errors.join(' ')).toMatch(/two credible sources/)
+    expect(oneResult.errors.join(' ')).not.toMatch(/one credible source plus an archived copy/)
+
+    const ownPage = validEntry({ id: 'own-page' })
+    ownPage.statement = {
+      ...ownPage.statement,
+      sources: [
+        source('https://www.stcatharinesstandard.ca/example-a'),
+        source('https://alexexample.ca/budget', 'Alex Example', true),
+      ],
+    }
+    const ownResult = validateCouncilRecordEntries([ownPage])
+    expect(ownResult.ok).toBe(false)
+    expect(ownResult.errors.join(' ')).toMatch(/archived copy when a source is the councillor's own page or post/)
+
+    ownPage.statement = {
+      ...ownPage.statement,
+      archived_copy_url: 'https://web.archive.org/web/20261118000000/https://alexexample.ca/budget',
+    }
+    expect(validateCouncilRecordEntries([ownPage]).ok).toBe(true)
   })
 
   it('rejects a missing second source, minutes link, comment request date, or last verified date', () => {
@@ -104,6 +127,37 @@ describe('Council Record validation', () => {
     const filing = validEntry({ id: 'filing' })
     filing.disclosure_basis = 'conflict-of-interest-filing'
     filing.public_disclosure = { privatebusiness: 'named in the filing' }
-    expect(validateCouncilRecordEntries([filing]).ok).toBe(true)
+    expect(validateCouncilRecordEntries([filing]).ok).toBe(false)
+    expect(validateCouncilRecordEntries([filing]).errors.join(' ')).toMatch(/private and is not published/)
+  })
+
+  it('requires a reply deadline at least two business days after the comment request', () => {
+    const missing = validEntry({ id: 'no-deadline' })
+    delete missing.reply_deadline
+    expect(validateCouncilRecordEntries([missing]).errors.join(' ')).toMatch(/reply_deadline is required/)
+
+    const tooSoon = validEntry({ id: 'too-soon', reply_deadline: '2026-11-19' })
+    expect(validateCouncilRecordEntries([tooSoon]).ok).toBe(false)
+    expect(validateCouncilRecordEntries([tooSoon]).errors.join(' ')).toMatch(/at least two business days/)
+
+    expect(validateCouncilRecordEntries([validEntry({ id: 'on-time', reply_deadline: '2026-11-20' })]).ok).toBe(true)
+
+    const friday = validEntry({
+      id: 'friday-request',
+      comment_requested_date: '2026-11-13',
+      reply_deadline: '2026-11-16',
+    })
+    expect(validateCouncilRecordEntries([friday]).ok).toBe(false)
+    friday.reply_deadline = '2026-11-17'
+    expect(validateCouncilRecordEntries([friday]).ok).toBe(true)
+
+    const saturday = validEntry({
+      id: 'saturday-request',
+      comment_requested_date: '2026-11-14',
+      reply_deadline: '2026-11-16',
+    })
+    expect(validateCouncilRecordEntries([saturday]).ok).toBe(false)
+    saturday.reply_deadline = '2026-11-17'
+    expect(validateCouncilRecordEntries([saturday]).ok).toBe(true)
   })
 })
