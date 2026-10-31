@@ -93,6 +93,8 @@ try {
     "/explore/port-dalhousie/",
     "/articles/not-a-published-story/",
     "/404/",
+    "/council-record/",
+    "/council-record/how-we-choose-entries/",
   ];
   for (const width of [320, 390, 768, 1440]) {
     await page.setViewportSize({ width, height: 1000 });

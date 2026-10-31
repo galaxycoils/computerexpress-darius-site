@@ -38,6 +38,8 @@ const PoliceNewsPage = lazy(() => import('../pages/PoliceNewsPage'))
 const VotesHubPage = lazy(() => import('../pages/VotesHubPage'))
 const HateExtremismPage = lazy(() => import('../pages/HateExtremismPage'))
 const HateExtremismMethodologyPage = lazy(() => import('../pages/HateExtremismMethodologyPage'))
+const CouncilRecordPage = lazy(() => import('../pages/CouncilRecordPage'))
+const CouncilRecordRulesPage = lazy(() => import('../pages/CouncilRecordRulesPage'))
 const EditorialPolicyPage = lazy(() => import('../pages/EditorialPolicyPage'))
 const CorrectionsPage = lazy(() => import('../pages/CorrectionsPage'))
 const SponsorPage = lazy(() => import('../pages/SponsorPage'))
@@ -82,6 +84,8 @@ export const lazyPages = {
   VotesHubPage,
   HateExtremismPage,
   HateExtremismMethodologyPage,
+  CouncilRecordPage,
+  CouncilRecordRulesPage,
   EditorialPolicyPage,
   CorrectionsPage,
   EditorialDeskPage,

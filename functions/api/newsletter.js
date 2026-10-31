@@ -1,5 +1,6 @@
 import {completeDelivery,createDelivery,failDelivery,recipientFingerprint} from '../lib/emailDelivery.js'
 import {issueToken,TOPICS} from '../lib/newsletterTokens.js'
+import {COUNCIL_RECORD_TAG,mergeTags,tagsFromSignup} from '../lib/subscriberTags.js'
 const response=(body,status=200)=>new Response(JSON.stringify(body),{status,headers:{'Content-Type':'application/json','Cache-Control':'no-store'}})
 export function onRequestGet({env}){return response({available:Boolean(env.STC_D1&&env.AGENTMAIL_API_KEY)})}
 export async function onRequestPost({env,request}){
@@ -11,11 +12,18 @@ export async function onRequestPost({env,request}){
  const email=String(body.email||'').trim().toLowerCase()
  if(email.length>254||!/^\S+@[^\s@]+\.[^\s@]+$/.test(email))return response({error:'Enter a valid email address.'},400)
  const topics=Array.isArray(body.topics)?[...new Set(body.topics.filter(x=>TOPICS.includes(x)))]:[]
- const placement=['home','site_rail','guide_inline','planning_tracker'].includes(body.placement)?body.placement:'site_rail'
+ const placement=['home','site_rail','guide_inline','planning_tracker','council-record'].includes(body.placement)?body.placement:'site_rail'
+ const incomingTags=tagsFromSignup({...body,placement})
  try{
-  const existing=await db.prepare('SELECT status, updated_at FROM newsletter_subscribers WHERE email = ?').bind(email).first()
-  if(existing?.status==='active'||(existing?.status==='pending'&&Date.now()-existing.updated_at<60000))return response({success:true,message:'Check your inbox for a confirmation or use the preferences link in an earlier email.'})
-  await db.prepare("INSERT INTO newsletter_subscribers (email,topics,placement,status,created_at,updated_at) VALUES (?,?,?,'pending',?,?) ON CONFLICT(email) DO UPDATE SET topics=excluded.topics,placement=excluded.placement,status='pending',updated_at=excluded.updated_at,confirmed_at=NULL").bind(email,JSON.stringify(topics),placement,Date.now(),Date.now()).run()
+  const existing=await db.prepare('SELECT status, updated_at, tags FROM newsletter_subscribers WHERE email = ?').bind(email).first()
+  const mergedTags=JSON.stringify(mergeTags(existing?.tags,incomingTags))
+  const recentPending=existing?.status==='pending'&&Date.now()-existing.updated_at<60000
+  if(existing?.status==='active'||recentPending){
+   if(incomingTags.length)await db.prepare('UPDATE newsletter_subscribers SET tags=? WHERE email=?').bind(mergedTags,email).run()
+   const message=existing.status==='active'&&incomingTags.includes(COUNCIL_RECORD_TAG)?'You are on the list. We will email this address when Council Record entries are published.':'Check your inbox for a confirmation or use the preferences link in an earlier email.'
+   return response({success:true,message})
+  }
+  await db.prepare("INSERT INTO newsletter_subscribers (email,topics,placement,status,created_at,updated_at,tags) VALUES (?,?,?,'pending',?,?,?) ON CONFLICT(email) DO UPDATE SET topics=excluded.topics,placement=excluded.placement,status='pending',updated_at=excluded.updated_at,confirmed_at=NULL,tags=excluded.tags").bind(email,JSON.stringify(topics),placement,Date.now(),Date.now(),mergedTags).run()
   const confirm=await issueToken(db,email,'confirm',24*60*60*1000),manage=await issueToken(db,email,'manage',90*24*60*60*1000)
   const confirmUrl=`https://stcatharinesdigital.ca/api/newsletter/confirm?token=${confirm}`,manageUrl=`https://stcatharinesdigital.ca/api/newsletter/manage?token=${manage}`
   const delivery=await createDelivery(db,{channel:'newsletter',recipientRef:await recipientFingerprint(email),template:'confirm'})

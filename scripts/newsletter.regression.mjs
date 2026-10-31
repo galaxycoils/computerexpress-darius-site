@@ -9,10 +9,11 @@ import { issueToken } from '../functions/lib/newsletterTokens.js'
 import { onRequestPost as submitContact } from '../functions/api/contact.js'
 import { onRequestGet as listSubmissions, onRequestPatch as updateSubmission } from '../functions/api/editorial/submissions.js'
 import { onRequest as reconcile } from '../functions/cron/reconcile-newsletter.js'
+import { newsletterTagMigration } from './newsletterTagMigration.js'
 
 function database() {
   const sqlite = new DatabaseSync(':memory:')
-  for (const file of ['0005_create_newsletter_subscribers.sql','0006_create_email_delivery_log.sql','0007_newsletter_tokens.sql','0008_editorial_submissions.sql','0009_editorial_audit.sql']) sqlite.exec(readFileSync(new URL('../migrations/'+file,import.meta.url),'utf8'))
+  for (const file of ['0005_create_newsletter_subscribers.sql','0006_create_email_delivery_log.sql','0007_newsletter_tokens.sql','0008_editorial_submissions.sql','0009_editorial_audit.sql','0012_newsletter_subscriber_tags.sql']) sqlite.exec(readFileSync(new URL('../migrations/'+file,import.meta.url),'utf8'))
   const db = {prepare(sql) {const statement=sqlite.prepare(sql);const execute=args=>({sql,async first(){return statement.get(...args)},async all(){return {results:statement.all(...args)}},async run(){const result=statement.run(...args);return {meta:{changes:result.changes}}}});return {...execute([]),bind(...args){return execute(args)}}}, async batch(statements){const results=[];for(const s of statements) results.push(/^\s*SELECT/i.test(s.sql)?await s.all():await s.run());return results}}
   return {sqlite,db}
 }
@@ -75,4 +76,73 @@ test('reader submissions enter a protected moderation queue and newsletter recon
  await db.prepare("INSERT INTO newsletter_subscribers (email,topics,placement,status,created_at,updated_at) VALUES (?,?,?,'failed',?,?)").bind('failed@example.com','[]','site_rail',Date.now(),Date.now()).run()
  const report=await reconcile({env:{STC_D1:db,CRON_SECRET:'cron'},request:new Request('https://stcatharinesdigital.ca/cron/reconcile-newsletter',{headers:{Authorization:'Bearer cron'}})})
  assert.deepEqual(await report.json(),{failedConfirmations:1,pendingConfirmations:0,action:'Readers must submit the signup form again to receive a new confirmation link.'})
+})
+
+test('council-record signup tags the shared newsletter list and keeps unsubscribe', async t => {
+  const {db, sqlite} = database()
+  t.after(() => sqlite.close())
+  let message
+  let sends = 0
+  t.mock.method(globalThis, 'fetch', async (url, options) => {
+    if (String(url).endsWith('/inboxes')) return Response.json({ inboxes: [{ inbox_id: 'test-inbox' }] })
+    sends += 1
+    message = JSON.parse(options.body)
+    return Response.json({ id: 'test-message' })
+  })
+  const env = { STC_D1: db, AGENTMAIL_API_KEY: 'mock-only' }
+  const signup = (email, body) => onRequestPost({
+    env,
+    request: request('/api/newsletter', { method: 'POST', body: JSON.stringify({ email, ...body }) }),
+  })
+  const created = await signup('reader@example.com', { source: 'council-record', placement: 'council-record', topics: ['not-a-list'] })
+  assert.equal(created.status, 200)
+  const createdRow = sqlite.prepare('SELECT status, placement, tags, topics FROM newsletter_subscribers').get()
+  assert.equal(createdRow.status, 'pending')
+  assert.equal(createdRow.placement, 'council-record')
+  assert.equal(createdRow.tags, '["council-record"]')
+  assert.equal(createdRow.topics, '[]')
+  assert.equal(sqlite.prepare("SELECT name FROM sqlite_master WHERE type='table' AND name='council_record_subscribers'").get(), undefined)
+  const confirmUrl = message.text.match(/Confirm: (\S+)/)[1]
+  const manageUrl = message.text.match(/unsubscribe: (\S+)/)[1]
+  assert.equal((await confirm({ env, request: new Request(confirmUrl, { method: 'POST' }) })).status, 200)
+  assert.equal(sqlite.prepare('SELECT status, tags FROM newsletter_subscribers').get().status, 'active')
+  const before = sends
+  const again = await signup('reader@example.com', { source: 'council-record' })
+  assert.equal(again.status, 200)
+  assert.match((await again.json()).message, /Council Record entries are published/)
+  assert.equal(sends, before)
+  assert.equal(sqlite.prepare('SELECT status, tags FROM newsletter_subscribers').get().tags, '["council-record"]')
+  assert.equal(sqlite.prepare('SELECT status FROM newsletter_subscribers').get().status, 'active')
+  await manage({ env, request: new Request(manageUrl, { method: 'POST', body: new URLSearchParams({ action: 'unsubscribe' }) }) })
+  assert.equal(sqlite.prepare('SELECT status, tags FROM newsletter_subscribers').get().status, 'unsubscribed')
+  assert.equal(sqlite.prepare('SELECT tags FROM newsletter_subscribers').get().tags, '["council-record"]')
+  await signup('reader@example.com', { tag: 'council-record' })
+  assert.equal(sqlite.prepare('SELECT COUNT(*) AS count FROM newsletter_subscribers').get().count, 1)
+  assert.equal(sqlite.prepare('SELECT status, tags FROM newsletter_subscribers').get().status, 'pending')
+
+  await signup('home@example.com', { placement: 'home', topics: ['planning'] })
+  const homeConfirm = message.text.match(/Confirm: (\S+)/)[1]
+  assert.equal((await confirm({ env, request: new Request(homeConfirm, { method: 'POST' }) })).status, 200)
+  assert.equal(sqlite.prepare('SELECT tags FROM newsletter_subscribers WHERE email=?').get('home@example.com').tags, '[]')
+  const tagged = await signup('home@example.com', { source: 'other-list', tags: ['council-record', 'second-list'] })
+  assert.equal(tagged.status, 200)
+  const home = sqlite.prepare('SELECT status, placement, tags, topics FROM newsletter_subscribers WHERE email=?').get('home@example.com')
+  assert.equal(home.status, 'active')
+  assert.equal(home.placement, 'home')
+  assert.equal(home.tags, '["council-record"]')
+  assert.equal(home.topics, '["planning"]')
+})
+
+test('newsletter tag migration adds the column once', () => {
+  const sqlite = new DatabaseSync(':memory:')
+  sqlite.exec(readFileSync(new URL('../migrations/0005_create_newsletter_subscribers.sql', import.meta.url), 'utf8'))
+  const names = () => sqlite.prepare('PRAGMA table_info(newsletter_subscribers)').all().map((column) => column.name)
+  assert.equal(names().includes('tags'), false)
+  const alter = newsletterTagMigration(names())
+  assert.match(readFileSync(new URL('../migrations/0012_newsletter_subscriber_tags.sql', import.meta.url), 'utf8'), /ALTER TABLE newsletter_subscribers ADD COLUMN tags/)
+  sqlite.exec(alter)
+  assert.equal(names().includes('tags'), true)
+  sqlite.exec(newsletterTagMigration(names()))
+  assert.throws(() => newsletterTagMigration(['email']), /topics/)
+  sqlite.close()
 })

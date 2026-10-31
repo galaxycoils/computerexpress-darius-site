@@ -263,6 +263,9 @@ jobs:
           npx --no-install wrangler d1 execute stcatharinesdigital_d1 --remote --file=./migrations/0008_editorial_submissions.sql --yes
           npx --no-install wrangler d1 execute stcatharinesdigital_d1 --remote --file=./migrations/0009_editorial_audit.sql --yes
           npx --no-install wrangler d1 execute stcatharinesdigital_d1 --remote --file=./migrations/0010_alert_sent_items.sql --yes
+          npx --no-install wrangler d1 execute stcatharinesdigital_d1 --remote --command='PRAGMA table_info(newsletter_subscribers)' --json --yes > "$RUNNER_TEMP/newsletter-columns.json"
+          node scripts/ensure-newsletter-tags.mjs "$RUNNER_TEMP/newsletter-columns.json" > "$RUNNER_TEMP/newsletter-tags.sql"
+          npx --no-install wrangler d1 execute stcatharinesdigital_d1 --remote --file="$RUNNER_TEMP/newsletter-tags.sql" --yes
           # Migration 0011 contains ALTER TABLE statements. Inspect columns so
           # fresh, existing and partially upgraded databases can all be handled
           # without resetting an existing reader's grace deadline.

@@ -12,7 +12,7 @@ Rules:
 - Describe the site as a guide to official sources, not as a government authority or emergency service.
 - Do not invent facts, dates, public-safety advice, or source material.
 - When a visitor needs urgent help, direct them to 911 for emergencies or to the relevant official municipal/NRPS source.
-- Keep responses concise and point people to the relevant site section: /planning-tracker, /council, /news/police, or /news.
+- Keep responses concise and point people to the relevant site section: /planning-tracker, /council, /council-record, /news/police, or /news.
 - For editorial corrections, sponsorship, or advertising inquiries, direct visitors to /contact.
 
 Keep responses under 150 words.`;
