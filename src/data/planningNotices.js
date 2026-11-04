@@ -6,13 +6,85 @@
  * - thorold.ca
  * - niagararegion.ca
  *
- * Updated: 2026-10-21
- * Note: Added Committee of Adjustment hearings for 74 and 78 Oliver Lane (A-56/26 and A-57/26, Nov 12, 2026). Road closures for Oct. 20 page returned 404.
+ * Updated: 2026-11-04
+ * Note: Added St. Catharines Property Standards Appeal Hearing for 249 Niagara Street (Nov 25 electronic). Added Welland public hearing for multiple consent/minor variance applications (Biggar Rd, Scholfield Ave, Tanguay Ave / Promenade Richelieu, Nov 12). Added Thorold Allanburg Bridge 11 weekday closures (to Nov 11) and noted past temporary Centre Street closure and Sullivan Avenue water shut-off.
  * Next review: Daily
  */
 import { getRenderNow, parseTorontoDate } from "../utils/renderClock.js";
 
 export const planningNotices = [
+  {
+    id: "stc-249-niagara-st-property-standards-appeal",
+    municipality: "St. Catharines",
+    type: "Property Standards Appeal Hearing",
+    title: "249 Niagara Street — Property Standards Appeal Hearing",
+    description: "The Property Standards Committee will meet electronically on November 25, 2026, at 5 p.m. to hear an appeal from the Order of the Property Standards Officer dated October 6, 2026, regarding 249 Niagara Street (PLAN 79 PT BLOCK H RP 30R14988 PART 3) under the Ontario Building Code and City Maintenance and Occupancy By-law 2014-248. Advance registration required by November 23.",
+    status: "Hearing Scheduled",
+    meetingDate: "2026-11-25T17:00:00",
+    meetingLocation: "Electronic (live-streamed on City YouTube)",
+    submissionDeadline: "2026-11-23T23:59:59",
+    publishedDate: "2026-11-02",
+    sourceUrl: "https://www.stcatharines.ca/news/posts/property-standards-appeal-hearing-249-niagara-street/",
+    category: "property-standards",
+    tags: ["Property Standards", "Appeal", "Niagara Street", "St. Catharines", "Committee"],
+  },
+  {
+    id: "welland-biggar-scholfield-tanguay-hearing-2026-11-12",
+    municipality: "Welland",
+    type: "Consent / Minor Variance (Public Hearing)",
+    title: "Public Hearing: Consent and Minor Variance Applications — Biggar Road, Scholfield Avenue, Tanguay Avenue / Promenade Richelieu",
+    description: "Committee of Adjustment public hearing on November 12, 2026, at 5 p.m. at Civic Square Council Chambers for multiple applications: PLCON202600233 (consent to lease telecommunications tower lands and easements at 485 Biggar Rd), PLMV202600245 (minor variance for existing front deck encroachment at 52 Scholfield Ave), and related consent/minor variance files for 655 Tanguay Ave and 51 Promenade Richelieu involving lot creation, easements, and planting strip/parking variances for institutional buildings. Written comments due by November 6.",
+    status: "Hearing Scheduled",
+    meetingDate: "2026-11-12T17:00:00",
+    meetingLocation: "Civic Square Council Chambers, 60 East Main Street, Welland",
+    submissionDeadline: "2026-11-06T23:59:59",
+    publishedDate: "2026-10-22",
+    sourceUrl: "https://www.welland.ca/news/posts/notice-of-public-hearing-concerning-applications-for-consent-and-minor-variance-biggar-rd-scholfield-ave-and-655-tanguay-ave-and-51-promenade-richelieu/",
+    category: "minor-variance",
+    tags: ["Consent", "Minor Variance", "Committee of Adjustment", "Welland", "Biggar Road", "Scholfield Avenue", "Tanguay Avenue"],
+  },
+  {
+    id: "thorold-allanburg-bridge-11-closure-2026",
+    municipality: "Thorold",
+    type: "Temporary Bridge Closure",
+    title: "Allanburg Bridge 11 (Highway 20) — Weekday Closures for Structural Rehabilitation",
+    description: "The Allanburg Bridge (Bridge 11) over the Welland Canal is fully closed to vehicular and pedestrian traffic Monday to Friday, 7 a.m. to 7 p.m., from October 13 to November 11, 2026, for structural rehabilitation work by the St. Lawrence Seaway Management Corporation. The bridge reopens evenings and weekends. Detours via the Thorold Tunnel and East Main Tunnel. A portion of the Welland Canals Parkway Trail north of the bridge is also closed.",
+    status: "Active",
+    meetingDate: "2026-10-13T07:00:00",
+    endDate: "2026-11-11T19:00:00",
+    publishedDate: "2026-10-13",
+    sourceUrl: "https://greatlakes-seaway.com/en/for-our-communities/infrastructure-maintenance/",
+    category: "road-closure",
+    tags: ["Bridge Closure", "Allanburg Bridge", "Highway 20", "Thorold", "Welland Canal", "Seaway"],
+  },
+  {
+    id: "thorold-centre-st-closure-oct-26-27",
+    municipality: "Thorold",
+    type: "Temporary Road Closure",
+    title: "Centre Street Temporary Closure — October 26 & 27 for Water Services",
+    description: "A private developer temporarily closed a portion of Centre Street in Thorold on October 26 and 27, 2026, from 7 a.m. to 5 p.m. each day to install water services for a new development at 2248 Centre Street. Local access and detours were in place.",
+    status: "Meeting Complete",
+    meetingDate: "2026-10-26T07:00:00",
+    endDate: "2026-10-27T17:00:00",
+    publishedDate: "2026-10-23",
+    sourceUrl: "https://www.thorold.ca/news/news/temporary-road-closure-centre-street-october-26-27/",
+    category: "road-closure",
+    tags: ["Road Closure", "Centre Street", "Thorold", "Construction"],
+  },
+  {
+    id: "thorold-sullivan-ave-water-shutoff-oct-27",
+    municipality: "Thorold",
+    type: "Temporary Water Shut-Off",
+    title: "Sullivan Avenue Temporary Water Shut-Off — October 27",
+    description: "City contractor Beam Excavating Ltd. planned a temporary water shut-off affecting businesses and residences on Sullivan Avenue on October 27, 2026, from 9 p.m. to 12 a.m. for a new watermain connection at Towpath Street. Residents were advised to store water in advance; discoloured water possible after restoration.",
+    status: "Meeting Complete",
+    meetingDate: "2026-10-27T21:00:00",
+    endDate: "2026-10-28T00:00:00",
+    publishedDate: "2026-10-26",
+    sourceUrl: "https://www.thorold.ca/news/news/temporary-water-shut-off-sullivan-avenue-october-27/",
+    category: "municipal-service",
+    tags: ["Water Shut-Off", "Sullivan Avenue", "Thorold", "Construction"],
+  },
   {
     id: "stc-78-oliver-lane-a-57-26",
     municipality: "St. Catharines",
@@ -993,4 +1065,5 @@ export function getNoticeStats(now = getRenderNow(), notices = planningNotices) 
     upcomingMeetings: getFutureMeetings(now, notices).length,
   };
 }
+
 
