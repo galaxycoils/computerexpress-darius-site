@@ -27,9 +27,33 @@ describe('wellandVotes registry dataset', () => {
     }
   })
 
+  it('carries certified vote counts with exactly one elected mayor', () => {
+    for (const c of MAYORAL_CANDIDATES) {
+      expect(typeof c.votes).toBe('number')
+      expect(c.votes).toBeGreaterThan(0)
+      expect(typeof c.elected).toBe('boolean')
+    }
+    const elected = MAYORAL_CANDIDATES.filter((c) => c.elected)
+    expect(elected).toHaveLength(1)
+    expect(elected[0].name).toBe('Pat Chiocchio')
+    expect(elected[0].votes).toBe(4271)
+    for (const c of MAYORAL_CANDIDATES) {
+      if (!c.elected) expect(c.votes).toBeLessThan(elected[0].votes)
+    }
+  })
+
   it('covers key dates, down-ballot races, and related coverage', () => {
     expect(KEY_DATES.length).toBeGreaterThanOrEqual(7)
-    expect(DOWN_BALLOT.length).toBe(9)
+    expect(DOWN_BALLOT.length).toBe(10)
     expect(RELATED_COVERAGE.length).toBeGreaterThan(0)
+  })
+
+  it('names two elected councillors for each of the six wards', () => {
+    const wards = DOWN_BALLOT.filter((d) => d.slug)
+    expect(wards).toHaveLength(6)
+    for (const w of wards) {
+      expect(w.detail).toMatch(/^Elected: .+ · .+$/)
+      expect(w.slug).toMatch(/^ward-[1-6]$/)
+    }
   })
 })
