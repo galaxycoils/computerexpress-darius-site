@@ -2,7 +2,7 @@ import { Link, useParams } from 'react-router-dom'
 import Seo from '../components/Seo'
 import NewsletterPanel from '../components/news/NewsletterPanel'
 import { getNoticesByMunicipality } from '../data/planningNotices'
-import { ELECTION_DATE, WARD_RACES_RETRIEVED, WARD_RACES_SOURCE, getWardRace, wellandWardRaces } from '../data/wardRaces'
+import { ELECTION_DATE, WARD_RACES_SOURCE, WARD_RESULTS_RETRIEVED, WARD_RESULTS_SOURCE, getWardRace, wellandWardRaces } from '../data/wardRaces'
 import NotFoundPage from './NotFoundPage'
 import '../components/news/news.css'
 
@@ -12,41 +12,42 @@ export default function WardRacePage() {
   if (!race) return <NotFoundPage />
   const path = `/elections/welland/${race.slug}`
   const notices = (getNoticesByMunicipality('welland') || []).slice(0, 5)
+  const winners = race.candidates.filter((c) => c.elected).map((c) => c.name).join(' and ')
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Event',
     name: `Welland Ward ${race.ward} Councillor Election`,
     startDate: `${ELECTION_DATE}T10:00:00-04:00`,
     endDate: `${ELECTION_DATE}T20:00:00-04:00`,
-    eventStatus: 'https://schema.org/EventScheduled',
+    eventStatus: 'https://schema.org/EventCompleted',
     location: { '@type': 'City', name: 'Welland, Ontario' },
   }
   return (
     <>
       <Seo
-        title={`Welland Ward ${race.ward} Candidates 2026 | St. Catharines Digital`}
-        description={`All ${race.candidates.length} certified candidates for Welland Ward ${race.ward} council (${race.seats} seats) in the October 26, 2026 election, from the City of Welland's official list.`}
+        title={`Welland Ward ${race.ward} Election Results 2026 | St. Catharines Digital`}
+        description={`Certified results for Welland Ward ${race.ward} council in the October 26, 2026 election: ${winners} elected to ${race.seats} seats. Full vote counts from the City of Welland.`}
         path={path}
         jsonLd={[jsonLd]}
       />
       <div className="scd-page">
         <nav aria-label="Breadcrumb"><Link to="/votes">Votes</Link> / <Link to="/welland-votes">Welland</Link> / Ward {race.ward}</nav>
-        <h1>Welland Ward {race.ward}: who's running</h1>
-        <p>{race.seats} councillors to be elected on October 26, 2026. {race.candidates.length} certified candidates.</p>
+        <h1>Welland Ward {race.ward}: election results</h1>
+        <p>{winners} elected — {race.seats} councillor seats, October 26, 2026. Certified by the City Clerk.</p>
         <ul className="scd-ward-candidates">
           {race.candidates.map((c) => (
             <li key={c.name}>
-              <strong>{c.name}</strong>
+              <strong>{c.name}</strong> — {c.votes.toLocaleString('en-CA')} votes{c.elected ? ' · elected' : ''}
               {c.site ? <> — <a href={c.site} rel="noopener noreferrer nofollow" target="_blank">campaign site</a></> : null}
             </li>
           ))}
         </ul>
         <p className="scd-source">
-          Source: <a href={WARD_RACES_SOURCE}>City of Welland — Registered Candidates</a> (retrieved {WARD_RACES_RETRIEVED}). Information is supplied by candidates. Listed alphabetically.
+          Results: <a href={WARD_RESULTS_SOURCE}>City of Welland — 2026 Election Results</a>, certified by the City Clerk (retrieved {WARD_RESULTS_RETRIEVED}). Candidate details from the <a href={WARD_RACES_SOURCE}>City's registered candidates list</a>. Listed alphabetically.
         </p>
         {notices.length > 0 && (
           <section aria-labelledby="ward-notices">
-            <h2 id="ward-notices">What the next council inherits: recent Welland notices</h2>
+            <h2 id="ward-notices">What the new council inherits: recent Welland notices</h2>
             <ul>{notices.map((n) => <li key={n.id}><a href={n.sourceUrl}>{n.title}</a></li>)}</ul>
             <Link to="/planning-tracker">Full planning tracker →</Link>
           </section>
