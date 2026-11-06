@@ -7,6 +7,8 @@ import {
   CITY_CANDIDATES,
   CITY_VOTERS,
   CITY_WARDS,
+  CITY_RESULTS,
+  CITY_RESULTS_RETRIEVED,
   CHAMBER_DEBATE,
   MAYORAL_CANDIDATES,
   KEY_DATES,
@@ -22,12 +24,12 @@ const votingDayJsonLd = {
   name: 'Welland Municipal Election — Voting Day',
   startDate: '2026-10-26T10:00:00-04:00',
   endDate: '2026-10-26T20:00:00-04:00',
-  eventStatus: 'https://schema.org/EventScheduled',
+  eventStatus: 'https://schema.org/EventCompleted',
   location: {
     '@type': 'City',
     name: 'Welland, Ontario',
   },
-  description: 'Welland residents elect 1 mayor, 12 ward councillors, and school board trustees. Paper ballot, 10 a.m. to 8 p.m.',
+  description: 'Welland residents elected 1 mayor, 12 ward councillors, and school board trustees. Paper ballot, 10 a.m. to 8 p.m.',
   organizer: {
     '@type': 'Organization',
     name: 'City of Welland — Office of the City Clerk',
@@ -41,18 +43,18 @@ const faqJsonLd = {
   mainEntity: [
     {
       '@type': 'Question',
-      name: 'When is the Welland municipal election?',
+      name: 'When was the 2026 Welland municipal election?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'Voting Day is Monday, October 26, 2026, 10 a.m. to 8 p.m. Advance voting runs October 5–9 at Civic Square and October 17–25 at Seaway Mall and the Welland Public Library.'
+        text: 'Voting Day was Monday, October 26, 2026, 10 a.m. to 8 p.m. Advance voting ran October 5–9 at Civic Square and October 17–25 at Seaway Mall and the Welland Public Library. The City Clerk certified the results on October 27, 2026.'
       }
     },
     {
       '@type': 'Question',
-      name: 'Who is running for mayor of Welland?',
+      name: 'Who won the 2026 Welland mayoral election?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'Eight certified candidates: Natashia Bergen, Pat Chiocchio, David Clow, Gary Graziani, April Jeffs, David McLeod, Brandon Simon, and Graham Speck. One mayor is elected at large.'
+        text: 'Pat Chiocchio, with 4,271 votes in the results certified by the City Clerk. Graham Speck placed second with 4,216. One mayor was elected at large.'
       }
     },
     {
@@ -65,10 +67,10 @@ const faqJsonLd = {
     },
     {
       '@type': 'Question',
-      name: 'Is there a Welland mayoral debate?',
+      name: 'Was there a Welland mayoral debate?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'The South Niagara Chambers of Commerce hosts a Municipal Debate in Welland on Tuesday, October 6, 2026, 6:30–8:30 p.m. at Royal Canadian Legion Rose City Branch 4. No organizer has published a confirmed participant list.'
+        text: 'The South Niagara Chambers of Commerce hosted a Municipal Debate in Welland on Tuesday, October 6, 2026, 6:30–8:30 p.m. at Royal Canadian Legion Rose City Branch 4.'
       }
     },
     {
@@ -86,8 +88,8 @@ export default function WellandVotesPage() {
   return (
     <>
       <Seo
-        title="Welland Votes 2026: Mayor's Race, Dates, How to Vote | St. Catharines Digital"
-        description="Welland elects a mayor October 26, 2026. Eight certified candidates, key dates, advance voting locations, eligibility, and down-ballot races — from official City of Welland sources."
+        title="Welland Votes 2026: Certified Election Results | St. Catharines Digital"
+        description="Certified 2026 Welland election results: Pat Chiocchio elected mayor, two councillors per ward across six wards, and school board trustees — full vote counts from official City of Welland sources."
         path="/welland-votes"
         jsonLd={[votingDayJsonLd, faqJsonLd, getLocalBusinessSchema()]}
       />
@@ -99,33 +101,34 @@ export default function WellandVotesPage() {
         </nav>
         <header className="scd-intro scd-votes-intro">
           <div>
-            <p className="scd-eyebrow">Welland votes · October 26, 2026</p>
-            <h1 className="scd-intro-title">Eight candidates. One mayor. Your ballot.</h1>
-            <p className="scd-intro-note">Everything a Welland voter needs: the certified mayoral field, key dates, advance voting locations, eligibility, and the rest of the ballot — drawn exclusively from official City of Welland sources.</p>
+            <p className="scd-eyebrow">Welland votes · Certified results</p>
+            <h1 className="scd-intro-title">Pat Chiocchio is Welland's next mayor.</h1>
+            <p className="scd-intro-note">The City Clerk has certified the results of Welland's 2026 municipal election: Pat Chiocchio elected mayor, two councillors per ward across six wards, and school board trustees. Full vote counts below, drawn exclusively from official City of Welland sources.</p>
             <ul className="scd-votes-facts" aria-label="Election at a glance">
-              <li><span className="badge badge-status">Voting Day Oct 26</span></li>
-              <li><span className="badge badge-status">8 certified for mayor</span></li>
+              <li><span className="badge badge-status">Results certified Oct 27</span></li>
+              <li><span className="badge badge-status">Chiocchio elected mayor</span></li>
               <li><span className="badge badge-default">Paper ballot</span></li>
             </ul>
           </div>
-          <aside className="scd-rail-block scd-votes-rail" aria-label="Vote first">
-            <p className="scd-rail-label">Voting Day</p>
-            <p className="scd-votes-railprice">Oct 26<span> · 10 a.m. – 8 p.m.</span></p>
-            <p>Advance voting opens Oct 5 at Civic Square. Check you are on the voter list before you go.</p>
-            <a className="button button-primary" href="https://registertovoteon.ca" target="_blank" rel="noopener noreferrer">Check registration</a>
+          <aside className="scd-rail-block scd-votes-rail" aria-label="Certified results">
+            <p className="scd-rail-label">Mayor-elect</p>
+            <p className="scd-votes-railprice">Chiocchio<span> · 4,271 votes</span></p>
+            <p>Certified by the City Clerk on October 27, 2026. Graham Speck finished second with 4,216.</p>
+            <a className="button button-primary" href={CITY_RESULTS} target="_blank" rel="noopener noreferrer">Official results</a>
             <p className="scd-sponsor-fineprint scd-votes-fineprint">Questions: 905-735-1700 · election@welland.ca</p>
           </aside>
         </header>
 
         <section className="scd-votes-section" aria-labelledby="mayor-race">
-          <h2 id="mayor-race" className="scd-section-rule">The mayoral race</h2>
-          <p className="scd-votes-standfirst">One mayor, elected at large by every Welland voter. The field below is the Clerk's certified list — names in the city's order, websites exactly as candidates filed them.</p>
+          <h2 id="mayor-race" className="scd-section-rule">Mayoral results</h2>
+          <p className="scd-votes-standfirst">One mayor, elected at large by every Welland voter. Certified vote counts below, names in the city's order, websites exactly as candidates filed them during the campaign.</p>
           <div className="scd-votes-grid">
             {MAYORAL_CANDIDATES.map((c) => (
               <article key={c.name} className="card meeting-card scd-votes-card">
-                <p className="scd-cat">Certified · Mayor</p>
+                <p className="scd-cat">{c.elected ? 'Elected · Mayor' : 'Mayor'}</p>
                 <h3>{c.name}</h3>
                 <p className="scd-votes-office">{c.office}</p>
+                <p className="scd-votes-office"><strong>{c.votes.toLocaleString('en-CA')}</strong> votes{c.elected ? ' · elected' : ''}</p>
                 {c.points.length > 0 ? (
                   <ul className="scd-votes-points">
                     {c.points.map((p) => (
@@ -145,12 +148,12 @@ export default function WellandVotesPage() {
               </article>
             ))}
           </div>
-          <p className="scd-votes-firewall">Platforms above are the candidates' own words, condensed from their campaign sites and linked for verification. Office histories come from city, regional, and police-board records plus on-record reporting. This list mirrors the registry and endorses no one.</p>
+          <p className="scd-votes-firewall">Platforms above are the candidates' own words from the campaign, condensed from their campaign sites and linked for verification. Office histories come from city, regional, and police-board records plus on-record reporting. Vote counts are the Clerk's certified results.</p>
         </section>
 
         <section className="scd-votes-section" aria-labelledby="debates">
           <h2 id="debates" className="scd-section-rule">Debates</h2>
-          <p className="scd-votes-standfirst">One confirmed all-candidates event so far. No organizer has published a confirmed participant list — appearances below will update once organizers confirm them.</p>
+          <p className="scd-votes-standfirst">One confirmed all-candidates event took place during the campaign.</p>
           <div className="scd-votes-howto">
             <div className="card">
               <h3>Municipal Debate — Welland</h3>
@@ -162,10 +165,10 @@ export default function WellandVotesPage() {
               </ul>
             </div>
             <div className="card">
-              <h3>How we list appearances</h3>
+              <h3>How we listed appearances</h3>
               <ul>
-                <li>Only organizer-confirmed events appear here</li>
-                <li>Self-organized social-media sessions are not listed as debates</li>
+                <li>Only organizer-confirmed events appeared here</li>
+                <li>Self-organized social-media sessions were not listed as debates</li>
                 <li>Equal rule for all eight candidates, no exceptions</li>
               </ul>
             </div>
@@ -185,24 +188,24 @@ export default function WellandVotesPage() {
         </section>
 
         <section className="scd-votes-section" aria-labelledby="how-to-vote">
-          <h2 id="how-to-vote" className="scd-section-rule">How to vote</h2>
+          <h2 id="how-to-vote" className="scd-section-rule">How voting worked</h2>
           <div className="scd-votes-howto">
             <div className="card">
-              <h3>Are you eligible?</h3>
+              <h3>Who was eligible?</h3>
               <ul>
                 <li>Canadian citizen, at least 18 years old</li>
                 <li>Resident, owner, or tenant of land in Welland — or spouse of one</li>
                 <li>Not prohibited from voting under any law</li>
-                <li>Confirm you are on the list at <a href="https://registertovoteon.ca" target="_blank" rel="noopener noreferrer">registertovoteon.ca</a></li>
+                <li>Registration ran through <a href="https://registertovoteon.ca" target="_blank" rel="noopener noreferrer">registertovoteon.ca</a></li>
               </ul>
             </div>
             <div className="card">
               <h3>Where and how</h3>
               <ul>
                 <li>Paper ballot — Welland's method since 1968</li>
-                <li>Oct 5–9, 10–6: Civic Square, 60 East Main Street</li>
+                <li>Advance polls ran Oct 5–9, 10–6: Civic Square, 60 East Main Street</li>
                 <li>Oct 17–25, 10–5: Seaway Mall + Public Library, 800 Niagara Street</li>
-                <li>Voting Day Oct 26, 10 a.m.–8 p.m.</li>
+                <li>Voting Day was Oct 26, 10 a.m.–8 p.m.</li>
               </ul>
             </div>
           </div>
@@ -210,11 +213,11 @@ export default function WellandVotesPage() {
 
         <section className="scd-votes-section" aria-labelledby="rest-of-ballot">
           <h2 id="rest-of-ballot" className="scd-section-rule">Rest of the ballot</h2>
-          <p className="scd-votes-standfirst">Two councillors per ward across six wards under the new boundaries, plus school board trustees. Full names on the <a href={CITY_CANDIDATES} target="_blank" rel="noopener noreferrer">city's certified list</a>.</p>
+          <p className="scd-votes-standfirst">Two councillors elected per ward across six wards, plus school board trustees. Full certified vote counts on each ward page and the <a href={CITY_RESULTS} target="_blank" rel="noopener noreferrer">city's results page</a>.</p>
           <ul className="scd-votes-downballot">
             {DOWN_BALLOT.map((d) => (
               <li key={d.office}>
-                <h3>{d.office}</h3>
+                <h3>{d.slug ? <Link to={`/elections/welland/${d.slug}`}>{d.office}</Link> : d.office}</h3>
                 <p>{d.detail}</p>
               </li>
             ))}
@@ -240,24 +243,24 @@ export default function WellandVotesPage() {
           <h2 id="votes-faq" className="scd-section-rule">Questions, answered</h2>
           <ul className="scd-votes-faq">
             <li>
-              <h3>When do I vote?</h3>
-              <p>Monday, October 26, 2026, 10 a.m. to 8 p.m. Advance polls run October 5–9 at Civic Square and October 17–25 at Seaway Mall and the library.</p>
+              <h3>When was the election?</h3>
+              <p>Monday, October 26, 2026, 10 a.m. to 8 p.m. Advance polls ran October 5–9 at Civic Square and October 17–25 at Seaway Mall and the library. The City Clerk certified the results on October 27.</p>
             </li>
             <li>
-              <h3>How do I know I am registered?</h3>
-              <p>Check at registertovoteon.ca. Also confirm your property taxes support the school board whose trustee you want to elect.</p>
+              <h3>Who won?</h3>
+              <p>Pat Chiocchio won the mayoral race with 4,271 certified votes; Graham Speck was second with 4,216. Ward and trustee results are above and on the <a href={CITY_RESULTS} target="_blank" rel="noopener noreferrer">city's certified results page</a>.</p>
             </li>
             <li>
               <h3>Is it true there are new ward boundaries?</h3>
               <p>Yes. Welland redrew its ward boundaries ahead of this election. Read the <a href={CITY_WARDS} target="_blank" rel="noopener noreferrer">city's ward boundary page</a> to find your ward.</p>
             </li>
             <li>
-              <h3>Is there a debate?</h3>
-              <p>Yes — the Chambers of Commerce debate is October 6 at the Rose City Legion. Organizers have not confirmed which candidates attend; this page updates when they do.</p>
+              <h3>Was there a debate?</h3>
+              <p>Yes — the Chambers of Commerce debate took place October 6 at the Rose City Legion.</p>
             </li>
             <li>
               <h3>Where does this information come from?</h3>
-              <p>Every date, name, and location on this page comes from official City of Welland election pages. Candidate websites are linked as filed and speak for the candidates.</p>
+              <p>Results come from the City of Welland's certified 2026 election results (retrieved {CITY_RESULTS_RETRIEVED}). Campaign-era details came from official City of Welland election pages and candidate websites as filed.</p>
             </li>
           </ul>
         </section>
@@ -265,7 +268,8 @@ export default function WellandVotesPage() {
         <section className="scd-votes-section" aria-labelledby="votes-sources">
           <h2 id="votes-sources" className="scd-section-rule">Official sources</h2>
           <p className="scd-votes-sources">
-            <a href={CITY_ELECTIONS} target="_blank" rel="noopener noreferrer">Municipal Elections — City of Welland</a>
+            <a href={CITY_RESULTS} target="_blank" rel="noopener noreferrer">2026 Election Results</a>
+            {' · '}<a href={CITY_ELECTIONS} target="_blank" rel="noopener noreferrer">Municipal Elections — City of Welland</a>
             {' · '}<a href={CITY_CANDIDATES} target="_blank" rel="noopener noreferrer">Registered Candidates</a>
             {' · '}<a href={CITY_VOTERS} target="_blank" rel="noopener noreferrer">Information for Voters</a>
             {' · '}<a href={CITY_WARDS} target="_blank" rel="noopener noreferrer">Ward Boundary Changes</a>
