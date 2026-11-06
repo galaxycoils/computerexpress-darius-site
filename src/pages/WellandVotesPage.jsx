@@ -24,7 +24,7 @@ const votingDayJsonLd = {
   name: 'Welland Municipal Election — Voting Day',
   startDate: '2026-10-26T10:00:00-04:00',
   endDate: '2026-10-26T20:00:00-04:00',
-  eventStatus: 'https://schema.org/EventCompleted',
+  eventStatus: 'https://schema.org/EventScheduled',
   location: {
     '@type': 'City',
     name: 'Welland, Ontario',
