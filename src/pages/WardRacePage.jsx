@@ -19,7 +19,7 @@ export default function WardRacePage() {
     name: `Welland Ward ${race.ward} Councillor Election`,
     startDate: `${ELECTION_DATE}T10:00:00-04:00`,
     endDate: `${ELECTION_DATE}T20:00:00-04:00`,
-    eventStatus: 'https://schema.org/EventCompleted',
+    eventStatus: 'https://schema.org/EventScheduled',
     location: { '@type': 'City', name: 'Welland, Ontario' },
   }
   return (
