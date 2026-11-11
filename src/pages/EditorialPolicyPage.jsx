@@ -9,7 +9,7 @@ export default function EditorialPolicyPage() {
         title="Editorial Policy | St. Catharines Digital"
         description="How St. Catharines Digital sources, checks, labels and corrects local news."
         path="/editorial-policy"
-        jsonLd={{ '@context': 'https://schema.org', '@type': 'WebPage', name: 'Editorial Policy', url: BASE_URL }}
+        jsonLd={{ '@context': 'https://schema.org', '@type': 'WebPage', name: 'Editorial Policy', url: `${BASE_URL}/editorial-policy/` }}
       />
       <article className="scd-page">
         <header className="scd-intro"><div><p className="scd-eyebrow">Accountability</p><h1 className="scd-intro-title">Editorial Policy</h1><p className="scd-intro-note">A clear record of how we gather, check and label local information.</p></div></header>

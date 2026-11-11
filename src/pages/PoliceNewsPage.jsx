@@ -1,7 +1,7 @@
 import { useState, useMemo } from 'react'
 import { Link } from 'react-router-dom'
 import Seo, { BASE_URL } from '../components/Seo'
-import { verifiedNrpsReleases as nrpsReleases } from '../data/nrpsReleases'
+import { policeDeskReleases } from '../data/policeDesk'
 import AnimatedSection from '../hooks/useInView'
 import { parseTorontoDate } from '../utils/renderClock.js'
 
@@ -11,7 +11,7 @@ export default function PoliceNewsPage() {
   const [categoryFilter, setCategoryFilter] = useState('all')
 
   const filteredReleases = useMemo(() => {
-    let result = nrpsReleases
+    let result = policeDeskReleases()
 
     if (search) {
       const s = search.toLowerCase()
@@ -337,14 +337,14 @@ export default function PoliceNewsPage() {
       <Seo
         title="Police Media Releases | St. Catharines Digital"
         description="A sourced selection of Niagara Regional Police Service media releases and community notifications. Check the official NRPS feed for the latest posts."
+        path="/news/police"
         jsonLd={{
           '@context': 'https://schema.org',
-          '@type': 'NewsMediaOrganization',
-          name: 'St. Catharines Digital Police News',
-          url: BASE_URL,
-          description: 'Compiled Niagara Regional Police Service media releases — official sources only.',
-          founder: { '@type': 'Organization', name: 'St. Catharines Digital' },
-          knowsAbout: ['Police Media Releases', 'Crime', 'Public Safety', 'Niagara Region', 'St. Catharines', 'Welland', 'Thorold'],
+          '@type': 'CollectionPage',
+          name: 'Police Media Releases',
+          url: `${BASE_URL}/news/police/`,
+          isPartOf: { '@type': 'WebSite', name: 'St. Catharines Digital', url: `${BASE_URL}/` },
+          publisher: { '@type': 'NewsMediaOrganization', name: 'St. Catharines Digital', url: `${BASE_URL}/` },
         }}
       />
 

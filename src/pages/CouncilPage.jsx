@@ -79,6 +79,16 @@ export default function CouncilPage() {
         <meta property="og:title" content="City Council — St. Catharines, Welland & Thorold" />
         <meta property="og:description" content="Official council portals and sourced civic records for St. Catharines, Welland and Thorold." />
         <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://stcatharinesdigital.ca/council/" />
+        <meta property="og:image" content="https://stcatharinesdigital.ca/og-card.webp" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:image:alt" content="City Council — St. Catharines, Welland & Thorold" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="City Council — St. Catharines, Welland & Thorold" />
+        <meta name="twitter:description" content="Official council portals and sourced civic records for St. Catharines, Welland and Thorold." />
+        <meta name="twitter:image" content="https://stcatharinesdigital.ca/og-card.webp" />
+        <meta name="twitter:image:alt" content="City Council — St. Catharines, Welland & Thorold" />
         <script type="application/ld+json">{JSON.stringify(councilJsonLd)}</script>
         <link rel="canonical" href="https://stcatharinesdigital.ca/council/" />
       </Helmet>

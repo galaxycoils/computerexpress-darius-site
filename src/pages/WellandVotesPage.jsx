@@ -102,6 +102,10 @@ export default function WellandVotesPage() {
         <header className="scd-intro scd-votes-intro">
           <div>
             <p className="scd-eyebrow">Welland votes · Certified results</p>
+            <p className="scd-votes-banner">
+              <strong>Voting closed Oct. 26.</strong>{' '}
+              <a href={CITY_RESULTS} target="_blank" rel="noopener noreferrer">City of Welland results</a>
+            </p>
             <h1 className="scd-intro-title">Pat Chiocchio is Welland's next mayor.</h1>
             <p className="scd-intro-note">The City Clerk has certified the results of Welland's 2026 municipal election: Pat Chiocchio elected mayor, two councillors per ward across six wards, and school board trustees. Full vote counts below, drawn exclusively from official City of Welland sources.</p>
             <ul className="scd-votes-facts" aria-label="Election at a glance">
@@ -127,7 +131,12 @@ export default function WellandVotesPage() {
               <article key={c.name} className="card meeting-card scd-votes-card">
                 <p className="scd-cat">{c.elected ? 'Elected · Mayor' : 'Mayor'}</p>
                 <h3>{c.name}</h3>
-                <p className="scd-votes-office">{c.office}</p>
+                {c.office && c.officeSource ? (
+                  <p className="scd-votes-office">
+                    {c.office}{' '}
+                    <a href={c.officeSource} target="_blank" rel="noopener noreferrer">City of Welland source</a>
+                  </p>
+                ) : null}
                 <p className="scd-votes-office"><strong>{c.votes.toLocaleString('en-CA')}</strong> votes{c.elected ? ' · elected' : ''}</p>
                 {c.points.length > 0 ? (
                   <ul className="scd-votes-points">
@@ -148,7 +157,7 @@ export default function WellandVotesPage() {
               </article>
             ))}
           </div>
-          <p className="scd-votes-firewall">Platforms above are the candidates' own words from the campaign, condensed from their campaign sites and linked for verification. Office histories come from city, regional, and police-board records plus on-record reporting. Vote counts are the Clerk's certified results.</p>
+          <p className="scd-votes-firewall">Platforms above are the candidates' own words from the campaign, condensed from their campaign sites and linked for verification. An office line appears only when a City of Welland page states it, and that page is linked. Vote counts are the Clerk's certified results.</p>
         </section>
 
         <section className="scd-votes-section" aria-labelledby="debates">
@@ -218,7 +227,15 @@ export default function WellandVotesPage() {
             {DOWN_BALLOT.map((d) => (
               <li key={d.office}>
                 <h3>{d.slug ? <Link to={`/elections/welland/${d.slug}`}>{d.office}</Link> : d.office}</h3>
-                <p>{d.detail}</p>
+                <p>
+                  {d.detail}
+                  {d.source ? (
+                    <>
+                      {' '}
+                      <a href={d.source} target="_blank" rel="noopener noreferrer">City of Welland results</a>
+                    </>
+                  ) : null}
+                </p>
               </li>
             ))}
           </ul>

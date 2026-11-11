@@ -3,7 +3,7 @@ import { fireEvent, render, screen } from '@testing-library/react'
 import { HelmetProvider } from 'react-helmet-async'
 import { BrowserRouter } from 'react-router-dom'
 import { planningNotices } from '../data/planningNotices'
-import { verifiedNrpsReleases as nrpsReleases } from '../data/nrpsReleases'
+import { policeDeskReleases } from '../data/policeDesk'
 import PlanningTrackerPage from './PlanningTrackerPage'
 import PoliceNewsPage from './PoliceNewsPage'
 
@@ -25,7 +25,7 @@ describe('source municipality filters', () => {
     const { container } = renderPage(<PoliceNewsPage />)
     fireEvent.change(screen.getByRole('combobox', { name: 'Filter by municipality' }), { target: { value: 'st. catharines' } })
     expect(container.querySelectorAll('.release-card')).toHaveLength(
-      nrpsReleases.filter(({ municipality }) => municipality.toLowerCase().includes('st. catharines')).length,
+      policeDeskReleases().filter(({ municipality }) => municipality.toLowerCase().includes('st. catharines')).length,
     )
   })
 })

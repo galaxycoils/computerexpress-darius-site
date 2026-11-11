@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { MAYORAL_CANDIDATES, KEY_DATES, DOWN_BALLOT, RELATED_COVERAGE } from './wellandVotes'
+import { MAYORAL_CANDIDATES, KEY_DATES, DOWN_BALLOT, RELATED_COVERAGE, CITY_RESULTS } from './wellandVotes'
 
 describe('wellandVotes registry dataset', () => {
   it('lists all 8 certified mayoral candidates in registry order', () => {
@@ -46,6 +46,20 @@ describe('wellandVotes registry dataset', () => {
     expect(KEY_DATES.length).toBeGreaterThanOrEqual(7)
     expect(DOWN_BALLOT.length).toBe(10)
     expect(RELATED_COVERAGE.length).toBeGreaterThan(0)
+  })
+
+  it('links office history and the acclaimed French Separate trustee to City of Welland pages', () => {
+    for (const candidate of MAYORAL_CANDIDATES) {
+      if (!candidate.office) {
+        expect(candidate.officeSource).toBeUndefined()
+        continue
+      }
+      expect(candidate.officeSource).toMatch(/^https:\/\/www\.welland\.ca\//)
+    }
+    const philome = DOWN_BALLOT.find((race) => race.detail.includes('Jean Max Philome'))
+    expect(philome.office).toMatch(/French Separate/)
+    expect(philome.detail).toMatch(/Acclaimed/)
+    expect(philome.source).toBe(CITY_RESULTS)
   })
 
   it('names two elected councillors for each of the six wards', () => {
