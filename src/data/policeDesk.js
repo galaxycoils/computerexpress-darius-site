@@ -3,11 +3,76 @@ import { verifiedNrpsReleases } from "./nrpsReleases.js";
 import { canonicalSource, namedCities } from "./publication.js";
 import { getRenderNow } from "../utils/renderClock.js";
 
+const PLACE_OR_AGENCY = new Set([
+  "niagara",
+  "falls",
+  "st",
+  "catharines",
+  "thorold",
+  "welland",
+  "pelham",
+  "grimsby",
+  "lincoln",
+  "fonthill",
+  "wainfleet",
+  "fort",
+  "erie",
+  "port",
+  "colborne",
+  "regional",
+  "region",
+  "police",
+  "service",
+  "nrps",
+  "ontario",
+  "canada",
+  "crime",
+  "stoppers",
+]);
+
+function wordKey(token) {
+  return token.toLowerCase().replace(/^[^a-z]+|[^a-z]+$/g, "");
+}
+
+/**
+ * A collector headline may name a person when it contains "youth" or
+ * "young person", or two consecutive capitalized words that are not a
+ * place or agency on PLACE_OR_AGENCY. Title case can trip this too.
+ */
+export function headlineNamesPerson(headline) {
+  const text = String(headline || "");
+  if (/youth|young person/i.test(text)) return true;
+  let run = 0;
+  for (const token of text.split(/\s+/)) {
+    const key = wordKey(token);
+    const startsWithCapital = /^[^A-Za-z]*[A-Z]/.test(token);
+    if (key && startsWithCapital && !PLACE_OR_AGENCY.has(key)) run += 1;
+    else run = 0;
+    if (run >= 2) return true;
+  }
+  return false;
+}
+
+export function withoutNamedCollectorHeadlines(items) {
+  const kept = [];
+  const skipped = [];
+  for (const item of items) {
+    if (headlineNamesPerson(item?.title)) skipped.push(item.title);
+    else kept.push(item);
+  }
+  if (skipped.length) {
+    console.warn(
+      `policeDesk skipped ${skipped.length} collector headline(s) that may name a person:\n${skipped.map((title) => `- ${title}`).join("\n")}`,
+    );
+  }
+  return kept;
+}
+
 /**
  * The curated NRPS archive is a hand-maintained module. The official-source
  * collector writes later releases into discovery.json, which /news already
- * reads. The police desk pages combine both so the public archive does not
- * stop on the last hand-entered day.
+ * reads. The police desk pages add those later releases except headlines
+ * the name guard holds back.
  */
 export function discoveryPoliceReleases(archive = verifiedNrpsReleases) {
   const seen = new Set(archive.map((release) => canonicalSource(release.url)));
@@ -15,7 +80,7 @@ export function discoveryPoliceReleases(archive = verifiedNrpsReleases) {
     (latest, release) => (release.date > latest ? release.date : latest),
     "",
   );
-  return (discovery.items || [])
+  return withoutNamedCollectorHeadlines(discovery.items || [])
     .filter(
       (item) =>
         item?.sourceId === "nrps-media-releases" &&

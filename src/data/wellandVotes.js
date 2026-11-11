@@ -80,7 +80,7 @@ export const MAYORAL_CANDIDATES = [
     votes: 3091,
     elected: false,
     points: [
-      'Property tax relief and a record of low increases cited from Wainfleet tenure',
+      'Property tax relief and a record of low increases',
       'Rein in city spending and budgets described as out of control',
       'Alleviate homelessness blocking downtown potential',
       'A council described as ineffective brought back on track',
@@ -88,8 +88,8 @@ export const MAYORAL_CANDIDATES = [
   },
   {
     name: 'David McLeod',
-    office: 'Ward 2 councillor',
-    officeSource: CITY_WARD_TWO,
+    office: 'Elected Ward 2 councillor in 2022',
+    officeSource: CITY_2022_RESULTS,
     site: null,
     label: null,
     votes: 2009,

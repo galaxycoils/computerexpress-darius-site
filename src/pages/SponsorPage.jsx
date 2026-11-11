@@ -72,7 +72,7 @@ export default function SponsorPage() {
         </aside>
       </header>
 <section className="scd-sponsor-section" aria-labelledby="verified-corpus">
-      <h2 id="verified-corpus" className="scd-section-rule">Verified public record</h2>
+      <h2 id="verified-corpus" className="scd-section-rule">Checked public record</h2>
       <p>
         The corpus sponsors buy into is the checked public record: <span data-testid="sponsor-corpus-counts">{corpus.summary}</span>.
         Council and committee decisions are cited separately, not folded into the
@@ -85,7 +85,7 @@ export default function SponsorPage() {
         <h2 id="verified-council-decisions" className="scd-section-rule">
           Council and committee decisions cited separately
         </h2>
-        <p data-testid="sponsor-corpus-ratio">These are verified outcomes, not part of the {corpus.ratio} count above.</p>
+        <p data-testid="sponsor-corpus-ratio">These are checked outcomes, not part of the {corpus.ratio} count above.</p>
         <ul className="scd-rail-list">
           {VERIFIED_COUNCIL_DECISIONS.map((decision) => (
             <li key={`${decision.city}-${decision.motion}`}>

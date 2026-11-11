@@ -85,7 +85,7 @@ const OWN_VOICE_LABELS = [
   /\bextremists?\b/i,
 ]
 
-const MINOR_AGE = /\b\d{1,2}-year-olds?\b/i
+const MINOR_AGE = /\b(?:1[0-7]|[1-9])-year-olds?\b/i
 const PHONE_NUMBER = /\b(?:\+?1[-.\s]*)?\(?\d{3}\)?[-.\s]*\d{3}[-.\s]*\d{4}\b/
 
 export function isIsoDate(value) {

@@ -249,15 +249,21 @@ describe('approved production records', () => {
     expect(hateExtremismSupport.every((entry) => entry.type === 'resource')).toBe(true)
     expect(hateExtremismSupport.find((entry) => entry.id === 'res-pride-niagara').sources).toHaveLength(1)
     const serialized = JSON.stringify({ hateExtremismEntries, hateExtremismSupport })
-    expect(serialized).not.toMatch(/14-year-old|15-year-old|71-year-old|goof busters|proud boys|bradley|sauer|hildred|queen st|zimmerman/i)
+    expect(serialized).not.toMatch(/14-year-old|15-year-old|goof busters|proud boys|bradley|sauer|hildred|queen st|zimmerman/i)
     const falls = hateExtremismEntries.find((entry) => entry.id === 'case-nf-graffiti-2026')
-    expect(falls.status).toBe('charged with mischief under $5,000; released with a future court date (Niagara Daily News, May 8, 2026)')
+    expect(falls.status).toBe('charged with mischief under $5,000; released with a future court date (Niagara Daily News, May 8, 2026) status as reported May 8, 2026; court outcome not yet confirmed.')
+    expect(falls.lastReviewed).toBe('2026-10-17')
     expect(falls.status).not.toMatch(/not charged as a hate crime|before the courts|undertaking/)
     expect(serialized).not.toMatch(/undertaking/i)
     expect(falls.summary).toBe('Niagara Daily News: "hate-related graffiti"; "hate speech was spray painted on several buildings." 105-1 The River: "hate speech had been spray painted on buildings."')
     expect(falls.title).toBe('Niagara Falls graffiti investigation: mischief charge')
-    expect(falls.sources.map((source) => source.outlet)).toContain('Niagara Regional Police Service')
-    expect(falls.sources.map((source) => source.url)).toContain('https://www.niagarapolice.ca/news/posts/niagara-falls-man-charged-in-hate-crime-mischief-investigation/')
+    expect(falls.sources.map((source) => source.url)).not.toContain('https://www.niagarapolice.ca/news/posts/niagara-falls-man-charged-in-hate-crime-mischief-investigation/')
+    expect(falls.sources).toContainEqual({
+      outlet: 'Niagara This Week',
+      title: '71-year-old accused of spray-painting hate speech in downtown Niagara Falls',
+      url: 'https://www.niagarathisweek.com/news/crime/niagara-falls-hate-speech-graffiti-mischief/article_48b012ca-a640-561c-a18b-f54640bb5dde.html',
+      date: '2026-05-09',
+    })
     expect(falls.sources.map((source) => source.outlet)).toContain('105-1 The River')
     expect(JSON.stringify(falls)).not.toMatch(/105\.7/)
     expect(falls.namedIndividuals).toEqual([])

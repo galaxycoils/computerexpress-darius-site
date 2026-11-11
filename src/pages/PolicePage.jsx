@@ -12,7 +12,7 @@ export default function PolicePage() {
     <>
       <Seo
         title="Niagara Regional Police — Official Releases"
-        description="Official media releases and community notifications from the Niagara Regional Police Service relevant to St. Catharines, Welland and Thorold."
+        description="Official media releases and community notifications from the Niagara Regional Police Service across Niagara."
         path="/police"
         jsonLd={{
           '@context': 'https://schema.org',

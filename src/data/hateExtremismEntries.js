@@ -179,13 +179,13 @@ export const hateExtremismEntries = [
     title: 'Niagara Falls graffiti investigation: mischief charge',
     summary: 'Niagara Daily News: "hate-related graffiti"; "hate speech was spray painted on several buildings." 105-1 The River: "hate speech had been spray painted on buildings."',
     location: 'Niagara Falls',
-    status: 'charged with mischief under $5,000; released with a future court date (Niagara Daily News, May 8, 2026)',
+    status: 'charged with mischief under $5,000; released with a future court date (Niagara Daily News, May 8, 2026) status as reported May 8, 2026; court outcome not yet confirmed.',
     sources: [
       {
-        outlet: 'Niagara Regional Police Service',
-        title: 'Niagara Falls man charged in hate crime mischief investigation',
-        url: 'https://www.niagarapolice.ca/news/posts/niagara-falls-man-charged-in-hate-crime-mischief-investigation/',
-        date: '2026-05-08',
+        outlet: 'Niagara This Week',
+        title: '71-year-old accused of spray-painting hate speech in downtown Niagara Falls',
+        url: 'https://www.niagarathisweek.com/news/crime/niagara-falls-hate-speech-graffiti-mischief/article_48b012ca-a640-561c-a18b-f54640bb5dde.html',
+        date: '2026-05-09',
       },
       {
         outlet: 'Niagara Daily News',

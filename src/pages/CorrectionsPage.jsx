@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useSearchParams } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
 import Seo, { BASE_URL } from '../components/Seo'
 import { submitForm } from '../utils/formRequest'
 import '../components/news/news.css'
@@ -100,6 +100,7 @@ export default function CorrectionsPage() {
         <section aria-labelledby="right-of-reply">
           <h2 id="right-of-reply" className="scd-section-rule">Request a correction or right of reply</h2>
           <p className="scd-lead-dek">Correction requests are reviewed within 72 hours.</p>
+          <p className="scd-lead-dek">We use your name and email only to review this request and reply to you. Requests are stored in our editorial queue and sent to the editor by email. See our <Link to="/privacy">privacy policy</Link>.</p>
           {requested ? <p className="scd-lead-dek">This form is for record <strong>{requested}</strong>.</p> : null}
           {submitted ? (
             <p role="status">Request received. Correction requests are reviewed within 72 hours.</p>

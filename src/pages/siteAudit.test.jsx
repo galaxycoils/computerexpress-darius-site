@@ -221,11 +221,16 @@ describe("development titles and the police desk", () => {
     expect(`${sample.title}${suffix}`.length).toBeGreaterThan(60);
   });
 
-  it("keeps the curated archive and adds later official releases", () => {
+  it("keeps the curated archive and holds back collector headlines that may name a person", () => {
+    const warn = vi.spyOn(console, "warn").mockImplementation(() => {});
     const desk = policeDeskReleases();
     const curatedLatest = verifiedNrpsReleases.map((release) => release.date).sort().at(-1);
     expect(curatedLatest).toBe("2026-10-22");
-    expect(desk.some((release) => release.date > "2026-10-22")).toBe(true);
     expect(desk.filter((release) => release.id === "nrps-2026-10-22-niagara-falls-drug-trafficking-seizure-200k")).toHaveLength(1);
+    expect(desk.map((release) => release.headline)).not.toContain(
+      "34-year-old St Catharines Man Arrested in Drug Trafficking Investigation",
+    );
+    expect(warn.mock.calls.map((call) => String(call[0])).join("\n")).toMatch(/34-year-old St Catharines Man Arrested/);
+    warn.mockRestore();
   });
 });
