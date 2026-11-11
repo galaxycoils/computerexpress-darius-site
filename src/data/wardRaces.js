@@ -1,12 +1,14 @@
 /**
- * Welland 2026 ward councillor races.
- * Source: City of Welland, Registered Candidates (retrieved 2026-10-16).
- * Only names and candidate-supplied websites are recorded. Incumbency and
- * voting records are deliberately omitted: councilData.js has no per-member
- * votes, and the City list does not flag incumbents.
+ * Welland 2026 ward councillor races and certified results.
+ * Candidates: City of Welland, Registered Candidates (retrieved 2026-10-16).
+ * Results: City of Welland, 2026 Election Results, certified by the City Clerk
+ * (retrieved 2026-11-06). Two councillors elected per ward; winners flagged.
+ * Incumbency is deliberately omitted: the City list does not flag incumbents.
  */
 export const WARD_RACES_SOURCE = 'https://www.welland.ca/city-hall/municipal-elections/registered-candidates/'
 export const WARD_RACES_RETRIEVED = '2026-10-16'
+export const WARD_RESULTS_SOURCE = 'https://www.welland.ca/city-hall/municipal-elections/2026-election-results/'
+export const WARD_RESULTS_RETRIEVED = '2026-11-06'
 export const ELECTION_DATE = '2026-10-26'
 
 export const wellandWardRaces = [
@@ -17,23 +19,33 @@ export const wellandWardRaces = [
     "candidates": [
       {
         "name": "Kiron Bondale",
-        "site": "https://votekiron.wordpress.com"
+        "site": "https://votekiron.wordpress.com",
+        "votes": 475,
+        "elected": false
       },
       {
         "name": "Jessica LaHay",
-        "site": "https://votejessicaward1.ca"
+        "site": "https://votejessicaward1.ca",
+        "votes": 1285,
+        "elected": true
       },
       {
         "name": "Adam Moote",
-        "site": null
+        "site": null,
+        "votes": 1672,
+        "elected": true
       },
       {
         "name": "Josh Sawatsky",
-        "site": null
+        "site": null,
+        "votes": 549,
+        "elected": false
       },
       {
         "name": "Brad Ulch",
-        "site": null
+        "site": null,
+        "votes": 748,
+        "elected": false
       }
     ]
   },
@@ -44,27 +56,39 @@ export const wellandWardRaces = [
     "candidates": [
       {
         "name": "Nick Albano",
-        "site": "https://www.nickforward2.ca"
+        "site": "https://www.nickforward2.ca",
+        "votes": 1180,
+        "elected": true
       },
       {
         "name": "Vince DiMauro",
-        "site": null
+        "site": null,
+        "votes": 206,
+        "elected": false
       },
       {
         "name": "Carolyn Fast",
-        "site": "https://sites.google.com/view/october262026/home"
+        "site": "https://sites.google.com/view/october262026/home",
+        "votes": 825,
+        "elected": false
       },
       {
         "name": "Aldo Parrotta",
-        "site": "https://votealdoparrotta.ca"
+        "site": "https://votealdoparrotta.ca",
+        "votes": 963,
+        "elected": true
       },
       {
         "name": "Leo Van Vliet",
-        "site": "https://leovanvliet.ca"
+        "site": "https://leovanvliet.ca",
+        "votes": 866,
+        "elected": false
       },
       {
         "name": "Steve Yochim",
-        "site": "https://www.steveyochim.com"
+        "site": "https://www.steveyochim.com",
+        "votes": 858,
+        "elected": false
       }
     ]
   },
@@ -75,23 +99,33 @@ export const wellandWardRaces = [
     "candidates": [
       {
         "name": "John Braimoh",
-        "site": "https://johnbraimoh.ca"
+        "site": "https://johnbraimoh.ca",
+        "votes": 468,
+        "elected": false
       },
       {
         "name": "John Chiocchio",
-        "site": null
+        "site": null,
+        "votes": 1802,
+        "elected": true
       },
       {
         "name": "Sharmila Setaram",
-        "site": "https://sharmila.ca"
+        "site": "https://sharmila.ca",
+        "votes": 1295,
+        "elected": true
       },
       {
         "name": "Steve Soos",
-        "site": null
+        "site": null,
+        "votes": 659,
+        "elected": false
       },
       {
         "name": "James Takeo",
-        "site": "https://jamestakeotattoos.com/blog"
+        "site": "https://jamestakeotattoos.com/blog",
+        "votes": 687,
+        "elected": false
       }
     ]
   },
@@ -102,31 +136,45 @@ export const wellandWardRaces = [
     "candidates": [
       {
         "name": "David Alexander",
-        "site": "https://davidalexander.ca"
+        "site": "https://davidalexander.ca",
+        "votes": 890,
+        "elected": true
       },
       {
         "name": "Safdar Ali",
-        "site": null
+        "site": null,
+        "votes": 62,
+        "elected": false
       },
       {
         "name": "Tia DeAgazio",
-        "site": null
+        "site": null,
+        "votes": 344,
+        "elected": false
       },
       {
         "name": "Tony DiMarco",
-        "site": null
+        "site": null,
+        "votes": 530,
+        "elected": false
       },
       {
         "name": "Bryan Green",
-        "site": "https://www.bryangreen4ward4.ca"
+        "site": "https://www.bryangreen4ward4.ca",
+        "votes": 976,
+        "elected": true
       },
       {
         "name": "Tissa Ratnayake",
-        "site": "https://votetissa.ca"
+        "site": "https://votetissa.ca",
+        "votes": 103,
+        "elected": false
       },
       {
         "name": "Terry Zorgel",
-        "site": "https://vote4terryz.ca"
+        "site": "https://vote4terryz.ca",
+        "votes": 795,
+        "elected": false
       }
     ]
   },
@@ -137,27 +185,39 @@ export const wellandWardRaces = [
     "candidates": [
       {
         "name": "Aaron Albano",
-        "site": "https://aaronalbano.ca"
+        "site": "https://aaronalbano.ca",
+        "votes": 906,
+        "elected": true
       },
       {
         "name": "Mark Dzugan",
-        "site": null
+        "site": null,
+        "votes": 746,
+        "elected": false
       },
       {
         "name": "Michelle Febers",
-        "site": null
+        "site": null,
+        "votes": 198,
+        "elected": false
       },
       {
         "name": "Connie McCutcheon",
-        "site": "https://conniemccutcheon.com"
+        "site": "https://conniemccutcheon.com",
+        "votes": 855,
+        "elected": false
       },
       {
         "name": "Luca Mele",
-        "site": "https://lucamele.ca"
+        "site": "https://lucamele.ca",
+        "votes": 574,
+        "elected": false
       },
       {
         "name": "Claudette Richard",
-        "site": null
+        "site": null,
+        "votes": 1217,
+        "elected": true
       }
     ]
   },
@@ -168,31 +228,45 @@ export const wellandWardRaces = [
     "candidates": [
       {
         "name": "Steve Falusi",
-        "site": "https://stevefalusiwellandward6.com"
+        "site": "https://stevefalusiwellandward6.com",
+        "votes": 361,
+        "elected": false
       },
       {
         "name": "Bonnie Fokkens",
-        "site": "https://bonniefokkens.ca"
+        "site": "https://bonniefokkens.ca",
+        "votes": 993,
+        "elected": true
       },
       {
         "name": "Jim Larouche",
-        "site": "https://electjimlarouche.ca"
+        "site": "https://electjimlarouche.ca",
+        "votes": 935,
+        "elected": true
       },
       {
         "name": "Jamie Lee",
-        "site": "https://www.jamieleeward6.ca"
+        "site": "https://www.jamieleeward6.ca",
+        "votes": 736,
+        "elected": false
       },
       {
         "name": "Kevin Muller",
-        "site": null
+        "site": null,
+        "votes": 128,
+        "elected": false
       },
       {
         "name": "Cheryl Rowe",
-        "site": null
+        "site": null,
+        "votes": 316,
+        "elected": false
       },
       {
         "name": "Sean Vout",
-        "site": null
+        "site": null,
+        "votes": 120,
+        "elected": false
       }
     ]
   }
