@@ -6,7 +6,7 @@ const aboutPageJsonLd = {
   name: 'St. Catharines Digital',
   url: BASE_URL,
   description:
-    'Independent local news for St. Catharines, Welland and Thorold. Council decisions, police releases, planning notices and municipal updates from official sources only.',
+    'Local news, civic records and places to explore in St. Catharines and Niagara. Connected to public records and primary sources.',
   address: {
     '@type': 'PostalAddress',
     addressLocality: 'St. Catharines',
@@ -17,6 +17,8 @@ const aboutPageJsonLd = {
     { '@type': 'City', name: 'St. Catharines' },
     { '@type': 'City', name: 'Welland' },
     { '@type': 'City', name: 'Thorold' },
+    { '@type': 'City', name: 'Niagara Falls' },
+    { '@type': 'AdministrativeArea', name: 'Niagara Region' },
   ],
 }
 
@@ -24,8 +26,8 @@ const breadcrumbJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'BreadcrumbList',
   itemListElement: [
-    { '@type': 'ListItem', position: 1, name: 'Home', item: BASE_URL },
-    { '@type': 'ListItem', position: 2, name: 'About', item: `${BASE_URL}/about` },
+    { '@type': 'ListItem', position: 1, name: 'Home', item: `${BASE_URL}/` },
+    { '@type': 'ListItem', position: 2, name: 'About', item: `${BASE_URL}/about/` },
   ],
 }
 
@@ -34,7 +36,7 @@ export default function AboutPage() {
     <>
       <Seo
         title="About — St. Catharines Digital"
-        description="Independent local news for St. Catharines, Welland and Thorold. We report only from official primary sources."
+        description="St. Catharines Digital is an independent Niagara newsroom. We start with official records and name other outlets when we use them."
         path="/about"
         jsonLd={[aboutPageJsonLd, breadcrumbJsonLd]}
       />
@@ -58,7 +60,7 @@ export default function AboutPage() {
             marginBottom: '0.85rem',
             maxWidth: '28rem'
           }}>
-            Local news from official sources only.
+            A Niagara newsroom, close to the record.
           </h1>
           <p style={{
             fontSize: '1.05rem',
@@ -66,10 +68,10 @@ export default function AboutPage() {
             maxWidth: '36rem',
             lineHeight: 1.6
           }}>
-            St. Catharines Digital covers St. Catharines, Welland and Thorold.
-            We focus on city council decisions, Niagara Regional Police releases,
-            planning notices and municipal updates — always linked back to the
-            primary documents.
+            St. Catharines Digital covers Niagara. The core of the desk is
+            St. Catharines, Welland and Thorold, and the site also carries
+            Niagara Falls, Niagara Region and Niagara Regional Police records
+            when those sources publish them.
           </p>
         </div>
       </section>
@@ -88,7 +90,7 @@ export default function AboutPage() {
               What we do
             </h2>
             <p style={{ fontSize: '0.95rem', color: 'var(--muted)', lineHeight: 1.6, marginBottom: '0.75rem' }}>
-              We surface official information that affects residents of the three cities:
+              We follow public records and local reporting that affect people in Niagara:
             </p>
             <ul style={{
               margin: 0,
@@ -98,7 +100,7 @@ export default function AboutPage() {
               lineHeight: 1.7
             }}>
               <li>City council agendas, minutes and decisions</li>
-              <li>Official Niagara Regional Police media releases</li>
+              <li>Niagara Regional Police media releases</li>
               <li>Planning applications, zoning notices and public meetings</li>
               <li>Municipal budgets, road closures and public notices</li>
             </ul>
@@ -115,10 +117,27 @@ export default function AboutPage() {
               How we work
             </h2>
             <p style={{ fontSize: '0.95rem', color: 'var(--muted)', lineHeight: 1.6 }}>
-              Everything published here comes from official primary sources:
-              the Niagara Regional Police Service, the City of St. Catharines,
-              the City of Welland, the City of Thorold, and Niagara Region.
-              We do not use social media, Facebook groups or Reddit as sources.
+              We begin with official records: municipal notices, council documents,
+              police releases and election authorities. Where a record also uses
+              an established news outlet, including the hate and extremism tracker,
+              that outlet is named on the record. We do not use social media,
+              Facebook groups or Reddit as sources.
+            </p>
+          </article>
+
+          <article style={{
+            background: 'var(--bg-card)',
+            border: '1px solid var(--border)',
+            borderRadius: '12px',
+            padding: '1.5rem',
+            marginBottom: '1rem'
+          }}>
+            <h2 style={{ fontSize: '1.05rem', fontWeight: 600, marginBottom: '0.6rem' }}>
+              Ownership
+            </h2>
+            <p style={{ fontSize: '0.95rem', color: 'var(--muted)', lineHeight: 1.6 }}>
+              St. Catharines Digital is an independent local news site.
+              Public credit: Darius T.
             </p>
           </article>
 

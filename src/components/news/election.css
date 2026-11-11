@@ -1,5 +1,14 @@
 /* Welland Votes 2026 — additive editorial layer. Tokens + fonts only. */
 
+.scd-votes-banner {
+  margin: 0 0 0.85rem;
+  padding: 0.7rem 0.9rem;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--bg-card);
+  max-width: 36rem;
+}
+
 .scd-votes-intro {
   align-items: start;
 }

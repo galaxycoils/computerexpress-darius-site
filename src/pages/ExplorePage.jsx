@@ -1,7 +1,7 @@
 import PageHeading from "../components/journal/PageHeading";
 import UiIcon from "../components/journal/UiIcon";
 import { Link, useParams } from "react-router-dom";
-import Seo from "../components/Seo";
+import Seo, { BASE_URL } from "../components/Seo";
 import { exploreGuides } from "../data/exploreGuides";
 export default function ExplorePage() {
   return (
@@ -10,6 +10,14 @@ export default function ExplorePage() {
         title="Explore St. Catharines | Local guides"
         description="Source-linked introductions to Port Dalhousie, Queen Street and the Lakeside Park Carousel."
         path="/explore"
+        jsonLd={{
+          "@context": "https://schema.org",
+          "@type": "CollectionPage",
+          name: "Explore St. Catharines",
+          description: "Source-linked introductions to Port Dalhousie, Queen Street and the Lakeside Park Carousel.",
+          url: `${BASE_URL}/explore/`,
+          isPartOf: { "@type": "WebSite", name: "St. Catharines Digital", url: `${BASE_URL}/` },
+        }}
       />
       <div className="scd-page journal-page">
         <PageHeading
@@ -87,6 +95,14 @@ export function ExploreGuidePage() {
         title={`${guide.title} | St. Catharines Digital`}
         description={guide.description}
         path={`/explore/${slug}`}
+        jsonLd={{
+          "@context": "https://schema.org",
+          "@type": "WebPage",
+          name: guide.title,
+          description: guide.description,
+          url: `${BASE_URL}/explore/${slug}/`,
+          isPartOf: { "@type": "WebSite", name: "St. Catharines Digital", url: `${BASE_URL}/` },
+        }}
       />
       <div className="scd-page journal-page">
         <Link className="journal-link" to="/explore">

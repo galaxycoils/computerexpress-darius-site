@@ -2,7 +2,7 @@ import UiIcon from "../components/journal/UiIcon";
 import { useState } from "react";
 import { Photo, SaveButton } from "../components/journal/Story";
 import { localPhotos } from "../data/localPhotos";
-import { citySlug as getCitySlug, canonicalSource } from "../data/publication";
+import { articleNewsSection, canonicalSource } from "../data/publication";
 import { planningNotices } from "../data/planningNotices";
 import { Link, useParams } from "react-router-dom";
 import Seo from "../components/Seo";
@@ -52,7 +52,7 @@ export default function ArticlePage() {
         (item.city === article.city || item.type === article.type),
     )
     .slice(0, 3);
-  const citySlug = getCitySlug(article.city);
+  const section = articleNewsSection(article);
   const articleSchema = {
     "@context": "https://schema.org",
     "@type": "NewsArticle",
@@ -112,13 +112,13 @@ export default function ArticlePage() {
         "@type": "ListItem",
         position: 2,
         name: "Local news",
-        item: `${BASE_URL}/news`,
+        item: `${BASE_URL}/news/`,
       },
       {
         "@type": "ListItem",
         position: 3,
-        name: article.city,
-        item: `${BASE_URL}/news/${citySlug}`,
+        name: section.name,
+        item: `${BASE_URL}${section.path}/`,
       },
       {
         "@type": "ListItem",
@@ -142,11 +142,7 @@ export default function ArticlePage() {
         <nav className="scd-article-crumb" aria-label="Breadcrumb">
           <Link to="/news">Local news</Link>
           <span aria-hidden="true">/</span>
-          <Link
-            to={citySlug === "niagara-region" ? "/news" : `/news/${citySlug}`}
-          >
-            {article.city}
-          </Link>
+          <Link to={section.path}>{section.name}</Link>
         </nav>
         <header className="scd-article-header">
           <p className="scd-eyebrow">

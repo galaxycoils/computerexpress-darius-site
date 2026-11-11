@@ -120,7 +120,7 @@ export default function AlertPreferencesPage() {
         description="Private planning-alert preference management."
         path="/preferences"
         noIndex
-        jsonLd={{ '@context': 'https://schema.org', '@type': 'WebPage', name: 'Planning Alert Preferences', url: BASE_URL }}
+        jsonLd={{ '@context': 'https://schema.org', '@type': 'WebPage', name: 'Planning Alert Preferences', url: `${BASE_URL}/preferences/` }}
       />
       <div className="scd-page scd-alerts scd-preferences">
         <header className="scd-intro scd-alerts-intro">

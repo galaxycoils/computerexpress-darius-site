@@ -1,33 +1,27 @@
 import UiIcon from "../components/journal/UiIcon";
-import { getLatestNrpsReleases } from '../data/nrpsReleases'
+import { getRecentPoliceDeskReleases } from '../data/policeDesk'
 import Seo from '../components/Seo'
 import { BASE_URL } from '../components/Seo'
 import { Link } from 'react-router-dom'
 
+const POLICE_URL = `${BASE_URL}/police/`
+
 export default function PolicePage() {
-  const recent = getLatestNrpsReleases(8, 30)
+  const recent = getRecentPoliceDeskReleases(8, 30)
   return (
     <>
       <Seo
         title="Niagara Regional Police — Official Releases"
         description="Official media releases and community notifications from the Niagara Regional Police Service relevant to St. Catharines, Welland and Thorold."
-        jsonLd={[
-          {
-            '@context': 'https://schema.org',
-            '@type': 'WebPage',
-            name: 'Niagara Regional Police',
-            url: BASE_URL,
-          },
-          {
-            '@context': 'https://schema.org',
-            '@type': 'NewsMediaOrganization',
-            name: 'St. Catharines Digital Police News',
-            url: BASE_URL,
-            description: 'Compiled Niagara Regional Police Service media releases — official sources only.',
-            founder: { '@type': 'Organization', name: 'St. Catharines Digital' },
-            knowsAbout: ['Police Media Releases', 'Crime', 'Public Safety', 'Niagara Region', 'St. Catharines', 'Welland', 'Thorold'],
-          },
-        ]}
+        path="/police"
+        jsonLd={{
+          '@context': 'https://schema.org',
+          '@type': 'WebPage',
+          name: 'Niagara Regional Police',
+          url: POLICE_URL,
+          isPartOf: { '@type': 'WebSite', name: 'St. Catharines Digital', url: `${BASE_URL}/` },
+          publisher: { '@type': 'NewsMediaOrganization', name: 'St. Catharines Digital', url: `${BASE_URL}/` },
+        }}
       />
 
       <section className="section-first" style={{ paddingTop: '3rem', paddingBottom: '2rem' }}>

@@ -1,6 +1,6 @@
 import UiIcon from "../components/journal/UiIcon";
 import { Link, useParams } from "react-router-dom";
-import Seo from "../components/Seo";
+import Seo, { BASE_URL } from "../components/Seo";
 import { cityBySlug } from "../data/cities";
 import { localPhotos } from "../data/localPhotos";
 import { Photo } from "../components/journal/Story";
@@ -21,6 +21,14 @@ export default function CityNewsPage() {
         title={`${city.name} news | St. Catharines Digital`}
         description={city.description}
         path={`/news/${citySlug}`}
+        jsonLd={{
+          "@context": "https://schema.org",
+          "@type": "CollectionPage",
+          name: `${city.name} news`,
+          description: city.description,
+          url: `${BASE_URL}/news/${citySlug}/`,
+          isPartOf: { "@type": "WebSite", name: "St. Catharines Digital", url: `${BASE_URL}/` },
+        }}
       />
       <div className="scd-page journal-page">
         <header className="journal-city-hero">

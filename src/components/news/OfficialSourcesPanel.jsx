@@ -1,7 +1,7 @@
 import UiIcon from "../journal/UiIcon";
 import { getLastRefreshedLabel } from "../data/officialDiscovery";
 
-const LAST_REFRESHED = getLastRefreshedLabel();
+const COLLECTED = getLastRefreshedLabel("Official-source snapshot collected ");
 
 export default function OfficialSourcesPanel() {
   return (
@@ -34,10 +34,9 @@ export default function OfficialSourcesPanel() {
           </a>
         </li>
       </ul>
-      {LAST_REFRESHED ? (
+      {COLLECTED ? (
         <p className="scd-rail-note" data-testid="official-sources-last-verified">
-          {LAST_REFRESHED} — every record is link-clean and attached to its
-          official source.
+          {COLLECTED}. Each record links to its official source.
         </p>
       ) : (
         <p className="scd-rail-note">

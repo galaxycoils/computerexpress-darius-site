@@ -7,7 +7,7 @@ export default function PrivacyPage() {
         title="Privacy Policy | St. Catharines Digital"
         description="How St. Catharines Digital collects, uses, and protects your information."
         path="/privacy"
-        jsonLd={{ '@context': 'https://schema.org', '@type': 'WebPage', name: 'Privacy Policy', url: BASE_URL }}
+        jsonLd={{ '@context': 'https://schema.org', '@type': 'WebPage', name: 'Privacy Policy', url: `${BASE_URL}/privacy/` }}
       />
       <section className="section section-first" aria-label="Privacy Policy">
         <div className="container" style={{ maxWidth: '800px' }}>
