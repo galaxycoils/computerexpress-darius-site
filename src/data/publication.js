@@ -2,6 +2,7 @@ import { getPublishableContent } from "./contentRegistry.js";
 import { planningNotices } from "./planningNotices.js";
 import { verifiedNrpsReleases as nrpsReleases } from "./nrpsReleases.js";
 import discovery from "./generated/discovery.json" with { type: "json" };
+import { publishableDiscoveryItems } from "./reviewedCollectorHeadlines.js";
 import { getRenderNow } from "../utils/renderClock.js";
 
 export function canonicalSource(value) {
@@ -150,8 +151,7 @@ export function getPublication(now = getRenderNow()) {
       topic: "Public safety",
     });
   }
-  for (const d of discovery.items || []) {
-    if (d.status !== "published" || d.reviewRequired) continue;
+  for (const d of publishableDiscoveryItems(discovery.items || [])) {
     const cities = d.city === "Niagara Region" ? namedCities(d.title) : [d.city];
     add({
       id: d.id,

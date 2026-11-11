@@ -75,8 +75,8 @@ export const MAYORAL_CANDIDATES = [
   {
     name: 'April Jeffs',
     office: '',
-    site: 'https://apriljeffs.ca/',
-    label: 'apriljeffs.ca',
+    site: null,
+    label: null,
     votes: 3091,
     elected: false,
     points: [
