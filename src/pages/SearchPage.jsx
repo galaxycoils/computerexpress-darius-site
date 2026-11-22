@@ -1,4 +1,4 @@
-import Seo from "../components/Seo";
+import Seo, { BASE_URL } from "../components/Seo";
 import NewsFeed from "../components/journal/NewsFeed";
 import PageHeading from "../components/journal/PageHeading";
 export default function SearchPage() {
@@ -8,6 +8,13 @@ export default function SearchPage() {
         title="Search | St. Catharines Digital"
         description="Search Niagara news, development records, civic meetings and local guides by street, city or subject."
         path="/search"
+        jsonLd={{
+          "@context": "https://schema.org",
+          "@type": "WebPage",
+          name: "Search",
+          description: "Search Niagara news, development records, civic meetings and local guides by street, city or subject.",
+          url: `${BASE_URL}/search/`,
+        }}
       />
       <div className="scd-page journal-page">
         <PageHeading kicker="Find your local story" title="Find your local.">

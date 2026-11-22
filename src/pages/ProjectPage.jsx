@@ -1,9 +1,12 @@
 import UiIcon from "../components/journal/UiIcon";
 import { Link, useParams } from "react-router-dom";
-import Seo from "../components/Seo";
+import Seo, { BASE_URL } from "../components/Seo";
 import { planningNotices } from "../data/planningNotices";
 import { dateLabel } from "../data/publication";
 import { eventTime } from "../data/events";
+import { shortenDocumentTitle } from "../data/documentTitle";
+
+const DEVELOPMENT_TITLE_SUFFIX = " | Development record";
 export default function ProjectPage() {
   const { id } = useParams(),
     record = planningNotices.find((n) => n.id === id);
@@ -18,9 +21,17 @@ export default function ProjectPage() {
   return (
     <>
       <Seo
-        title={`${record.title} | Development record`}
+        title={shortenDocumentTitle(record.title, { suffix: DEVELOPMENT_TITLE_SUFFIX })}
         description={record.description}
         path={`/development/${id}`}
+        jsonLd={{
+          "@context": "https://schema.org",
+          "@type": "WebPage",
+          name: record.title,
+          description: record.description,
+          url: `${BASE_URL}/development/${id}/`,
+          isPartOf: { "@type": "WebSite", name: "St. Catharines Digital", url: `${BASE_URL}/` },
+        }}
       />
       <div className="scd-page journal-page">
         <Link className="journal-link" to="/planning-tracker">

@@ -26,7 +26,7 @@ export default function ReaderServicesPage() {
       title="Reader Services | St. Catharines Digital"
       description="Newsletters, planning alerts, corrections, local tips and reader support for St. Catharines Digital."
       path="/reader-services"
-      jsonLd={{ '@context': 'https://schema.org', '@type': 'WebPage', name: 'Reader Services', url: BASE_URL }}
+      jsonLd={{ '@context': 'https://schema.org', '@type': 'WebPage', name: 'Reader Services', url: `${BASE_URL}/reader-services/` }}
     />
     <div className="scd-page scd-services-page journal-page">
       <PageHeading kicker="For readers" title="Reader Services">

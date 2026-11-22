@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import Seo from "../components/Seo";
+import Seo, { BASE_URL } from "../components/Seo";
 export default function AccessibilityPage() {
   return (
     <>
@@ -7,6 +7,13 @@ export default function AccessibilityPage() {
         title="Accessibility | St. Catharines Digital"
         description="Reading options and how to report an accessibility barrier."
         path="/accessibility"
+        jsonLd={{
+          "@context": "https://schema.org",
+          "@type": "WebPage",
+          name: "Accessibility",
+          description: "Reading options and how to report an accessibility barrier.",
+          url: `${BASE_URL}/accessibility/`,
+        }}
       />
       <div className="scd-page journal-page">
         <header className="journal-page-heading">

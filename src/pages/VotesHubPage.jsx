@@ -5,7 +5,7 @@ import '../components/news/news.css'
 export default function VotesHubPage() {
   return (
     <>
-      <Seo title="Elections & Voting | St. Catharines Digital" description="Verified local election guides, candidate information, key dates and voting details for Niagara residents." path="/votes" jsonLd={{ '@context': 'https://schema.org', '@type': 'WebPage', name: 'Elections & Voting', url: BASE_URL }} />
+      <Seo title="Elections & Voting | St. Catharines Digital" description="Certified local election results and the records used to check them." path="/votes" jsonLd={{ '@context': 'https://schema.org', '@type': 'WebPage', name: 'Elections & Voting', url: `${BASE_URL}/votes/` }} />
       <div className="scd-page">
         <nav className="scd-article-crumb" aria-label="Breadcrumb">
           <Link to="/">Home</Link>
@@ -20,12 +20,12 @@ export default function VotesHubPage() {
           </div>
         </header>
         <section aria-labelledby="current-guides">
-          <h2 id="current-guides" className="scd-section-rule">Current guides</h2>
+          <h2 id="current-guides" className="scd-section-rule">Results</h2>
           <article className="card">
             <p className="scd-cat">Welland · Municipal election 2026</p>
-            <h3>Welland Votes 2026</h3>
-            <p>Mayoral candidates, key dates, advance voting, eligibility and the rest of the ballot.</p>
-            <Link to="/welland-votes" className="scd-more">Open the Welland voter guide →</Link>
+            <h3>Welland 2026 results</h3>
+            <p>Certified results for mayor, ward councillors and school board trustees. Voting closed Oct. 26.</p>
+            <Link to="/welland-votes" className="scd-more">Open the Welland results →</Link>
             <p>Ward races: {[1, 2, 3, 4, 5, 6].map((n) => (<Link key={n} to={`/elections/welland/ward-${n}`} style={{ marginRight: '0.75rem' }}>Ward {n}</Link>))}</p>
           </article>
         </section>

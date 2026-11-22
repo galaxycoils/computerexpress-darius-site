@@ -2,6 +2,7 @@ import { getPublishableContent } from "./contentRegistry.js";
 import { planningNotices } from "./planningNotices.js";
 import { verifiedNrpsReleases as nrpsReleases } from "./nrpsReleases.js";
 import discovery from "./generated/discovery.json" with { type: "json" };
+import { publishableDiscoveryItems } from "./reviewedCollectorHeadlines.js";
 import { getRenderNow } from "../utils/renderClock.js";
 
 export function canonicalSource(value) {
@@ -17,6 +18,26 @@ export function canonicalSource(value) {
 }
 export function citySlug(name) {
   return name.toLowerCase().replace(/\./g, "").replace(/\s+/g, "-");
+}
+
+const NEWS_CITY_SECTIONS = new Set([
+  "st-catharines",
+  "welland",
+  "thorold",
+  "niagara-falls",
+]);
+
+/** Breadcrumb target for an article. Only returns a path the router actually serves. */
+export function articleNewsSection(article) {
+  const slug = citySlug(article?.city || "");
+  if (NEWS_CITY_SECTIONS.has(slug)) {
+    return { name: article.city, path: `/news/${slug}` };
+  }
+  const policeRecord =
+    article?.type === "public-safety" ||
+    /niagarapolice\.ca/i.test(article?.primarySource || "");
+  if (policeRecord) return { name: "Police", path: "/news/police" };
+  return { name: article?.city || "Local news", path: "/news" };
 }
 export function dateLabel(value, options = {}) {
   if (!value) return "Source date unavailable";
@@ -130,8 +151,7 @@ export function getPublication(now = getRenderNow()) {
       topic: "Public safety",
     });
   }
-  for (const d of discovery.items || []) {
-    if (d.status !== "published" || d.reviewRequired) continue;
+  for (const d of publishableDiscoveryItems(discovery.items || [])) {
     const cities = d.city === "Niagara Region" ? namedCities(d.title) : [d.city];
     add({
       id: d.id,

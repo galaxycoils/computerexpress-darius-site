@@ -2,7 +2,7 @@ import PageHeading from "../components/journal/PageHeading";
 import UiIcon from "../components/journal/UiIcon";
 import { useState } from "react";
 import { Link, useParams, useSearchParams } from "react-router-dom";
-import Seo from "../components/Seo";
+import Seo, { BASE_URL } from "../components/Seo";
 import {
   civicEvents,
   filterEvents,
@@ -70,6 +70,14 @@ export default function EventsPage() {
         title="What’s on: civic calendar | St. Catharines Digital"
         description="Upcoming municipal meetings and hearings across Niagara, with official sources and calendar downloads."
         path="/events"
+        jsonLd={{
+          "@context": "https://schema.org",
+          "@type": "CollectionPage",
+          name: "Civic calendar",
+          description: "Upcoming municipal meetings and hearings across Niagara, with official sources and calendar downloads.",
+          url: `${BASE_URL}/events/`,
+          isPartOf: { "@type": "WebSite", name: "St. Catharines Digital", url: `${BASE_URL}/` },
+        }}
       />
       <div className="scd-page journal-page">
         <PageHeading

@@ -17,7 +17,7 @@ export const siteConfig = {
     latitude: 43.1594,
     longitude: -79.2449,
   },
-  description: 'Track planning notices and official source links for St. Catharines, Welland, Thorold, and Niagara Region. Follow the source documents and sign up for available alerts.',
+  description: 'Local news, civic records and places to explore in St. Catharines and Niagara. Connected to public records and primary sources.',
   defaultImage: '/og-card.webp',
   googleBusinessProfile: {
     status: 'verified',

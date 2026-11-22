@@ -2,8 +2,8 @@
 // Names, order, and contact facts mirror the Clerk's certified registry
 // (https://www.welland.ca/city-hall/municipal-elections/registered-candidates/).
 // Platform condensations are the candidates' own words, verified against
-// their campaign sites Sept 13 2026. Office histories from city, regional,
-// and police-board records plus on-record reporting. Neutral, equal weight.
+// their campaign sites Sept 13 2026. An office line is published only with
+// a City of Welland page that states it. Neutral, equal weight.
 // Results: City of Welland, 2026 Election Results, certified by the City
 // Clerk (retrieved 2026-11-06). Winners flagged with elected: true.
 
@@ -12,13 +12,15 @@ export const CITY_CANDIDATES = 'https://www.welland.ca/city-hall/municipal-elect
 export const CITY_VOTERS = 'https://www.welland.ca/city-hall/municipal-elections/information-for-voters/'
 export const CITY_WARDS = 'https://www.welland.ca/city-hall/municipal-elections/ward-boundary-changes/'
 export const CITY_RESULTS = 'https://www.welland.ca/city-hall/municipal-elections/2026-election-results/'
+export const CITY_2022_RESULTS = 'https://www.welland.ca/city-hall/municipal-elections/2022-election-reports/2022-election-results/'
+export const CITY_WARD_TWO = 'https://www.welland.ca/city-hall/mayor-and-council/members-of-council/ward-two-councillors/'
 export const CITY_RESULTS_RETRIEVED = '2026-11-06'
 export const CHAMBER_DEBATE = 'https://southniagaracc.com/event/municipal-debate-welland/'
 
 export const MAYORAL_CANDIDATES = [
   {
     name: 'Natashia Bergen',
-    office: 'Newcomer — no municipal office held',
+    office: '',
     site: 'https://www.natashiabergen.com/platform',
     label: 'natashiabergen.com',
     votes: 548,
@@ -32,7 +34,8 @@ export const MAYORAL_CANDIDATES = [
   },
   {
     name: 'Pat Chiocchio',
-    office: 'Regional councillor; 14+ years on council including vice-mayor; police board chair roles',
+    office: 'Elected Niagara regional councillor in 2022',
+    officeSource: CITY_2022_RESULTS,
     site: 'https://patformayor.ca/#/issues',
     label: 'patformayor.ca',
     votes: 4271,
@@ -47,7 +50,7 @@ export const MAYORAL_CANDIDATES = [
   },
   {
     name: 'David Clow',
-    office: 'No municipal office held — ran for mayor in 2018; community arts activist',
+    office: '',
     site: null,
     label: null,
     votes: 582,
@@ -56,7 +59,7 @@ export const MAYORAL_CANDIDATES = [
   },
   {
     name: 'Gary Graziani',
-    office: 'Newcomer — building inspector; no elected office held',
+    office: '',
     site: 'https://www.garygraziani.ca/policies',
     label: 'garygraziani.ca',
     votes: 717,
@@ -71,13 +74,13 @@ export const MAYORAL_CANDIDATES = [
   },
   {
     name: 'April Jeffs',
-    office: 'Ex-mayor of Wainfleet (2010–2018); not on Welland council',
-    site: 'https://apriljeffs.ca/',
-    label: 'apriljeffs.ca',
+    office: '',
+    site: null,
+    label: null,
     votes: 3091,
     elected: false,
     points: [
-      'Property tax relief and a record of low increases cited from Wainfleet tenure',
+      'Property tax relief and a record of low increases',
       'Rein in city spending and budgets described as out of control',
       'Alleviate homelessness blocking downtown potential',
       'A council described as ineffective brought back on track',
@@ -85,7 +88,8 @@ export const MAYORAL_CANDIDATES = [
   },
   {
     name: 'David McLeod',
-    office: 'Ward 2 councillor since 2014; budget chair; former vice-mayor',
+    office: 'Elected Ward 2 councillor in 2022',
+    officeSource: CITY_2022_RESULTS,
     site: null,
     label: null,
     votes: 2009,
@@ -94,7 +98,7 @@ export const MAYORAL_CANDIDATES = [
   },
   {
     name: 'Brandon Simon',
-    office: 'Newcomer — never held political office',
+    office: '',
     site: 'https://mayorsimon.ca/plan',
     label: 'mayorsimon.ca',
     votes: 591,
@@ -109,7 +113,8 @@ export const MAYORAL_CANDIDATES = [
   },
   {
     name: 'Graham Speck',
-    office: 'Ward 5 councillor since 2018',
+    office: 'Elected Ward 5 councillor in 2022',
+    officeSource: CITY_2022_RESULTS,
     site: 'https://grahamspeck.ca/a-vision-for-welland/',
     label: 'grahamspeck.ca',
     votes: 4216,
@@ -145,7 +150,7 @@ export const DOWN_BALLOT = [
   { office: 'English Public trustee – 1', detail: 'Elected: Sue Barnett' },
   { office: 'English Separate trustee – 1', detail: 'Elected: Paul Turner' },
   { office: 'French Public trustee – 1', detail: 'Elected: Amanda Leduc' },
-  { office: 'French Separate trustee – 1', detail: 'Acclaimed: Jean Max Philome' },
+  { office: 'French Separate trustee – 1', detail: 'Acclaimed: Jean Max Philome', source: CITY_RESULTS },
 ]
 
 export const RELATED_COVERAGE = [

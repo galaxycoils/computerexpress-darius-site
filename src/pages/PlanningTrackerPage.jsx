@@ -204,7 +204,7 @@ export default function PlanningTrackerPage() {
           "@context": "https://schema.org",
           "@type": "WebPage",
           name: "Planning & Development Tracker",
-          url: BASE_URL,
+          url: `${BASE_URL}/planning-tracker/`,
         }}
       />
       <div className="planning-tracker-page">

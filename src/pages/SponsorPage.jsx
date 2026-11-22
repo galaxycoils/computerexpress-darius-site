@@ -5,10 +5,8 @@ import '../components/news/news.css'
 import '../components/news/sponsor.css'
 import { getSponsorCorpusCounts } from '../data/metrics.js';
 import { SPONSOR_RATE_LINE } from '../data/sponsorOffer.js';
-import { getLastRefreshedLabel } from '../data/officialDiscovery.js';
 import { submitForm } from '../utils/formRequest.js';
 
-const FRESHNESS_LABEL = getLastRefreshedLabel();
 const corpus = getSponsorCorpusCounts();
 const VERIFIED_COUNCIL_DECISIONS = [
   { city: 'St. Catharines', motion: '2026-07', date: 'Mar 16, 2026', label: 'Aquatic Centre/Multi-Use Facility preliminary cost estimates' },
@@ -21,7 +19,7 @@ const VERIFIED_COUNCIL_DECISIONS = [
   { city: 'Thorold', motion: '2026-13', date: 'Jul 14, 2026', label: 'Mayoral decision ratifying council by-laws' },
   { city: 'Thorold', motion: '2026-16', date: 'Sep 8, 2026', label: 'Mayoral decision ratifying council by-laws' },
 ];
-const LAST_REFRESHED = FRESHNESS_LABEL ? `${FRESHNESS_LABEL} — every record is link-clean and attached to its official source.` : 'Source corpus verification date unavailable.';
+const LAST_REFRESHED = 'Each record links to its official source.';
 const OPTIONS = [
   { value: 'primary', label: 'Planning Alert sponsorship inquiry' },
   { value: 'category', label: 'Planning Tracker placement inquiry' },
@@ -74,9 +72,9 @@ export default function SponsorPage() {
         </aside>
       </header>
 <section className="scd-sponsor-section" aria-labelledby="verified-corpus">
-      <h2 id="verified-corpus" className="scd-section-rule">Verified public record</h2>
+      <h2 id="verified-corpus" className="scd-section-rule">Checked public record</h2>
       <p>
-        The corpus sponsors buy into is the audited public record: <span data-testid="sponsor-corpus-counts">{corpus.summary}</span>.
+        The corpus sponsors buy into is the checked public record: <span data-testid="sponsor-corpus-counts">{corpus.summary}</span>.
         Council and committee decisions are cited separately, not folded into the
         document total.
       </p>
@@ -87,7 +85,7 @@ export default function SponsorPage() {
         <h2 id="verified-council-decisions" className="scd-section-rule">
           Council and committee decisions cited separately
         </h2>
-        <p data-testid="sponsor-corpus-ratio">These are verified outcomes, not part of the {corpus.ratio} count above.</p>
+        <p data-testid="sponsor-corpus-ratio">These are checked outcomes, not part of the {corpus.ratio} count above.</p>
         <ul className="scd-rail-list">
           {VERIFIED_COUNCIL_DECISIONS.map((decision) => (
             <li key={`${decision.city}-${decision.motion}`}>
